@@ -1,3 +1,4 @@
+![Tutorial](./assets/tutorial.png)
 # DEFIANCE OF THE FALL: TTRPG
 
 ## The Tutorial — "Integration Protocol"

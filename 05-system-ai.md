@@ -1,3 +1,4 @@
+![System AI](./assets/system_ai.png)
 # DEFIANCE OF THE FALL: TTRPG
 
 ## The System AI (GM Infrastructure)

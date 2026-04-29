@@ -1,3 +1,4 @@
+![Principles](./assets/principles.png)
 # DEFIANCE OF THE FALL: TTRPG
 
 ## The Principle System

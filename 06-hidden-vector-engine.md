@@ -1,3 +1,4 @@
+![Hidden Vector Engine](./assets/hidden_vector_engine.png)
 # DEFIANCE OF THE FALL: TTRPG
 
 ## The Hidden Vector Engine

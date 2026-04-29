@@ -1,3 +1,4 @@
+![Quick Reference](./assets/quick_reference.png)
 # DEFIANCE OF THE FALL: TTRPG
 
 ## Quick Reference: The Clash
