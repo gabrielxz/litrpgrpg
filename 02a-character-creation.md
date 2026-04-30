@@ -56,6 +56,14 @@ At Level 1, HP and Energy are single digits. That is intentional — freshly int
 
 Starting gear is campaign-dependent. The GM determines what characters have access to based on the scenario. For the standard Integration Protocol opening, characters begin with whatever they had on their person at the moment of Integration — everyday clothing, a phone, maybe a pocket knife. The System provides nothing.
 
+# Step 5: Starting Principle Access
+
+Freshly integrated characters do not begin with active Principle Applications. At creation, a character may have at most **Initial Insight** toward a single Principle Concept — a passive, narrative attunement chosen with the GM. This grants a minor passive bonus and a few narrative permissions, but no active ability. Active Principle Applications (Seed and above) are unlocked through play by accumulating Insight Points; they cannot be selected at creation.
+
+**Why this matters mechanically:** A Seed Application costs 10 Energy at F-Grade origin. A starting character with POW 8 has 8 Max Energy and could not cast it even once. Earning Seeds through play paces the unlock to a moment when the character's POW (and therefore Energy pool) can actually support the cost — typically Level 4–7+, when POW has grown into the 15–25 range. Casting remains scarce, but viable.
+
+The Initial Insight slot is optional. A character may choose to begin with no Principle attunement at all and accept their first Insight when the System grants it. See the Principles document for the full progression: Initial Insight → Seed → Early Fragment → Mid Fragment (Infusion) → Peak Fragment (Domain).
+
 ---
 
 # Pre-Class Progression (Levels 2–9)
@@ -86,6 +94,8 @@ The GM does not need to calculate anything. At each level-up, review what the ch
 **How to read the table:** If a character spent the last level charging into fights and solving problems through brute force, the GM puts 2 points into STR and 1 into FOR (or all 3 into STR if the behavior was extreme and unambiguous). A character who planned every engagement and used terrain might get 2 PER and 1 DEX. Mixed behavior? Split accordingly — 1 STR, 1 PER, 1 CHA is a perfectly valid assignment for a character who fought, planned, and negotiated in equal measure.
 
 The GM's goal is simple: **reward what the character actually did, not what the player says they want.** This is the Hidden Vector Engine's primary mechanical lever during F-Grade — the System watches, and the System responds.
+
+**Tutorial Multi-Level Allocation:** When the tutorial concludes and the System awards multiple levels at once (typical: Levels 1 → 3–5), the GM does not need to walk through each level individually. Review the player's tutorial behavior holistically and assign the cumulative System points (3 per level granted) according to the dominant patterns from the Behavioral Stat Mapping table. The player allocates their cumulative free points (2 per level) at the end. A character who reaches Level 4 directly from Level 1 receives 9 GM-assigned points (3 × 3 levels) and 6 free points (2 × 3 levels). This compression is allowed only for the tutorial-level jump; ongoing campaign play should level one at a time.
 
 ## What This Produces
 
