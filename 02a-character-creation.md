@@ -1,3 +1,4 @@
+![Character Creation](./assets/character_creation.png)
 # DEFIANCE OF THE FALL: TTRPG
 
 ## Character Creation
