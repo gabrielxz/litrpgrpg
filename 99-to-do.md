@@ -7,7 +7,9 @@
 ### Pending Design Decisions (Active Discussion)
 
 
-- **Breakthrough Consolidation — full mechanic:** Currently a stub in the cultivation doc. Need full mechanic: exact roll formula, required VE overcharge amount, failure consequences in detail, environmental hooks, treasures that improve odds, and how stats recalibrate upon ascension.
+- **Energy Density as a full subsystem:** The Breakthrough doc defines energy density tiers sufficient for Breakthroughs, but the broader subsystem (affecting Consolidation efficiency, Principle resonance, monster spawning, territorial control, hex-level mapping) needs its own section.
+- **Higher-Grade Breakthrough themes (D→C and beyond):** The universal blueprint and formula extend, but thematic trial content, failure severity, and Transcendent reward scales need development when the campaign reaches that point.
+- **Bloodline interaction with Breakthroughs:** How does an active Bloodline modify the trial? Additional internal challenge, or a shortcut?
 - **Ability/Spell interaction with the Clash system:** How do active skills modify Force, add Tactical bonuses, or create special Clash conditions?
 
 ### Systems To Be Designed
@@ -44,6 +46,8 @@
 ---
 
 ### Recently Resolved
+
+- **Grade Breakthrough mechanic locked** (08-breakthroughs.md). Four-beat structure (Preparation → Ignition → Trial → Recognition). Roll formula: d100 + POW Force + HRT Force vs. Severe DC of target Grade. Five quality tiers (Cracked/Stable/Polished/Pristine/Transcendent) determined by margin. Overcharge Ratio is the player-controlled risk dial. Six item categories defined. Energy Density tiers established. HVE Coherence bonus rewards behavioral consistency. Party support is lightweight (Anchor action + phenomenon defense). Stat model on ascension: cap lifts + class evolution infusion (50–100 points at E-Grade, class-directed); no stat multiplication. Dump stats can lag behind Grade floor by design. F→E and E→D themes written; higher Grades deliberately deferred.
 
 - **Heart (HRT) stat added as 7th attribute** (v1.6). Governs defense against mental/spiritual/coercive attacks and Aura Pressure. PER retains illusion/sensory defense role.
 - **VE Tolerance formula locked** as (Raw FOR + Raw POW) / 2 × 10. Symmetric POW/FOR contribution; both builds consolidate at the same rate.

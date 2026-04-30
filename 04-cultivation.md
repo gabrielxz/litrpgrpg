@@ -89,16 +89,11 @@ Characters earn baseline progression through survival and quest completion. VE f
 
 Consuming healing pills or forced-growth treasures adds **Toxin Points**. If Toxin Points exceed a character's Toxin Tolerance (Raw FOR × 2), Consolidation efficiency drops: more time is required per VE processed, and a percentage of VE is lost to impurity during each rest.
 
-## Breakthrough Consolidation (Stub — Full Mechanic TBD)
+## Grade Breakthroughs
 
-Ascending from one Grade to the next is a deliberate, dangerous act — not a passive level-up. When a character reaches the Grade-cap level (the last level within their Grade), they cannot advance further through ordinary Consolidation. Instead:
+Ascending from one Grade to the next is a deliberate, dangerous act — not a passive level-up. When a character reaches the Grade-cap level (the last level within their Grade), they cannot advance further through ordinary Consolidation. Instead, they must attempt a **Grade Breakthrough** — a four-beat ritual involving deliberate VE overcharge, a Breakthrough Check (d100 + POW Force + HRT Force vs. Severe difficulty of the target Grade), external phenomena management, and System recognition.
 
-1. The character must intentionally push their VE into Saturation, using the overcharge as fuel for the Breakthrough.
-2. They declare a **Breakthrough Consolidation**, a specialized rest distinct from ordinary processing.
-3. A roll is required — likely **d100 + POW Force + HRT Force vs. a Severe or Peak difficulty on the next Grade's Reference Card** — to successfully reshape their systemic structure.
-4. On success: the character ascends, gains Grade-appropriate stat scaling, and excess VE burns off. On failure: Critical Saturation consequences trigger, potential stat loss, and a lock-out period before retry.
-
-The full mechanic (exact roll formula, VE requirements, failure consequences, environmental hooks, special treasures that improve odds) is reserved for future design. What matters now: the genre-required bottleneck exists, POW and HRT are the relevant stats, and the "overcharge is sometimes required" design space is reserved for later mining.
+The full mechanic — including the Overcharge Ratio risk-reward dial, the five Quality Tiers (Cracked through Transcendent), Breakthrough Item categories, Environment & Energy Density modifiers, Party Support mechanics, and Grade-specific trial themes — is documented in the **Grade Breakthroughs** section (08-breakthroughs.md).
 
 ---
 
