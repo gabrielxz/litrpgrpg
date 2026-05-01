@@ -2,7 +2,7 @@
 
 # Core Mechanics
 
-*The Significant Digits Framework, v1.7*
+*The Significant Digits Framework*
 
 ## Core Design Philosophy
 
@@ -12,7 +12,7 @@ This system decouples narrative scale from resolution scale to capture the feel 
 
 - **The Clash (Opposed Resolution):** Every contested action resolves in one opposed roll. There is no separate to-hit step and damage step. You roll, your opponent rolls, and the Margin between totals determines the outcome. Combat is fast, decisive, and cinematic.
 
-- **Grade-Anchored Difficulty:** The GM never calculates difficulty from scratch. Every obstacle is assigned a Grade and a relative difficulty, and the number comes from a reference card. Cross-Grade challenges simply add +100 per Grade of difference.
+- **Grade-Anchored Difficulty:** The GM never calculates difficulty from scratch. Every obstacle is assigned a Grade and a relative difficulty, and the number comes from a single reference card. Cross-Grade interactions resolve through a symmetric adjustment: the higher-Grade side gains +100 per Grade of difference, applied to its Force (in Opposed Rolls) or its Resistance (in Resistance Rolls).
 
 **Rounding:** All fractions round down. Always.
 
@@ -84,20 +84,28 @@ Meet or exceed the Resistance to succeed.
 
 ### The Grade Reference Card
 
-The GM does not calculate difficulty from scratch. They ask two questions: What Grade is this obstacle? and How tough is it for that Grade? The answer is read from this table:
+The GM does not calculate difficulty from scratch. They ask two questions: What is this obstacle's difficulty tier? And what is its Grade relative to the challenger's? The base Resistance is read from this table:
 
-| **Difficulty** | **F-Grade** | **E-Grade** | **D-Grade** | **C-Grade** |
-|---|---|---|---|---|
-| Trivial | 40 | 140 | 240 | 340 |
-| Easy | 65 | 165 | 265 | 365 |
-| Moderate | 90 | 190 | 290 | 390 |
-| Hard | 115 | 215 | 315 | 415 |
-| Severe | 140 | 240 | 340 | 440 |
-| Peak | 165 | 265 | 365 | 465 |
+| **Difficulty** | **Resistance** |
+|---|---|
+| Trivial | 40 |
+| Easy | 65 |
+| Moderate | 90 |
+| Hard | 115 |
+| Severe | 140 |
+| Peak | 165 |
 
-Each Grade adds exactly +100 to every difficulty tier. A magically reinforced door built by an E-Grade formation master? That's E-Grade, Moderate: Resistance 190. An F-Grade character with STR Force 99 rolls d100 + 99, maximum possible result of 199. They can barely crack it on a perfect roll. A mid-range F-Grader with Force 50? Maximum 150 — they cannot even reach it. No math, instant ruling, fiction preserved.
+The card is a single column because Force is a single column: every Grade resolves with Force in the 1–99 band. Power scaling between Grades is handled separately by the **Cross-Grade Adjustment** below — not by inflating the card's columns.
 
-Build one card per Grade you're running. At F-Grade, that's one column. Tape it to the GM screen.
+**Cross-Grade Adjustment.** When the obstacle's Grade differs from the challenger's, the higher-Grade side gains **+100 per Grade of difference**. Apply it to whichever side is higher:
+
+- **Higher-Grade challenger vs. lower-Grade obstacle:** Add +100 per Grade of difference to the challenger's roll.
+- **Lower-Grade challenger vs. higher-Grade obstacle:** Add +100 per Grade of difference to the obstacle's Resistance.
+- **Same Grade:** No adjustment. Read the Resistance straight off the card.
+
+A magically reinforced door built by an E-Grade formation master is Moderate: base Resistance 90. An F-Grade challenger faces it at effective Resistance 190 (90 + 100 for the one-Grade differential). An F-Grade character with STR Force 99 rolls d100 + 99, maximum possible result 199 — they can barely crack it on a perfect roll. An E-Grade peer with Force 50 challenges the same door at Resistance 90 and cracks it on any roll of 40 or higher. The fiction reads correctly at both Grades, and the GM never has to recompute the card.
+
+Tape the card to the GM screen. One card, every Grade.
 
 ### Auto-Success: The Power Fantasy Rule
 
@@ -126,11 +134,11 @@ The GM decides which Attribute applies. Resisting coercion is HRT; reading an in
 
 ### System Volatility (Exploding Dice)
 
-Higher Grades of power are not just bigger — they are more volatile. The System's energy density at elevated Grades creates cascading instabilities in every clash.
+Higher Grades of power are not just bigger — they are more volatile. The System's energy density at elevated Grades creates cascading instabilities in every clash. The colloquial term is **exploding** — a die that triggers Volatility "explodes."
 
-When rolling d100 in combat, if the natural die result meets or exceeds the Volatility Threshold for the combatant's Grade, they roll again and add the result. This can cascade — each additional roll that meets the threshold triggers another.
+**The Trigger.** Volatility checks the **natural d100 result (before any modifiers)** — Force, Tactical Modifiers, Cross-Grade Adjustments, item bonuses, and ability bonuses are all ignored for the purpose of triggering Volatility. If the natural die meets or exceeds the Volatility Threshold for the rolling combatant's Grade, they roll again and add the new die to their Clash total. Each additional die cascades on the same natural threshold; modifiers never count toward the trigger. A single roll can cascade indefinitely so long as each successive die comes up natural-threshold or higher.
 
-| **Grade** | **Explodes On** | **Probability** |
+| **Grade** | **Explodes On (natural)** | **Probability** |
 |---|---|---|
 | F-Grade | 96–100 | 5% |
 | E-Grade | 90–100 | 11% |
@@ -138,6 +146,8 @@ When rolling d100 in combat, if the natural die result meets or exceeds the Vola
 | C-Grade | 70–100 | 31% |
 | B-Grade | 55–100 | 46% |
 | S-Grade | 40–100 | 61% |
+
+**Symmetry — Offensive and Defensive Explosions.** Volatility applies to **every d100 rolled in combat**, by either side: attacker's roll, defender's roll, both sides of an Opposed Roll, contested checks, and saves resolved during a combat scene. Both attackers and defenders can explode. An offensive explosion typically spikes the Margin upward into devastating damage. A defensive explosion drives the attacker's Margin sharply negative — the attack lands harmlessly with a spectacular flourish, as if the System itself swept the blow aside. A winning defender deals no damage from the Clash itself.
 
 At F-Grade, explosions are rare — combat is gritty and grounded. At D-Grade and above, cascading explosions generate enormous Margins. Time-to-kill plummets. S-Grade fights are blindingly fast, terrifying exchanges where a single opening obliterates the opponent.
 

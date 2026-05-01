@@ -10,6 +10,7 @@
 - **Higher-Grade Breakthrough themes (D→C and beyond):** The universal blueprint and formula extend, but thematic trial content, failure severity, and Transcendent reward scales need development when the campaign reaches that point.
 - **Bloodline interaction with Breakthroughs:** How does an active Bloodline modify the trial? Additional internal challenge, or a shortcut?
 - **Ability/Spell interaction with the Clash system:** How do active skills modify Force, add Tactical bonuses, or create special Clash conditions? Stable Abilities are a tutorial-tier example; class-tier and Principle-tier interactions need a unified treatment.
+- **Large-negative-margin outcomes and defensive explosion payoffs.** Volatility now applies symmetrically — defenders can explode the same as attackers, and a winning defender's exploded roll can drive the attacker's Margin sharply negative. Currently the rule is clean: a winning defender deals no damage from the Clash. Open question is whether large-negative-margin outcomes (whether driven by a defensive explosion or simply by a wide gulf in Force) should produce mechanical consequences beyond "no damage" — counter-damage, a forced Momentum shift, weapon-breakage, a free Beat, or pure narrative spectacle. Not yet ready to commit; needs playtesting before deciding.
 
 ## Systems To Be Designed
 

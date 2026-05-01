@@ -2,8 +2,6 @@
 
 # The Tutorial: Integration Protocol
 
-*Design Document, v2.0*
-
 ---
 
 ## Pre-Tutorial Setup
@@ -345,7 +343,7 @@ The party should never feel comfortable exploring one zone while the others wait
 
 This is the session where the GM introduces:
 
-- **Volatility cascades** (one or more enemies trigger 96+ on a d100; demonstrate the explosion mechanic).
+- **Volatility cascades** (one or more enemies trigger a natural d100 of 96+; demonstrate the explosion mechanic).
 - **Aura Pressure save** (a higher-Grade entity passes through one of the zones — see Wild Fragment below).
 - **Saturation symptoms** (a player who pushes hard accumulates VE past Tolerance; describe symptoms without naming thresholds).
 - **The auto-success rule** (during the zone, a check that would have been impossible at L1 is now beneath them — show, don't tell).
@@ -408,7 +406,7 @@ A shattered tower or ritual complex — the remnants of a civilization that unde
 - **Broken constructs:** can be partially reactivated by characters who experiment (PER vs. F-Hard 115). On success, the construct fights for the party for 3 rounds (Off Force 12, Def Force 15, HP 15).
 - **Corrupted data-altar:** answers one question about the tutorial zone truthfully — but the question must be phrased precisely, and the answer comes in symbolic form requiring interpretation.
 
-**Volatility Demonstration:** During the Wraith fight, the GM should engineer a moment where the d100 lands 96+. Show the cascade — explain it after, not before. Players will remember this.
+**Volatility Demonstration:** During the Wraith fight, the GM should engineer a moment where a natural d100 lands 96+ (before any modifiers). Show the cascade — explain it after, not before. Players will remember this.
 
 **Hidden Opportunity:** At the top of the shattered tower, a partially intact observation deck overlooks the entire valley. From here, a character can see things invisible from ground level — the geometric precision of the zone boundaries, the pattern in the terrain layout, the fact that the "random" debris is arranged in a spiral. **This information is critical for Phase 6's multi-path resolution** (a character with this knowledge can predict the Reality Purge's path). Whether the player shares the information is a Method/Control read — log it.
 
@@ -537,7 +535,7 @@ A door appears in front of you — solid, real, locked. You sense, somehow, that
 
 > *Threshold detected. Compatibility: marginal. Crossing: not recommended.*
 
-- **Open the door:** Reveals a brief vision of an E-Grade location — overwhelming, beautiful, terrifying. Aura Pressure save: d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance E-Severe 240. Will fail at F-Grade. On fail: Suppressed for the rest of the tutorial (1 Beat). On success (statistically improbable): **Hidden Achievement** — "The One Who Walked Through." Logs **Freedom 2.0**, **Hunger 1.0**, **Will 1.0**.
+- **Open the door:** Reveals a brief vision of an E-Grade location — overwhelming, beautiful, terrifying. Aura Pressure save: d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance 240 (Severe 140 + 100 Cross-Grade Adjustment for an F-Grade challenger facing an E-Grade source). Will fail at F-Grade. On fail: Suppressed for the rest of the tutorial (1 Beat). On success (statistically improbable): **Hidden Achievement** — "The One Who Walked Through." Logs **Freedom 2.0**, **Hunger 1.0**, **Will 1.0**.
 - **Walk away:** Logs **Restraint 1.0**, **Method 1.0**.
 
 ### GM Notes
@@ -585,7 +583,7 @@ See `60-bestiary.md` for the full stat block. Key behaviors:
 
 - **Phase 1 (full HP):** Ignores the party, moves toward the gate using all 3 Beats.
 - **Phase 2 (below 75% HP):** Becomes aware. Uses 2 Beats for attacks, 1 Beat for movement.
-- **Glitch Cascade:** On Volatility (96+), next attack against the Warden gains +20.
+- **Glitch Cascade:** On Volatility (natural d100 of 96+), next attack against the Warden gains +20.
 
 ### Multi-Path Resolution
 

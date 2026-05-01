@@ -78,15 +78,13 @@ The cultivator makes a single roll:
 
 > **d100 + POW Force + HRT Force vs. Breakthrough DC**
 
-**Breakthrough DC** is read from the Grade Reference Card at the **Severe** difficulty of the *target* Grade (the Grade being ascended into), modified by the Overcharge Ratio.
+**Breakthrough DC** is **240** at every Grade transition: Severe difficulty (140) on the Grade Reference Card plus the +100 Cross-Grade Adjustment (the target Grade is always exactly one above the challenger's). The Overcharge Ratio further modifies the DC.
 
-| Target Grade | Base DC (Severe) | At ×1.5 | At ×2.0 | At ×2.5 |
+| Overcharge Ratio | ×1.0 | ×1.5 | ×2.0 | ×2.5 |
 |---|---|---|---|---|
-| E-Grade | 240 | 255 | 270 | 285 |
-| D-Grade | 340 | 355 | 370 | 385 |
-| C-Grade | 440 | 455 | 470 | 485 |
+| Effective DC | 240 | 255 | 270 | 285 |
 
-**What the DC represents:** The Severe difficulty of the target Grade is the barrier. An F-Grade character attempting to reach E-Grade must hit 240 — a number that is, by design, unreachable through raw stats alone at F-Grade (max POW Force 99 + max HRT Force 99 + perfect d100 roll of 100 = 298). A well-built character can reach it. A poorly built one cannot, even with a perfect roll. This is intentional — Breakthroughs are meant to require investment, not luck.
+**What the DC represents:** 240 is the barrier. A challenger must hit it with d100 + POW Force + HRT Force, where both Force values are bounded 1–99 within the challenger's current Grade. Maximum possible roll: 100 + 99 + 99 = 298. A well-built character can reach 240; a poorly built one cannot, even on a perfect roll. The math is identical at every Breakthrough — F→E, E→D, D→C — because every cultivator is climbing the same wall, just with bigger raw numbers behind their Force values. Breakthroughs are meant to require investment, not luck.
 
 **Modifiers to the Breakthrough Check:**
 
@@ -138,7 +136,7 @@ The party's job during Beat 3 is straightforward: **keep the cultivator alive an
 
 **Mechanically, the party contributes in two ways:**
 
-1. **Phenomenon Management.** The GM presents 1–3 external threats scaled to the current Grade's difficulty (typically Moderate to Hard on the current Grade's Reference Card). The party deals with them using standard Clash rules. If any threat reaches the cultivator, it imposes a penalty on the Breakthrough Check (−10 per threat that breaks through). These fights should be short — 2–3 rounds maximum. The point is dramatic tension, not a grinding slog.
+1. **Phenomenon Management.** The GM presents 1–3 external threats at the current Grade, typically Moderate to Hard on the Grade Reference Card. The party deals with them using standard Clash rules. If any threat reaches the cultivator, it imposes a penalty on the Breakthrough Check (−10 per threat that breaks through). These fights should be short — 2–3 rounds maximum. The point is dramatic tension, not a grinding slog.
 
 2. **Active Support.** One party member may declare an **Anchor action** — a deliberate act of support that grants the cultivator a bonus on the Breakthrough Check. The Anchor makes an Opposed Roll using their most relevant Force (HRT Force for spiritual anchoring, POW Force for energy channeling, FOR Force for physical shielding) against a Moderate difficulty of the current Grade. Success grants +5 to the Breakthrough Check. A Margin of 20+ grants +10. A Margin of 40+ grants +15. Only one Anchor action per Breakthrough — this keeps the spotlight on the cultivator.
 
@@ -288,7 +286,7 @@ A well-built F-Grade cap character (POW ~75, HRT ~60) has Force 75 + Force 60 = 
   - A **Method-dominant** character navigates labyrinthine internal architecture — crystalline structures of plans-within-plans, each one a decision made, a variable controlled. The trial demands they find the path through without losing themselves in abstraction.
   - An **Accord-dominant** character mediates between aspects of self — fragments representing every alliance forged, every compromise made, every time they bent to hold the group together. The trial demands they unify these fragments into a coherent whole.
   - A **Will-dominant** character confronts projections of everything they have dominated — the people cowed, the systems broken to their will, the resistance crushed. The trial demands they prove their will is genuine sovereignty and not mere cruelty.
-- **External:** Significant phenomena. Spectral manifestations coalesce from the cultivator's HVE signature — echoes given temporary physical form outside the cultivator's body. These are E-Grade threats (Moderate to Hard difficulty on the E-Grade Reference Card) and they carry thematic resonance with the cultivator's behavioral patterns. A Force-dominant cultivator's external phenomena are aggressive and kinetic; a Method-dominant cultivator's are spatial and disorienting. Energy storms, terrain warping, and transformed local wildlife are all appropriate.
+- **External:** Significant phenomena. Spectral manifestations coalesce from the cultivator's HVE signature — echoes given temporary physical form outside the cultivator's body. These are E-Grade threats (Moderate to Hard difficulty on the Grade Reference Card) and they carry thematic resonance with the cultivator's behavioral patterns. A Force-dominant cultivator's external phenomena are aggressive and kinetic; a Method-dominant cultivator's are spatial and disorienting. Energy storms, terrain warping, and transformed local wildlife are all appropriate.
 
 **Failure Consequences (Cracked at E→D):**
 

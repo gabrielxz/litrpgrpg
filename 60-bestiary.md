@@ -141,7 +141,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **Tactics:**
   - **Phase 1 — Indifferent:** While at full HP, the Warden ignores the party. It moves toward the gate using all 3 Beats per turn (one Zone of movement per Beat). It does not attack unless attacked.
   - **Phase 2 — Hostile:** Once damaged below 75% HP, the Warden becomes aware. It uses 2 Beats for attacks and 1 Beat for movement.
-  - **Glitch Cascade:** Whenever the Warden rolls a System Volatility explosion (96+), the construct's targeting reroutes erratically. The next attack against the Warden by any combatant gains +20.
+  - **Glitch Cascade:** Whenever the Warden rolls a System Volatility explosion (natural d100 of 96+), the construct's targeting reroutes erratically. The next attack against the Warden by any combatant gains +20.
   - **Tutorial Note:** This encounter is **not winnable in a straight fight at F-Grade**. Players succeed by reaching the gate, slowing the Warden, exploiting Glitch Cascades, and using Volatile Artifacts (skill shards in particular). The Multi-Path Resolution in the Tutorial document describes how each tested competence — martial, environmental, arcane, social — can contribute.
 
 ---
