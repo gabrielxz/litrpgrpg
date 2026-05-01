@@ -1,5 +1,8 @@
 # LitRPG: RPG — Build Pipeline
-# Run `make` to build the PDF. Run `make clean` to wipe build artifacts.
+# Run `make` (or `make all`) to build PDF + EPUB.
+# Run `make pdf` or `make epub` to build just one.
+# Each invocation copies the build to a timestamped filename.
+# Run `make clean` to wipe build artifacts.
 
 PROJECT     := litrpg-rpg
 BUILD_DIR   := build
@@ -28,22 +31,33 @@ SOURCES := \
   65-items.md \
   70-tutorial.md
 
-PROCESSED := $(addprefix $(BUILD_DIR)/, $(SOURCES))
+# Per-invocation timestamp (YYYYMMDD-HHMMSS) for the stamped output filenames.
+# `:=` evaluates once, so PDF and EPUB share the same timestamp on a given build.
+TIMESTAMP := $(shell date +%Y%m%d-%H%M%S)
 
-PDF := $(BUILD_DIR)/$(PROJECT).pdf
+PDF_DIR        := $(BUILD_DIR)/pdf
+EPUB_DIR       := $(BUILD_DIR)/epub
+PDF_PROCESSED  := $(addprefix $(PDF_DIR)/,  $(SOURCES))
+EPUB_PROCESSED := $(addprefix $(EPUB_DIR)/, $(SOURCES))
 
-.PHONY: pdf clean
+PDF_BASE   := $(BUILD_DIR)/$(PROJECT).pdf
+EPUB_BASE  := $(BUILD_DIR)/$(PROJECT).epub
+PDF_OUT    := $(BUILD_DIR)/$(PROJECT)-$(TIMESTAMP).pdf
+EPUB_OUT   := $(BUILD_DIR)/$(PROJECT)-$(TIMESTAMP).epub
 
-pdf: $(PDF)
+.PHONY: all pdf epub clean
 
+all: pdf epub
+
+# --- PDF -------------------------------------------------------------------
 # Per-file pre-processing: convert chapter art image syntax into a full-page
 # bleed-edge LaTeX command. Pattern: ![alt](./assets/foo.png) -> \fullpageart{./assets/foo.png}
-$(BUILD_DIR)/%.md: %.md | $(BUILD_DIR)
+$(PDF_DIR)/%.md: %.md | $(PDF_DIR)
 	sed -E \
 	  -e 's|^!\[[^]]*\]\(\./assets/([^)]+\.png)\)[[:space:]]*$$|\\fullpageart{./assets/\1}|' \
 	  $< > $@
 
-$(PDF): $(PROCESSED) $(METADATA) $(TEMPLATE) $(PREAMBLE) $(LUAFILTER)
+$(PDF_BASE): $(PDF_PROCESSED) $(METADATA) $(TEMPLATE) $(PREAMBLE) $(LUAFILTER)
 	pandoc \
 	  --from markdown \
 	  --to pdf \
@@ -59,12 +73,44 @@ $(PDF): $(PROCESSED) $(METADATA) $(TEMPLATE) $(PREAMBLE) $(LUAFILTER)
 	  --number-sections \
 	  --listings \
 	  --output $@ \
-	  $(PROCESSED)
-	@echo ""
-	@echo "Built: $(PDF)"
-	@echo "Size:  $$(du -h $(PDF) | cut -f1)"
+	  $(PDF_PROCESSED)
 
-$(BUILD_DIR):
+pdf: $(PDF_BASE)
+	cp $(PDF_BASE) $(PDF_OUT)
+	@echo ""
+	@echo "Built: $(PDF_OUT)"
+	@echo "Size:  $$(du -h $(PDF_OUT) | cut -f1)"
+
+# --- EPUB ------------------------------------------------------------------
+# EPUB pre-processing: pass markdown through unchanged. The \fullpageart{}
+# substitution is skipped so chapter art renders as a normal inline image.
+# The LaTeX-only preamble and lua filter are also skipped — fenced divs
+# (::: systemvoice etc.) pass through as <div class="..."> for CSS styling.
+$(EPUB_DIR)/%.md: %.md | $(EPUB_DIR)
+	cp $< $@
+
+$(EPUB_BASE): $(EPUB_PROCESSED) $(METADATA)
+	pandoc \
+	  --from markdown \
+	  --to epub3 \
+	  --metadata-file=$(METADATA) \
+	  --resource-path=. \
+	  --top-level-division=chapter \
+	  --toc \
+	  --toc-depth=2 \
+	  --number-sections \
+	  --epub-cover-image=assets/cover.png \
+	  --output $@ \
+	  $(EPUB_PROCESSED)
+
+epub: $(EPUB_BASE)
+	cp $(EPUB_BASE) $(EPUB_OUT)
+	@echo ""
+	@echo "Built: $(EPUB_OUT)"
+	@echo "Size:  $$(du -h $(EPUB_OUT) | cut -f1)"
+
+# --- Directories & clean ---------------------------------------------------
+$(PDF_DIR) $(EPUB_DIR):
 	mkdir -p $@
 
 clean:
