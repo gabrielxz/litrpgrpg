@@ -1,5 +1,5 @@
 ![Breakthroughs](./assets/breakthroughs.png)
-# DEFIANCE OF THE FALL: TTRPG
+# LitRPG: RPG
 
 ## Grade Breakthroughs
 

@@ -1,4 +1,4 @@
-# DEFIANCE OF THE FALL: TTRPG
+# LitRPG: RPG
 
 ## Items, Consumables, and Volatile Artifacts
 

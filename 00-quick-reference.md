@@ -1,5 +1,5 @@
 ![Quick Reference](./assets/quick_reference.png)
-# DEFIANCE OF THE FALL: TTRPG
+# LitRPG: RPG
 
 ## Quick Reference: The Clash
 

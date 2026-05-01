@@ -1,5 +1,5 @@
 ![Tutorial](./assets/tutorial.png)
-# DEFIANCE OF THE FALL: TTRPG
+# LitRPG: RPG
 
 ## The Tutorial — "Integration Protocol"
 

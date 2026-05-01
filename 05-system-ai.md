@@ -1,5 +1,5 @@
 ![System AI](./assets/system_ai.png)
-# DEFIANCE OF THE FALL: TTRPG
+# LitRPG: RPG
 
 ## The System AI (GM Infrastructure)
 

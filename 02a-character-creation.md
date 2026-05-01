@@ -1,5 +1,5 @@
 ![Character Creation](./assets/character_creation.png)
-# DEFIANCE OF THE FALL: TTRPG
+# LitRPG: RPG
 
 ## Character Creation
 

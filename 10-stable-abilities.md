@@ -1,4 +1,4 @@
-# DEFIANCE OF THE FALL: TTRPG
+# LitRPG: RPG
 
 ## Stable Abilities (Tutorial-Tier System Grants)
 

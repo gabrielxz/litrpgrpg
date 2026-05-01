@@ -1,5 +1,5 @@
 ![Core Mechanics](./assets/core_mechanics.png)
-# DEFIANCE OF THE FALL: TTRPG
+# LitRPG: RPG
 
 **System Core Rules (v1.7 — The Significant Digits Framework)**
 

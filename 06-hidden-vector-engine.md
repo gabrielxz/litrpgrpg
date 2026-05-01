@@ -1,5 +1,5 @@
 ![Hidden Vector Engine](./assets/hidden_vector_engine.png)
-# DEFIANCE OF THE FALL: TTRPG
+# LitRPG: RPG
 
 ## The Hidden Vector Engine
 

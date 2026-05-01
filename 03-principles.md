@@ -1,5 +1,5 @@
 ![Principles](./assets/principles.png)
-# DEFIANCE OF THE FALL: TTRPG
+# LitRPG: RPG
 
 ## The Principle System
 

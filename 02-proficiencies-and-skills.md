@@ -1,5 +1,5 @@
 ![Proficiencies and Skills](./assets/proficiencies_skills.png)
-# DEFIANCE OF THE FALL: TTRPG
+# LitRPG: RPG
 
 ## Non-Combat Skills: Proficiencies
 

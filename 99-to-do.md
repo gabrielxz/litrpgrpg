@@ -1,4 +1,4 @@
-# DEFIANCE OF THE FALL: TTRPG
+# LitRPG: RPG
 
 ## Design Backlog
 
@@ -40,9 +40,19 @@
 - System AI prompt templates for class generation, loot generation, skill synthesis
 - GM screen reference card (printable)
 
+### Production / Visual Design
+
+- **Verify the title page cover treatment.** Eisvogel's `titlepage-background` overlays the default title/author/date text on top of the cover image. If the existing `assets/cover.png` already has the title baked in, the result will double up. Check the rendered title page; if doubled, set `titlepage-text-color` to match the background or move the title elsewhere.
+- **Generate chapter header art for chapters 9–13.** The bestiary, stable abilities, items, titles, and quests chapters currently open without header images. Generate art per the art style guide so the visual rhythm matches chapters 0–8. Pipeline picks new PNGs up automatically once they land in `assets/`.
+- **Refine callout box styling toward stencil/sumi-e aesthetic.** The current `systemvoice`, `statblock`, and `questcard` environments use generic cyan/gray defaults. The art style guide calls for a heavier, more handcrafted look — frantic black brushwork, distressed textures, neon "System Pop" accents only on System UI. Retune colors, rules, and texture in `pipeline/preamble.tex` once the visual identity is locked.
+- **Consider splitting the heading font.** Alegreya Black is currently used for all section levels. If it reads as too aggressive for sub-section headings, split it: Alegreya Black for chapter titles only, regular Alegreya (Bold or Medium weight) for `section` and below. Single-line preamble change.
+- **Apply callout boxes to existing content.** The `systemvoice`, `statblock`, and `questcard` environments are defined and one demo is in place (Phase 1 of the tutorial). Existing patterns that would benefit: System voice quotes throughout the tutorial, all bestiary entries in `09-bestiary.md`, all Quest UI entries (`[Q-XXX]` blocks) across the docs.
+
 ---
 
 ### Recently Resolved
+
+- **Project renamed to "LitRPG: RPG."** The legacy "Defiance of the Fall: TTRPG" boilerplate H1 was replaced with `# LitRPG: RPG` across all 16 source markdown files. Makefile updated (header comment, pre-processing comment, sed pattern). The genre-influence reference to the *Defiance of the Fall* novel series in `CLAUDE.md` was preserved — that names a real source novel, not the project.
 
 - **Tutorial rewritten end-to-end** (`07-tutorial.md` v2.0, ~850 lines). All seven phases reconciled with current rules. New: pre-tutorial setup checklist, mechanics introduction schedule (mapping each phase to which mechanics it teaches), expected mechanical outcomes (every player must hit specific milestones by tutorial end). Phase 1 probes mapped to specific HVE axes. Phase 2 micro-encounters use bestiary stat blocks and items.md references with explicit VE rewards and intensity logging. Phase 3 introduces the Quest UI formally (Q-001, Q-002). Phase 4 zones each demonstrate a specific mechanic (Volatility cascade, Aura Pressure save, Saturation, skill shard activation). Phase 5 events are framed as Personal Opportunities. Phase 6 opens with the first Mandate (M-00) and uses the Corrupted System Warden bestiary block. Phase 7 includes per-archetype summary templates, Stable Ability assignment, first Title delivery, Affinity Notices, Hidden Quest reveals, and the Stinger. Three new GM Reference appendices: Vector Logging Cheatsheet, Mechanics Introduction Tracker (checklist), Tutorial Reward Ledger (VE pacing by phase).
 

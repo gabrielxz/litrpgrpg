@@ -19,3 +19,9 @@ WORKFLOW:
 - When I upload a revised file, that becomes the new working version.
 
 When I paste in ideas from other AIs, synthesize critically — take what works, reject what contradicts the design priorities, and flag any conflicts with existing rules.
+
+PROJECT TITLE: The book's working title is "LitRPG: RPG". Don't use any legacy title in new content.
+
+BUILD PIPELINE: The book is produced via `make pdf` (Pandoc + XeLaTeX + Eisvogel template). When adding a new top-level chapter file, append it to the `SOURCES` list in the Makefile. New chapter docs follow the numeric prefix convention (00–13 sequential; 99 reserved for to-do). The pipeline strips a per-file boilerplate H1 and converts chapter art (`![alt](./assets/foo.png)` on its own line) into full-page bleed-edge LaTeX via the `\fullpageart{}` command — keep using that pattern for new chapter art.
+
+CALLOUT BOXES: Three styled environments are defined in `pipeline/preamble.tex` for the PDF — `systemvoice` (in-fiction System messages), `statblock` (creature/character stats), and `questcard` (quest log entries). Trigger them in markdown via `::: systemvoice` (etc.) fenced divs; a Lua filter routes them. New callout types can be added by defining a new tcolorbox environment in the preamble and adding the class name to the filter's recognized list.

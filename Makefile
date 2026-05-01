@@ -1,4 +1,4 @@
-# Defiance of the Fall TTRPG — Build Pipeline
+# LitRPG: RPG — Build Pipeline
 # Run `make` to build the PDF. Run `make clean` to wipe build artifacts.
 
 PROJECT     := litrpg-rpg
@@ -39,12 +39,12 @@ PDF := $(BUILD_DIR)/$(PROJECT).pdf
 pdf: $(PDF)
 
 # Per-file pre-processing:
-#   1. Strip the boilerplate "# DEFIANCE OF THE FALL: TTRPG" line.
+#   1. Strip the boilerplate "# LitRPG: RPG" line.
 #   2. Convert chapter art image syntax into a full-page bleed-edge LaTeX command.
 #      Pattern: ![alt](./assets/foo.png)  ->  \fullpageart{./assets/foo.png}
 $(BUILD_DIR)/%.md: %.md | $(BUILD_DIR)
 	sed -E \
-	  -e '/^# DEFIANCE OF THE FALL: TTRPG[[:space:]]*$$/d' \
+	  -e '/^# LitRPG: RPG[[:space:]]*$$/d' \
 	  -e 's|^!\[[^]]*\]\(\./assets/([^)]+\.png)\)[[:space:]]*$$|\\fullpageart{./assets/\1}|' \
 	  $< > $@
 

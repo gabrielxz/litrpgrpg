@@ -1,5 +1,5 @@
 ![Cultivation](./assets/cultivation.png)
-# DEFIANCE OF THE FALL: TTRPG
+# LitRPG: RPG
 
 ## Cultivation: Volatile Energy, Consolidation & Healing
 
