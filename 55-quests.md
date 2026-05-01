@@ -1,10 +1,9 @@
-# LitRPG: RPG
 
-## System Quests
+# System Quests
 
 ---
 
-# Design Intent
+## Design Intent
 
 System Quests are the System steering the player and recognizing their actions. They are explicit, structured, video-gamey — and that is the point. Quest notifications, objectives, rewards, time limits, and a quest log UI are core to the LitRPG genre experience. This system embraces them.
 
@@ -14,7 +13,7 @@ System Quests are the System steering the player and recognizing their actions. 
 
 ---
 
-# The Quest UI
+## The Quest UI
 
 The System provides a quest log UI for the player. This is genre-correct and should be embraced at the table.
 
@@ -44,11 +43,11 @@ For Hidden Quests, the entry appears differently — see Hidden Quest Convention
 
 ---
 
-# Quest Categories
+## Quest Categories
 
-## Mandates
+### Mandates
 
-Already established (`05-system-ai.md`). Server-wide directives, cold and impersonal, with real consequences for noncompliance.
+Already established (`45-system-ai.md`). Server-wide directives, cold and impersonal, with real consequences for noncompliance.
 
 **Shape:** A System-issued objective binding on every Initiate within a region or population. Story-driving, multi-session, often party-converging.
 
@@ -58,7 +57,7 @@ Already established (`05-system-ai.md`). Server-wide directives, cold and impers
 
 Refusing a Mandate brands the character, attracts faction attention, and locks specific reward paths. Mandates are how the System bends the campaign.
 
-## Personal Opportunities
+### Personal Opportunities
 
 The System notices something specific about a character and offers a tailored quest. Generated from current HVE state, recent behavior, and the immediate situation.
 
@@ -66,7 +65,7 @@ The System notices something specific about a character and offers a tailored qu
 
 This is where the System feels personal. Personal Opportunities are also the primary lever by which the System nudges or tests the character — the offer can affirm an existing pattern or quietly invite the character to step against it.
 
-## Routine Quests
+### Routine Quests
 
 The "kill ten boars" tier. Reliable, repeatable, video-gamey. The System issues quests for clearing local threats, gathering resources, scouting territory, completing exploration objectives, and defeating specific enemies.
 
@@ -81,13 +80,13 @@ Routine quests vary in scale: an "F-Grade, Trivial" hunt sits in the log alongsi
 > *Objective: Eliminate Glow-Mote swarms reported near the eastern perimeter. (0/3)*
 > *Reward: 15 VE, 1 Stuttering Tincture.*
 
-## Hidden Quests
+### Hidden Quests
 
 No notification at the time of action — or notification with deliberately unclear objectives. The character is doing something the System recognizes as significant but isn't telling them about (or is telling them in cryptic terms).
 
 These pair beautifully with Hidden Achievement titles and reward attentive, exploratory play. See Hidden Quest Conventions below for UI presentation details.
 
-## Faction and Bestowed Quests
+### Faction and Bestowed Quests
 
 Issued by NPCs, organizations, mentors — not by the System directly. The System tracks them in the quest UI but does not generate them. These are normal RPG quests, but System tracking means completion still feeds HVE and can trigger title generation.
 
@@ -101,9 +100,9 @@ Issued by NPCs, organizations, mentors — not by the System directly. The Syste
 
 ---
 
-# Quest Mechanical Treatment
+## Quest Mechanical Treatment
 
-## Quest VE Policy
+### Quest VE Policy
 
 **Both action VE and quest completion VE apply.** Combat kills, environmental absorption, and other VE sources accumulate normally during a quest. On completion, the quest's stated VE reward is awarded *additionally*.
 
@@ -111,7 +110,7 @@ Issued by NPCs, organizations, mentors — not by the System directly. The Syste
 
 **Limit:** quest completion VE is awarded only once per quest, at completion. Quests cannot be "farmed" for repeat VE — once cleared, the same quest does not return on the same character.
 
-## Quest Difficulty
+### Quest Difficulty
 
 Quest difficulty is read off the **Grade Reference Card**, identical to combat and obstacle resolution. Same system as everything else — a quest is "E-Grade, Severe" or "F-Grade, Moderate." Players develop intuition for what they can take on at their current power level by reading the Grade tag.
 
@@ -121,11 +120,11 @@ A quest's difficulty determines:
 - The reward magnitude (see Reward Reference Table).
 - The Mandate-tier consequences for refusal or failure (if applicable).
 
-## Refusal and Failure Consequences
+### Refusal and Failure Consequences
 
 Consequences scale by quest type. Below is the operational taxonomy.
 
-### Single-quest refusal
+#### Single-quest refusal
 
 | **Quest Type** | **Consequence of Refusing One** |
 |---|---|
@@ -135,7 +134,7 @@ Consequences scale by quest type. Below is the operational taxonomy.
 | Faction | Reputation drop with the issuing faction. |
 | Hidden | The opportunity passes silently — the character usually never learns it existed. |
 
-### Repeated refusal of a quest type
+#### Repeated refusal of a quest type
 
 When a character refuses three or more Personal Opportunities of the same flavor (combat-oriented, social-oriented, exploration-oriented), the System narrows offerings:
 
@@ -145,13 +144,13 @@ When a character refuses three or more Personal Opportunities of the same flavor
 
 This is a primary tool for the System to recognize that the character is not who it thought they were and quietly redirect.
 
-### Refusal of a faction's quests
+#### Refusal of a faction's quests
 
 - Reputation drops with that faction.
 - After repeated refusal, the faction may issue a "test" quest with elevated stakes — accept or be marked.
 - After persistent refusal, the faction stops offering quests entirely, may grant a negative Bestowed title, and may close that faction's reward paths permanently.
 
-### Refusal of a Mandate
+#### Refusal of a Mandate
 
 - Immediate System recognition. Behavioral reclassification is visible.
 - Faction hostility from the Mandate's beneficiary.
@@ -159,7 +158,7 @@ This is a primary tool for the System to recognize that the character is not who
 - Specific reward paths permanently closed — class evolution options narrow, certain Principle Concepts become inaccessible, certain location access revokes.
 - Higher-Grade entities may take an interest. This can be opportunity or threat.
 
-### Failure (attempted but not completed)
+#### Failure (attempted but not completed)
 
 Failure is distinct from refusal — the character tried and lost. Consequences are softer than refusal but harder than no engagement.
 
@@ -173,11 +172,11 @@ The System recognizes effort. A character who attempts a Mandate and fails hones
 
 ---
 
-# Reward Reference Table
+## Reward Reference Table
 
 The following tables calibrate quest rewards for the GM and the System AI. They establish what "good" looks like at each tier so both can extrapolate consistently. All values are **F-Grade baseline** unless otherwise noted; multiply by ×10 per Grade.
 
-## VE Rewards by Quest Category and Difficulty
+### VE Rewards by Quest Category and Difficulty
 
 | **Difficulty** | **Routine VE** | **Personal Opportunity VE** | **Mandate VE** | **Faction VE** |
 |---|---|---|---|---|
@@ -192,7 +191,7 @@ The following tables calibrate quest rewards for the GM and the System AI. They 
 
 Hidden Quest VE rewards equal Personal Opportunity rewards at the same difficulty tier, with bonus VE possible when the System AI recognizes truly elegant or improbable resolution.
 
-## Item Rewards by Difficulty
+### Item Rewards by Difficulty
 
 Quest item rewards scale with difficulty. Pull from this reference; let the System AI generate variants:
 
@@ -207,15 +206,15 @@ Quest item rewards scale with difficulty. Pull from this reference; let the Syst
 
 Personal Opportunity rewards are weighted to the character's HVE alignment — a Force/Hunger character is more likely to receive a weapon or kill-empowering consumable; a Method/Restraint character is more likely to receive a sensory tool or a Principle-resonance item.
 
-## Title and HVE Rewards
+### Title and HVE Rewards
 
 - **Routine quests** rarely grant titles directly, but contribute to Achievement title thresholds (a "kill ten Snarljaws" routine quest progresses the Snarljaw-related Achievement counter).
 - **Personal Opportunities** can grant Achievement titles immediately on completion, or contribute to HVE-Resonant title progression.
 - **Mandates** may grant Bestowed titles on completion (or negative Bestowed titles on refusal). High-difficulty Mandates often grant a unique Bestowed title that becomes part of the character's identity.
-- **Hidden Quests** are the primary delivery mechanism for **Hidden Achievement titles** (see `12-titles.md`). A Hidden Quest's reward is often *the title itself*, plus a smaller VE/item award.
+- **Hidden Quests** are the primary delivery mechanism for **Hidden Achievement titles** (see `40-titles.md`). A Hidden Quest's reward is often *the title itself*, plus a smaller VE/item award.
 - **Faction quests** grant reputation, which is a faction-tracked stat that gates further faction quests, access, and eventual Bestowed faction titles.
 
-## Narrative Rewards
+### Narrative Rewards
 
 Beyond mechanical reward, quests deliver:
 
@@ -227,7 +226,7 @@ Beyond mechanical reward, quests deliver:
 
 ---
 
-# Personal Opportunity Generation (System AI Prompt Template)
+## Personal Opportunity Generation (System AI Prompt Template)
 
 The following template is a starting point for the GM querying the System AI to generate a Personal Opportunity. Inputs and output shape are structured for consistent results.
 
@@ -294,13 +293,13 @@ The System AI is the arbiter; the GM uses the output as a draft and can revise t
 
 ---
 
-# Hidden Quest Conventions
+## Hidden Quest Conventions
 
 How Hidden Quests appear in the UI.
 
 **Three presentation modes:**
 
-### Fully Obscured
+#### Fully Obscured
 
 Appears in the log immediately when the System detects significant action, but with no readable content.
 
@@ -311,7 +310,7 @@ Status: Active
 
 The player knows *something* is happening. They don't know what. Encourages exploratory play and pattern-noticing.
 
-### Partial Reveal
+#### Partial Reveal
 
 Appears when the character has made multiple choices that match the hidden pattern. The System is starting to "see" the shape but is not telling the character outright.
 
@@ -323,7 +322,7 @@ Status:     Active.
 
 The title is a clue. The conditions are not. Players must figure out what they are doing right (or wrong) by experimentation.
 
-### Post-Completion Only
+#### Post-Completion Only
 
 Appears retroactively after fulfillment, usually for one-shot moments of grace, sacrifice, or improbability.
 
@@ -333,13 +332,13 @@ Reward: +1 IP toward Restraint-aligned Principle Concept.
         New Hidden Achievement: "The One Who Stayed Their Hand."
 ```
 
-### When to use which
+#### When to use which
 
 - **Fully Obscured** is for *ongoing patterns* the System has just begun tracking — the character is doing something repeatable that may or may not pay off. Use early in a campaign or when a new behavior emerges.
 - **Partial Reveal** is for *recognized patterns* the System wants the player to chase consciously — the character has done it twice; the System is hinting "do this again." Use to nudge play in interesting directions.
 - **Post-Completion Only** is for *singular moments* the System can only acknowledge after the fact. The character did one extraordinary thing; no advance signal would have made sense. Use sparingly to preserve impact.
 
-### Signaling that something hidden may be in play
+#### Signaling that something hidden may be in play
 
 Players should sometimes feel the System watching even when no quest entry appears. Subtle signals:
 
@@ -352,7 +351,7 @@ These signals reward attentive players and create the genre-correct sense of the
 
 ---
 
-# Open Design Space
+## Open Design Space
 
 Deferred until playtest data or campaign progression demands them:
 

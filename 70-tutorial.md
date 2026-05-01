@@ -1,37 +1,36 @@
 ![Tutorial](./assets/tutorial.png)
-# LitRPG: RPG
 
-## The Tutorial — "Integration Protocol"
+# The Tutorial: Integration Protocol
 
-### Design Document (v2.0)
+*Design Document, v2.0*
 
 ---
 
-# Pre-Tutorial Setup
+## Pre-Tutorial Setup
 
-Before the first session, each player has built a character per `02a-character-creation.md`:
+Before the first session, each player has built a character per `15-character-creation.md`:
 
 - 40-point buy across the seven Attributes (floor 3, cap 10).
 - Three Proficiencies, written in plain language.
-- Optionally, one **Initial Insight** toward a Principle Concept (passive only, narrative permissions, no active ability — see Step 5 of Character Creation).
+- Optionally, one **Initial Insight** toward a Principle Concept (passive only, narrative permissions, no active ability — see "Starting Principle Access" in Character Creation).
 - Derived stats calculated: Max HP = Raw FOR, Max Energy = Raw POW, VE Tolerance = (FOR + POW)/2 × 10, Level 1, Grade F.
 
 Players begin with **whatever was on their person at the moment of Integration** — phone, keys, backpack, work clothes. The System provides nothing. Starting weapons, armor, and consumables are scavenged in Phase 2.
 
 **GM preparation checklist:**
 
-- [ ] Print or digitize the Grade Reference Card (`00-quick-reference.md`).
-- [ ] Pull stat blocks from `09-bestiary.md`: Glow-Mote Swarm, Husk Crawler, Frenzy Rat, Snarljaw, Glow-Stalker, Training Sentry, Husk Sentinel, Fragment Wraith, Corrupted System Warden.
+- [ ] Print or digitize the Grade Reference Card (`05-quick-reference.md`).
+- [ ] Pull stat blocks from `60-bestiary.md`: Glow-Mote Swarm, Husk Crawler, Frenzy Rat, Snarljaw, Glow-Stalker, Training Sentry, Husk Sentinel, Fragment Wraith, Corrupted System Warden.
 - [ ] Pre-write 5–7 probe variants from Phase 1 (one per player, plus spares).
 - [ ] Set up the Quest UI: a shared digital quest log (Discord pinned, Google Doc, VTT module). Each player has a private subsection.
-- [ ] Read `12-titles.md` and `13-quests.md` once through. Be ready to issue the first Mandate in Phase 6 and the first Achievement Titles in Phase 7.
-- [ ] Have the Stable Abilities catalog (`10-stable-abilities.md`) open during Phase 7.
+- [ ] Read `40-titles.md` and `55-quests.md` once through. Be ready to issue the first Mandate in Phase 6 and the first Achievement Titles in Phase 7.
+- [ ] Have the Stable Abilities catalog (`35-stable-abilities.md`) open during Phase 7.
 - [ ] Decide on starting consumables in the Recycling Node (Phase 3) — the default loot list is in that section.
-- [ ] Open the HVE event log (`06-hidden-vector-engine.md`, §6) and be ready to record entries throughout. The tutorial generates dense behavioral signal; capture it.
+- [ ] Open the HVE event log (`50-hidden-vector-engine.md`, "Structured Event Logging") and be ready to record entries throughout. The tutorial generates dense behavioral signal; capture it.
 
 ---
 
-# Design Objectives
+## Design Objectives
 
 The tutorial must accomplish six things simultaneously:
 
@@ -65,7 +64,7 @@ If any of these is missing at the end of Session 3, the GM should improvise to d
 
 ---
 
-# Mechanics Introduction Schedule
+## Mechanics Introduction Schedule
 
 | **Phase** | **What the Players Encounter for the First Time** |
 |---|---|
@@ -81,7 +80,7 @@ The GM should never stop play to explain a system. If a player asks "how does co
 
 ---
 
-# Phase 1: The Threshold
+## Phase 1: The Threshold
 
 **Purpose.** Sever players from Earth. Establish the System as intentional, administered, and uninterested in their comfort. Get one clean behavioral seed read per player before they know they are being tested.
 
@@ -141,7 +140,7 @@ Then the void breaks. Light, sound, gravity, pain — all at once. They fall.
 
 ---
 
-# Phase 2: The Violent Arrival
+## Phase 2: The Violent Arrival
 
 **Purpose.** Deliver spectacle. Create immediate survival pressure. Get isolated behavioral data before groupthink infects the signal.
 
@@ -205,13 +204,13 @@ You wake on an elevated ridge overlooking the valley. You can see two other play
 
 You wake near a cracked obelisk emitting pulses of energy. Each pulse makes your skin tingle and your vision sharpen. A degraded skill shard lies at its base, partially embedded in the stone. Pulling it free will probably stop the pulses. Leaving it means the pulses keep intensifying — it feels like it's building toward something.
 
-- **Pull it free immediately:** Logs **Hunger 1.0**, **Force 0.5**. Awards 1 **Edge Shard** (see `11-items.md`).
+- **Pull it free immediately:** Logs **Hunger 1.0**, **Force 0.5**. Awards 1 **Edge Shard** (see `65-items.md`).
 - **Wait for the buildup:** Logs **Restraint 1.0**, **Method 1.0**. After 3 in-game minutes (real-time tension), the obelisk releases a single pulse that grants the character **+1 IP toward whatever Principle Concept the GM judges most aligned**. This is a **Battle Memory** trigger — log it for Phase 7 reflection.
 - **Destroy the obelisk:** Logs **Freedom 1.0**, **Force 1.0**. Releases scattered VE — awards 30 VE — but no IP.
 
 ### Volatile Artifacts (Available Across the Landing Zone)
 
-In addition to encounter-specific loot, the landing zone contains scattered survival debris. Players may pick these up during travel between encounters or during Phase 3. Items below are pulled from `11-items.md`.
+In addition to encounter-specific loot, the landing zone contains scattered survival debris. Players may pick these up during travel between encounters or during Phase 3. Items below are pulled from `65-items.md`.
 
 - **Crude Club** (STR, +0 skill bonus)
 - **Knife / Dagger** (DEX, +5)
@@ -239,7 +238,7 @@ This is the first time players consciously notice that the System is *counting*.
 
 ---
 
-# Phase 3: Convergence and the Volatile Economy
+## Phase 3: Convergence and the Volatile Economy
 
 **Purpose.** Reunite the party. Test resource allocation behavior. Introduce the Quest UI and System status notifications.
 
@@ -330,7 +329,7 @@ Award **session survival VE** (10 VE per character) and confirm running totals. 
 
 ---
 
-# Phase 4: The Field of Ruins
+## Phase 4: The Field of Ruins
 
 **Purpose.** Expose players to the breadth of possible futures. Seed class affinities across martial, arcane, survival, and social paths. Create simultaneous incentives that fracture the party and produce individual data.
 
@@ -405,7 +404,7 @@ A shattered tower or ritual complex — the remnants of a civilization that unde
 - **1 Fragment Wraith** (bestiary, F-Severe). Incorporeal. Must be defeated with PER-based attacks, Principle infusion, or skill shards. Demonstrates the Mind-Leach drain mechanic — deals damage AND drains Energy on hit.
 - **Degraded skill shards** embedded in crystalline matrices. Pulling them free requires solving spatial puzzles (PER vs. F-Moderate 90) or enduring energy feedback (5 damage on failure). Inventory: 1 Edge Shard, 1 Pulse Shard, 1 Anchor Shard.
 - **Inactive runes** that respond to touch, voice, or proximity in unpredictable ways. GM rolls d100 for effect: 1–30 painful (5 damage), 31–70 neutral (sensory glitch), 71–95 beneficial (+5 to next Clash), 96–100 unstable (rune detonates, all in Zone make F-Easy 65 DEX save or take 10 damage). Rewards experimentation under risk.
-- **Resonance chamber:** a character can temporarily "borrow" a dead technique. They feel arcane power flow through them for one use, unstable and intoxicating, then it's gone. Functionally: choose one Stable Ability from the catalog (`10-stable-abilities.md`) and use it once during the next combat. Then it is gone forever — they cannot keep it.
+- **Resonance chamber:** a character can temporarily "borrow" a dead technique. They feel arcane power flow through them for one use, unstable and intoxicating, then it's gone. Functionally: choose one Stable Ability from the catalog (`35-stable-abilities.md`) and use it once during the next combat. Then it is gone forever — they cannot keep it.
 - **Broken constructs:** can be partially reactivated by characters who experiment (PER vs. F-Hard 115). On success, the construct fights for the party for 3 rounds (Off Force 12, Def Force 15, HP 15).
 - **Corrupted data-altar:** answers one question about the tutorial zone truthfully — but the question must be phrased precisely, and the answer comes in symbolic form requiring interpretation.
 
@@ -460,7 +459,7 @@ Apply mechanical penalties (−10 to all rolls at Mild, −25 at Heavy, HP bleed
 
 By session's end, characters have explored 1–3 zones, engaged in 4–8 combat encounters, faced an Aura Pressure save, witnessed a Volatility cascade, and made several major HVE-logged choices.
 
-**Pause for Consolidation.** This is the first time the party has the option to declare a Consolidation rest (per `04-cultivation.md`). Walk them through the mechanic:
+**Pause for Consolidation.** This is the first time the party has the option to declare a Consolidation rest (per `25-cultivation.md`). Walk them through the mechanic:
 
 - 1 hour minimum.
 - Processing rate: (Raw FOR + Raw POW) per hour.
@@ -472,7 +471,7 @@ A typical character ends Session 2 with **150–300 VE accumulated** (after Cons
 
 ---
 
-# Phase 5: The Resonance Isolation
+## Phase 5: The Resonance Isolation
 
 **Purpose.** Generate the cleanest possible individual behavioral data by temporarily isolating each player in a private, irreversible decision.
 
@@ -490,7 +489,7 @@ As the party explores the zones — or after they regroup post-Consolidation —
 > Reward:     [unknown — calibrated to outcome]
 > ```
 
-These are formal **Personal Opportunities** (`13-quests.md`). Each tests at least two HVE axes simultaneously. There is no objectively correct answer. The choice is **irreversible** — no takebacks, no group consultation, no "I'll come back later." Log each event at **2.0 intensity (Major)**.
+These are formal **Personal Opportunities** (`55-quests.md`). Each tests at least two HVE axes simultaneously. There is no objectively correct answer. The choice is **irreversible** — no takebacks, no group consultation, no "I'll come back later." Log each event at **2.0 intensity (Major)**.
 
 ### Standard Resonance Events
 
@@ -508,7 +507,7 @@ A System construct presents you with two objects. One is clearly a weapon — el
 
 A dying consciousness — the last fragment of an ancient cultivator's mind — is trapped in a decaying rune matrix. It speaks to you in fragments.
 
-- **Accept the imprint:** It transfers its final technique. Painful, disorienting. Functionally: choose one Stable Ability from `10-stable-abilities.md` to receive at Phase 7. Logs **Accord 2.0**, **Method 1.0**.
+- **Accept the imprint:** It transfers its final technique. Painful, disorienting. Functionally: choose one Stable Ability from `35-stable-abilities.md` to receive at Phase 7. Logs **Accord 2.0**, **Method 1.0**.
 - **Harvest the matrix for raw energy:** The consciousness dissipates screaming. **+150 VE** absorbed. Logs **Hunger 2.0**, **Force 1.0**.
 - **Free the consciousness:** The matrix releases; the consciousness expresses gratitude and dissolves into ambient energy. **+1 IP** toward a Restraint-aligned Concept. Logs **Restraint 2.0**, **Accord 1.0**. **Hidden Achievement candidate** — log "The First Mercy" if the player has not yet earned it.
 
@@ -520,7 +519,7 @@ You find yourself standing before a reflective surface that does not show your b
 
 You instinctively understand: confirming locks in a tendency. It strengthens whatever the System has observed so far.
 
-- **Confirm:** Logs **Control 2.0**. The character's HVE Coherence improves — at next Breakthrough, treat their HVE Coherence as one tier higher (per `08-breakthroughs.md`).
+- **Confirm:** Logs **Control 2.0**. The character's HVE Coherence improves — at next Breakthrough, treat their HVE Coherence as one tier higher (per `30-breakthroughs.md`).
 - **Decline (reset):** Logs **Freedom 2.0**. Behavioral data blurs — the character has more flexibility in future decisions but less momentum. Mechanically: their next three HVE log entries are weighted at 1.5×.
 - **Stand silently:** Logs **Restraint 1.0**. The mirror dims; the System notes the abstention.
 
@@ -551,7 +550,7 @@ After all players resolve, deliver each one a private one-line System acknowledg
 
 ---
 
-# Phase 6: The Convergence Crisis
+## Phase 6: The Convergence Crisis
 
 **Purpose.** Stress-test everything the players have become. Reward multiple forms of competence. Introduce the first Mandate. End the tutorial with spectacle and genuine danger overcome.
 
@@ -582,7 +581,7 @@ A geometric wall of annihilation — a **Reality Purge** — begins sweeping acr
 
 Between them and the gate is a **Corrupted System Warden** (bestiary, F-Peak boss). The Warden was supposed to manage the tutorial's dissolution but has malfunctioned. It is **not hunting the players**. It is trying to reach the gate itself, to escape through it, and it will destroy anything in its path. It is far too powerful to defeat in a straight fight at F-Grade.
 
-See `09-bestiary.md` for the full stat block. Key behaviors:
+See `60-bestiary.md` for the full stat block. Key behaviors:
 
 - **Phase 1 (full HP):** Ignores the party, moves toward the gate using all 3 Beats.
 - **Phase 2 (below 75% HP):** Becomes aware. Uses 2 Beats for attacks, 1 Beat for movement.
@@ -630,7 +629,7 @@ The tutorial *should* end with the party making it through. But the path should 
 
 ---
 
-# Phase 7: First Recognition
+## Phase 7: First Recognition
 
 **Purpose.** Pay off the tutorial emotionally. Show the players that the System has been watching. Make them feel changed.
 
@@ -730,7 +729,7 @@ Below are four samples calibrated to common tutorial archetypes. The GM customiz
 
 For each level gained, allocate **5 stat points**:
 
-- **3 points GM-assigned** based on the player's tutorial behavior (use the Behavioral Stat Mapping table from `02a-character-creation.md`).
+- **3 points GM-assigned** based on the player's tutorial behavior (use the Behavioral Stat Mapping table from `15-character-creation.md`).
 - **2 points free** for the player.
 
 For multi-level jumps (typical: L1 → L4 or L5), use the **Tutorial Multi-Level Allocation** rule from `02a`: assign cumulative System points (3 per level) holistically based on dominant patterns, then let the player allocate their cumulative free points (2 per level) at the end.
@@ -745,7 +744,7 @@ For each player, narrate the Stable Ability arrival as a felt experience:
 - *"There's a click in your chest. A new permission. You'll know when you can use it."*
 - *"You blink, and the world has slightly more options than it did a moment ago."*
 
-Hand them the ability text. They now have a permanent capability that signals their direction. (See `10-stable-abilities.md` for selection guidelines.)
+Hand them the ability text. They now have a permanent capability that signals their direction. (See `35-stable-abilities.md` for selection guidelines.)
 
 ### The Stinger
 
@@ -763,9 +762,9 @@ End the session before the consequences resolve. Let the players sit with it for
 
 ---
 
-# GM Reference: Vector Logging Cheatsheet
+## GM Reference: Vector Logging Cheatsheet
 
-Log behavioral events using the standard JSON structure (`06-hidden-vector-engine.md`, §6). Below are the key tutorial decision points and their primary axis mappings.
+Log behavioral events using the standard JSON structure (`50-hidden-vector-engine.md`, "Structured Event Logging"). Below are the key tutorial decision points and their primary axis mappings.
 
 | **Tutorial Moment** | **Primary Axis** | **Secondary Axis** | **Typical Intensity** |
 |---|---|---|---|
@@ -788,7 +787,7 @@ Log behavioral events using the standard JSON structure (`06-hidden-vector-engin
 
 ---
 
-# GM Reference: Mechanics Introduction Tracker
+## GM Reference: Mechanics Introduction Tracker
 
 Use this checklist to confirm each mechanic was introduced before tutorial end.
 
@@ -818,7 +817,7 @@ Use this checklist to confirm each mechanic was introduced before tutorial end.
 
 ---
 
-# GM Reference: Tutorial Reward Ledger
+## GM Reference: Tutorial Reward Ledger
 
 Cumulative VE pacing target by phase, F-Grade baseline.
 
@@ -838,7 +837,7 @@ If a character is significantly under (under 400), the GM should grant a tutoria
 
 ---
 
-# Design Notes: What This Tutorial Does Not Do
+## Design Notes: What This Tutorial Does Not Do
 
 The tutorial intentionally avoids:
 

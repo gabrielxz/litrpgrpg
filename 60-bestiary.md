@@ -1,10 +1,9 @@
-# LitRPG: RPG
 
-## F-Grade Bestiary
+# Bestiary
 
 ---
 
-# How to Read a Stat Block
+## How to Read a Stat Block
 
 Every stat block lists only the values relevant for the Clash. Force values are pre-extracted (already 1–99). HP equals the creature's effective Raw FOR; Energy is listed only for creatures that use Principle Applications or active skills. Beats per turn, governing offensive Force, governing defensive Force, and tactical notes complete the entry.
 
@@ -16,9 +15,9 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 
 ---
 
-# Trash Tier (Trivial / Easy)
+## Trash Tier (Trivial / Easy)
 
-## Glow-Mote Swarm
+### Glow-Mote Swarm
 *A cloud of bioluminescent stinging insects, drawn to body heat.*
 
 - **Tier:** Trivial · **VE:** 5
@@ -27,7 +26,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **Def Force (DEX, evasion):** 8
 - **Tactics:** On a successful hit, target is **Exposed** for one round (vision dazzle from bioluminescence).
 
-## Husk Crawler
+### Husk Crawler
 *A pre-System corpse animated by residual integration energy. Slow, persistent, dumb.*
 
 - **Tier:** Trivial · **VE:** 5
@@ -36,7 +35,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **Def Force (FOR, dead flesh):** 8
 - **Tactics:** Will not flee. Ignores Free Strikes when leaving a Zone — it does not register the threat.
 
-## Frenzy Rat
+### Frenzy Rat
 *A small, vicious creature warped by ambient energy. Scampers and bites.*
 
 - **Tier:** Easy · **VE:** 15
@@ -47,9 +46,9 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 
 ---
 
-# Peer Tier (Moderate)
+## Peer Tier (Moderate)
 
-## Pre-System Brigand
+### Pre-System Brigand
 *A surviving human bandit, integrated but unambitious. Cowardly, predictable.*
 
 - **Tier:** Easy · **VE:** 15
@@ -58,7 +57,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **Def Force (FOR or DEX):** 7 / 7
 - **Tactics:** Flees on Soft Failure or when reduced below 50% HP. Carries 1d3 Stuttering Tinctures and a crude weapon.
 
-## Snarljaw
+### Snarljaw
 *A pack-hunting beast, maw lined with serrated bone.*
 
 - **Tier:** Moderate · **VE:** 30
@@ -67,7 +66,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **Def Force (DEX):** 18
 - **Tactics:** Pack hunter — gains +10 (Flanking) when another Snarljaw is in the same Zone. On a successful hit, may spend its second Beat instead of attacking again to drag prey down (target becomes **Exposed** for next round).
 
-## Glow-Stalker
+### Glow-Stalker
 *A camouflaged predator from the bioluminescent forests. Hunts via ambush.*
 
 - **Tier:** Moderate · **VE:** 30
@@ -76,7 +75,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **Def Force (DEX, fade):** 22
 - **Tactics:** Begins encounter unseen unless detected by an active Perception Clash. Surprise Beat on first turn. Withdraws to the Zone edge after striking; favors hit-and-run over sustained combat. If pinned, fights frantically — gains +5 Off Force when below 50% HP.
 
-## Training Sentry
+### Training Sentry
 *A military construct from the Martial Remnant. Predictable patterns; escalating threat.*
 
 - **Tier:** Moderate · **VE:** 30
@@ -87,9 +86,9 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 
 ---
 
-# Elite Tier (Hard)
+## Elite Tier (Hard)
 
-## Rival Initiate
+### Rival Initiate
 *Another integrated human, dropped from a parallel tutorial. Tactically competent, hostile.*
 
 - **Tier:** Hard · **VE:** 60
@@ -98,7 +97,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **Def Force (DEX or FOR):** 30 / 28
 - **Tactics:** Wields a Knife (+5 skill bonus). Has one Seed Application: **Searing Strike** — costs 10 Energy, +10 to next Clash, deals damage as fire. Uses positioning intelligently and will retreat to advantageous terrain. Carries 1 Lesser Healing Pill.
 
-## Husk Sentinel
+### Husk Sentinel
 *A heavier construct from the Civic Fragment. Durable, counter-aggressive.*
 
 - **Tier:** Hard · **VE:** 60
@@ -107,7 +106,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **Def Force (FOR, plating):** 40
 - **Tactics:** When the Sentinel wins a defensive Clash, it gains a free **Counterstrike** — one Clash at no Beat cost against the failed attacker. Resistant to mental attacks (treat HRT Force as 25 for defensive purposes).
 
-## Alpha Snarljaw
+### Alpha Snarljaw
 *Pack leader. Coordinates lesser Snarljaws, hits with sundering force.*
 
 - **Tier:** Hard · **VE:** 60
@@ -118,9 +117,9 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 
 ---
 
-# Boss Tier (Severe / Peak)
+## Boss Tier (Severe / Peak)
 
-## Fragment Wraith
+### Fragment Wraith
 *A spiritual remnant — the dying coherence of a fallen cultivator's mind, given temporary form by ambient energy.*
 
 - **Tier:** Severe · **VE:** 100
@@ -132,7 +131,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
   - **Mind-Leach (1 Beat, 10 Energy):** target rolls HRT defense. On a hit, deal damage as normal AND drain 1 Energy from the target per damage point dealt. The Wraith adds drained Energy to its own pool, up to its Max.
   - **Vulnerability:** PER-based attacks (Sensory Pulse, Light or Truth Principles, scanning skills) deal +10 bonus damage on the Margin.
 
-## Corrupted System Warden — *Tutorial Boss*
+### Corrupted System Warden — *Tutorial Boss*
 *A massive maintenance construct that was supposed to manage the tutorial's dissolution. Now it is glitching, deranged, and trying to reach the gate before the Initiates do.*
 
 - **Tier:** Peak · **VE:** 200
@@ -147,7 +146,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 
 ---
 
-# GM Reference: Encounter Building
+## GM Reference: Encounter Building
 
 When in doubt, use the Grade Reference Card. A character with Force 30 fighting an enemy with Force 30 is a peer fight (Moderate). Add +10 to enemy Force for a tougher engagement, subtract for an easier one.
 

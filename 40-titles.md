@@ -1,10 +1,9 @@
-# LitRPG: RPG
 
-## Titles
+# Titles
 
 ---
 
-# Design Intent
+## Design Intent
 
 Titles are the System's mirror. They are how the System tells the character — and the rest of the world — *who you are turning into*. They are not a buff list to be optimized in isolation; they are recognition, retroactive and ongoing, of behavior the System has already observed.
 
@@ -23,9 +22,9 @@ These are guidance, not quotas. The right pace is whatever keeps the table engag
 
 ---
 
-# Title Categories
+## Title Categories
 
-## Achievement Titles
+### Achievement Titles
 
 Generated when a player crosses a quantitative threshold the System tracks: kills, distance traveled, items crafted, Consolidations completed, days survived, locks picked, oaths fulfilled, and so on. Common, semi-predictable in rhythm, low-to-moderate mechanical impact.
 
@@ -33,15 +32,15 @@ Players don't see thresholds in advance, but after the second or third Achieveme
 
 **Examples:** "Ten-Slayer," "First Through the Gate," "Pillwright," "Hundredfoot," "Vow-Keeper," "Lockbreaker."
 
-## Hidden Achievement Titles
+### Hidden Achievement Titles
 
 Generated when a player accomplishes something statistically improbable — surviving an encounter they should have died in, solving a puzzle in an unintended way, completing an objective with a self-imposed constraint, achieving an outcome the System did not predict.
 
-Rare, surprising, meaningfully buffed. Already established as a System AI function (`05-system-ai.md`). Players never see criteria in advance. These are the titles players brag about.
+Rare, surprising, meaningfully buffed. Already established as a System AI function (`45-system-ai.md`). Players never see criteria in advance. These are the titles players brag about.
 
 **Examples:** "Improbable," "The One Who Walked Through," "Unbroken," "The First Mercy," "Cornerless."
 
-## HVE-Resonant Titles
+### HVE-Resonant Titles
 
 Generated when a character's behavioral signature crystallizes into a recognizable pattern. The System acknowledging *who you are*, not *what you did*. Tend to appear during Consolidation, after meaningful Battle Memories, or at Breakthrough.
 
@@ -51,7 +50,7 @@ Mechanically grant bonuses aligned with the dominant axis combination. Often car
 
 **Examples:** "The Hungering Edge" (Force + Hunger), "Quiet Architect" (Method + Control), "The Open Hand" (Restraint + Accord), "The Severed Tether" (Method + Freedom).
 
-## Bestowed Titles
+### Bestowed Titles
 
 Granted by external entities — factions, higher-Grade beings, ancient Principles, locations, or the System itself responding to a specific action. Mechanically variable, narratively heavy.
 
@@ -61,9 +60,9 @@ Granted by external entities — factions, higher-Grade beings, ancient Principl
 
 ---
 
-# Mechanical Effects
+## Mechanical Effects
 
-## Stacking Rules
+### Stacking Rules
 
 **Stacking is unbounded.** There is no cap on the number of simultaneous active titles. A character with thirty titles benefits from all thirty, modulo the mutual-exclusion rule below.
 
@@ -73,11 +72,11 @@ Achievement, Hidden Achievement, and Bestowed titles never conflict with each ot
 
 **Identity titles can coexist when the axes differ.** A character can simultaneously hold "The Hungering Edge" (Force + Hunger) and "The Open Hand" (Restraint + Accord) only if their HVE profile genuinely supports both — which is rare, but possible for a character whose behavior is genuinely bimodal. The System AI is the arbiter.
 
-## Bonus Magnitudes
+### Bonus Magnitudes
 
 Titles grant a mix of effect types. Magnitudes scale by the Grade at which the title was earned. The numbers below are calibrated assuming a player will stack 8–15 titles by the end of any given Grade.
 
-### Flat Stat Bonuses (the workhorse)
+#### Flat Stat Bonuses (the workhorse)
 
 The most common bonus shape. Stacks cleanly and predictably.
 
@@ -92,7 +91,7 @@ The most common bonus shape. Stacks cleanly and predictably.
 
 **Example F-Grade stack ceiling:** A focused player with 12 active titles by F-Cap might accumulate roughly +25 to +40 stat points distributed across their key stats — about 15–25% on top of their accumulated stat budget. Strong, but not game-breaking. The same player at E-Cap, having evolved or replaced most of those titles, has an equivalent percentage boost on the E-Grade scale.
 
-### Percent Bonuses (rare, build-defining)
+#### Percent Bonuses (rare, build-defining)
 
 Reserved for Hidden Achievement titles, peak Bestowed titles, and Transcendent-tier rewards. Players build entire strategies around these.
 
@@ -103,7 +102,7 @@ Reserved for Hidden Achievement titles, peak Bestowed titles, and Transcendent-t
 - +5% to +15% to a specific damage type or against a specific enemy category
 - +5% to +10% to a Clash type (defensive Clashes, offensive Clashes when initiating, etc.)
 
-### Conditional and Situational Bonuses
+#### Conditional and Situational Bonuses
 
 Bonuses that trigger under specific circumstances — outnumbered, below half HP, against a specific enemy type, in a specific environment, after killing a foe.
 
@@ -111,7 +110,7 @@ Bonuses that trigger under specific circumstances — outnumbered, below half HP
 
 These reward setup play. A player who orchestrates the conditions for their stack to light up is doing exactly what the system wants.
 
-### Action Economy Bonuses
+#### Action Economy Bonuses
 
 Free Beats or extra actions under specific conditions. Genuinely powerful — use sparingly.
 
@@ -122,7 +121,7 @@ Free Beats or extra actions under specific conditions. Genuinely powerful — us
 
 These should be rare — typically Hidden Achievement or peak Bestowed.
 
-### Narrative Permissions
+#### Narrative Permissions
 
 NPC reactions, faction access, environmental affinities, recognition signals. No flat bonus, but tangible advantage in specific scenes.
 
@@ -133,7 +132,7 @@ NPC reactions, faction access, environmental affinities, recognition signals. No
 
 Narrative permissions don't stack mechanically — they overlap fictionally. A character with five faction-recognition titles is a known figure; the GM plays NPC reactions accordingly.
 
-### Resistances and Affinities
+#### Resistances and Affinities
 
 Damage reduction against specific damage types, Principle resonance bonuses, environmental tolerance.
 
@@ -142,7 +141,7 @@ Damage reduction against specific damage types, Principle resonance bonuses, env
 - +1 to +3 IP per Consolidation toward an aligned Principle Concept (over a fixed window — e.g., "for the next month after earning the title")
 - Immunity to specific minor effects (heat exhaustion, mild poisons, sensory deception below a Force threshold)
 
-## Negative Titles
+### Negative Titles
 
 A negative Bestowed title cannot be unequipped or removed without specific in-fiction action. The character carries it until they earn the conditions of release.
 
@@ -150,7 +149,7 @@ A negative Bestowed title cannot be unequipped or removed without specific in-fi
 
 **Release conditions** are written into the title itself when granted. "Oathbroken" is released by fulfilling a new sworn oath under witness. "Marked for the Hunt" is released by defeating the entity that marked you. The System AI generates the release condition based on the violation.
 
-## Passive Recognition
+### Passive Recognition
 
 All earned titles are visible to the System and to anyone with appropriate inspection skills (see Inspection and Visibility below). They affect NPC reactions, faction relationships, and System-generated content **regardless of how many are mechanically "active"** — there is no concept of "equipping" titles. They are part of the character's record, always.
 
@@ -158,7 +157,7 @@ The mechanical bonuses always apply. The narrative weight always applies. Stacki
 
 ---
 
-# Title Evolution
+## Title Evolution
 
 How HVE-Resonant titles change over time.
 
@@ -180,7 +179,7 @@ How HVE-Resonant titles change over time.
 
 ---
 
-# Inspection and Visibility
+## Inspection and Visibility
 
 Who can see what.
 
@@ -204,11 +203,11 @@ Who can see what.
 
 ---
 
-# Sample F-Grade Titles by HVE Archetype
+## Sample F-Grade Titles by HVE Archetype
 
-The four archetypes from `06-hidden-vector-engine.md` illustrate magnitude and flavor. Each archetype gets a sample stack of five titles spanning the four categories. The System AI generates titles dynamically — these are calibration references, not menus.
+The four archetypes from `50-hidden-vector-engine.md` illustrate magnitude and flavor. Each archetype gets a sample stack of five titles spanning the four categories. The System AI generates titles dynamically — these are calibration references, not menus.
 
-## The Apex Predator (Force + Hunger + Will + Freedom)
+### The Apex Predator (Force + Hunger + Will + Freedom)
 
 | **Title** | **Class** | **Effect** |
 |---|---|---|
@@ -218,7 +217,7 @@ The four archetypes from `06-hidden-vector-engine.md` illustrate magnitude and f
 | **Cornerless** | Hidden Achievement | When at 25% HP or less, +5 STR and +5 DEX. Triggered by surviving an encounter that the System assessed as 10× over-Grade. |
 | **Marked by the Wild** | Bestowed (Beast) | Predators recognize you as kin or rival — advantage on Clashes against beasts that flee, disadvantage on parley with hostile fauna. Granted by killing the alpha of a wild pack. |
 
-## The System Architect (Method + Restraint + Accord + Control)
+### The System Architect (Method + Restraint + Accord + Control)
 
 | **Title** | **Class** | **Effect** |
 |---|---|---|
@@ -228,7 +227,7 @@ The four archetypes from `06-hidden-vector-engine.md` illustrate magnitude and f
 | **The One Who Did Not Strike First** | Hidden Achievement | Once per encounter, when an enemy attacks you first in a Clash, gain +10 to that defensive Clash. Triggered by completing three consecutive encounters without making the first offensive move. |
 | **Witnessed by the Mountain** | Bestowed (Place) | +5 to all Clashes within terrain matching the witnessing site. Granted by completing a Consolidation at a Principle-resonant location. |
 
-## The Iron Adjudicator (Force + Restraint + Will + Control)
+### The Iron Adjudicator (Force + Restraint + Will + Control)
 
 | **Title** | **Class** | **Effect** |
 |---|---|---|
@@ -238,7 +237,7 @@ The four archetypes from `06-hidden-vector-engine.md` illustrate magnitude and f
 | **The Line That Did Not Move** | Hidden Achievement | +10% Max HP. Triggered by holding a position alone against three or more attackers without retreating, for three consecutive rounds. |
 | **Hand of the Iron Court** | Bestowed (Faction) | Faction-granted: bureaucratic recognition, access to Iron Court resources, +5 to social Clashes invoking lawful authority. |
 
-## The Phantom Thief (Method + Hunger + Accord + Freedom)
+### The Phantom Thief (Method + Hunger + Accord + Freedom)
 
 | **Title** | **Class** | **Effect** |
 |---|---|---|
@@ -250,7 +249,7 @@ The four archetypes from `06-hidden-vector-engine.md` illustrate magnitude and f
 
 ---
 
-# Open Design Space
+## Open Design Space
 
 Deliberately deferred until playtest data or campaign progression demands them:
 

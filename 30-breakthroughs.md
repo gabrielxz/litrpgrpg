@@ -1,11 +1,10 @@
 ![Breakthroughs](./assets/breakthroughs.png)
-# LitRPG: RPG
 
-## Grade Breakthroughs
+# Grade Breakthroughs
 
 ---
 
-# Design Intent
+## Design Intent
 
 Breakthroughs are the genre's emotional centerpiece. They are ritual moments — not long rests, not passive level-ups, not bookkeeping. A Breakthrough is the scene the table remembers.
 
@@ -18,7 +17,7 @@ Breakthroughs are the genre's emotional centerpiece. They are ritual moments —
 
 ---
 
-# In-World Framing
+## In-World Framing
 
 A Breakthrough occurs when the barrier between the cultivator's current Grade and the next becomes permeable. The System's Principles draw closer to the material plane — the boundary thins, the ambient energy density spikes, and for a brief window the cultivator's body and spirit can be reshaped by forces that normally operate far beyond mortal reach.
 
@@ -26,11 +25,11 @@ This proximity is what makes the event possible. It is also what makes it danger
 
 ---
 
-# The Universal Blueprint
+## The Universal Blueprint
 
 Every Breakthrough, regardless of Grade, follows the same four-beat structure. The flavor and stakes of Beats 2 and 3 change by Grade. The scale of Beat 4's rewards changes by Grade. But the skeleton is always the same.
 
-## Beat 1 — Preparation
+### Beat 1 — Preparation
 
 The setup phase. No dice are rolled. This is where most quality dials are set.
 
@@ -48,7 +47,7 @@ The setup phase. No dice are rolled. This is where most quality dials are set.
 
 **GM Note:** Beat 1 should feel deliberate — a ritual in motion. Describe the cultivator settling into position, consuming pills, the air growing heavy with unprocessed energy. The party arranging themselves. The world going quiet. Then transition to Beat 2.
 
-## Beat 2 — Ignition
+### Beat 2 — Ignition
 
 The cultivator deliberately floods their body with Volatile Energy, pushing past Tolerance into Saturation. This overcharge is not an accident — it is the fuel that powers the ascension. The body must be forced past its current limits before it can be reshaped to hold the next Grade's capacity.
 
@@ -69,11 +68,11 @@ The VE required for Ignition is gathered from environmental absorption during th
 
 **Once the cultivator declares Ignition, Beat 3 begins immediately. There is no going back.**
 
-## Beat 3 — The Trial
+### Beat 3 — The Trial
 
 The dangerous part. A hybrid structure: an internal challenge for the cultivator resolved mechanically through the Breakthrough Check, coupled with external phenomena that the party (or the cultivator, if solo) must manage.
 
-### The Breakthrough Check
+#### The Breakthrough Check
 
 The cultivator makes a single roll:
 
@@ -109,7 +108,7 @@ The cultivator makes a single roll:
 
 The GM does not need to calculate this precisely — it is a qualitative read of the HVE profile, expressed as a modifier. Characters who have lived with conviction are rewarded. Characters who have drifted aimlessly face a harder road.
 
-### The Quality Tier
+#### The Quality Tier
 
 The Breakthrough Check margin (roll result minus DC) determines the base Quality Tier. Overcharge and item bonuses can push the tier higher.
 
@@ -123,7 +122,7 @@ The Breakthrough Check margin (roll result minus DC) determines the base Quality
 
 **Tier Adjustment:** Quality Enhancer items push the final tier up by one step (never above Transcendent). The Overcharge Ratio modifier is already factored into the DC — it makes the roll harder, but a character who succeeds despite higher DC gets a better margin naturally. This is the risk-reward loop: overcharging doesn't guarantee a better tier, but it creates the *possibility* of one.
 
-### External Phenomena (The Party's Role)
+#### External Phenomena (The Party's Role)
 
 When the cultivator ignites, the environment reacts. The thinning of the boundary between Grades draws attention — from the ambient energy field, from local wildlife, from things that exist in the space between Grades.
 
@@ -145,15 +144,15 @@ The party's job during Beat 3 is straightforward: **keep the cultivator alive an
 
 **Solo Breakthrough:** A cultivator attempting to Break Through alone must handle external phenomena themselves. Any phenomena that manifest impose their penalty automatically (the cultivator cannot fight and meditate simultaneously). This is why solo Breakthroughs require superior preparation — the item and location bonuses must compensate for the lack of party support and phenomenon management. A maxed-prep solo cultivator (peak location, full item loadout, high HVE coherence) should be able to reliably hit Stable without party support. Polished is possible but requires either a strong roll or exceptional preparation. Pristine solo is the stuff of legend.
 
-### Time-Boxing
+#### Time-Boxing
 
 The Trial is time-boxed in fiction. From the moment of Ignition to the completion of the Breakthrough Check, no more than **10 minutes of in-game time** pass. This is a single dramatic sequence — not a slog, not a multi-hour ordeal. The Breakthrough Check, the party's defense, the external phenomena — all of it happens in a compressed burst of reality-warping intensity. Describe it as such.
 
-## Beat 4 — Recognition
+### Beat 4 — Recognition
 
 The System processes the result. This is the payoff — the moment the numbers change and the character is fundamentally different from who they were ten minutes ago.
 
-### Outputs by Quality Tier
+#### Outputs by Quality Tier
 
 **Cracked (Failure):**
 
@@ -201,7 +200,7 @@ Everything from Pristine, plus:
 
 ---
 
-# Breakthrough Item Categories
+## Breakthrough Item Categories
 
 Six functional categories. Each is a treasure-hunt objective that players can pursue proactively when they see their Grade cap approaching. GMs should seed these items into dungeons and treasure hoards sessions before they are needed — let the players realize what they have and plan accordingly.
 
@@ -220,11 +219,11 @@ Six functional categories. Each is a treasure-hunt objective that players can pu
 
 ---
 
-# Environment & Energy Density
+## Environment & Energy Density
 
 The location where a Breakthrough occurs matters. Energy density — the concentration of ambient systemic energy in the environment — directly affects both the Breakthrough Check bonus and the intensity of external phenomena.
 
-## Energy Density Tiers
+### Energy Density Tiers
 
 | Tier | Breakthrough Bonus | Phenomena Intensity | Example Locations |
 |---|---|---|---|
@@ -236,11 +235,11 @@ The location where a Breakthrough occurs matters. Energy density — the concent
 
 The tradeoff is explicit: better locations produce better Breakthroughs, but they also attract more dangerous tribulation phenomena. A party that can handle the external threats should always seek the highest-density location available. A solo cultivator must weigh the bonus against the automatic phenomenon penalties they will eat.
 
-## Consolidation Bonus (Cross-Reference)
+### Consolidation Bonus (Cross-Reference)
 
 Energy density also affects ordinary Consolidation (documented in the Cultivation section): Consolidating in a high-density hex reduces required time by 25%. The same environmental scouting that identifies good Breakthrough locations pays dividends during routine play.
 
-## Location Scouting
+### Location Scouting
 
 Finding and securing a Breakthrough location is an adventure in itself. The GM should:
 
@@ -250,9 +249,9 @@ Finding and securing a Breakthrough location is an adventure in itself. The GM s
 
 ---
 
-# Grade-Specific Breakthroughs
+## Grade-Specific Breakthroughs
 
-## F → E: Foundation & Body Tempering
+### F → E: Foundation & Body Tempering
 
 **Theme:** Body-focused. The System burns out pre-System impurities — toxins, accumulated damage, the lingering fragility of a body that was never designed to hold systemic energy. The cultivator's physical form is fundamentally remade as a vessel capable of holding E-Grade energy density.
 
@@ -276,7 +275,7 @@ Finding and securing a Breakthrough location is an adventure in itself. The GM s
 
 A well-built F-Grade cap character (POW ~75, HRT ~60) has Force 75 + Force 60 = 135 before modifiers. The DC is 240 (E-Grade Severe). They need their d100 + modifiers to cover the remaining 105. Average d100 roll (50) leaves a gap of 55. With a Moderate location (+10), a Foundation Pill (+10), HVE Coherence of Defined (+10), and Party Anchor (+5 to +15), they are looking at +35 to +45 in modifiers, bringing the total needed from the d100 down to ~60–70. Achievable on an average-to-good roll. A maxed-prep character (POW 99, HRT 80, High density location, best pill, Singular coherence, strong Anchor) could make the check with a below-average roll and aim for Polished or better. This confirms the design intent: well-prepared characters succeed reliably; poorly prepared ones must roll well.
 
-## E → D: Soul Sea Expansion
+### E → D: Soul Sea Expansion
 
 **Theme:** Spiritual-focused. The cultivator's energy channels and inner architecture rebuild at higher capacity. The "Soul Sea" — the internal space where Energy is held and Principle is processed — expands and reshapes around the character's accumulated identity. Who you have been determines the shape of who you become.
 
@@ -301,13 +300,13 @@ A well-built F-Grade cap character (POW ~75, HRT ~60) has Force 75 + Force 60 = 
 
 **Key Items/Locations:** Resonance Catalysts and Quality Enhancers become critical at E→D. The HVE Coherence bonus is more impactful because the trial's internal content is shaped by it — a character with a scattered HVE profile faces a chaotic, incoherent trial that is mechanically and narratively harder. Tribulation Wards are worth their weight in gold at this Grade, because Cracked consequences are now permanent.
 
-## D → C and Beyond
+### D → C and Beyond
 
 Deliberately unwritten. These Grades will be developed when the campaign reaches that scale. The universal blueprint applies — the four-beat structure, the Overcharge Ratio, the Quality Tier system, and the Breakthrough Check formula all extend unchanged. What changes is the thematic content of the trial (D→C likely introduces true Heart Demon confrontation as an adversarial internal entity), the severity of failure, the scale of external phenomena (D-Grade tribulations may attract attention from entities beyond the local System), and the magnitude of Transcendent rewards.
 
 ---
 
-# The Breakthrough Check — Summary Reference
+## The Breakthrough Check — Summary Reference
 
 > **Roll: d100 + POW Force + HRT Force**
 >
@@ -330,7 +329,7 @@ Deliberately unwritten. These Grades will be developed when the campaign reaches
 
 ---
 
-# Open Design Space
+## Open Design Space
 
 The following elements are identified as future development targets. They are not forgotten — they are deliberately deferred until playtest data or campaign progression demands them.
 

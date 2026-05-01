@@ -1,9 +1,8 @@
 ![Quick Reference](./assets/quick_reference.png)
-# LitRPG: RPG
 
-## Quick Reference: The Clash
+# Quick Reference
 
----
+## The Clash
 
 **Roll d100 + Force + Tactics. High wins.**
 

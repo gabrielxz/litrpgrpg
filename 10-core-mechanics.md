@@ -1,11 +1,10 @@
 ![Core Mechanics](./assets/core_mechanics.png)
-# LitRPG: RPG
 
-**System Core Rules (v1.7 — The Significant Digits Framework)**
+# Core Mechanics
 
----
+*The Significant Digits Framework, v1.7*
 
-# 1. CORE DESIGN PHILOSOPHY
+## Core Design Philosophy
 
 This system decouples narrative scale from resolution scale to capture the feel of LitRPG progression: numbers go up, players feel it on their character sheet, and the GM never drowns in five-digit arithmetic.
 
@@ -19,7 +18,7 @@ This system decouples narrative scale from resolution scale to capture the feel 
 
 ---
 
-# 2. THE SIGNIFICANT DIGITS FRAMEWORK
+## The Significant Digits Framework
 
 Every stat in the game has three components:
 
@@ -43,7 +42,7 @@ At F-Grade, Force equals Raw Power directly (no extraction needed — the number
 
 The d100 never becomes irrelevant. A +10 flanking bonus matters exactly as much at C-Grade as it does at F-Grade, because the System scales the weight of tactics perfectly.
 
-## 2a. Stat Growth and the Cap
+### Stat Growth and the Cap
 
 Stats increase through leveling during Consolidation, consuming attribute-enhancing treasures, evolving to a new class at major milestones, and Hidden Achievement rewards. The System AI determines specific stat gains based on the character's class, behavior, and investment.
 
@@ -59,11 +58,11 @@ Stats increase through leveling during Consolidation, consuming attribute-enhanc
 
 ---
 
-# 3. CORE RESOLUTION
+## Core Resolution
 
 Every check in the game resolves with a single mechanic: roll d100, add your Force, and compare.
 
-## 3a. Opposed Rolls (Active Opposition)
+### Opposed Rolls (Active Opposition)
 
 When acting against another creature, NPC, or player character, both sides roll:
 
@@ -75,7 +74,7 @@ Higher total wins. In the case of a tie, the initiator wins.
 
 The **Margin** (winner's total minus loser's total) determines the degree of success. In combat, the Margin directly drives damage. Outside combat, the GM interprets the Margin narratively — a Margin of 50+ is a dominant success; a Margin of 1–5 is razor-thin.
 
-## 3b. Resistance Rolls (Passive Obstacles)
+### Resistance Rolls (Passive Obstacles)
 
 When acting against a passive obstacle (a locked door, a cliff face, a trap, a poison), the GM assigns a Resistance value from the Grade Reference Card. The player rolls:
 
@@ -83,7 +82,7 @@ When acting against a passive obstacle (a locked door, a cliff face, a trap, a p
 
 Meet or exceed the Resistance to succeed.
 
-## 3c. The Grade Reference Card
+### The Grade Reference Card
 
 The GM does not calculate difficulty from scratch. They ask two questions: What Grade is this obstacle? and How tough is it for that Grade? The answer is read from this table:
 
@@ -100,7 +99,7 @@ Each Grade adds exactly +100 to every difficulty tier. A magically reinforced do
 
 Build one card per Grade you're running. At F-Grade, that's one column. Tape it to the GM screen.
 
-## 3d. Auto-Success: The Power Fantasy Rule
+### Auto-Success: The Power Fantasy Rule
 
 If your Force alone meets or exceeds the Resistance, you do not roll. You simply succeed. The action is beneath you.
 
@@ -108,7 +107,24 @@ That F-Grade Moderate lock (Resistance 90) that once required a tense roll when 
 
 The GM only calls for a roll when there is genuine uncertainty — your Force is below the Resistance and the d100 could swing it.
 
-## 3e. System Volatility (Exploding Dice)
+### Proficiencies and Skill Checks
+
+Each character begins with three Proficiencies — broad domains of competence written in plain language. Examples: "wilderness survival," "ancient languages," "mechanical tinkering," "intimidation," "field medicine," "stealth and infiltration."
+
+**Skill Check Formula:**
+
+- **Base Modifier:** Your Relevant Attribute's **Force** (e.g., intimidating a guard uses CHA Force; breaking down a barricade uses STR Force; tracking a creature uses PER Force; resisting an interrogator's coercion uses HRT Force).
+- **Proficiency Bonus:** If you possess a relevant Proficiency, add a flat **+10** to your roll.
+
+Opposed checks resolve as Opposed Rolls (above) — both sides roll d100 + Force, higher wins. Passive obstacles resolve as Resistance Rolls — the GM assigns a Resistance from the Grade Reference Card and the character must meet or exceed it.
+
+The GM decides which Attribute applies. Resisting coercion is HRT; reading an interrogator's tells is PER; outlasting physical torture is FOR. Deciphering Principle script might be PER if it is analytical, POW if it is intuitive, or even a Principle affinity check if the script resonates with the reader's own cultivation.
+
+**Passive Awareness:** If a character has a relevant Proficiency (perception, survival, investigation), the GM may assume they notice things up to a reasonable baseline without rolling. Only roll when there is meaningful risk, uncertainty, or time pressure.
+
+**Gaining New Proficiencies:** Characters can earn new Proficiencies through play. The System AI may award them as class features, Hidden Achievement rewards, or Consolidation visions.
+
+### System Volatility (Exploding Dice)
 
 Higher Grades of power are not just bigger — they are more volatile. The System's energy density at elevated Grades creates cascading instabilities in every clash.
 
@@ -131,7 +147,7 @@ System Volatility replaces traditional critical hits. When an explosion occurs, 
 
 ---
 
-# 4. ATTRIBUTES & DERIVED STATS
+## Attributes & Derived Stats
 
 Every character possesses seven core Attributes. These are raw numbers — the big LitRPG values on the character sheet. Their Force equivalents are used at the table.
 
@@ -149,7 +165,7 @@ Every character possesses seven core Attributes. These are raw numbers — the b
 
 - **Max Energy:** Equal to the character's Raw POW value.
 
-- **Defense Force:** In combat, the defending stat used in a Clash depends on context. Against physical attacks, a character uses FOR Force (representing toughness, armor integration, and physical resilience). Against mental, spiritual, or coercive attacks, HRT Force. Against illusions and sensory deceptions, PER Force (you resist by recognizing the deception; Heart does not help if you do not realize you are being tricked). The defender always adds DEX Force if actively dodging (see The Clash, Section 5d).
+- **Defense Force:** In combat, the defending stat used in a Clash depends on context. Against physical attacks, a character uses FOR Force (representing toughness, armor integration, and physical resilience). Against mental, spiritual, or coercive attacks, HRT Force. Against illusions and sensory deceptions, PER Force (you resist by recognizing the deception; Heart does not help if you do not realize you are being tricked). The defender always adds DEX Force if actively dodging (see Combat Mechanics, "The Clash" subsection).
 
 There is no Damage Reduction as a derived stat. Armor, toughness, and defensive training are folded into the defender's Clash total. If your defense is strong enough, the attacker's Margin is small — or negative, meaning you deflect entirely.
 
@@ -157,11 +173,11 @@ Stats are raw and unfiltered. There is no class-based efficiency layer — if a 
 
 ---
 
-# 5. COMBAT MECHANICS
+## Combat Mechanics
 
 Combat is lethal, mathematically clean, and resolved through opposed Clashes.
 
-## 5a. Initiative: The Momentum System
+### Initiative: The Momentum System
 
 There is no fixed turn order. Combat flows through Momentum — whichever side holds Momentum acts first as a group, in whatever order they choose. Then the opposition acts. This keeps combat cinematic and rewards fictional positioning over stat optimization.
 
@@ -180,7 +196,7 @@ A character may also attempt to **seize Momentum** by spending 1 Beat and winnin
 
 The GM is the final arbiter of Momentum shifts. When in doubt, Momentum stays where it is.
 
-## 5b. Action Economy: Beats
+### Action Economy: Beats
 
 Each character gets **two Beats** per turn. A Beat is one meaningful action:
 
@@ -197,9 +213,9 @@ Each character gets **two Beats** per turn. A Beat is one meaningful action:
 
 **Anti-Repetition Rule:** Repeating the same offensive action twice in one turn imposes −10 to the second Clash roll. A fighter can swing twice, but the second strike is less precise. This prevents degenerate double-attack loops while keeping the flexibility of two Beats.
 
-**Aura Pressure and Beat Loss:** When Aura Pressure reduces a character's Beats, they drop to one Beat (moderate suppression) or zero Beats (severe suppression). See Section 6c.
+**Aura Pressure and Beat Loss:** When Aura Pressure reduces a character's Beats, they drop to one Beat (moderate suppression) or zero Beats (severe suppression). See "Aura Pressure" below.
 
-## 5c. Movement: Zones and Position
+### Movement: Zones and Position
 
 Combat does not use grids or measured distance. Each combat scene is divided into **Zones** — loose areas defined by the fiction.
 
@@ -222,7 +238,7 @@ Combat does not use grids or measured distance. Each combat scene is divided int
 
 Spending 1 Beat to reposition within a Zone can change your Positional State (e.g., climbing to high ground, diving behind cover). The GM may also assign Positional States based on terrain, clever play, or failed rolls.
 
-## 5d. The Clash (Combat Resolution)
+### The Clash (Combat Resolution)
 
 Combat is a series of Opposed Clashes. There is no separate to-hit roll and damage roll. Each Clash determines *whether* you hit, *how hard*, and *how much damage* in a single exchange.
 
@@ -279,7 +295,7 @@ Apply this damage directly to the defender's HP (which is their Raw FOR value). 
 
 **Why this works:** Because Force is always 1–99 and the d100 is always 1–100, the Margin naturally stays in a tight, predictable band. Tactical modifiers never become irrelevant. The big LitRPG numbers live on the character sheet where players want them; the table math is an addition problem and a zero-appending exercise.
 
-## 5e. AoE and Multi-Target Attacks
+### AoE and Multi-Target Attacks
 
 An AoE spell or sweep attack targets everyone in a Zone (or a portion of a Zone specified by the GM). The attacker rolls once. Each defender rolls their own Clash individually. The Margin is calculated separately for each defender — some may take massive damage while others barely get clipped.
 
@@ -287,7 +303,7 @@ AoE abilities are powerful by design. They are gated by Energy cost, skill rarit
 
 For a martial character who wants to hit two adjacent targets with a melee cleave: make a single Clash roll against both (each defender rolls separately). Each defender takes damage based on their individual Margin, but the attacker splits their Magnitude tier down by one step (a D-Grade attacker's cleave adds 1 zero instead of 2). This gives melee fighters a multi-target option at a meaningful cost.
 
-## 5f. Failure Consequences
+### Failure Consequences
 
 When a roll fails, the GM selects the appropriate severity:
 
@@ -301,11 +317,11 @@ The GM chooses based on fictional stakes and narrative momentum. Catastrophic Fa
 
 ---
 
-# 6. THE GRADE GAP: THE MAGNITUDE BARRIER
+## The Grade Gap: The Magnitude Barrier
 
 When entities of different Grades clash, the gap between them is expressed through the same Force system — cleanly, without bolted-on suppression layers.
 
-## 6a. The Magnitude Gap Rule
+### The Magnitude Gap Rule
 
 **For every Grade of difference, the higher-Grade combatant adds +100 to their Force in all Clashes and opposed checks.**
 
@@ -328,11 +344,11 @@ If the E-Grade attacks: d100 + (12 + 100) vs. d100 + 99. The E-Grade's effective
 
 **The combined effect:** Cross-grade combat is asymmetric not because of bolted-on penalties, but because the math itself creates asymmetry. The higher-Grade entity's damage multiplier ensures that even a small Margin is lethal, while the lower-Grade entity must win by a massive Margin to inflict meaningful damage at their reduced multiplier. Punching up is *possible* — possible enough to generate the best stories — but it requires extraordinary rolls, tactical mastery, and Principle preparation.
 
-## 6b. The Natural Stat Wall
+### The Natural Stat Wall
 
 Before the Magnitude Gap bonus even applies, the raw stat difference between Grades creates a wall. An F-Grade character's stats max at 99. An E-Grade character's stats start at 100. The Force extraction ensures these map to the same 10–99 band for resolution, but the damage multiplier gap (×1 vs. ×10) makes every successful attack from a higher Grade devastatingly efficient.
 
-## 6c. Aura Pressure
+### Aura Pressure
 
 Being in the presence of a higher-Grade entity is not merely a tactical disadvantage — it is a visceral, spiritual experience. The weight of a higher-Grade being's accumulated systemic energy presses down on weaker entities like gravity.
 
@@ -360,21 +376,21 @@ A benevolent higher-Grade NPC may suppress their aura entirely (no save required
 
 ---
 
-# 7. THE ENERGY SYSTEM
+## The Energy System
 
 Energy is the universal resource for active Principle Applications, spells, and most active skills. Warriors and casters alike draw on it — anyone reaching for System-granted power spends Energy to do so.
 
-## 7a. The Energy Pool
+### The Energy Pool
 
 **Max Energy equals the character's Raw POW value.** An F-Grade character with POW 80 has 80 Energy. An E-Grade character with POW 500 has 500 Energy. The pool scales naturally with Grade through the stat cap and per-level allocations — no separate multiplier is required.
 
-## 7b. Regeneration
+### Regeneration
 
 **Energy does not regenerate in combat. It does not regenerate between combats. It does not regenerate with passive time.** Energy refills only through **Consolidation** — a full pool restore occurs automatically at the start of any Consolidation rest (see Cultivation document).
 
 This is deliberate. Combat Energy is a finite budget. Every Principle Application, every active skill, every sustained Domain eats against a hard ceiling that cannot be replenished until the character stops to rest. Characters must decide when to unleash big abilities and when to save them. The same pressure applies equally to warriors and casters — there is no "catching your breath" between fights.
 
-## 7c. Costs Scale by Skill Origin Grade
+### Costs Scale by Skill Origin Grade
 
 Every Principle Application, spell, and active skill has a fixed Energy cost based on the Grade at which it was acquired. Baseline costs are set at F-Grade; each Grade higher multiplies the cost by the Grade Magnitude (×10 per Grade) — the same scaling rule used for damage and difficulty.
 
@@ -393,7 +409,7 @@ This produces two distinct feels at every Grade-up:
 
 - **New Grade-appropriate skills are the true upgrade.** A skill acquired at E-Grade costs 100 Energy per use — a meaningful fraction of the new pool. The character who wants to access their new Grade's full ceiling must pay for it. Old tricks still work, but they are no longer where the real power lives.
 
-## 7d. Attrition Across the Grade Gap
+### Attrition Across the Grade Gap
 
 Because costs scale with skill Grade but pool size scales with the user's current stats, higher-Grade characters in protracted combat must still manage Energy carefully. This produces the genre-standard attrition pressure: a higher-Grade entity fighting large numbers of lower-Grade opponents is not invincible — they are eventually drained.
 

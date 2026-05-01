@@ -29,8 +29,9 @@ fontsize: 11pt
 linestretch: 1.18
 
 # Headings & numbering
-numbersections: false
+numbersections: true
 toc-depth: 2
+secnumdepth: 3   # number chapters, sections, subsections
 
 # Code & listings
 listings-disable-line-numbers: true

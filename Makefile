@@ -10,26 +10,24 @@ PREAMBLE    := $(PIPELINE)/preamble.tex
 LUAFILTER   := $(PIPELINE)/divs-to-environments.lua
 
 # Source files in canonical order. 99-to-do is excluded by design.
+# Numeric prefixes use a gap-of-5 scheme to allow new chapters to slot in
+# between existing ones without renumbering.
 SOURCES := \
-  00-quick-reference.md \
-  01-core-mechanics.md \
-  02-proficiencies-and-skills.md \
-  02a-character-creation.md \
-  03-principles.md \
-  04-cultivation.md \
-  05-system-ai.md \
-  06-hidden-vector-engine.md \
-  07-tutorial.md \
-  08-breakthroughs.md \
-  09-bestiary.md \
-  10-stable-abilities.md \
-  11-items.md \
-  12-titles.md \
-  13-quests.md
+  05-quick-reference.md \
+  10-core-mechanics.md \
+  15-character-creation.md \
+  20-principles.md \
+  25-cultivation.md \
+  30-breakthroughs.md \
+  35-stable-abilities.md \
+  40-titles.md \
+  45-system-ai.md \
+  50-hidden-vector-engine.md \
+  55-quests.md \
+  60-bestiary.md \
+  65-items.md \
+  70-tutorial.md
 
-# Pre-processed copies in build/ have the per-file boilerplate H1 stripped
-# so each file's H2 ("Quick Reference: The Clash", etc.) becomes the chapter
-# title after --shift-heading-level-by=-1.
 PROCESSED := $(addprefix $(BUILD_DIR)/, $(SOURCES))
 
 PDF := $(BUILD_DIR)/$(PROJECT).pdf
@@ -38,13 +36,10 @@ PDF := $(BUILD_DIR)/$(PROJECT).pdf
 
 pdf: $(PDF)
 
-# Per-file pre-processing:
-#   1. Strip the boilerplate "# LitRPG: RPG" line.
-#   2. Convert chapter art image syntax into a full-page bleed-edge LaTeX command.
-#      Pattern: ![alt](./assets/foo.png)  ->  \fullpageart{./assets/foo.png}
+# Per-file pre-processing: convert chapter art image syntax into a full-page
+# bleed-edge LaTeX command. Pattern: ![alt](./assets/foo.png) -> \fullpageart{./assets/foo.png}
 $(BUILD_DIR)/%.md: %.md | $(BUILD_DIR)
 	sed -E \
-	  -e '/^# LitRPG: RPG[[:space:]]*$$/d' \
 	  -e 's|^!\[[^]]*\]\(\./assets/([^)]+\.png)\)[[:space:]]*$$|\\fullpageart{./assets/\1}|' \
 	  $< > $@
 
@@ -59,9 +54,9 @@ $(PDF): $(PROCESSED) $(METADATA) $(TEMPLATE) $(PREAMBLE) $(LUAFILTER)
 	  --lua-filter=$(LUAFILTER) \
 	  --resource-path=. \
 	  --top-level-division=chapter \
-	  --shift-heading-level-by=-1 \
 	  --toc \
 	  --toc-depth=2 \
+	  --number-sections \
 	  --listings \
 	  --output $@ \
 	  $(PROCESSED)

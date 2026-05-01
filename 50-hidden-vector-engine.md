@@ -1,13 +1,12 @@
 ![Hidden Vector Engine](./assets/hidden_vector_engine.png)
-# LitRPG: RPG
 
-## The Hidden Vector Engine
+# The Hidden Vector Engine
 
 **Behavioral Identity System for AI-Assisted LitRPG Worlds**
 
 ---
 
-# 1. Core Purpose
+## Core Purpose
 
 The Hidden Vector Engine tracks how a character actually behaves under pressure and converts those patterns into a structured identity that the System can use.
 
@@ -19,7 +18,7 @@ Players should feel observed. They should not see the underlying numbers. The sy
 
 ---
 
-# 2. Design Principles
+## Design Principles
 
 The engine follows five constraints:
 
@@ -31,11 +30,11 @@ The engine follows five constraints:
 
 ---
 
-# 3. Behavioral Axes & Principle Affinities
+## Behavioral Axes & Principle Affinities
 
 The engine tracks four bipolar axes. Each represents a distinct dimension of behavior. The System observes these behaviors to forge the character's Internal Power — the specific Principle Concepts and Principles they are offered during Consolidation.
 
-## A. Force ↔ Method (Interaction)
+### Force ↔ Method (Interaction)
 
 *How does the character solve problems?*
 
@@ -43,7 +42,7 @@ The engine tracks four bipolar axes. Each represents a distinct dimension of beh
 
 - **Method (−):** Planning, positioning, altering conditions before acting, solving situations indirectly. *Principle Affinity:* Yields Principles of Architecture — Concepts like Space, Leverage, Misdirection, Shadows, or Geometry.
 
-## B. Hunger ↔ Restraint (Desire)
+### Hunger ↔ Restraint (Desire)
 
 *What is the character's relationship to gain?*
 
@@ -51,7 +50,7 @@ The engine tracks four bipolar axes. Each represents a distinct dimension of beh
 
 - **Restraint (−):** Passing on excess reward, prioritizing mission or people over loot. *Principle Affinity:* Yields Principles of Preservation — Concepts like Shielding, Purification, Iron, Stasis, or Resilience.
 
-## C. Will ↔ Accord (Social)
+### Will ↔ Accord (Social)
 
 *How does the character relate to others and systems of order?*
 
@@ -59,7 +58,7 @@ The engine tracks four bipolar axes. Each represents a distinct dimension of beh
 
 - **Accord (−):** Negotiation, cooperation, adaptation, working within systems. *Principle Affinity:* Yields Principles of Harmony — Concepts like Resonance, Symbiosis, Life, Empathy, or The Hearth.
 
-## D. Control ↔ Freedom (Governance)
+### Control ↔ Freedom (Governance)
 
 *Does the character impose structure, or allow outcomes to emerge?*
 
@@ -69,7 +68,7 @@ The engine tracks four bipolar axes. Each represents a distinct dimension of beh
 
 ---
 
-# 4. Multi-Vector Intersections
+## Multi-Vector Intersections
 
 Axes do not exist in a vacuum. The System AI looks at the synthesis of all four vectors to determine the character's true systemic footprint. Illustrative examples:
 
@@ -83,7 +82,7 @@ Axes do not exist in a vacuum. The System AI looks at the synthesis of all four 
 
 ---
 
-# 5. Event-Based Scoring
+## Event-Based Scoring
 
 Behavior is recorded through discrete events, not session summaries. Each event is defined by one primary axis, an intensity value, and an optional secondary axis (rare).
 
@@ -96,13 +95,13 @@ Behavior is recorded through discrete events, not session summaries. Each event 
 
 ---
 
-# 6. Structured Event Logging
+## Structured Event Logging
 
 Events must be recorded in a consistent JSON format: player, event_summary, context, intent, outcome, primary_axis, intensity, secondary_axis. This ensures reliable interpretation by the System AI. PvP coercion attempts should always be logged as high-intensity Will events.
 
 ---
 
-# 7. Temporal Model
+## Temporal Model
 
 Each axis is tracked in two layers:
 
@@ -113,18 +112,18 @@ At the end of each session, Current Vectors decay significantly while Deep Vecto
 
 ---
 
-# 8. External Consequence (Macro-System Outputs)
+## External Consequence (Macro-System Outputs)
 
 While the individual vectors forge a character's Internal Power (Principles and Classes), the aggregate vector data feeds the System's macroscopic response to the player.
 
-## A. World & Faction Response
+### World & Faction Response
 
 - High **Hunger** attracts risky opportunities, black-market factions, and corrupting rewards.
 - High **Accord** opens diplomatic pathways, attracts followers, and lowers merchant prices.
 - High **Control** leads to structured opportunities, stable alliances, and invitations from bureaucratic Sects.
 - High **Freedom** leads to volatile opportunities, emergent events, and bounties placed by authoritarian factions.
 
-## B. Adversarial Design (Systemic Pressure)
+### Adversarial Design (Systemic Pressure)
 
 The System generates challenges that actively pressure the character's dominant tendencies:
 
@@ -134,6 +133,6 @@ The System generates challenges that actively pressure the character's dominant 
 
 ---
 
-# 9. Hidden State and Narrative Expression
+## Hidden State and Narrative Expression
 
 Numeric values are never exposed. The system expresses identity purely through titles, achievements, NPC reactions, System messages, class resonance, and environmental affinities. Players should feel the pattern without seeing the mechanism.

@@ -1,10 +1,9 @@
-# LitRPG: RPG
 
-## Items, Consumables, and Volatile Artifacts
+# Items, Consumables & Volatile Artifacts
 
 ---
 
-# Design Notes
+## Design Notes
 
 This document covers the practical items players encounter during F-Grade play — the consumables, weapons, and one-shot oddities that fill the spaces between treasure tiers. The full economy, crafting professions, and merchant systems are deferred. This is what the GM needs at the table for the prototype.
 
@@ -12,9 +11,9 @@ All Toxin Points referenced below interact with the Toxin Tolerance rule (Cultiv
 
 ---
 
-# Consumables
+## Consumables
 
-## Healing Pills
+### Healing Pills
 
 Restore HP instantly. Adds Toxin Points. Consumed as a free action on the user's turn, or as a 1-Beat action to administer to an ally in the same Zone.
 
@@ -30,7 +29,7 @@ E-Grade pills heal ×10 the listed amount and add ×10 Toxin (if the user can me
 
 **Healing pills cap at the user's Max HP.** Excess healing is wasted.
 
-## Energy Pills
+### Energy Pills
 
 Restore Energy mid-encounter. Toxin cost.
 
@@ -43,7 +42,7 @@ Restore Energy mid-encounter. Toxin cost.
 
 Energy Pills exist but should be rare. Energy is meant to be a scarce resource that primarily refills through Consolidation; Energy Pills are emergency tools, not crutches. A party with reliable access to Energy Pills will short-circuit the design intent of the Energy system.
 
-## Foundation Pills
+### Foundation Pills
 
 See the Breakthroughs document for full rules. Brief reference:
 
@@ -57,7 +56,7 @@ Foundation Pills are consumed during Beat 1 of a Breakthrough (Preparation phase
 
 ---
 
-# Weapons (F-Grade Reference)
+## Weapons (F-Grade Reference)
 
 Weapons in this system don't deal flat damage — they determine which Force is governing for an attack and may grant a small **Skill Bonus** to the Clash. Quality and craftsmanship matter narratively but do not break the math.
 
@@ -78,18 +77,18 @@ These are intended as starting and recovery tier. Higher-quality weapons (named,
 
 ---
 
-# Volatile Artifacts (One-Shot and Tutorial-Grade)
+## Volatile Artifacts (One-Shot and Tutorial-Grade)
 
 Volatile Artifacts are scavenged debris from dead worlds, half-functioning constructs, and degraded shards of higher-tier equipment. They are unreliable, frequently single-use, and core to the tutorial's economy.
 
-## Reactive Buckler
+### Reactive Buckler
 
 A small shield that absorbs one impact before its protective field collapses.
 
 - **Effect:** Once per encounter, when the wielder would take damage from a physical Clash, reduce that damage to 0. The buckler's field discharges visibly and does not reset until the next Consolidation.
 - **Limitations:** Does not protect against mental, spiritual, or illusion-based attacks. Does not negate the Margin — only converts damage to 0 after the Clash resolves. Does not work against attacks the wielder did not see coming (Surprise Beat hits, ambushes from Hidden enemies).
 
-## Degraded Skill Shards
+### Degraded Skill Shards
 
 Crystalline matrices containing fragments of dead techniques. Single-use. Activate as a 1-Beat action; the user describes intent and the GM rolls for backfire. Roll **1d100** when activating.
 
@@ -104,19 +103,19 @@ Crystalline matrices containing fragments of dead techniques. Single-use. Activa
 
 Shards are deliberate randomizers. They reward players who use them in moments where a wild outcome is acceptable, and punish those who treat them as reliable tools.
 
-## Sensory Tools
+### Sensory Tools
 
 - **Resonance Glass:** Spend 1 Beat. Reveals hidden energy signatures within your current Zone — concealed runes, dormant constructs, Principle resonance points. Does not reveal hidden creatures unless they have an active energy signature (cultivators using skills, magical creatures, etc.). Reusable.
 - **Truthbinder Cuff:** Forces a single yes/no answer from one detained, non-hostile target. Single use; the cuff dissolves after activation. Cannot compel meaningful detail — only a binary truth.
 
-## Single-Use Ranged Relic
+### Single-Use Ranged Relic
 
 Devastating weapon, one charge. Common in tutorial scavenger zones.
 
 - **Effect:** A ranged Clash using DEX or POW Force (user's choice) at +20 to the roll. On hit, deals damage as normal but treats the user's Grade as **one tier higher** for the damage Multiplier (an F-Grade user deals E-Grade damage on this hit only — Margin × 10 instead of × 1).
 - **Disposable:** After use, the relic burns out and crumbles. Cannot be repaired.
 
-## Other Tutorial-Grade Items
+### Other Tutorial-Grade Items
 
 - **Battered Medkit:** Heals 10 HP (no Toxin) when used as a 1-Beat action on yourself or an ally in the same Zone. Three uses before the supplies are exhausted.
 - **Low-Grade Armor Scraps:** Heavy. Grants +5 Defense Force when defending with FOR; imposes −5 to DEX-based Clashes (offensive or defensive). Stackable up to one set per character.
@@ -125,7 +124,7 @@ Devastating weapon, one charge. Common in tutorial scavenger zones.
 
 ---
 
-# Item Acquisition
+## Item Acquisition
 
 For F-Grade prototype play, items appear:
 
@@ -140,7 +139,7 @@ If the party is hoarding consumables and never spending them, the GM is being to
 
 ---
 
-# Future Expansion
+## Future Expansion
 
 This document covers prototype-tier items only. Deferred for later development:
 

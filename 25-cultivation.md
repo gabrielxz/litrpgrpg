@@ -1,15 +1,14 @@
 ![Cultivation](./assets/cultivation.png)
-# LitRPG: RPG
 
-## Cultivation: Volatile Energy, Consolidation & Healing
+# Cultivation
 
 ---
 
-# Volatile Energy & Consolidation
+## Volatile Energy & Consolidation
 
 Characters do not gain traditional "Experience Points." They accumulate **Volatile Energy (VE)** from kills, consumables, and environmental sources. VE represents raw, unprocessed power absorbed from the Multiverse — essence that must be refined into permanent growth through structured rest.
 
-## The Pressure Gauge
+### The Pressure Gauge
 
 Every character has a **VE Tolerance** representing the raw energy their body and spirit can hold before refinement:
 
@@ -25,7 +24,7 @@ VE accumulates automatically after combat and from other sources. As long as sto
 
 **GM Note on Saturation:** The System does not announce band thresholds to the character. Narrate symptoms instead — skin feels hot and prickly, vision tunnels at the edges, muscles cramp, something under the breastbone flexes in ways that feel wrong. Let players learn the pattern by experience. This generates rich Hidden Vector signal: who pushes into the red zone chasing one more kill? (Hunger.) Who pulls back at the first warning? (Restraint.)
 
-## Consolidation (Structured Rest)
+### Consolidation (Structured Rest)
 
 To process VE, a character declares a **Consolidation** rest. This is not a mini-game. The player states they are consolidating, the GM tracks the clock and any interruptions, and the mechanical result resolves automatically.
 
@@ -41,7 +40,7 @@ An F-Grade character with FOR 60 and POW 60 processes 120 VE per hour. A full ta
 
 **HP Recovery:** During Consolidation, characters recover 25% of their Max HP per hour.
 
-**Energy Recovery:** Energy refills completely at the start of any Consolidation rest, regardless of duration. This is the *only* source of Energy regeneration — Energy does not recover in combat, between combats, or through passive time. See Core Mechanics §7 for the full Energy system.
+**Energy Recovery:** Energy refills completely at the start of any Consolidation rest, regardless of duration. This is the *only* source of Energy regeneration — Energy does not recover in combat, between combats, or through passive time. See Core Mechanics: "The Energy System".
 
 **Partial Consolidation:** If interrupted, the character retains proportional progress on both VE processing and HP recovery. Unprocessed VE stays in the tank and remains subject to Saturation rules.
 
@@ -51,7 +50,7 @@ An F-Grade character with FOR 60 and POW 60 processes 120 VE per hour. A full ta
 
 **Battle Memory Meditation:** Characters who hold a Battle Memory Card (see Principles document) process it during Consolidation. The GM feeds the memory context into the System AI, which generates a cryptic vision and awards Insight Points.
 
-## Leveling: The VE Chart
+### Leveling: The VE Chart
 
 Levels require accumulated processed VE following an exponential curve:
 
@@ -78,17 +77,17 @@ At E-Grade, every entry is × 10 (Level 1 costs 1,000 VE). At D-Grade, × 100. T
 
 **Grade Breakthrough** happens at the Grade-cap level (Level 25 within the current Grade). It is **not** an automatic level-up. See Breakthrough Consolidation below.
 
-## The Interesting Decision
+### The Interesting Decision
 
 Consolidation is not about *how* — it is about *when*. Do you push one more fight while your gauge is in the red zone, gambling on a bigger haul before resting? Or do you pull back and consolidate safely, knowing that another group might claim the hunting ground while you meditate?
 
 Players who hunt aggressively and consolidate efficiently pull ahead. Players who get greedy risk poisoning and permanent loss. This maps directly onto the Hunger/Restraint behavioral axis.
 
-## VE Rewards by Source
+### VE Rewards by Source
 
 The GM awards VE from multiple sources. The baseline rates below are tuned to F-Grade — multiply by ×10 per Grade for higher tiers (E-Grade enemies yield ×10 VE, D-Grade ×100, and so on), matching the leveling chart and damage Multiplier.
 
-### Combat Kills
+#### Combat Kills
 
 The defeated enemy's difficulty tier (read from the Grade Reference Card) determines VE awarded:
 
@@ -105,32 +104,32 @@ Cross-Grade kills follow the multiplier — an E-Grade Moderate enemy yields 300
 
 A stealth kill or trap kill yields half VE — the System rewards risk, not efficiency. A defeated boss-tier encounter (rare, named, or designed for the moment) may be worth 1.5× the listed amount at the GM's discretion.
 
-### Quest & Survival
+#### Quest & Survival
 
 - **Session Survival:** 10 VE (F-Grade) per character per session, awarded for surviving meaningful play. Scales with Grade.
 - **Quest Completion:** GM-assigned. A typical F-Grade side quest awards 30–100 VE; a major quest arc may award the equivalent of a full level or more.
 - **Hidden Achievements:** Rare. Award 50–200 VE (F-Grade) plus a Title or other narrative reward.
 
-### Environmental Sources
+#### Environmental Sources
 
 - **Energy-Density Hex Absorption:** During exploration of high-density terrain, characters passively absorb 5 VE/hour at Moderate density, 15 VE/hour at High density, 30 VE/hour at Extreme density. This is the absorption that funds Breakthrough Ignition; it also accumulates during normal play.
 - **Treasure Cores & Affinity Crystals:** Lump VE awards on consumption. F-Grade examples: minor core (50 VE), refined core (150 VE), pristine core (400 VE).
 
-### Pacing Reference (F-Grade)
+#### Pacing Reference (F-Grade)
 
 L1 → L2 requires 100 VE — roughly 7 Easy kills, 4 Moderate, or one strong quest plus survival. L1 → L10 requires 3,193 cumulative VE — across ~25–30 sessions of moderate-pace play. L1 → L25 (F-cap) requires 39,248 VE; the final 3 levels alone account for over 16,500 VE — the genre-standard pre-Breakthrough grind.
 
 GMs should not micromanage VE awards mid-session. Track running totals between sessions and award in batches at meaningful rest points.
 
-### Bonus VE: The Risk-Rest Curve
+#### Bonus VE: The Risk-Rest Curve
 
 Survival and quest completion guarantee baseline progression. Combat VE and environmental absorption are the accelerants — they reward characters who push into danger, hunt aggressively, and master the timing of risk and rest. Playing it safe means you still level. The aggressive cultivator who balances Saturation pressure against Consolidation timing pulls ahead.
 
-## Toxins & Impurities
+### Toxins & Impurities
 
 Consuming healing pills or forced-growth treasures adds **Toxin Points**. If Toxin Points exceed a character's Toxin Tolerance (Raw FOR × 2), Consolidation efficiency drops: more time is required per VE processed, and a percentage of VE is lost to impurity during each rest.
 
-## Grade Breakthroughs
+### Grade Breakthroughs
 
 Ascending from one Grade to the next is a deliberate, dangerous act — not a passive level-up. When a character reaches the Grade-cap level (the last level within their Grade), they cannot advance further through ordinary Consolidation. Instead, they must attempt a **Grade Breakthrough** — a four-beat ritual involving deliberate VE overcharge, a Breakthrough Check (d100 + POW Force + HRT Force vs. Severe difficulty of the target Grade), external phenomena management, and System recognition.
 
@@ -138,7 +137,7 @@ The full mechanic — including the Overcharge Ratio risk-reward dial, the five 
 
 ---
 
-# Healing
+## Healing
 
 Recovery in the Multiverse is never free. There are three paths, each with a cost.
 

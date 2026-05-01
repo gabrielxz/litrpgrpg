@@ -1,10 +1,9 @@
-# LitRPG: RPG
 
-## Stable Abilities (Tutorial-Tier System Grants)
+# Stable Abilities
 
 ---
 
-# Design Notes
+## Design Notes
 
 A **Stable Ability** is a small, permanent capability granted by the System at the end of the Integration Tutorial (Phase 7: First Recognition). It is not a class feature — class selection happens at Level 10. It is not a Principle Application — those are earned through Insight Points. A Stable Ability is the System's first formal acknowledgment of the character's emerging identity: a single, flavor-rich tool that signals the direction of their growth.
 
@@ -18,18 +17,18 @@ Each Stable Ability is keyed to a behavioral signature observed during the tutor
 
 ---
 
-# The Catalog
+## The Catalog
 
-## Force / Hunger Axis
+### Force / Hunger Axis
 
-### First Impact
+#### First Impact
 *The first blow lands harder when the body is fresh and the mind is set.*
 
 The first Clash you make in any combat gains **+15 to the roll**. Once per encounter; refreshes when combat ends.
 
 **Best for:** Characters who charged decisively into the tutorial's first fights, claimed weapons aggressively, or struck before others could react.
 
-### Bloodfast
+#### Bloodfast
 *Killing accelerates the next strike.*
 
 Each time you deliver a killing blow, your next Clash this turn (if any) gains **+5 cumulative**. Resets at end of turn or end of encounter.
@@ -38,16 +37,16 @@ Each time you deliver a killing blow, your next Clash this turn (if any) gains *
 
 ---
 
-## Method / Restraint Axis
+### Method / Restraint Axis
 
-### Sensory Pulse
+#### Sensory Pulse
 *A pulse of focused attention reveals what hides in the seams.*
 
 Once per Consolidation, spend 1 Beat. Reveal hidden features within your current Zone — traps, concealed enemies, structural weak points, energy signatures. The GM describes what stands out.
 
 **Best for:** Characters who explored the Arcane Debris carefully, noticed the spiral pattern, or asked careful questions before acting.
 
-### Architect's Eye
+#### Architect's Eye
 *You see the shape of the thing before you see the thing itself.*
 
 After observing a target for at least one round (combat or otherwise), you may ask the GM one tactical question about it: a Force value, a vulnerability, its preferred attack pattern, or its remaining HP/Energy in rough terms. Once per encounter, no Beat cost.
@@ -56,23 +55,23 @@ After observing a target for at least one round (combat or otherwise), you may a
 
 ---
 
-## Will / Accord Axis
+### Will / Accord Axis
 
-### Crushing Stare
+#### Crushing Stare
 *Some pressure is delivered without a weapon.*
 
 Once per encounter, spend 1 Beat. One target in your Zone makes a HRT Force save vs. your CHA Force + 10. On failure, they lose their next Beat (suppressed by your presence). Does not work on creatures immune to mental attacks (constructs, mindless undead).
 
 **Best for:** Characters who dominated social interactions, intimidated alien Initiates, or made others defer through sheer presence.
 
-### Rally
+#### Rally
 *A word, a look, a gesture — and your ally finds another half-step.*
 
 Once per encounter, spend 1 Beat. One ally within line of sight gains **+10 to their next Clash this round**.
 
 **Best for:** Characters who advocated for the group, mediated disputes, or stepped forward as informal leaders during the Civic Fragment encounter.
 
-### Voice of Decision
+#### Voice of Decision
 *When the room can't decide, you decide.*
 
 When the party is deliberating a decision and unable to reach agreement, you may declare a resolution. This is not magical compulsion — but the System notes the moment of leadership. Your CHA-based Clashes gain **+10 for the rest of that session**, whether the party accepts your declaration or not. Once per session.
@@ -81,23 +80,23 @@ When the party is deliberating a decision and unable to reach agreement, you may
 
 ---
 
-## Control / Freedom Axis
+### Control / Freedom Axis
 
-### Iron Settle
+#### Iron Settle
 *The wound deepens, the stance lowers, and the world narrows to what must hold.*
 
 When at 25% HP or less, gain **+10 to Defense Force on all Clashes**. Lasts until you regain HP above the threshold.
 
 **Best for:** Characters who held the line, endured hardship, or refused to retreat when the party was breaking.
 
-### Slipstep
+#### Slipstep
 *The blow that should have landed slides past you.*
 
 When you would be hit by an attack, declare Slipstep — the attacker rerolls their Clash and takes the lower result. Once per Consolidation.
 
 **Best for:** Characters who improvised under pressure, embraced chaotic solutions, or escaped situations through unpredictable movement.
 
-### Tracker's Mark
+#### Tracker's Mark
 *You hold the impression of them, and the impression holds direction.*
 
 Spend 1 Beat outside of combat to mark a target you can perceive. For the next 24 hours, you sense their direction and rough distance. Affects only one target at a time; marking a new target replaces the old one.
@@ -106,16 +105,16 @@ Spend 1 Beat outside of combat to mark a target you can perceive. For the next 2
 
 ---
 
-## Hybrid / Arcane
+### Hybrid / Arcane
 
-### Arcane Flicker
+#### Arcane Flicker
 *A small, deliberate disturbance in the air.*
 
 Free action, no Energy cost: produce a small telekinetic push. Move an unattended object up to 10 lbs within line of sight, or shove an Exposed enemy off-balance (no damage; impose **−5 to their next Clash**). Useful for tactical setups, environmental tricks, knocking objects loose from a distance.
 
 **Best for:** Characters who experimented with unstable shards, interacted with arcane phenomena, or showed early POW affinity in the Arcane Debris.
 
-### Reactive Dodge
+#### Reactive Dodge
 *The body remembers what the mind has not yet decided.*
 
 When you are Exposed and would be hit by an attack, gain **+10 to Defense Force on that Clash**. Once per encounter.
@@ -124,7 +123,7 @@ When you are Exposed and would be hit by an attack, gain **+10 to Defense Force 
 
 ---
 
-# Selection Guidelines for the GM
+## Selection Guidelines for the GM
 
 At Phase 7 of the tutorial, review each player's tutorial behavior and select **one** Stable Ability per character. If multiple abilities feel appropriate, pick the one that:
 
@@ -138,7 +137,7 @@ If two players would naturally receive the same ability, give one of them a them
 
 ---
 
-# Future Expansion
+## Future Expansion
 
 This catalog covers the tutorial-tier grant. As the campaign develops, new Stable Abilities may be granted by:
 

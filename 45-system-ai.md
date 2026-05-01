@@ -1,7 +1,8 @@
 ![System AI](./assets/system_ai.png)
-# LitRPG: RPG
 
-## The System AI (GM Infrastructure)
+# The System AI
+
+*GM Infrastructure for an AI-Assisted LitRPG World*
 
 ---
 
