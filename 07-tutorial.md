@@ -95,11 +95,17 @@ For approximately sixty seconds of subjective experience, they are nowhere. No b
 
 Then the System speaks — not in words, but in meaning that arrives pre-translated, like remembering something you never learned:
 
-> *Consciousness anchored.*
-> *Native world: Earth. Status: Integrated.*
-> *Integration stability: provisional.*
-> *Tutorial rights: granted. Tutorial mercy: limited.*
-> *Mortality: active.*
+::: systemvoice
+*Consciousness anchored.*
+
+*Native world: Earth. Status: Integrated.*
+
+*Integration stability: provisional.*
+
+*Tutorial rights: granted. Tutorial mercy: limited.*
+
+*Mortality: active.*
+:::
 
 The System does not answer questions. It does not wait for acknowledgment. It processes and moves on.
 
@@ -667,9 +673,6 @@ Below are four samples calibrated to common tutorial archetypes. The GM customiz
 
 **Force/Hunger archetype** (charged in, claimed loot, killed aggressively):
 
-> ══════════════════════════════════════════
->     INTEGRATION COMPLETE — INITIATE [name]
-> ══════════════════════════════════════════
 > *Repeated front-line engagement detected. Pain tolerance: above baseline. Resource prioritization: self-first. Pattern intensifying.*
 >
 > *Conceptual resonance detected: pattern-class IMPACT. Monitoring.*
@@ -682,7 +685,6 @@ Below are four samples calibrated to common tutorial archetypes. The GM customiz
 >
 > Levels gained: 4 (now Level 5). Stat allocation pending.
 > VE total processed: 720.
-> ══════════════════════════════════════════
 
 **Method/Restraint archetype** (observed, planned, helped others):
 

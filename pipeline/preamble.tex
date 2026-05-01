@@ -1,0 +1,129 @@
+% =====================================================
+% LitRPG: RPG — custom LaTeX preamble
+% Loaded via pandoc --include-in-header
+% =====================================================
+
+% -----------------------------------------------------
+% Fonts (Path= into TeX Live's bundled fonts)
+% -----------------------------------------------------
+\usepackage{fontspec}
+
+% Body: EB Garamond — classic book serif
+\setmainfont{EBGaramond}[
+  Path=/usr/share/texmf-dist/fonts/opentype/public/ebgaramond/,
+  Extension=.otf,
+  UprightFont=*-Regular,
+  ItalicFont=*-Italic,
+  BoldFont=*-Bold,
+  BoldItalicFont=*-BoldItalic
+]
+
+% Sans: Alegreya Sans — used by some elements
+\setsansfont{Alegreya}[
+  Path=/usr/share/texmf-dist/fonts/opentype/huerta/alegreya/,
+  Extension=.otf,
+  UprightFont=*-Regular,
+  ItalicFont=*-Italic,
+  BoldFont=*-Bold,
+  BoldItalicFont=*-BoldItalic
+]
+
+% Monospace: JetBrains Mono (fontconfig finds it)
+\setmonofont{JetBrains Mono}[Scale=0.82]
+
+% Heading font: Alegreya Black — display serif with weight
+\newfontfamily\headingfont{Alegreya}[
+  Path=/usr/share/texmf-dist/fonts/opentype/huerta/alegreya/,
+  Extension=.otf,
+  UprightFont=*-Black,
+  ItalicFont=*-BlackItalic
+]
+
+% Apply heading font to all KOMA-Script "disposition" elements
+% (chapters, sections, subsections, paragraph titles)
+\addtokomafont{disposition}{\headingfont}
+\addtokomafont{chapter}{\headingfont}
+\addtokomafont{section}{\headingfont}
+\addtokomafont{subsection}{\headingfont}
+
+% -----------------------------------------------------
+% Full-page bleed-edge art (chapter opener images)
+% -----------------------------------------------------
+\usepackage{tikz}
+
+\newcommand{\fullpageart}[1]{%
+  \clearpage%
+  \thispagestyle{empty}%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=center, inner sep=0pt] at (current page.center) {%
+      \includegraphics[width=\paperwidth, height=\paperheight, keepaspectratio=false]{#1}%
+    };
+  \end{tikzpicture}%
+  \clearpage%
+}
+
+% -----------------------------------------------------
+% Callout box environments (tcolorbox-based)
+% Use in markdown via fenced divs:
+%   ::: systemvoice
+%   *Consciousness anchored.*
+%   :::
+% Requires the pandoc filter that maps div class -> environment
+% (or raw LaTeX blocks).
+% -----------------------------------------------------
+\usepackage[most]{tcolorbox}
+
+% System Voice — dark box with cyan rule, italic body
+% For in-fiction System messages: "Consciousness anchored. Status: Integrated."
+\newtcolorbox{systemvoice}{
+  enhanced,
+  colback=black!90,
+  colframe=cyan!60!black,
+  coltext=white,
+  fontupper=\itshape\sffamily,
+  boxrule=0.4pt,
+  arc=0pt,
+  outer arc=0pt,
+  left=12pt,
+  right=12pt,
+  top=10pt,
+  bottom=10pt,
+  before skip=10pt,
+  after skip=10pt,
+  borderline west={2.5pt}{0pt}{cyan!70!black}
+}
+
+% Stat Block — distressed gray box with heavy top rule
+% For monster/character stat blocks
+\newtcolorbox{statblock}{
+  enhanced,
+  colback=gray!6,
+  colframe=black!60,
+  boxrule=0.4pt,
+  arc=0pt,
+  outer arc=0pt,
+  left=12pt,
+  right=12pt,
+  top=8pt,
+  bottom=8pt,
+  before skip=10pt,
+  after skip=10pt,
+  borderline north={2.5pt}{0pt}{black!70}
+}
+
+% Quest Card — System UI-style structured entry
+% For Quest Log entries, Mandates, Personal Opportunity notifications
+\newtcolorbox{questcard}{
+  enhanced,
+  colback=cyan!4,
+  colframe=cyan!50!black,
+  boxrule=0.5pt,
+  arc=1pt,
+  fontupper=\ttfamily\small,
+  left=10pt,
+  right=10pt,
+  top=8pt,
+  bottom=8pt,
+  before skip=10pt,
+  after skip=10pt
+}

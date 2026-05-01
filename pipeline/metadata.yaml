@@ -1,0 +1,57 @@
+---
+title: "LitRPG: RPG"
+author: "Gabriel Beal"
+date: "Working Draft"
+
+# Title page — uses cover.png as full-bleed background
+titlepage: true
+titlepage-background: "assets/cover.png"
+titlepage-text-color: "F5F5F5"
+titlepage-rule-color: "00000000"   # transparent rule
+titlepage-rule-height: 0
+toc-own-page: true
+book: true
+classoption:
+  - oneside
+  - 11pt
+
+# Page geometry — 7x10 trim with comfortable inner margin
+geometry:
+  - paperwidth=7in
+  - paperheight=10in
+  - inner=0.85in
+  - outer=0.7in
+  - top=0.85in
+  - bottom=0.9in
+  - headsep=0.3in
+
+fontsize: 11pt
+linestretch: 1.18
+
+# Headings & numbering
+numbersections: false
+toc-depth: 2
+
+# Code & listings
+listings-disable-line-numbers: true
+listings-no-page-break: true
+code-block-font-size: \scriptsize
+caption-justification: centering
+
+# Misc
+links-as-notes: false
+colorlinks: true
+linkcolor: black
+urlcolor: "5B7C99"
+toccolor: black
+
+# Running header / footer overrides
+# Defaults from Eisvogel: title (left), date (right), author (footer-left), page (footer-right).
+# We strip date and author from running pages — they appear only on the title page.
+header-left: "\\leftmark"   # current chapter name (set by \chaptermark)
+header-center: ""
+header-right: "\\thepage"   # page number top-right
+footer-left: ""
+footer-center: ""
+footer-right: ""
+---
