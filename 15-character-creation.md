@@ -42,14 +42,14 @@ Proficiencies should reflect the character's life before Integration: what they 
 
 Calculate and record these values:
 
-- **Max HP:** Equal to your Raw FOR value.
+- **Max HP:** Raw FOR × 2.
 - **Max Energy:** Equal to your Raw POW value.
 - **VE Tolerance:** (Raw FOR + Raw POW) / 2 × 10.
 - **VE Stored:** 0.
 - **Level:** 1.
 - **Grade:** F.
 
-At Level 1, HP and Energy are single digits. That is intentional — freshly integrated characters are fragile, and early encounters should feel dangerous. Growth comes fast.
+At Level 1, HP is in the single to low double digits and Energy is single digits. That is intentional — freshly integrated characters are fragile, and early encounters should feel dangerous. Growth comes fast.
 
 ## Starting Equipment
 

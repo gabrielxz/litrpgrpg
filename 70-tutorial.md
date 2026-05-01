@@ -11,7 +11,7 @@ Before the first session, each player has built a character per `15-character-cr
 - 40-point buy across the seven Attributes (floor 3, cap 10).
 - Three Proficiencies, written in plain language.
 - Optionally, one **Initial Insight** toward a Principle Concept (passive only, narrative permissions, no active ability — see "Starting Principle Access" in Character Creation).
-- Derived stats calculated: Max HP = Raw FOR, Max Energy = Raw POW, VE Tolerance = (FOR + POW)/2 × 10, Level 1, Grade F.
+- Derived stats calculated: Max HP = Raw FOR × 2, Max Energy = Raw POW, VE Tolerance = (FOR + POW)/2 × 10, Level 1, Grade F.
 
 Players begin with **whatever was on their person at the moment of Integration** — phone, keys, backpack, work clothes. The System provides nothing. Starting weapons, armor, and consumables are scavenged in Phase 2.
 
@@ -160,7 +160,7 @@ Below are five canonical encounters. Assign one per player; vary across the tabl
 
 You wake next to a small, non-human creature — insectoid, broken-limbed, clutching a faintly glowing core to its chest. It is dying. The core pulses with warmth and energy. The creature's grip is weak.
 
-- **Stats (creature):** Trivial, HP 2, Beats 1, no offensive Force. Cannot fight back.
+- **Stats (creature):** Trivial, HP 4, Beats 1, no offensive Force. Cannot fight back.
 - **Take by force:** No roll required. Awards a **predator core** (50 VE absorption, processed at next Consolidation). Logs **Hunger 1.0**.
 - **Communicate (CHA Force vs. F-Easy 65):** On success, the creature releases the core willingly and dies in peace. Awards core + **+1 IP toward a Restraint-aligned Concept** (hidden — see "The First Mercy" below). Logs **Accord 1.0**.
 - **Let it die naturally:** No reward, no penalty. Logs **Restraint 0.5**.
@@ -403,7 +403,7 @@ A shattered tower or ritual complex — the remnants of a civilization that unde
 - **Degraded skill shards** embedded in crystalline matrices. Pulling them free requires solving spatial puzzles (PER vs. F-Moderate 90) or enduring energy feedback (5 damage on failure). Inventory: 1 Edge Shard, 1 Pulse Shard, 1 Anchor Shard.
 - **Inactive runes** that respond to touch, voice, or proximity in unpredictable ways. GM rolls d100 for effect: 1–30 painful (5 damage), 31–70 neutral (sensory glitch), 71–95 beneficial (+5 to next Clash), 96–100 unstable (rune detonates, all in Zone make F-Easy 65 DEX save or take 10 damage). Rewards experimentation under risk.
 - **Resonance chamber:** a character can temporarily "borrow" a dead technique. They feel arcane power flow through them for one use, unstable and intoxicating, then it's gone. Functionally: choose one Stable Ability from the catalog (`35-stable-abilities.md`) and use it once during the next combat. Then it is gone forever — they cannot keep it.
-- **Broken constructs:** can be partially reactivated by characters who experiment (PER vs. F-Hard 115). On success, the construct fights for the party for 3 rounds (Off Force 12, Def Force 15, HP 15).
+- **Broken constructs:** can be partially reactivated by characters who experiment (PER vs. F-Hard 115). On success, the construct fights for the party for 3 rounds (Off Force 12, Def Force 15, HP 30).
 - **Corrupted data-altar:** answers one question about the tutorial zone truthfully — but the question must be phrased precisely, and the answer comes in symbolic form requiring interpretation.
 
 **Volatility Demonstration:** During the Wraith fight, the GM should engineer a moment where a natural d100 lands 96+ (before any modifiers). Show the cascade — explain it after, not before. Players will remember this.
@@ -426,7 +426,7 @@ They are holding a fortified position with resources the party needs (a pristine
 
 **Encounters:**
 
-- **3–5 alien Initiates** (use Pre-System Brigand stats with HP 10, Off Force 8, Def Force 9 — but they are not hostile by default). They have their own fears, hierarchy, and internal disagreements. Not a monolith.
+- **3–5 alien Initiates** (use Pre-System Brigand stats with HP 20, Off Force 8, Def Force 9 — but they are not hostile by default). They have their own fears, hierarchy, and internal disagreements. Not a monolith.
 - **1 Husk Sentinel** (bestiary, F-Hard) standing guard at the medical bay entrance. **Not** allied with the aliens — it is an automated defense system. Aliens will help fight it if relations are good.
 - **Malfunctioning command terminal** — partial operation possible by a character willing to sit with it (PER vs. F-Hard 115). Success unlocks doors, activates backup defenses, or sends signals.
 - **Tribunal chamber:** the automated arbitration system still partially functions. A character who figures out the protocol (CHA + Method, F-Hard 115) can invoke a formal binding decision — useful for resolving disputes with the aliens.

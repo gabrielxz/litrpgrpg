@@ -171,7 +171,7 @@ Every character possesses seven core Attributes. These are raw numbers — the b
 
 **Derived Statistics:**
 
-- **Max HP:** Equal to the character's Raw FOR value. A character with FOR 75 has 75 HP. A character with FOR 8,500 has 8,500 HP. The numbers scale with Grade because the stats themselves scale with Grade.
+- **Max HP:** Raw FOR × 2. A character with FOR 75 has 150 HP. A character with FOR 8,500 has 17,000 HP. The numbers scale with Grade because the stats themselves scale with Grade. The doubled coefficient gives peer combat enough room to develop across multiple exchanges before lethality lands — without it, a single hot opening Clash routinely ended fights before the defender could act.
 
 - **Max Energy:** Equal to the character's Raw POW value.
 

@@ -15,7 +15,7 @@ All Toxin Points referenced below interact with the Toxin Tolerance rule (Cultiv
 
 ### Healing Pills
 
-Restore HP instantly. Adds Toxin Points. Consumed as a free action on the user's turn, or as a 1-Beat action to administer to an ally in the same Zone.
+Restore HP instantly. Adds Toxin Points. Consumed as a **free action** on the user's turn, or as a 1-Beat action to administer to an ally in the same Zone.
 
 | **Pill** | **Grade** | **HP Restored** | **Toxin Added** |
 |---|---|---|---|
@@ -28,6 +28,30 @@ Restore HP instantly. Adds Toxin Points. Consumed as a free action on the user's
 E-Grade pills heal ×10 the listed amount and add ×10 Toxin (if the user can metabolize them — F-Grade systems are prone to violent reactions when ingesting E-Grade materia, often inducing temporary Saturation).
 
 **Healing pills cap at the user's Max HP.** Excess healing is wasted.
+
+#### Pill Saturation in Combat
+
+Pills are emergency tools, not infinite reservoirs. The body's energy channels accept healing in diminishing quantities — chugging the entire stash does not make a character immortal.
+
+Within a single combat scene, each healing pill consumed by a given character heals at progressively lower efficiency:
+
+| Pill # in this combat | Efficiency |
+|---|---|
+| 1st | 100% (full listed value) |
+| 2nd | 50% |
+| 3rd | 25% |
+| 4th | 12% |
+| 5th and beyond | half-again per pill, until rounded to 0 |
+
+Round down at each step. Once a pill would heal 0 HP, the character is **saturated** and further pills have no healing effect for the remainder of the combat scene. Energy Pills follow the same diminishing schedule, tracked separately from healing pills (a third Healing Pill does not affect the next Energy Pill's potency).
+
+**Toxin still accrues at the listed amount per pill regardless of efficiency.** A desperate character chugging pills in a long fight pays the full Toxin price even after the heals stop landing — the body absorbed the impurities without absorbing the medicine.
+
+**Administering a pill to an ally** remains a 1-Beat action. The ally's saturation count increments, not the user's.
+
+**Out-of-combat Consolidation rest** resets all saturation counts. The body has time to clear residual saturation between encounters.
+
+**Foundation Pills are exempt** — they are not consumed during combat.
 
 ### Energy Pills
 
