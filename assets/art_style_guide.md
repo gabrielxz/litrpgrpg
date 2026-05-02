@@ -1,43 +1,41 @@
-# LitRPG TTRPG Art Style Guide: The Unreadable System
+# LitRPG: RPG Art Style Guide: Kinetic Ink & The Stenciled System
 
-**Core Philosophy:** A brutal synthesis of gritty, urban street-art stencils and the raw, frantic kineticism of sumi-e ink wash. We aggressively reject the smooth, hyper-polished "plastic" sheen of standard anime and LitRPG rendering. The visual language must be handcrafted, chaotic, and heavily textured. Crucially, the art must function as a seamless user interface for the tabletop experience, bridging the gap between narrative flavor and strict mechanical bookkeeping, while maintaining an unreadable, non-English aesthetic for all 'System' elements.
+## Prime Directive: Visual Chaos
 
-## 1. Linework & Rendering: Frantic Weight
+The overarching goal is to achieve a visceral, adrenaline-fueled aesthetic that violently synthesizes raw, heavy, urban street-art stencils with the frantic kinetic energy of sumi-e ink wash. We aggressively reject any smooth, hyper-polished "plastic" sheen typical of standard anime or digital rendering. The visual language must be handcrafted, chaotic, and heavily textured. The art must visually communicate a reality that is being dissected and re-stenciled by an advanced, indifferent mechanism.
 
-* **Thick & Energetic:** Deploy bold, heavy black strokes that imitate a physical stencil, but shatter the clean lines with chaotic, expressive brushstrokes.
-* **Zero Smooth Shading:** Soft gradients are strictly forbidden. Define form and shadow exclusively through frantic ink splatters, unrefined cross-hatching, and heavy black negative space.
-* **Raw Edges:** Illustrations should bleed. Leave the edges of character portraits and spot art raw, resembling an adrenaline-fueled field sketch rather than a studio rendering.
+## Core Visual Principles
 
-## 2. Color Palette: The Grounded and The Arcane
+### Linework & Rendering: Frantic Weight
 
-* **Muted & Desaturated:** The physical world is grim. Anchor the environmental and character palettes in faded blues, concrete grays, dirty oxidized browns, and dried-blood reds.
-* **Abstract Washes:** Apply foundational color not as a digital "fill," but as loose, physical watercolor or ink washes that bleed slightly outside the linework boundaries.
-* **The System Pop (Strict Rule):** Reserve high-vibrancy neon colors (electric blue, pure magenta, arcane purple) exclusively for System elements—holographic screens, UI overlays, and active magic. This visual spike must brutally contrast the desaturated physical world, emphasizing the System's unnatural intrusion into reality.
+- **Thick & Energetic:** Deploy bold, heavy black strokes that imitate a physical, messy street stencil, but then shatter those clean forms with chaotic, expressive brushstrokes.
+- **No Smooth Shading:** Form and shadow must be defined exclusively by frantic ink splatters, unrefined cross-hatching, and heavy negative space. Soft gradients are forbidden.
+- **Raw and Bleeding Edges:** The artwork must look like an unfinished field sketch or a rushed mural. Illustrations must not have clean borders; the medium should be allowed to run, bleed, and splatter into the background texture.
 
-## 3. Texture, Grime & TTRPG UX Legibility
+### Mediums & Textures: Grime and Paper
 
-* **Distressed Mediums:** Overlay the canvas with rough, physical textures: scratched metal, cracked concrete, or aged parchment.
-* **Controlled Grime:** Use ink splatters and smudges heavily, but never at the expense of mechanical readability.
-* **Typography & Rulebook Layout:** The art must support the rules, not obscure them. Use the stencil aesthetic for bold, punchy headers. Body text must sit on clean, low-opacity "washed" zones within the texture to ensure zero friction when players are parsing mechanics at the table.
+- **Dominant Mediums:** Frantic, kinetic sumi-e ink wash and loose, wet watercolor applied on a distressed canvas. The canvas itself should look like aged parchment, heavy watercolor paper, or a worn physical surface.
+- **Overlay:** The entire image must be heavily overlaid with physical, distressed textures — scratched metal, worn paint, or cracked concrete.
+- **Kinetic Grime:** Incorporate ink splatters, drips, and smudges to create a frantic, action-oriented atmosphere. The grounding textures (concrete, decay) should feature abstract, graffiti-like stenciled shapes (not legible words).
 
-## 4. Diegetic Interfaces & Character Sheets
+### Color Space & The "System Pop"
 
-* **The Sheet as an Artifact:** Treat character sheets and stat blocks not as out-of-game paper, but as diegetic, stenciled documents found within the world.
-* **Data Representation (Strict Rule):** Progression tracks, HP grids, inventory slots, and all numerical data must be represented exclusively by The System Script (see Section 5), not legible words or numbers. This eliminates any ambiguity or rules conflicts with player-readable data.
+- **Grounded Palette:** Anchor the physical world in a muted, desaturated watercolor wash palette: faded concrete grays, oxidized browns, concrete dust, and dried-blood reds.
+- **Arcane Contrast (Strict Rule):** Faint, ephemeral holographic projections and active magic effects must be rendered exclusively in hyper-vibrant, emissive neon colors (electric cyan, pure magenta, arcane purple). These neon elements must starkly contrast against the gritty, faded watercolor background.
 
-## 5. THE SYSTEM SCRIPT (Core Change: No English)
+### The System Script (Unreadable UI)
 
-* **Completely Unreadable Interface:** Aggressively purge all readable English text (e.g., 'SYSTEM OVERLAY', 'GRADE', 'Tier', numerical data) from all System overlays, holographic screens, and interface elements.
-* **New Script of Glyphs:** Replace all text with a newly created script of complex, unreadable, stylized glyphs. This script should be a fusion of abstract geometric shapes, stenciled vector arrows, and fragmented arcane symbols, rendered with the same stencil-and-brush-work feel. The glyphs should look functional and complex but be impossible for a player to decrypt as a word. This script evokes the System's inhuman, advanced language and removes the risk of incorrect data. Use the "System Pop" neons for active script elements.
+- **NO ENGLISH TEXT.** Absolutely no readable words, numbers, or letters are allowed anywhere in the image.
+- **NO POLYHEDRAL DICE.** Depictions of dice are forbidden.
+- **The Script of Glyphs:** Replace all text with an intricate script of complex, unreadable, stylized glyphs. This script should be a synthesis of abstract geometric shapes, fragmented vector symbols, and stenciled arcane forms. It must look functional and complex, but remain entirely impossible for a human to decrypt as a word.
 
-## 6. Characters & LitRPG Gear
+### Character & Gear
 
-* **Stylized Kinetics:** Retain the dynamic, gravity-defying poses and stylized proportions of action anime, but strip out the "cute" and the clean.
-* **Fierce Expressions:** Eyes must be sharp and expressive, utilizing heavy ink surrounding the eye rather than generic shiny reflections.
-* **Scavenged & Mismatched Gear:** Equipment must visually communicate the LitRPG loop of progression and survival. Gear should look visibly constructed from scavenged monster carapace, scratched urban steel, and worn leather, with "System stats" (now depicted as glyph clusters) and active magical effects illuminated by the "System Pop" colors.
-* **No Dice:** Depictions of dice are forbidden. This prevents errors in showing the wrong sides of polyhedrals and reinforces the focus on a character's inherent "System stats" and the hidden rules of the world.
+- **Stylized Kinetics:** Highly stylized, dynamic action anime proportions and poses.
+- **Fierce Expressions:** Eyes must be sharp, fierce, and expressive, utilizing heavy ink surrounding the eye rather than generic shiny reflections.
+- **Scavenged & Mismatched Gear:** Gear is scavenged, mismatched, heavily worn, and asymmetrical, combining raw urban survivalist clothing with fragmented armor plates. Mismatched components should communicate the process of building progression. Active gear should glow with System neon.
 
-## 7. Environment & Scalable Branding
+## Technical Constraints & Aspect Ratio
 
-* **Urban Decay:** Environments must feature structural wear, deep stains, and abstract graffiti-like stencils that evoke an underground, post-apocalyptic punk vibe.
-* **Event Scaling:** The aesthetic must scale cleanly. Whether it's a tiny rulebook margin illustration or a massive promo banner for a live event like Pantheons Play, the core stencil silhouettes and the identifiable glyph script must remain readable from a distance, ensuring the "chaos" is meticulously controlled for brand identity. The glyph script itself should serve as a primary brand marker.
+- **Vertical Aspect Ratio:** 7:10. This is the required format for all cover illustrations.
+- **Target Output Resolution:** 2100×3000 vertical. Always state: "High-resolution vertical portrait, 7:10 aspect ratio."
