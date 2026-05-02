@@ -1,3 +1,4 @@
+![Items](./assets/items.png)
 
 # Items, Consumables & Volatile Artifacts
 

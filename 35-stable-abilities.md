@@ -1,3 +1,4 @@
+![Stable Abilities](./assets/stable_abilities.png)
 
 # Stable Abilities
 

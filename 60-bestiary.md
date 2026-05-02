@@ -1,3 +1,4 @@
+![Bestiary](./assets/bestiary.png)
 
 # Bestiary
 

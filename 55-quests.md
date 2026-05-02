@@ -1,3 +1,4 @@
+![Quests](./assets/quests.png)
 
 # System Quests
 
