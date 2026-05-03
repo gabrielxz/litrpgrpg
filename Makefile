@@ -66,11 +66,13 @@ $(COVER_TITLED): $(COVER_BASE) | $(BUILD_DIR)
 	magick $(COVER_BASE) \
 	  -gravity North \
 	  -font $(TITLE_FONT) \
-	  -pointsize 95 -fill white \
+	  -pointsize 95 \
+	  -stroke black -strokewidth 3 -fill white \
 	  -annotate +0+45 "LITRPG: RPG" \
 	  -gravity SouthEast \
 	  -font $(BYLINE_FONT) \
-	  -pointsize 26 -fill white \
+	  -pointsize 26 \
+	  -stroke none -fill white \
 	  -annotate +30+30 "by Gabriel Beal" \
 	  $@
 
