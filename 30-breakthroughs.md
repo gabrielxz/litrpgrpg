@@ -6,14 +6,12 @@
 
 ## Design Intent
 
-Breakthroughs are the genre's emotional centerpiece. They are ritual moments — not long rests, not passive level-ups, not bookkeeping. A Breakthrough is the scene the table remembers.
+A Breakthrough is a ritual moment — not a long rest, not a passive level-up, not bookkeeping. The mechanic is built around four principles:
 
-**Principles governing this mechanic:**
-
-- **Visible Payoff.** Every successful Breakthrough produces numbers going up, new options unlocking, and the System itself acknowledging the character's ascension. The LitRPG power fantasy must be tangible.
-- **Single-Session Resolution.** A Breakthrough resolves in one dramatic sequence. No multi-session seclusion arcs, no cutting away for weeks of in-game meditation. The tension builds and pays off in one sitting.
-- **Soloable, But Better With Friends.** A well-prepared cultivator with the right location and items can Break Through alone. But the party makes it more interesting, more accessible, and more dramatic.
-- **The Spotlight Problem, Solved.** Other party members should find Breakthrough scenes exciting to participate in — but they should never feel burdened with constant tactical decisions during someone else's spotlight moment. Their involvement is meaningful but lightweight.
+- **Visible Payoff.** Every successful Breakthrough produces stat changes, new options, and a System acknowledgment of the character's ascension.
+- **Single-Session Resolution.** A Breakthrough resolves in one dramatic sequence. No multi-session seclusion arcs.
+- **Soloable, but better with friends.** A well-prepared cultivator can Break Through alone. The party makes it more accessible and more dramatic.
+- **Lightweight spotlight.** Other party members participate, but without constant tactical decisions during the cultivator's moment.
 
 ---
 
@@ -271,7 +269,7 @@ Finding and securing a Breakthrough location is an adventure in itself. The GM s
 
 **Math Check (F→E):**
 
-A well-built F-Grade cap character (POW ~75, HRT ~60) has Force 75 + Force 60 = 135 before modifiers. The DC is 240 (E-Grade Severe). They need their d100 + modifiers to cover the remaining 105. Average d100 roll (50) leaves a gap of 55. With a Moderate location (+10), a Foundation Pill (+10), HVE Coherence of Defined (+10), and Party Anchor (+5 to +15), they are looking at +35 to +45 in modifiers, bringing the total needed from the d100 down to ~60–70. Achievable on an average-to-good roll. A maxed-prep character (POW 99, HRT 80, High density location, best pill, Singular coherence, strong Anchor) could make the check with a below-average roll and aim for Polished or better. This confirms the design intent: well-prepared characters succeed reliably; poorly prepared ones must roll well.
+A well-built F-Grade cap character (POW ~75, HRT ~60) has Force 75 + Force 60 = 135 before modifiers. The DC is 240 (E-Grade Severe). They need their d100 + modifiers to cover the remaining 105. Average d100 roll (50) leaves a gap of 55. With a Moderate location (+10), a Foundation Pill (+10), HVE Coherence of Defined (+10), and Party Anchor (+5 to +15), they are looking at +35 to +45 in modifiers, bringing the total needed from the d100 down to ~60–70. Achievable on an average-to-good roll. A maxed-prep character (POW 99, HRT 80, High density location, best pill, Singular coherence, strong Anchor) could make the check with a below-average roll and aim for Polished or better. Well-prepared characters succeed reliably; poorly prepared ones must roll well.
 
 ### E → D: Soul Sea Expansion
 

@@ -8,9 +8,9 @@
 
 Titles are the System's mirror. They are how the System tells the character — and the rest of the world — *who you are turning into*. They are not a buff list to be optimized in isolation; they are recognition, retroactive and ongoing, of behavior the System has already observed.
 
-**The genre payoff is stacking.** An MC who collects, combines, and weaponizes titles is genre-correct LitRPG. The system below is designed expecting players to stack aggressively. Title bonuses are calibrated so that a single title is a satisfying nudge, but a creatively constructed stack of five to ten produces visible, table-shaking power. Players should hunt titles, plan around title combinations, and feel rewarded when their stack lights up exactly when it matters.
+**Stacking is the point.** Title bonuses are calibrated so that a single title is a satisfying nudge, but a creatively constructed stack of five to ten produces visible, decisive power. Players are expected to hunt titles, plan around combinations, and lean on the stack when conditions converge.
 
-Titles arrive in four shapes (Achievement, Hidden Achievement, HVE-Resonant, Bestowed). All four coexist on a character. None of them are selected from a menu — the System AI generates every title dynamically, calibrated to the specific character.
+Titles arrive in four shapes (Achievement, Hidden Achievement, HVE-Resonant, Bestowed). All four coexist on a character. None are selected from a menu — the System AI generates every title dynamically, calibrated to the specific character.
 
 **Pacing target (soft):**
 
@@ -19,7 +19,7 @@ Titles arrive in four shapes (Achievement, Hidden Achievement, HVE-Resonant, Bes
 - **Hidden Achievement titles:** 1–3 times per campaign arc
 - **Bestowed titles:** whenever the fiction earns them
 
-These are guidance, not quotas. The right pace is whatever keeps the table engaged and the System feeling alive.
+These are guidance, not quotas.
 
 ---
 

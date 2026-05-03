@@ -32,9 +32,7 @@ E-Grade pills heal ×10 the listed amount and add ×10 Toxin (if the user can me
 
 #### Pill Saturation in Combat
 
-Pills are emergency tools, not infinite reservoirs. The body's energy channels accept healing in diminishing quantities — chugging the entire stash does not make a character immortal.
-
-Within a single combat scene, each healing pill consumed by a given character heals at progressively lower efficiency:
+The body's energy channels accept healing in diminishing quantities. Within a single combat scene, each healing pill consumed by a given character heals at progressively lower efficiency:
 
 | Pill # in this combat | Efficiency |
 |---|---|
@@ -46,7 +44,7 @@ Within a single combat scene, each healing pill consumed by a given character he
 
 Round down at each step. Once a pill would heal 0 HP, the character is **saturated** and further pills have no healing effect for the remainder of the combat scene. Energy Pills follow the same diminishing schedule, tracked separately from healing pills (a third Healing Pill does not affect the next Energy Pill's potency).
 
-**Toxin still accrues at the listed amount per pill regardless of efficiency.** A desperate character chugging pills in a long fight pays the full Toxin price even after the heals stop landing — the body absorbed the impurities without absorbing the medicine.
+**Toxin still accrues at the listed amount per pill regardless of efficiency.** Even after the healing stops landing, the body still absorbs the impurities.
 
 **Administering a pill to an ally** remains a 1-Beat action. The ally's saturation count increments, not the user's.
 
@@ -65,7 +63,7 @@ Restore Energy mid-encounter. Toxin cost.
 | Energy Pill | F | 50 | 25 |
 | Greater Energy Pill | F | 80 | 50 |
 
-Energy Pills exist but should be rare. Energy is meant to be a scarce resource that primarily refills through Consolidation; Energy Pills are emergency tools, not crutches. A party with reliable access to Energy Pills will short-circuit the design intent of the Energy system.
+Energy Pills should be rare. Energy primarily refills through Consolidation; widely available Energy Pills would collapse the scarcity the Energy system is built on.
 
 ### Foundation Pills
 
@@ -83,7 +81,7 @@ Foundation Pills are consumed during Beat 1 of a Breakthrough (Preparation phase
 
 ## Weapons (F-Grade Reference)
 
-Weapons in this system don't deal flat damage — they determine which Force is governing for an attack and may grant a small **Skill Bonus** to the Clash. Quality and craftsmanship matter narratively but do not break the math.
+Weapons do not deal flat damage. They determine which Force governs an attack and may grant a small **Skill Bonus** to the Clash. Quality and craftsmanship matter narratively but do not change the math.
 
 | **Weapon** | **Governing Force** | **Skill Bonus** | **Notes** |
 |---|---|---|---|

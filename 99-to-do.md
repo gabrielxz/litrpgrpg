@@ -41,6 +41,7 @@
 - Additional F-Grade enemies as the campaign demands them (current bestiary: 12 entries)
 - System AI prompt templates for class generation, loot generation, skill synthesis
 - GM screen reference card (printable)
+- **Starting-human stat reference table.** A per-stat archetype breakdown for values 1–10 across all seven Attributes (STR, DEX, FOR, HRT, POW, PER, CHA). Anchors what each value means for a freshly integrated human so players can interpret point-buy choices concretely. Natural home: `15-character-creation.md`, near the Sample Spreads. Calibrate so 10 is genuine peak human (e.g., for STR: strongest humans ever recorded), 8–9 are recognizable elite tiers, 5 is average, 3 is the deficiency floor.
 
 ## Production / Visual Design
 

@@ -6,13 +6,13 @@
 
 ## Core Design Philosophy
 
-This system decouples narrative scale from resolution scale to capture the feel of LitRPG progression: numbers go up, players feel it on their character sheet, and the GM never drowns in five-digit arithmetic.
+This system separates narrative scale from resolution scale. Stats grow into the millions; the math at the table stays in the 10–99 band.
 
-- **Significant Digits (The Force System):** Every stat has a Raw Power value (the big LitRPG number) and a Force value (the first two significant digits). Players see their Strength climb from 4,200 to 4,500. The GM only ever touches the Force: 42 becomes 45. All resolution math stays locked in the 10–99 band, making a d100 always meaningful — whether characters are punching goblins or splitting continents.
+- **Significant Digits (The Force System):** Every stat has a Raw Power value (the big LitRPG number) and a Force value (the first two significant digits). Players see their Strength climb from 4,200 to 4,500. The GM only ever touches the Force: 42 becomes 45. All resolution math stays locked in the 10–99 band, so a d100 always means something at every Grade.
 
-- **The Clash (Opposed Resolution):** Every contested action resolves in one opposed roll. There is no separate to-hit step and damage step. You roll, your opponent rolls, and the Margin between totals determines the outcome. Combat is fast, decisive, and cinematic.
+- **The Clash (Opposed Resolution):** Every contested action resolves in one opposed roll. There is no separate to-hit step and damage step. You roll, your opponent rolls, and the Margin between totals determines the outcome.
 
-- **Grade-Anchored Difficulty:** The GM never calculates difficulty from scratch. Every obstacle is assigned a Grade and a relative difficulty, and the number comes from a single reference card. Cross-Grade interactions resolve through a symmetric adjustment: the higher-Grade side gains +100 per Grade of difference, applied to its Force (in Opposed Rolls) or its Resistance (in Resistance Rolls).
+- **Grade-Anchored Difficulty:** Every obstacle is assigned a Grade and a relative difficulty, and the number comes from a single reference card. Cross-Grade interactions resolve through a symmetric adjustment: the higher-Grade side gains +100 per Grade of difference, applied to its Force (in Opposed Rolls) or its Resistance (in Resistance Rolls).
 
 **Rounding:** All fractions round down. Always.
 
@@ -38,23 +38,21 @@ Every stat in the game has three components:
 | C-Grade | 10,000–99,999 | 10³ | 10–99 | ×1,000 (add 3 zeroes) |
 | B-Grade | 100,000–999,999 | 10⁴ | 10–99 | ×10,000 (add 4 zeroes) |
 
-At F-Grade, Force equals Raw Power directly (no extraction needed — the number is already 1–99). From E-Grade onward, Force is extracted as the first two significant digits. A fresh E-Grade character with STR 120 has Force 12; they are weak within their Grade but still carry the Grade's damage multiplier, which is what makes cross-Grade combat so asymmetric.
-
-The d100 never becomes irrelevant. A +10 flanking bonus matters exactly as much at C-Grade as it does at F-Grade, because the System scales the weight of tactics perfectly.
+At F-Grade, Force equals Raw Power directly (no extraction needed — the number is already 1–99). From E-Grade onward, Force is extracted as the first two significant digits. A fresh E-Grade character with STR 120 has Force 12; they are weak within their Grade but still carry the Grade's damage multiplier, which is what makes cross-Grade combat asymmetric.
 
 ### Stat Growth and the Cap
 
 Stats increase through leveling during Consolidation, consuming attribute-enhancing treasures, evolving to a new class at major milestones, and Hidden Achievement rewards. The System AI determines specific stat gains based on the character's class, behavior, and investment.
 
-**Starting Stats:** A freshly integrated human begins with **40 points** distributed across seven Attributes via point buy, with a minimum of 3 and a maximum of 10 per stat. This produces stats typically in the 4–8 range, with one or two stats pushed to 9–10 by background or training. Even a +1 is meaningful — going from STR 5 to STR 7 represents the difference between a fit teenager and a seasoned laborer. See the Character Creation document for the full procedure and sample spreads.
+**Starting Stats:** A freshly integrated human begins with **40 points** distributed across seven Attributes via point buy, with a minimum of 3 and a maximum of 10 per stat. This produces stats typically in the 4–8 range, with one or two stats pushed to 9–10 by background or training. Even a +1 is meaningful. STR 8 is a competitive collegiate powerlifter; STR 9 is a professional strongman; STR 10 is reserved for the strongest humans ever to live. Each step is a single point. See the Character Creation document for the full procedure and sample spreads.
 
-**Per-Level Stat Budget (F-Grade):** Each level grants **5 stat points total**: **3 points** determined by class profile (or by the GM during pre-class levels) **+ 2 free points** for player choice. At higher Grades, the per-level budget scales with Grade magnitude — an E-Grade level grants points on the E-Grade scale (×10), a D-Grade level grants points on the D-Grade scale (×100), and so on.
+**Per-Level Stat Budget (F-Grade):** The default is **5 stat points per level: 3 points** determined by class profile (or by the GM during pre-class levels) **+ 2 free points** for player choice. At higher Grades, the budget scales with Grade magnitude (×10 at E, ×100 at D, and so on). The 3+2 split is the anchor; the System AI may vary it when a class, evolution, or narrative arc calls for a different shape.
 
 **Pre-Class Allocation (Levels 2–9):** Before class selection at Level 10, the GM assigns the 3 fixed points each level based on observed behavior, using the Behavioral Stat Mapping table in the Character Creation document. A character who consistently acts with force tends to gain STR or FOR. A character who plans meticulously tends to gain PER or DEX. A character who leads or negotiates tends to gain CHA or HRT. The player controls 2 free points each level. This pre-class period is the Hidden Vector Engine's most influential window — how you play shapes what you become.
 
-**Class Evolution at Level 10:** When the character selects their class from the three options generated by the System AI, they receive a one-time bonus allocation (typically 5–10 points, class-distributed) reflecting the character's systemic attunement to their new role. From this point, the class profile determines the 3 fixed points per level instead of the GM.
+**Class Evolution at Level 10:** When the character selects their class from the System AI's offerings (three options is the default — some characters draw more), they receive a one-time bonus allocation (typically 5–10 points, class-distributed) reflecting their systemic attunement to the new role. From this point, the class profile determines the fixed points per level. Most classes spread that allocation across three stats; some concentrate on two, or thin across four, when the System judges it fits.
 
-**Stat Cap:** A character's stats cannot exceed the maximum of their current Grade — **99 at F-Grade, 999 at E-Grade, 9,999 at D-Grade**, and so on. If leveling, treasures, or other rewards would push a stat above the cap, **those excess points are lost**. Breakthrough to the next Grade removes the barrier; stats scale into the new range and growth resumes. This is the genre's classic bottleneck: a cultivator who has maxed their primary stats feels the pressure of their Grade as a literal ceiling and must Break Through to continue growing.
+**Stat Cap:** A character's stats cannot exceed the maximum of their current Grade — **99 at F-Grade, 999 at E-Grade, 9,999 at D-Grade**, and so on. If leveling, treasures, or other rewards would push a stat above the cap, **those excess points are lost**. Breakthrough to the next Grade lifts the cap; growth into the new range resumes through leveling, class evolution, and treasures.
 
 ---
 
@@ -84,7 +82,7 @@ Meet or exceed the Resistance to succeed.
 
 ### The Grade Reference Card
 
-The GM does not calculate difficulty from scratch. They ask two questions: What is this obstacle's difficulty tier? And what is its Grade relative to the challenger's? The base Resistance is read from this table:
+Every obstacle has a difficulty tier and a Grade relative to the challenger. The base Resistance is read from this table:
 
 | **Difficulty** | **Resistance** |
 |---|---|
@@ -95,7 +93,7 @@ The GM does not calculate difficulty from scratch. They ask two questions: What 
 | Severe | 140 |
 | Peak | 165 |
 
-The card is a single column because Force is a single column: every Grade resolves with Force in the 1–99 band. Power scaling between Grades is handled separately by the **Cross-Grade Adjustment** below — not by inflating the card's columns.
+Power scaling between Grades is handled separately by the **Cross-Grade Adjustment** below.
 
 **Cross-Grade Adjustment.** When the obstacle's Grade differs from the challenger's, the higher-Grade side gains **+100 per Grade of difference**. Apply it to whichever side is higher:
 
@@ -103,17 +101,15 @@ The card is a single column because Force is a single column: every Grade resolv
 - **Lower-Grade challenger vs. higher-Grade obstacle:** Add +100 per Grade of difference to the obstacle's Resistance.
 - **Same Grade:** No adjustment. Read the Resistance straight off the card.
 
-A magically reinforced door built by an E-Grade formation master is Moderate: base Resistance 90. An F-Grade challenger faces it at effective Resistance 190 (90 + 100 for the one-Grade differential). An F-Grade character with STR Force 99 rolls d100 + 99, maximum possible result 199 — they can barely crack it on a perfect roll. An E-Grade peer with Force 50 challenges the same door at Resistance 90 and cracks it on any roll of 40 or higher. The fiction reads correctly at both Grades, and the GM never has to recompute the card.
+A magically reinforced door built by an E-Grade formation master is Moderate: base Resistance 90. An F-Grade challenger faces it at effective Resistance 190 (90 + 100 for the one-Grade differential). An F-Grade character with STR Force 99 rolls d100 + 99, maximum possible result 199 — they can barely crack it on a perfect roll. An E-Grade peer with Force 50 challenges the same door at Resistance 90 and cracks it on any roll of 40 or higher.
 
-Tape the card to the GM screen. One card, every Grade.
+### Auto-Success
 
-### Auto-Success: The Power Fantasy Rule
+If your Force alone meets or exceeds the Resistance, you do not roll. You succeed.
 
-If your Force alone meets or exceeds the Resistance, you do not roll. You simply succeed. The action is beneath you.
+A Moderate F-Grade lock has Resistance 90. A character with DEX Force 30 has to roll for it; the same character at DEX Force 92 opens it without rolling.
 
-That F-Grade Moderate lock (Resistance 90) that once required a tense roll when your DEX Force was 30? When your DEX Force reaches 92, you pick it open without thinking. No roll. The table feels the growth. This is the LitRPG progression payoff expressed mechanically.
-
-The GM only calls for a roll when there is genuine uncertainty — your Force is below the Resistance and the d100 could swing it.
+The GM only calls for a roll when there is genuine uncertainty — when Force is below Resistance and the d100 could swing it.
 
 ### Proficiencies and Skill Checks
 
@@ -149,9 +145,9 @@ Higher Grades of power are not just bigger — they are more volatile. The Syste
 
 **Symmetry — Offensive and Defensive Explosions.** Volatility applies to **every d100 rolled in combat**, by either side: attacker's roll, defender's roll, both sides of an Opposed Roll, contested checks, and saves resolved during a combat scene. Both attackers and defenders can explode. An offensive explosion typically spikes the Margin upward into devastating damage. A defensive explosion drives the attacker's Margin sharply negative — the attack lands harmlessly with a spectacular flourish, as if the System itself swept the blow aside. A winning defender deals no damage from the Clash itself.
 
-At F-Grade, explosions are rare — combat is gritty and grounded. At D-Grade and above, cascading explosions generate enormous Margins. Time-to-kill plummets. S-Grade fights are blindingly fast, terrifying exchanges where a single opening obliterates the opponent.
+At F-Grade, explosions are rare. At higher Grades, cascading explosions generate enormous Margins, and time-to-kill drops sharply.
 
-System Volatility replaces traditional critical hits. When an explosion occurs, it is inherently spectacular — the System's energy spiked, and the narrative should reflect it.
+System Volatility replaces traditional critical hits. When an explosion occurs, narrate it as a visible spike of System energy.
 
 **Volatility applies only in combat.** Non-combat skill checks use the standard d100 without explosion.
 
@@ -171,7 +167,7 @@ Every character possesses seven core Attributes. These are raw numbers — the b
 
 **Derived Statistics:**
 
-- **Max HP:** Raw FOR × 2. A character with FOR 75 has 150 HP. A character with FOR 8,500 has 17,000 HP. The numbers scale with Grade because the stats themselves scale with Grade. The doubled coefficient gives peer combat enough room to develop across multiple exchanges before lethality lands — without it, a single hot opening Clash routinely ended fights before the defender could act.
+- **Max HP:** Raw FOR × 2. A character with FOR 75 has 150 HP. A character with FOR 8,500 has 17,000 HP. The doubled coefficient gives peer combat enough room to develop across multiple exchanges before lethality lands.
 
 - **Max Energy:** Equal to the character's Raw POW value.
 
@@ -185,11 +181,9 @@ Stats are raw and unfiltered. There is no class-based efficiency layer — if a 
 
 ## Combat Mechanics
 
-Combat is lethal, mathematically clean, and resolved through opposed Clashes.
-
 ### Initiative: The Momentum System
 
-There is no fixed turn order. Combat flows through Momentum — whichever side holds Momentum acts first as a group, in whatever order they choose. Then the opposition acts. This keeps combat cinematic and rewards fictional positioning over stat optimization.
+There is no fixed turn order. Combat flows through Momentum — whichever side holds Momentum acts first as a group, in whatever order they choose. Then the opposition acts.
 
 **Starting Momentum:** The side that initiated the encounter holds Momentum. Ambushers, aggressors, or whoever forced the fight goes first. If unclear, the GM calls for an Opposed Roll (each side's representative rolls d100 + DEX Force). Higher total wins Momentum.
 
@@ -221,7 +215,7 @@ Each character gets **two Beats** per turn. A Beat is one meaningful action:
 
 **Free actions** (no Beat cost): speaking, drawing a weapon, dropping an object, moving within your current Zone.
 
-**Anti-Repetition Rule:** Repeating the same offensive action twice in one turn imposes −10 to the second Clash roll. A fighter can swing twice, but the second strike is less precise. This prevents degenerate double-attack loops while keeping the flexibility of two Beats.
+**Anti-Repetition Rule:** Repeating the same offensive action twice in one turn imposes −10 to the second Clash roll. A fighter can swing twice, but the second strike is less precise.
 
 **Aura Pressure and Beat Loss:** When Aura Pressure reduces a character's Beats, they drop to one Beat (moderate suppression) or zero Beats (severe suppression). See "Aura Pressure" below.
 
@@ -299,19 +293,15 @@ Take the Margin and multiply it by the attacker's Grade Magnitude:
 | D-Grade | 2 | Damage = Margin × 100 |
 | C-Grade | 3 | Damage = Margin × 1,000 |
 
-The GM does zero mental arithmetic on the big numbers. They just append zeroes.
-
 Apply this damage directly to the defender's HP (which is their Raw FOR value). There is no Damage Reduction subtraction step. Armor, toughness, and defensive capability were already factored into the defender's Clash roll.
-
-**Why this works:** Because Force is always 1–99 and the d100 is always 1–100, the Margin naturally stays in a tight, predictable band. Tactical modifiers never become irrelevant. The big LitRPG numbers live on the character sheet where players want them; the table math is an addition problem and a zero-appending exercise.
 
 ### AoE and Multi-Target Attacks
 
 An AoE spell or sweep attack targets everyone in a Zone (or a portion of a Zone specified by the GM). The attacker rolls once. Each defender rolls their own Clash individually. The Margin is calculated separately for each defender — some may take massive damage while others barely get clipped.
 
-AoE abilities are powerful by design. They are gated by Energy cost, skill rarity, and the risk of hitting allies in the same Zone.
+AoE abilities are gated by Energy cost, skill rarity, and the risk of hitting allies in the same Zone.
 
-For a martial character who wants to hit two adjacent targets with a melee cleave: make a single Clash roll against both (each defender rolls separately). Each defender takes damage based on their individual Margin, but the attacker splits their Magnitude tier down by one step (a D-Grade attacker's cleave adds 1 zero instead of 2). This gives melee fighters a multi-target option at a meaningful cost.
+For a martial character who wants to hit two adjacent targets with a melee cleave: make a single Clash roll against both (each defender rolls separately). Each defender takes damage based on their individual Margin, but the attacker splits their Magnitude tier down by one step — a D-Grade attacker's cleave adds 1 zero instead of 2.
 
 ### Failure Consequences
 
@@ -329,13 +319,11 @@ The GM chooses based on fictional stakes and narrative momentum. Catastrophic Fa
 
 ## The Grade Gap: The Magnitude Barrier
 
-When entities of different Grades clash, the gap between them is expressed through the same Force system — cleanly, without bolted-on suppression layers.
+When entities of different Grades clash, the gap between them is expressed through the same Force system.
 
 ### The Magnitude Gap Rule
 
 **For every Grade of difference, the higher-Grade combatant adds +100 to their Force in all Clashes and opposed checks.**
-
-This is not a separate mechanic. It flows directly from the Significant Digits framework. A character operating at a higher Grade carries more systemic weight — the System recognizes the dimensional difference and adjusts accordingly.
 
 | **Grade Gap** | **Higher-Grade Force Bonus** |
 |---|---|
@@ -352,7 +340,7 @@ If the F-Grade attacks: d100 + 99 vs. d100 + 112. The F-Grade's peak Force nearl
 
 If the E-Grade attacks: d100 + (12 + 100) vs. d100 + 99. The E-Grade's effective Force is 112. An average exchange (both roll 50) gives the E-Grade a Clash Total of 162 vs. 149. Margin of 13. E-Grade damage adds 1 zero: 130 damage. The F-Peak has 99 HP. Instantly dead — from a glancing blow.
 
-**The combined effect:** Cross-grade combat is asymmetric not because of bolted-on penalties, but because the math itself creates asymmetry. The higher-Grade entity's damage multiplier ensures that even a small Margin is lethal, while the lower-Grade entity must win by a massive Margin to inflict meaningful damage at their reduced multiplier. Punching up is *possible* — possible enough to generate the best stories — but it requires extraordinary rolls, tactical mastery, and Principle preparation.
+**The combined effect:** The higher-Grade entity's damage multiplier ensures that even a small Margin is lethal, while the lower-Grade entity must win by a massive Margin to inflict meaningful damage at their reduced multiplier. Punching up is possible, but it requires extraordinary rolls, tactical mastery, and Principle preparation.
 
 ### The Natural Stat Wall
 
@@ -360,7 +348,7 @@ Before the Magnitude Gap bonus even applies, the raw stat difference between Gra
 
 ### Aura Pressure
 
-Being in the presence of a higher-Grade entity is not merely a tactical disadvantage — it is a visceral, spiritual experience. The weight of a higher-Grade being's accumulated systemic energy presses down on weaker entities like gravity.
+The weight of a higher-Grade being's accumulated systemic energy presses down on weaker entities like gravity.
 
 When a character first enters the presence of a higher-Grade entity, they must make a single **Will Save:**
 
@@ -392,13 +380,11 @@ Energy is the universal resource for active Principle Applications, spells, and 
 
 ### The Energy Pool
 
-**Max Energy equals the character's Raw POW value.** An F-Grade character with POW 80 has 80 Energy. An E-Grade character with POW 500 has 500 Energy. The pool scales naturally with Grade through the stat cap and per-level allocations — no separate multiplier is required.
+**Max Energy equals the character's Raw POW value.** An F-Grade character with POW 80 has 80 Energy. An E-Grade character with POW 500 has 500 Energy.
 
 ### Regeneration
 
 **Energy does not regenerate in combat. It does not regenerate between combats. It does not regenerate with passive time.** Energy refills only through **Consolidation** — a full pool restore occurs automatically at the start of any Consolidation rest (see Cultivation document).
-
-This is deliberate. Combat Energy is a finite budget. Every Principle Application, every active skill, every sustained Domain eats against a hard ceiling that cannot be replenished until the character stops to rest. Characters must decide when to unleash big abilities and when to save them. The same pressure applies equally to warriors and casters — there is no "catching your breath" between fights.
 
 ### Costs Scale by Skill Origin Grade
 
@@ -413,16 +399,14 @@ Every Principle Application, spell, and active skill has a fixed Energy cost bas
 
 **The cost is permanently fixed to the skill's origin Grade.** A Seed Application learned at F-Grade costs 10 Energy for the rest of the character's life — after Breakthrough to E, to D, to C, it is still 10 Energy. The pool around it grows by orders of magnitude; the skill's price does not.
 
-This produces two distinct feels at every Grade-up:
+What this means in play:
 
-- **Old skills become trivial to sustain.** An F-Peak caster with 99 Energy got ~10 uses of a Seed Application per fight. After Breakthrough to E-Initiate (Energy ~100), still 10 uses. At E-Peak (Energy 999), 99 uses — an order of magnitude more sustain on their old toolkit. By D-Grade, F-tier skills are pennies.
+- **Old skills become trivial to sustain.** An F-Peak caster with 99 Energy gets about 10 uses of a Seed Application per fight. After Breakthrough to E-Initiate (Energy ~100), still 10 uses. At E-Peak (Energy 999), 99 uses. By D-Grade, F-tier skills are pennies.
 
-- **New Grade-appropriate skills are the true upgrade.** A skill acquired at E-Grade costs 100 Energy per use — a meaningful fraction of the new pool. The character who wants to access their new Grade's full ceiling must pay for it. Old tricks still work, but they are no longer where the real power lives.
+- **New Grade-appropriate skills cost full price.** A skill acquired at E-Grade costs 100 Energy per use — a meaningful fraction of the new pool. Accessing the new Grade's full ceiling means paying for it.
 
 ### Attrition Across the Grade Gap
 
-Because costs scale with skill Grade but pool size scales with the user's current stats, higher-Grade characters in protracted combat must still manage Energy carefully. This produces the genre-standard attrition pressure: a higher-Grade entity fighting large numbers of lower-Grade opponents is not invincible — they are eventually drained.
+Because costs scale with skill Grade but pool size scales with the user's current stats, higher-Grade characters in protracted combat must still manage Energy carefully. A higher-Grade entity fighting large numbers of lower-Grade opponents is not invincible — they are eventually drained.
 
 A D-Grade warrior facing an F-Grade horde can spam cheap F-tier Seed Applications nearly forever, but F-tier bonuses do not clear swarms fast enough. Clearing the field requires D-tier AoE, Early Fragment applications, or a sustained Domain — all of which drain from the same 5,000-ish Energy pool. The character wins the encounter but cannot keep winning encounters without rest.
-
-Numbers matter. Raw pool magnitude matters. Grade superiority is real but not infinite.

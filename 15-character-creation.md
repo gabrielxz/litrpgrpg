@@ -92,7 +92,7 @@ The GM does not need to calculate anything. At each level-up, review what the ch
 
 **How to read the table:** If a character spent the last level charging into fights and solving problems through brute force, the GM puts 2 points into STR and 1 into FOR (or all 3 into STR if the behavior was extreme and unambiguous). A character who planned every engagement and used terrain might get 2 PER and 1 DEX. Mixed behavior? Split accordingly — 1 STR, 1 PER, 1 CHA is a perfectly valid assignment for a character who fought, planned, and negotiated in equal measure.
 
-The GM's goal is simple: **reward what the character actually did, not what the player says they want.** This is the Hidden Vector Engine's primary mechanical lever during F-Grade — the System watches, and the System responds.
+The GM's rule: **reward what the character actually did, not what the player says they want.** This is the Hidden Vector Engine's primary mechanical lever during F-Grade.
 
 **Tutorial Multi-Level Allocation:** When the tutorial concludes and the System awards multiple levels at once (typical: Levels 1 → 3–5), the GM does not need to walk through each level individually. Review the player's tutorial behavior holistically and assign the cumulative System points (3 per level granted) according to the dominant patterns from the Behavioral Stat Mapping table. The player allocates their cumulative free points (2 per level) at the end. A character who reaches Level 4 directly from Level 1 receives 9 GM-assigned points (3 × 3 levels) and 6 free points (2 × 3 levels). This compression is allowed only for the tutorial-level jump; ongoing campaign play should level one at a time.
 

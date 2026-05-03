@@ -6,21 +6,21 @@
 
 ## Design Intent
 
-System Quests are the System steering the player and recognizing their actions. They are explicit, structured, video-gamey — and that is the point. Quest notifications, objectives, rewards, time limits, and a quest log UI are core to the LitRPG genre experience. This system embraces them.
+System Quests are the System steering the player and recognizing their actions. They are explicit and structured: notifications, objectives, rewards, time limits, and a persistent log.
 
-**The mix is the point.** Routine "kill ten boars" filler quests sit in the same log alongside Mandates that reshape the campaign. Both serve the design. Filler quests give players reliable progression hooks and the satisfying System-notification rhythm that the genre is built on. Meaningful quests carry stakes, drive story, and reveal character. Players choose which to engage with based on capability and interest.
+**Filler and meaningful quests share the log.** Routine "kill ten boars" entries sit alongside Mandates that reshape the campaign. Filler quests provide steady progression hooks and the System-notification rhythm; Mandates carry stakes and drive story. Players choose what to engage with based on capability and interest.
 
-**Refusal and failure have consequences, but consequences are not always punishment.** Sometimes the System simply *stops offering certain paths*. What the System offers reflects what it thinks the character will engage with. Consistent refusal narrows future offerings. This is a softer, more interesting consequence shape than reputation loss alone — and it lets players passively shape their own arcs.
+**Refusal and failure have consequences, but consequences are not always punishment.** Sometimes the System simply *stops offering certain paths*. Consistent refusal narrows future offerings — a softer consequence shape than reputation loss, and one that lets players shape their own arcs by what they ignore.
 
 ---
 
 ## The Quest UI
 
-The System provides a quest log UI for the player. This is genre-correct and should be embraced at the table.
+The System provides a quest log UI for the player.
 
 **Recommended table presentation:** a **shared digital quest log** — Discord pinned message, Google Doc, dedicated app, or VTT module — visible to all players, updated by the GM. Each player has a private subsection for personal and hidden quests visible only to them.
 
-A handout-only or GM-narrated-only approach loses the genre feel. The System's UI is a character. It should be present at the table.
+A handout-only or GM-narrated-only approach loses the in-fiction texture of the System UI. Make it present at the table.
 
 **Standard quest entry shape:**
 

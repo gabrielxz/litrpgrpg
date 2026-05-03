@@ -14,7 +14,7 @@ Every character has a **VE Tolerance** representing the raw energy their body an
 
 > **VE Tolerance = (Raw FOR + Raw POW) / 2 × 10**
 
-An F-Grade character with FOR 60 and POW 60 has a Tolerance of 600. A pure warrior (FOR 80, POW 30) has a Tolerance of 550. A pure caster (FOR 30, POW 80) also has 550. The formula scales naturally with Grade — no special multiplier needed; the × 10 is a constant, and the Grade scaling comes from the stats themselves.
+An F-Grade character with FOR 60 and POW 60 has a Tolerance of 600. A pure warrior (FOR 80, POW 30) has a Tolerance of 550. A pure caster (FOR 30, POW 80) also has 550.
 
 VE accumulates automatically after combat and from other sources. As long as stored VE remains below Tolerance, there is no penalty. Once VE exceeds Tolerance, the character enters **Saturation:**
 
@@ -34,7 +34,7 @@ To process VE, a character declares a **Consolidation** rest. This is not a mini
 
 **Processing Rate:** **(Raw FOR + Raw POW) per hour of Consolidation.**
 
-An F-Grade character with FOR 60 and POW 60 processes 120 VE per hour. A full tank (600 VE) takes 5 hours to empty. The same ratio holds at every Grade — an E-Grade character with FOR 500 and POW 400 processes 900 VE per hour, a full tank (4,500) in 5 hours. Time pressure is Grade-invariant.
+An F-Grade character with FOR 60 and POW 60 processes 120 VE per hour. A full tank (600 VE) takes 5 hours to empty. The ratio holds at every Grade — an E-Grade character with FOR 500 and POW 400 processes 900 VE per hour, a full tank (4,500) in 5 hours.
 
 **Result:** Processed VE converts into permanent level progress. When accumulated processed VE meets the threshold for the next level, the character advances (see Leveling below).
 
@@ -73,15 +73,13 @@ Where Grade Multiplier is ×1 for F, ×10 for E, ×100 for D, ×1,000 for C, etc
 
 At E-Grade, every entry is × 10 (Level 1 costs 1,000 VE). At D-Grade, × 100. The chart shape is identical at every Grade; only the magnitude shifts. Class features, rare titles, or specific treasures may tweak the multiplier for individual characters, but the baseline curve applies to everyone.
 
-**Grade Length:** Each Grade contains **25 levels**. Levels 1–25 are F-Grade; after L25, the character cannot advance through ordinary Consolidation and must attempt a Grade Breakthrough to enter E-Grade Levels 1–25, and so on. The exponential curve repeats identically at every Grade, scaled by the Grade Multiplier. The bottleneck near the cap is intentional — the last 3–5 levels of any Grade account for over 40% of that Grade's cumulative VE, producing the genre-typical "stuck before Breakthrough" pressure window.
+**Grade Length:** Each Grade contains **25 levels**. Levels 1–25 are F-Grade; after L25, the character cannot advance through ordinary Consolidation and must attempt a Grade Breakthrough to enter E-Grade Levels 1–25, and so on. The exponential curve repeats identically at every Grade, scaled by the Grade Multiplier. The last 3–5 levels of any Grade account for over 40% of that Grade's cumulative VE — the pre-Breakthrough wall is built into the curve.
 
 **Grade Breakthrough** happens at the Grade-cap level (Level 25 within the current Grade). It is **not** an automatic level-up. See Breakthrough Consolidation below.
 
-### The Interesting Decision
+### When to Consolidate
 
-Consolidation is not about *how* — it is about *when*. Do you push one more fight while your gauge is in the red zone, gambling on a bigger haul before resting? Or do you pull back and consolidate safely, knowing that another group might claim the hunting ground while you meditate?
-
-Players who hunt aggressively and consolidate efficiently pull ahead. Players who get greedy risk poisoning and permanent loss. This maps directly onto the Hunger/Restraint behavioral axis.
+The decision is about timing. Push one more fight while the gauge is in the red zone, gambling on a bigger haul before resting? Or pull back and consolidate safely, knowing another group might claim the hunting ground while you meditate? The Saturation bands above are the rule; the table answers the question every session.
 
 ### VE Rewards by Source
 
@@ -117,13 +115,13 @@ A stealth kill or trap kill yields half VE — the System rewards risk, not effi
 
 #### Pacing Reference (F-Grade)
 
-L1 → L2 requires 100 VE — roughly 7 Easy kills, 4 Moderate, or one strong quest plus survival. L1 → L10 requires 3,193 cumulative VE — across ~25–30 sessions of moderate-pace play. L1 → L25 (F-cap) requires 39,248 VE; the final 3 levels alone account for over 16,500 VE — the genre-standard pre-Breakthrough grind.
+L1 → L2 requires 100 VE — roughly 7 Easy kills, 4 Moderate, or one strong quest plus survival. L1 → L10 requires 3,193 cumulative VE — across ~25–30 sessions of moderate-pace play. L1 → L25 (F-cap) requires 39,248 VE; the final 3 levels alone account for over 16,500 VE.
 
 GMs should not micromanage VE awards mid-session. Track running totals between sessions and award in batches at meaningful rest points.
 
-#### Bonus VE: The Risk-Rest Curve
+#### Risk vs. Rest
 
-Survival and quest completion guarantee baseline progression. Combat VE and environmental absorption are the accelerants — they reward characters who push into danger, hunt aggressively, and master the timing of risk and rest. Playing it safe means you still level. The aggressive cultivator who balances Saturation pressure against Consolidation timing pulls ahead.
+Survival and quest completion guarantee baseline progression. Combat VE and environmental absorption are the accelerants — characters who push into danger and time their rests well level faster than those who play it safe.
 
 ### Toxins & Impurities
 
@@ -131,20 +129,20 @@ Consuming healing pills or forced-growth treasures adds **Toxin Points**. If Tox
 
 ### Grade Breakthroughs
 
-Ascending from one Grade to the next is a deliberate, dangerous act — not a passive level-up. When a character reaches the Grade-cap level (the last level within their Grade), they cannot advance further through ordinary Consolidation. Instead, they must attempt a **Grade Breakthrough** — a four-beat ritual involving deliberate VE overcharge, a Breakthrough Check (d100 + POW Force + HRT Force vs. Severe difficulty of the target Grade), external phenomena management, and System recognition.
+When a character reaches the Grade-cap level (the last level within their Grade), they cannot advance further through ordinary Consolidation. Instead, they must attempt a **Grade Breakthrough** — a four-beat ritual involving deliberate VE overcharge, a Breakthrough Check (d100 + POW Force + HRT Force vs. Severe difficulty of the target Grade), external phenomena management, and System recognition.
 
-The full mechanic — including the Overcharge Ratio risk-reward dial, the five Quality Tiers (Cracked through Transcendent), Breakthrough Item categories, Environment & Energy Density modifiers, Party Support mechanics, and Grade-specific trial themes — is documented in the **Grade Breakthroughs** section (08-breakthroughs.md).
+The full mechanic — including the Overcharge Ratio risk-reward dial, the five Quality Tiers (Cracked through Transcendent), Breakthrough Item categories, Environment & Energy Density modifiers, Party Support mechanics, and Grade-specific trial themes — is documented in the **Grade Breakthroughs** chapter (`30-breakthroughs.md`).
 
 ---
 
 ## Healing
 
-Recovery in the Multiverse is never free. There are three paths, each with a cost.
+Three paths, each with a cost:
 
 - **Rest Healing:** During Consolidation, characters recover 25% Max HP per hour. Safest option, but it requires time.
 
-- **Healing Pills and Potions:** Instant recovery of a flat HP amount based on pill grade. However, every pill adds Toxin Points.
+- **Healing Pills and Potions:** Instant recovery of a flat HP amount based on pill grade. Every pill adds Toxin Points.
 
 - **Healing Skills and Spells:** Some classes possess healing abilities generated by the System AI. These cost Energy and one Beat in combat.
 
-There are no instant full heals outside of extraordinary systemic treasures. Attrition is real and Consolidation timing remains meaningful.
+Instant full heals do not exist outside extraordinary systemic treasures.
