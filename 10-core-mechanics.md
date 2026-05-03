@@ -143,7 +143,7 @@ Higher Grades of power are not just bigger — they are more volatile. The Syste
 | B-Grade | 55–100 | 46% |
 | S-Grade | 40–100 | 61% |
 
-**Symmetry — Offensive and Defensive Explosions.** Volatility applies to **every d100 rolled in combat**, by either side: attacker's roll, defender's roll, both sides of an Opposed Roll, contested checks, and saves resolved during a combat scene. Both attackers and defenders can explode. An offensive explosion typically spikes the Margin upward into devastating damage. A defensive explosion drives the attacker's Margin sharply negative — the attack lands harmlessly with a spectacular flourish, as if the System itself swept the blow aside. A winning defender deals no damage from the Clash itself.
+**Symmetry — Offensive and Defensive Explosions.** Volatility applies to **every d100 rolled in combat**, by either side: attacker's roll, defender's roll, both sides of an Opposed Roll, contested checks, and saves resolved during a combat scene. An offensive explosion spikes the Margin upward. A defensive explosion drives the attacker's Margin sharply negative; the attack lands harmlessly. A winning defender deals no damage from the Clash itself.
 
 At F-Grade, explosions are rare. At higher Grades, cascading explosions generate enormous Margins, and time-to-kill drops sharply.
 

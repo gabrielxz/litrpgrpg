@@ -443,7 +443,7 @@ They are holding a fortified position with resources the party needs (a pristine
 
 ### Saturation Demonstration
 
-Saturation is near-universal by Phase 4. A starting character with FOR 5 and POW 4 has Tolerance = ((5 + 4) / 2) × 10 = **45 VE** — they cross into **Mild Saturation** (46+ VE) after just 3–4 Easy kills, and into **Heavy Saturation** (68+ VE) soon after. The pressure is meant to be felt.
+Saturation is near-universal by Phase 4. A starting character with FOR 5 and POW 4 has Tolerance = ((5 + 4) / 2) × 10 = **45 VE** — they cross into **Mild Saturation** (46+ VE) after just 3–4 Easy kills, and into **Heavy Saturation** (68+ VE) soon after.
 
 Do not announce thresholds. Instead, narrate symptoms:
 

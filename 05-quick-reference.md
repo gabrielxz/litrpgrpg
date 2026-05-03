@@ -76,7 +76,7 @@ Attacker: STR 55 (Force 55). Defender: FOR 40 (Force 40), HP 80.
 
 - Attacker rolls 60 + 55 = 115. Defender rolls 50 + 40 = 90.
 - Margin = 25. F-Grade adds 0 zeroes. **Damage = 25.**
-- Defender drops from 80 HP to 55. Roughly a third of their health gone in one hit. Three or four solid exchanges before either side falls — decisive, but not instant.
+- Defender drops from 80 HP to 55.
 
 **2. D-Grade Peer Clash (Volatility Cascade):**
 
@@ -85,7 +85,7 @@ Attacker: STR 8,500 (D-Grade, Force 85). Defender: FOR 7,000 (D-Grade, Force 70)
 - Attacker rolls a natural 82. D-Grade explodes on natural 80+. Rolls again: natural 40 (no further cascade). Total die = 122. Clash = 122 + 85 = 207.
 - Defender rolls a natural 75 (no explosion). Clash = 75 + 70 = 145.
 - Margin = 62. D-Grade adds 2 zeroes. **Damage = 6,200.**
-- Defender drops from 14,000 to 7,800 HP. Half their health gone from a single explosive exchange. One more like that and they fall — but they still have a turn to respond.
+- Defender drops from 14,000 to 7,800 HP.
 
 **3. Cross-Grade: F-Grade Peak vs. E-Grade Initiate:**
 
@@ -94,9 +94,9 @@ F-Peak: STR 99 (Force 99), HP 198. E-Initiate: FOR 120 (Force 12, +100 Grade bon
 F attacks E:
 
 - F-Peak rolls brilliantly: 85 + 99 = 184. E-Initiate rolls poorly: 20 + 112 = 132.
-- Margin = 52. F-Grade multiplier: ×1. **Damage = 52.** About a fifth of the E-Grade's HP — meaningful, but the E-Grade is still standing.
+- Margin = 52. F-Grade multiplier: ×1. **Damage = 52.** The E-Grade drops from 240 HP to 188.
 
 E attacks F:
 
 - E-Initiate rolls average: 50 + 112 = 162. F-Peak rolls average: 50 + 99 = 149.
-- Margin = 13. E-Grade multiplier: ×10. **Damage = 130.** F-Peak has 198 HP. Drops to 68 — two-thirds gone from a glancing blow. Cross-Grade is still brutal, but no longer instant death.
+- Margin = 13. E-Grade multiplier: ×10. **Damage = 130.** F-Peak drops from 198 HP to 68.

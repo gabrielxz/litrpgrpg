@@ -48,7 +48,7 @@ Round down at each step. Once a pill would heal 0 HP, the character is **saturat
 
 **Administering a pill to an ally** remains a 1-Beat action. The ally's saturation count increments, not the user's.
 
-**Out-of-combat Consolidation rest** resets all saturation counts. The body has time to clear residual saturation between encounters.
+**Out-of-combat Consolidation rest** resets all saturation counts.
 
 **Foundation Pills are exempt** — they are not consumed during combat.
 

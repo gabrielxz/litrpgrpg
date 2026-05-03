@@ -75,7 +75,7 @@ Once per encounter, spend 1 Beat. One ally within line of sight gains **+10 to t
 #### Voice of Decision
 *When the room can't decide, you decide.*
 
-When the party is deliberating a decision and unable to reach agreement, you may declare a resolution. This is not magical compulsion — but the System notes the moment of leadership. Your CHA-based Clashes gain **+10 for the rest of that session**, whether the party accepts your declaration or not. Once per session.
+When the party is deliberating a decision and unable to reach agreement, you may declare a resolution. The System registers the moment of leadership and grants **+10 to your CHA-based Clashes for the rest of that session**, whether the party accepts your declaration or not. Once per session.
 
 **Best for:** Characters who broke deadlocks, took responsibility under uncertainty, or established themselves as the party's voice without seizing dominance.
 

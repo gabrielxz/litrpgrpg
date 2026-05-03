@@ -348,8 +348,6 @@ Players should sometimes feel the System watching even when no quest entry appea
 - A subtle change in environmental affinity (a location feels warmer to this character than to others).
 - A Battle Memory that resonates oddly during Consolidation, hinting at a pattern the player has not yet named.
 
-These signals reward attentive players and create the genre-correct sense of the System as a constantly observant, slightly inscrutable watcher.
-
 ---
 
 ## Open Design Space

@@ -82,7 +82,7 @@ The cultivator makes a single roll:
 |---|---|---|---|---|
 | Effective DC | 240 | 255 | 270 | 285 |
 
-**What the DC represents:** 240 is the barrier. A challenger must hit it with d100 + POW Force + HRT Force, where both Force values are bounded 1–99 within the challenger's current Grade. Maximum possible roll: 100 + 99 + 99 = 298. A well-built character can reach 240; a poorly built one cannot, even on a perfect roll. The math is identical at every Breakthrough — F→E, E→D, D→C — because every cultivator is climbing the same wall, just with bigger raw numbers behind their Force values. Breakthroughs are meant to require investment, not luck.
+**What the DC represents:** A challenger rolls d100 + POW Force + HRT Force against 240, with both Force values bounded 1–99 within the challenger's current Grade. Maximum possible roll: 100 + 99 + 99 = 298. A well-built character can reach 240; a poorly built one cannot, even on a perfect roll. The math is identical at every Breakthrough — F→E, E→D, D→C.
 
 **Modifiers to the Breakthrough Check:**
 
@@ -180,7 +180,7 @@ Everything from Stable, plus:
 
 Everything from Polished, plus:
 
-- **Bespoke Perk.** The System AI generates a unique perk tailored to the character's specific HVE signature and Principle alignment. This is not a generic bonus — it is a one-of-a-kind ability, passive, or systemic advantage that reflects *who this character is*. Examples: a Force-dominant warrior might receive "First Impact" (the first Clash of every combat gets +15), a Method-dominant planner might receive "Architect's Eye" (once per Consolidation, reveal the structural weakness of any single target), a Hunger-dominant cultivator might receive "Refined Consumption" (VE gained from kills is increased by 25%).
+- **Bespoke Perk.** The System AI generates a one-of-a-kind ability, passive, or systemic advantage tailored to the character's HVE signature and Principle alignment. Examples: a Force-dominant warrior might receive "First Impact" (the first Clash of every combat gets +15), a Method-dominant planner might receive "Architect's Eye" (once per Consolidation, reveal the structural weakness of any single target), a Hunger-dominant cultivator might receive "Refined Consumption" (VE gained from kills is increased by 25%).
 - **Principle Bonus.** +10 Insight Points toward the character's highest-affinity Principle Concept, representing the trial's resonance with their established pattern.
 
 **Transcendent (One-of-a-Kind Ascension):**
@@ -263,7 +263,7 @@ Finding and securing a Breakthrough location is an adventure in itself. The GM s
 - **Stat Loss:** Temporary. FOR and POW each drop by 5 (minimum 1). Recovery through one full Consolidation rest.
 - **Toxin Accumulation:** Impurities not fully purged leave behind 50 Toxin Points.
 - **Lockout:** 2 sessions before retry.
-- **No permanent consequences.** The F→E Breakthrough is forgiving by design. It is the training run.
+- **No permanent consequences.** The F→E Breakthrough is forgiving.
 
 **Key Items/Locations:** Foundation Pills matter most at this Grade — the roll bonus they provide is a larger percentage of the total needed. Anchoring Artifacts are less critical because failure consequences are mild. A character with good stats and a decent location can Break Through to E-Grade with minimal item support.
 

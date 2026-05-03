@@ -79,7 +79,7 @@ Titles grant a mix of effect types. Magnitudes scale by the Grade at which the t
 
 #### Flat Stat Bonuses (the workhorse)
 
-The most common bonus shape. Stacks cleanly and predictably.
+The most common bonus shape. Multiple flat bonuses to the same stat sum directly.
 
 | **Title Class** | **F-Grade Bonus** | **E-Grade Bonus** | **D-Grade Bonus** |
 |---|---|---|---|
@@ -96,7 +96,7 @@ The most common bonus shape. Stacks cleanly and predictably.
 
 Reserved for Hidden Achievement titles, peak Bestowed titles, and Transcendent-tier rewards. Players build entire strategies around these.
 
-**Cap any single title's percent bonus at +15%.** Stacking percent bonuses across multiple titles is uncapped — a player who collects "+5% damage when outnumbered," "+10% damage to constructs," and "+5% damage at low HP" gets +20% damage when those conditions converge. That convergence-as-power is the genre point.
+**Cap any single title's percent bonus at +15%.** Stacking percent bonuses across multiple titles is uncapped — a player who collects "+5% damage when outnumbered," "+10% damage to constructs," and "+5% damage at low HP" gets +20% damage when those conditions converge.
 
 **Common percent bonus shapes:**
 - +5% to +10% to a derived stat (Max HP, Max Energy, damage)

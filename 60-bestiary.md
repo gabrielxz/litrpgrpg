@@ -8,7 +8,7 @@
 
 Every stat block lists only the values relevant for the Clash. Force values are pre-extracted (already 1–99). HP equals 2 × the creature's effective Raw FOR; Energy is listed only for creatures that use Principle Applications or active skills. Beats per turn, governing offensive Force, governing defensive Force, and tactical notes complete the entry.
 
-Most F-Grade enemies have Force values in the 4–40 range and HP in the 8–80 range. By design, even a mid-tier F-Grade enemy can threaten a starting character. By Level 10, the same enemy is trivial.
+Most F-Grade enemies have Force values in the 4–40 range and HP in the 8–80 range. A mid-tier F-Grade enemy can threaten a starting character; by Level 10, the same enemy is trivial.
 
 **Difficulty tier maps to the Grade Reference Card and to VE reward** (see Cultivation). A "Moderate" enemy is balanced for a peer character (similar Force values); an "Easy" enemy is a clear underdog; a "Hard" enemy is a dangerous fight; a "Severe" or "Peak" enemy is boss-tier.
 
