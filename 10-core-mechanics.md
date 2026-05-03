@@ -183,35 +183,41 @@ Stats are raw and unfiltered. There is no class-based efficiency layer — if a 
 
 ### Initiative: The Momentum System
 
-There is no fixed turn order. Combat flows through Momentum — whichever side holds Momentum acts first as a group, in whatever order they choose. Then the opposition acts.
+Combat does not use a fixed turn order. Each round, the side with **Momentum** takes a complete turn first; the other side or sides take their turns after. Momentum can shift between rounds on specific triggers.
 
-**Starting Momentum:** The side that initiated the encounter holds Momentum. Ambushers, aggressors, or whoever forced the fight goes first. If unclear, the GM calls for an Opposed Roll (each side's representative rolls d100 + DEX Force). Higher total wins Momentum.
+**Initial Momentum.** At the start of combat, each side's representative makes an Opposed DEX Roll (d100 + DEX Force). The side with the highest total holds Momentum for the first round. Ties go to the players.
 
-**Surprise Beat:** A side that achieves true surprise (successful ambush, undetected trap) gains one free Beat per character before Momentum-based turns begin. This is the only time the action economy is asymmetric.
+**Surprise.** A side that achieves true surprise — a successful ambush, an undetected trap, a hidden combatant revealing themselves — holds Momentum for the first round without rolling. In addition, each ambushing character gains +1 Beat for the first round only. The action economy is asymmetric for that round and normal thereafter.
 
-**Momentum Shifts:** Momentum passes to the opposing side when:
+**Round Structure.** When a side takes its turn:
 
-- A character drops to 0 HP or suffers near-fatal damage
-- A System Volatility explosion occurs (the energy spike disrupts the flow of combat)
-- A new combatant enters the fight or the terrain meaningfully changes
-- A player action significantly alters positional advantage
+- Characters on that side act **one at a time**, in any order the side chooses.
+- A character uses **all** of their Beats before the next teammate acts. A character with 3 Beats uses all 3 before passing.
+- Once every character on the side has acted, the next side begins its turn.
+- A round ends when every side has acted.
 
-A character may also attempt to **seize Momentum** by spending 1 Beat and winning an Opposed Roll (d100 + DEX Force vs. d100 + DEX Force of the opposing side's representative). Failure wastes the Beat.
+**Multi-Faction Combat.** With three or more sides, the initial Opposed DEX Roll establishes a turn order for the entire round (highest-to-lowest). Sides act in that order each round until a Shift fires.
 
-The GM is the final arbiter of Momentum shifts. When in doubt, Momentum stays where it is.
+**Momentum Shifts.** Between rounds, Momentum can shift on three triggers:
+
+- **Reinforcement Arrival.** A previously-absent combatant enters the fight. Momentum shifts to that combatant's side at the start of the next round, if that side does not already hold it.
+- **Decisive Tactical Reversal.** A character takes an action that meaningfully reshapes the fight — springing a trap, weaponizing terrain in an unexpected way, completing a multi-round setup, exposing a hidden combatant, or any other move the GM judges to qualify. Momentum shifts to the acting character's side at the start of the next round. The threshold is GM judgment; this is the GM's flexible reward for clever play.
+- **Seize Momentum.** A character spends 1 Beat and rolls an Opposed DEX Roll against the side currently holding Momentum. On a win, Momentum shifts to the seizing character's side at the start of the next round. On a loss, the Beat is wasted.
+
+When no Shift fires, Momentum stays where it is — the prior round's order continues.
 
 ### Action Economy: Beats
 
-Each character gets **two Beats** per turn. A Beat is one meaningful action:
+Each character gets **two Beats** per turn. Some powerful creatures have three or more — each character's Beat count is set by their stat block. A Beat is one meaningful action:
 
 - Attack (melee or ranged)
 - Cast a spell
 - Move to an adjacent Zone
 - Use an item
-- Activate a Principle Application (Seed or Early Fragment)
+- Activate a Principle Application (default 1 Beat — see Principles for tier-specific Beat and Energy costs)
 - Attempt a skill check
 - Disengage from a hostile (leave their Zone without provoking a free strike)
-- Attempt to seize Momentum (Opposed DEX Force roll)
+- Attempt to seize Momentum (Opposed DEX Roll)
 
 **Free actions** (no Beat cost): speaking, drawing a weapon, dropping an object, moving within your current Zone.
 
@@ -221,7 +227,7 @@ Each character gets **two Beats** per turn. A Beat is one meaningful action:
 
 ### Movement: Zones and Position
 
-Combat does not use grids or measured distance. Each combat scene is divided into **Zones** — loose areas defined by the fiction.
+Combat does not use grids or measured distance. Each combat scene is divided into **Zones** — loose areas defined by the fiction. The GM establishes Zones at scene start; players propose, the GM rules.
 
 - A tavern brawl might have three Zones: the bar, the floor, the doorway.
 - A forest ambush might have: the trail, the tree line, the ridge.
@@ -293,15 +299,18 @@ Take the Margin and multiply it by the attacker's Grade Magnitude:
 | D-Grade | 2 | Damage = Margin × 100 |
 | C-Grade | 3 | Damage = Margin × 1,000 |
 
-Apply this damage directly to the defender's HP (which is their Raw FOR value). There is no Damage Reduction subtraction step. Armor, toughness, and defensive capability were already factored into the defender's Clash roll.
+Apply this damage directly to the defender's HP. There is no Damage Reduction subtraction step. Armor, toughness, and defensive capability were already factored into the defender's Clash roll.
 
-### AoE and Multi-Target Attacks
+### Multi-Target & AoE Resolution
 
-An AoE spell or sweep attack targets everyone in a Zone (or a portion of a Zone specified by the GM). The attacker rolls once. Each defender rolls their own Clash individually. The Margin is calculated separately for each defender — some may take massive damage while others barely get clipped.
+When a single attack or effect targets multiple creatures simultaneously — a spell with an AoE, a Principle Application that hits a Zone, a thrown explosive, a falling boulder, an environmental hazard — resolve as follows:
 
-AoE abilities are gated by Energy cost, skill rarity, and the risk of hitting allies in the same Zone.
+- The source makes one attack roll (one Clash total).
+- Each target rolls their own defensive Clash individually.
+- Damage is calculated per target based on their individual Margin.
+- Allies in the affected Zone are valid targets unless the ability explicitly excludes them.
 
-For a martial character who wants to hit two adjacent targets with a melee cleave: make a single Clash roll against both (each defender rolls separately). Each defender takes damage based on their individual Margin, but the attacker splits their Magnitude tier down by one step — a D-Grade attacker's cleave adds 1 zero instead of 2.
+Multi-target capability is a property of specific abilities, spells, or effects — not a baseline action. A character with a polearm does not get a free cleave; that's a class feature or System-granted technique that says so explicitly.
 
 ### Failure Consequences
 

@@ -6,6 +6,7 @@
 
 ## Pending Design Decisions (Active Discussion)
 
+- **DEX-keyed movement and cross-Grade speed scaling. (FRONT OF BACKLOG — solve before next playtest.)** Movement is currently uniform: 1 Zone per Beat for everyone, regardless of DEX. High-DEX builds get no mechanical speed advantage, which contradicts the genre's most basic build expectation. A within-Grade fix (Free Step at DEX Force 25+, Sprint Mastery at 75+) addresses peer combat but does not differentiate across Grades, since Force is always 1–99 within a Grade. A cross-Grade-aware solution likely requires movement bonuses keyed to Grade differential, scaling Beats with Grade, raw-DEX-derived speed, or a separate Speed stat. Each is its own design problem and none has been chosen. The DEX deal-breaker stands open until this lands.
 - **Energy Density as a full subsystem:** The Breakthrough doc defines energy density tiers sufficient for Breakthroughs and Cultivation defines passive absorption rates, but the broader subsystem (affecting Principle resonance, monster spawning, territorial control, hex-level mapping) needs its own section.
 - **Higher-Grade Breakthrough themes (D→C and beyond):** The universal blueprint and formula extend, but thematic trial content, failure severity, and Transcendent reward scales need development when the campaign reaches that point.
 - **Bloodline interaction with Breakthroughs:** How does an active Bloodline modify the trial? Additional internal challenge, or a shortcut?
