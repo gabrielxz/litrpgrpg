@@ -22,7 +22,7 @@
 - Planetary leadership mechanics
 - Races
 - The "System" and opaque rules (how much players know vs. discover)
-
+- Figuring out if modern weapons (guns, mechanical arms, robots, etc) should be allowed and how they would work
 - A rules-light quickstart version
 - Epiphany Track (4–5 checkboxes tied to core Principle Concept)
 - Principle Tiers and Active Nodes (changeable during Consolidation)
