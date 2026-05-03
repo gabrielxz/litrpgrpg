@@ -949,18 +949,10 @@ $if(titlepage-background)$
 \tikz[remember picture,overlay] \node[inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{$titlepage-background$}};
 $endif$
 % ===== LitRPG: RPG custom titlepage =====
-% Title big and centered at top in Cinzel Decorative Black.
-% Author byline bottom-right, "by Name" in italic.
-% No rule, no date, no centered author block.
+% The cover image already has title and byline baked in by ImageMagick
+% (see the cover-titled rule in the Makefile), so this block only
+% suppresses Eisvogel's default text overlay and sets the page style.
 \thispagestyle{empty}
-\begin{tikzpicture}[remember picture, overlay]
-  \node[anchor=north, text=white, align=center, yshift=-2.6cm] at (current page.north) {%
-    \covertitlefont\fontsize{60pt}{68pt}\selectfont $title$%
-  };
-  \node[anchor=south east, text=white, xshift=-1.5cm, yshift=1.5cm] at (current page.south east) {%
-    {\itshape\fontsize{15pt}{18pt}\selectfont by $for(author)$$author$$sep$, $endfor$}%
-  };
-\end{tikzpicture}
 % ===== End custom titlepage =====
 \end{titlepage}
 \restoregeometry

@@ -3,9 +3,11 @@ title: "LitRPG: RPG"
 author: "Gabriel Beal"
 date: "Working Draft"
 
-# Title page — uses cover.png as full-bleed background
+# Title page — uses the title-baked cover (built by ImageMagick) as full-bleed
+# background. Title and byline are rendered into the image itself, so PDF and
+# EPUB share an identical cover treatment.
 titlepage: true
-titlepage-background: "assets/cover.png"
+titlepage-background: "build/cover_titled.png"
 titlepage-text-color: "F5F5F5"
 titlepage-rule-color: "00000000"   # transparent rule
 titlepage-rule-height: 0

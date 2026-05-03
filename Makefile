@@ -45,9 +45,34 @@ EPUB_BASE  := $(BUILD_DIR)/$(PROJECT).epub
 PDF_OUT    := $(BUILD_DIR)/$(PROJECT)-$(TIMESTAMP).pdf
 EPUB_OUT   := $(BUILD_DIR)/$(PROJECT)-$(TIMESTAMP).epub
 
+# Cover image with title and byline baked in via ImageMagick.
+# Used by BOTH the PDF titlepage-background and the EPUB --epub-cover-image,
+# so the cover treatment is identical across formats. Pandoc's EPUB writer
+# does not overlay text on the cover image, hence the bake.
+COVER_BASE   := assets/cover.png
+COVER_TITLED := $(BUILD_DIR)/cover_titled.png
+TITLE_FONT   := /usr/share/texmf-dist/fonts/truetype/ndiscovered/cinzel/CinzelDecorative-Black.ttf
+BYLINE_FONT  := /usr/share/texmf-dist/fonts/opentype/public/ebgaramond/EBGaramond-Italic.otf
+
 .PHONY: all pdf epub clean
 
 all: pdf epub
+
+# --- Cover with baked title -----------------------------------------------
+# Bake "LITRPG: RPG" (top, Cinzel Decorative Black) and "by Gabriel Beal"
+# (bottom-right, EB Garamond Italic) onto the cover image. Both PDF and
+# EPUB consume the result so the cover treatment is identical across formats.
+$(COVER_TITLED): $(COVER_BASE) | $(BUILD_DIR)
+	magick $(COVER_BASE) \
+	  -gravity North \
+	  -font $(TITLE_FONT) \
+	  -pointsize 95 -fill white \
+	  -annotate +0+45 "LITRPG: RPG" \
+	  -gravity SouthEast \
+	  -font $(BYLINE_FONT) \
+	  -pointsize 26 -fill white \
+	  -annotate +30+30 "by Gabriel Beal" \
+	  $@
 
 # --- PDF -------------------------------------------------------------------
 # Per-file pre-processing: convert chapter art image syntax into a full-page
@@ -57,7 +82,7 @@ $(PDF_DIR)/%.md: %.md | $(PDF_DIR)
 	  -e 's|^!\[[^]]*\]\(\./assets/([^)]+\.png)\)[[:space:]]*$$|\\fullpageart{./assets/\1}|' \
 	  $< > $@
 
-$(PDF_BASE): $(PDF_PROCESSED) $(METADATA) $(TEMPLATE) $(PREAMBLE) $(LUAFILTER)
+$(PDF_BASE): $(PDF_PROCESSED) $(METADATA) $(TEMPLATE) $(PREAMBLE) $(LUAFILTER) $(COVER_TITLED)
 	pandoc \
 	  --from markdown \
 	  --to pdf \
@@ -89,7 +114,7 @@ pdf: $(PDF_BASE)
 $(EPUB_DIR)/%.md: %.md | $(EPUB_DIR)
 	cp $< $@
 
-$(EPUB_BASE): $(EPUB_PROCESSED) $(METADATA)
+$(EPUB_BASE): $(EPUB_PROCESSED) $(METADATA) $(COVER_TITLED)
 	pandoc \
 	  --from markdown \
 	  --to epub3 \
@@ -99,7 +124,7 @@ $(EPUB_BASE): $(EPUB_PROCESSED) $(METADATA)
 	  --toc \
 	  --toc-depth=2 \
 	  --number-sections \
-	  --epub-cover-image=assets/cover.png \
+	  --epub-cover-image=$(COVER_TITLED) \
 	  --output $@ \
 	  $(EPUB_PROCESSED)
 
