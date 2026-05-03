@@ -31,9 +31,9 @@ The overarching goal is to achieve a visceral, adrenaline-fueled aesthetic that 
 
 ### Character & Gear
 
-- **Stylized Kinetics:** Highly stylized, dynamic action anime proportions and poses.
+- **Stylized Kinetics:** Highly stylized, dynamic action and poses.
 - **Fierce Expressions:** Eyes must be sharp, fierce, and expressive, utilizing heavy ink surrounding the eye rather than generic shiny reflections.
-- **Scavenged & Mismatched Gear:** Gear is scavenged, mismatched, heavily worn, and asymmetrical, combining raw urban survivalist clothing with fragmented armor plates. Mismatched components should communicate the process of building progression. Active gear should glow with System neon.
+- **Scavenged & Mismatched Gear:** Gear is scavenged, mismatched, heavily worn, and asymmetrical, combining raw urban survivalist clothing with fragmented armor plates. Mismatched components should communicate the process of building progression. Active gear should glow with System neon. Should lean more fantasy than modern - more swords and sorcery than military.
 
 ## Technical Constraints & Aspect Ratio
 
