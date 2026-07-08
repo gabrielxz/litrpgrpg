@@ -4,11 +4,50 @@
 
 ---
 
-## Current Revision Cycle (July 2026 Note Review)
+## Current Cycle: Playtest & Hand-Off Readiness (established 2026-07-08)
 
-**Complete as of 2026-07-08.** Gabriel's full-book read-through notes were triaged on 2026-07-02 and executed in order: Batch 1 mechanical fixes, Block A (combat feel), Block B (Principles rebuild), Block C (stat economy & Volatility), the Aether rename, and the em-dash/prose sweep. Every decision is logged with context in Recently Resolved below.
+**Goal:** a stranger can be handed the book, read it cold, run the Integration Tutorial, and continue into a campaign. Assessment (2026-07-08): the system is mechanically cohesive after the note-review cycle; the book is ready for a Levels 1–9 playtest once Tier 1 lands. The two structural boundaries are the Level 10 class wall (class generation is fully delegated to the System AI with no framework behind it; a campaign hits this around session 6) and the System AI being invoked throughout but explained nowhere. The book's deeper hand-off problem: it is a GM reference that assumes you already know the game — it opens with a reference card, buries the premise in the Principles ontology and the tutorial, and never shows what play sounds like.
 
-**One open naming question from the cycle:** ambient environmental **"Energy Density"** kept its name when the resource pool became Aether. Options if it ever bothers us: leave it (three named energies is genre-normal), "Aether density" (tidy cosmology, but muddies the Aether/VE distinction since dense hexes feed VE absorption), or "VE density" (mechanically accurate, clunky as prose). Parked, not blocking.
+### The Three Ways to Run (decision in progress)
+
+Context, captured 2026-07-08. Gabriel's long-standing plan is a **companion app**: an AI listening app at the table that transcribes play and writes HVE log entries (axis, intensity, context) automatically — the app *is* the Hidden Vector Engine's bookkeeper, and could also run the System AI generation functions (classes, Personal Opportunities, visions). Whether it exists before the first playtest is ~50/50. He has been hedging: wanting the game runnable without the app but not committing to that in the text. The three modes to document in the expanded System AI chapter:
+
+- **Mode A — Companion App:** live listening → automatic HVE log; GM reviews and curates entries; app runs generation functions on demand. (Needs a player-consent note: the table is being recorded.)
+- **Mode B — AI-Assisted:** no bespoke app; the GM keeps the HVE log manually (the tutorial's Vector Logging Cheatsheet already does this) and pastes it into any LLM chat with the book's prompt templates for class generation, Personal Opportunities, Battle Memory visions, and Compression refinement. Between-sessions work, not live.
+- **Mode C — Unplugged:** no AI at all. Requires the **Paper HVE** (Tier 1 item below) and a static class catalog (Tier 2, part of the class framework).
+
+**DECIDED (2026-07-08): Mode C is the floor — the book must be fully runnable unplugged — and Modes A/B are amplifiers.** Recorded as a standing commitment ("The Unplugged Floor") in CLAUDE.md. Rationale: the hand-off goal fails if the book requires software that is 50/50 to exist; a print RPG shouldn't be hostage to an app's lifecycle; and specifying the manual procedure first makes the app a well-defined automation of a working system instead of the system being an underspecified app. Corollary: the first playtest runs **Mode B** regardless of app progress — it exercises the prompt templates (needed anyway) and doubles as requirements-gathering for the app (whatever the GM finds tedious to log by hand is the app's feature list).
+
+### Tier 1 — before the first playtest / before handing the book to anyone
+
+1. **Death & dying rules.** Verified absent (2026-07-08): nothing in the book says what happens at 0 HP. Cross-Grade examples say "simply dead"; no PC rule exists. Design considerations: genre lethality is real but protagonists survive by inches (DotF/PH — death is permanent, no respawn); interacts with healing pills, Pill Saturation, and the deliberate "double HP" softening pass; options include dead-at-zero (brutal), a dying countdown in Beats/rounds with stabilization (medkit/pill/ally Beat), and an overkill threshold (negative HP beyond some fraction of Max = true death, otherwise downed). Near-death is already a Battle Memory trigger, so a downed-but-alive state has HVE value. Small to write; blocks the first session it isn't written for.
+2. **Introduction chapter** (`00-introduction.md`, prepend to Makefile SOURCES). Contents: the pitch and premise (Earth integrated; the System as adaptive experimenter — currently buried in 20's ontology and the tutorial); what players and the GM do; what you need at the table; how to use this book (reading order: core mechanics + character creation, skim progression chapters, run the tutorial); the audience stance — the book is GM-facing, players may read it, and the **HVE spoiler policy** must be stated explicitly (recommended: players may know the Engine exists; they never see their own numbers; the book prints the machinery because the GM needs it).
+3. **The Three Ways to Run + System AI chapter expansion** (see above; absorbs the old "expand 45-system-ai.md" and "3 ways" items). The expanded chapter needs: what the System AI is at the table per mode, input/output contracts per function (class gen, loot, skill synthesis, Personal Opportunities, Hidden Achievements, visions), the prompt templates (currently only Quests has one), and worked examples.
+   **Includes the no-AI recalibration audit** — every "the System AI does X" in the book needs a stated Mode C answer. Sites enumerated 2026-07-08: Battle Memory visions (`20`, `25`: GM narrates the cryptic vision; add guidance + two or three example visions), Compression refinement (`20`: the GM applies the Operational/Bounded/Testable criteria; wording only), Personal Opportunity generation (`55`: the prompt template doubles as a GM worksheet; tutorial Phase 5 already has worked examples), Hidden Achievements and bespoke titles (`40`, `45`: GM invents within the four-category framework; archetype samples exist), loot generation (`45`, `65`: the F-Grade catalog suffices; add a simple drop guideline), skill synthesis and Fusion bespoke Applications (`45`, `20`: GM adjudicates; E-Grade-and-up concern, low urgency), class generation and evolution (`45`, `15`, `30`: the static catalog, Tier 2 item 8), HVE bookkeeping (the Paper HVE, item 4), and the two chapter subtitles reading "AI-Assisted LitRPG Worlds" (`45`, `50`: reword). Net: mostly phrasing, plus three concrete artifacts — vision guidance, a drop guideline, and the static class catalog.
+4. **Paper HVE (the Mode C floor).** The HVE as written is app-shaped: weighted events (0.5–3.0), structured JSON, Current/Deep vectors with differential decay. Design the manual equivalent: tally-based axis tracking (the tutorial's Vector Logging Cheatsheet is the seed), a session-end aggregation ritual, a decay approximation (e.g., halve Current tallies each session), and a qualitative Coherence read for the Breakthrough bonus. The app then automates this procedure rather than replacing an unspecified one.
+5. **Tutorial reconciliation pass** (absorbs "Playtest-ready Integration Protocol"). The note-review cycle changed rules under the tutorial: Surprise Beat (now matches the Glow-Stalker's existing language, but Phase 2 teaching text should teach it), Momentum rolls are DEX-or-PER, zero Principle access at creation (line updated, but Phase 7 Affinity Notices should acknowledge it), Aether rename (sed-applied; needs a read for phrasing), 2+ cascades now auto-grant Battle Memories (Phase 4's staged cascade demo now hands out a Memory — either embrace it as the first Memory or re-stage), Turned Aside exists (Phase 2/4 combat guidance should demonstrate it), Free Step exists (no tutorial character will have DEX Force 50+; fine, but the Warden might). Full read-through with the current rules, not a grep pass.
+6. **Example of play + narrated combat round.** A one-page GM/player/dice transcript (likely at the end of the introduction) plus a fully narrated combat round in Core Mechanics showing Momentum, Beats, Zones, a Clash with damage, and a Turned Aside. The book has worked math everywhere but never shows the conversation. Highest-leverage comprehension artifact per page of any item in this cycle.
+7. **Pregens + starting-human stat table** (absorbs both existing content items). 4–5 pregenerated characters (the sample-spread archetypes made real: point-buy, Proficiencies, derived stats, a suggested first-session play style per HVE archetype) — they double as character-creation worked examples and as the fastest path to a playtest. The stat table: per-stat archetype anchors for values 1–10 across all seven Attributes (10 = peak recorded human, 8–9 elite, 5 average, 3 deficiency floor); home: `15-character-creation.md` near the Sample Spreads.
+
+### Tier 2 — before a campaign passes Level 9
+
+8. **Class design framework.** The biggest remaining design job. Needs: stat-profile templates, Signature Skill shape (cost, Beat economy, Modifier Budget compliance), class evolution bonus structure at Breakthrough, rarity bands (Common–Epic), and — for Mode C — a static catalog of ~12–20 pre-built classes mapped to HVE archetypes, with the generative path (Modes A/B) layered on top via prompt template.
+9. **"After the Tutorial" campaign guidance.** The tutorial delivers sessions 1–3 and stops. A short GM chapter: session VE budgets (the F-Grade reward table exists; give per-session pacing), quest cadence by category, seeding Breakthrough locations early, escalating toward Level 10 and running class selection, and how the HVE's world-response outputs (faction reactions, adversarial design) turn into prep.
+10. **Ability/Spell interaction with the Clash system** (promoted from Pending). How active skills modify Force, add tactical bonuses, or create special Clash conditions; Stable Abilities are the tutorial-tier example; class Signature Skills and Principle Applications need the unified treatment. Prerequisite for the class framework's Signature Skill shape.
+
+### Tier 3 — comprehension polish, any time
+
+11. **Table kit:** move the Quick Reference to a back appendix slot (a reference card is a terrible chapter 1 for a cold reader — renumber `05` to the end and let the book open with the introduction); a printable character sheet (also a comprehension device — the sheet shows what matters: attributes with Raw/Force columns, HP/Aether/VE Tolerance, IP track, Concept slots, titles); the printable GM screen card (existing item).
+12. **Glossary appendix.** 30+ coined terms (Grade, Force, Margin, Beat, Zone, Momentum, Volatility, VE, Aether, Saturation, Consolidation, Toxin, IP, Concept, Seed/Fragment/Domain, Compression, Coherence, Battle Memory, Mandate…). One page, alphabetical, chapter pointers. Also a consistency-checking tool during writing.
+13. **Cross-reference cleanup:** chapters cite each other by filename (`60-bestiary.md`) which reads oddly in the built book; switch to chapter names. Plus the Production/Visual Design items below (callout boxes onto bestiary/quest entries, chapter art for the five bare chapters, cover title-doubling check).
+
+---
+
+## Completed: July 2026 Note-Review Cycle
+
+Complete as of 2026-07-08: Batch 1 mechanical fixes, Block A (combat feel), Block B (Principles rebuild), Block C (stat economy & Volatility), the Aether rename, and the em-dash/prose sweep — all committed as `7cdc7db`. Every decision is logged with context in Recently Resolved below.
+
+**Parked naming question:** ambient environmental **"Energy Density"** kept its name when the resource pool became Aether. Options if it ever bothers us: leave it (three named energies is genre-normal), "Aether density" (tidy cosmology, but muddies the Aether/VE distinction since dense hexes feed VE absorption), or "VE density" (mechanically accurate, clunky as prose). Not blocking.
 
 ---
 
@@ -17,12 +56,10 @@
 - **Energy Density as a full subsystem:** The Breakthrough doc defines energy density tiers sufficient for Breakthroughs and Cultivation defines passive absorption rates, but the broader subsystem (affecting Principle resonance, monster spawning, territorial control, hex-level mapping) needs its own section.
 - **Higher-Grade Breakthrough themes (D→C and beyond):** The universal blueprint and formula extend, but thematic trial content, failure severity, and Transcendent reward scales need development when the campaign reaches that point.
 - **Bloodline interaction with Breakthroughs:** How does an active Bloodline modify the trial? Additional internal challenge, or a shortcut?
-- **Ability/Spell interaction with the Clash system:** How do active skills modify Force, add Tactical bonuses, or create special Clash conditions? Stable Abilities are a tutorial-tier example; class-tier and Principle-tier interactions need a unified treatment. (Touches Blocks A and B; pick up formally after both.)
 - **Large-negative-margin outcomes and defensive explosion payoffs.** Volatility applies symmetrically — a winning defender's exploded roll can drive the attacker's Margin sharply negative. Currently: a winning defender deals no damage. Open question is whether large-negative-margin outcomes should produce mechanical consequences beyond "no damage" — counter-damage, a forced Momentum shift, weapon-breakage, a free Beat, or pure narrative spectacle. Needs playtesting before deciding.
 
 ## Systems To Be Designed
 
-- **Expand The System AI (`45-system-ai.md`) into a real chapter.** Currently a one-page stub that class generation, loot, skill synthesis, Personal Opportunities, and Hidden Achievements all load-bear on. Needs: what the System AI is at the table (tool? oracle? optional?), input/output contracts per function, and worked examples. Connects to the existing "3 ways to run the game" item below.
 - Aura system (detailed mechanics beyond the Aura Pressure save)
 - Professions (crafting, alchemy, formations)
 - Merchants and economy (currency formalized; reputation as numeric tracked stat)
@@ -38,19 +75,16 @@
 - Bloodlines
 - Secret starting benefits: Unique/Exclusive Skills, System Exploits, Specialized Builds, Unmatched Aether Pool/Regen, Superior Knowledge, Rapid Progression/Leveling
 - Additional Grade Reference Cards (C-Grade and beyond)
-- Class design framework (stat profile templates, Signature Skill shape, class evolution bonuses)
 - Higher-Grade bestiary (E-Grade and beyond)
 - E-Grade items, pills, and consumables (extends the F-Grade catalog ×10)
-- add section about the 3 ways to run the game (with ai companion app, with occasional AI assistance, with no AI)
+
+*(Promoted to the current cycle: System AI expansion + Three Ways to Run, Paper HVE, class design framework, Ability/Spell–Clash treatment.)*
 
 ## Content To Be Produced
 
-- Playtest-ready Integration Protocol (post-reconciliation pass)
-- Sample characters at F-Grade (with new starting stat ranges of 4–8)
 - Additional F-Grade enemies as the campaign demands them (current bestiary: 12 entries)
-- System AI prompt templates for class generation, loot generation, skill synthesis
-- GM screen reference card (printable)
-- **Starting-human stat reference table.** A per-stat archetype breakdown for values 1–10 across all seven Attributes (STR, DEX, FOR, HRT, POW, PER, CHA). Anchors what each value means for a freshly integrated human so players can interpret point-buy choices concretely. Natural home: `15-character-creation.md`, near the Sample Spreads. Calibrate so 10 is genuine peak human (e.g., for STR: strongest humans ever recorded), 8–9 are recognizable elite tiers, 5 is average, 3 is the deficiency floor.
+
+*(Promoted to the current cycle: tutorial reconciliation pass, pregens/sample characters, System AI prompt templates, GM screen card, starting-human stat table.)*
 
 ## Production / Visual Design
 
@@ -64,6 +98,8 @@
 ---
 
 ## Recently Resolved
+
+- **The Unplugged Floor decided (2026-07-08).** The book must be fully playable with no AI (Mode C); the companion app (Gabriel's planned AI listening app that transcribes table talk and auto-logs HVE entries) and LLM assistance are amplifiers, never requirements. Recorded as a standing DESIGN COMMITMENT in CLAUDE.md, checked like the design priorities. Ends a long-standing hedge — the deciding argument was the hand-off goal (a book requiring 50/50-to-exist software isn't a book) plus the app-spec argument (specify the manual procedure first; the app automates a working system). First playtest runs Mode B (manual HVE log + LLM prompt templates) regardless of app progress, doubling as app requirements-gathering. The no-AI recalibration audit is enumerated under Tier 1 item 3 of the current cycle.
 
 - **Aether rename + em-dash/prose sweep; revision cycle complete (2026-07-08).** The character resource "Energy" is now **Aether** across all chapters (Max Aether = Raw POW, Aether Pills, Aether costs, bestiary stat lines); "Volatile Energy"/VE and ambient "Energy Density" deliberately kept their names. All ~420 em-dashes removed from the 14 published chapters via sentence restructuring (periods, commas, colons, semicolons, parentheses; table "n/a" placeholder dashes became words); en-dashes, minus signs, and arrows untouched; verified zero remaining. Concurrent prose-anti-pattern cleanup per CLAUDE.md: cut "This is intentional"/"a feature, not a bug" (30), "Numbers go up. Players feel it." tagline (70), "pair beautifully"/"These are good." (55), "Slogs are the enemy of the design." (60), "deliberate randomizers" (65), "That is intentional" (15), "time-to-kill drops sharply" and a Momentum tagline (10); "System Volatility replaces traditional critical hits" reworded to answer the crit question directly. Borderline passages (in-world lore closers, Design Notes framing, GM calibration lines) deliberately kept. Also fixed a Defense Force redundancy in `10` (physical defense was described twice after the Batch 1 posture fix).
 

@@ -9,6 +9,9 @@ DESIGN PRIORITIES (in order):
 4. The Hidden Vector Engine must receive clean behavioral signal. Every mechanic should generate meaningful data about how players act under pressure.
 5. Lighter side of rules-heavy. If a subsystem adds tracking burden without proportional payoff, cut it.
 
+DESIGN COMMITMENTS (standing constraints, checked like the priorities):
+- **The Unplugged Floor (decided 2026-07-08).** The book must be fully playable with no AI. The companion app (planned: an AI listening app that auto-logs HVE entries from table talk) and general LLM assistance are amplifiers, never requirements. Every mechanic that invokes the System AI must also have a stated manual procedure — "the GM, or the System AI in assisted modes." The three run modes (Companion App / AI-Assisted / Unplugged) are documented in the System AI chapter.
+
 TONE (chat): Direct, opinionated, and constructive. Push back on my ideas when the math breaks or the design contradicts itself. Don't be polite about bad mechanics — be precise about why they're bad and what replaces them.
 
 PROSE STYLE (book content): The book is a rules manual that GMs reread during prep and at the table. Write for the table, not for sale. The reader will never see prior versions of any rule, so do not justify changes or compare the system to absent alternatives.
