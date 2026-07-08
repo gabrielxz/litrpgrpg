@@ -6,7 +6,7 @@
 
 ## Design Notes
 
-This document covers the practical items players encounter during F-Grade play — the consumables, weapons, and one-shot oddities that fill the spaces between treasure tiers. The full economy, crafting professions, and merchant systems are deferred. This is what the GM needs at the table for the prototype.
+This document covers the practical items players encounter during F-Grade play: the consumables, weapons, and one-shot oddities that fill the spaces between treasure tiers. The full economy, crafting professions, and merchant systems are deferred. This is what the GM needs at the table for the prototype.
 
 All Toxin Points referenced below interact with the Toxin Tolerance rule (Cultivation §Toxins & Impurities). A character whose accumulated Toxin exceeds Tolerance suffers Consolidation efficiency loss; pushing well above tolerance risks permanent stat degradation.
 
@@ -26,7 +26,7 @@ Restore HP instantly. Adds Toxin Points. Consumed as a **free action** on the us
 | Greater Healing Pill | F | 50 | 20 |
 | Pristine Recovery Pill | F | 80 | 40 |
 
-E-Grade pills heal ×10 the listed amount and add ×10 Toxin (if the user can metabolize them — F-Grade systems are prone to violent reactions when ingesting E-Grade materia, often inducing temporary Saturation).
+E-Grade pills heal ×10 the listed amount and add ×10 Toxin (if the user can metabolize them; F-Grade systems are prone to violent reactions when ingesting E-Grade materia, often inducing temporary Saturation).
 
 **Healing pills cap at the user's Max HP.** Excess healing is wasted.
 
@@ -42,7 +42,7 @@ The body's energy channels accept healing in diminishing quantities. Within a si
 | 4th | 12% |
 | 5th and beyond | half-again per pill, until rounded to 0 |
 
-Round down at each step. Once a pill would heal 0 HP, the character is **saturated** and further pills have no healing effect for the remainder of the combat scene. Energy Pills follow the same diminishing schedule, tracked separately from healing pills (a third Healing Pill does not affect the next Energy Pill's potency).
+Round down at each step. Once a pill would heal 0 HP, the character is **saturated** and further pills have no healing effect for the remainder of the combat scene. Aether Pills follow the same diminishing schedule, tracked separately from healing pills (a third Healing Pill does not affect the next Aether Pill's potency).
 
 **Toxin still accrues at the listed amount per pill regardless of efficiency.** Even after the healing stops landing, the body still absorbs the impurities.
 
@@ -50,20 +50,20 @@ Round down at each step. Once a pill would heal 0 HP, the character is **saturat
 
 **Out-of-combat Consolidation rest** resets all saturation counts.
 
-**Foundation Pills are exempt** — they are not consumed during combat.
+**Foundation Pills are exempt.** They are not consumed during combat.
 
-### Energy Pills
+### Aether Pills
 
-Restore Energy mid-encounter. Toxin cost.
+Restore Aether mid-encounter. Toxin cost.
 
-| **Pill** | **Grade** | **Energy Restored** | **Toxin Added** |
+| **Pill** | **Grade** | **Aether Restored** | **Toxin Added** |
 |---|---|---|---|
 | Sparkstone Tablet | F | 10 | 5 |
-| Lesser Energy Pill | F | 25 | 10 |
-| Energy Pill | F | 50 | 25 |
-| Greater Energy Pill | F | 80 | 50 |
+| Lesser Aether Pill | F | 25 | 10 |
+| Aether Pill | F | 50 | 25 |
+| Greater Aether Pill | F | 80 | 50 |
 
-Energy Pills should be rare. Energy primarily refills through Consolidation; widely available Energy Pills would collapse the scarcity the Energy system is built on.
+Aether Pills should be rare. Aether primarily refills through Consolidation; widely available Aether Pills would collapse the scarcity the Aether system is built on.
 
 ### Foundation Pills
 
@@ -75,7 +75,7 @@ See the Breakthroughs document for full rules. Brief reference:
 | Nine Leaf Essence | F | +10 | 30 |
 | Heavenly Foundation Pill | F | +15 | 50 |
 
-Foundation Pills are consumed during Beat 1 of a Breakthrough (Preparation phase). Only one Foundation Pill effect applies per Breakthrough — the body cannot metabolize multiple at once.
+Foundation Pills are consumed during Beat 1 of a Breakthrough (Preparation phase). Only one Foundation Pill effect applies per Breakthrough; the body cannot metabolize multiple at once.
 
 ---
 
@@ -109,7 +109,7 @@ Volatile Artifacts are scavenged debris from dead worlds, half-functioning const
 A small shield that absorbs one impact before its protective field collapses.
 
 - **Effect:** Once per encounter, when the wielder would take damage from a physical Clash, reduce that damage to 0. The buckler's field discharges visibly and does not reset until the next Consolidation.
-- **Limitations:** Does not protect against mental, spiritual, or illusion-based attacks. Does not negate the Margin — only converts damage to 0 after the Clash resolves. Does not work against attacks the wielder did not see coming (Surprise Beat hits, ambushes from Hidden enemies).
+- **Limitations:** Does not protect against mental, spiritual, or illusion-based attacks. Does not negate the Margin; it only converts damage to 0 after the Clash resolves. Does not work against attacks the wielder did not see coming (Surprise Beat hits, ambushes from Hidden enemies).
 
 ### Degraded Skill Shards
 
@@ -118,24 +118,24 @@ Crystalline matrices containing fragments of dead techniques. Single-use. Activa
 | **Shard Type** | **Effect** | **Backfire (on d100 ≤ 10)** |
 |---|---|---|
 | Edge Shard | Next Clash this turn gains +20. | Shard cracks: user takes 5 damage. |
-| Pulse Shard | Restore 30 Energy. | Energy backlash: user takes 10 Toxin. |
-| Veil Shard | Become invisible until end of next turn or until you act offensively. | Veil flickers — you remain visible but appear blurred (+5 to defense, no concealment). |
-| Anchor Shard | Until end of next turn, you cannot be moved by any effect, and your Defense Force gains +10. | You become **Rooted** — you also cannot move under your own power. |
+| Pulse Shard | Restore 30 Aether. | Aether backlash: user takes 10 Toxin. |
+| Veil Shard | Become invisible until end of next turn or until you act offensively. | Veil flickers: you remain visible but appear blurred (+5 to defense, no concealment). |
+| Anchor Shard | Until end of next turn, you cannot be moved by any effect, and your Defense Force gains +10. | You become **Rooted**; you also cannot move under your own power. |
 | Resonance Shard | Add 1 IP toward a Principle Concept of your choice. | The IP is added to a random Concept the GM selects. |
 | Volatile Shard | Roll d100 again. The GM and the System AI generate an unpredictable effect based on the result. | The GM's discretion is the risk. |
 
-Shards are deliberate randomizers. They reward players who use them in moments where a wild outcome is acceptable, and punish those who treat them as reliable tools.
+Shards are randomizers. They reward players who use them in moments where a wild outcome is acceptable, and punish those who treat them as reliable tools.
 
 ### Sensory Tools
 
-- **Resonance Glass:** Spend 1 Beat. Reveals hidden energy signatures within your current Zone — concealed runes, dormant constructs, Principle resonance points. Does not reveal hidden creatures unless they have an active energy signature (cultivators using skills, magical creatures, etc.). Reusable.
-- **Truthbinder Cuff:** Forces a single yes/no answer from one detained, non-hostile target. Single use; the cuff dissolves after activation. Cannot compel meaningful detail — only a binary truth.
+- **Resonance Glass:** Spend 1 Beat. Reveals hidden energy signatures within your current Zone: concealed runes, dormant constructs, Principle resonance points. Does not reveal hidden creatures unless they have an active energy signature (cultivators using skills, magical creatures, etc.). Reusable.
+- **Truthbinder Cuff:** Forces a single yes/no answer from one detained, non-hostile target. Single use; the cuff dissolves after activation. Cannot compel meaningful detail, only a binary truth.
 
 ### Single-Use Ranged Relic
 
 Devastating weapon, one charge. Common in tutorial scavenger zones.
 
-- **Effect:** A ranged Clash using DEX or POW Force (user's choice) at +20 to the roll. On hit, deals damage as normal but treats the user's Grade as **one tier higher** for the damage Multiplier (an F-Grade user deals E-Grade damage on this hit only — Margin × 10 instead of × 1).
+- **Effect:** A ranged Clash using DEX or POW Force (user's choice) at +20 to the roll. On hit, deals damage as normal but treats the user's Grade as **one tier higher** for the damage Multiplier (an F-Grade user deals E-Grade damage on this hit only: Margin × 10 instead of × 1).
 - **Disposable:** After use, the relic burns out and crumbles. Cannot be repaired.
 
 ### Other Tutorial-Grade Items
@@ -152,7 +152,7 @@ Devastating weapon, one charge. Common in tutorial scavenger zones.
 For F-Grade prototype play, items appear:
 
 - As **tutorial scavenge** in Volatile Artifact zones (Phase 2 and Phase 3 of the Integration Tutorial).
-- As **loot drops** from defeated enemies — the System AI generates tier-appropriate drops per the loot generation rule (System AI document).
+- As **loot drops** from defeated enemies; the System AI generates tier-appropriate drops per the loot generation rule (System AI document).
 - In **dungeon caches**, treasure rooms, and abandoned stockpiles.
 - Through **trade with NPCs** in the Civic Fragment or post-tutorial settlements.
 

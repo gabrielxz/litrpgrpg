@@ -6,7 +6,7 @@
 
 ## How to Read a Stat Block
 
-Every stat block lists only the values relevant for the Clash. Force values are pre-extracted (already 1–99). HP equals 2 × the creature's effective Raw FOR; Energy is listed only for creatures that use Principle Applications or active skills. Beats per turn, governing offensive Force, governing defensive Force, and tactical notes complete the entry.
+Every stat block lists only the values relevant for the Clash. Force values are pre-extracted (already 1–99). HP equals 2 × the creature's effective Raw FOR; Aether is listed only for creatures that use Principle Applications or active skills. Beats per turn, governing offensive Force, governing defensive Force, and tactical notes complete the entry.
 
 Most F-Grade enemies have Force values in the 4–40 range and HP in the 8–80 range. A mid-tier F-Grade enemy can threaten a starting character; by Level 10, the same enemy is trivial.
 
@@ -34,7 +34,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **HP:** 16 · **Beats:** 1
 - **Off Force (STR, claws):** 4
 - **Def Force (FOR, dead flesh):** 8
-- **Tactics:** Will not flee. Ignores Free Strikes when leaving a Zone — it does not register the threat.
+- **Tactics:** Will not flee. Ignores Free Strikes when leaving a Zone; it does not register the threat.
 
 ### Frenzy Rat
 *A small, vicious creature warped by ambient energy. Scampers and bites.*
@@ -65,7 +65,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **HP:** 24 · **Beats:** 2
 - **Off Force (STR, fang and claw):** 14
 - **Def Force (DEX):** 18
-- **Tactics:** Pack hunter — gains +10 (Flanking) when another Snarljaw is in the same Zone. On a successful hit, may spend its second Beat instead of attacking again to drag prey down (target becomes **Exposed** for next round).
+- **Tactics:** Pack hunter: gains +10 (Flanking) when another Snarljaw is in the same Zone. On a successful hit, may spend its second Beat instead of attacking again to drag prey down (target becomes **Exposed** for next round).
 
 ### Glow-Stalker
 *A camouflaged predator from the bioluminescent forests. Hunts via ambush.*
@@ -74,7 +74,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **HP:** 20 · **Beats:** 2
 - **Off Force (DEX, ambush strike):** 22
 - **Def Force (DEX, fade):** 22
-- **Tactics:** Begins encounter unseen unless detected by an active Perception Clash. Surprise Beat on first turn. Withdraws to the Zone edge after striking; favors hit-and-run over sustained combat. If pinned, fights frantically — gains +5 Off Force when below 50% HP.
+- **Tactics:** Begins encounter unseen unless detected by an active Perception Clash. Surprise Beat on first turn. Withdraws to the Zone edge after striking; favors hit-and-run over sustained combat. If pinned, fights frantically, gaining +5 Off Force when below 50% HP.
 
 ### Training Sentry
 *A military construct from the Martial Remnant. Predictable patterns; escalating threat.*
@@ -93,10 +93,10 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 *Another integrated human, dropped from a parallel tutorial. Tactically competent, hostile.*
 
 - **Tier:** Hard · **VE:** 60
-- **HP:** 56 · **Energy:** 22 · **Beats:** 2
+- **HP:** 56 · **Aether:** 22 · **Beats:** 2
 - **Off Force (DEX, bladework):** 30
 - **Def Force (DEX or FOR):** 30 / 28
-- **Tactics:** Wields a Knife (+5 skill bonus). Has one Seed Application: **Searing Strike** — costs 10 Energy, +10 to next Clash, deals damage as fire. Uses positioning intelligently and will retreat to advantageous terrain. Carries 1 Lesser Healing Pill.
+- **Tactics:** Wields a Knife (+5 skill bonus). Has one Seed Application: **Searing Strike** (costs 10 Aether, +10 to next Clash, deals damage as fire). Uses positioning intelligently and will retreat to advantageous terrain. Carries 1 Lesser Healing Pill.
 
 ### Husk Sentinel
 *A heavier construct from the Civic Fragment. Durable, counter-aggressive.*
@@ -105,7 +105,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **HP:** 80 · **Beats:** 2
 - **Off Force (STR, glaive sweep):** 35
 - **Def Force (FOR, plating):** 40
-- **Tactics:** When the Sentinel wins a defensive Clash, it gains a free **Counterstrike** — one Clash at no Beat cost against the failed attacker. Resistant to mental attacks (treat HRT Force as 25 for defensive purposes).
+- **Tactics:** When the Sentinel wins a defensive Clash, it gains a free **Counterstrike**: one Clash at no Beat cost against the failed attacker. Resistant to mental attacks (treat HRT Force as 25 for defensive purposes).
 
 ### Alpha Snarljaw
 *Pack leader. Coordinates lesser Snarljaws, hits with sundering force.*
@@ -114,36 +114,36 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **HP:** 64 · **Beats:** 2
 - **Off Force (STR, sundering bite):** 30
 - **Def Force (DEX):** 28
-- **Tactics:** **Pack Tactics** — while any other Snarljaw is in the same Zone, all of them gain +10 to Clashes. When the Alpha lands a hit, it deals +5 bonus damage on the Margin (sundering jaw). Will not flee; defends the pack to death.
+- **Tactics:** **Pack Tactics.** While any other Snarljaw is in the same Zone, all of them gain +10 to Clashes. When the Alpha lands a hit, it deals +5 bonus damage on the Margin (sundering jaw). Will not flee; defends the pack to death.
 
 ---
 
 ## Boss Tier (Severe / Peak)
 
 ### Fragment Wraith
-*A spiritual remnant — the dying coherence of a fallen cultivator's mind, given temporary form by ambient energy.*
+*A spiritual remnant: the dying coherence of a fallen cultivator's mind, given temporary form by ambient energy.*
 
 - **Tier:** Severe · **VE:** 100
-- **HP:** 120 · **Energy:** 65 · **Beats:** 2
+- **HP:** 120 · **Aether:** 65 · **Beats:** 2
 - **Off Force (POW, mind-leach):** 65
 - **Def Force (HRT, spectral):** 60 · (PER, vs. illusion-piercing): 70
 - **Tactics:**
   - **Incorporeal:** STR/DEX physical attacks are at −10 unless the weapon or attack carries an active Principle infusion.
-  - **Mind-Leach (1 Beat, 10 Energy):** target rolls HRT defense. On a hit, deal damage as normal AND drain 1 Energy from the target per damage point dealt. The Wraith adds drained Energy to its own pool, up to its Max.
+  - **Mind-Leach (1 Beat, 10 Aether):** target rolls HRT defense. On a hit, deal damage as normal AND drain 1 Aether from the target per damage point dealt. The Wraith adds drained Aether to its own pool, up to its Max.
   - **Vulnerability:** PER-based attacks (Sensory Pulse, Light or Truth Principles, scanning skills) deal +10 bonus damage on the Margin.
 
-### Corrupted System Warden — *Tutorial Boss*
+### Corrupted System Warden (*Tutorial Boss*)
 *A massive maintenance construct that was supposed to manage the tutorial's dissolution. Now it is glitching, deranged, and trying to reach the gate before the Initiates do.*
 
 - **Tier:** Peak · **VE:** 200
-- **HP:** 190 · **Energy:** 75 · **Beats:** 3
+- **HP:** 190 · **Aether:** 75 · **Beats:** 3
 - **Off Force (STR, gauntlet smash):** 80 · **(POW, energy lash):** 75
 - **Def Force (FOR, plating):** 95 · (DEX, evasive shift): 60
 - **Tactics:**
-  - **Phase 1 — Indifferent:** While at full HP, the Warden ignores the party. It moves toward the gate using all 3 Beats per turn (one Zone of movement per Beat). It does not attack unless attacked.
-  - **Phase 2 — Hostile:** Once damaged below 75% HP, the Warden becomes aware. It uses 2 Beats for attacks and 1 Beat for movement.
+  - **Phase 1 (Indifferent):** While at full HP, the Warden ignores the party. It moves toward the gate using all 3 Beats per turn (one Zone of movement per Beat). It does not attack unless attacked.
+  - **Phase 2 (Hostile):** Once damaged below 75% HP, the Warden becomes aware. It uses 2 Beats for attacks and 1 Beat for movement.
   - **Glitch Cascade:** Whenever the Warden rolls a System Volatility explosion (natural d100 of 96+), the construct's targeting reroutes erratically. The next attack against the Warden by any combatant gains +20.
-  - **Tutorial Note:** This encounter is **not winnable in a straight fight at F-Grade**. Players succeed by reaching the gate, slowing the Warden, exploiting Glitch Cascades, and using Volatile Artifacts (skill shards in particular). The Multi-Path Resolution in the Tutorial document describes how each tested competence — martial, environmental, arcane, social — can contribute.
+  - **Tutorial Note:** This encounter is **not winnable in a straight fight at F-Grade**. Players succeed by reaching the gate, slowing the Warden, exploiting Glitch Cascades, and using Volatile Artifacts (skill shards in particular). The Multi-Path Resolution in the Tutorial document describes how each tested competence (martial, environmental, arcane, social) can contribute.
 
 ---
 
@@ -161,6 +161,6 @@ When in doubt, use the Grade Reference Card. A character with Force 30 fighting 
 | L13–20 | 2 Hard | 1 Severe + 1 Hard | 1 Peak or 2 Severe |
 | L21–25 | 2 Severe | 1 Peak + 1 Hard | Boss + adds |
 
-These ratios assume a balanced party with reasonable equipment. Adjust upward for well-prepared parties; adjust downward when the party is wounded, low on Energy, or out of consumables.
+These ratios assume a balanced party with reasonable equipment. Adjust upward for well-prepared parties; adjust downward when the party is wounded, low on Aether, or out of consumables.
 
-Combat should resolve in 3–5 rounds. If a fight is dragging into round 6+, raise the stakes: introduce a complication, escalate the enemy's tactics, or end it decisively. Slogs are the enemy of the design.
+Combat should resolve in 3–5 rounds. If a fight is dragging into round 6+, raise the stakes: introduce a complication, escalate the enemy's tactics, or end it decisively.

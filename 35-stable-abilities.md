@@ -6,15 +6,15 @@
 
 ## Design Notes
 
-A **Stable Ability** is a small, permanent capability granted by the System at the end of the Integration Tutorial (Phase 7: First Recognition). It is not a class feature — class selection happens at Level 10. It is not a Principle Application — those are earned through Insight Points. A Stable Ability is the System's first formal acknowledgment of the character's emerging identity: a single, flavor-rich tool that signals the direction of their growth.
+A **Stable Ability** is a small, permanent capability granted by the System at the end of the Integration Tutorial (Phase 7: First Recognition). It is not a class feature; class selection happens at Level 10. It is not a Principle Application (those are earned through Insight Points). A Stable Ability is the System's first formal acknowledgment of the character's emerging identity: a single, flavor-rich tool that signals the direction of their growth.
 
-Each Stable Ability is keyed to a behavioral signature observed during the tutorial. The GM selects one ability per character at Phase 7, drawing from the catalog below. Use the player's strongest tutorial moment, their dominant Hidden Vector axis, or a combination — whichever feels most earned.
+Each Stable Ability is keyed to a behavioral signature observed during the tutorial. The GM selects one ability per character at Phase 7, drawing from the catalog below. Use the player's strongest tutorial moment, their dominant Hidden Vector axis, or a combination, whichever feels most earned.
 
 **Mechanical principles:**
 
-- Stable Abilities cost no Energy. They are System-stamped permissions, not channeled techniques.
+- Stable Abilities cost no Aether. They are System-stamped permissions, not channeled techniques.
 - Most are gated by frequency (once per encounter, once per Consolidation, once per session) rather than by resource pool.
-- They never replace a class feature. When the character selects their class at Level 10, the Stable Ability remains — but the class will provide more powerful, similar-flavored options that may overshadow it. That is intentional. The Stable Ability is a foothold, not a peak.
+- They never replace a class feature. When the character selects their class at Level 10, the Stable Ability remains, but the class will provide more powerful, similar-flavored options that may overshadow it. That is intentional. The Stable Ability is a foothold, not a peak.
 
 ---
 
@@ -43,14 +43,14 @@ Each time you deliver a killing blow, your next Clash this turn (if any) gains *
 #### Sensory Pulse
 *A pulse of focused attention reveals what hides in the seams.*
 
-Once per Consolidation, spend 1 Beat. Reveal hidden features within your current Zone — traps, concealed enemies, structural weak points, energy signatures. The GM describes what stands out.
+Once per Consolidation, spend 1 Beat. Reveal hidden features within your current Zone: traps, concealed enemies, structural weak points, energy signatures. The GM describes what stands out.
 
 **Best for:** Characters who explored the Arcane Debris carefully, noticed the spiral pattern, or asked careful questions before acting.
 
 #### Architect's Eye
 *You see the shape of the thing before you see the thing itself.*
 
-After observing a target for at least one round (combat or otherwise), you may ask the GM one tactical question about it: a Force value, a vulnerability, its preferred attack pattern, or its remaining HP/Energy in rough terms. Once per encounter, no Beat cost.
+After observing a target for at least one round (combat or otherwise), you may ask the GM one tactical question about it: a Force value, a vulnerability, its preferred attack pattern, or its remaining HP/Aether in rough terms. Once per encounter, no Beat cost.
 
 **Best for:** Characters who studied the training constructs, observed before engaging, or proposed structured plans during loot allocation.
 
@@ -66,7 +66,7 @@ Once per encounter, spend 1 Beat. One target in your Zone makes a HRT Force save
 **Best for:** Characters who dominated social interactions, intimidated alien Initiates, or made others defer through sheer presence.
 
 #### Rally
-*A word, a look, a gesture — and your ally finds another half-step.*
+*A word, a look, a gesture, and your ally finds another half-step.*
 
 Once per encounter, spend 1 Beat. One ally within line of sight gains **+10 to their next Clash this round**.
 
@@ -93,7 +93,7 @@ When at 25% HP or less, gain **+10 to Defense Force on all Clashes**. Lasts unti
 #### Slipstep
 *The blow that should have landed slides past you.*
 
-When you would be hit by an attack, declare Slipstep — the attacker rerolls their Clash and takes the lower result. Once per Consolidation.
+When you would be hit by an attack, declare Slipstep: the attacker rerolls their Clash and takes the lower result. Once per Consolidation.
 
 **Best for:** Characters who improvised under pressure, embraced chaotic solutions, or escaped situations through unpredictable movement.
 
@@ -111,7 +111,7 @@ Spend 1 Beat outside of combat to mark a target you can perceive. For the next 2
 #### Arcane Flicker
 *A small, deliberate disturbance in the air.*
 
-Free action, no Energy cost: produce a small telekinetic push. Move an unattended object up to 10 lbs within line of sight, or shove an Exposed enemy off-balance (no damage; impose **−5 to their next Clash**). Useful for tactical setups, environmental tricks, knocking objects loose from a distance.
+Free action, no Aether cost: produce a small telekinetic push. Move an unattended object up to 10 lbs within line of sight, or shove an Exposed enemy off-balance (no damage; impose **−5 to their next Clash**). Useful for tactical setups, environmental tricks, knocking objects loose from a distance.
 
 **Best for:** Characters who experimented with unstable shards, interacted with arcane phenomena, or showed early POW affinity in the Arcane Debris.
 
@@ -132,9 +132,9 @@ At Phase 7 of the tutorial, review each player's tutorial behavior and select **
 2. Reflects a specific moment that surprised the table (the play that made everyone lean forward).
 3. Opens a direction the player seems excited about, even if they haven't named it.
 
-If two players would naturally receive the same ability, give one of them a thematically adjacent variant rather than splitting them between identical kits. Stable Abilities are signals of identity — duplication blunts the signal.
+If two players would naturally receive the same ability, give one of them a thematically adjacent variant rather than splitting them between identical kits. Stable Abilities are signals of identity; duplication blunts the signal.
 
-**Do not let players select their own Stable Ability.** The point is that the System grants what it observed, not what the player wants. If a player's behavior didn't strongly signal anything, default to **Reactive Dodge** or **Sensory Pulse** — both are flexible and don't lock direction.
+**Do not let players select their own Stable Ability.** The point is that the System grants what it observed, not what the player wants. If a player's behavior didn't strongly signal anything, default to **Reactive Dodge** or **Sensory Pulse**; both are flexible and don't lock direction.
 
 ---
 
@@ -146,4 +146,4 @@ This catalog covers the tutorial-tier grant. As the campaign develops, new Stabl
 - **Major narrative milestones** (saving a faction, completing a Mandate, surviving a B-tier threat).
 - **Bespoke System recognition** at Pristine or Transcendent Breakthroughs.
 
-The GM may extend the catalog with new abilities tailored to the campaign's emerging themes. The shape stays the same: one trigger, one effect, no Energy cost, frequency-gated.
+The GM may extend the catalog with new abilities tailored to the campaign's emerging themes. The shape stays the same: one trigger, one effect, no Aether cost, frequency-gated.

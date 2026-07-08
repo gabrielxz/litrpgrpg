@@ -9,8 +9,12 @@
 - **vs. Active opponent:** Both roll d100 + Force + Tactics. Higher total wins. Margin = Winner − Loser.
 - **vs. Passive obstacle:** Beat the Resistance (from the Grade Reference Card).
 - **Auto-success:** If Force ≥ Resistance, no roll needed.
-- **Volatility:** In combat, if the **natural d100** (before any modifiers) meets the Grade threshold, roll again and add. Each cascade die also checks its own natural result. Applies to every d100 rolled in combat — attacker, defender, opposed, contested, or save.
-- **Elevated:** +10 to roll. **Exposed:** −10 to roll. **Flanking:** +10 to roll.
+- **Volatility:** In combat, if the **natural d100** (before any modifiers) meets the Grade threshold, roll again and add. Each cascade die also checks its own natural result. Applies to every d100 rolled in combat (attacker or defender, Opposed Rolls, Resistance Rolls, and Will Saves), plus the Breakthrough Check. A cascade of 2+ extra dice on a PC's roll grants a Battle Memory Card.
+- **Advantaged:** +10 to roll (fiction-derived positional edge). **Exposed:** −10 to roll. **Flanking:** +10 to roll. **Environment:** −10 hindering / −20 crippling.
+- **Turned Aside:** defender wins by Margin 20+ → attacker Exposed until end of their next turn. Defensive win with an explosion → Momentum shifts next round.
+- **Momentum:** Opposed Momentum Roll: d100 + DEX or PER Force (whichever is higher). Winning side acts first each round.
+- **Free Step:** DEX Force 50+ grants one free Zone move or in-Zone reposition per turn.
+- **Cross-Grade movement:** the higher Grade auto-wins movement contests; +1 free Zone move per turn per Grade above the highest-Grade hostile.
 
 **The Clash Formula:**
 
@@ -38,9 +42,9 @@
 
 **Cross-Grade Adjustment:** The higher-Grade side gains +100 per Grade of difference. In Opposed Rolls, the higher-Grade combatant adds +100 to their total per Grade above the opponent. In Resistance Rolls, add +100 per Grade of difference to whichever side is higher (the challenger's roll if challenging a lower-Grade obstacle, the obstacle's Resistance if challenging a higher-Grade obstacle). Same Grade, no adjustment.
 
-**HP** = Raw FOR × 2. **Energy** = Raw POW. Energy refills only on Consolidation (no in-combat or passive regen).
+**HP** = Raw FOR × 2. **Aether** = Raw POW. Aether refills only on Consolidation (no in-combat or passive regen).
 
-**Principle / Skill Energy Costs (F-Grade baseline):** Seed App: 10 | Early Fragment App: 15 | Infusion: free | Domain: 30 + 5/round. Multiply cost by Grade Magnitude (×10 / ×100 / ×1,000) for skills learned at E / D / C respectively. Cost is permanently fixed to the skill's origin Grade.
+**Principle / Skill Aether Costs (F-Grade baseline):** Seed App: 10 | Early Fragment App: 15 | Infusion: free | Domain: 30 + 5/round. Multiply cost by Grade Magnitude (×10 / ×100 / ×1,000) for skills learned at E / D / C respectively. Cost is permanently fixed to the skill's origin Grade.
 
 **Aura Pressure Save:** d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance.
 

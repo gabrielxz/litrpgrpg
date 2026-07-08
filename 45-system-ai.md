@@ -10,9 +10,9 @@ The Game Master utilizes the System AI backend to manage the infinite combinator
 
 **Core System AI Functions:**
 
-- **Class Generation (Level 10+):** The GM inputs the player's core stats, favored weapons, Principle affinities, and behavioral vectors. The System AI outputs three class options (ranging from Common to Epic) with a unique Signature Skill.
+- **Class Generation (Level 10+):** The GM inputs the player's core stats, favored weapons, Principle affinities, and behavioral vectors. The System AI outputs class options (three is the default; some characters draw more), ranging from Common to Epic, each with a unique Signature Skill.
 
-- **Skill Synthesis:** When a player crushes multiple Skill Crystals or attempts to fuse moves, the System AI calculates the synergy and outputs the new Skill, complete with Energy costs and cooldowns.
+- **Skill Synthesis:** When a player crushes multiple Skill Crystals or attempts to fuse moves, the System AI calculates the synergy and outputs the new Skill, complete with Aether costs and cooldowns.
 
 - **Loot Generation:** The System AI scales monster drops based on Luck, Enemy Grade, and combat difficulty.
 
