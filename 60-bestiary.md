@@ -164,3 +164,5 @@ When in doubt, use the Grade Reference Card. A character with Force 30 fighting 
 These ratios assume a balanced party with reasonable equipment. Adjust upward for well-prepared parties; adjust downward when the party is wounded, low on Aether, or out of consumables.
 
 Combat should resolve in 3–5 rounds. If a fight is dragging into round 6+, raise the stakes: introduce a complication, escalate the enemy's tactics, or end it decisively.
+
+**When a player character goes Downed:** mindless creatures (Husk Crawlers, Glow-Motes, Frenzy Rats) do not execute; they turn to the nearest live threat, or begin dragging prey away, which is its own kind of clock. Pack hunters guard a kill rather than finish it. Intelligent enemies (Brigands, Rival Initiates, the Warden) may execute, and the threat should be telegraphed a Beat early so the table can react. See Core Mechanics, "Downed and Death."

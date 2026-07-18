@@ -44,6 +44,8 @@
 
 **HP** = Raw FOR × 2. **Aether** = Raw POW. Aether refills only on Consolidation (no in-combat or passive regen).
 
+**Downed:** at 0 HP: no Beats, no defense; dies at the end of their third round unless stabilized (any healing, or 1 Beat + Moderate 90 check, field-medicine Proficiencies apply). One hit ≥ 10× Max HP kills outright. Attacking a Downed character: 1 Beat, no roll, kills. Surviving being Downed grants a Battle Memory Card.
+
 **Principle / Skill Aether Costs (F-Grade baseline):** Seed App: 10 | Early Fragment App: 15 | Infusion: free | Domain: 30 + 5/round. Multiply cost by Grade Magnitude (×10 / ×100 / ×1,000) for skills learned at E / D / C respectively. Cost is permanently fixed to the skill's origin Grade.
 
 **Aura Pressure Save:** d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance.

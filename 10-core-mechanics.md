@@ -344,6 +344,29 @@ When a roll fails, the GM selects the appropriate severity:
 
 The GM chooses based on fictional stakes and narrative momentum. Catastrophic Failures should be rare, reserved for moments when the fiction demands it or when a natural 01–05 is rolled.
 
+### Downed and Death
+
+**Downed at zero.** A character reduced to 0 HP is **Downed**: unconscious or barely conscious, prone, and out of the fight. A Downed character has no Beats and cannot defend. HP does not go negative; it floors at 0. Creatures simply die at 0 HP unless the GM wants them alive; the Downed state applies to player characters and named NPCs.
+
+::: systemvoice
+*[Vital coherence: fraying. Estimated thread loss: 3 rounds.]*
+:::
+
+**The countdown.** A Downed character dies at the end of their third round Downed unless stabilized first. The System announces the count; the table always knows the clock.
+
+**Stabilizing.** Two paths:
+
+- **Any HP restoration.** A healing pill, medkit, or healing skill administered by an ally in the same Zone (1 Beat) returns the character to consciousness at the restored HP.
+- **Bare hands.** 1 Beat and a Moderate (90) skill check; a relevant Proficiency (field medicine and the like) adds its +10. Success stops the countdown. The character is stable but remains Downed at 0 HP; a stable character regains consciousness when the scene ends, at 1 HP.
+
+**Annihilation.** If a single hit deals damage equal to or greater than **10 × the target's Max HP**, there is no Downed state and no countdown: the character is destroyed outright. A fresh initiate with 12 Max HP takes an E-Grade glancing blow for 130 damage (130 ≥ 120) and is simply gone; a FOR 40 scout with 80 Max HP takes the same blow (130 < 800) and drops, Downed and counting.
+
+**Executions.** A deliberate attack against a Downed character kills them: 1 Beat, no roll. Mindless creatures rarely execute; they turn to the nearest live threat or drag prey away. Intelligent enemies may. A player character executing a Downed enemy is a high-intensity Will or Hunger event for the Hidden Vector Engine log.
+
+**Death is permanent.** At the Grades this book covers, nothing returns the dead.
+
+**Surviving leaves a mark.** A character who survives being Downed gains a Battle Memory Card (see Principles).
+
 ---
 
 ## The Grade Gap: The Magnitude Barrier

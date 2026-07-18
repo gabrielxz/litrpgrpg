@@ -137,6 +137,8 @@ The full mechanic is documented in the **Grade Breakthroughs** chapter (`30-brea
 
 ## Healing
 
+For 0 HP, the Downed state, stabilization, and death, see Core Mechanics, "Downed and Death."
+
 Three paths, each with a cost:
 
 - **Rest Healing:** During Consolidation, characters recover 25% Max HP per hour. Safest option, but it requires time.
