@@ -48,7 +48,7 @@ An F-Grade character with FOR 60 and POW 60 processes 120 VE per hour. A full ta
 
 **Environmental Modifiers:** Consolidating in a high-energy-density hex reduces required time by 25%. Consolidating while holding a Principle-affinity treasure grants a small bonus to Insight Points for that Principle Concept.
 
-**Battle Memory Meditation:** Characters who hold a Battle Memory Card (see Principles document) process it during Consolidation. The GM feeds the memory context into the System AI, which generates a cryptic vision and awards Insight Points.
+**Battle Memory Meditation:** Characters who hold a Battle Memory Card (see Principles document) process it during Consolidation. The System AI returns a cryptic vision and awards Insight Points; the vision procedure for every run mode is in The System AI chapter.
 
 ### Leveling: The VE Chart
 

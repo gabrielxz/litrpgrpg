@@ -2,7 +2,7 @@
 
 # The Hidden Vector Engine
 
-**Behavioral Identity System for AI-Assisted LitRPG Worlds**
+**The Behavioral Identity System**
 
 ---
 
@@ -38,7 +38,7 @@ The engine tracks four bipolar axes. Each represents a distinct dimension of beh
 
 *How does the character solve problems?*
 
-- **Force (+):** Aggressive engagement, applying pressure immediately, relying on overwhelming presence or impact. *Principle Affinity:* Yields Principles of Impact: Concepts like Momentum, Weight, Shattering, Kinetic Aether, or Heat.
+- **Force (+):** Aggressive engagement, applying pressure immediately, relying on overwhelming presence or impact. *Principle Affinity:* Yields Principles of Impact: Concepts like Momentum, Weight, Shattering, Kinetic Energy, or Heat.
 
 - **Method (−):** Planning, positioning, altering conditions before acting, solving situations indirectly. *Principle Affinity:* Yields Principles of Architecture: Concepts like Space, Leverage, Misdirection, Shadows, or Geometry.
 
@@ -99,6 +99,8 @@ Behavior is recorded through discrete events, not session summaries. Each event 
 
 Events must be recorded in a consistent JSON format: player, event_summary, context, intent, outcome, primary_axis, intensity, secondary_axis. This ensures reliable interpretation by the System AI. PvP coercion attempts should always be logged as high-intensity Will events.
 
+The structured log is the format for AI-assisted and companion-app play. GMs running unplugged use "Tracking by Hand" (below) instead.
+
 ---
 
 ## Temporal Model
@@ -109,6 +111,29 @@ Each axis is tracked in two layers:
 - **Deep Vector:** Represents long-term behavioral tendency. Partial event value applies.
 
 At the end of each session, Current Vectors decay significantly while Deep Vectors decay slightly. This ensures characters can evolve naturally while their long-term patterns still shape their identity.
+
+---
+
+## Tracking by Hand
+
+The model above (weighted events, structured logs, decaying vectors) is what the companion app implements and what an AI assistant can maintain from a pasted log. None of it requires software. The by-hand procedure preserves the axes, the weighting, and the recency bias, and drops the arithmetic.
+
+**The sheet.** One half page per character: four rows (Force | Method, Hunger | Restraint, Will | Accord, Control | Freedom), each row split into a **Current** column (pencil) and a **Deep** column (pen).
+
+**During play.** When a meaningful decision lands, make one pencil tally on the matching side of Current. A major, high-stakes choice: two tallies. A defining, identity-shaping moment: three tallies, circled, with a one-line note in the sheet margin. Minor signals get no tally; let them stay impressions.
+
+**At session end.** For each axis: if one side of Current leads by 2 or more, add one pen tally to that side of Deep. Then erase Current. This is the decay model in miniature: recent behavior wipes every session; identity accretes slowly, in ink.
+
+**Reading the profile.** Deep is the character's long-term identity: use it for class generation, HVE-Resonant Titles, and world response. The circled margin notes are the moments the System remembers; quote them back through titles, visions, and Personal Opportunities. For the Breakthrough Coherence bonus, read the Deep rows:
+
+| **Profile** | **Deep tallies** | **Coherence Bonus** |
+|---|---|---|
+| Scattered | No side leads by 3+ | +0 |
+| Leaning | One side leads by 3+ | +5 |
+| Defined | One side leads by 5+, or two sides by 3+ | +10 |
+| Singular | One side leads by 8+ | +20 |
+
+These bands are the by-hand equivalents of the intensity thresholds in Grade Breakthroughs; use whichever form matches how you track.
 
 ---
 

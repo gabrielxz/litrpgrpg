@@ -17,7 +17,7 @@ Players begin with **whatever was on their person at the moment of Integration**
 
 **GM preparation checklist:**
 
-- [ ] Print or digitize the Grade Reference Card (`05-quick-reference.md`).
+- [ ] Print or digitize the Grade Reference Card (`75-quick-reference.md`).
 - [ ] Pull stat blocks from `60-bestiary.md`: Glow-Mote Swarm, Husk Crawler, Frenzy Rat, Snarljaw, Glow-Stalker, Training Sentry, Husk Sentinel, Fragment Wraith, Corrupted System Warden.
 - [ ] Pre-write 5–7 probe variants from Phase 1 (one per player, plus spares).
 - [ ] Set up the Quest UI: a shared digital quest log (Discord pinned, Google Doc, VTT module). Each player has a private subsection.

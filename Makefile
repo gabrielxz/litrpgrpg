@@ -16,7 +16,7 @@ LUAFILTER   := $(PIPELINE)/divs-to-environments.lua
 # Numeric prefixes use a gap-of-5 scheme to allow new chapters to slot in
 # between existing ones without renumbering.
 SOURCES := \
-  05-quick-reference.md \
+  00-introduction.md \
   10-core-mechanics.md \
   15-character-creation.md \
   20-principles.md \
@@ -29,7 +29,8 @@ SOURCES := \
   55-quests.md \
   60-bestiary.md \
   65-items.md \
-  70-tutorial.md
+  70-tutorial.md \
+  75-quick-reference.md
 
 # Per-invocation timestamp (YYYYMMDD-HHMMSS) for the stamped output filenames.
 # `:=` evaluates once, so PDF and EPUB share the same timestamp on a given build.
