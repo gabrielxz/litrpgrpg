@@ -6,15 +6,21 @@
 
 ## Core Design Philosophy
 
-This system separates narrative scale from resolution scale. Stats grow into the millions; the math at the table stays in the 10–99 band.
+The game's numbers come in two sizes: the huge ones the story is about, and the small ones the table rolls with. Stats grow into the millions; every number that touches dice stays between 1 and 99.
 
-- **Significant Digits (The Force System):** Every stat has a Raw Power value (the big LitRPG number) and a Force value (the first two significant digits). Players see their Strength climb from 4,200 to 4,500. The GM only ever touches the Force: 42 becomes 45. All resolution math stays locked in the 10–99 band, so a d100 always means something at every Grade.
+- **Significant Digits (The Force System):** Every stat has a Raw Power value (the big LitRPG number) and a Force value (the first two significant digits). Players see their Strength climb from 4,200 to 4,500; at the table, that same climb is Force 42 becoming Force 45. All resolution math stays locked in the 1–99 band, so a d100 always means something at every Grade.
 
 - **The Clash (Opposed Resolution):** Every contested action resolves in one opposed roll. There is no separate to-hit step and damage step. You roll, your opponent rolls, and the Margin between totals determines the outcome.
 
 - **Grade-Anchored Difficulty:** Every obstacle is assigned a Grade and a relative difficulty, and the number comes from a single reference card. Cross-Grade interactions resolve through a symmetric adjustment: the higher-Grade side gains +100 per Grade of difference, applied to its Force (in Opposed Rolls) or its Resistance (in Resistance Rolls).
 
 **Rounding:** All fractions round down. Always.
+
+### Drama Over Simulation
+
+These rules chase the feel of the genre's fights: impossible speed, a sword arc that splits a hillside, the weak toppling the strong on nerve and timing. They are a camera, and the camera serves the story. A Zone is a piece of story geography; a Beat is a slice of dramatic time. Neither maps to meters or seconds, and pressing them for physical precision will produce nonsense faster than answers.
+
+Any system this size has edge cases, and every table eventually finds a reading of the rules that is technically legal and completely ridiculous, or an incentive that points somewhere no one in the fiction would actually go. When that happens, the GM's tiebreaker is drama: rule for the version that belongs in the story the table is imagining. Exploiting a rules edge is often half the fun of progression fantasy, and the System itself rewards ingenuity, so the question is never whether players are optimizing. The question is whether the optimization makes the table lean in or check out. If everyone is grinning, let it ride and let the world react. If it is draining tension from a scene people cared about, name it, adjust it, and move on.
 
 ---
 
@@ -48,7 +54,7 @@ Stats increase through leveling during Consolidation, consuming attribute-enhanc
 
 **Per-Level Stat Budget (F-Grade):** The default is **5 stat points per level: 3 points** determined by class profile (or by the GM during pre-class levels) **+ 2 free points** for player choice. At higher Grades, the budget scales with Grade magnitude (×10 at E, ×100 at D, and so on). The 3+2 split is the anchor; the System AI may vary it when a class, evolution, or narrative arc calls for a different shape.
 
-**Pre-Class Allocation (Levels 2–9):** Before class selection at Level 10, the GM assigns the 3 fixed points each level based on observed behavior, using the Behavioral Stat Mapping table in the Character Creation document. A character who consistently acts with force tends to gain STR or FOR. A character who plans meticulously tends to gain PER or DEX. A character who leads or negotiates tends to gain CHA or HRT. The player controls 2 free points each level. This pre-class period is the Hidden Vector Engine's most influential window: how you play shapes what you become.
+**Pre-Class Allocation (Levels 2–9):** Before class selection at Level 10, the GM assigns the 3 fixed points each level based on observed behavior, using the Behavioral Stat Mapping table in the Progression chapter. A character who consistently acts with force tends to gain STR or FOR. A character who plans meticulously tends to gain PER or DEX. A character who leads or negotiates tends to gain CHA or HRT. The player controls 2 free points each level. This pre-class period is the Hidden Vector Engine's most influential window: how you play shapes what you become.
 
 **Class Evolution at Level 10:** When the character selects their class from the System AI's offerings (three options is the default, though some characters draw more), they receive a one-time bonus allocation (typically 5–10 points, class-distributed) reflecting their systemic attunement to the new role. From this point, the class profile determines the fixed points per level. Most classes spread that allocation across three stats; some concentrate on two, or thin across four, when the System judges it fits.
 
@@ -58,7 +64,7 @@ Stats increase through leveling during Consolidation, consuming attribute-enhanc
 
 ## Core Resolution
 
-Every check in the game resolves with a single mechanic: roll d100, add your Force, and compare.
+Every check in the game resolves with a single mechanic: roll d100, add your relevant Force, and compare.
 
 ### Opposed Rolls (Active Opposition)
 
@@ -70,7 +76,7 @@ When acting against another creature, NPC, or player character, both sides roll:
 
 Higher total wins. In the case of a tie, the initiator wins.
 
-The **Margin** (winner's total minus loser's total) determines the degree of success. In combat, the Margin directly drives damage. Outside combat, the GM interprets the Margin narratively: a Margin of 50+ is a dominant success; a Margin of 1–5 is razor-thin.
+The **Margin** (winner's total minus loser's total) determines the degree of success. In combat, the Margin directly drives damage. Outside combat, the GM interprets the Margin narratively: a Margin of 40+ is a dominant success; a Margin of 1–5 is razor-thin. Forty is the swing number throughout these rules: win by 40 and the outcome is decisive, whatever the arena.
 
 ### Resistance Rolls (Passive Obstacles)
 
@@ -111,6 +117,8 @@ A Moderate F-Grade lock has Resistance 90. A character with DEX Force 30 has to 
 
 The GM only calls for a roll when there is genuine uncertainty, when Force is below Resistance and the d100 could swing it.
 
+**Cross-Grade Auto-Success:** Against passive obstacles, the Cross-Grade Adjustment counts toward Auto-Success: if Force plus the Adjustment meets the Resistance, no roll. In practice, a challenger two or more Grades above a passive obstacle never rolls (the +200 clears even Peak Resistance), and a challenger one Grade above rolls only when a Severe or Peak obstacle meets a low Force. Living opposition is different: Opposed Rolls are always rolled, whatever the Grade gap.
+
 ### Proficiencies and Skill Checks
 
 Each character begins with three Proficiencies: broad domains of competence written in plain language. Examples: "wilderness survival," "ancient languages," "mechanical tinkering," "intimidation," "field medicine," "stealth and infiltration."
@@ -132,26 +140,28 @@ The GM decides which Attribute applies. Resisting coercion is HRT; reading an in
 
 ### System Volatility (Exploding Dice)
 
-Higher Grades of power are not just bigger; they are more volatile. The System's energy density at elevated Grades creates cascading instabilities in every clash. The colloquial term is **exploding**: a die that triggers Volatility "explodes."
+The System's energy density at elevated Grades creates cascading instabilities in every clash. The colloquial term is **exploding**: a die that triggers Volatility "explodes."
 
 **The Trigger.** Volatility checks the **natural d100 result (before any modifiers)**. Force, Tactical Modifiers, Cross-Grade Adjustments, item bonuses, and ability bonuses are all ignored for the purpose of triggering Volatility. If the natural die meets or exceeds the Volatility Threshold for the rolling combatant's Grade, they roll again and add the new die to their Clash total. Each additional die cascades on the same natural threshold; modifiers never count toward the trigger. A single roll can cascade indefinitely so long as each successive die comes up natural-threshold or higher.
 
 | **Grade** | **Explodes On (natural)** | **Probability** |
 |---|---|---|
 | F-Grade | 96–100 | 5% |
-| E-Grade | 90–100 | 11% |
-| D-Grade | 80–100 | 21% |
-| C-Grade | 70–100 | 31% |
-| B-Grade | 55–100 | 46% |
-| S-Grade | 40–100 | 61% |
+| E-Grade | 95–100 | 6% |
+| D-Grade | 94–100 | 7% |
+| C-Grade | 93–100 | 8% |
+| B-Grade | 92–100 | 9% |
+| S-Grade | 91–100 | 10% |
 
-**Symmetry: Offensive and Defensive Explosions.** Volatility applies to **every d100 rolled in combat**, by either side: attacker's roll, defender's roll, both sides of an Opposed Roll, Resistance Rolls made during combat, and Will Saves resolved during a combat scene. An offensive explosion spikes the Margin upward. A defensive explosion drives the attacker's Margin sharply negative; the attack lands harmlessly. A winning defender deals no damage from the Clash itself.
+The threshold starts at 96 and falls one point per Grade.
 
-At F-Grade, explosions are rare. At higher Grades, cascading explosions generate enormous Margins.
+**Symmetry: Offensive and Defensive Explosions.** Volatility applies to every **Clash roll and Will Save in combat**, by either side: attacker's roll, defender's roll, and both sides of any Opposed Clash. Skill checks never explode, even mid-combat; a battlefield surgery resolves on the standard d100. An offensive explosion spikes the Margin upward. A defensive explosion drives the attacker's Margin sharply negative; the attack lands harmlessly. A winning defender deals no damage from the Clash itself.
+
+Explosions stay rare at every Grade: 5% at F-Grade, rising one point per Grade to 10% at S-Grade.
 
 There is no separate critical-hit rule; Volatility fills that role. When an explosion occurs, narrate it as a visible spike of System energy.
 
-**Volatility applies only in combat**, with one exception: the Breakthrough Check explodes (see Grade Breakthroughs). All other non-combat checks use the standard d100 without explosion.
+**Volatility applies only to combat Clashes and Will Saves**, with one exception: the Breakthrough Check explodes (see Grade Breakthroughs). Everything else resolves on the standard d100.
 
 **Cascades leave marks.** A cascade of two or more extra dice on a player character's roll grants that character a **Battle Memory Card** (see Principles). The System records what it just witnessed, and so does the one who lived it.
 
@@ -189,7 +199,13 @@ Stats are raw and unfiltered. There is no class-based efficiency layer: if a Men
 
 Combat does not use a fixed turn order. Each round, the side with **Momentum** takes a complete turn first; the other side or sides take their turns after. Momentum can shift between rounds on specific triggers.
 
-**Initial Momentum.** At the start of combat, each side's sharpest combatant (the one with the highest DEX or PER Force) makes an Opposed **Momentum Roll**: d100 + DEX or PER Force, whichever is higher. The side with the highest total holds Momentum for the first round. Ties go to the players.
+**Initial Momentum.** At the start of combat, each side sends one roller, found like this:
+
+1. For each combatant on the side, take the higher of their DEX Force and PER Force.
+2. The side's roller is the combatant with the highest such value.
+3. The roller makes the side's **Momentum Roll**: d100 plus that value.
+
+The two sides may be rolling different Attributes; one side's roller might use DEX while the other's uses PER. The side with the highest total holds Momentum for the first round. Ties go to the players.
 
 **Surprise.** A side that achieves true surprise (a successful ambush, an undetected trap, a hidden combatant revealing themselves) acts before combat properly begins: each surprising character immediately takes one free Beat (the **Surprise Beat**). Then Initial Momentum is rolled normally. A sharp defender can absorb an ambush and still wrest the first full round.
 
@@ -300,7 +316,7 @@ Highest Clash Total wins. Tie goes to the attacker (the initiator).
 
 If the **defender wins**, the attack is deflected, dodged, or absorbed harmlessly. The defender deals no damage unless they used a specific Counter ability.
 
-**Turned Aside:** If the defender wins by a Margin of 20 or more, the attacker is **Exposed** until the end of their next turn (off-balance, overextended, or mentally reeling from the failed attempt). A defensive win that includes a Volatility explosion also counts as a Decisive Tactical Reversal: Momentum shifts to the defender's side at the start of the next round. Turned Aside applies to every defensive posture; a mentalist whose assault is shrugged off by 20+ suffers the backlash the same as a swordsman whose lunge is turned.
+**Turned Aside:** If the defender wins by a Margin of 40 or more, the attacker is **Exposed** until the end of their next turn (off-balance, overextended, or mentally reeling from the failed attempt). A defensive win that includes a Volatility explosion also counts as a Decisive Tactical Reversal: Momentum shifts to the defender's side at the start of the next round. Turned Aside applies to every defensive posture; a mentalist whose assault is shrugged off by 40+ suffers the backlash the same as a swordsman whose lunge is turned.
 
 If the **attacker wins**, calculate the **Margin:**
 
@@ -334,15 +350,15 @@ Multi-target capability is a property of specific abilities, spells, or effects,
 
 ### Failure Consequences
 
-When a roll fails, the GM selects the appropriate severity:
+These tiers apply to **skill checks**; combat Clashes carry their own outcomes (the Clash rules and Turned Aside). When a skill check fails, the margin of failure sets the severity:
 
-- **Soft Failure:** Success at a cost. The attack hits but the attacker becomes Exposed. The lock opens but the tool breaks. Partial information, not total ignorance.
+- **Soft Failure (fail by 1–39):** Success at a cost, or meaningful partial progress. The lock opens but the pick snaps inside it. You learn half of what you wanted. The climb succeeds, loudly.
 
-- **Hard Failure:** Failure plus consequence. The attack misses and the enemy shifts Position. The negotiation fails and the NPC's attitude worsens. The stealth check fails and you are detected.
+- **Hard Failure (fail by 40 or more):** Failure plus consequence. The negotiation collapses and the NPC's attitude hardens. The stealth attempt fails and you are detected. The same 40 that marks a dominant success marks a dominant failure.
 
-- **Catastrophic Failure:** Failure plus escalation. The spell misfires and drains double Aether. The enemy counterattacks outside normal turn order. The failed acrobatics check sends you off the ledge.
+- **Catastrophic Failure (natural 01–05):** Failure plus escalation, whatever the margin. The rope parts at the worst height. The ancient script does the thing it warned about.
 
-The GM chooses based on fictional stakes and narrative momentum. Catastrophic Failures should be rare, reserved for moments when the fiction demands it or when a natural 01–05 is rolled.
+The GM may shift the tier one step when the fictional stakes demand it, and softens or sharpens the consequence to fit the scene.
 
 ### Downed and Death
 
@@ -396,7 +412,7 @@ If the E-Grade attacks: d100 + (12 + 100) vs. d100 + 99. The E-Grade's effective
 
 ### The Natural Stat Wall
 
-Before the Magnitude Gap bonus even applies, the raw stat difference between Grades creates a wall. An F-Grade character's stats max at 99. An E-Grade character's stats start at 100. The Force extraction ensures these map to the same 10–99 band for resolution, but the damage multiplier gap (×1 vs. ×10) makes every successful attack from a higher Grade devastatingly efficient.
+Before the Magnitude Gap bonus even applies, the raw stat difference between Grades creates a wall. An F-Grade character's stats max at 99. An E-Grade character's stats start at 100. The Force extraction ensures these map to the same 1–99 band for resolution, but the damage multiplier gap (×1 vs. ×10) makes every successful attack from a higher Grade devastatingly efficient.
 
 ### Aura Pressure
 
@@ -406,7 +422,7 @@ When a character first enters the presence of a higher-Grade entity, they must m
 
 > **d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance**
 
-The entity's Aura Resistance is read from the Grade Reference Card, typically Hard or Severe for their Grade.
+Aura Resistance comes straight off the Grade Reference Card with no Cross-Grade Adjustment; the Grade gap is priced into which difficulty applies. A higher-Grade entity carrying its presence calmly is **Hard (115)**; one flaring its aura in anger or intent is **Severe (140)**. At three or more Grades of difference, the GM may skip the save entirely: some presences are simply beyond a mortal's ability to stand in.
 
 This save is decisive:
 
@@ -420,7 +436,7 @@ A character who fails does not retry each round. Aura suppression can only be br
 - An ally spending a Beat to intervene (shielding, shouting, physical contact). The intervener must not themselves be Suppressed; you have to be standing to lift someone
 - The higher-Grade entity taking significant damage or being distracted
 
-When one of these occurs, the GM allows a fresh Will Save.
+Each of these grants the fresh Will Save automatically; the action buys the retry, and the retry can still fail.
 
 A benevolent higher-Grade NPC may suppress their aura entirely (no save required). A hostile entity that deliberately flares their aura mid-combat (as a Beat on their turn) forces a fresh save from everyone.
 
@@ -438,9 +454,9 @@ Aether is the universal resource for active Principle Applications, spells, and 
 
 **Aether does not regenerate in combat. It does not regenerate between combats. It does not regenerate with passive time.** Aether refills only through **Consolidation**: a full pool restore occurs automatically at the start of any Consolidation rest (see Cultivation document).
 
-### Costs Scale by Skill Origin Grade
+### Aether Costs Are Set at Acquisition
 
-Every Principle Application, spell, and active skill has a fixed Aether cost based on the Grade at which it was acquired. Baseline costs are set at F-Grade; each Grade higher multiplies the cost by the Grade Magnitude (×10 per Grade), the same scaling rule used for damage and difficulty.
+Every Principle Application, spell, and active skill has a fixed Aether cost, set once, by the Grade at which it was acquired, and never changed afterward. Two skills of the same tier acquired at different Grades cost different amounts: a Seed Application picked up at F-Grade costs 10 Aether for the rest of the character's life, while a Seed acquired fresh at E-Grade costs 100 for the rest of theirs. The scaling factor between acquisition Grades is the usual ×10 per Grade. The acquisition Grade also sets the skill's potency envelope, the scale of what its manifestation can affect; see The Principle System, "Application Grade."
 
 | **Skill Origin Grade** | **Seed Application** | **Early Fragment App.** | **Peak Fragment Domain** |
 |---|---|---|---|

@@ -97,11 +97,11 @@ Then the System speaks, not in words, but in meaning that arrives pre-translated
 
 *Native world: Earth. Status: Integrated.*
 
-*Integration stability: provisional.*
+*Population: 7,916,442,203. Integration stability: provisional.*
 
-*Tutorial rights: granted. Tutorial mercy: limited.*
+*Tutorial: provisioned.*
 
-*Mortality: active.*
+*Prior exemptions: expired. Observation: begun.*
 :::
 
 The System does not answer questions. It does not wait for acknowledgment. It processes and moves on.
@@ -727,7 +727,7 @@ Below are four samples calibrated to common tutorial archetypes. The GM customiz
 
 For each level gained, allocate **5 stat points**:
 
-- **3 points GM-assigned** based on the player's tutorial behavior (use the Behavioral Stat Mapping table from `15-character-creation.md`).
+- **3 points GM-assigned** based on the player's tutorial behavior (use the Behavioral Stat Mapping table from `17-progression.md`).
 - **2 points free** for the player.
 
 For multi-level jumps (typical: L1 → L4 or L5), use the **Tutorial Multi-Level Allocation** rule from `02a`: assign cumulative System points (3 per level) holistically based on dominant patterns, then let the player allocate their cumulative free points (2 per level) at the end.

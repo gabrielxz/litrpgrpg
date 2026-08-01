@@ -9,9 +9,11 @@
 - **vs. Active opponent:** Both roll d100 + Force + Tactics. Higher total wins. Margin = Winner − Loser.
 - **vs. Passive obstacle:** Beat the Resistance (from the Grade Reference Card).
 - **Auto-success:** If Force ≥ Resistance, no roll needed.
-- **Volatility:** In combat, if the **natural d100** (before any modifiers) meets the Grade threshold, roll again and add. Each cascade die also checks its own natural result. Applies to every d100 rolled in combat (attacker or defender, Opposed Rolls, Resistance Rolls, and Will Saves), plus the Breakthrough Check. A cascade of 2+ extra dice on a PC's roll grants a Battle Memory Card.
+- **Volatility:** In combat, if the **natural d100** (before any modifiers) meets the Grade threshold, roll again and add. Each cascade die also checks its own natural result. Applies to combat Clash rolls and Will Saves (either side), plus the Breakthrough Check; skill checks never explode. A cascade of 2+ extra dice on a PC's roll grants a Battle Memory Card.
 - **Advantaged:** +10 to roll (fiction-derived positional edge). **Exposed:** −10 to roll. **Flanking:** +10 to roll. **Environment:** −10 hindering / −20 crippling.
-- **Turned Aside:** defender wins by Margin 20+ → attacker Exposed until end of their next turn. Defensive win with an explosion → Momentum shifts next round.
+- **Turned Aside:** defender wins by Margin 40+ → attacker Exposed until end of their next turn. Defensive win with an explosion → Momentum shifts next round.
+- **Skill check failure:** fail by 1–39 soft (success at a cost), 40+ hard (failure plus consequence), natural 01–05 catastrophic. Margin 40+ on any success is dominant.
+- **Cross-Grade Auto-Success:** vs. passive obstacles, Force + Cross-Grade Adjustment ≥ Resistance = no roll (2+ Grades up never rolls).
 - **Momentum:** Opposed Momentum Roll: d100 + DEX or PER Force (whichever is higher). Winning side acts first each round.
 - **Free Step:** DEX Force 50+ grants one free Zone move or in-Zone reposition per turn.
 - **Cross-Grade movement:** the higher Grade auto-wins movement contests; +1 free Zone move per turn per Grade above the highest-Grade hostile.
@@ -38,7 +40,7 @@
 
 **Grade Multipliers:** F-Grade: ×1 | E-Grade: ×10 | D-Grade: ×100 | C-Grade: ×1,000
 
-**Volatility Thresholds (Combat Only, Natural Die):** F: 96+ | E: 90+ | D: 80+ | C: 70+ | B: 55+ | S: 40+
+**Volatility Thresholds (natural die; combat Clashes, Will Saves, and the Breakthrough Check):** F: 96+ | E: 95+ | D: 94+ | C: 93+ | B: 92+ | S: 91+ (starts at 96, falls 1 per Grade). Skill checks never explode.
 
 **Cross-Grade Adjustment:** The higher-Grade side gains +100 per Grade of difference. In Opposed Rolls, the higher-Grade combatant adds +100 to their total per Grade above the opponent. In Resistance Rolls, add +100 per Grade of difference to whichever side is higher (the challenger's roll if challenging a lower-Grade obstacle, the obstacle's Resistance if challenging a higher-Grade obstacle). Same Grade, no adjustment.
 

@@ -38,6 +38,21 @@ Choose **three Proficiencies**, broad domains of competence written in plain lan
 
 Proficiencies should reflect the character's life before Integration: what they trained in, what they were good at, what they spent years doing. A soldier might take "close combat," "field medicine," and "tactical awareness." A professor might take "ancient languages," "research methodology," and "persuasion." A mechanic might take "mechanical tinkering," "jury-rigging," and "vehicle operation."
 
+**A menu of thirty.** Pick from this list or use it as a model. It is deliberately incomplete: players and GMs should invent new Proficiencies together, named in plain language and scoped like these.
+
+| | | |
+|---|---|---|
+| close combat | wilderness survival | mechanical tinkering |
+| archery and marksmanship | tracking and fieldcraft | jury-rigging |
+| military tactics | foraging and herblore | electronics |
+| athletics | animal handling | construction |
+| endurance training | navigation | vehicle operation |
+| persuasion | research methodology | stealth and infiltration |
+| intimidation | ancient languages | lockpicking and security |
+| deception | field medicine | streetwise |
+| performance | chemistry | sleight of hand |
+| leadership | logistics and accounting | teaching |
+
 ## Derived Stats
 
 Calculate and record these values:
@@ -61,58 +76,6 @@ Freshly integrated characters begin with no Principle access. Insight toward a P
 
 ---
 
-## Pre-Class Progression (Levels 2–9)
+## After Creation
 
-### Per-Level Stat Allocation
-
-Each level from 2 through 9, the character gains **5 stat points:**
-
-- **3 points assigned by the GM** based on how the character has been behaving. These represent the System observing the character and reinforcing the patterns it detects. The GM uses the Behavioral Stat Mapping table below as a guide.
-
-- **2 points assigned freely by the player.** These represent the character's conscious self-improvement: the attributes they deliberately train or develop.
-
-### Behavioral Stat Mapping (GM Reference)
-
-At each level-up, review what the character has done since the last level and assign the 3 System points to the stats that best match their behavior. Use the table as a guide, not a rigid formula.
-
-| Behavior Pattern | Primary Stat | Secondary Stat |
-|---|---|---|
-| Solves problems with direct force, charges in | STR | FOR |
-| Plans ahead, positions carefully, uses finesse | DEX | PER |
-| Pursues power aggressively, takes risks for gain | POW | STR |
-| Shows restraint, endures hardship, holds the line | FOR | HRT |
-| Dominates socially, intimidates, commands | CHA | STR |
-| Cooperates, negotiates, builds alliances | CHA | HRT |
-| Imposes structure, creates systems, controls variables | PER | POW |
-| Breaks rules, improvises, embraces chaos | DEX | POW |
-
-**How to read the table:** If a character spent the last level charging into fights and solving problems through brute force, the GM puts 2 points into STR and 1 into FOR (or all 3 into STR if the behavior was extreme and unambiguous). A character who planned every engagement and used terrain might get 2 PER and 1 DEX. Mixed behavior? Split accordingly; 1 STR, 1 PER, 1 CHA is a perfectly valid assignment for a character who fought, planned, and negotiated in equal measure.
-
-The GM's rule: **reward what the character actually did, not what the player says they want.** This is the Hidden Vector Engine's primary mechanical lever during F-Grade.
-
-**Tutorial Multi-Level Allocation:** When the tutorial concludes and the System awards multiple levels at once (typical: Levels 1 → 3–5), the GM does not need to walk through each level individually. Review the player's tutorial behavior holistically and assign the cumulative System points (3 per level granted) according to the dominant patterns from the Behavioral Stat Mapping table. The player allocates their cumulative free points (2 per level) at the end. A character who reaches Level 4 directly from Level 1 receives 9 GM-assigned points (3 × 3 levels) and 6 free points (2 × 3 levels). This compression is allowed only for the tutorial-level jump; ongoing campaign play should level one at a time.
-
-### What This Produces
-
-By Level 9, a character has accumulated:
-
-| Source | Points |
-|---|---|
-| Point buy (creation) | 40 |
-| System-assigned (3 × 8 levels) | 24 |
-| Free allocation (2 × 8 levels) | 16 |
-| **Total at Level 9** | **80** |
-
-A character who acted consistently toward one behavioral archetype will have a clear stat skew heading into class selection. A character who played eclectically will be more balanced. Both paths are valid, but the class options offered at Level 10 will differ dramatically between them.
-
----
-
-## Class Selection (Level 10)
-
-At Level 10, the System AI generates class options based on the character's Hidden Vector Engine profile, the cumulative record of their behavior across Levels 1–9. Three options is the default; some characters draw more. The full class generation system is documented separately, but the mechanical effect at this milestone is:
-
-1. The player selects one of the offered classes.
-2. The character receives a **one-time bonus allocation of 5–10 stat points**, distributed according to the class's stat profile. These are not player-assigned; they represent the System attuning the character's body and spirit to their new role.
-3. From Level 10 onward, per-level stat allocation shifts to the class model: **3 points allocated by class profile** (fixed, determined by the class's stat priorities) **+ 2 points free** for the player. The GM no longer assigns the fixed portion. The class does.
-
-The pre-class observation period is over. The Hidden Vector Engine continues tracking behavior for future class evolutions, Principle forging, and world response, but the stat allocation lever now belongs to the class.
+A finished character is Level 1, Grade F, with no class, no Principle access, and whatever was in their pockets. Everything from here is earned in play: levels and stat growth are covered in the Progression chapter, the VE economy that fuels them in Cultivation, and the class milestone at Level 10 in Progression, "Class Selection."

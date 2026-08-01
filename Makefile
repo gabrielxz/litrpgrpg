@@ -19,6 +19,7 @@ SOURCES := \
   00-introduction.md \
   10-core-mechanics.md \
   15-character-creation.md \
+  17-progression.md \
   20-principles.md \
   25-cultivation.md \
   30-breakthroughs.md \

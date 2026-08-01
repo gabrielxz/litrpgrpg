@@ -42,7 +42,7 @@ Each function below states its inputs, its outputs, and the unplugged procedure.
 
 **In:** the character's HVE profile (Deep Vector reads and defining moments), stats, favored weapons and tactics, Principle Concepts and affinities, titles held. **Out:** three class options (rarity Common to Epic), each with a name, a one-line identity, a stat profile (the 3 fixed points per level), and one Signature Skill with Beat and Aether costs.
 
-**Unplugged procedure:** build the three options as one class that *amplifies* the dominant behavioral pattern, one that *formalizes* the secondary pattern, and one hybrid of the two. Stat profiles come off the Behavioral Stat Mapping table (Character Creation). Signature Skills price against the Modifier Budget; Aether costs follow the origin-Grade table (a skill acquired at F-Grade: 10 to 15 Aether).
+**Unplugged procedure:** build the three options as one class that *amplifies* the dominant behavioral pattern, one that *formalizes* the secondary pattern, and one hybrid of the two. Stat profiles come off the Behavioral Stat Mapping table (Progression). Signature Skills price against the Modifier Budget; Aether costs follow the origin-Grade table (a skill acquired at F-Grade: 10 to 15 Aether).
 
 **Prompt (AI-assisted):**
 
@@ -68,7 +68,7 @@ The System Quests chapter carries the full generation template. Unplugged, use i
 
 **In:** the memory's context and the player's meditation description. **Out:** a cryptic vision in the System's voice, and an IP award (1 to 3, by the memory's intensity) toward the aligned Concept.
 
-**Unplugged procedure:** compose the vision from three images: the moment itself, stripped of one load-bearing detail; the Concept in a pure or alien form; and one image that overreaches or misleads. Visions are glimpses, not lessons. Deliver it in System voice, award the IP, and say nothing else.
+**Unplugged procedure:** compose the vision from three images: the moment itself, stripped of one load-bearing detail; the Concept in a pure or alien form; and one image that overreaches or misleads. A vision hints; it does not teach. Deliver it in System voice, award the IP, and say nothing else.
 
 *Example (a cave-in survived by holding the slab, toward Weight):* "A mountain hangs from a thread. The thread does not strain. Below, something waits to be told where to fall."
 

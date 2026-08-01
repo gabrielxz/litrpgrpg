@@ -86,7 +86,7 @@ HRT is the anchor: every Breakthrough is a trial of will. The second Force expre
 
 **What the DC represents:** A challenger rolls d100 + HRT Force + their highest Attribute's Force against 240, with both Force values bounded 1–99 within the challenger's current Grade. Maximum natural roll: 100 + 99 + 99 = 298. A character who has grown their Heart alongside their strongest Attribute can reach 240; one who neglected Heart cannot, even on a perfect natural roll; willpower is the one investment no path skips. The math is identical at every Breakthrough: F→E, E→D, D→C.
 
-**The Breakthrough Check explodes.** This is the one roll outside combat where System Volatility applies. The natural d100 checks the character's **current** Grade threshold and cascades as normal (see Core Mechanics, "System Volatility"). At F→E an explosion is a rare 5% surge; by D→C it fires roughly one attempt in five, and Breakthroughs grow wilder with every Grade. A cascade can carry an outmatched cultivator past the DC, or turn a safe attempt into a Transcendent one.
+**The Breakthrough Check explodes.** This is the one roll outside combat where System Volatility applies. The natural d100 checks the character's **current** Grade threshold and cascades as normal (see Core Mechanics, "System Volatility"): a rare surge at every transition, natural 96+ for an F-Grade cultivator, with the threshold falling one point per Grade. A cascade can carry an outmatched cultivator past the DC, or turn a safe attempt into a Transcendent one.
 
 **Modifiers to the Breakthrough Check:**
 

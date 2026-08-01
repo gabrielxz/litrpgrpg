@@ -91,10 +91,10 @@ The player answers from their character's lived experience. The GM and System AI
 
 **New Concepts enter at the bottom.** Mastery is per-Concept and never transfers. A C-Grade fire cultivator who turns to Sharpness starts at 0 IP and climbs to Initial Insight and Seed like any novice. Two costs keep late acquisition honest:
 
-- The new Concept's Applications are priced at their **origin Grade** (see Core Mechanics, "Costs Scale by Skill Origin Grade"). A Seed acquired at C-Grade costs 10,000 Aether per use, a real fraction of even a veteran's pool.
+- The new Concept's Applications are priced at their **acquisition Grade** (see Core Mechanics, "Aether Costs Are Set at Acquisition") and carry that Grade's potency envelope (see "Application Grade" below). A Seed acquired at C-Grade costs 10,000 Aether per use and manifests at C-Grade scale.
 - Its IP must come from experiences aligned to the *new* Concept: attention and risk spent there instead of deepening what the character already holds.
 
-A late Concept is thin, not weak: because resolution math stays in the Force band at every Grade, a Seed's +10 lands as hard at C-Grade as at F.
+A late Concept is narrow rather than weak: one Application, full price, full scale.
 
 ## Activation Costs
 
@@ -108,6 +108,20 @@ A late Concept is thin, not weak: because resolution math stays in the Force ban
 Aether costs scale ×10 per Grade of the Application's origin and are fixed to that origin forever; a Seed learned at F-Grade costs 10 Aether for the rest of the character's life. See Core Mechanics, "The Aether System," for the full table and the attrition dynamics this creates.
 
 **Principle and Spells:** A character's Principle passives always apply to matching spells automatically. Using an active Application alongside a spell requires Infusion tier. Below that, choose one per Beat: cast the spell or use the Application.
+
+## Application Grade
+
+Every Application has a Grade of its own, set at the moment it is acquired. That Grade fixes two things for the Application's whole existence: its Aether cost, and its **potency envelope**: the scale of world the manifestation can touch. The Clash bonus stays inside the Modifier Budget at every Grade; what grows is everything around the number.
+
+**Searing Strike at three acquisition Grades** (the Seed Application of a Fire Concept):
+
+- **F-Grade (10 Aether):** +10 to a Clash against targets vulnerable to fire. The flame wraps the weapon's edge, ignites cloth and dry wood, and leaves scorch lines on flesh.
+- **E-Grade (100 Aether):** the same +10. The flame runs white and dense: it chars through leather, ruins the temper of a parried blade, and the wounds it leaves cauterize shut, still smoking.
+- **D-Grade (1,000 Aether):** the same +10. The strike arrives as a sheet of fire with an edge in it. It passes through a steel door as through bread, and the Zone smells of ozone for hours.
+
+The envelope is narrative permission scaled by Grade. When an envelope collides with the world (can it burn this? can that survive it?), the GM reads the Application's Grade against the obstacle's Grade the same way any Cross-Grade question resolves.
+
+**Re-forging.** During any Compression, a character may also re-forge one Application they already know at their current Grade. The Application takes its new Grade's cost and envelope, and the old version is gone. An F-forged Searing Strike stays 10 Aether forever, a lit match that a D-Grade warrior can flick all day; re-forged at D-Grade it becomes a door-cutter that costs 1,000 a swing. Keeping the cheap old trick or paying full price for real power is a genuine choice, made one Application at a time.
 
 ## Narrative Permissions
 
