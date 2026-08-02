@@ -51,7 +51,7 @@ By the end of the tutorial, every player should have:
 
 - Reached **Level 4 or 5** (cumulative VE ~450–700; see Phase 7 ledger).
 - Survived at least one Clash that nearly killed them.
-- Witnessed at least one System Volatility cascade.
+- Witnessed at least one System Volatility explosion.
 - Made at least three **2.0+ intensity** HVE log events (high-stakes choices).
 - Earned **one Stable Ability** drawn from the catalog.
 - Earned **at least one Achievement Title** (Hidden Achievement titles are rare but possible).
@@ -69,7 +69,7 @@ If any of these is missing at the end of Session 3, the GM should improvise to d
 | 1: Threshold | The System's voice. The probe (HVE seed reads). |
 | 2: Violent Arrival | The Clash. Force. Beats. Zones. First kill. First VE. Volatile Artifacts. |
 | 3: Convergence | System status notifications. The Quest UI. Scarcity. Group dynamics. |
-| 4: Field of Ruins | Volatility cascades. Aura Pressure save. Saturation symptoms. Skill Shards in use. The auto-success rule. |
+| 4: Field of Ruins | Volatility explosions. Aura Pressure save. Saturation symptoms. Skill Shards in use. Routine Mastery. |
 | 5: Resonance Isolation | Personal Opportunities. Irreversible solo decisions. The first Battle Memory. |
 | 6: Convergence Crisis | The first Mandate. Boss-tier combat. Sacrifice as a 3.0 intensity choice. |
 | 7: First Recognition | Consolidation. Leveling. Stat allocation. Stable Abilities. Titles. Affinity Notices. Hidden Quest reveals. The Stinger. |
@@ -304,7 +304,7 @@ From the Node, the party can see the four major sub-zones of the tutorial landsc
 - **The Arcane Debris** (west): a shattered tower with runes still flickering, suspended fragments orbiting slowly.
 - **The Civic Fragment** (south): a partially intact administrative structure, distant lights.
 
-Beyond, distant landmarks suggest the world's true scale: a floating citadel, a creature so vast it blots out a section of sky, a wall of energy marking the tutorial boundary. The party can access maybe 10% of what they can see. That gap is intentional.
+Beyond, distant landmarks suggest the world's true scale: a floating citadel, a creature so vast it blots out a section of sky, a wall of energy marking the tutorial boundary. The party can access maybe 10% of what they can see; the rest is there to establish scale.
 
 The System issues a second quest the moment the party orients:
 
@@ -325,6 +325,8 @@ Pause here. Players have experienced the void, the violent arrival, the first Cl
 
 Award **session survival VE** (10 VE per character) and confirm running totals. A typical character ends Session 1 with **40–80 VE** accumulated (combat + encounter rewards + survival).
 
+**The First Consolidation.** Close the session with the party camping overnight at the Node and declaring their first Consolidation (Cultivation chapter). Walk through the mechanic once: minimum 1 hour, processing rate of (Raw FOR + Raw POW) VE per hour, 25% Max HP recovered per hour, Aether refilling at the start. At starting Tolerances (around 45 VE), most characters are already carrying more VE than they can hold; narrate the Saturation symptoms as they settle in (skin hot and prickly, hands trembling at rest) and the relief as the overnight rest processes the load. Eight hours at starting stats processes 70–110 VE. Most characters wake still Level 1, a fight or two short of the 100-VE threshold; a character who crosses it levels mid-rest, and the GM walks them through the 3+2 stat allocation (Progression chapter) at the table.
+
 ---
 
 ## Phase 4: The Field of Ruins
@@ -339,14 +341,18 @@ The four sub-zones can be approached in any order, but the GM should **engineer 
 
 The party should never feel comfortable exploring one zone while the others wait patiently.
 
+### Threat Calibration
+
+Three of the four zones hold a threat sized above a fresh party: the Wild Fragment's Snarljaw pack, the Arcane Debris' Fragment Wraith, and the Civic Fragment's Husk Sentinel are Hard-to-Severe encounters that a Level 1–3 party cannot beat head-on (see the Bestiary's encounter sizing table: a Severe enemy is boss-tier for a party ten levels from now). Each one has a non-combat path, listed in its zone. The tutorial teaches threat assessment by making some fights losing propositions: telegraph the danger through the fiction (a carcass larder, a keening in the tower, scorch marks fanning out from a doorway), let players walk in anyway if they insist, and lean on the Downed rules rather than instant death when they do.
+
 ### Mechanical Introductions in Phase 4
 
 This is the session where the GM introduces:
 
-- **Volatility cascades** (one or more enemies trigger a natural d100 of 96+; demonstrate the explosion mechanic).
+- **Volatility explosions** (the first natural 96+ of the campaign; spotlight it when it lands; see the Volatility Demonstration note in Zone C).
 - **Aura Pressure save** (a higher-Grade entity passes through one of the zones; see Wild Fragment below).
 - **Saturation symptoms** (a player who pushes hard accumulates VE past Tolerance; describe symptoms without naming thresholds).
-- **The auto-success rule** (during the zone, a check that would have been impossible at L1 is now beneath them; show, don't tell).
+- **Routine Mastery** (a relevant Proficiency turns an Easy task into no roll at all; the Wild Fragment's hidden trail demonstrates it).
 - **Skill Shard activation** (one of the zones requires or rewards using a shard).
 
 ### Zone A: The Martial Remnant
@@ -357,7 +363,7 @@ A ruined arena from a dead warrior civilization. Stone tiers, shattered weapon r
 
 **Encounters:**
 
-- **3–4 Training Sentries** (bestiary, F-Moderate). They activate when approached. Sentry escalation triggers if combat extends past 3 rounds: Force values increase by +5.
+- **3–4 Training Sentries** (bestiary, F-Moderate). They activate by proximity, one at a time; a party that spreads across the arena floor or rushes the armory can wake two or three at once. One Sentry is a Hard fight for a fresh party; two at once will Down someone. Sentry escalation triggers if combat extends past 3 rounds: Force values increase by +5.
 - **Tactical diagrams** carved on the walls. Spending 1 Beat studying mid-combat grants **+5 to the next Clash**.
 - **Locked armory** behind a Sentry that requires defeating it cleanly (no kiting; the arena geometry punishes it). Contents: 1 Greatsword (+10 skill), 1 Reactive Buckler, 2 Lesser Healing Pills.
 - **Sealed vault door** at the rear, partially buried, humming. A Grade warning the players cannot yet read. **It does not open.** This is withheld access, a thread for the future.
@@ -376,14 +382,14 @@ An unnatural forest of bioluminescent trees with root systems that visibly move.
 
 **Encounters:**
 
-- **Snarljaw pack** (3 Snarljaws + 1 Alpha Snarljaw, bestiary). Pack tactics make them dangerous: +10 Flanking when they share a Zone. The Alpha will not flee.
+- **Snarljaw pack** (3 Snarljaws + 1 Alpha Snarljaw, bestiary). Pack tactics make them dangerous: +10 Flanking when they share a Zone. The Alpha will not flee. The pack is a hazard to route around rather than an encounter to clear; in open ground it is beyond a tutorial party. Telegraph it (drag marks, a carcass larder, paired eyes at the tree line) and reward the players who take the hint: the hidden trail and a stealthy den approach both let the zone be beaten without the pack ever charging. The pack hunts as one body; a party that pulls one Snarljaw to isolated ground can win that fight.
 - **1 Glow-Stalker** stalking the party from concealment. Surprise Beat on first turn. Hit-and-run.
 - **Predator den** with young (harmless). Inside: a high-value resource (1 predator core, 50 VE absorption). Killing the adults is straightforward; harvesting the den while sparing the young is a Hunger/Restraint test.
 - **Edible flora** that restores 10 HP but causes temporary sensory distortion (−5 to PER Clashes for the next encounter).
-- **A hidden trail** that bypasses the entire zone. PER Force vs. F-Easy 65 to spot while moving normally. A character who spends 1 Beat actively scanning *with* a relevant Proficiency (tracking, survival, scouting) auto-detects the trail (no roll). The trail passes through the zone in three minutes of fictional time and exits behind the predator den.
+- **A hidden trail** that bypasses the entire zone. PER Force vs. F-Easy 65 to spot while moving normally. A character who spends 1 Beat actively scanning *with* a relevant Proficiency (tracking, survival, scouting) auto-detects the trail: an Easy task with a relevant Proficiency is Routine Mastery, no roll. The trail passes through the zone in three minutes of fictional time and exits behind the predator den.
 - **A trapped creature** (non-hostile, non-human) caught in root-tendrils, slowly being digested. Saving it costs 1d3 rounds and attracts predators (1 Glow-Stalker), but the creature knows things about the landscape.
 
-**Aura Pressure Demonstration:** Once during this zone, a far-off **higher-Grade entity** passes overhead, a vast shape barely visible above the canopy. Every character within line of sight makes a **Will Save: d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance F-Severe 140**. This is calibrated to *fail* for most starting characters (with HRT 5 and FOR 5, total Force ≈ 7.5, max d100 + 7.5 = 107.5, below 140 always). On failure, the character is **Suppressed (1 Beat)** for the next encounter. This teaches the rule. The entity does not engage; it passes.
+**Aura Pressure Demonstration:** Once during this zone, a far-off **higher-Grade entity** passes overhead, a vast shape barely visible above the canopy. Every character within line of sight makes a **Will Save: d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance Hard (115)**; the entity is merely passing, its presence calm, and Aura Resistance is the flat card value with no Cross-Grade Adjustment. This is calibrated to *fail* for tutorial-tier characters (with HRT 5 and FOR 5, the bonus is 5 + 2 = 7; the maximum result of 107 falls short of 115). On failure, the character is **Suppressed (1 Beat)** for the next encounter. This teaches the rule. The entity does not engage; it passes.
 
 **Hidden Opportunity:** Deep in the forest, a **Resonance Node** pulses at a frequency only characters with PER Force ≥ 7 can detect. Approaching it triggers a sensory vision: a flash of the wider Multiverse, overwhelming and beautiful and terrifying. Grants **+1 IP** toward whatever Principle Concept the GM judges most aligned with the player's current vector state. The player does not choose. The System does. **This is also a Battle Memory trigger**; log it for Phase 7 reflection.
 
@@ -399,14 +405,14 @@ A shattered tower or ritual complex: the remnants of a civilization that underst
 
 **Encounters:**
 
-- **1 Fragment Wraith** (bestiary, F-Severe). Incorporeal. Must be defeated with PER-based attacks, Principle infusion, or skill shards. Demonstrates the Mind-Leach drain mechanic: deals damage AND drains Aether on hit.
+- **1 Fragment Wraith** (bestiary, F-Severe). Incorporeal. Vulnerable to PER-based attacks and skill shards. It haunts the tower's lower halls; the shard matrices and the observation deck are reachable without waking it, through exterior climbs and gaps in the shattered wall (Moderate 90 checks). As a fight it is a rout for a tutorial party: run it as a horror beat instead. Weapons pass through it, the PER-based openings glow obvious to anyone who looks, and fleeing works; it does not pursue beyond the tower. A party that engages anyway should learn the tutorial's hardest lesson cheaply: one character Downed and stabilized, then a retreat. Its Mind-Leach (damage plus Aether drain on hit) makes the danger legible fast.
 - **Degraded skill shards** embedded in crystalline matrices. Pulling them free requires solving spatial puzzles (PER vs. F-Moderate 90) or enduring energy feedback (5 damage on failure). Inventory: 1 Edge Shard, 1 Pulse Shard, 1 Anchor Shard.
 - **Inactive runes** that respond to touch, voice, or proximity in unpredictable ways. GM rolls d100 for effect: 1–30 painful (5 damage), 31–70 neutral (sensory glitch), 71–95 beneficial (+5 to next Clash), 96–100 unstable (rune detonates, all in Zone make F-Easy 65 DEX save or take 10 damage). Rewards experimentation under risk.
 - **Resonance chamber:** a character can temporarily "borrow" a dead technique. They feel arcane power flow through them for one use, unstable and intoxicating, then it's gone. Functionally: choose one Stable Ability from the catalog (`35-stable-abilities.md`) and use it once during the next combat. Then it is gone forever; they cannot keep it.
 - **Broken constructs:** can be partially reactivated by characters who experiment (PER vs. F-Hard 115). On success, the construct fights for the party for 3 rounds (Off Force 12, Def Force 15, HP 30).
 - **Corrupted data-altar:** answers one question about the tutorial zone truthfully, but the question must be phrased precisely, and the answer comes in symbolic form requiring interpretation.
 
-**Volatility Demonstration:** During the Wraith fight, the GM should engineer a moment where a natural d100 lands 96+ (before any modifiers). Show the cascade. Explain it after, not before. Players will remember this.
+**Volatility Demonstration:** Explosions are rare (natural 96+ at F-Grade, 5%), so do not script one and do not fudge dice to force one; across Phase 4's combat volume, one will almost certainly arrive on its own, on either side of a Clash. When the first natural 96+ lands, slow down and show the cascade: the extra die, the spike of System energy. Explain it after it resolves, not before. If a cascade ever runs to two or more extra dice on a player character's roll, it auto-grants a Battle Memory Card (Core Mechanics); deliver it on the spot as the character's first.
 
 **Hidden Opportunity:** At the top of the shattered tower, a partially intact observation deck overlooks the entire valley. From here, a character can see things invisible from ground level: the geometric precision of the zone boundaries, the pattern in the terrain layout, the fact that the "random" debris is arranged in a spiral. **This information is critical for Phase 6's multi-path resolution** (a character with this knowledge can predict the Reality Purge's path). Whether the player shares the information is a Method/Control read; log it.
 
@@ -427,8 +433,8 @@ They are holding a fortified position with resources the party needs (a pristine
 **Encounters:**
 
 - **3–5 alien Initiates** (use Pre-System Brigand stats with HP 20, Off Force 8, Def Force 9, but they are not hostile by default). They have their own fears, hierarchy, and internal disagreements. Not a monolith.
-- **1 Husk Sentinel** (bestiary, F-Hard) standing guard at the medical bay entrance. **Not** allied with the aliens; it is an automated defense system. Aliens will help fight it if relations are good.
-- **Malfunctioning command terminal:** partial operation possible by a character willing to sit with it (PER vs. F-Hard 115). Success unlocks doors, activates backup defenses, or sends signals.
+- **1 Husk Sentinel** (bestiary, F-Hard) standing guard at the medical bay entrance. **Not** allied with the aliens; it is an automated defense system. A fresh party cannot beat it head-on; the winning paths are alien backup (they will help fight it if relations are good) or the command terminal below.
+- **Malfunctioning command terminal:** partial operation possible by a character willing to sit with it (PER vs. F-Hard 115). Success unlocks doors, powers the Husk Sentinel down for one hour, activates backup defenses, or sends signals.
 - **Tribunal chamber:** the automated arbitration system still partially functions. A character who figures out the protocol (CHA + Method, F-Hard 115) can invoke a formal binding decision, useful for resolving disputes with the aliens.
 - **Locked medical bay** with healing supplies for the whole party (3 Healing Pills, 1 Greater Healing Pill). The aliens are using it as their stronghold.
 - **Scattered records in alien script** (PER + curiosity, F-Moderate 90): partial decoding reveals the alien group has lost members and is as scared as the players are.
@@ -455,17 +461,14 @@ Apply mechanical penalties (−10 to all rolls at Mild, −25 at Heavy, HP bleed
 
 ### End of Session 2
 
-By session's end, characters have explored 1–3 zones, engaged in 4–8 combat encounters, faced an Aura Pressure save, witnessed a Volatility cascade, and made several major HVE-logged choices.
+By session's end, characters have explored 1–3 zones, engaged in 4–8 combat encounters, faced an Aura Pressure save, likely witnessed a Volatility explosion, and made several major HVE-logged choices.
 
-**Pause for Consolidation.** This is the first time the party has the option to declare a Consolidation rest (per `25-cultivation.md`). Walk them through the mechanic:
+**Pause for Consolidation.** The party camps and consolidates again, overnight; they know the procedure from Session 1, so this rest runs itself. Two additions:
 
-- 1 hour minimum.
-- Processing rate: (Raw FOR + Raw POW) per hour.
-- HP recovery: 25% Max per hour.
-- Aether refills fully on declaration.
 - Anyone holding a **Battle Memory** card from the Wild Fragment Resonance Node or the Resonance Flicker (Phase 2) reflects on it now and gains **+1 IP** toward the System AI's chosen Principle Concept.
+- Phase 4's VE haul pushes most characters past a level threshold or two during the night. Run each level as it lands: 3 System points via Behavioral Stat Mapping, 2 free (Progression chapter).
 
-A typical character ends Session 2 with **150–300 VE accumulated** (after Consolidation processing, this becomes permanent level progress). Most should be approaching or at **Level 3**.
+A typical character ends Session 2 with **150–300 VE accumulated**; the overnight rest processes 80–120 of it. Most should wake at **Level 2**, aggressive earners at **Level 3**, with the remainder banked in the tank for Phase 7. A character still over Tolerance at dawn can extend the rest into the morning; Phase 5 has no fixed start time, and choosing to push on saturated instead is itself HVE signal (Hunger).
 
 ---
 
@@ -535,7 +538,7 @@ A door appears in front of you: solid, real, locked. You sense, somehow, that wh
 
 > *Threshold detected. Compatibility: marginal. Crossing: not recommended.*
 
-- **Open the door:** Reveals a brief vision of an E-Grade location: overwhelming, beautiful, terrifying. Aura Pressure save: d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance 240 (Severe 140 + 100 Cross-Grade Adjustment for an F-Grade challenger facing an E-Grade source). Will fail at F-Grade. On fail: Suppressed for the rest of the tutorial (1 Beat). On success (statistically improbable): **Hidden Achievement**, "The One Who Walked Through." Logs **Freedom 2.0**, **Hunger 1.0**, **Will 1.0**.
+- **Open the door:** Reveals a brief vision of an E-Grade location: overwhelming, beautiful, terrifying. Aura Pressure save: d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance Severe (140); the flat card value, no Cross-Grade Adjustment, and the source is flaring with everything the door was holding back. No tutorial-tier character can pass it; the roll exists so the player feels the gap. On the inevitable failure: Suppressed for the rest of the tutorial (1 Beat). Opening the door also counts as entering a sealed location, progress toward the Hidden Achievement "The One Who Walked Through." Logs **Freedom 2.0**, **Hunger 1.0**, **Will 1.0**.
 - **Walk away:** Logs **Restraint 1.0**, **Method 1.0**.
 
 ### GM Notes
@@ -659,8 +662,7 @@ Each player receives a **private System summary**: a card, note, sidebar, or one
 [Title(s) granted: list.]
 [Stable Ability granted: name + brief effect.]
 [Hidden Quest reveals: list with rewards.]
-[Levels gained: count + stat allocation.]
-[VE total processed: number.]
+[VE awaiting refinement: number + projected level.]
 ══════════════════════════════════════════
 ```
 
@@ -680,8 +682,7 @@ Below are four samples calibrated to common tutorial archetypes. The GM customiz
 >
 > Hidden Quest revealed: *"Ten-Slayer." Progress: 4/10.*
 >
-> Levels gained: 4 (now Level 5). Stat allocation pending.
-> VE total processed: 720.
+> VE awaiting refinement: 720. Projected advancement: Level 5.
 
 **Method/Restraint archetype** (observed, planned, helped others):
 
@@ -693,8 +694,7 @@ Below are four samples calibrated to common tutorial archetypes. The GM customiz
 > Hidden Quest revealed (post-completion): *"The First Mercy." Complete. Reward: +1 IP toward Restraint-aligned Concept.*
 > Stable Ability: **Architect's Eye**. Once per encounter, after observing a target for at least one round, ask the GM one tactical question about it.
 >
-> Levels gained: 3 (now Level 4). Stat allocation pending.
-> VE total processed: 580.
+> VE awaiting refinement: 480. Projected advancement: Level 4.
 
 **Will/Accord archetype** (led the group, negotiated, rallied):
 
@@ -706,8 +706,7 @@ Below are four samples calibrated to common tutorial archetypes. The GM customiz
 > Bestowed title: **The Hand That Reached** (granted by System construct in Resonance Event).
 > Stable Ability: **Rally**. Once per encounter, spend 1 Beat to grant an ally +10 to their next Clash this round.
 >
-> Levels gained: 4 (now Level 5). Stat allocation pending.
-> VE total processed: 690.
+> VE awaiting refinement: 690. Projected advancement: Level 5.
 
 **Method/Freedom archetype** (experimented, broke rules, escaped):
 
@@ -720,19 +719,18 @@ Below are four samples calibrated to common tutorial archetypes. The GM customiz
 >
 > Hidden Quest revealed: *"The One Who Walked Through." In progress (1/3 sealed locations entered).*
 >
-> Levels gained: 3 (now Level 4). Stat allocation pending.
-> VE total processed: 540.
+> VE awaiting refinement: 470. Projected advancement: Level 4.
 
-### Stat Allocation Procedure
+### The Post-Gate Consolidation
 
-For each level gained, allocate **5 stat points**:
+Levels arrive here the way they always will: at Consolidation, as processed VE crosses each threshold (Progression chapter). The post-gate rest is the tutorial's longest: real ground, no clock, and most of the tutorial's VE still unprocessed in the tank. Let it run as long as the fiction allows (a full day or more of camp is natural here) and process the backlog. Most characters climb from Level 2–3 to **Level 4–5** during this rest, leveling repeatedly as the totals cross thresholds.
+
+For each level as it lands, allocate **5 stat points**:
 
 - **3 points GM-assigned** based on the player's tutorial behavior (use the Behavioral Stat Mapping table from `17-progression.md`).
 - **2 points free** for the player.
 
-For multi-level jumps (typical: L1 → L4 or L5), use the **Tutorial Multi-Level Allocation** rule from `02a`: assign cumulative System points (3 per level) holistically based on dominant patterns, then let the player allocate their cumulative free points (2 per level) at the end.
-
-Walk each player through this individually. The first stat increase is a moment: the character sheet changes in front of them.
+Run the levels one at a time rather than summing them; the sheet changing again and again in one sitting is the payoff. Walk each player through this individually.
 
 ### The Stable Ability Moment
 
@@ -796,17 +794,17 @@ Use this checklist to confirm each mechanic was introduced before tutorial end.
 - [ ] **Zones** introduced in Phase 2 or Phase 3 (multiple Zones in scattered landing).
 - [ ] **VE accumulation** visible by Phase 3 (totals tracked).
 - [ ] **Quest UI** debuts in Phase 3.
-- [ ] **System Volatility** demonstrated in Phase 4 (engineer at least one cascade).
+- [ ] **System Volatility** demonstrated (spotlight the first natural explosion; do not force one).
 - [ ] **Aura Pressure save** delivered in Phase 4 (Wild Fragment passover).
 - [ ] **Saturation symptoms** narrated in Phase 4 if any player pushes hard.
-- [ ] **Auto-success rule** experienced in Phase 4 (hidden trail Force ≥ 8).
+- [ ] **Routine Mastery** experienced in Phase 4 (a Proficiency auto-detects the hidden trail, no roll).
 - [ ] **Skill Shard activation** at least once in Phase 4 or 6.
 - [ ] **Personal Opportunity** delivered in Phase 5.
 - [ ] **Battle Memory** earned by at least one player (Resonance Node, Resonance Flicker, or near-death moment).
 - [ ] **First Mandate** issued in Phase 6.
 - [ ] **Boss-tier combat** in Phase 6 (Warden).
-- [ ] **Consolidation** taught at end of Session 2 or in Phase 7.
-- [ ] **Leveling and stat allocation** in Phase 7 (with Multi-Level Allocation rule).
+- [ ] **Consolidation** taught at the end of Session 1 (the First Consolidation at the Node).
+- [ ] **Leveling and stat allocation** run levels-as-earned at each Consolidation, finishing at the post-gate rest in Phase 7.
 - [ ] **Stable Ability** assigned in Phase 7.
 - [ ] **First Title** delivered in Phase 7.
 - [ ] **Affinity Notice** delivered in Phase 7.
@@ -829,7 +827,7 @@ Cumulative VE pacing target by phase, F-Grade baseline.
 | 6: Convergence Crisis | 200–300 | Mandate completion (1,000 raw, but tutorial-scaled to 200) + Warden contribution (varies) + gate survival. |
 | 7: Recognition | 100–200 | Tutorial completion bonus + Hidden Quest reveal rewards. |
 
-**Total expected:** 540–1,120 VE, processed during the Phase 7 Consolidation. With cumulative VE at Level 4 = 364 and Level 5 = 536, this puts characters firmly in the **L4–L5 range** by tutorial end.
+**Total expected:** 540–1,120 VE, processed across the tutorial's Consolidations, most of it at the post-gate rest. With cumulative VE at Level 4 = 364 and Level 5 = 536, this puts characters firmly in the **L4–L5 range** by tutorial end.
 
 If a character is significantly under (under 400), the GM should grant a tutorial completion bonus. If significantly over (above 1,200), they leveled hard and the next sessions can adjust pacing accordingly.
 
@@ -845,7 +843,7 @@ The tutorial intentionally avoids:
 
 - **Selecting classes.** Class choice happens at Level 10. The tutorial generates the behavioral data that informs class offerings later. Players should feel their identity *forming*, not see a menu.
 
-- **Being fair.** Some players get better loot. Some face harder encounters. Some have Resonance events that grant more power. This asymmetry is intentional: the System is not fair, and the sooner players internalize that, the better they will understand the world.
+- **Being fair.** Some players get better loot. Some face harder encounters. Some have Resonance events that grant more power. The System is not fair, and the sooner players internalize that, the better they will understand the world.
 
 - **Overstaying its welcome.** Three sessions, maximum. The tutorial proves four things: the world is huge, the System is watching, identity emerges through action, and many futures are possible. It does not need to prove anything else. Restraint makes the world feel larger.
 

@@ -56,7 +56,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **HP:** 14 · **Beats:** 2
 - **Off Force (STR, club; or DEX, knife):** 8 / 7
 - **Def Force (FOR or DEX):** 7 / 7
-- **Tactics:** Flees on Soft Failure or when reduced below 50% HP. Carries 1d3 Stuttering Tinctures and a crude weapon.
+- **Tactics:** Flees when Turned Aside or when reduced below 50% HP. Carries 1d3 Stuttering Tinctures and a crude weapon.
 
 ### Snarljaw
 *A pack-hunting beast, maw lined with serrated bone.*

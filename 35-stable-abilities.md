@@ -14,7 +14,7 @@ Each Stable Ability is keyed to a behavioral signature observed during the tutor
 
 - Stable Abilities cost no Aether. They are System-stamped permissions, not channeled techniques.
 - Most are gated by frequency (once per encounter, once per Consolidation, once per session) rather than by resource pool.
-- They never replace a class feature. When the character selects their class at Level 10, the Stable Ability remains, but the class will provide more powerful, similar-flavored options that may overshadow it. That is intentional. The Stable Ability is a foothold, not a peak.
+- They never replace a class feature. When the character selects their class at Level 10, the Stable Ability remains, but the class will provide more powerful, similar-flavored options that may overshadow it. The Stable Ability is a foothold.
 
 ---
 

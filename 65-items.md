@@ -88,7 +88,7 @@ Weapons do not deal flat damage. They determine which Force governs an attack an
 | Crude Club | STR | +0 | Found objects, broken table legs. |
 | Knife / Dagger | DEX | +5 | Quick, concealable. Throwable as one-shot ranged. |
 | Spear | DEX | +5 | Reach: free Disengage from one Zone-edge enemy per turn. |
-| Battle Axe / Greatsword | STR | +10 | Heavy. Cannot be wielded with under STR Force 5 without Soft Failure on every Clash. |
+| Battle Axe / Greatsword | STR | +10 | Heavy. Requires STR Force 5; below that, every Clash with it takes −10 (hindering). |
 | Short Bow | DEX | +5 | Ranged: target enemies in adjacent Zones. |
 | Crossbow (single-shot) | DEX | +10 | Requires 1 Beat to reload between shots. |
 | Quarterstaff | STR or DEX | +5 | Versatile: choose Force at attack time. |

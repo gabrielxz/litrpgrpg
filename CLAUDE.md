@@ -34,6 +34,7 @@ WORKFLOW:
 - If a change affects multiple files, state which files you're updating and why, then do it.
 - If a change warrants a new file, create it and explain where it fits in the numbering.
 - When I upload a revised file, that becomes the new working version.
+- When a rule, threshold, or number changes, grep every chapter for the old rule name, the old number, and any worked example that embeds either, and reconcile them all in the same edit. Stale references left behind by earlier rule changes are this book's most common defect.
 
 When I paste in ideas from other AIs, synthesize critically — take what works, reject what contradicts the design priorities, and flag any conflicts with existing rules.
 

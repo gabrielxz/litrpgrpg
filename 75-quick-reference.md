@@ -51,7 +51,7 @@
 
 **Principle / Skill Aether Costs (F-Grade baseline):** Seed App: 10 | Early Fragment App: 15 | Infusion: free | Domain: 30 + 5/round. Multiply cost by Grade Magnitude (×10 / ×100 / ×1,000) for skills learned at E / D / C respectively. Cost is permanently fixed to the skill's origin Grade.
 
-**Aura Pressure Save:** d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance.
+**Aura Pressure Save:** d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance. Aura Resistance is the flat card value, no Cross-Grade Adjustment: calm presence Hard (115), flaring Severe (140). At 3+ Grades of difference the GM may skip the save.
 
 ---
 
@@ -91,10 +91,10 @@ Attacker: STR 55 (Force 55). Defender: FOR 40 (Force 40), HP 80.
 
 Attacker: STR 8,500 (D-Grade, Force 85). Defender: FOR 7,000 (D-Grade, Force 70), HP 14,000.
 
-- Attacker rolls a natural 82. D-Grade explodes on natural 80+. Rolls again: natural 40 (no further cascade). Total die = 122. Clash = 122 + 85 = 207.
+- Attacker rolls a natural 97. D-Grade explodes on natural 94+. Rolls again: natural 40 (below 94, no further cascade). Total die = 137. Clash = 137 + 85 = 222.
 - Defender rolls a natural 75 (no explosion). Clash = 75 + 70 = 145.
-- Margin = 62. D-Grade adds 2 zeroes. **Damage = 6,200.**
-- Defender drops from 14,000 to 7,800 HP.
+- Margin = 77. D-Grade adds 2 zeroes. **Damage = 7,700.**
+- Defender drops from 14,000 to 6,300 HP.
 
 **3. Cross-Grade: F-Grade Peak vs. E-Grade Initiate:**
 
