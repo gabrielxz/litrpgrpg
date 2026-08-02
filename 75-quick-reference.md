@@ -13,6 +13,7 @@
 - **Advantaged:** +10 to roll (fiction-derived positional edge). **Exposed:** −10 to roll. **Flanking:** +10 to roll. **Environment:** −10 hindering / −20 crippling.
 - **Turned Aside:** defender wins by Margin 40+ → attacker Exposed until end of their next turn. Defensive win with an explosion → Momentum shifts next round.
 - **Skill check failure:** fail by 1–39 soft (success at a cost), 40+ hard (failure plus consequence), natural 01–05 catastrophic. Margin 40+ on any success is dominant.
+- **Exceptional Success:** natural 96–100 on a skill check. Success: narrate a step beyond what was asked. Failure: Soft regardless of margin. No extra dice.
 - **Cross-Grade Auto-Success:** vs. passive obstacles, Force + Cross-Grade Adjustment ≥ Resistance = no roll (2+ Grades up never rolls).
 - **Momentum:** Opposed Momentum Roll: d100 + DEX or PER Force (whichever is higher). Winning side acts first each round.
 - **Free Step:** DEX Force 50+ grants one free Zone move or in-Zone reposition per turn.

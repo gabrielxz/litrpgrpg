@@ -360,6 +360,8 @@ These tiers apply to **skill checks**; combat Clashes carry their own outcomes (
 
 The GM may shift the tier one step when the fictional stakes demand it, and softens or sharpens the consequence to fit the scene.
 
+**Exceptional Success:** the other end of the die. A natural 96–100 on a skill check adds no dice and no math; it makes the outcome remarkable. If the total succeeds, the GM narrates one step beyond what was asked: the merchant agrees, then offers more than anyone put on the table. If the total still fails, the failure is Soft regardless of margin. An Exceptional Success is mortal skill at its peak; explosions belong to the System, and skill checks never explode.
+
 ### Downed and Death
 
 **Downed at zero.** A character reduced to 0 HP is **Downed**: unconscious or barely conscious, prone, and out of the fight. A Downed character has no Beats and cannot defend. HP does not go negative; it floors at 0. Creatures simply die at 0 HP unless the GM wants them alive; the Downed state applies to player characters and named NPCs.
