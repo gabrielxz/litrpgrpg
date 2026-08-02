@@ -120,7 +120,7 @@ The Breakthrough Check margin (roll result minus DC) determines the base Quality
 | 40–59 | **Pristine** | Exceptional ascension. |
 | 60+ | **Transcendent** | One-of-a-kind ascension. |
 
-**Tier Adjustment:** Quality Enhancer items push the final tier up by one step (never above Transcendent). The Overcharge Ratio modifier is already factored into the DC: it makes the roll harder, but a character who succeeds despite higher DC gets a better margin naturally. This is the risk-reward loop: overcharging doesn't guarantee a better tier, but it creates the *possibility* of one.
+**Tier Adjustment:** On a successful check, apply the Overcharge Quality Modifier to the base tier from the margin table: ×1.5 raises the final tier one step, ×2.0 two steps, ×2.5 three steps. Quality Enhancer items push the final tier up one further step. Neither adjustment raises a tier above Transcendent, and neither applies on a failure: a check that misses the DC is Cracked no matter the Overcharge. This is the risk-reward loop: overcharging raises the DC, buying a better outcome on success at the price of a likelier failure.
 
 #### External Phenomena (The Party's Role)
 
@@ -273,7 +273,7 @@ Finding and securing a Breakthrough location is an adventure in itself. The GM s
 
 **Math Check (F→E):**
 
-A well-built F-Grade cap character (POW ~75, HRT ~60) has Force 75 + Force 60 = 135 before modifiers. The DC is 240 (E-Grade Severe). They need their d100 + modifiers to cover the remaining 105. Average d100 roll (50) leaves a gap of 55. With a Moderate location (+10), a Foundation Pill (+10), HVE Coherence of Defined (+10), and Party Anchor (+5 to +15), they are looking at +35 to +45 in modifiers, bringing the total needed from the d100 down to ~60–70. Achievable on an average-to-good roll. A maxed-prep character (POW 99, HRT 80, High density location, best pill, Singular coherence, strong Anchor) could make the check with a below-average roll and aim for Polished or better. Well-prepared characters succeed reliably; poorly prepared ones must roll well.
+A well-built F-Grade cap character (POW ~75, HRT ~60) has Force 75 + Force 60 = 135 before modifiers. The DC is 240 (E-Grade Severe). They need their d100 + modifiers to cover the remaining 105. Average d100 roll (50) leaves a gap of 55. With a Moderate location (+10), a Foundation Pill (+10), HVE Coherence of Defined (+10), and Party Anchor (+5 to +15), they are looking at +35 to +45 in modifiers, bringing the total needed from the d100 down to ~60–70: roughly one attempt in three succeeds, plus a small explosion tail. A maxed-prep character (POW 99, HRT 80, High density location, best pill, Singular coherence, strong Anchor) could make the check with a below-average roll and aim for Polished or better. Strong preparation makes success likely within an attempt or two (a Cracked F→E costs a temporary stat dip and a two-session lockout); maxed preparation makes it near-certain. Poorly prepared characters must roll well.
 
 ### E → D: Soul Sea Expansion
 

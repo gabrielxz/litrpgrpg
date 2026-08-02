@@ -85,7 +85,7 @@ Meeting an IP threshold does not advance the tier. Advancement requires **Compre
 
 The GM asks: *"What pattern have you discovered in how you act, or in how the world behaves?"*
 
-The player answers from their character's lived experience. The GM and System AI then refine the articulation into the tier's mechanical expression: enforcing operational clarity, defining scope and limits, and assigning the Application, passive, or Domain it produces. A sharp articulation produces a sharp expression; a muddled one produces a lesser expression. This matters most at Peak Fragment, where the articulation determines the Domain's character and scale.
+The player answers from their character's lived experience. The GM and System AI then work with the player to refine the articulation into the tier's mechanical expression: enforcing operational clarity, defining scope and limits, and assigning the Application, passive, or Domain it produces. Refinement is collaborative and continues until the articulation is Operational, Bounded, and Testable; the expression that results is full strength however plainly it was first spoken. What shapes the expression is the pattern the character has actually lived, which matters most at Peak Fragment, where the articulation determines the Domain's character.
 
 **Refinement.** The articulation can steer an existing Concept rather than deepen it as-is. A character whose Fire has grown hungrier with every fight may Compress Fire into **Consuming Flame**: same slot, same tier, same IP, shifted expression. The System AI adjusts the Concept's Applications and permissions to match. Refinement is how a Principle stays true to the person wielding it as the Hidden Vector Engine's read of them evolves.
 

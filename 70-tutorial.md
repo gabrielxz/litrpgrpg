@@ -171,7 +171,7 @@ You wake next to a small, non-human creature: insectoid, broken-limbed, clutchin
 
 You wake pinned under a slab of stone. Not crushing, but immobilizing. Something is circling nearby; you can hear it but not see it. A rusted metal bar is within arm's reach, and a natural crack runs through the stone near your shoulder.
 
-- **Brute force escape (STR Force vs. F-Moderate 90):** Logs **Force 1.0**. On success, the noise nearby flees. On failure, the noise resolves into **1 Frenzy Rat** (bestiary); combat ensues from a prone position (Exposed: −10 to Clashes until standing, 1 Beat to stand).
+- **Brute force escape (STR Force vs. F-Moderate 90):** Logs **Force 1.0**. On success, the noise nearby flees. On failure, the noise resolves into **1 Husk Crawler** (bestiary); combat ensues from a prone position (Exposed: −10 to Clashes until standing, 1 Beat to stand).
 - **Lever the crack (DEX Force vs. F-Easy 65):** Logs **Method 1.0**. Lifts the slab cleanly without alerting anything.
 - **Improvise (PER + creativity, GM judgment):** Player describes a non-standard solution. If clever, no roll. Logs **Method 1.0** or **Freedom 1.0** depending on approach.
 
@@ -227,6 +227,8 @@ Who grabs what (and who grabs nothing because they were busy helping someone els
 ### GM Notes
 
 The scattered landing is the single most important structural decision in the tutorial. It guarantees that every player's first 5–10 minutes are purely their own. The Engine gets clean signal. **Do not let players "decide to land together" or otherwise circumvent the isolation.**
+
+**No isolated micro-encounter can kill.** A solo character has no ally to stabilize them, so a Downed result here would run the countdown out unopposed. If a character goes Downed alone, the creature drags or loses interest (the Bestiary's mindless-creature guidance) and another Initiate's path crosses theirs before the count ends. The tutorial's one true death sits at the Phase 6 gate; nothing in Phase 2 preempts it.
 
 After each player resolves their encounter, the System delivers a one-line clinical summary as a private note:
 

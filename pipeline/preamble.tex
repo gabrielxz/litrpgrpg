@@ -127,3 +127,11 @@
   before skip=10pt,
   after skip=10pt
 }
+
+% Running header fix: with scrbook + oneside, chapters only \markright,
+% so \leftmark keeps the table of contents' "Contents" mark for the whole
+% book. Mark both sides from the chapter so header-left (\leftmark in
+% metadata.yaml) tracks the current chapter name.
+\AtBeginDocument{%
+  \renewcommand{\chaptermark}[1]{\markboth{#1}{}}%
+}

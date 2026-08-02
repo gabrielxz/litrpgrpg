@@ -111,7 +111,7 @@ Spend 1 Beat outside of combat to mark a target you can perceive. For the next 2
 #### Arcane Flicker
 *A small, deliberate disturbance in the air.*
 
-Free action, no Aether cost: produce a small telekinetic push. Move an unattended object up to 10 lbs within line of sight, or shove an Exposed enemy off-balance (no damage; impose **−5 to their next Clash**). Useful for tactical setups, environmental tricks, knocking objects loose from a distance.
+Free action, no Aether cost: produce a small telekinetic push that moves an unattended object up to 10 lbs within line of sight. Once per encounter, the push can instead shove an Exposed enemy off-balance (no damage; impose **−5 to their next Clash**). Useful for tactical setups, environmental tricks, knocking objects loose from a distance.
 
 **Best for:** Characters who experimented with unstable shards, interacted with arcane phenomena, or showed early POW affinity in the Arcane Debris.
 

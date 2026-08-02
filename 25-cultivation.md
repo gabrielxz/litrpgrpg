@@ -18,9 +18,9 @@ An F-Grade character with FOR 60 and POW 60 has a Tolerance of 600. A pure warri
 
 VE accumulates automatically after combat and from other sources. As long as stored VE remains below Tolerance, there is no penalty. Once VE exceeds Tolerance, the character enters **Saturation:**
 
-- **Mild Saturation (101–150% Tolerance):** −10 to all rolls. Aether regeneration halved.
+- **Mild Saturation (101–150% Tolerance):** −10 to all rolls.
 - **Heavy Saturation (151–200% Tolerance):** −25 to all rolls. HP begins bleeding (1% Max HP per round in combat, per hour outside combat).
-- **Critical Saturation (200%+ Tolerance):** Stat degradation begins. Permanent attribute loss if not addressed.
+- **Critical Saturation (200%+ Tolerance):** Heavy Saturation penalties continue, and the body starts burning itself as insulation: at the end of each hour spent at Critical Saturation, the character permanently loses 1 Raw point of FOR or POW (player's choice).
 
 **GM Note on Saturation:** The System does not announce band thresholds to the character. Narrate symptoms instead: skin feels hot and prickly, vision tunnels at the edges, muscles cramp, something under the breastbone flexes in ways that feel wrong. Let players learn the pattern by experience. This generates rich Hidden Vector signal: who pushes into the red zone chasing one more kill? (Hunger.) Who pulls back at the first warning? (Restraint.)
 
@@ -100,7 +100,9 @@ The defeated enemy's difficulty tier (read from the Grade Reference Card) determ
 
 Cross-Grade kills follow the multiplier: an E-Grade Moderate enemy yields 300 VE; a D-Grade Hard yields 6,000. A successful punch-up against a higher-Grade opponent is one of the fastest ways to leap forward in progression.
 
-A stealth kill or trap kill yields half VE; the System rewards risk, not efficiency. A defeated boss-tier encounter (rare, named, or designed for the moment) may be worth 1.5× the listed amount at the GM's discretion.
+The kill is priced by what died, whatever the method: a trap, an ambush, or a plan that ended the fight before it started pays the same as an open brawl. How the kill happened is logged by the Hidden Vector Engine; it is never priced. A defeated boss-tier encounter (rare, named, or designed for the moment) may be worth 1.5× the listed amount at the GM's discretion.
+
+**Who earns it.** Combat VE is pooled per encounter and split evenly among meaningful participants (round down). Fighting, guarding, scouting the escape route, and controlling the field all participate; being elsewhere does not. The killing blow earns no extra share; individual excellence reaches the System through the Hidden Vector Engine log, titles, and Hidden Achievements.
 
 #### Quest & Survival
 
@@ -125,7 +127,9 @@ Survival and quest completion guarantee baseline progression. Combat VE and envi
 
 ### Toxins & Impurities
 
-Consuming healing pills or forced-growth treasures adds **Toxin Points**. If Toxin Points exceed a character's Toxin Tolerance (Raw FOR × 2), Consolidation efficiency drops: more time is required per VE processed, and a percentage of VE is lost to impurity during each rest.
+Consuming healing pills or forced-growth treasures adds **Toxin Points**. If Toxin Points exceed a character's Toxin Tolerance (Raw FOR × 2), Consolidation degrades: the processing rate is halved, and one quarter of the VE processed during each rest is lost to impurity (round down).
+
+Toxin clears on its own at a rate of **Raw FOR points per full day** free of new Toxin intake.
 
 ### Grade Breakthroughs
 
