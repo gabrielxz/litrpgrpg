@@ -45,6 +45,8 @@
 
 **Cross-Grade Adjustment:** The higher-Grade side gains +100 per Grade of difference. In Opposed Rolls, the higher-Grade combatant adds +100 to their total per Grade above the opponent. In Resistance Rolls, add +100 per Grade of difference to whichever side is higher (the challenger's roll if challenging a lower-Grade obstacle, the obstacle's Resistance if challenging a higher-Grade obstacle). Same Grade, no adjustment.
 
+**Lagging stats:** a stat below its owner's Grade band keeps its own magnitude: Force is the number as written, and Clashes it governs take the Cross-Grade Adjustment and damage multiplier from the stat's Grade rather than the character's.
+
 **HP** = Raw FOR × 2. **Aether** = Raw POW. Aether refills only on Consolidation (no in-combat or passive regen).
 
 **Downed:** at 0 HP: no Beats, no defense; dies at the end of their third round unless stabilized (any healing, or 1 Beat + Moderate 90 check, field-medicine Proficiencies apply). One hit ≥ 10× Max HP kills outright. Attacking a Downed character: 1 Beat, no roll, kills. Surviving being Downed grants a Battle Memory Card.

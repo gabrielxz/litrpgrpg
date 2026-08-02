@@ -172,7 +172,7 @@ The character successfully ascends. Clean, competent, unremarkable.
 - **System Message.** The System AI generates a clinical acknowledgment of the ascension: a brief, cold System notification reflecting the character's journey. ("*[Subject 4,291-F] has undergone Grade Evaluation. Assessment: Stable foundation. F-Grade patterns preserved. E-Grade clearance granted.*")
 - **Principle Slots.** New Principle Application slots unlock at the new Grade tier. The character can now begin developing Grade-appropriate Principle Concepts.
 
-**A Note on Dump Stats:** A character whose STR is 65 at F-Grade cap may still have STR 65 after Breaking Through to E-Grade if their class evolution doesn't invest in STR. An E-Grade wizard with sub-100 STR is physically frail among E-Grade peers and hazards. Natural growth through E-Grade leveling, attribute treasures, and titles will push all stats upward over time, but lagging stats create meaningful character texture.
+**A Note on Dump Stats:** A character whose STR is 65 at F-Grade cap may still have STR 65 after Breaking Through to E-Grade if their class evolution doesn't invest in STR. That stat now lags below the E-Grade band and resolves at its own magnitude (see Core Mechanics, "Lagging Stats"): E-Grade physical opposition takes the +100 adjustment against it, and attacks it drives deal F-Grade damage. Natural growth through E-Grade leveling, attribute treasures, and titles will push all stats upward over time, but lagging stats create meaningful character texture.
 
 **Polished (Above-Average Ascension):**
 

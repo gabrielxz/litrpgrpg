@@ -30,7 +30,7 @@ Every stat in the game has three components:
 
 - **Raw Power:** The actual LitRPG number on the character sheet (e.g., 4,520). This is what players see, track, and get excited about.
 
-- **Grade (Magnitude):** The order of magnitude, which maps directly to the character's Grade tier. Each Grade represents one order of magnitude of power.
+- **Grade (Magnitude):** The order of magnitude, read off the stat itself: 1–99 is F-magnitude, 100–999 E-magnitude, 1,000–9,999 D-magnitude. A character's Grade names the band their stat caps sit in, and nearly every stat lives there; a stat left below the band keeps its own magnitude (see The Grade Gap, "Lagging Stats").
 
 - **Force:** The first two significant digits of the Raw Power. This is the only number used at the table for resolution.
 
@@ -324,7 +324,7 @@ If the **attacker wins**, calculate the **Margin:**
 
 **Step 3. Apply Damage (The Zeroes Rule):**
 
-Take the Margin and multiply it by the attacker's Grade Magnitude:
+Take the Margin and multiply it by the attacker's Grade Magnitude (for an attack driven by a lagging stat, the stat's own magnitude; see "Lagging Stats"):
 
 > **Damage = Margin × 10^(Grade Magnitude)**
 
@@ -395,6 +395,8 @@ When entities of different Grades clash, the gap between them is expressed throu
 
 **For every Grade of difference, the higher-Grade combatant adds +100 to their Force in all Clashes and opposed checks.**
 
+The Grades compared are those of the governing stats on each side. For characters whose stats sit in their Grade's band, which is nearly everyone nearly always, that is simply the characters' Grades; the exception is a lagging stat (below).
+
 | **Grade Gap** | **Higher-Grade Force Bonus** |
 |---|---|
 | Same Grade | +0 |
@@ -414,7 +416,15 @@ If the E-Grade attacks: d100 + (12 + 100) vs. d100 + 99. The E-Grade's effective
 
 ### The Natural Stat Wall
 
-Before the Magnitude Gap bonus even applies, the raw stat difference between Grades creates a wall. An F-Grade character's stats max at 99. An E-Grade character's stats start at 100. The Force extraction ensures these map to the same 1–99 band for resolution, but the damage multiplier gap (×1 vs. ×10) makes every successful attack from a higher Grade devastatingly efficient.
+Before the Magnitude Gap bonus even applies, the raw stat difference between Grades creates a wall. An F-Grade character's stats cap at 99. An E-Grade character's stats grow through 100–999. The Force extraction ensures these map to the same 1–99 band for resolution, but the damage multiplier gap (×1 vs. ×10) makes every successful attack from a higher Grade devastatingly efficient.
+
+### Lagging Stats
+
+Breakthrough lifts stat caps without raising stats, so a neglected Attribute can sit below the new Grade's band: an E-Grade scholar might carry STR 65 into a world of three-digit bodies. A lagging stat keeps its own magnitude. It extracts Force as the number it is (STR 65 is Force 65, an F-magnitude stat), and any Clash or check it governs applies the Cross-Grade Adjustment and the damage multiplier by the stat's Grade rather than its owner's.
+
+**Worked example.** An E-Grade scholar (STR 65, Force 65) grapples an E-Grade soldier (STR 300, Force 30). The soldier's stat is one magnitude above the scholar's, so the soldier adds +100: d100 + 130 vs. d100 + 65. If the scholar lands a punch instead, it is an F-magnitude attack: damage is Margin × 1 against an E-Grade HP pool. The scholar's POW 500 spells resolve as normal E-Grade actions; the frailty lives only in the stat that lagged.
+
+Rules keyed to the character rather than to a stat (Volatility threshold, stat caps, level span, cross-Grade movement, Aura Pressure) read the character's Grade as always.
 
 ### Aura Pressure
 
