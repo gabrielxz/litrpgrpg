@@ -63,4 +63,4 @@ The pre-class observation period is over. The Hidden Vector Engine continues tra
 
 ## Beyond Level 25
 
-Level 25 is the Grade cap. Cumulative VE keeps accumulating, stats keep growing from treasures and titles up to the Grade's stat cap, but no further levels arrive. The way forward is a **Grade Breakthrough**: a deliberate, dangerous ritual with its own chapter. Every ceiling in this chapter (level cap, stat cap, Principle tier cap, Concept slots) lifts at once when it succeeds.
+Level 25 is the Grade cap. Cumulative VE keeps accumulating, stats keep growing from treasures and titles up to the Grade's stat cap, but no further levels arrive. The way forward is a **Grade Breakthrough**: a deliberate, dangerous ritual with its own chapter. When it succeeds, the level span resets into a fresh 25 and the stat cap rises to the new Grade's maximum; the F→E Breakthrough also unlocks the second Concept slot (see The Principle System).

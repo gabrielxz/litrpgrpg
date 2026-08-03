@@ -62,7 +62,7 @@ Behavioral profile: [Deep Vector reads plus 2-3 defining moments]
 
 ### Personal Opportunities
 
-The System Quests chapter carries the full generation template. Unplugged, use it as a worksheet and fill each field by hand; the tutorial's Phase 5 events are worked examples.
+The System Quests chapter carries the full generation template. Unplugged, use it as a worksheet and fill each field by hand; the tutorial's Phase 5 events are examples.
 
 ### Battle Memory Visions
 

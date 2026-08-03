@@ -170,7 +170,7 @@ The character successfully ascends. Clean, competent, unremarkable.
 - **Grade Advancement.** The character's Grade increments. All stat caps rise to the new Grade's maximum (999 at E-Grade, 9,999 at D-Grade, etc.). Stats are *not* multiplied: an F-Grade character with STR 80 still has STR 80 after Breaking Through to E. The cap is lifted, not the floor. Growth into the new Grade's stat range comes from class evolution bonuses, E-Grade leveling (where per-level stat budgets scale with Grade magnitude), treasures, and titles.
 - **Class Evolution.** The System AI generates 1–3 class evolution options appropriate to the new Grade. These function like the Level 10 class selection. The character's HVE profile, current class, and Principle affinities shape what is offered. The player selects one. The selected evolution grants a new Signature Skill, modifies the class's stat profile for future level-ups, and provides a **one-time class evolution stat infusion**, a lump sum of stat points distributed according to the new class's stat profile. At E-Grade, this infusion is typically 50–100 points total (enough to push primary stats past 100 while leaving dump stats where they are). The infusion scales with Grade magnitude at higher Breakthroughs.
 - **System Message.** The System AI generates a clinical acknowledgment of the ascension: a brief, cold System notification reflecting the character's journey. ("*[Subject 4,291-F] has undergone Grade Evaluation. Assessment: Stable foundation. F-Grade patterns preserved. E-Grade clearance granted.*")
-- **Principle Slots.** New Principle Application slots unlock at the new Grade tier. The character can now begin developing Grade-appropriate Principle Concepts.
+- **Principle Track Effects.** Principles advance on their own track and most Breakthroughs leave it untouched. Two exceptions: the F→E Breakthrough unlocks the **second Concept slot**, and reaching D-Grade opens the **Domain gate** (see The Principle System, "Concept Slots" and "The Domain Gate").
 
 **A Note on Dump Stats:** A character whose STR is 65 at F-Grade cap may still have STR 65 after Breaking Through to E-Grade if their class evolution doesn't invest in STR. That stat now lags below the E-Grade band and resolves at its own magnitude (see Core Mechanics, "Lagging Stats"): E-Grade physical opposition takes the +100 adjustment against it, and attacks it drives deal F-Grade damage. Natural growth through E-Grade leveling, attribute treasures, and titles will push all stats upward over time, but lagging stats create meaningful character texture.
 
@@ -262,6 +262,8 @@ Finding and securing a Breakthrough location is an adventure in itself. The GM s
 - **Internal:** Physical-spiritual pressure test. The cultivator's body is the battlefield; they must endure the reconstruction of their physical vessel while maintaining spiritual coherence. Describe impurity expulsion, body-tempering visions (flashes of the character's hardest physical moments, replayed and compressed into a single searing experience), the sensation of bones breaking and reforming.
 - **External:** Mild phenomena. Local energy fluctuations cause temperature spikes, minor tremors, flickering light. Small elemental manifestations (energy wisps, ground cracks, brief spatial shimmers) appear and dissipate. At low-density locations, these may not manifest at all. At high-density locations, minor tribulation beasts (F-Grade, Moderate difficulty) may be drawn to the site.
 
+**Recognition at this Grade** also unlocks the second, and final, Concept slot (see The Principle System, "Concept Slots").
+
 **Failure Consequences (Cracked at F→E):**
 
 - **Stat Loss:** Temporary. FOR and POW each drop by 5 (minimum 1). Recovery through one full Consolidation rest.
@@ -290,6 +292,8 @@ A well-built F-Grade cap character (POW ~75, HRT ~60) has Force 75 + Force 60 = 
   - A **Will-dominant** character confronts projections of everything they have dominated: the people cowed, the systems broken to their will, the resistance crushed. The trial demands they prove their will is genuine sovereignty and not mere cruelty.
 - **External:** Significant phenomena. Spectral manifestations coalesce from the cultivator's HVE signature, echoes given temporary physical form outside the cultivator's body. These are E-Grade threats (Moderate to Hard difficulty on the Grade Reference Card) and they carry thematic resonance with the cultivator's behavioral patterns. A Force-dominant cultivator's external phenomena are aggressive and kinetic; a Method-dominant cultivator's are spatial and disorienting. Aether storms, terrain warping, and transformed local wildlife are all appropriate.
 
+**Recognition at this Grade** opens the Domain gate: the rebuilt Soul Sea is a vessel that can hold a Domain, and a character with a Peak Fragment articulation waiting may Compress it at their next Consolidation (see The Principle System, "The Domain Gate").
+
 **Failure Consequences (Cracked at E→D):**
 
 - **Aether Ceiling Reduction:** Permanent. Max Aether is reduced by 10% until the next successful Breakthrough. The Soul Sea cracked but did not shatter; it holds, but leaks.
@@ -302,7 +306,7 @@ A well-built F-Grade cap character (POW ~75, HRT ~60) has Force 75 + Force 60 = 
 
 ### D → C and Beyond
 
-Deliberately unwritten. These Grades will be developed when the campaign reaches that scale. The universal blueprint applies: the four-beat structure, the Overcharge Ratio, the Quality Tier system, and the Breakthrough Check formula all extend unchanged. What changes is the thematic content of the trial (D→C likely introduces true Heart Demon confrontation as an adversarial internal entity), the severity of failure, the scale of external phenomena (D-Grade tribulations may attract attention from entities beyond the local System), and the magnitude of Transcendent rewards.
+This book covers F→E and E→D in full; D→C and beyond arrive in a future supplement. The universal blueprint applies: the four-beat structure, the Overcharge Ratio, the Quality Tier system, and the Breakthrough Check formula all extend unchanged. What changes is the thematic content of the trial (D→C likely introduces true Heart Demon confrontation as an adversarial internal entity), the severity of failure, the scale of external phenomena (D-Grade tribulations may attract attention from entities beyond the local System), and the magnitude of Transcendent rewards.
 
 ---
 

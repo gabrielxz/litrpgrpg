@@ -135,3 +135,21 @@
 \AtBeginDocument{%
   \renewcommand{\chaptermark}[1]{\markboth{#1}{}}%
 }
+
+% Lore — in-world cosmology, legends, and color vignettes.
+% Demarcates fiction and worldbuilding from rules text.
+\newtcolorbox{lore}{
+  enhanced,
+  breakable,
+  colback=black!4,
+  colframe=black!4,
+  boxrule=0pt,
+  borderline west={2.5pt}{0pt}{black!70},
+  arc=0pt,
+  left=12pt,
+  right=12pt,
+  top=10pt,
+  bottom=10pt,
+  before skip=12pt,
+  after skip=12pt
+}

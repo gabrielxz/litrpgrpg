@@ -503,7 +503,7 @@ Use 3–5 of the following, varying axes across the table.
 A System construct presents you with two objects. One is clearly a weapon: elegant, sharp, radiating controlled violence. The other is a seed of something, organic, warm, pulsing with slow potential. The construct's posture makes clear: you take one, the other ceases to exist.
 
 - **Weapon:** A Knife with +10 skill bonus and +5 to first Clash of any combat. Logs **Hunger 2.0**, **Force 1.0**.
-- **Seed:** Cannot be used immediately. During next Consolidation, the seed germinates into a Principle Affinity for a Concept the System chooses. Functionally: **+2 IP** toward that Concept and a permanent narrative permission. Logs **Restraint 2.0**, **Method 1.0**.
+- **Seed:** Cannot be used immediately. During next Consolidation, the seed germinates into a Principle Affinity for a Concept the System chooses. Functionally: **+2 IP** toward that Concept and a permanent Attunement (see The Principle System). Logs **Restraint 2.0**, **Method 1.0**.
 - **Refuse both:** Logs **Freedom 2.0**. The construct dissolves silently. The System notes the refusal; Personal Opportunity offerings narrow for the next session.
 
 #### The Trapped Intelligence

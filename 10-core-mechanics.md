@@ -404,7 +404,7 @@ The Grades compared are those of the governing stats on each side. For character
 | 2 Grades higher | +200 |
 | 3+ Grades higher | +300+ |
 
-**Worked Example: F-Grade Peak vs. E-Grade Initiate.**
+**Example: F-Grade Peak vs. E-Grade Initiate.**
 
 The F-Grade Peak has STR 99 (Force 99). The E-Grade Initiate has DEF 120 (Force 12, plus +100 for the Grade gap = effective Force 112).
 
@@ -422,7 +422,7 @@ Before the Magnitude Gap bonus even applies, the raw stat difference between Gra
 
 Breakthrough lifts stat caps without raising stats, so a neglected Attribute can sit below the new Grade's band: an E-Grade scholar might carry STR 65 into a world of three-digit bodies. A lagging stat keeps its own magnitude. It extracts Force as the number it is (STR 65 is Force 65, an F-magnitude stat), and any Clash or check it governs applies the Cross-Grade Adjustment and the damage multiplier by the stat's Grade rather than its owner's.
 
-**Worked example.** An E-Grade scholar (STR 65, Force 65) grapples an E-Grade soldier (STR 300, Force 30). The soldier's stat is one magnitude above the scholar's, so the soldier adds +100: d100 + 130 vs. d100 + 65. If the scholar lands a punch instead, it is an F-magnitude attack: damage is Margin × 1 against an E-Grade HP pool. The scholar's POW 500 spells resolve as normal E-Grade actions; the frailty lives only in the stat that lagged.
+**Example.** An E-Grade scholar (STR 65, Force 65) grapples an E-Grade soldier (STR 300, Force 30). The soldier's stat is one magnitude above the scholar's, so the soldier adds +100: d100 + 130 vs. d100 + 65. If the scholar lands a punch instead, it is an F-magnitude attack: damage is Margin × 1 against an E-Grade HP pool. The scholar's POW 500 spells resolve as normal E-Grade actions; the frailty lives only in the stat that lagged.
 
 Rules keyed to the character rather than to a stat (Volatility threshold, stat caps, level span, cross-Grade movement, Aura Pressure) read the character's Grade as always.
 
@@ -468,14 +468,16 @@ Aether is the universal resource for active Principle Applications, spells, and 
 
 ### Aether Costs Are Set at Acquisition
 
-Every Principle Application, spell, and active skill has a fixed Aether cost, set once, by the Grade at which it was acquired, and never changed afterward. Two skills of the same tier acquired at different Grades cost different amounts: a Seed Application picked up at F-Grade costs 10 Aether for the rest of the character's life, while a Seed acquired fresh at E-Grade costs 100 for the rest of theirs. The scaling factor between acquisition Grades is the usual ×10 per Grade. The acquisition Grade also sets the skill's potency envelope, the scale of what its manifestation can affect; see The Principle System, "Application Grade."
+Every Principle Application, spell, and active skill has a fixed Aether cost, set once, by the Grade at which it was acquired, and never changed afterward. Two skills of the same tier acquired at different Grades cost different amounts: a Seed Application picked up at F-Grade costs 10 Aether for the rest of the character's life, while a Seed acquired fresh at E-Grade costs 100 for the rest of theirs. The scaling factor between acquisition Grades is the usual ×10 per Grade. The acquisition Grade also sets the skill's scale, how much world its manifestation can touch; see The Principle System, "Application Grade."
 
 | **Skill Origin Grade** | **Seed Application** | **Early Fragment App.** | **Peak Fragment Domain** |
 |---|---|---|---|
-| F-Grade | 10 | 15 | 30 + 5/round |
-| E-Grade | 100 | 150 | 300 + 50/round |
+| F-Grade | 10 | 15 | not possible |
+| E-Grade | 100 | 150 | not possible |
 | D-Grade | 1,000 | 1,500 | 3,000 + 500/round |
 | C-Grade | 10,000 | 15,000 | 30,000 + 5,000/round |
+
+The Domain column starts at D-Grade because a Domain requires a D-Grade vessel (see The Principle System, "The Domain Gate"); no Domain is ever acquired at F or E origin.
 
 **The cost is permanently fixed to the skill's origin Grade.** A Seed Application learned at F-Grade costs 10 Aether for the rest of the character's life; after Breakthrough to E, to D, to C, it is still 10 Aether. The pool around it grows by orders of magnitude; the skill's price does not.
 

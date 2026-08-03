@@ -14,6 +14,7 @@
 --   * systemvoice   — in-fiction System messages (dark, cyan-ruled)
 --   * statblock     — monster / character stat blocks (gray, top-ruled)
 --   * questcard     — Quest log / Mandate / Personal Opportunity entries
+--   * lore          — in-world cosmology, legends, color vignettes (gray, left-ruled)
 --
 -- Anything else passes through untouched.
 
@@ -21,6 +22,7 @@ local recognized = {
   systemvoice = true,
   statblock   = true,
   questcard   = true,
+  lore        = true,
 }
 
 function Div(el)

@@ -51,7 +51,7 @@
 
 **Downed:** at 0 HP: no Beats, no defense; dies at the end of their third round unless stabilized (any healing, or 1 Beat + Moderate 90 check, field-medicine Proficiencies apply). One hit ≥ 10× Max HP kills outright. Attacking a Downed character: 1 Beat, no roll, kills. Surviving being Downed grants a Battle Memory Card.
 
-**Principle / Skill Aether Costs (F-Grade baseline):** Seed App: 10 | Early Fragment App: 15 | Infusion: free | Domain: 30 + 5/round. Multiply cost by Grade Magnitude (×10 / ×100 / ×1,000) for skills learned at E / D / C respectively. Cost is permanently fixed to the skill's origin Grade.
+**Principle / Skill Aether Costs (by origin Grade, ×10 per Grade):** Seed App: 10 (F) / 100 (E) / 1,000 (D) | Early Fragment App: 15 (F) / 150 (E) / 1,500 (D) | Infusion: free | Domain: 3,000 + 500/round (D) / 30,000 + 5,000/round (C). Domains require a D-Grade vessel. Cost is permanently fixed to the skill's origin Grade.
 
 **Aura Pressure Save:** d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance. Aura Resistance is the flat card value, no Cross-Grade Adjustment: calm presence Hard (115), flaring Severe (140). At 3+ Grades of difference the GM may skip the save.
 
@@ -79,7 +79,7 @@ Resistance is read straight off the card for same-Grade encounters. For Cross-Gr
 
 ---
 
-## Worked Examples
+## Examples
 
 **1. F-Grade Peer Clash:**
 
