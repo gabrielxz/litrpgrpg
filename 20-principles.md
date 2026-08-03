@@ -53,6 +53,8 @@ Principles advance on their own track. Levels and Grades measure how much power 
 | Principle | A compressed truth about how reality behaves. |
 | Concept | The truth's name and identity (Fire, Weight, Edge); what sits in a slot. |
 | Concept Slot | Capacity to hold a Concept: one at F-Grade, a second at E-Grade, never more. |
+| Pattern-class | The family a Concept belongs to (Impact, Architecture, Consumption...); what the System names before crystallization. |
+| Crystallization | The moment at 3 IP when the System names the Concept and the slot fills. |
 | Insight Points (IP) | Accumulated understanding of one Concept; a visible running total. |
 | Battle Memory | A card the GM grants for a moment of extreme stress; meditating on it during Consolidation yields IP. |
 | Tier | A Concept's depth: Initial Insight, Seed, Early / Mid / Peak Fragment. |
@@ -74,6 +76,19 @@ A character holds **one Concept** at F-Grade. Breaking through to E-Grade unlock
 
 A slot, once filled, holds its Concept for life. The Concept can change shape (Refinement), widen (Broadening), or merge with the other (Fusion); it never simply drops away. The only way a slot opens again is Fusion: two Concepts become one, and the freed slot may later take a new Concept, which enters at the bottom like any other.
 
+## Your First Concept
+
+No character chooses a Concept from a list; there is no list. The System watches what the character actually does and presents the Concept their life has been spelling out. The procedure:
+
+1. **The System watches.** From the first session, the GM logs how the character behaves under pressure (the Hidden Vector Engine chapter). Every behavior pattern points at a family of Concepts: Impact, Architecture, Consumption, Preservation, Imposition, Harmony, Governance, or Subversion. The behavior-to-family map is in that chapter.
+2. **Resonance accrues.** When the character begins earning IP, the System reports it at the family level only: *[Resonance accruing: pattern-class IMPACT. 2/3.]* The character knows a direction and nothing more.
+3. **At 3 IP, the Concept crystallizes.** The GM names one specific Concept, and the System announces it: *[Initial Insight: Weight.]* The slot fills for life, and the tier's minor passive arrives.
+4. **The player steers by playing.** What the character does is what the System reads. How the player describes their meditations shapes which Concept a memory feeds. And if the System's read drifts from the person over time, Refinement (below) steers the Concept back.
+
+**Naming the Concept (GM guidance).** Use three inputs: the pattern family, the character's biggest logged moments, and the words the player has used while meditating. If you are unsure, say the character's three biggest moments out loud and ask what they have in common; name that. Pick the plainer word: Weight beats Gravitational Inevitability, and Fire beats Combustion. A good Concept name is one the player hears and instantly recognizes as theirs.
+
+**The second Concept.** The slot that opens at E-Grade fills the same way, with one difference: a veteran character can pursue a direction on purpose. The player may declare what they are seeking and spend attention and risk on aligned experiences. The System still does the naming, and it names what was actually lived, which may sit a step away from what was sought.
+
 ## Insight Points
 
 Progression within a Concept is measured in **Insight Points (IP)**. IP totals are visible; the System reports them the way it reports levels:
@@ -85,7 +100,7 @@ Progression within a Concept is measured in **Insight Points (IP)**. IP totals a
 
 The character sees the number. What the System is forging from the number, it keeps to itself.
 
-**Earning IP.** IP accrues only from experiences aligned with the Concept, and nearly all of it is earned under pressure. A character cannot grind generic experience into Sharpness insight: they must cut, be cut, study cutting, survive the edge.
+**Earning IP.** IP accrues only from experiences aligned with the Concept (before crystallization, with the pattern family), and nearly all of it is earned under pressure. A character cannot grind generic experience into Sharpness insight: they must cut, be cut, study cutting, survive the edge.
 
 | **Source** | **IP Awarded** |
 |---|---|
@@ -106,7 +121,7 @@ Slower roads exist. The System honors comprehension however it arrives, and the 
 
 **Battle Memories** are the primary pipeline from play to insight. In moments of extreme stress (surviving at near-zero HP, witnessing something beyond comprehension, achieving an outcome the System deems statistically improbable), the GM grants a **Battle Memory Card**. Two triggers are automatic: a Volatility cascade of two or more extra dice on a player character's roll, and surviving being Downed (see Core Mechanics, "Downed and Death").
 
-During the next Consolidation, the player describes how their character meditates on the memory: what they felt, what they noticed, what pattern they think they glimpsed. The System returns a cryptic vision and awards IP toward the Concept the memory most closely expresses, 1 to 3 by the memory's intensity. The vision procedure for every run mode is in The System AI chapter; the unplugged version is three images composed by the GM.
+During the next Consolidation, the player describes how their character meditates on the memory: what they felt, what they noticed, what pattern they think they glimpsed. The System returns a cryptic vision and awards IP toward the Concept the memory most closely expresses (before crystallization, toward the pattern family), 1 to 3 by the memory's intensity. The vision procedure for every run mode is in The System AI chapter; the unplugged version is three images composed by the GM.
 
 **In play.** Kara (the brawler whose progression appears below) survived a cave-in by catching a falling slab and holding it while her partner dragged himself clear. The GM handed her a Battle Memory Card. At the party's next Consolidation:
 
@@ -130,7 +145,7 @@ That is the whole procedure. The player reaches for the pattern out loud, the Sy
 
 | **Tier** | **Cumulative IP** | **Grants** |
 |---|---|---|
-| Initial Insight | 3 | Minor passive (e.g., +5% Fire Resistance) |
+| Initial Insight | 3 | The Concept crystallizes and is named; minor passive (e.g., +5% Fire Resistance) |
 | Seed | 10 | First Application; Attunements |
 | Early Fragment | 25 | Second Application; passive doubles |
 | Mid Fragment | 50 | Infusion |
@@ -163,7 +178,7 @@ Meeting an IP threshold does not advance the tier. Advancement requires **Compre
 
 The result: a Concept acquired at C-Grade has a beginner's toolkit, one Application, swung with a titan's arm. It knows one trick, and the trick is enormous.
 
-**Example progression:** Kara, an F-Grade brawler, fights heavy and direct. Over six sessions she banks two Battle Memories (2 IP, 3 IP), survives a cave-in by holding a falling slab (2 IP), and receives one Consolidation vision (1 IP): 8 IP toward **Weight**. Two sessions later a third Battle Memory (2 IP) carries her to 10. At her next Consolidation she Compresses, articulates the pattern ("things fall the way I decide"), and the System grants her Seed Application: **Sudden Weight** (1 Beat, 10 Aether): her strike lands with the mass of something far larger, +10 to the Clash, and at F-Grade scale it can stagger a grown man, buckle a door, crack floorboards. She is Level 6 with POW 18; the 10-Aether cost is heavy but castable, exactly once per fight with room to spare.
+**Example progression:** Kara, an F-Grade brawler, fights heavy and direct. Her first Battle Memory (2 IP) registers as pattern-class resonance (IMPACT). Surviving a cave-in by holding a falling slab (2 IP) carries her past 3, and the Concept crystallizes: *[Initial Insight: Weight.]* A second Battle Memory (3 IP) and a Consolidation vision (1 IP) bring her to 8. Two sessions later a third Battle Memory (2 IP) carries her to 10. At her next Consolidation she Compresses, articulates the pattern ("things fall the way I decide"), and the System grants her Seed Application: **Sudden Weight** (1 Beat, 10 Aether): her strike lands with the mass of something far larger, +10 to the Clash, and at F-Grade scale it can stagger a grown man, buckle a door, crack floorboards. She is Level 6 with POW 18; the 10-Aether cost is heavy but castable, exactly once per fight with room to spare.
 
 ## Activation Costs
 
@@ -227,7 +242,7 @@ Everything on this track that says "the System returns" or "the System AI genera
 
 ## Design Intent
 
-Principles are discovered in play rather than chosen from a list, because the discovery *is* the behavioral signal. What a character does under pressure, recorded by the Hidden Vector Engine, determines which Concepts the System offers, which Battle Memories resonate, and what a Compression articulation can honestly claim. The axis-by-axis Concept affinities are documented in the Hidden Vector Engine chapter.
+Principles are discovered in play rather than chosen from a list, because the discovery *is* the behavioral signal. What a character does under pressure, recorded by the Hidden Vector Engine, determines which Concepts crystallize, which Battle Memories resonate, and what a Compression articulation can honestly claim. The axis-by-axis Concept affinities are documented in the Hidden Vector Engine chapter.
 
 Slots are scarce and entry is always at the bottom so that a character's one or two Concepts, their Refinements, and the Fusion that may one day join them read as the mechanical transcript of who that character has been. The track runs beside the level track rather than inside it: the System integrates power on its own schedule, and hands out understanding only when it has been lived.
 

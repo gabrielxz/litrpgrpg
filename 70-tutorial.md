@@ -67,7 +67,7 @@ If any of these is missing at the end of Session 3, the GM should improvise to d
 | **Phase** | **What the Players Encounter for the First Time** |
 |---|---|
 | 1: Threshold | The System's voice. The probe (HVE seed reads). |
-| 2: Violent Arrival | The Clash. Force. Beats. Zones. First kill. First VE. Volatile Artifacts. |
+| 2: Violent Arrival | The Clash. Force. Beats. Zones. Surge. First kill. First VE. Volatile Artifacts. |
 | 3: Convergence | System status notifications. The Quest UI. Scarcity. Group dynamics. |
 | 4: Field of Ruins | Volatility explosions. Aura Pressure save. Saturation symptoms. Skill Shards in use. Routine Mastery. |
 | 5: Resonance Isolation | Personal Opportunities. Irreversible solo decisions. The first Battle Memory. |
@@ -203,7 +203,7 @@ You wake on an elevated ridge overlooking the valley. You can see two other play
 You wake near a cracked obelisk emitting pulses of energy. Each pulse makes your skin tingle and your vision sharpen. A degraded skill shard lies at its base, partially embedded in the stone. Pulling it free will probably stop the pulses. Leaving it means the pulses keep intensifying. It feels like it's building toward something.
 
 - **Pull it free immediately:** Logs **Hunger 1.0**, **Force 0.5**. Awards 1 **Edge Shard** (see `65-items.md`).
-- **Wait for the buildup:** Logs **Restraint 1.0**, **Method 1.0**. After 3 in-game minutes (real-time tension), the obelisk releases a single pulse that grants the character **+1 IP toward whatever Principle Concept the GM judges most aligned**. This is a **Battle Memory** trigger; log it for Phase 7 reflection.
+- **Wait for the buildup:** Logs **Restraint 1.0**, **Method 1.0**. After 3 in-game minutes (real-time tension), the obelisk releases a single pulse that grants the character **+1 IP toward their pattern-class resonance** (see The Principle System, "Your First Concept"). This is a **Battle Memory** trigger; log it for Phase 7 reflection.
 - **Destroy the obelisk:** Logs **Freedom 1.0**, **Force 1.0**. Releases scattered VE (awards 30 VE) but no IP.
 
 ### Volatile Artifacts (Available Across the Landing Zone)
@@ -393,7 +393,7 @@ An unnatural forest of bioluminescent trees with root systems that visibly move.
 
 **Aura Pressure Demonstration:** Once during this zone, a far-off **higher-Grade entity** passes overhead, a vast shape barely visible above the canopy. Every character within line of sight makes a **Will Save: d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance Hard (115)**; the entity is merely passing, its presence calm, and Aura Resistance is the flat card value with no Cross-Grade Adjustment. This is calibrated to *fail* for tutorial-tier characters (with HRT 5 and FOR 5, the bonus is 5 + 2 = 7; the maximum result of 107 falls short of 115). On failure, the character is **Suppressed (1 Beat)** for the next encounter. This teaches the rule. The entity does not engage; it passes.
 
-**Hidden Opportunity:** Deep in the forest, a **Resonance Node** pulses at a frequency only characters with PER Force ≥ 7 can detect. Approaching it triggers a sensory vision: a flash of the wider Multiverse, overwhelming and beautiful and terrifying. Grants **+1 IP** toward whatever Principle Concept the GM judges most aligned with the player's current vector state. The player does not choose. The System does. **This is also a Battle Memory trigger**; log it for Phase 7 reflection.
+**Hidden Opportunity:** Deep in the forest, a **Resonance Node** pulses at a frequency only characters with PER Force ≥ 7 can detect. Approaching it triggers a sensory vision: a flash of the wider Multiverse, overwhelming and beautiful and terrifying. Grants **+1 IP** toward the character's pattern-class resonance, or their Concept if one has crystallized; the System chooses the target, per the crystallization procedure (The Principle System, "Your First Concept"). **This is also a Battle Memory trigger**; log it for Phase 7 reflection.
 
 **HVE Reads:** Who scouts ahead? Who blunders? Who notices the hidden path? Who saves the trapped creature? Who harvests the predator den despite the young?
 
@@ -467,7 +467,7 @@ By session's end, characters have explored 1–3 zones, engaged in 4–8 combat 
 
 **Pause for Consolidation.** The party camps and consolidates again, overnight; they know the procedure from Session 1, so this rest runs itself. Two additions:
 
-- Anyone holding a **Battle Memory** card from the Wild Fragment Resonance Node or the Resonance Flicker (Phase 2) reflects on it now and gains **+1 IP** toward the System AI's chosen Principle Concept.
+- Anyone holding a **Battle Memory** card from the Wild Fragment Resonance Node or the Resonance Flicker (Phase 2) reflects on it now and gains **+1 IP** toward their pattern-class resonance or crystallized Concept.
 - Phase 4's VE haul pushes most characters past a level threshold or two during the night. Run each level as it lands: 3 System points via Behavioral Stat Mapping, 2 free (Progression chapter).
 
 A typical character ends Session 2 with **150–300 VE accumulated**; the overnight rest processes 80–120 of it. Most should wake at **Level 2**, aggressive earners at **Level 3**, with the remainder banked in the tank for Phase 7. A character still over Tolerance at dawn can extend the rest into the morning; Phase 5 has no fixed start time, and choosing to push on saturated instead is itself HVE signal (Hunger).
@@ -793,6 +793,7 @@ Use this checklist to confirm each mechanic was introduced before tutorial end.
 - [ ] **The Clash** demonstrated in Phase 2 (first combat).
 - [ ] **Force extraction** taught implicitly: players see Force values on their sheet, used for Clash.
 - [ ] **Beats** demonstrated in Phase 2 (first turn with two-Beat economy).
+- [ ] **Surge** demonstrated by Phase 4 (someone shoves half their pool into one Clash roll).
 - [ ] **Zones** introduced in Phase 2 or Phase 3 (multiple Zones in scattered landing).
 - [ ] **VE accumulation** visible by Phase 3 (totals tracked).
 - [ ] **Quest UI** debuts in Phase 3.

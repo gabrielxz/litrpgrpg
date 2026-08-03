@@ -66,6 +66,8 @@ Calculate and record these values:
 
 At Level 1, HP is in the single to low double digits and Aether is single digits. Freshly integrated characters are fragile, and early encounters should feel dangerous. Growth comes fast.
 
+Aether matters to every character, caster or brawler: anyone can spend half their Maximum Aether to Surge (see Core Mechanics, "Surge").
+
 ## Starting Equipment
 
 Starting gear is campaign-dependent. The GM determines what characters have access to based on the scenario. For the standard Integration Protocol opening, characters begin with whatever they had on their person at the moment of Integration (everyday clothing, a phone, maybe a pocket knife). The System provides nothing.

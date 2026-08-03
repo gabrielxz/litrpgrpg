@@ -32,7 +32,7 @@ The engine follows five constraints:
 
 ## Behavioral Axes & Principle Affinities
 
-The engine tracks four bipolar axes. Each represents a distinct dimension of behavior. The System observes these behaviors to forge the character's Internal Power: the specific Principle Concepts and Principles they are offered during Consolidation.
+The engine tracks four bipolar axes. Each represents a distinct dimension of behavior. The System observes these behaviors to forge the character's Internal Power: the specific Principle Concepts that crystallize for them (see The Principle System, "Your First Concept"). The eight affinity families named below are the pattern classes the System reports before a Concept crystallizes.
 
 ### Force ↔ Method (Interaction)
 

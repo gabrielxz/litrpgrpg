@@ -13,6 +13,7 @@ Pencil, paper, and this book. The GM performs every System function by hand, usi
 | **Function** | **Where the manual procedure lives** |
 |---|---|
 | HVE tracking | Hidden Vector Engine, "Tracking by Hand" |
+| Concept crystallization | The Principle System, "Your First Concept" |
 | Class generation | This chapter, "Class Generation" |
 | Personal Opportunities | System Quests, the generation template (used as a worksheet) |
 | Battle Memory visions | This chapter, "Battle Memory Visions" |

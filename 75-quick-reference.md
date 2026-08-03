@@ -49,6 +49,8 @@
 
 **HP** = Raw FOR × 2. **Aether** = Raw POW. Aether refills only on Consolidation (no in-combat or passive regen).
 
+**Surge:** spend half your Maximum Aether (round up) for +5 on one Clash roll you make. Declare before rolling. No Beat. Stacks with everything; available to everyone.
+
 **Downed:** at 0 HP: no Beats, no defense; dies at the end of their third round unless stabilized (any healing, or 1 Beat + Moderate 90 check, field-medicine Proficiencies apply). One hit ≥ 10× Max HP kills outright. Attacking a Downed character: 1 Beat, no roll, kills. Surviving being Downed grants a Battle Memory Card.
 
 **Principle / Skill Aether Costs (by origin Grade, ×10 per Grade):** Seed App: 10 (F) / 100 (E) / 1,000 (D) | Early Fragment App: 15 (F) / 150 (E) / 1,500 (D) | Infusion: free | Domain: 3,000 + 500/round (D) / 30,000 + 5,000/round (C). Domains require a D-Grade vessel. Cost is permanently fixed to the skill's origin Grade.

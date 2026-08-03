@@ -302,7 +302,7 @@ The defender chooses their defensive posture when targeted, bounded by what the 
 
 | **Modifier** | **Size** | **Examples** |
 |---|---|---|
-| Minor bonus | +5 | Basic weapon Skill Bonus, minor blessings |
+| Minor bonus | +5 | Basic weapon Skill Bonus, Surge, minor blessings |
 | Standard bonus | +10 | Advantaged, Flanking, Proficiency, most System-granted skills |
 | Peak bonus (rare) | +15 to +20 | Peak abilities, one-shot relics, Hidden Achievement rewards |
 | Hindering environment | −10 | Darkness, difficult footing, driving rain |
@@ -465,6 +465,23 @@ Aether is the universal resource for active Principle Applications, spells, and 
 ### Regeneration
 
 **Aether does not regenerate in combat. It does not regenerate between combats. It does not regenerate with passive time.** Aether refills only through **Consolidation**: a full pool restore occurs automatically at the start of any Consolidation rest (see Cultivation document).
+
+### Surge
+
+Every Integrated being can shove raw Aether into their own body: unshaped energy forced into an arm mid-swing, or into the legs mid-dodge.
+
+> **Surge: spend half your Maximum Aether (round up) to add +5 to one Clash roll you are making. Declare it before you roll. No Beat.**
+
+The details:
+
+- Surge works on any Clash roll you make, attacking or defending.
+- Declare it before the dice hit the table, then pay the cost.
+- It stacks with everything else on the roll; it is your own energy.
+- The cost is always half your **Maximum** Aether, whatever you currently have left. Two Surges empty a full pool, and Aether refills only at Consolidation.
+
+**Example:** Kara has POW 6: Maximum Aether 6, so her Surge costs 3. Cornered by a Snarljaw, she declares a Surge on her defensive roll, pays 3 Aether, and rolls with +5. She has 3 Aether left: exactly one more Surge, and nothing refills until she rests.
+
+A Seed Application grants +10 for a small fixed cost; Surge pays half a pool for +5. Raw energy is wasteful, and shaped technique is the reason to walk the Principle track. What Surge offers is availability: it is there from the first minute of Integration to the last Grade, and it asks the same question every time: is this the moment?
 
 ### Aether Costs Are Set at Acquisition
 

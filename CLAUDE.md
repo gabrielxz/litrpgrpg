@@ -35,6 +35,7 @@ WORKFLOW:
 - If a change warrants a new file, create it and explain where it fits in the numbering.
 - When I upload a revised file, that becomes the new working version.
 - When a rule, threshold, or number changes, grep every chapter for the old rule name, the old number, and any worked example that embeds either, and reconcile them all in the same edit. Stale references left behind by earlier rule changes are this book's most common defect.
+- When a new mechanic lands, sweep its surfaces in the same edit: the quick reference, the tutorial's teaching schedule and tracker, character creation if it touches a stat or resource, and every chapter that owns a system it interacts with.
 
 When I paste in ideas from other AIs, synthesize critically — take what works, reject what contradicts the design priorities, and flag any conflicts with existing rules.
 
