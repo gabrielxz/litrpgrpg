@@ -13,7 +13,7 @@ Pencil, paper, and this book. The GM performs every System function by hand, usi
 | **Function** | **Where the manual procedure lives** |
 |---|---|
 | HVE tracking | Hidden Vector Engine, "Tracking by Hand" |
-| Concept crystallization | The Principle System, "Your First Concept" |
+| Principle crystallization | The Principle System, "Your First Principle" |
 | Class generation | This chapter, "Class Generation" |
 | Personal Opportunities | System Quests, the generation template (used as a worksheet) |
 | Battle Memory visions | This chapter, "Battle Memory Visions" |
@@ -41,7 +41,7 @@ Each function below states its inputs, its outputs, and the unplugged procedure.
 
 ### Class Generation (Level 10)
 
-**In:** the character's HVE profile (Deep Vector reads and defining moments), stats, favored weapons and tactics, Principle Concepts and affinities, titles held. **Out:** three class options (rarity Common to Epic), each with a name, a one-line identity, a stat profile (the 3 fixed points per level), and one Signature Skill with Beat and Aether costs.
+**In:** the character's HVE profile (Deep Vector reads and defining moments), stats, favored weapons and tactics, Principles and affinities, titles held. **Out:** three class options (rarity Common to Epic), each with a name, a one-line identity, a stat profile (the 3 fixed points per level), and one Signature Skill with Beat and Aether costs.
 
 **Unplugged procedure:** build the three options as one class that *amplifies* the dominant behavioral pattern, one that *formalizes* the secondary pattern, and one hybrid of the two. Stat profiles come off the Behavioral Stat Mapping table (Progression). Signature Skills price against the Modifier Budget; Aether costs follow the origin-Grade table (a skill acquired at F-Grade: 10 to 15 Aether).
 
@@ -57,7 +57,7 @@ Price flat bonuses as +5 minor, +10 standard, +15 to +20 rare peak.
 One option amplifies the dominant behavioral pattern, one formalizes
 the secondary pattern, one hybridizes them.
 
-Character: [stats, level, weapons, Concepts, titles]
+Character: [stats, level, weapons, Principles, titles]
 Behavioral profile: [Deep Vector reads plus 2-3 defining moments]
 ```
 
@@ -67,9 +67,9 @@ The System Quests chapter carries the full generation template. Unplugged, use i
 
 ### Battle Memory Visions
 
-**In:** the memory's context and the player's meditation description. **Out:** a cryptic vision in the System's voice, and an IP award (1 to 3, by the memory's intensity) toward the aligned Concept.
+**In:** the memory's context and the player's meditation description. **Out:** a cryptic vision in the System's voice, and an IP award (1 to 3, by the memory's intensity) toward the aligned Principle.
 
-**Unplugged procedure:** compose the vision from three images: the moment itself, stripped of one load-bearing detail; the Concept in a pure or alien form; and one image that overreaches or misleads. A vision hints; it does not teach. Deliver it in System voice, award the IP, and say nothing else.
+**Unplugged procedure:** compose the vision from three images: the moment itself, stripped of one load-bearing detail; the Principle in a pure or alien form; and one image that overreaches or misleads. A vision hints; it does not teach. Deliver it in System voice, award the IP, and say nothing else.
 
 *Example (a cave-in survived by holding the slab, toward Weight):* "A mountain hangs from a thread. The thread does not strain. Below, something waits to be told where to fall."
 
@@ -107,7 +107,7 @@ Keep this pasted at the top of the campaign conversation and update it as things
 ```
 Campaign: [one-paragraph premise and current situation]
 Per character: name, level, Grade, stats (Raw), titles, Principle
-Concepts and tiers, Stable Ability.
+Principles and tiers, Stable Ability.
 Behavioral profile per character: one line per HVE axis (Deep Vector),
 plus their 2-3 defining logged moments.
 Last session: [three-sentence summary]

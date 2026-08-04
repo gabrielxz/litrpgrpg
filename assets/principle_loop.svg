@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1500" viewBox="0 0 1500 1500">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#008b8b"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1500" height="1500" fill="#ffffff"/>
+
+  <!-- loop-back line: from THE GRANT left edge, up the left margin, into LIVE HARD -->
+  <path d="M 280 1300 L 150 1300 L 150 200 L 268 200" fill="none" stroke="#008b8b" stroke-width="4" marker-end="url(#arrow)"/>
+  <text x="118" y="750" font-family="DejaVu Serif" font-style="italic" font-size="26" fill="#555555" text-anchor="middle" transform="rotate(-90 118 750)">then live it deeper</text>
+
+  <!-- Stage 1: LIVE HARD -->
+  <rect x="280" y="120" width="620" height="160" rx="14" fill="#141414" stroke="#008b8b" stroke-width="4"/>
+  <text x="590" y="190" font-family="DejaVu Sans" font-weight="bold" font-size="46" fill="#ffffff" text-anchor="middle">LIVE HARD</text>
+  <text x="590" y="245" font-family="DejaVu Sans" font-size="28" fill="#c8c8c8" text-anchor="middle">fight, risk, survive</text>
+
+  <!-- arrow 1 -> 2 -->
+  <line x1="590" y1="280" x2="590" y2="385" stroke="#008b8b" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <!-- Stage 2: BATTLE MEMORY -->
+  <rect x="280" y="395" width="620" height="160" rx="14" fill="#141414" stroke="#008b8b" stroke-width="4"/>
+  <text x="590" y="465" font-family="DejaVu Sans" font-weight="bold" font-size="46" fill="#ffffff" text-anchor="middle">BATTLE MEMORY</text>
+  <text x="590" y="520" font-family="DejaVu Sans" font-size="28" fill="#c8c8c8" text-anchor="middle">the System keeps your worst moments</text>
+  <line x1="900" y1="475" x2="965" y2="475" stroke="#008b8b" stroke-width="3" stroke-dasharray="3,7"/>
+  <rect x="965" y="448" width="400" height="54" rx="10" fill="#141414"/>
+  <text x="985" y="484" font-family="DejaVu Sans Mono" font-size="24" fill="#2fc2c2">[Battle Memory recorded.]</text>
+
+  <!-- arrow 2 -> 3 -->
+  <line x1="590" y1="555" x2="590" y2="660" stroke="#008b8b" stroke-width="4" marker-end="url(#arrow)"/>
+  <text x="620" y="618" font-family="DejaVu Serif" font-style="italic" font-size="26" fill="#555555">meditate on it during Consolidation</text>
+
+  <!-- Stage 3: INSIGHT POINTS -->
+  <rect x="280" y="670" width="620" height="160" rx="14" fill="#141414" stroke="#008b8b" stroke-width="4"/>
+  <text x="590" y="740" font-family="DejaVu Sans" font-weight="bold" font-size="46" fill="#ffffff" text-anchor="middle">INSIGHT POINTS</text>
+  <text x="590" y="795" font-family="DejaVu Sans" font-size="28" fill="#c8c8c8" text-anchor="middle">understanding, counted</text>
+  <line x1="900" y1="750" x2="965" y2="750" stroke="#008b8b" stroke-width="3" stroke-dasharray="3,7"/>
+  <rect x="965" y="723" width="455" height="54" rx="10" fill="#141414"/>
+  <text x="985" y="759" font-family="DejaVu Sans Mono" font-size="24" fill="#2fc2c2">[Insight Gained: Weight 8/10]</text>
+
+  <!-- arrow 3 -> 4 -->
+  <line x1="590" y1="830" x2="590" y2="935" stroke="#008b8b" stroke-width="4" marker-end="url(#arrow)"/>
+  <text x="620" y="893" font-family="DejaVu Serif" font-style="italic" font-size="26" fill="#555555">at 3 / 10 / 25 / 50 / 100 IP</text>
+
+  <!-- Stage 4: COMPRESSION -->
+  <rect x="280" y="945" width="620" height="160" rx="14" fill="#141414" stroke="#008b8b" stroke-width="4"/>
+  <text x="590" y="1015" font-family="DejaVu Sans" font-weight="bold" font-size="46" fill="#ffffff" text-anchor="middle">COMPRESSION</text>
+  <text x="590" y="1070" font-family="DejaVu Sans" font-size="28" fill="#c8c8c8" text-anchor="middle">say the truth you have learned</text>
+
+  <!-- arrow 4 -> 5 -->
+  <line x1="590" y1="1105" x2="590" y2="1210" stroke="#008b8b" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <!-- Stage 5: THE GRANT -->
+  <rect x="280" y="1220" width="620" height="160" rx="14" fill="#141414" stroke="#008b8b" stroke-width="4"/>
+  <text x="590" y="1290" font-family="DejaVu Sans" font-weight="bold" font-size="46" fill="#ffffff" text-anchor="middle">THE GRANT</text>
+  <text x="590" y="1345" font-family="DejaVu Sans" font-size="28" fill="#c8c8c8" text-anchor="middle">Application, Infusion, or Domain</text>
+  <line x1="900" y1="1300" x2="965" y2="1300" stroke="#008b8b" stroke-width="3" stroke-dasharray="3,7"/>
+  <rect x="965" y="1273" width="485" height="54" rx="10" fill="#141414"/>
+  <text x="985" y="1309" font-family="DejaVu Sans Mono" font-size="24" fill="#2fc2c2">[Seed attained: Sudden Weight.]</text>
+</svg>

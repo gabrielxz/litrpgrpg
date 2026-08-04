@@ -74,7 +74,7 @@ Starting gear is campaign-dependent. The GM determines what characters have acce
 
 ## Starting Principle Access
 
-Freshly integrated characters begin with no Principle access. Insight toward a Principle Concept, and every tier beyond it, is earned through play by accumulating Insight Points. Nothing on this track is selected at creation. See the Principles document for the full progression.
+Freshly integrated characters begin with no Principle access. Insight toward a Principle, and every tier beyond it, is earned through play by accumulating Insight Points. Nothing on this track is selected at creation. See the Principles document for the full progression.
 
 ---
 

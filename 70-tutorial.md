@@ -162,7 +162,7 @@ You wake next to a small, non-human creature: insectoid, broken-limbed, clutchin
 
 - **Stats (creature):** Trivial, HP 4, Beats 1, no offensive Force. Cannot fight back.
 - **Take by force:** No roll required. Awards a **predator core** (50 VE absorption, processed at next Consolidation). Logs **Hunger 1.0**.
-- **Communicate (CHA Force vs. F-Easy 65):** On success, the creature releases the core willingly and dies in peace. Awards core + **+1 IP toward a Restraint-aligned Concept** (hidden; see "The First Mercy" below). Logs **Accord 1.0**.
+- **Communicate (CHA Force vs. F-Easy 65):** On success, the creature releases the core willingly and dies in peace. Awards core + **+1 IP toward a Restraint-aligned Principle** (hidden; see "The First Mercy" below). Logs **Accord 1.0**.
 - **Let it die naturally:** No reward, no penalty. Logs **Restraint 0.5**.
 - **Mercy kill (no core take):** Hidden achievement candidate. Logs **Restraint 1.0**, **Heart 0.5**.
 - **Hidden Quest:** If the player spares the creature without taking the core, log it; this is the seed of a Hidden Quest titled *"The First Mercy."* Reveal at Phase 7.
@@ -203,7 +203,7 @@ You wake on an elevated ridge overlooking the valley. You can see two other play
 You wake near a cracked obelisk emitting pulses of energy. Each pulse makes your skin tingle and your vision sharpen. A degraded skill shard lies at its base, partially embedded in the stone. Pulling it free will probably stop the pulses. Leaving it means the pulses keep intensifying. It feels like it's building toward something.
 
 - **Pull it free immediately:** Logs **Hunger 1.0**, **Force 0.5**. Awards 1 **Edge Shard** (see `65-items.md`).
-- **Wait for the buildup:** Logs **Restraint 1.0**, **Method 1.0**. After 3 in-game minutes (real-time tension), the obelisk releases a single pulse that grants the character **+1 IP toward their pattern-class resonance** (see The Principle System, "Your First Concept"). This is a **Battle Memory** trigger; log it for Phase 7 reflection.
+- **Wait for the buildup:** Logs **Restraint 1.0**, **Method 1.0**. After 3 in-game minutes (real-time tension), the obelisk releases a single pulse that grants the character **+1 IP toward their family resonance** (see The Principle System, "Your First Principle"). This is a **Battle Memory** trigger; log it for Phase 7 reflection.
 - **Destroy the obelisk:** Logs **Freedom 1.0**, **Force 1.0**. Releases scattered VE (awards 30 VE) but no IP.
 
 ### Volatile Artifacts (Available Across the Landing Zone)
@@ -217,7 +217,7 @@ In addition to encounter-specific loot, the landing zone contains scattered surv
 - **Short Bow** (DEX, +5, ranged)
 - **Reactive Buckler** (one-shot 0-damage absorb)
 - **2–3 Skill Shards** (Edge, Pulse, Veil, Anchor, Resonance, or Volatile; GM picks)
-- **1 Battered Medkit** (3 charges, 10 HP each, no Toxin)
+- **1 Battered Medkit** (3 charges, 10 HP each)
 - **Low-Grade Armor Scraps** (+5 FOR defense, −5 DEX-based Clashes)
 - **1 Single-Use Ranged Relic** (one charge, +20 to Clash, deals damage at one Grade higher)
 - **1 Resonance Glass** (sensory tool)
@@ -256,7 +256,7 @@ The Node contains useful equipment, but not enough optimal gear for everyone. **
 - **1 set of Low-Grade Armor Scraps** (+5 FOR defense, −5 DEX).
 - **1 Reactive Buckler.**
 - **2 skill shards** (1 Edge Shard, 1 Veil Shard).
-- **1 Healing Pill** (30 HP, 10 Toxin).
+- **1 Healing Pill** (30 HP).
 - **1 Resonance Glass.**
 - **Junk:** broken constructs, unidentifiable objects, mysteries the System AI can interpret later if a player asks.
 
@@ -327,7 +327,7 @@ Pause here. Players have experienced the void, the violent arrival, the first Cl
 
 Award **session survival VE** (10 VE per character) and confirm running totals. A typical character ends Session 1 with **40–80 VE** accumulated (combat + encounter rewards + survival).
 
-**The First Consolidation.** Close the session with the party camping overnight at the Node and declaring their first Consolidation (Cultivation chapter). Walk through the mechanic once: minimum 1 hour, processing rate of (Raw FOR + Raw POW) VE per hour, 25% Max HP recovered per hour, Aether refilling at the start. At starting Tolerances (around 45 VE), most characters are already carrying more VE than they can hold; narrate the Saturation symptoms as they settle in (skin hot and prickly, hands trembling at rest) and the relief as the overnight rest processes the load. Eight hours at starting stats processes 70–110 VE. Most characters wake still Level 1, a fight or two short of the 100-VE threshold; a character who crosses it levels mid-rest, and the GM walks them through the 3+2 stat allocation (Progression chapter) at the table.
+**The First Consolidation.** Close the session with the party camping overnight at the Node and declaring their first Consolidation (Cultivation chapter). Walk through the mechanic once: minimum 1 hour, each full hour clears one fifth of Tolerance from stored VE, 25% Max HP recovered per hour, Aether refilling when the first full hour completes. At starting Tolerances (around 45 VE), most characters are already carrying more VE than they can hold; narrate the Saturation symptoms as they settle in (skin hot and prickly, hands trembling at rest) and the relief as the overnight rest processes the load; eight hours clears more than a full tank and a half, enough for all but the heaviest hauls. Most characters wake still Level 1, a fight or two short of the 100-VE threshold; a character who crosses it levels mid-rest, and the GM walks them through the 3+2 stat allocation (Progression chapter) at the table.
 
 ---
 
@@ -393,7 +393,7 @@ An unnatural forest of bioluminescent trees with root systems that visibly move.
 
 **Aura Pressure Demonstration:** Once during this zone, a far-off **higher-Grade entity** passes overhead, a vast shape barely visible above the canopy. Every character within line of sight makes a **Will Save: d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance Hard (115)**; the entity is merely passing, its presence calm, and Aura Resistance is the flat card value with no Cross-Grade Adjustment. This is calibrated to *fail* for tutorial-tier characters (with HRT 5 and FOR 5, the bonus is 5 + 2 = 7; the maximum result of 107 falls short of 115). On failure, the character is **Suppressed (1 Beat)** for the next encounter. This teaches the rule. The entity does not engage; it passes.
 
-**Hidden Opportunity:** Deep in the forest, a **Resonance Node** pulses at a frequency only characters with PER Force ≥ 7 can detect. Approaching it triggers a sensory vision: a flash of the wider Multiverse, overwhelming and beautiful and terrifying. Grants **+1 IP** toward the character's pattern-class resonance, or their Concept if one has crystallized; the System chooses the target, per the crystallization procedure (The Principle System, "Your First Concept"). **This is also a Battle Memory trigger**; log it for Phase 7 reflection.
+**Hidden Opportunity:** Deep in the forest, a **Resonance Node** pulses at a frequency only characters with PER Force ≥ 7 can detect. Approaching it triggers a sensory vision: a flash of the wider Multiverse, overwhelming and beautiful and terrifying. Grants **+1 IP** toward the character's family resonance, or their Principle if one has crystallized; the System chooses the target, per the crystallization procedure (The Principle System, "Your First Principle"). **This is also a Battle Memory trigger**; log it for Phase 7 reflection.
 
 **HVE Reads:** Who scouts ahead? Who blunders? Who notices the hidden path? Who saves the trapped creature? Who harvests the predator den despite the young?
 
@@ -467,7 +467,7 @@ By session's end, characters have explored 1–3 zones, engaged in 4–8 combat 
 
 **Pause for Consolidation.** The party camps and consolidates again, overnight; they know the procedure from Session 1, so this rest runs itself. Two additions:
 
-- Anyone holding a **Battle Memory** card from the Wild Fragment Resonance Node or the Resonance Flicker (Phase 2) reflects on it now and gains **+1 IP** toward their pattern-class resonance or crystallized Concept.
+- Anyone holding a **Battle Memory** card from the Wild Fragment Resonance Node or the Resonance Flicker (Phase 2) reflects on it now and gains **+1 IP** toward their family resonance or crystallized Principle.
 - Phase 4's VE haul pushes most characters past a level threshold or two during the night. Run each level as it lands: 3 System points via Behavioral Stat Mapping, 2 free (Progression chapter).
 
 A typical character ends Session 2 with **150–300 VE accumulated**; the overnight rest processes 80–120 of it. Most should wake at **Level 2**, aggressive earners at **Level 3**, with the remainder banked in the tank for Phase 7. A character still over Tolerance at dawn can extend the rest into the morning; Phase 5 has no fixed start time, and choosing to push on saturated instead is itself HVE signal (Hunger).
@@ -503,7 +503,7 @@ Use 3–5 of the following, varying axes across the table.
 A System construct presents you with two objects. One is clearly a weapon: elegant, sharp, radiating controlled violence. The other is a seed of something, organic, warm, pulsing with slow potential. The construct's posture makes clear: you take one, the other ceases to exist.
 
 - **Weapon:** A Knife with +10 skill bonus and +5 to first Clash of any combat. Logs **Hunger 2.0**, **Force 1.0**.
-- **Seed:** Cannot be used immediately. During next Consolidation, the seed germinates into a Principle Affinity for a Concept the System chooses. Functionally: **+2 IP** toward that Concept and a permanent Attunement (see The Principle System). Logs **Restraint 2.0**, **Method 1.0**.
+- **Seed:** Cannot be used immediately. During next Consolidation, the seed germinates into a Principle Affinity the System chooses. Functionally: **+2 IP** toward that Principle and a permanent Attunement (see The Principle System). Logs **Restraint 2.0**, **Method 1.0**.
 - **Refuse both:** Logs **Freedom 2.0**. The construct dissolves silently. The System notes the refusal; Personal Opportunity offerings narrow for the next session.
 
 #### The Trapped Intelligence
@@ -512,7 +512,7 @@ A dying consciousness, the last fragment of an ancient cultivator's mind, is tra
 
 - **Accept the imprint:** It transfers its final technique. Painful, disorienting. Functionally: choose one Stable Ability from `35-stable-abilities.md` to receive at Phase 7. Logs **Accord 2.0**, **Method 1.0**.
 - **Harvest the matrix for raw energy:** The consciousness dissipates screaming. **+150 VE** absorbed. Logs **Hunger 2.0**, **Force 1.0**.
-- **Free the consciousness:** The matrix releases; the consciousness expresses gratitude and dissolves into ambient energy. **+1 IP** toward a Restraint-aligned Concept. Logs **Restraint 2.0**, **Accord 1.0**. **Hidden Achievement candidate**: log "The First Mercy" if the player has not yet earned it.
+- **Free the consciousness:** The matrix releases; the consciousness expresses gratitude and dissolves into ambient energy. **+1 IP** toward a Restraint-aligned Principle. Logs **Restraint 2.0**, **Accord 1.0**. **Hidden Achievement candidate**: log "The First Mercy" if the player has not yet earned it.
 
 #### The Mirror
 
@@ -676,7 +676,7 @@ Below are four samples calibrated to common tutorial archetypes. The GM customiz
 
 > *Repeated front-line engagement detected. Pain tolerance: above baseline. Resource prioritization: self-first. Pattern intensifying.*
 >
-> *Conceptual resonance detected: pattern-class IMPACT. Monitoring.*
+> *Resonance detected: IMPACT. Monitoring.*
 >
 > Title granted: **First Blood** (Achievement).
 > Hidden Achievement: **Cornerless** (survived a Clash at 25% HP or less).
@@ -690,10 +690,10 @@ Below are four samples calibrated to common tutorial archetypes. The GM customiz
 
 > *Environmental adaptation speed: notable. Threat avoidance preferred over threat elimination. Pattern fixation detected.*
 >
-> *Conceptual resonance detected: pattern-class ARCHITECTURE. Monitoring.*
+> *Resonance detected: ARCHITECTURE. Monitoring.*
 >
 > Title granted: **Patient Gardener** (Achievement).
-> Hidden Quest revealed (post-completion): *"The First Mercy." Complete. Reward: +1 IP toward Restraint-aligned Concept.*
+> Hidden Quest revealed (post-completion): *"The First Mercy." Complete. Reward: +1 IP toward a Restraint-aligned Principle.*
 > Stable Ability: **Architect's Eye**. Once per encounter, after observing a target for at least one round, ask the GM one tactical question about it.
 >
 > VE awaiting refinement: 480. Projected advancement: Level 4.
@@ -702,7 +702,7 @@ Below are four samples calibrated to common tutorial archetypes. The GM customiz
 
 > *Social dominance captured under uncertainty. Negotiation preference over coercion. Alliance instinct: strong.*
 >
-> *Conceptual resonance detected: pattern-class HARMONY. Monitoring.*
+> *Resonance detected: HARMONY. Monitoring.*
 >
 > Title granted: **Voice of Decision** (Achievement, for breaking deadlock during Recycling Node allocation).
 > Bestowed title: **The Hand That Reached** (granted by System construct in Resonance Event).
@@ -714,7 +714,7 @@ Below are four samples calibrated to common tutorial archetypes. The GM customiz
 
 > *Unstable resonance tolerance: above baseline. Experimentation under risk: persistent. Consequence aversion: low.*
 >
-> *Conceptual resonance detected: pattern-class SUBVERSION. Monitoring.*
+> *Resonance detected: SUBVERSION. Monitoring.*
 >
 > Title granted: **Lockbreaker** (Achievement, for opening the locked cache without the proper inputs).
 > Stable Ability: **Slipstep**. Once per Consolidation, when you would be hit by an attack, declare Slipstep; the attacker rerolls and takes the lower result.

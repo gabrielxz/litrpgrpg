@@ -464,7 +464,7 @@ Aether is the universal resource for active Principle Applications, spells, and 
 
 ### Regeneration
 
-**Aether does not regenerate in combat. It does not regenerate between combats. It does not regenerate with passive time.** Aether refills only through **Consolidation**: a full pool restore occurs automatically at the start of any Consolidation rest (see Cultivation document).
+**Aether does not regenerate in combat. It does not regenerate between combats. It does not regenerate with passive time.** Aether refills only through **Consolidation**: a full pool restore occurs when the first full hour of a Consolidation rest completes (see the Cultivation chapter).
 
 ### Surge
 
@@ -485,7 +485,7 @@ A Seed Application grants +10 for a small fixed cost; Surge pays half a pool for
 
 ### Aether Costs Are Set at Acquisition
 
-Every Principle Application, spell, and active skill has a fixed Aether cost, set once, by the Grade at which it was acquired, and never changed afterward. Two skills of the same tier acquired at different Grades cost different amounts: a Seed Application picked up at F-Grade costs 10 Aether for the rest of the character's life, while a Seed acquired fresh at E-Grade costs 100 for the rest of theirs. The scaling factor between acquisition Grades is the usual ×10 per Grade. The acquisition Grade also sets the skill's scale, how much world its manifestation can touch; see The Principle System, "Application Grade."
+Every Principle Application, spell, and active skill has a fixed Aether cost, set once, and never changed afterward. For spells and class skills, the cost is set by the Grade at which the skill was acquired. For Principle Applications, the cost is set by the **forge Grade**: every Application is forged at F-Grade when granted, and re-forging during a Compression is the only way to raise it (see The Principle System, "Applications: Cost and Scale"). The scaling factor between Grades is the usual ×10. The same Grade also sets the skill's scale, how much world its manifestation can touch.
 
 | **Skill Origin Grade** | **Seed Application** | **Early Fragment App.** | **Peak Fragment Domain** |
 |---|---|---|---|
@@ -494,9 +494,9 @@ Every Principle Application, spell, and active skill has a fixed Aether cost, se
 | D-Grade | 1,000 | 1,500 | 3,000 + 500/round |
 | C-Grade | 10,000 | 15,000 | 30,000 + 5,000/round |
 
-The Domain column starts at D-Grade because a Domain requires a D-Grade vessel (see The Principle System, "The Domain Gate"); no Domain is ever acquired at F or E origin.
+The Domain column starts at D-Grade because a Domain requires a D-Grade body (see The Principle System, "The Domain gate"); no Domain is ever forged at F or E.
 
-**The cost is permanently fixed to the skill's origin Grade.** A Seed Application learned at F-Grade costs 10 Aether for the rest of the character's life; after Breakthrough to E, to D, to C, it is still 10 Aether. The pool around it grows by orders of magnitude; the skill's price does not.
+**The cost is permanently fixed to the skill's origin Grade.** A Seed Application forged at F-Grade costs 10 Aether for the rest of the character's life; after Breakthrough to E, to D, to C, it is still 10 Aether unless the character re-forges it. The pool around it grows by orders of magnitude; the skill's price does not.
 
 What this means in play:
 

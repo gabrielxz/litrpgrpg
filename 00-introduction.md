@@ -27,7 +27,7 @@ A starting character is an ordinary person: seven Attributes bought with 40 poin
 Progression runs on three tracks:
 
 - **Levels.** Kills, quests, and survival yield Volatile Energy (VE); resting to refine it (Consolidation) converts it into levels and stat growth.
-- **Principles.** Insight into reality's underlying patterns (Fire, Weight, Edge, Space) unlocks Applications, and eventually Domains.
+- **Principles.** Insight into reality's underlying patterns (Fire, Weight, Edge, Space) unlocks Applications, and eventually Domains. The track rewards talking through what a character has learned, and it plays at full strength without a word of it (The Principle System, "The Quiet Path").
 - **Recognition.** Titles, a class at Level 10, and, at each Grade's cap, a Breakthrough: a ritual gamble that lifts every ceiling at once.
 
 ## What You Need

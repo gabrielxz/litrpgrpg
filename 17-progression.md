@@ -8,7 +8,7 @@ Characters grow on a single loop: fight, quest, and survive to accumulate Volati
 
 Every kill, completed quest, survived ordeal, and absorbed treasure adds VE to the character's stored pool. Stored VE does nothing on its own; it must be processed during a **Consolidation** rest. When a character's cumulative processed VE crosses the next threshold on the VE Chart (Cultivation, "Leveling: The VE Chart"), they level up on the spot, mid-rest. Levels arrive only at Consolidation: a character can end a battle carrying three levels' worth of unprocessed VE and still be the level they woke up as until they sit down and refine it.
 
-Each Grade spans 25 levels. Level thresholds grow on an exponential curve, so early levels come fast and the last few levels before a Grade's cap are a wall. At the cap, leveling stops; only a Grade Breakthrough (its own chapter) opens the next span.
+Levels are numbered continuously across Grades: each Grade spans 25 of them, so Levels 1–25 are F-Grade, 26–50 are E-Grade, and so on. Level thresholds grow on an exponential curve, so early levels come fast and the last few levels before a Grade's cap are a wall. At the cap, leveling stops; only a Grade Breakthrough (its own chapter) opens the next span.
 
 ## Leveling Up
 
@@ -63,4 +63,4 @@ The pre-class observation period is over. The Hidden Vector Engine continues tra
 
 ## Beyond Level 25
 
-Level 25 is the Grade cap. Cumulative VE keeps accumulating, stats keep growing from treasures and titles up to the Grade's stat cap, but no further levels arrive. The way forward is a **Grade Breakthrough**: a deliberate, dangerous ritual with its own chapter. When it succeeds, the level span resets into a fresh 25 and the stat cap rises to the new Grade's maximum; the F→E Breakthrough also unlocks the second Concept slot (see The Principle System).
+Level 25 is the F-Grade cap. Cumulative VE keeps accumulating, stats keep growing from treasures and titles up to the Grade's stat cap, but no further levels arrive. The way forward is a **Grade Breakthrough**: a deliberate, dangerous ritual with its own chapter. When it succeeds, leveling resumes at Level 26 on the E-Grade span of the curve, and the stat cap rises to the new Grade's maximum; the F→E Breakthrough also unlocks the second Principle slot (see The Principle System).

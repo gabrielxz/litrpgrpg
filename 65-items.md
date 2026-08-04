@@ -8,25 +8,23 @@
 
 This document covers the practical items players encounter during F-Grade play: the consumables, weapons, and one-shot oddities that fill the spaces between treasure tiers. The full economy, crafting professions, and merchant systems are deferred. This is what the GM needs at the table for the prototype.
 
-All Toxin Points referenced below interact with the Toxin Tolerance rule (Cultivation §Toxins & Impurities). A character whose accumulated Toxin exceeds Tolerance suffers Consolidation efficiency loss; pushing well above tolerance risks permanent stat degradation.
-
 ---
 
 ## Consumables
 
 ### Healing Pills
 
-Restore HP instantly. Adds Toxin Points. Consumed as a **free action** on the user's turn, or as a 1-Beat action to administer to an ally in the same Zone.
+Restore HP instantly. In combat, consuming a pill costs **1 Beat**, whether swallowing one yourself or administering it to an ally in the same Zone.
 
-| **Pill** | **Grade** | **HP Restored** | **Toxin Added** |
-|---|---|---|---|
-| Stuttering Tincture | F | 5 | 2 |
-| Lesser Healing Pill | F | 15 | 5 |
-| Healing Pill | F | 30 | 10 |
-| Greater Healing Pill | F | 50 | 20 |
-| Pristine Recovery Pill | F | 80 | 40 |
+| **Pill** | **Grade** | **HP Restored** |
+|---|---|---|
+| Stuttering Tincture | F | 5 |
+| Lesser Healing Pill | F | 15 |
+| Healing Pill | F | 30 |
+| Greater Healing Pill | F | 50 |
+| Pristine Recovery Pill | F | 80 |
 
-E-Grade pills heal ×10 the listed amount and add ×10 Toxin (if the user can metabolize them; F-Grade systems are prone to violent reactions when ingesting E-Grade materia, often inducing temporary Saturation).
+E-Grade pills heal ×10 the listed amount (if the user can metabolize them; F-Grade systems are prone to violent reactions when ingesting E-Grade materia, often inducing temporary Saturation).
 
 **Healing pills cap at the user's Max HP.** Excess healing is wasted.
 
@@ -44,9 +42,7 @@ The body's energy channels accept healing in diminishing quantities. Within a si
 
 Round down at each step. Once a pill would heal 0 HP, the character is **saturated** and further pills have no healing effect for the remainder of the combat scene. Aether Pills follow the same diminishing schedule, tracked separately from healing pills (a third Healing Pill does not affect the next Aether Pill's potency).
 
-**Toxin still accrues at the listed amount per pill regardless of efficiency.** Even after the healing stops landing, the body still absorbs the impurities.
-
-**Administering a pill to an ally** remains a 1-Beat action. The ally's saturation count increments, not the user's.
+**Administering a pill to an ally** is a 1-Beat action. The ally's saturation count increments, not the user's.
 
 **Out-of-combat Consolidation rest** resets all saturation counts.
 
@@ -54,14 +50,14 @@ Round down at each step. Once a pill would heal 0 HP, the character is **saturat
 
 ### Aether Pills
 
-Restore Aether mid-encounter. Toxin cost.
+Restore Aether mid-encounter. In combat, consuming one costs **1 Beat**.
 
-| **Pill** | **Grade** | **Aether Restored** | **Toxin Added** |
-|---|---|---|---|
-| Sparkstone Tablet | F | 10 | 5 |
-| Lesser Aether Pill | F | 25 | 10 |
-| Aether Pill | F | 50 | 25 |
-| Greater Aether Pill | F | 80 | 50 |
+| **Pill** | **Grade** | **Aether Restored** |
+|---|---|---|
+| Sparkstone Tablet | F | 10 |
+| Lesser Aether Pill | F | 25 |
+| Aether Pill | F | 50 |
+| Greater Aether Pill | F | 80 |
 
 Aether Pills should be rare. Aether primarily refills through Consolidation; widely available Aether Pills would collapse the scarcity the Aether system is built on.
 
@@ -69,11 +65,11 @@ Aether Pills should be rare. Aether primarily refills through Consolidation; wid
 
 See the Breakthroughs document for full rules. Brief reference:
 
-| **Pill** | **Grade** | **Breakthrough Bonus** | **Toxin Added** |
-|---|---|---|---|
-| Dragon Marrow Pill | F | +5 | 15 |
-| Nine Leaf Essence | F | +10 | 30 |
-| Heavenly Foundation Pill | F | +15 | 50 |
+| **Pill** | **Grade** | **Breakthrough Bonus** |
+|---|---|---|
+| Dragon Marrow Pill | F | +5 |
+| Nine Leaf Essence | F | +10 |
+| Heavenly Foundation Pill | F | +15 |
 
 Foundation Pills are consumed during Beat 1 of a Breakthrough (Preparation phase). Only one Foundation Pill effect applies per Breakthrough; the body cannot metabolize multiple at once.
 
@@ -118,10 +114,10 @@ Crystalline matrices containing fragments of dead techniques. Single-use. Activa
 | **Shard Type** | **Effect** | **Backfire (on d100 ≤ 10)** |
 |---|---|---|
 | Edge Shard | Next Clash this turn gains +20. | Shard cracks: user takes 5 damage. |
-| Pulse Shard | Restore 30 Aether. | Aether backlash: user takes 10 Toxin. |
+| Pulse Shard | Restore 30 Aether. | Aether backlash: user takes 10 damage. |
 | Veil Shard | Become invisible until end of next turn or until you act offensively. | Veil flickers: you remain visible but appear blurred (+5 to defense, no concealment). |
 | Anchor Shard | Until end of next turn, you cannot be moved by any effect, and your Defense Force gains +10. | You become **Rooted**; you also cannot move under your own power. |
-| Resonance Shard | Add 1 IP toward a Principle Concept of your choice. | The IP is added to a random Concept the GM selects. |
+| Resonance Shard | Add 1 IP toward a Principle of your choice. | The IP is added to a random Principle the GM selects. |
 | Volatile Shard | Roll d100 again. The GM and the System AI generate an unpredictable effect based on the result. | The GM's discretion is the risk. |
 
 Shards are randomizers. They reward players who use them in moments where a wild outcome is acceptable, and punish those who treat them as reliable tools.
@@ -140,7 +136,7 @@ Devastating weapon, one charge. Common in tutorial scavenger zones.
 
 ### Other Tutorial-Grade Items
 
-- **Battered Medkit:** Heals 10 HP (no Toxin) when used as a 1-Beat action on yourself or an ally in the same Zone. Three uses before the supplies are exhausted.
+- **Battered Medkit:** Heals 10 HP when used as a 1-Beat action on yourself or an ally in the same Zone. Does not count toward pill saturation. Three uses before the supplies are exhausted.
 - **Low-Grade Armor Scraps:** Heavy. Grants +5 Defense Force when defending with FOR; imposes −5 to DEX-based Clashes (offensive or defensive). Stackable up to one set per character.
 - **Sensory Tool (Generic):** Spend 1 Beat. Reveal one hidden feature within your Zone. Single use unless specified otherwise.
 - **Battered Communicator:** Allows short-range communication between paired devices. Frequently malfunctions. Useful for the Civic Fragment terminal interaction in the tutorial.
@@ -167,7 +163,7 @@ If the party is hoarding consumables and never spending them, the GM is being to
 This document covers prototype-tier items only. Deferred for later development:
 
 - **Crafted equipment and named weapons.** Once the Professions system is designed, players can craft, refine, and name their own gear.
-- **Principle-attuned items.** Weapons and tools that resonate with specific Principle Concepts and grant attunement bonuses.
+- **Principle-attuned items.** Weapons and tools that resonate with specific Principles and grant attunement bonuses.
 - **Set bonuses and equipment synergies.** Multi-piece kits with cumulative effects.
 - **E-Grade and higher item tiers.** When the campaign scales, the same six categories scale ×10 per Grade.
 - **Bespoke artifacts.** Story-tier items with unique mechanical and narrative weight, generated by the System AI and the GM in collaboration.

@@ -156,7 +156,7 @@ This is a primary tool for the System to recognize that the character is not who
 - Immediate System recognition. Behavioral reclassification is visible.
 - Faction hostility from the Mandate's beneficiary.
 - Negative Bestowed title at the System's discretion (commonly "Defiant" or "Mandate-Breaker"; rarely something stranger).
-- Specific reward paths permanently closed: class evolution options narrow, certain Principle Concepts become inaccessible, certain location access revokes.
+- Specific reward paths permanently closed: class evolution options narrow, certain Principles become inaccessible, certain location access revokes.
 - Higher-Grade entities may take an interest. This can be opportunity or threat.
 
 #### Failure (attempted but not completed)
@@ -281,7 +281,7 @@ Objective:  A Glow-Stalker injured during your last engagement
 Reward:     60 VE, 1 predator core (50 VE absorption value)
 Hidden:     If the Glow-Stalker is captured alive and returned
             to the Wild Fragment uninjured beyond current state,
-            +1 IP toward a Restraint-aligned Principle Concept.
+            +1 IP toward a Restraint-aligned Principle.
 Refusal:    Predator-tier opportunities offered less frequently
             for the next session.
 
@@ -329,7 +329,7 @@ Appears retroactively after fulfillment, usually for one-shot moments of grace, 
 
 ```
 [Q-HID-014] "The First Mercy": Complete.
-Reward: +1 IP toward Restraint-aligned Principle Concept.
+Reward: +1 IP toward a Restraint-aligned Principle.
         New Hidden Achievement: "The One Who Stayed Their Hand."
 ```
 

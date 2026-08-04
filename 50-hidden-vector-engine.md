@@ -32,39 +32,39 @@ The engine follows five constraints:
 
 ## Behavioral Axes & Principle Affinities
 
-The engine tracks four bipolar axes. Each represents a distinct dimension of behavior. The System observes these behaviors to forge the character's Internal Power: the specific Principle Concepts that crystallize for them (see The Principle System, "Your First Concept"). The eight affinity families named below are the pattern classes the System reports before a Concept crystallizes.
+The engine tracks four bipolar axes. Each represents a distinct dimension of behavior. The System observes these behaviors to forge the character's Internal Power: the specific Principles that crystallize for them (see The Principle System, "Your First Principle"). The eight affinity families named below are what the System reports before a Principle crystallizes.
 
 ### Force ↔ Method (Interaction)
 
 *How does the character solve problems?*
 
-- **Force (+):** Aggressive engagement, applying pressure immediately, relying on overwhelming presence or impact. *Principle Affinity:* Yields Principles of Impact: Concepts like Momentum, Weight, Shattering, Kinetic Energy, or Heat.
+- **Force (+):** Aggressive engagement, applying pressure immediately, relying on overwhelming presence or impact. *Principle Affinity:* Yields Principles of Impact, like Momentum, Weight, Shattering, Kinetic Energy, or Heat.
 
-- **Method (−):** Planning, positioning, altering conditions before acting, solving situations indirectly. *Principle Affinity:* Yields Principles of Architecture: Concepts like Space, Leverage, Misdirection, Shadows, or Geometry.
+- **Method (−):** Planning, positioning, altering conditions before acting, solving situations indirectly. *Principle Affinity:* Yields Principles of Architecture, like Space, Leverage, Misdirection, Shadows, or Geometry.
 
 ### Hunger ↔ Restraint (Desire)
 
 *What is the character's relationship to gain?*
 
-- **Hunger (+):** Pursuit of wealth, power, or advantage; prioritizing gain over safety. *Principle Affinity:* Yields Principles of Consumption: Concepts like Devouring, Blood, The Void, Assimilation, or Corrosion.
+- **Hunger (+):** Pursuit of wealth, power, or advantage; prioritizing gain over safety. *Principle Affinity:* Yields Principles of Consumption, like Devouring, Blood, The Void, Assimilation, or Corrosion.
 
-- **Restraint (−):** Passing on excess reward, prioritizing mission or people over loot. *Principle Affinity:* Yields Principles of Preservation: Concepts like Shielding, Purification, Iron, Stasis, or Resilience.
+- **Restraint (−):** Passing on excess reward, prioritizing mission or people over loot. *Principle Affinity:* Yields Principles of Preservation, like Shielding, Purification, Iron, Stasis, or Resilience.
 
 ### Will ↔ Accord (Social)
 
 *How does the character relate to others and systems of order?*
 
-- **Will (+):** Coercion, intimidation, dominance, shaping outcomes through pressure. *Principle Affinity:* Yields Principles of Imposition: Concepts like Conqueror's Haki, Mind Control, Pressure, Fear, or Sovereignty.
+- **Will (+):** Coercion, intimidation, dominance, shaping outcomes through pressure. *Principle Affinity:* Yields Principles of Imposition, like Conqueror's Haki, Mind Control, Pressure, Fear, or Sovereignty.
 
-- **Accord (−):** Negotiation, cooperation, adaptation, working within systems. *Principle Affinity:* Yields Principles of Harmony: Concepts like Resonance, Symbiosis, Life, Empathy, or The Hearth.
+- **Accord (−):** Negotiation, cooperation, adaptation, working within systems. *Principle Affinity:* Yields Principles of Harmony, like Resonance, Symbiosis, Life, Empathy, or The Hearth.
 
 ### Control ↔ Freedom (Governance)
 
 *Does the character impose structure, or allow outcomes to emerge?*
 
-- **Control (+):** The drive to impose order, establish hierarchy, restrict variables. *Principle Affinity:* Yields Principles of Governance: Concepts like Gravity, Chains, Dominion, Logic, or Suppression.
+- **Control (+):** The drive to impose order, establish hierarchy, restrict variables. *Principle Affinity:* Yields Principles of Governance, like Gravity, Chains, Dominion, Logic, or Suppression.
 
-- **Freedom (−):** The drive to break chains, subvert authority, embrace emergence. *Principle Affinity:* Yields Principles of Subversion: Concepts like Wind, Severance, Spatial Rupture, Entropy, or Illusions.
+- **Freedom (−):** The drive to break chains, subvert authority, embrace emergence. *Principle Affinity:* Yields Principles of Subversion, like Wind, Severance, Spatial Rupture, Entropy, or Illusions.
 
 ---
 

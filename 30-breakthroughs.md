@@ -33,7 +33,7 @@ The setup phase. No dice are rolled. This is where most quality dials are set.
 
 **Requirements:**
 
-- The character must be at the **Grade-cap level** (the final level within their current Grade).
+- The character must be at the **Grade-cap level** (Level 25 for F-Grade, 50 for E, 75 for D, and so on).
 - All VE from leveling must already be fully processed through Consolidation. The character's VE tank starts this process empty; what fills it next is the Ignition fuel.
 
 **Steps:**
@@ -62,7 +62,7 @@ The cultivator must accumulate VE equal to at least **100% of their VE Tolerance
 
 The VE required for Ignition is gathered from environmental absorption during the Preparation phase and from any consumables. The GM determines how long this takes based on location energy density. A high-density location might provide full Tolerance in minutes; a barren one might take hours of dangerous exposure.
 
-**While overcharging, Saturation effects apply.** A cultivator pushing to ×2.0 is operating under Heavy Saturation penalties (−25 to all rolls, HP bleeding). This is the explicit price of ambition: the character is poisoning themselves with power to fuel a better outcome. The Saturation penalties do not apply to the Breakthrough Check itself (the ignition burns the VE as fuel), but they apply to everything else, including any actions the party must take during the Trial.
+**While overcharging, Saturation effects apply.** A cultivator pushing to ×2.0 is operating under Heavy Saturation penalties (−25 to all rolls, HP bleeding). This is the explicit price of ambition: the character is poisoning themselves with power to fuel a better outcome. The Saturation penalties do not apply to the Breakthrough Check itself (the ignition burns the VE as fuel), but they apply to everything else, including any actions the party must take during the Trial. The Critical Saturation collapse clock (Cultivation chapter) also runs during Preparation: a cultivator holding 200%+ of Tolerance must reach Ignition before the body force-vents, which is why ×2.0 and above are gathered fast in dense locations rather than slowly in barren ones. Once Ignition is declared, Saturation rules are suspended; the ritual consumes the VE as fuel.
 
 **Once the cultivator declares Ignition, Beat 3 begins immediately. There is no going back.**
 
@@ -158,7 +158,7 @@ The System processes the result. This is the payoff: the moment the numbers chan
 
 The Breakthrough fails. The overcharged VE backlashes through the cultivator's system.
 
-- **VE Backlash:** All stored VE converts to Toxin Points. If this exceeds Toxin Tolerance, the character suffers stat degradation (see Toxins & Impurities in the Cultivation document).
+- **VE Backlash:** All stored VE is burned off in the failed attempt; none of it becomes level progress. The stat cost of the backlash scales by Grade (see the Grade-Specific sections below).
 - **Lockout Period:** The character cannot attempt another Breakthrough for a minimum number of sessions determined by Grade (F→E: 2 sessions, E→D: 3 sessions, D→C: 4 sessions). This is narrative: the character's channels are damaged and must heal.
 - **Stat Consequences:** Scale by Grade (see Grade-Specific sections below).
 - **Tribulation Ward Effect:** If a Tribulation Ward was consumed, the Cracked result is upgraded to Stable. The Ward absorbs the backlash. This is the insurance item: expensive, rare, but it turns catastrophe into mediocrity.
@@ -170,7 +170,7 @@ The character successfully ascends. Clean, competent, unremarkable.
 - **Grade Advancement.** The character's Grade increments. All stat caps rise to the new Grade's maximum (999 at E-Grade, 9,999 at D-Grade, etc.). Stats are *not* multiplied: an F-Grade character with STR 80 still has STR 80 after Breaking Through to E. The cap is lifted, not the floor. Growth into the new Grade's stat range comes from class evolution bonuses, E-Grade leveling (where per-level stat budgets scale with Grade magnitude), treasures, and titles.
 - **Class Evolution.** The System AI generates 1–3 class evolution options appropriate to the new Grade. These function like the Level 10 class selection. The character's HVE profile, current class, and Principle affinities shape what is offered. The player selects one. The selected evolution grants a new Signature Skill, modifies the class's stat profile for future level-ups, and provides a **one-time class evolution stat infusion**, a lump sum of stat points distributed according to the new class's stat profile. At E-Grade, this infusion is typically 50–100 points total (enough to push primary stats past 100 while leaving dump stats where they are). The infusion scales with Grade magnitude at higher Breakthroughs.
 - **System Message.** The System AI generates a clinical acknowledgment of the ascension: a brief, cold System notification reflecting the character's journey. ("*[Subject 4,291-F] has undergone Grade Evaluation. Assessment: Stable foundation. F-Grade patterns preserved. E-Grade clearance granted.*")
-- **Principle Track Effects.** Principles advance on their own track and most Breakthroughs leave it untouched. Two exceptions: the F→E Breakthrough unlocks the **second Concept slot**, and reaching D-Grade opens the **Domain gate** (see The Principle System, "Concept Slots" and "The Domain Gate").
+- **Principle Track Effects.** Principles advance on their own track and most Breakthroughs leave it untouched. Two exceptions: the F→E Breakthrough unlocks the **second Principle slot**, and reaching D-Grade opens the **Domain gate** (see The Principle System, "Principle Slots" and "The Domain gate").
 
 **A Note on Dump Stats:** A character whose STR is 65 at F-Grade cap may still have STR 65 after Breaking Through to E-Grade if their class evolution doesn't invest in STR. That stat now lags below the E-Grade band and resolves at its own magnitude (see Core Mechanics, "Lagging Stats"): E-Grade physical opposition takes the +100 adjustment against it, and attacks it drives deal F-Grade damage. Natural growth through E-Grade leveling, attribute treasures, and titles will push all stats upward over time, but lagging stats create meaningful character texture.
 
@@ -185,7 +185,7 @@ Everything from Stable, plus:
 Everything from Polished, plus:
 
 - **Bespoke Perk.** The System AI generates a one-of-a-kind ability, passive, or systemic advantage tailored to the character's HVE signature and Principle alignment. Examples: a Force-dominant warrior might receive "First Impact" (the first Clash of every combat gets +15), a Method-dominant planner might receive "Architect's Eye" (once per Consolidation, reveal the structural weakness of any single target), a Hunger-dominant cultivator might receive "Refined Consumption" (VE gained from kills is increased by 25%).
-- **Principle Bonus.** +10 Insight Points toward the character's highest-affinity Principle Concept, representing the trial's resonance with their established pattern.
+- **Principle Bonus.** +10 Insight Points toward the character's highest-affinity Principle, representing the trial's resonance with their established pattern.
 
 **Transcendent (One-of-a-Kind Ascension):**
 
@@ -193,9 +193,9 @@ Everything from Pristine, plus:
 
 - **System-Generated Unique Reward.** The System AI creates a one-of-one reward that exists nowhere else in the Multiverse. This is the Breakthrough as promotion review: the System looked at this character's entire behavioral record, their Principle mastery, their combat history, their choices under pressure, and decided to invest. Possible forms:
   - **Bloodline Awakening:** A latent genetic or systemic pattern activates, granting a permanent passive effect and opening a new evolutionary tree.
-  - **Unique Skill:** A skill synthesized from the character's specific intersection of HVE axes and Principle Concepts, something no other cultivator has ever been offered.
+  - **Unique Skill:** A skill synthesized from the character's specific intersection of HVE axes and Principles, something no other cultivator has ever been offered.
   - **Hidden Title:** A System-granted title with mechanical weight: stat bonuses, faction recognition, or environmental effects that trigger in specific contexts.
-  - **Principle Revelation:** An immediate jump in Principle progression: a Concept that was at Early Fragment might leap to Mid Fragment, or a new Concept might crystallize fully formed.
+  - **Principle Revelation:** An immediate jump in Principle progression: a Principle at Early Fragment might leap to Mid Fragment, or a new Principle might crystallize fully formed.
 - **Hidden Achievement.** The System also generates a Hidden Achievement marking the Transcendent Breakthrough. This becomes part of the character's permanent record and may influence future System interactions.
 
 ---
@@ -207,15 +207,13 @@ Six functional categories. Each is a treasure-hunt objective that players can pu
 | Category | Function | Examples |
 |---|---|---|
 | **Foundation Pills** | Raise base success odds on the Breakthrough Check. | Dragon Marrow Pill (+5), Nine Leaf Essence (+10), Heavenly Foundation Pill (+15) |
-| **Resonance Catalysts** | Amplify Principle gains during the trial. Increase IP awarded at Stable or higher. | Principle Tuning Crystal, Concept Resonance Elixir |
+| **Resonance Catalysts** | Amplify Principle gains during the trial. Increase IP awarded at Stable or higher. | Principle Tuning Crystal, Resonance Elixir |
 | **Anchoring Artifacts** | Reduce backlash damage to self and party if the Breakthrough fails or external phenomena break through. | Stillwater Ward Stone, Earthbound Anchor Talisman |
 | **Tribulation Wards** | The insurance policy. If consumed, upgrades a Cracked result to Stable. Consumed whether used or not. Extremely rare. | Phoenix Down Seal, Heavenly Tribulation Banner |
 | **Quality Enhancers** | Push the final Quality Tier up by one step (never above Transcendent). | Celestial Refinement Crystal, Dao Clarification Lotus |
 | **Bespoke Items** | Rare, themed effects that do not fit the other categories. | Heart Demon Mirror (reveals HVE manifest during the trial; the cultivator sees their behavioral signature given form), Phoenix Feather (grants one re-roll on a failed Breakthrough Check), Spatial Anchor Stone (suppresses all external phenomena for the first round of the trial) |
 
 **Item Stacking:** A cultivator may consume one item from each category. Multiple items from the same category do not stack: the body can only process one Foundation Pill, one Resonance Catalyst, etc. Bespoke Items are the exception; their effects are unique enough that the GM adjudicates stacking on a case-by-case basis.
-
-**Toxin Cost:** Most breakthrough consumables add Toxin Points. More powerful items add more. A cultivator who stacks maximum items may enter the Breakthrough with Toxin already pushing against their tolerance, another risk-reward axis.
 
 ---
 
@@ -245,7 +243,7 @@ Finding and securing a Breakthrough location is an adventure in itself. The GM s
 
 - **Hint early.** Introduce energy-dense locations during exploration and dungeon crawls, well before any character is approaching their Grade cap.
 - **Create competition.** Other cultivators (NPC factions, rival sects, or Incursion forces) may have claimed the best locations. Acquiring access might require negotiation, subterfuge, or force.
-- **Layer additional properties.** Some locations have Principle resonance (a fire-aspected volcanic caldera grants bonus IP to fire-aligned Concepts), spatial instability (increases tribulation intensity but also increases the chance of bespoke rewards), or historical significance (previous Transcendent Breakthroughs at a site may leave residual benefits, or residual dangers).
+- **Layer additional properties.** Some locations have Principle resonance (a fire-aspected volcanic caldera grants bonus IP to fire-aligned Principles), spatial instability (increases tribulation intensity but also increases the chance of bespoke rewards), or historical significance (previous Transcendent Breakthroughs at a site may leave residual benefits, or residual dangers).
 
 ---
 
@@ -262,12 +260,11 @@ Finding and securing a Breakthrough location is an adventure in itself. The GM s
 - **Internal:** Physical-spiritual pressure test. The cultivator's body is the battlefield; they must endure the reconstruction of their physical vessel while maintaining spiritual coherence. Describe impurity expulsion, body-tempering visions (flashes of the character's hardest physical moments, replayed and compressed into a single searing experience), the sensation of bones breaking and reforming.
 - **External:** Mild phenomena. Local energy fluctuations cause temperature spikes, minor tremors, flickering light. Small elemental manifestations (energy wisps, ground cracks, brief spatial shimmers) appear and dissipate. At low-density locations, these may not manifest at all. At high-density locations, minor tribulation beasts (F-Grade, Moderate difficulty) may be drawn to the site.
 
-**Recognition at this Grade** also unlocks the second, and final, Concept slot (see The Principle System, "Concept Slots").
+**Recognition at this Grade** also unlocks the second, and final, Principle slot (see The Principle System, "Principle Slots").
 
 **Failure Consequences (Cracked at F→E):**
 
 - **Stat Loss:** Temporary. FOR and POW each drop by 5 (minimum 1). Recovery through one full Consolidation rest.
-- **Toxin Accumulation:** Impurities not fully purged leave behind 50 Toxin Points.
 - **Lockout:** 2 sessions before retry.
 - **No permanent consequences.** The F→E Breakthrough is forgiving.
 
@@ -292,12 +289,12 @@ A well-built F-Grade cap character (POW ~75, HRT ~60) has Force 75 + Force 60 = 
   - A **Will-dominant** character confronts projections of everything they have dominated: the people cowed, the systems broken to their will, the resistance crushed. The trial demands they prove their will is genuine sovereignty and not mere cruelty.
 - **External:** Significant phenomena. Spectral manifestations coalesce from the cultivator's HVE signature, echoes given temporary physical form outside the cultivator's body. These are E-Grade threats (Moderate to Hard difficulty on the Grade Reference Card) and they carry thematic resonance with the cultivator's behavioral patterns. A Force-dominant cultivator's external phenomena are aggressive and kinetic; a Method-dominant cultivator's are spatial and disorienting. Aether storms, terrain warping, and transformed local wildlife are all appropriate.
 
-**Recognition at this Grade** opens the Domain gate: the rebuilt Soul Sea is a vessel that can hold a Domain, and a character with a Peak Fragment articulation waiting may Compress it at their next Consolidation (see The Principle System, "The Domain Gate").
+**Recognition at this Grade** opens the Domain gate: the rebuilt Soul Sea is a vessel that can hold a Domain, and a character with a Peak Fragment articulation waiting may Compress it at their next Consolidation (see The Principle System, "The Domain gate").
 
 **Failure Consequences (Cracked at E→D):**
 
 - **Aether Ceiling Reduction:** Permanent. Max Aether is reduced by 10% until the next successful Breakthrough. The Soul Sea cracked but did not shatter; it holds, but leaks.
-- **Principle Regression:** The character loses IP equal to half their current total toward their highest Principle Concept. Progress toward the current tier is set back, though the tier itself is not lost.
+- **Principle Regression:** The character loses IP equal to half their current total toward their highest Principle. Progress toward the current tier is set back, though the tier itself is not lost.
 - **Lockout:** 3 sessions before retry.
 - **Cracked Foundation Status:** The character gains the narrative status "Cracked Foundation." This is known to the System and to perceptive cultivators. Future Breakthrough attempts carry an additional −5 penalty until a successful Breakthrough clears the status. NPCs and faction leaders who can sense cultivation state may react accordingly.
 - **Stat Loss:** FOR and POW each drop by a value equal to 5% of their current Raw value (e.g., FOR 500 loses 25). This loss is permanent until recovered through leveling or treasures.

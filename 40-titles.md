@@ -139,7 +139,7 @@ Damage reduction against specific damage types, Principle resonance bonuses, env
 
 **F-Grade magnitudes:**
 - 5%–10% damage reduction against a specific type
-- +1 to +3 IP per Consolidation toward an aligned Principle Concept (over a fixed window, e.g., "for the next month after earning the title")
+- +1 to +3 IP per Consolidation toward an aligned Principle (over a fixed window, e.g., "for the next month after earning the title")
 - Immunity to specific minor effects (heat exhaustion, mild poisons, sensory deception below a Force threshold)
 
 ### Negative Titles

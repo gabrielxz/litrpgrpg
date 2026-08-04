@@ -6,7 +6,11 @@
 
 ## Volatile Energy & Consolidation
 
-Characters do not gain traditional "Experience Points." They accumulate **Volatile Energy (VE)** from kills, consumables, and environmental sources. VE represents raw, unprocessed power absorbed from the Multiverse, essence that must be refined into permanent growth through structured rest.
+Characters do not gain traditional "Experience Points." They accumulate **Volatile Energy (VE)** from kills, consumables, and environmental sources: raw, unprocessed power absorbed from the Multiverse. VE is fuel. Refining it through structured rest is what turns it into permanent growth. The whole chapter is one loop:
+
+**Earn VE → watch your gauge → decide to push or rest → Consolidate → level up.**
+
+Joe has FOR 7 and POW 5, so his VE Tolerance is 60. A morning of hunting earns him 35 VE; he is fine. Then the party finds the den, and Joe decides to risk it: two more fights push him to 70 VE, past his Tolerance, and the overload starts to burn (Saturation, below: −10 to everything until he processes it). The party makes camp and Joe Consolidates. An hour in, his Aether is back. By the sixth hour the whole load is refined: his wounds are closed, the burn is gone, and all 70 VE is permanent progress toward his next level.
 
 ### The Pressure Gauge
 
@@ -14,78 +18,78 @@ Every character has a **VE Tolerance** representing the raw energy their body an
 
 > **VE Tolerance = (Raw FOR + Raw POW) / 2 × 10**
 
-An F-Grade character with FOR 60 and POW 60 has a Tolerance of 600. A pure warrior (FOR 80, POW 30) has a Tolerance of 550. A pure caster (FOR 30, POW 80) also has 550.
+Joe, with FOR 7 and POW 5, holds 60.
 
 VE accumulates automatically after combat and from other sources. As long as stored VE remains below Tolerance, there is no penalty. Once VE exceeds Tolerance, the character enters **Saturation:**
 
 - **Mild Saturation (101–150% Tolerance):** −10 to all rolls.
 - **Heavy Saturation (151–200% Tolerance):** −25 to all rolls. HP begins bleeding (1% Max HP per round in combat, per hour outside combat).
-- **Critical Saturation (200%+ Tolerance):** Heavy Saturation penalties continue, and the body starts burning itself as insulation: at the end of each hour spent at Critical Saturation, the character permanently loses 1 Raw point of FOR or POW (player's choice).
+- **Critical Saturation (200%+ Tolerance):** Heavy Saturation penalties continue, and the body starts fighting to vent. At the end of each full hour spent at Critical, roll d100: the character collapses on a result of 25 or less. The threshold rises by 25 each hour (50 the second hour, 75 the third), and in the fourth hour the collapse is automatic. A collapsed character drops into involuntary Consolidation on the spot: defenseless, processing at the normal rate, unwakeable until stored VE falls below Tolerance. The collapse also costs 1 temporary Raw point of FOR or POW (player's choice), which returns after the character's next full clean Consolidation.
 
 **GM Note on Saturation:** The System does not announce band thresholds to the character. Narrate symptoms instead: skin feels hot and prickly, vision tunnels at the edges, muscles cramp, something under the breastbone flexes in ways that feel wrong. Let players learn the pattern by experience. This generates rich Hidden Vector signal: who pushes into the red zone chasing one more kill? (Hunger.) Who pulls back at the first warning? (Restraint.)
 
 ### Consolidation (Structured Rest)
 
-To process VE, a character declares a **Consolidation** rest. This is not a mini-game. The player states they are consolidating, the GM tracks the clock and any interruptions, and the mechanical result resolves automatically.
+To process VE, a character declares a **Consolidation** rest and states what they are reaching for: process everything, process until the next level, or process a specific amount. The goal matters because the GM may interrupt for narrative reasons, and the player should know what they were reaching for.
 
-**Declaration:** The player specifies a goal: process all current VE, process until the next level-up, or process a specific amount. The goal matters because the GM may interrupt for narrative reasons, and the player should know what they were reaching for.
+One rule covers the clock: **each full hour of Consolidation clears one fifth of your Tolerance from stored VE.** A full tank takes five hours; a night's rest covers it with margin. The minimum is 1 hour of in-game time, however little VE needs processing.
 
-**Minimum Duration:** 1 hour of in-game time, regardless of how little VE needs processing.
+During the rest:
 
-**Processing Rate:** **(Raw FOR + Raw POW) per hour of Consolidation.**
+- **Growth:** Processed VE converts into permanent level progress. When cumulative processed VE crosses the next threshold on the VE Chart, the character levels up on the spot, mid-rest.
+- **HP:** Characters recover 25% of Max HP per hour; wounds are closed by the fourth hour.
+- **Aether:** The pool refills completely when the first full hour completes. This is the only source of Aether regeneration; Aether does not recover in combat, between combats, or through passive time. See Core Mechanics, "The Aether System."
+- **Interruption:** The character keeps every completed hour of processing and recovery. Unprocessed VE stays in the tank and remains subject to Saturation.
+- **Defenselessness:** A consolidating character is completely defenseless. The whole party may consolidate at once as a calculated risk; posting a guard means that character is not consolidating.
 
-An F-Grade character with FOR 60 and POW 60 processes 120 VE per hour. A full tank (600 VE) takes 5 hours to empty. The ratio holds at every Grade; an E-Grade character with FOR 500 and POW 400 processes 900 VE per hour, a full tank (4,500) in 5 hours.
+**Environmental Modifiers:** Consolidating in a high-energy-density hex reduces the required time by a quarter. Consolidating while holding a Principle-affinity treasure grants a small bonus to Insight Points for that Principle.
 
-**Result:** Processed VE converts into permanent level progress. When accumulated processed VE meets the threshold for the next level, the character advances (see Leveling below).
-
-**HP Recovery:** During Consolidation, characters recover 25% of their Max HP per hour.
-
-**Aether Recovery:** Aether refills completely at the start of any Consolidation rest, regardless of duration. This is the *only* source of Aether regeneration. Aether does not recover in combat, between combats, or through passive time. See Core Mechanics: "The Aether System".
-
-**Partial Consolidation:** If interrupted, the character retains proportional progress on both VE processing and HP recovery. Unprocessed VE stays in the tank and remains subject to Saturation rules.
-
-**Simultaneous Consolidation:** The entire party may consolidate at the same time. This is a tactical choice: the party is completely defenseless while consolidating. Posting a guard means that character is not consolidating.
-
-**Environmental Modifiers:** Consolidating in a high-energy-density hex reduces required time by 25%. Consolidating while holding a Principle-affinity treasure grants a small bonus to Insight Points for that Principle Concept.
-
-**Battle Memory Meditation:** Characters who hold a Battle Memory Card (see Principles document) process it during Consolidation. The System AI returns a cryptic vision and awards Insight Points; the vision procedure for every run mode is in The System AI chapter.
+**Battle Memory Meditation:** Characters holding a Battle Memory Card process it during Consolidation. The System returns a cryptic vision and awards Insight Points; see The Principle System, and the vision procedure for every run mode in The System AI chapter.
 
 ### Leveling: The VE Chart
 
-Levels require accumulated processed VE following an exponential curve:
-
-> **VE to reach next level = 100 × 1.2^(Level-in-Grade − 1) × Grade Multiplier**
-
-Where Grade Multiplier is ×1 for F, ×10 for E, ×100 for D, ×1,000 for C, etc., the same multiplier used everywhere else in the system.
-
-**F-Grade reference (selected levels):**
+Levels are numbered continuously across Grades: **Levels 1–25 are F-Grade, 26–50 are E-Grade, 51–75 are D-Grade**, and so on. Each Grade spans 25 levels, and the last few before a Grade's cap are a wall; the pre-Breakthrough grind is built into the curve.
 
 | Level | VE to Next | Cumulative VE |
 |---|---|---|
 | 1 → 2 | 100 | 100 |
 | 2 → 3 | 120 | 220 |
 | 3 → 4 | 144 | 364 |
-| 5 → 6 | 207 | 871 |
-| 10 → 11 | 516 | 3,193 |
-| 15 → 16 | 1,284 | 9,539 |
-| 20 → 21 | 3,196 | 25,330 |
-| **24 → 25 (cap)** | **6,625** | **39,248** |
+| 4 → 5 | 173 | 537 |
+| 5 → 6 | 207 | 744 |
+| 6 → 7 | 249 | 993 |
+| 7 → 8 | 299 | 1,292 |
+| 8 → 9 | 358 | 1,650 |
+| 9 → 10 | 430 | 2,080 |
+| 10 → 11 | 516 | 2,596 |
+| 11 → 12 | 619 | 3,215 |
+| 12 → 13 | 743 | 3,958 |
+| 13 → 14 | 892 | 4,850 |
+| 14 → 15 | 1,070 | 5,920 |
+| 15 → 16 | 1,284 | 7,204 |
+| 16 → 17 | 1,541 | 8,745 |
+| 17 → 18 | 1,849 | 10,594 |
+| 18 → 19 | 2,219 | 12,813 |
+| 19 → 20 | 2,662 | 15,475 |
+| 20 → 21 | 3,195 | 18,670 |
+| 21 → 22 | 3,834 | 22,504 |
+| 22 → 23 | 4,601 | 27,105 |
+| 23 → 24 | 5,521 | 32,626 |
+| **24 → 25 (F cap)** | **6,625** | **39,251** |
 
-At E-Grade, every entry is × 10 (Level 1 costs 1,000 VE). At D-Grade, × 100. The chart shape is identical at every Grade; only the magnitude shifts. Class features, rare titles, or specific treasures may tweak the multiplier for individual characters, but the baseline curve applies to everyone.
-
-**Grade Length:** Each Grade contains **25 levels**. Levels 1–25 are F-Grade; after L25, the character cannot advance through ordinary Consolidation and must attempt a Grade Breakthrough to enter E-Grade Levels 1–25, and so on. The exponential curve repeats identically at every Grade, scaled by the Grade Multiplier. The last 3–5 levels of any Grade account for over 40% of that Grade's cumulative VE; the pre-Breakthrough wall is built into the curve.
-
-**Grade Breakthrough** happens at the Grade-cap level (Level 25 within the current Grade). It is **not** an automatic level-up. See Breakthrough Consolidation below.
+**Grade Breakthrough:** At Level 25 the character cannot advance through ordinary Consolidation. Entering E-Grade (and Level 26) requires a **Grade Breakthrough**, a deliberate ritual with its own chapter. It is **not** an automatic level-up. The E-Grade span climbs the same curve at ×10 the cost; the numbers live in the GM reference at the end of this chapter.
 
 ### When to Consolidate
 
 The decision is about timing. Push one more fight while the gauge is in the red zone, gambling on a bigger haul before resting? Or pull back and consolidate safely, knowing another group might claim the hunting ground while you meditate? The Saturation bands above are the rule; the table answers the question every session.
 
-### VE Rewards by Source
+---
+
+## Awarding VE (GM Reference)
 
 The GM awards VE from multiple sources. The baseline rates below are tuned to F-Grade. Multiply by ×10 per Grade for higher tiers (E-Grade enemies yield ×10 VE, D-Grade ×100, and so on), matching the leveling chart and damage Multiplier.
 
-#### Combat Kills
+### Combat Kills
 
 The defeated enemy's difficulty tier (read from the Grade Reference Card) determines VE awarded:
 
@@ -102,40 +106,46 @@ Cross-Grade kills follow the multiplier: an E-Grade Moderate enemy yields 300 VE
 
 The kill is priced by what died, whatever the method: a trap, an ambush, or a plan that ended the fight before it started pays the same as an open brawl. How the kill happened is logged by the Hidden Vector Engine; it is never priced. A defeated boss-tier encounter (rare, named, or designed for the moment) may be worth 1.5× the listed amount at the GM's discretion.
 
-**Who earns it.** Combat VE is pooled per encounter and split evenly among meaningful participants (round down). Fighting, guarding, scouting the escape route, and controlling the field all participate; being elsewhere does not. The killing blow earns no extra share; individual excellence reaches the System through the Hidden Vector Engine log, titles, and Hidden Achievements.
+**Who earns it.** Combat VE is pooled per encounter and split evenly among meaningful participants (round down). Fighting, guarding, scouting the escape route, and controlling the field all participate; being elsewhere does not. The killing blow earns no extra share; individual excellence reaches the System through the Hidden Vector Engine log, titles, and Hidden Achievements. When participation was grossly lopsided (one character carried an encounter the others watched), the System may weight the shares; treat this as a rare override rather than a per-fight judgment.
 
-#### Quest & Survival
+### Quest & Survival
 
 - **Session Survival:** 10 VE (F-Grade) per character per session, awarded for surviving meaningful play. Scales with Grade.
 - **Quest Completion:** GM-assigned. A typical F-Grade side quest awards 30–100 VE; a major quest arc may award the equivalent of a full level or more.
 - **Hidden Achievements:** Rare. Award 50–200 VE (F-Grade) plus a Title or other narrative reward.
 
-#### Environmental Sources
+### Environmental Sources
 
-- **Aether-Density Hex Absorption:** During exploration of high-density terrain, characters passively absorb 5 VE/hour at Moderate density, 15 VE/hour at High density, 30 VE/hour at Extreme density. This is the absorption that funds Breakthrough Ignition; it also accumulates during normal play.
-- **Treasure Cores & Affinity Crystals:** Lump VE awards on consumption. F-Grade examples: minor core (50 VE), refined core (150 VE), pristine core (400 VE).
+- **Aether-Density Hex Absorption:** Characters passively absorb VE in high-density terrain: 5 VE/hour at Moderate density, 15 VE/hour at High, 30 VE/hour at Extreme. High-density hexes should be rare, notable locations, and the award should be batched per visit ("a day working the ridge: 100 VE"), never tracked hour by hour at the table. This is the absorption that funds Breakthrough Ignition.
+- **Treasure Cores & Affinity Crystals:** VE awarded once, when consumed. F-Grade examples: minor core (50 VE), refined core (150 VE), pristine core (400 VE).
 
-#### Pacing Reference (F-Grade)
+### Pacing Reference (F-Grade)
 
-L1 → L2 requires 100 VE: roughly 7 Easy kills, 4 Moderate, or one strong quest plus survival. L1 → L10 requires 3,193 cumulative VE, across ~25–30 sessions of moderate-pace play. L1 → L25 (F-cap) requires 39,248 VE; the final 3 levels alone account for over 16,500 VE.
+L1 → L2 requires 100 VE: roughly 7 Easy kills, 4 Moderate, or one strong quest plus survival. Reaching Level 10 requires 2,080 cumulative VE, across roughly 15–20 sessions of moderate-pace play. Reaching the F-Grade cap at Level 25 requires 39,251 VE; the final 3 levels alone account for nearly 17,000.
 
 GMs should not micromanage VE awards mid-session. Track running totals between sessions and award in batches at meaningful rest points.
 
-#### Risk vs. Rest
+### Risk vs. Rest
 
 Survival and quest completion guarantee baseline progression. Combat VE and environmental absorption are the accelerants. Characters who push into danger and time their rests well level faster than those who play it safe.
 
-### Toxins & Impurities
+### The Curve
 
-Consuming healing pills or forced-growth treasures adds **Toxin Points**. If Toxin Points exceed a character's Toxin Tolerance (Raw FOR × 2), Consolidation degrades: the processing rate is halved, and one quarter of the VE processed during each rest is lost to impurity (round down).
+The chart is generated by:
 
-Toxin clears on its own at a rate of **Raw FOR points per full day** free of new Toxin intake.
+> **VE to reach next level = 100 × 1.2^(level-within-Grade − 1) × Grade Multiplier**
 
-### Grade Breakthroughs
+where level-within-Grade runs 1–24 inside each Grade and the Grade Multiplier is ×1 for F, ×10 for E, ×100 for D, the same multiplier used everywhere else in the system. The E-Grade chart is the F-Grade chart ×10, numbered 26–50. Class features, rare titles, or specific treasures may tweak the multiplier for individual characters, but the baseline curve applies to everyone.
 
-When a character reaches the Grade-cap level (the last level within their Grade), they cannot advance further through ordinary Consolidation. Instead, they must attempt a **Grade Breakthrough**, a four-beat ritual involving deliberate VE overcharge, a Breakthrough Check (d100 + HRT Force + your highest Attribute's Force vs. Severe difficulty of the target Grade), external phenomena management, and System recognition.
+The exact processing rate behind the one-fifth rule is (Raw FOR + Raw POW) VE per hour, which equals one fifth of Tolerance by construction; the fifths phrasing is the same rule with no per-character arithmetic.
 
-The full mechanic is documented in the **Grade Breakthroughs** chapter (`30-breakthroughs.md`), including the Overcharge Ratio risk-reward dial, the five Quality Tiers (Cracked through Transcendent), Breakthrough Item categories, Environment & Energy Density modifiers, Party Support mechanics, and Grade-specific trial themes.
+On paper the pace is flat across Grades: rewards and costs both scale ×10, so the same number of peer kills spans a level at every Grade. In play, later Grades run slower anyway. Sub-Grade kills pay next to nothing, peer prey is rarer and defends better territory, and every peer fight is genuinely dangerous. Expect each Grade to take more sessions than the one before without touching the numbers.
+
+---
+
+## Grade Breakthroughs
+
+When a character reaches the Grade-cap level, they must attempt a **Grade Breakthrough**: a four-beat ritual involving deliberate VE overcharge, a Breakthrough Check (d100 + HRT Force + your highest Attribute's Force vs. Severe difficulty of the target Grade), external phenomena management, and System recognition. The full mechanic is in the Grade Breakthroughs chapter, including the Overcharge Ratio risk-reward dial, the five Quality Tiers, Breakthrough Item categories, Environment & Energy Density modifiers, Party Support, and Grade-specific trial themes.
 
 ---
 
@@ -147,7 +157,7 @@ Three paths, each with a cost:
 
 - **Rest Healing:** During Consolidation, characters recover 25% Max HP per hour. Safest option, but it requires time.
 
-- **Healing Pills and Potions:** Instant recovery of a flat HP amount based on pill grade. Every pill adds Toxin Points.
+- **Healing Pills and Potions:** Instant recovery of a flat HP amount based on pill grade. Consuming one in combat costs 1 Beat, and healing lands with diminishing efficiency over a single fight (see Items, "Pill Saturation in Combat").
 
 - **Healing Skills and Spells:** Some classes possess healing abilities generated by the System AI. These cost Aether and one Beat in combat.
 
