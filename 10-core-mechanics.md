@@ -8,7 +8,7 @@
 
 The game's numbers come in two sizes: the huge ones the story is about, and the small ones the table rolls with. Stats grow into the millions; every number that touches dice stays between 1 and 99.
 
-- **Significant Digits (The Force System):** Every stat has a Raw Power value (the big LitRPG number) and a Force value (the first two significant digits). Players see their Strength climb from 4,200 to 4,500; at the table, that same climb is Force 42 becoming Force 45. All resolution math stays locked in the 1–99 band, so a d100 always means something at every Grade.
+- **Significant Digits (The Force System):** Every stat has a Raw Power value (the big LitRPG number) and a Force value (the stat's first two digits, read at the character's Grade). Players see their Strength climb from 4,200 to 4,500; at the table, that same climb is Force 42 becoming Force 45. All resolution math stays locked in the 1–99 band, so a d100 always means something at every Grade.
 
 - **The Clash (Opposed Resolution):** Every contested action resolves in one opposed roll. There is no separate to-hit step and damage step. You roll, your opponent rolls, and the Margin between totals determines the outcome.
 
@@ -30,9 +30,9 @@ Every stat in the game has three components:
 
 - **Raw Power:** The actual LitRPG number on the character sheet (e.g., 4,520). This is what players see, track, and get excited about.
 
-- **Grade (Magnitude):** The order of magnitude, read off the stat itself: 1–99 is F-magnitude, 100–999 E-magnitude, 1,000–9,999 D-magnitude. A character's Grade names the band their stat caps sit in, and nearly every stat lives there; a stat left below the band keeps its own magnitude (see The Grade Gap, "Lagging Stats").
+- **Grade (Magnitude):** The order of magnitude of the character's Grade: F reads stats as 1–99, E as 100–999, D as 1,000–9,999. Every stat a character owns reads at their Grade's magnitude; a stat that trails below the band pads with leading zeros (see The Grade Gap, "Lagging Stats").
 
-- **Force:** The first two significant digits of the Raw Power. This is the only number used at the table for resolution.
+- **Force:** The first two digits of the Raw Power read at the character's Grade: divide by the Grade's divisor (by 1 at F, by 10 at E, by 100 at D) and drop fractions. For a stat inside the Grade's band, which is nearly every stat, this is simply the first two significant digits. Force is the only number used at the table for resolution.
 
 **Extraction Example:** A character with STR 4,520 is D-Grade. Their STR Force is 45. An opponent with DEF 3,100 is D-Grade. Their DEF Force is 31.
 
@@ -44,7 +44,7 @@ Every stat in the game has three components:
 | C-Grade | 10,000–99,999 | 10³ | 10–99 | ×1,000 (add 3 zeroes) |
 | B-Grade | 100,000–999,999 | 10⁴ | 10–99 | ×10,000 (add 4 zeroes) |
 
-At F-Grade, Force equals Raw Power directly (no extraction needed; the number is already 1–99). From E-Grade onward, Force is extracted as the first two significant digits. A fresh E-Grade character with STR 120 has Force 12; they are weak within their Grade but still carry the Grade's damage multiplier, which is what makes cross-Grade combat asymmetric.
+At F-Grade, Force equals Raw Power directly (no extraction needed; the number is already 1–99). From E-Grade onward, Force is extracted by dividing by the Grade's divisor and dropping fractions; for a stat inside the band, that is simply its first two digits. A fresh E-Grade character with STR 120 has Force 12; they are weak within their Grade but still carry the Grade's damage multiplier, which is what makes cross-Grade combat asymmetric.
 
 ### Stat Growth and the Cap
 
@@ -324,7 +324,7 @@ If the **attacker wins**, calculate the **Margin:**
 
 **Step 3. Apply Damage (The Zeroes Rule):**
 
-Take the Margin and multiply it by the attacker's Grade Magnitude (for an attack driven by a lagging stat, the stat's own magnitude; see "Lagging Stats"):
+Take the Margin and multiply it by the attacker's Grade Magnitude:
 
 > **Damage = Margin × 10^(Grade Magnitude)**
 
@@ -395,7 +395,7 @@ When entities of different Grades clash, the gap between them is expressed throu
 
 **For every Grade of difference, the higher-Grade combatant adds +100 to their Force in all Clashes and opposed checks.**
 
-The Grades compared are those of the governing stats on each side. For characters whose stats sit in their Grade's band, which is nearly everyone nearly always, that is simply the characters' Grades; the exception is a lagging stat (below).
+The Grades compared are the two combatants' Grades, whatever stats govern the exchange.
 
 | **Grade Gap** | **Higher-Grade Force Bonus** |
 |---|---|
@@ -420,11 +420,11 @@ Before the Magnitude Gap bonus even applies, the raw stat difference between Gra
 
 ### Lagging Stats
 
-Breakthrough lifts stat caps without raising stats, so a neglected Attribute can sit below the new Grade's band: an E-Grade scholar might carry STR 65 into a world of three-digit bodies. A lagging stat keeps its own magnitude. It extracts Force as the number it is (STR 65 is Force 65, an F-magnitude stat), and any Clash or check it governs applies the Cross-Grade Adjustment and the damage multiplier by the stat's Grade rather than its owner's.
+Breakthrough lifts stat caps without raising stats, so a neglected Attribute can sit below the new Grade's band: an E-Grade scholar might carry STR 65 into a world of three-digit bodies. The lagging stat reads like every other stat its owner has, at the character's Grade: pad it with leading zeros to the band's width and take the first two digits. STR 65 on an E-Grade character is 065, Force 06. The same stat on a D-Grade character would read 0065, Force 0.
 
-**Example.** An E-Grade scholar (STR 65, Force 65) grapples an E-Grade soldier (STR 300, Force 30). The soldier's stat is one magnitude above the scholar's, so the soldier adds +100: d100 + 130 vs. d100 + 65. If the scholar lands a punch instead, it is an F-magnitude attack: damage is Margin × 1 against an E-Grade HP pool. The scholar's POW 500 spells resolve as normal E-Grade actions; the frailty lives only in the stat that lagged.
+Nothing else changes. The character's Grade governs the Cross-Grade Adjustment, the damage multiplier, and every Grade-keyed rule for all of their stats, lagging or not.
 
-Rules keyed to the character rather than to a stat (Volatility threshold, stat caps, level span, cross-Grade movement, Aura Pressure) read the character's Grade as always.
+**Example.** An E-Grade scholar (STR 65, Force 06) grapples an E-Grade soldier (STR 300, Force 30): d100 + 6 vs. d100 + 30, an honest mismatch the scholar occasionally wins on the dice. Against an F-Grade dockworker (STR 80, Force 80), the scholar adds the +100 Cross-Grade Adjustment: d100 + 106 vs. d100 + 80, because even the neglected arm of an ascended body is beyond a mortal's. And on the rounds the scholar's grip closes, the damage is E-Grade, Margin × 10. The whole body Broke Through, weak parts included; what lags is how it measures against peers.
 
 ### Aura Pressure
 

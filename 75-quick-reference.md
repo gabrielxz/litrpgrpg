@@ -45,7 +45,7 @@
 
 **Cross-Grade Adjustment:** The higher-Grade side gains +100 per Grade of difference. In Opposed Rolls, the higher-Grade combatant adds +100 to their total per Grade above the opponent. In Resistance Rolls, add +100 per Grade of difference to whichever side is higher (the challenger's roll if challenging a lower-Grade obstacle, the obstacle's Resistance if challenging a higher-Grade obstacle). Same Grade, no adjustment.
 
-**Lagging stats:** a stat below its owner's Grade band keeps its own magnitude: Force is the number as written, and Clashes it governs take the Cross-Grade Adjustment and damage multiplier from the stat's Grade rather than the character's.
+**Lagging stats:** every stat reads at its owner's Grade. Pad below-band stats with leading zeros (E-Grade STR 65 → 065 → Force 06). Cross-Grade Adjustment and damage multiplier always follow the character's Grade.
 
 **HP** = Raw FOR × 2. **Aether** = Raw POW. Aether refills only on Consolidation, after the first full hour (no in-combat or passive regen).
 
