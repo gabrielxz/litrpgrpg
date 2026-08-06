@@ -10,7 +10,7 @@ Characters do not gain traditional "Experience Points." They accumulate **Volati
 
 **Earn VE → watch your gauge → decide to push or rest → Consolidate → level up.**
 
-Joe has FOR 7 and POW 5, so his VE Tolerance is 60. A morning of hunting earns him 35 VE; he is fine. Then the party finds the den, and Joe decides to risk it: two more fights push him to 70 VE, past his Tolerance, and the overload starts to burn (Saturation, below: −10 to everything until he processes it). The party makes camp and Joe Consolidates. An hour in, his Aether is back. By the sixth hour the whole load is refined: his wounds are closed, the burn is gone, and all 70 VE is permanent progress toward his next level.
+Joe has FOR 7 and POW 5, so his VE Tolerance is 60. A morning of hunting earns him 35 VE; he is fine. Then the party finds the den, and Joe decides to risk it: two more fights push him to 70 VE, past his Tolerance, and now Joe feels uncomfortably full of energy: his skin prickles, his hands won't stay still, and everything is a little harder than it should be (Saturation, below: −10 to everything until he processes it). The party makes camp and Joe Consolidates. An hour in, his Aether is back. By the sixth hour the whole load is refined: his wounds are closed, the too-full feeling is gone, and all 70 VE is permanent progress toward his next level.
 
 ### The Pressure Gauge
 
@@ -37,7 +37,7 @@ One rule covers the clock: **each full hour of Consolidation clears one fifth of
 During the rest:
 
 - **Growth:** Processed VE converts into permanent level progress. When cumulative processed VE crosses the next threshold on the VE Chart, the character levels up on the spot, mid-rest.
-- **HP:** Characters recover 25% of Max HP per hour; wounds are closed by the fourth hour.
+- **HP:** Characters recover 20% of Max HP per hour; wounds close as the tank empties, by the fifth hour.
 - **Aether:** The pool refills completely when the first full hour completes. This is the only source of Aether regeneration; Aether does not recover in combat, between combats, or through passive time. See Core Mechanics, "The Aether System."
 - **Interruption:** The character keeps every completed hour of processing and recovery. Unprocessed VE stays in the tank and remains subject to Saturation.
 - **Defenselessness:** A consolidating character is completely defenseless. The whole party may consolidate at once as a calculated risk; posting a guard means that character is not consolidating.
@@ -78,6 +78,8 @@ Levels are numbered continuously across Grades: **Levels 1–25 are F-Grade, 26�
 | **24 → 25 (F cap)** | **6,625** | **39,251** |
 
 **Grade Breakthrough:** At Level 25 the character cannot advance through ordinary Consolidation. Entering E-Grade (and Level 26) requires a **Grade Breakthrough**, a deliberate ritual with its own chapter. It is **not** an automatic level-up. The E-Grade span climbs the same curve at ×10 the cost; the numbers live in the GM reference at the end of this chapter.
+
+At the cap, VE keeps accumulating with nowhere to go, and stored VE counts in full toward Breakthrough Ignition. Hunting at the cap is banking fuel for the ritual; Saturation applies to the stockpile as normal, which is why the last stretch of the charge gets gathered fast, on site.
 
 ### When to Consolidate
 
@@ -145,7 +147,7 @@ On paper the pace is flat across Grades: rewards and costs both scale ×10, so t
 
 ## Grade Breakthroughs
 
-When a character reaches the Grade-cap level, they must attempt a **Grade Breakthrough**: a four-beat ritual involving deliberate VE overcharge, a Breakthrough Check (d100 + HRT Force + your highest Attribute's Force vs. Severe difficulty of the target Grade), external phenomena management, and System recognition. The full mechanic is in the Grade Breakthroughs chapter, including the Overcharge Ratio risk-reward dial, the five Quality Tiers, Breakthrough Item categories, Environment & Energy Density modifiers, Party Support, and Grade-specific trial themes.
+When a character reaches the Grade-cap level, they must attempt a **Grade Breakthrough**: a four-stage ritual involving deliberate VE overcharge, a Breakthrough Check (d100 + HRT Force + your highest Attribute's Force vs. Severe difficulty of the target Grade), external phenomena management, and System recognition. The full mechanic is in the Grade Breakthroughs chapter, including the Overcharge Ratio risk-reward dial, the five Quality Tiers, Breakthrough Item categories, Environment & Energy Density modifiers, Party Support, and Grade-specific trial themes.
 
 ---
 
@@ -155,7 +157,7 @@ For 0 HP, the Downed state, stabilization, and death, see Core Mechanics, "Downe
 
 Three paths, each with a cost:
 
-- **Rest Healing:** During Consolidation, characters recover 25% Max HP per hour. Safest option, but it requires time.
+- **Rest Healing:** During Consolidation, characters recover 20% Max HP per hour. Safest option, but it requires time.
 
 - **Healing Pills and Potions:** Instant recovery of a flat HP amount based on pill grade. Consuming one in combat costs 1 Beat, and healing lands with diminishing efficiency over a single fight (see Items, "Pill Saturation in Combat").
 

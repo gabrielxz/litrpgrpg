@@ -6,11 +6,11 @@
 
 ## Design Intent
 
-Titles are the System's mirror. They are how the System tells the character, and the rest of the world, *who you are turning into*. They are not a buff list to be optimized in isolation; they are recognition, retroactive and ongoing, of behavior the System has already observed.
+Titles are the System's achievement layer: notifications that land mid-session, each with a name worth reading aloud and a bonus attached. Kill your tenth beast and "Ten-Slayer" pops up with +1 STR. Survive something you had no business surviving and something rarer appears. Collecting them is fun, comparing them is fun, and a good stack adds up to real power.
 
 **Stacking is the point.** Title bonuses are calibrated so that a single title is a satisfying nudge, but a creatively constructed stack of five to ten produces visible, decisive power. Players are expected to hunt titles, plan around combinations, and lean on the stack when conditions converge.
 
-Titles arrive in four shapes (Achievement, Hidden Achievement, HVE-Resonant, Bestowed). All four coexist on a character. None are selected from a menu; the System AI generates every title dynamically, calibrated to the specific character.
+Titles arrive in four shapes (Achievement, Hidden Achievement, HVE-Resonant, Bestowed). All four coexist on a character. Nobody picks them from a menu; the GM, or the System AI in assisted modes, generates each one for the specific character who earned it.
 
 **Pacing target (soft):**
 
@@ -37,17 +37,17 @@ Players don't see thresholds in advance, but after the second or third Achieveme
 
 Generated when a player accomplishes something statistically improbable: surviving an encounter they should have died in, solving a puzzle in an unintended way, completing an objective with a self-imposed constraint, achieving an outcome the System did not predict.
 
-Rare, surprising, meaningfully buffed. Already established as a System AI function (`45-system-ai.md`). Players never see criteria in advance. These are the titles players brag about.
+Rare, surprising, meaningfully buffed. Generation guidance lives in The System AI chapter. Players never see criteria in advance. These are the titles players brag about.
 
 **Examples:** "Improbable," "The One Who Walked Through," "Unbroken," "The First Mercy," "Cornerless."
 
 ### HVE-Resonant Titles
 
-Generated when a character's behavioral signature crystallizes into a recognizable pattern. The System acknowledging *who you are*, not *what you did*. Tend to appear during Consolidation, after meaningful Battle Memories, or at Breakthrough.
+Generated when a character's behavior settles into a recognizable pattern. Achievement titles track things a character did; these track how a character does things. Tend to appear during Consolidation, after meaningful Battle Memories, or at Breakthrough.
 
-Mechanically grant bonuses aligned with the dominant axis combination. Often carry narrative permissions (NPC reactions, faction interest, environmental affinities).
+Mechanically grant bonuses aligned with the dominant axis combination.
 
-**These titles evolve.** A character who is "The Hungering Edge" at F-Grade may become "The Devourer's Blade" at E-Grade if the pattern intensifies, or may shed the title and gain a new one if their behavior shifts. Titles are a living expression of identity, not a permanent label.
+**These titles evolve.** A character who is "The Hungering Edge" at F-Grade may become "The Devourer's Blade" at E-Grade if the pattern intensifies, or may shed the title and gain a new one if their behavior shifts.
 
 **Examples:** "The Hungering Edge" (Force + Hunger), "Quiet Architect" (Method + Control), "The Open Hand" (Restraint + Accord), "The Severed Tether" (Method + Freedom).
 
@@ -65,7 +65,7 @@ Granted by external entities: factions, higher-Grade beings, ancient Principles,
 
 ### Stacking Rules
 
-**Stacking is unbounded.** There is no cap on the number of simultaneous active titles. A character with thirty titles benefits from all thirty, modulo the mutual-exclusion rule below.
+**Stacking is unbounded.** There is no cap on the number of simultaneous active titles. A character with thirty titles benefits from all thirty, except where the mutual-exclusion rule below applies.
 
 **Mutual exclusion (HVE-Resonant only):** A character may have only **one HVE-Resonant title per axis pair active at a time**. When the System grants a new HVE-Resonant title that resonates with an axis pair already represented, the new title supersedes the old one. The old title is logged as "Echoed" (visible in the character's history, no longer mechanically active).
 
@@ -122,17 +122,6 @@ Free Beats or extra actions under specific conditions. Genuinely powerful; use s
 
 These should be rare, typically Hidden Achievement or peak Bestowed.
 
-#### Narrative Permissions
-
-NPC reactions, faction access, environmental affinities, recognition signals. No flat bonus, but tangible advantage in specific scenes.
-
-**Examples:**
-- "NPCs of [faction] recognize you on sight."
-- "Wildlife of [biome] does not flee from you."
-- "Bureaucratic systems acknowledge your authority within [domain]."
-
-Narrative permissions don't stack mechanically; they overlap fictionally. A character with five faction-recognition titles is a known figure; the GM plays NPC reactions accordingly.
-
 #### Resistances and Affinities
 
 Damage reduction against specific damage types, Principle resonance bonuses, environmental tolerance.
@@ -146,7 +135,7 @@ Damage reduction against specific damage types, Principle resonance bonuses, env
 
 A negative Bestowed title cannot be unequipped or removed without specific in-fiction action. The character carries it until they earn the conditions of release.
 
-**Common shape:** a flat penalty (−2 to a stat, +10 difficulty against a specific entity) plus a narrative permission flipped negative (NPCs of a faction become hostile on sight, environmental affinity becomes environmental hostility).
+**Common shape:** a flat penalty (−2 to a stat, +10 difficulty against a specific entity) plus a concrete social consequence (NPCs of a faction turn hostile on sight, wildlife that once ignored you now hunts you).
 
 **Release conditions** are written into the title itself when granted. "Oathbroken" is released by fulfilling a new sworn oath under witness. "Marked for the Hunt" is released by defeating the entity that marked you. The System AI generates the release condition based on the violation.
 
@@ -172,7 +161,7 @@ How HVE-Resonant titles change over time.
 **HVE-Resonant titles coexist when:**
 - The character develops a genuinely new axis pairing in addition to an existing one. A character who started Force + Hunger and develops an additional Will pattern may end up holding both "The Hungering Edge" and a new Will-based title. This is rare and the System AI is conservative about granting it.
 
-**Achievement titles never evolve.** They commemorate a specific milestone. The "Ten-Slayer" you earned at F-Grade is still in your record at S-Grade. Its bonus is small, but it is part of who you have been.
+**Achievement titles never evolve.** They commemorate a specific milestone. The "Ten-Slayer" you earned at F-Grade is still on your record at S-Grade; its bonus is small, but it never goes away.
 
 **Hidden Achievement titles never evolve.** They commemorate a specific moment. They keep their original bonus.
 
@@ -206,7 +195,7 @@ Who can see what.
 
 ## Sample F-Grade Titles by HVE Archetype
 
-The four archetypes from `50-hidden-vector-engine.md` illustrate magnitude and flavor. Each archetype gets a sample stack of five titles spanning the four categories. The System AI generates titles dynamically; these are calibration references, not menus.
+The four archetypes from the Hidden Vector Engine chapter illustrate magnitude and flavor. Each archetype gets a sample stack of five titles spanning the four categories. The System AI generates titles dynamically; these are calibration references, not menus.
 
 ### The Apex Predator (Force + Hunger + Will + Freedom)
 

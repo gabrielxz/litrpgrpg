@@ -22,7 +22,6 @@ Players begin with **whatever was on their person at the moment of Integration**
 - [ ] Pre-write 5–7 probe variants from Phase 1 (one per player, plus spares).
 - [ ] Set up the Quest UI: a shared digital quest log (Discord pinned, Google Doc, VTT module). Each player has a private subsection.
 - [ ] Read `40-titles.md` and `55-quests.md` once through. Be ready to issue the first Mandate in Phase 6 and the first Achievement Titles in Phase 7.
-- [ ] Have the Stable Abilities catalog (`35-stable-abilities.md`) open during Phase 7.
 - [ ] Decide on starting consumables in the Recycling Node (Phase 3); the default loot list is in that section.
 - [ ] Open the HVE event log (`50-hidden-vector-engine.md`, "Structured Event Logging") and be ready to record entries throughout. The tutorial generates dense behavioral signal; capture it.
 
@@ -53,7 +52,6 @@ By the end of the tutorial, every player should have:
 - Survived at least one Clash that nearly killed them.
 - Witnessed at least one System Volatility explosion.
 - Made at least three **2.0+ intensity** HVE log events (high-stakes choices).
-- Earned **one Stable Ability** drawn from the catalog.
 - Earned **at least one Achievement Title** (Hidden Achievement titles are rare but possible).
 - Received an **Affinity Notice** hinting at their Principle direction.
 - Survived a **Mandate** (the Phase 6 dissolution event).
@@ -72,7 +70,7 @@ If any of these is missing at the end of Session 3, the GM should improvise to d
 | 4: Field of Ruins | Volatility explosions. Aura Pressure save. Saturation symptoms. Skill Shards in use. Routine Mastery. |
 | 5: Resonance Isolation | Personal Opportunities. Irreversible solo decisions. The first Battle Memory. |
 | 6: Convergence Crisis | The first Mandate. Boss-tier combat. Sacrifice as a 3.0 intensity choice. |
-| 7: First Recognition | Consolidation. Leveling. Stat allocation. Stable Abilities. Titles. Affinity Notices. Hidden Quest reveals. The Stinger. |
+| 7: First Recognition | Consolidation. Leveling. Stat allocation. Titles. Affinity Notices. Hidden Quest reveals. The Stinger. |
 
 The GM should never stop play to explain a system. If a player asks "how does combat work," the answer is *"roll d100, add your Force, I'll tell you what happens."* Every other rule emerges by encountering it.
 
@@ -327,7 +325,7 @@ Pause here. Players have experienced the void, the violent arrival, the first Cl
 
 Award **session survival VE** (10 VE per character) and confirm running totals. A typical character ends Session 1 with **40–80 VE** accumulated (combat + encounter rewards + survival).
 
-**The First Consolidation.** Close the session with the party camping overnight at the Node and declaring their first Consolidation (Cultivation chapter). Walk through the mechanic once: minimum 1 hour, each full hour clears one fifth of Tolerance from stored VE, 25% Max HP recovered per hour, Aether refilling when the first full hour completes. At starting Tolerances (around 45 VE), most characters are already carrying more VE than they can hold; narrate the Saturation symptoms as they settle in (skin hot and prickly, hands trembling at rest) and the relief as the overnight rest processes the load; eight hours clears more than a full tank and a half, enough for all but the heaviest hauls. Most characters wake still Level 1, a fight or two short of the 100-VE threshold; a character who crosses it levels mid-rest, and the GM walks them through the 3+2 stat allocation (Progression chapter) at the table.
+**The First Consolidation.** Close the session with the party camping overnight at the Node and declaring their first Consolidation (Cultivation chapter). Walk through the mechanic once: minimum 1 hour, each full hour clears one fifth of Tolerance from stored VE, 20% Max HP recovered per hour, Aether refilling when the first full hour completes. At starting Tolerances (around 45 VE), most characters are already carrying more VE than they can hold; narrate the Saturation symptoms as they settle in (skin hot and prickly, hands trembling at rest) and the relief as the overnight rest processes the load; eight hours clears more than a full tank and a half, enough for all but the heaviest hauls. Most characters wake still Level 1, a fight or two short of the 100-VE threshold; a character who crosses it levels mid-rest, and the GM walks them through the 3+2 stat allocation (Progression chapter) at the table.
 
 ---
 
@@ -410,7 +408,7 @@ A shattered tower or ritual complex: the remnants of a civilization that underst
 - **1 Fragment Wraith** (bestiary, F-Severe). Incorporeal. Vulnerable to PER-based attacks and skill shards. It haunts the tower's lower halls; the shard matrices and the observation deck are reachable without waking it, through exterior climbs and gaps in the shattered wall (Moderate 90 checks). As a fight it is a rout for a tutorial party: run it as a horror beat instead. Weapons pass through it, the PER-based openings glow obvious to anyone who looks, and fleeing works; it does not pursue beyond the tower. A party that engages anyway should learn the tutorial's hardest lesson cheaply: one character Downed and stabilized, then a retreat. Its Mind-Leach (damage plus Aether drain on hit) makes the danger legible fast.
 - **Degraded skill shards** embedded in crystalline matrices. Pulling them free requires solving spatial puzzles (PER vs. F-Moderate 90) or enduring energy feedback (5 damage on failure). Inventory: 1 Edge Shard, 1 Pulse Shard, 1 Anchor Shard.
 - **Inactive runes** that respond to touch, voice, or proximity in unpredictable ways. GM rolls d100 for effect: 1–30 painful (5 damage), 31–70 neutral (sensory glitch), 71–95 beneficial (+5 to next Clash), 96–100 unstable (rune detonates, all in Zone make F-Easy 65 DEX save or take 10 damage). Rewards experimentation under risk.
-- **Resonance chamber:** a character can temporarily "borrow" a dead technique. They feel arcane power flow through them for one use, unstable and intoxicating, then it's gone. Functionally: choose one Stable Ability from the catalog (`35-stable-abilities.md`) and use it once during the next combat. Then it is gone forever; they cannot keep it.
+- **Resonance chamber:** a character can temporarily "borrow" a dead technique. They feel arcane power flow through them for one use, unstable and intoxicating, then it's gone. Functionally: the GM improvises a one-use technique priced against the Modifier Budget (a +10 Clash effect or similar, 1 Beat), usable once during the next combat. Then it is gone forever; they cannot keep it.
 - **Broken constructs:** can be partially reactivated by characters who experiment (PER vs. F-Hard 115). On success, the construct fights for the party for 3 rounds (Off Force 12, Def Force 15, HP 30).
 - **Corrupted data-altar:** answers one question about the tutorial zone truthfully, but the question must be phrased precisely, and the answer comes in symbolic form requiring interpretation.
 
@@ -510,7 +508,7 @@ A System construct presents you with two objects. One is clearly a weapon: elega
 
 A dying consciousness, the last fragment of an ancient cultivator's mind, is trapped in a decaying rune matrix. It speaks to you in fragments.
 
-- **Accept the imprint:** It transfers its final technique. Painful, disorienting. Functionally: choose one Stable Ability from `35-stable-abilities.md` to receive at Phase 7. Logs **Accord 2.0**, **Method 1.0**.
+- **Accept the imprint:** It transfers its final technique. Painful, disorienting. Functionally: a Battle Memory trigger; the meditation carries the construct's dying technique and awards **+1 IP** toward an Accord-aligned Principle. Logs **Accord 2.0**, **Method 1.0**.
 - **Harvest the matrix for raw energy:** The consciousness dissipates screaming. **+150 VE** absorbed. Logs **Hunger 2.0**, **Force 1.0**.
 - **Free the consciousness:** The matrix releases; the consciousness expresses gratitude and dissolves into ambient energy. **+1 IP** toward a Restraint-aligned Principle. Logs **Restraint 2.0**, **Accord 1.0**. **Hidden Achievement candidate**: log "The First Mercy" if the player has not yet earned it.
 
@@ -610,7 +608,7 @@ A player may choose to draw the Warden's attention permanently, dying in the pro
 
 - The sacrificing character's HVE log records a **3.0 Defining intensity** event on whichever axis matches their motivation (typically Accord + Restraint, but it could be Will if they are dying spitefully).
 - **Hidden Achievement title** awarded retroactively at Phase 7: "The One Who Stood." If the player rolls a new character, the title persists as a permanent legacy in the world; NPCs and the System remember.
-- The sacrificing player may, with GM permission, return as a new character at the next session, generated as if they had completed Phase 7 (with full Stable Ability and tutorial rewards).
+- The sacrificing player may, with GM permission, return as a new character at the next session, generated as if they had completed Phase 7 (with full tutorial rewards).
 
 If no one sacrifices, that's fine. The encounter is winnable through cooperation. Sacrifice should never feel mandatory; it should feel *available* for the player who wants to commit to it.
 
@@ -662,7 +660,6 @@ Each player receives a **private System summary**: a card, note, sidebar, or one
 [Summary observation: 2–3 lines, clinical.]
 [Affinity Notice: 1 line, hint at Principle direction.]
 [Title(s) granted: list.]
-[Stable Ability granted: name + brief effect.]
 [Hidden Quest reveals: list with rewards.]
 [VE awaiting refinement: number + projected level.]
 ══════════════════════════════════════════
@@ -680,7 +677,6 @@ Below are four samples calibrated to common tutorial archetypes. The GM customiz
 >
 > Title granted: **First Blood** (Achievement).
 > Hidden Achievement: **Cornerless** (survived a Clash at 25% HP or less).
-> Stable Ability: **First Impact**. Once per encounter, the first Clash you make in any combat gains +15.
 >
 > Hidden Quest revealed: *"Ten-Slayer." Progress: 4/10.*
 >
@@ -694,7 +690,6 @@ Below are four samples calibrated to common tutorial archetypes. The GM customiz
 >
 > Title granted: **Patient Gardener** (Achievement).
 > Hidden Quest revealed (post-completion): *"The First Mercy." Complete. Reward: +1 IP toward a Restraint-aligned Principle.*
-> Stable Ability: **Architect's Eye**. Once per encounter, after observing a target for at least one round, ask the GM one tactical question about it.
 >
 > VE awaiting refinement: 480. Projected advancement: Level 4.
 
@@ -706,7 +701,6 @@ Below are four samples calibrated to common tutorial archetypes. The GM customiz
 >
 > Title granted: **Voice of Decision** (Achievement, for breaking deadlock during Recycling Node allocation).
 > Bestowed title: **The Hand That Reached** (granted by System construct in Resonance Event).
-> Stable Ability: **Rally**. Once per encounter, spend 1 Beat to grant an ally +10 to their next Clash this round.
 >
 > VE awaiting refinement: 690. Projected advancement: Level 5.
 
@@ -717,7 +711,6 @@ Below are four samples calibrated to common tutorial archetypes. The GM customiz
 > *Resonance detected: SUBVERSION. Monitoring.*
 >
 > Title granted: **Lockbreaker** (Achievement, for opening the locked cache without the proper inputs).
-> Stable Ability: **Slipstep**. Once per Consolidation, when you would be hit by an attack, declare Slipstep; the attacker rerolls and takes the lower result.
 >
 > Hidden Quest revealed: *"The One Who Walked Through." In progress (1/3 sealed locations entered).*
 >
@@ -733,16 +726,6 @@ For each level as it lands, allocate **5 stat points**:
 - **2 points free** for the player.
 
 Run the levels one at a time rather than summing them; the sheet changing again and again in one sitting is the payoff. Walk each player through this individually.
-
-### The Stable Ability Moment
-
-For each player, narrate the Stable Ability arrival as a felt experience:
-
-- *"You feel a faint pressure behind your eyes, and then a knowing. Your body remembers something it hasn't done yet."*
-- *"There's a click in your chest. A new permission. You'll know when you can use it."*
-- *"You blink, and the world has slightly more options than it did a moment ago."*
-
-Hand them the ability text. They now have a permanent capability that signals their direction. (See `35-stable-abilities.md` for selection guidelines.)
 
 ### The Stinger
 
@@ -808,7 +791,6 @@ Use this checklist to confirm each mechanic was introduced before tutorial end.
 - [ ] **Boss-tier combat** in Phase 6 (Warden).
 - [ ] **Consolidation** taught at the end of Session 1 (the First Consolidation at the Node).
 - [ ] **Leveling and stat allocation** run levels-as-earned at each Consolidation, finishing at the post-gate rest in Phase 7.
-- [ ] **Stable Ability** assigned in Phase 7.
 - [ ] **First Title** delivered in Phase 7.
 - [ ] **Affinity Notice** delivered in Phase 7.
 - [ ] **Hidden Quest reveals** in Phase 7 (retroactive completions).

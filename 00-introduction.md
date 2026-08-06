@@ -51,7 +51,7 @@ For the GM, in order:
 
 1. **Core Mechanics** and **Character Creation**: read closely. This is the resolution engine and the character sheet.
 2. **Cultivation**: the progression engine. Read closely.
-3. **The Principle System**, **Grade Breakthroughs**, **Stable Abilities**, **Titles**, and **System Quests**: read once so you know what exists; return when play reaches them.
+3. **The Principle System**, **Grade Breakthroughs**, **Titles**, and **System Quests**: read once so you know what exists; return when play reaches them.
 4. **The System AI**: choose how you'll run (below).
 5. **The Hidden Vector Engine**: the observation layer behind everything.
 6. **The Tutorial**: your campaign's first three sessions, ready to run. It introduces every mechanic in play, phase by phase. Do not stop play to teach rules; when a player asks how combat works, the whole answer is "roll d100, add your Force, and I'll tell you what happens."

@@ -10,19 +10,19 @@ Five terms carry this chapter:
 
 | **Term** | **Meaning** |
 |---|---|
-| Principle | The truth your character is learning: Weight, Fire, Edge. |
+| Principle | The conceptual truth your character is learning: Weight, Fire, Edge. |
 | Insight Points (IP) | Accumulated understanding. A visible number. |
 | Battle Memory | An extreme moment the System kept. Meditating on it earns IP. |
-| Compression | The act that turns enough IP into an advancement: say the truth, receive its expression. |
+| Distillation | The act that turns enough IP into an advancement: say the truth, receive its expression. |
 | Application | An active technique granted by a Principle. |
 
 Everything else in the chapter is detail hanging off this loop:
 
 ![](./assets/principle_loop.png){width=88%}
 
-Principles advance on their own track. Levels and Grades measure how much power the System has integrated into your body; the Principle track measures how much of reality you understand. The two feed on the same dangerous life, so they usually rise together, but nothing forces them to. The track touches your Grade at exactly one point, the Domain gate, covered later in this chapter.
+Principles advance on their own track. Levels and Grades measure how much power the System has integrated into your body; the Principle track measures how much of reality you understand. The two feed on the same dangerous life, so they usually rise together, but nothing forces them to. Grade matters to this track only once: the highest grant, the Domain, needs a D-Grade body. Everything below it advances at any Grade.
 
-A Principle does not raise stats. What it grants, tier by tier, is capability: active techniques, resistances and affinities, and eventually a zone where its truth is briefly law.
+A Principle does not raise stats. What it grants, tier by tier, is capability: active techniques, resistances and affinities, and eventually a Domain, a zone where its truth is briefly law.
 
 ## Kara's Story
 
@@ -40,11 +40,15 @@ The whole track, from first resonance to first power, looks like this at the tab
 
 **GM:** You're cycling, and the slab comes back. The full weight of it, on you again. What do you notice this time that you didn't in the moment?
 
-**Kara:** In the moment I thought I was pushing up. But that's wrong. Nobody pushes up against a hillside. I think I was deciding where it would fall. It was always coming down; I picked "not yet, and not here."
+**Kara:** I don't know. I keep thinking about how I couldn't have held it. It was way too heavy.
 
-**GM:** The memory holds still, like something is listening. Say what the pattern is.
+**GM:** And yet your partner is alive. What did you actually do, if you didn't hold it?
 
-**Kara:** Heavy things don't argue. They arrive. You can't stop something that heavy, but maybe you can be the one who says where it lands.
+**Kara:** I guess... it was coming down no matter what. I just made it come down somewhere else. Not on him.
+
+**GM:** The memory holds still, like something is listening. Say that again, plainer.
+
+**Kara:** You can't stop a heavy thing. But maybe you can pick where it lands.
 
 ::: systemvoice
 *A mountain hangs from a thread. The thread does not strain. Below, something waits to be told where to fall.*
@@ -60,7 +64,7 @@ The meditation earned 2 IP. That carried her past 3, and the Principle **crystal
 
 **The climb to 10.** A second Battle Memory (3 IP) and a Consolidation vision (1 IP) bring her to 8. Two sessions later a third Battle Memory (2 IP) carries her to 10. The number sits there; nothing happens on its own.
 
-**Compression.** At her next Consolidation, Kara declares Compression. The GM asks what pattern she has discovered. She answers from the fights and the slab: "Things fall the way I decide." The System grants her Seed Application, **Sudden Weight** (1 Beat, 10 Aether): her strike lands with the mass of something far larger, +10 to the Clash, and at F-Grade scale it can stagger a grown man, buckle a door, crack floorboards. She is Level 6 with POW 18; the 10-Aether cost is heavy but castable, exactly once per fight with room to spare.
+**Distillation.** At her next Consolidation, Kara declares Distillation. The GM asks what pattern she has discovered. She answers from the fights and the slab: "Things fall the way I decide." The System grants her Seed Application, **Sudden Weight** (1 Beat, 10 Aether): her strike lands with the mass of something far larger, +10 to the Clash, and at F-Grade scale it can stagger a grown man, buckle a door, crack floorboards. She is Level 6 with POW 18; the 10-Aether cost is heavy but castable, exactly once per fight with room to spare.
 
 > **Kara's sheet now.** Principle: Weight. Insight: 10/10 spent into Seed. Tier: Seed. Benefits: the passive, the Application Sudden Weight, and Attunements (she can feel loads and balance points at a glance; see "Attunements"). Next: a second Application at 25 IP.
 
@@ -74,7 +78,7 @@ The rest of this chapter is the rules Kara just walked through, in the order she
 
 During the next Consolidation, the player describes how their character meditates on the memory: what they felt, what they noticed, what pattern they think they glimpsed. A sentence is enough. The GM should ask one or two questions, the way Kara's GM did, and let the table sit with the answer. The System returns a cryptic vision and awards IP toward the Principle the memory most closely expresses (before crystallization, toward the family), 1 to 3 by the memory's intensity. The vision procedure for every run mode is in The System AI chapter; the unplugged version is three images composed by the GM.
 
-A vision hints and never teaches. If it taught plainly, the player's later Compression would be dictation instead of understanding, and understanding is the thing being tested. If the player decodes a vision correctly, the payoff arrives in play, later.
+A vision hints and never teaches. If it taught plainly, the player's later Distillation would be dictation instead of understanding, and understanding is the thing being tested. If the player decodes a vision correctly, the payoff arrives in play, later.
 
 ### Insight Points
 
@@ -106,14 +110,16 @@ Slower roads exist. The System honors comprehension however it arrives, and the 
 
 ## Your First Principle
 
-No character chooses a Principle from a list; there is no list. The System watches what the character actually does and presents the truth their life has been spelling out. The procedure:
+No character chooses a Principle from a menu. The System watches what the character actually does and presents the truth their life has been spelling out. The procedure:
 
-1. **The System watches.** From the first session, the GM logs how the character behaves under pressure (the Hidden Vector Engine chapter). Every behavior pattern points at a family of Principles: Impact, Architecture, Consumption, Preservation, Imposition, Harmony, Governance, or Subversion. The behavior-to-family map is in that chapter.
+1. **The System watches.** From the first session, the GM logs how the character behaves under pressure (the Hidden Vector Engine chapter). Every behavior pattern points at a family of Principles. There are eight families, and this is the complete set: Impact, Architecture, Consumption, Preservation, Imposition, Harmony, Governance, and Subversion. The behavior-to-family map is in that chapter.
 2. **Resonance accrues.** When the character begins earning IP, the System reports it at the family level only: *[Resonance accruing: IMPACT. 2/3.]* The character knows a direction and nothing more.
 3. **At 3 IP, the Principle crystallizes.** The GM names one specific Principle, and the System announces it: *[Initial Insight: Weight.]* The slot fills for life, and the tier's minor passive arrives.
 4. **The player steers by playing.** What the character does is what the System reads. How the player describes their meditations shapes which Principle a memory feeds. And if the System's read drifts from the person over time, Refinement (below) steers the Principle back.
 
 **The second Principle.** The slot that opens at E-Grade fills the same way, with one difference: a veteran character can pursue a direction on purpose. The player may declare what they are seeking and spend attention and risk on aligned experiences. The System still does the naming, and it names what was actually lived, which may sit a step away from what was sought.
+
+**Pursuing the second slot has a real cost.** IP comes from attention and risk, and both are finite: every desperate hour spent feeding a new Principle is one not deepening the first. A character chasing a second Principle slows their climb through the Fragment tiers, and two shallow Principles lose to one deep one in almost every fight that matters. The strong reason to fill the slot is a lived pattern the first Principle genuinely cannot hold, and a character who never fills it is not behind.
 
 ## Slots and the Ladder
 
@@ -133,25 +139,25 @@ A slot, once filled, holds its Principle for life. The Principle can change shap
 | Mid Fragment | 50 | Infusion: the Principle rides your ordinary actions at no Beat or Aether cost |
 | Peak Fragment | 100 | Domain: a zone where your Principle is briefly law |
 
-**The Domain gate.** A Domain requires a **D-Grade body**. The insight can be complete at any Grade: a character may hold 100 IP and a fully formed Peak Fragment understanding while still E-Grade. The body is the limit; holding open a zone of law takes a frame rebuilt twice by Breakthrough. IP accrues normally past 100, and the Domain Compression waits for D-Grade. This is the Principle track's one hard tie to Grade.
+**The Domain gate.** A Domain requires a **D-Grade body**. The insight can be complete at any Grade: a character may hold 100 IP and a fully formed Peak Fragment understanding while still E-Grade. The body is the limit; holding open a zone of law takes a frame rebuilt twice by Breakthrough. IP accrues normally past 100, and the Domain Distillation waits for D-Grade.
 
-**What the economy delivers in practice.** With IP gated behind pressure, a character who lives dangerously reaches Seed midway through F-Grade, works through the Fragment tiers across E-Grade and into D, and Compresses a Domain at D-Grade. Nothing enforces that schedule; it bends toward the life lived. A cautious character reaches Seed late or never. A character the System keeps nearly killing runs ahead of it.
+**What the economy delivers in practice.** With IP gated behind pressure, a character who lives dangerously reaches Seed midway through F-Grade, works through the Fragment tiers across E-Grade and into D, and Distills a Domain at D-Grade. Nothing enforces that schedule; it bends toward the life lived. A cautious character reaches Seed late or never. A character the System keeps nearly killing runs ahead of it.
 
 **Tiers beyond Peak Fragment** exist at C-Grade and above. This book does not cover them; a future book will.
 
-## Compression
+## Distillation
 
-Meeting an IP threshold does not advance the tier. Advancement requires **Compression**, a declared act during Consolidation. The procedure:
+Meeting an IP threshold does not advance the tier. Advancement requires **Distillation**, a declared act during Consolidation. The procedure:
 
-1. **Declare.** During any Consolidation with a threshold met, the player declares Compression.
+1. **Declare.** During any Consolidation with a threshold met, the player declares Distillation.
 2. **The question.** The GM asks: *"What pattern have you discovered in how you act, or in how the world behaves?"*
 3. **The answer.** The player answers from their character's lived experience: the fights, the Battle Memories, the moments that produced this IP.
 4. **Refine together.** The GM works the answer with the player until it is specific enough to grant power (the GM section below has the test). This is a table conversation, and the GM carries as much of it as the player needs. A halting answer and a fluent one end in the same place: what is being compressed is the character's lived pattern, and the player's delivery has no effect on the result.
 5. **The grant.** The System expresses the new tier: the Application, Infusion, or Domain, shaped by the articulation.
 
-Compression and Battle Memory meditation both happen during Consolidation and both involve talking about what the character has learned, so keep their shapes distinct at the table. A Battle Memory meditation is small and exploratory. A Compression is rare and declarative.
+Distillation and Battle Memory meditation both happen during Consolidation and both involve talking about what the character has learned, so keep their shapes distinct at the table. A Battle Memory meditation is small and exploratory. A Distillation is rare and declarative.
 
-| | **Battle Memory** | **Compression** |
+| | **Battle Memory** | **Distillation** |
 |---|---|---|
 | Happens when | After an extraordinary event | After reaching an IP threshold |
 | Looks back at | One experience | Your whole history with the Principle |
@@ -162,11 +168,11 @@ Compression and Battle Memory meditation both happen during Consolidation and bo
 
 Three different changes can happen to a Principle a character already holds. They answer three different questions.
 
-**Refinement changes the identity.** At any Compression, the articulation can steer the Principle at its current tier instead of climbing. A character whose Fire has grown hungrier with every fight may Compress Fire into **Consuming Flame**: same slot, same tier, same IP, shifted identity. The System adjusts the Principle's Applications and Attunements to match the new reading. Refinement grants no new tier; what it buys is a Principle that keeps up with who its holder is becoming, which the Hidden Vector Engine is tracking either way.
+**Refinement changes the identity.** At any Distillation, the articulation can steer the Principle at its current tier instead of climbing. A character whose Fire has grown hungrier with every fight may Distill Fire into **Consuming Flame**: same slot, same tier, same IP, shifted identity. The System adjusts the Principle's Applications and Attunements to match the new reading. Refinement grants no new tier; what it buys is a Principle that keeps up with who its holder is becoming, which the Hidden Vector Engine is tracking either way.
 
-**Broadening changes the scope.** At a tier-up, the re-articulation sometimes outgrows the Principle's name, and the System recognizes the larger truth. Weight, articulated again at Fragment depth ("everything falls toward something, and I choose the direction"), can become **Gravity**; Gravity, lifetimes deeper, might become **Dominion**. Broadening is a possibility inside a tier-up Compression, never a separate procedure and never owed: most tier-ups deepen the Principle under its own name. Existing Applications keep their names, costs, and scales; the new tier's grant takes the broadened identity.
+**Broadening changes the scope.** At a tier-up, the re-articulation sometimes outgrows the Principle's name, and the System recognizes the larger truth. Weight, articulated again at Fragment depth ("everything falls toward something, and I choose the direction"), can become **Gravity**; Gravity, lifetimes deeper, might become **Dominion**. Broadening is a possibility inside a tier-up Distillation, never a separate procedure and never owed: most tier-ups deepen the Principle under its own name. Existing Applications keep their names, costs, and scales; the new tier's grant takes the broadened identity.
 
-**Re-forging changes one Application's power.** Applications keep the cost and scale they were forged at (see "Applications: Cost and Scale" below). During any Compression, a character may re-forge one Application they already know at their current Grade: it takes the new Grade's cost and scale, and the old version is gone the moment the new one exists. An F-forged Searing Strike stays 10 Aether forever, a lit match that a D-Grade warrior can flick all day. Re-forged at D-Grade it becomes a door-cutter that costs 1,000 a swing, and the lit match no longer exists. Keeping the cheap old trick or paying full price for real power is a genuine choice, made one Application at a time.
+**Re-forging changes one Application's power.** Applications keep the cost and scale they were forged at (see "Applications: Cost and Scale" below). During any Distillation, a character may re-forge one Application they already know at their current Grade: it takes the new Grade's cost and scale, and the old version is gone the moment the new one exists. An F-forged Searing Strike stays 10 Aether forever, a lit match that a D-Grade warrior can flick all day. Re-forged at D-Grade it becomes a door-cutter that costs 1,000 a swing, and the lit match no longer exists. Keeping the cheap old trick or paying full price for real power is a genuine choice, made one Application at a time.
 
 **New Principles enter at the bottom.** Mastery is per-Principle and never transfers. Whether the second slot opens at E-Grade or Fusion frees a slot late in a career, a new Principle starts at 0 IP and climbs to Initial Insight and Seed like any novice's. Its IP must come from experiences aligned to the *new* Principle: attention and risk spent there instead of deepening what the character already holds. And its Applications are forged at F-Grade like everyone's first (below), then raised by re-forging if the character chooses.
 
@@ -174,16 +180,17 @@ Three different changes can happen to a Principle a character already holds. The
 
 Every Application is an active technique costing 1 Beat plus Aether. Two numbers define it for life: its Aether cost and its **scale**, how much world the manifestation can touch. Both are fixed by its **forge Grade**.
 
-**Every Application is forged at F-Grade.** Whenever a Principle grants an Application, at whatever point in a career, the technique arrives at F-Grade cost and scale. Raising it is what Re-forging is for: one Application per Compression may be re-forged at the character's current Grade, taking the new Grade's cost and scale (see "Changing an Existing Principle"). A Domain is the exception: it can only be Compressed by a D-Grade body, so it is forged at the Grade of that Compression.
+**Every Application is forged at F-Grade.** Whenever a Principle grants an Application, at whatever point in a career, the technique arrives at F-Grade cost and scale: **a Seed Application costs 10 Aether, an Early Fragment Application costs 15, and Infusion is free.** Those are the only Application prices a player needs until re-forging. A cost is set at the forge and never changes afterward (see Core Mechanics, "Aether Costs Are Set at Acquisition").
 
-| **Tier** | **Beat Cost** | **F forge** | **E forge** | **D forge** | **C forge** |
-|---|---|---|---|---|---|
-| Seed Application | 1 Beat | 10 | 100 | 1,000 | 10,000 |
-| Early Fragment Application | 1 Beat | 15 | 150 | 1,500 | 15,000 |
-| Mid Fragment Infusion | Free | Free | Free | Free | Free |
-| Peak Fragment Domain | 1 Beat to activate | not possible | not possible | 3,000 + 500/round | 30,000 + 5,000/round |
+Raising an Application is what Re-forging is for: one Application per Distillation may be re-forged at the character's current Grade, taking the new Grade's cost and scale (see "Changing an Existing Principle"). Costs scale ×10 per Grade:
 
-A cost is set at the forge and never changes afterward (see Core Mechanics, "Aether Costs Are Set at Acquisition"). Costs scale ×10 per forge Grade. The Domain row starts at D because Domains require a D-Grade body.
+| **Re-forged at** | **Seed Application** | **Early Fragment Application** |
+|---|---|---|
+| E-Grade | 100 | 150 |
+| D-Grade | 1,000 | 1,500 |
+| C-Grade | 10,000 | 15,000 |
+
+A Domain is the exception to F-forging: it can only be Distilled by a D-Grade body, so it is forged at the Grade of that Distillation. A D-forged Domain costs 3,000 Aether to activate plus 500 per round held; a C-forged Domain costs 30,000 plus 5,000 per round. Activation takes 1 Beat.
 
 **What the Aether buys.** Every Seed Application grants a bonus inside the Modifier Budget, around +10, at every Grade; the table math never inflates. What scales is the technique's scale. **Searing Strike at three forge Grades** (the Seed Application of a Fire Principle):
 
@@ -207,7 +214,7 @@ Specific Attunements beyond the baseline are generated by the GM and System AI t
 
 ## Principle Fusion
 
-A character holding **two Principles at Seed tier or higher** may attempt to fuse them during a Compression. With two slots for life, this is the largest commitment the track offers: both identities go in, one comes out.
+A character holding **two Principles at Seed tier or higher** may attempt to fuse them during a Distillation. With two slots for life, this is the largest commitment the track offers: both identities go in, one comes out.
 
 Fusion is a Resistance Roll:
 
@@ -218,28 +225,28 @@ Fusion is a Resistance Roll:
 
 ## The Quiet Path
 
-The track was built to be talked through, and a table that enjoys the philosophy will pull more fiction out of it. Nothing in it requires the performance. What the System compresses is the character's lived pattern; speech is one way of reaching toward it, and the System can read the pattern without any speech at all. A player who came to level up and collect powers plays this track at full strength as follows:
+Some players don't enjoy trying to wax philosophical at the RPG table. They came to roll dice, level up, and collect powers, and being asked to articulate a truth about reality in front of four friends is the opposite of fun for them. That's fine, and it costs them nothing: the System reads what a character does, never how well their player talks. Run the track for these players as follows:
 
-- **Battle Memories:** the player says one sentence about the memory, or simply that their character sits with it. The GM narrates the meditation and the vision. IP is awarded by the event's intensity, which was always the rule.
-- **Compression:** instead of articulating the pattern, the player asks the System to name what it saw. The GM (or the System AI, in assisted modes) offers an articulation built from the character's logged behavior. The player accepts it, picks between two offered phrasings, or vetoes it and Compresses at a later Consolidation. Same grant, same tier, no discount.
-- **Steering:** behavior remains the steering wheel. A Quiet Path character shapes their Principle by how they fight, spend, and choose, which is the primary channel anyway.
+- **Battle Memories:** the player says one sentence about the memory, or just "he sits with it." You narrate the meditation and the vision. Award IP by the event's intensity, which was always the rule.
+- **Distillation:** instead of asking the player to state the pattern, offer it to them. Build an articulation from the character's logged behavior (or take one from the System AI in assisted modes) and present it: "Here's what the System saw. Sound right?" The player accepts it, picks between two phrasings you offer, or vetoes it and Distills at a later Consolidation. Same grant, same tier, no discount.
+- **Steering:** behavior remains the steering wheel. A Quiet Path character shapes their Principle by how they fight, spend, and choose, which is the primary channel for everyone anyway.
 
-**GM note:** do not press a Quiet Path player for speeches. Offer either/or questions ("was it the stopping or the choosing?"), accept a shrug as an answer, and put the poetry in the System's mouth instead of demanding it from theirs.
+Don't press a Quiet Path player for speeches. Offer either/or questions ("was it the stopping or the choosing?"), accept a shrug as an answer, and put the poetry in the System's mouth instead of demanding it from theirs. And don't treat the mode as a lesser way to play or a phase to coax them out of; a player who grunts "Weight stuff, I guess" and then spends every fight putting heavy things on top of enemies is feeding the track everything it needs.
 
 ## Running the Track (GM Reference)
 
 **Naming a Principle.** Use three inputs: the family, the character's biggest logged moments, and the words the player has used while meditating. If you are unsure, say the character's three biggest moments out loud and ask what they have in common; name that. Pick the plainer word: Weight beats Gravitational Inevitability, and Fire beats Combustion. A good name is one the player hears and instantly recognizes as theirs.
 
-**The Compression test.** A valid articulation is **Operational** (it does something specific), **Bounded** (it does not apply everywhere), and **Testable** (its use produces observable outcomes). If a proposed truth cannot meet all three, it is a mood, and the System does not compress moods. "Fury" is a mood: it does nothing specific and applies anywhere the character is angry. "Fire consumes and spreads" is a Principle. Work the player's answer toward the three properties collaboratively; the test is a filter for the final wording, never a grade on the player's delivery.
+**The Distillation test.** A valid articulation is **Operational** (it does something specific), **Bounded** (it does not apply everywhere), and **Testable** (its use produces observable outcomes). If a proposed truth cannot meet all three, it is a mood, and the System does not compress moods. "Fury" is a mood: it does nothing specific and applies anywhere the character is angry. "Fire consumes and spreads" is a Principle. Work the player's answer toward the three properties collaboratively; the test is a filter for the final wording, never a grade on the player's delivery.
 
-**Families and the Hidden Vector Engine.** The eight families (Impact, Architecture, Consumption, Preservation, Imposition, Harmony, Governance, Subversion) map to the four behavioral axes; the map and the per-axis Principle affinities are in the Hidden Vector Engine chapter. What a character does under pressure determines which Principle crystallizes, which Battle Memories resonate, and what a Compression articulation can honestly claim.
+**Families and the Hidden Vector Engine.** The eight families (Impact, Architecture, Consumption, Preservation, Imposition, Harmony, Governance, Subversion) map to the four behavioral axes; the map and the per-axis Principle affinities are in the Hidden Vector Engine chapter. What a character does under pressure determines which Principle crystallizes, which Battle Memories resonate, and what a Distillation articulation can honestly claim.
 
 **Pricing.** Application bonuses live inside the Modifier Budget (Core Mechanics): +5 minor, +10 standard, +15 to +20 peak and rare. Attunements are fictional capability; anything that would demand a Clash roll is an Application and gets priced.
 
 **Each run mode.** Everything on this track that says "the System returns" or "the System generates" has a manual answer.
 
-- **Unplugged:** the GM composes Battle Memory visions from the three-image procedure in The System AI chapter, applies the Compression test by hand, and invents Attunements and Application effects priced against the Modifier Budget.
-- **AI-Assisted:** between sessions, paste the standing campaign context and the relevant function prompt (The System AI chapter) and treat the output as a draft. Visions tolerate a week's delay; Compression happens live at the table, so run it as the Unplugged procedure and let the AI polish the resulting Application afterward.
+- **Unplugged:** the GM composes Battle Memory visions from the three-image procedure in The System AI chapter, applies the Distillation test by hand, and invents Attunements and Application effects priced against the Modifier Budget.
+- **AI-Assisted:** between sessions, paste the standing campaign context and the relevant function prompt (The System AI chapter) and treat the output as a draft. Visions tolerate a week's delay; Distillation happens live at the table, so run it as the Unplugged procedure and let the AI polish the resulting Application afterward.
 - **Companion App:** the app drafts visions and Applications from the session transcript; the GM reviews before anything reaches a player.
 
 ## Design Intent

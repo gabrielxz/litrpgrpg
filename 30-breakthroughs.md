@@ -9,7 +9,7 @@
 A Breakthrough is a ritual moment: not a long rest, not a passive level-up, not bookkeeping. The mechanic is built around four principles:
 
 - **Visible Payoff.** Every successful Breakthrough produces stat changes, new options, and a System acknowledgment of the character's ascension.
-- **Single-Session Resolution.** A Breakthrough resolves in one dramatic sequence. No multi-session seclusion arcs.
+- **Single-Session Resolution.** A Breakthrough resolves in one dramatic sequence.
 - **Soloable, but better with friends.** A well-prepared cultivator can Break Through alone. The party makes it more accessible and more dramatic.
 - **Lightweight spotlight.** Other party members participate, but without constant tactical decisions during the cultivator's moment.
 
@@ -25,16 +25,17 @@ This proximity is what makes the event possible. It is also what makes it danger
 
 ## The Universal Blueprint
 
-Every Breakthrough, regardless of Grade, follows the same four-beat structure. The flavor and stakes of Beats 2 and 3 change by Grade. The scale of Beat 4's rewards changes by Grade. But the skeleton is always the same.
+Every Breakthrough, regardless of Grade, follows the same four-stage structure. The flavor and stakes of Stages 2 and 3 change by Grade. The scale of Stage 4's rewards changes by Grade. But the skeleton is always the same.
 
-### Beat 1: Preparation
+### Stage 1: Preparation
 
 The setup phase. No dice are rolled. This is where most quality dials are set.
 
 **Requirements:**
 
 - The character must be at the **Grade-cap level** (Level 25 for F-Grade, 50 for E, 75 for D, and so on).
-- All VE from leveling must already be fully processed through Consolidation. The character's VE tank starts this process empty; what fills it next is the Ignition fuel.
+
+At the cap, VE has nowhere else to go: kills, quests, and absorption keep filling the tank, and everything stored counts toward the Ignition fuel. A character who has been hunting at the cap arrives with a head start.
 
 **Steps:**
 
@@ -43,9 +44,9 @@ The setup phase. No dice are rolled. This is where most quality dials are set.
 3. **Consume Breakthrough Items.** Any prepared items (see Breakthrough Item Categories below) are consumed now, before the trial begins. Their effects lock in as modifiers to the Breakthrough Check.
 4. **Receive Party Support Setup.** If allies are present, they declare their support roles now. This is the moment for buffs, formations, wards, or simply taking up defensive positions around the cultivator.
 
-**GM Note:** Beat 1 should feel deliberate, a ritual in motion. Describe the cultivator settling into position, consuming pills, the air growing heavy with unprocessed energy. The party arranging themselves. The world going quiet. Then transition to Beat 2.
+**GM Note:** Stage 1 should feel deliberate, a ritual in motion. Describe the cultivator settling into position, consuming pills, the air growing heavy with unprocessed energy. The party arranging themselves. The world going quiet. Then transition to Stage 2.
 
-### Beat 2: Ignition
+### Stage 2: Ignition
 
 The cultivator deliberately floods their body with Volatile Energy, pushing past Tolerance into Saturation. This overcharge is not an accident; it is the fuel that powers the ascension. The body must be forced past its current limits before it can be reshaped to hold the next Grade's capacity.
 
@@ -60,13 +61,15 @@ The cultivator must accumulate VE equal to at least **100% of their VE Tolerance
 | ×2.0 (Reckless) | 200% of Tolerance | +30 to Breakthrough DC | +2 Tiers |
 | ×2.5 (Suicidal) | 250% of Tolerance | +45 to Breakthrough DC | +3 Tiers |
 
-The VE required for Ignition is gathered from environmental absorption during the Preparation phase and from any consumables. The GM determines how long this takes based on location energy density. A high-density location might provide full Tolerance in minutes; a barren one might take hours of dangerous exposure.
+Ignition fuel is whatever the cultivator carries plus whatever the site provides. Stored VE from ordinary at-cap hunting counts in full, consumables add more, and environmental absorption tops up the rest. The GM determines how long the top-up takes based on location energy density: a high-density location might close the gap in minutes, a barren one in hours of dangerous exposure.
 
-**While overcharging, Saturation effects apply.** A cultivator pushing to ×2.0 is operating under Heavy Saturation penalties (−25 to all rolls, HP bleeding). This is the explicit price of ambition: the character is poisoning themselves with power to fuel a better outcome. The Saturation penalties do not apply to the Breakthrough Check itself (the ignition burns the VE as fuel), but they apply to everything else, including any actions the party must take during the Trial. The Critical Saturation collapse clock (Cultivation chapter) also runs during Preparation: a cultivator holding 200%+ of Tolerance must reach Ignition before the body force-vents, which is why ×2.0 and above are gathered fast in dense locations rather than slowly in barren ones. Once Ignition is declared, Saturation rules are suspended; the ritual consumes the VE as fuel.
+**While overcharging, Saturation effects apply.** A cultivator pushing to ×2.0 is operating under Heavy Saturation penalties (−25 to all rolls, HP bleeding). This is the explicit price of ambition: the character is poisoning themselves with power to fuel a better outcome. The Saturation penalties do not apply to the Breakthrough Check itself (the ignition burns the VE as fuel), but they apply to everything else, including any actions the party must take during the Trial.
 
-**Once the cultivator declares Ignition, Beat 3 begins immediately. There is no going back.**
+**The body can give out first.** The Critical Saturation collapse clock (Cultivation chapter) runs until the moment of Ignition. A cultivator holding 200%+ of Tolerance is rolling that d100 at the end of every full hour, and if the collapse fires before they ignite, they pass out on the spot: involuntary Consolidation, defenseless, the gathered charge draining away with nothing to show for it (at the cap there are no levels for it to become), 1 temporary Raw point of FOR or POW gone until the next full clean rest, and no Breakthrough attempt. This is why ×2.0 and above are gathered fast, in dense locations, with the ritual site already prepared: the last stretch of the charge is a race against the character's own body. Once Ignition is declared, Saturation rules are suspended; the ritual consumes the VE as fuel.
 
-### Beat 3: The Trial
+**Once the cultivator declares Ignition, Stage 3 begins immediately. There is no going back.**
+
+### Stage 3: The Trial
 
 The dangerous part. A hybrid structure: an internal challenge for the cultivator resolved mechanically through the Breakthrough Check, coupled with external phenomena that the party (or the cultivator, if solo) must manage.
 
@@ -134,7 +137,7 @@ When the cultivator ignites, the environment reacts. The thinning of the boundar
 
 **Party Engagement (The Support Role):**
 
-The party's job during Beat 3 is straightforward: **keep the cultivator alive and undisturbed.** This is not a full tactical combat; it is a defense scenario with a built-in clock.
+The party's job during Stage 3 is straightforward: **keep the cultivator alive and undisturbed.** This is not a full tactical combat; it is a defense scenario with a built-in clock.
 
 **Mechanically, the party contributes in two ways:**
 
@@ -148,7 +151,7 @@ The party's job during Beat 3 is straightforward: **keep the cultivator alive an
 
 The Trial is time-boxed in fiction. From the moment of Ignition to the completion of the Breakthrough Check, no more than **10 minutes of in-game time** pass. This is a single dramatic sequence, not a slog, not a multi-hour ordeal. The Breakthrough Check, the party's defense, the external phenomena: all of it happens in a compressed burst of reality-warping intensity. Describe it as such.
 
-### Beat 4: Recognition
+### Stage 4: Recognition
 
 The System processes the result. This is the payoff: the moment the numbers change and the character is fundamentally different from who they were ten minutes ago.
 
@@ -289,7 +292,7 @@ A well-built F-Grade cap character (POW ~75, HRT ~60) has Force 75 + Force 60 = 
   - A **Will-dominant** character confronts projections of everything they have dominated: the people cowed, the systems broken to their will, the resistance crushed. The trial demands they prove their will is genuine sovereignty and not mere cruelty.
 - **External:** Significant phenomena. Spectral manifestations coalesce from the cultivator's HVE signature, echoes given temporary physical form outside the cultivator's body. These are E-Grade threats (Moderate to Hard difficulty on the Grade Reference Card) and they carry thematic resonance with the cultivator's behavioral patterns. A Force-dominant cultivator's external phenomena are aggressive and kinetic; a Method-dominant cultivator's are spatial and disorienting. Aether storms, terrain warping, and transformed local wildlife are all appropriate.
 
-**Recognition at this Grade** opens the Domain gate: the rebuilt Soul Sea is a vessel that can hold a Domain, and a character with a Peak Fragment articulation waiting may Compress it at their next Consolidation (see The Principle System, "The Domain gate").
+**Recognition at this Grade** opens the Domain gate: the rebuilt Soul Sea is a vessel that can hold a Domain, and a character with a Peak Fragment articulation waiting may Distill it at their next Consolidation (see The Principle System, "The Domain gate").
 
 **Failure Consequences (Cracked at E→D):**
 

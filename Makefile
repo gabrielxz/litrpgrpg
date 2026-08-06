@@ -23,7 +23,6 @@ SOURCES := \
   20-principles.md \
   25-cultivation.md \
   30-breakthroughs.md \
-  35-stable-abilities.md \
   40-titles.md \
   45-system-ai.md \
   50-hidden-vector-engine.md \

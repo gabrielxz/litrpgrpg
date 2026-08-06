@@ -485,7 +485,7 @@ A Seed Application grants +10 for a small fixed cost; Surge pays half a pool for
 
 ### Aether Costs Are Set at Acquisition
 
-Every Principle Application, spell, and active skill has a fixed Aether cost, set once, and never changed afterward. For spells and class skills, the cost is set by the Grade at which the skill was acquired. For Principle Applications, the cost is set by the **forge Grade**: every Application is forged at F-Grade when granted, and re-forging during a Compression is the only way to raise it (see The Principle System, "Applications: Cost and Scale"). The scaling factor between Grades is the usual ×10. The same Grade also sets the skill's scale, how much world its manifestation can touch.
+Every Principle Application, spell, and active skill has a fixed Aether cost, set once, and never changed afterward. For spells and class skills, the cost is set by the Grade at which the skill was acquired. For Principle Applications, the cost is set by the **forge Grade**: every Application is forged at F-Grade when granted, and re-forging during a Distillation is the only way to raise it (see The Principle System, "Applications: Cost and Scale"). The scaling factor between Grades is the usual ×10. The same Grade also sets the skill's scale, how much world its manifestation can touch.
 
 | **Skill Origin Grade** | **Seed Application** | **Early Fragment App.** | **Peak Fragment Domain** |
 |---|---|---|---|

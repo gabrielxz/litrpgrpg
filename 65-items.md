@@ -71,7 +71,7 @@ See the Breakthroughs document for full rules. Brief reference:
 | Nine Leaf Essence | F | +10 |
 | Heavenly Foundation Pill | F | +15 |
 
-Foundation Pills are consumed during Beat 1 of a Breakthrough (Preparation phase). Only one Foundation Pill effect applies per Breakthrough; the body cannot metabolize multiple at once.
+Foundation Pills are consumed during Stage 1 of a Breakthrough (Preparation). Only one Foundation Pill effect applies per Breakthrough; the body cannot metabolize multiple at once.
 
 ---
 

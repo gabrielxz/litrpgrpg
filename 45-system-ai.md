@@ -106,8 +106,8 @@ Keep this pasted at the top of the campaign conversation and update it as things
 
 ```
 Campaign: [one-paragraph premise and current situation]
-Per character: name, level, Grade, stats (Raw), titles, Principle
-Principles and tiers, Stable Ability.
+Per character: name, level, Grade, stats (Raw), titles,
+Principles and tiers.
 Behavioral profile per character: one line per HVE axis (Deep Vector),
 plus their 2-3 defining logged moments.
 Last session: [three-sentence summary]
