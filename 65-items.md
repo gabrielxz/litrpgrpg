@@ -4,15 +4,21 @@
 
 ---
 
-## Design Notes
+## How to Read This Chapter
 
-This document covers the practical items players encounter during F-Grade play: the consumables, weapons, and one-shot oddities that fill the spaces between treasure tiers. The full economy, crafting professions, and merchant systems are deferred. This is what the GM needs at the table.
+This chapter covers the practical items players encounter during F-Grade play: the consumables, weapons, and one-shot oddities that fill the spaces between treasure tiers. The full economy, crafting professions, and merchant systems are deferred. This is what the GM needs at the table.
+
+Every entry here is one of three kinds, and each is labeled:
+
+- **Category.** A class of items. The listed members are the common forms; the GM builds variants inside the same price band and the same rules. Healing Pills and Degraded Skill Shards are categories.
+- **Worked example.** One fully specified item, usable exactly as written and meant as the pattern for building others of its kind. The Reactive Buckler is a worked example.
+- **Unique.** A one-of-a-kind item. Nothing in this chapter is unique; at F-Grade, named and System-forged gear is bespoke treasure the GM designs for the moment.
 
 ---
 
 ## Consumables
 
-### Healing Pills
+### Healing Pills (Category)
 
 Restore HP instantly. In combat, consuming a pill costs **1 Beat**, spent by whoever takes the action: swallow one yourself, or administer one to an ally in the same Zone. The recipient of an administered pill spends nothing.
 
@@ -36,7 +42,7 @@ The body accepts only so much pill-borne help under stress. **The first two Heal
 
 **Foundation Pills are exempt.** They are not consumed during combat.
 
-### Aether Pills
+### Aether Pills (Category)
 
 Restore Aether mid-encounter. In combat, consuming one costs **1 Beat**.
 
@@ -49,9 +55,9 @@ Restore Aether mid-encounter. In combat, consuming one costs **1 Beat**.
 
 Aether Pills should be rare. Aether primarily refills through Consolidation; widely available Aether Pills would collapse the scarcity the Aether system is built on.
 
-### Foundation Pills
+### Foundation Pills (Category)
 
-See the Breakthroughs document for full rules. Brief reference:
+See the Grade Breakthroughs chapter for full rules. Brief reference:
 
 | **Pill** | **Grade** | **Breakthrough Bonus** |
 |---|---|---|
@@ -80,24 +86,19 @@ The wielder is the weapon. In an Integrated body, accuracy and killing power bot
 | Quarterstaff | STR or DEX | +5 | Versatile: choose Force at attack time. |
 | Hand Axe (thrown) | STR | +5 | Ranged: one Zone. Recoverable. |
 
-These are intended as starting and recovery tier. Higher-quality weapons (named, System-forged, Principle-attuned) are bespoke items the GM designs as treasure or quest rewards.
+These are the starting and recovery tier. Higher-quality weapons (named, System-forged, Principle-attuned) are bespoke items the GM designs as treasure or quest rewards.
 
 **Wielding without proficiency:** A character with no relevant Proficiency may still use a weapon, but loses the Skill Bonus. A trained soldier with a Greatsword adds +10; a librarian swinging the same blade adds +0.
 
 ---
 
-## Volatile Artifacts (One-Shot and Tutorial-Grade)
+## Volatile Artifacts
 
-Volatile Artifacts are scavenged debris from dead worlds, half-functioning constructs, and degraded shards of higher-tier equipment. They are unreliable, frequently single-use, and core to the tutorial's economy.
+<!-- worldbuilding pass: opening story slot (related-thread survivor) -->
 
-### Reactive Buckler
+Volatile Artifacts are scavenged debris from dead worlds, half-functioning constructs, and degraded shards of higher-tier equipment. They are unreliable and frequently single-use. They are also disposable verbs: an artifact in a pocket is a whole new move a character can make exactly once, and which one a player hoards, spends, or hands away tells the System something.
 
-A small shield that absorbs one impact before its protective field collapses.
-
-- **Effect:** Once per encounter, when the wielder would take damage from a physical Clash, reduce that damage to 0. The buckler's field discharges visibly and does not reset until the next Consolidation.
-- **Limitations:** Does not protect against mental, spiritual, or illusion-based attacks. Does not negate the Margin; it only converts damage to 0 after the Clash resolves. Does not work against attacks the wielder did not see coming (Surprise Beat hits, ambushes from Hidden enemies).
-
-### Degraded Skill Shards
+### Degraded Skill Shards (Category)
 
 Crystalline matrices containing fragments of dead techniques. Single-use. Activate as a 1-Beat action; the user describes intent and the GM rolls for backfire. Roll **1d100** when activating.
 
@@ -110,26 +111,39 @@ Crystalline matrices containing fragments of dead techniques. Single-use. Activa
 | Resonance Shard | Add 1 IP toward a Principle of your choice. | The IP is lost. |
 | Volatile Shard | Roll d100 again. The GM and the System AI generate an unpredictable effect based on the result. | The GM's discretion is the risk. |
 
-Shards are randomizers. They reward players who use them in moments where a wild outcome is acceptable, and punish those who treat them as reliable tools.
+Shards are randomizers. They reward players who use them in moments where a wild outcome is acceptable, and punish those who treat them as reliable tools. New shard types price their effects against the Modifier Budget and keep the d100 ≤ 10 backfire shape.
 
-### Sensory Tools
+### The Reactive Buckler (Worked Example: Protective One-Shots)
 
-- **Resonance Glass:** Spend 1 Beat. Reveals hidden energy signatures within your current Zone: concealed runes, dormant constructs, Principle resonance points. Does not reveal hidden creatures unless they have an active energy signature (cultivators using skills, magical creatures, etc.). Reusable.
-- **Truthbinder Cuff:** Forces a single yes/no answer from one detained, non-hostile target. Single use; the cuff dissolves after activation. Cannot compel meaningful detail, only a binary truth.
+A small shield that absorbs one impact before its protective field collapses. The pattern for defensive artifacts generally: one negation, a visible discharge, a recharge tied to Consolidation, and stated limits.
 
-### Single-Use Ranged Relic
+- **Effect:** Once per encounter, when the wielder would take damage from a physical Clash, reduce that damage to 0. The buckler's field discharges visibly and does not reset until the next Consolidation.
+- **Limitations:** Does not protect against mental, spiritual, or illusion-based attacks. Does not negate the Margin; it only converts damage to 0 after the Clash resolves. Does not work against attacks the wielder did not see coming (Surprise Beat hits, ambushes from Hidden enemies).
 
-Devastating weapon, one charge. Common in tutorial scavenger zones.
+### Single-Use Ranged Relic (Worked Example: Expended Weapons)
+
+A devastating weapon with one charge, the pattern for burnt-out relics of higher-Grade arsenals.
 
 - **Effect:** A ranged Clash using DEX or POW Force (user's choice) at +20 to the roll. On hit, deals damage as normal but treats the user's Grade as **one tier higher** for the damage Multiplier (an F-Grade user deals E-Grade damage on this hit only: Margin × 10 instead of × 1).
 - **Disposable:** After use, the relic burns out and crumbles. Cannot be repaired.
 
-### Other Tutorial-Grade Items
+### Sensory Tools (Category)
+
+Artifacts that reveal rather than harm.
+
+- **Resonance Glass:** Spend 1 Beat. Reveals hidden energy signatures within your current Zone: concealed runes, dormant constructs, Principle resonance points. Does not reveal hidden creatures unless they have an active energy signature (cultivators using skills, magical creatures, etc.). Reusable.
+- **Truthbinder Cuff:** Forces a single yes/no answer from one detained, non-hostile target. Single use; the cuff dissolves after activation. Cannot compel meaningful detail, only a binary truth.
+- **Generic single-use variants** exist throughout scavenge zones: spend 1 Beat, reveal one hidden feature within your Zone, then the tool is spent.
+
+---
+
+## Scavenged Field Gear (Worked Examples)
+
+Mundane survival equipment, battered but functional. The pattern: small flat effects, limited uses, no Aether interaction.
 
 - **Battered Medkit:** Heals 10 HP when used as a 1-Beat action on yourself or an ally in the same Zone. Does not count toward the pill limit. Three uses before the supplies are exhausted.
 - **Low-Grade Armor Scraps:** Heavy. Grants +5 Defense Force when defending with FOR; imposes −5 to DEX-based Clashes (offensive or defensive). Stackable up to one set per character.
-- **Sensory Tool (Generic):** Spend 1 Beat. Reveal one hidden feature within your Zone. Single use unless specified otherwise.
-- **Battered Communicator:** Allows short-range communication between paired devices. Frequently malfunctions. Useful for the Civic Fragment terminal interaction in the tutorial.
+- **Battered Communicator:** Allows short-range communication between paired devices. Frequently malfunctions.
 
 ---
 
@@ -137,14 +151,26 @@ Devastating weapon, one charge. Common in tutorial scavenger zones.
 
 At F-Grade, items appear:
 
-- As **tutorial scavenge** in Volatile Artifact zones (Phase 2 and Phase 3 of the Integration Tutorial).
-- As **loot drops** from defeated enemies; the System AI generates tier-appropriate drops per the loot generation rule (System AI document).
+- As **loot drops** from defeated enemies; the System AI generates tier-appropriate drops per the loot generation rule (see The System AI).
 - In **dungeon caches**, treasure rooms, and abandoned stockpiles.
-- Through **trade with NPCs** in the Civic Fragment or post-tutorial settlements.
+- As **scavenge** in ruins and Volatile Artifact zones.
+- Through **trade with NPCs** in settlements.
 
-Players should not be flush with consumables. Healing Pills are a meaningful resource. The Reactive Buckler that saves a player's life in Phase 5 of the tutorial is supposed to be remembered. The single-use ranged relic that one-shots a tutorial mini-boss is supposed to be a story.
+Players should not be flush with consumables. Healing Pills are a meaningful resource. The buckler that saves a life is supposed to be remembered; the relic that one-shots a boss is supposed to be a story.
 
 If the party is hoarding consumables and never spending them, the GM is being too generous with drops. If the party is constantly out and dying for want of a Lesser Healing Pill, the GM is being too stingy. Calibrate to encounter density.
+
+---
+
+## Outfitting the Tutorial (GM Reference)
+
+The Integration Tutorial draws its economy from this chapter. What the tutorial expects:
+
+- **Phases 2 and 3 are the scavenge phases.** Starting weapons, armor, and consumables all come from landing-zone debris and the Recycling Node; the default loot list lives in the tutorial's Phase 3.
+- **The Recycling Node's scarcity is deliberate.** One superior weapon, one armor set, one buckler, two shards, one pill, one Resonance Glass for a full party: the shortfall is the point, and the division of it is HVE signal.
+- **The Battered Communicator** exists for the Civic Fragment terminal interaction in Phase 5; seed one in Phase 2 or 3 scavenge.
+- **The Single-Use Ranged Relic** is common in tutorial scavenger zones and is one of the sanctioned answers to the Phase 6 boss; place at least one where exploration finds it.
+- **Volatile Artifacts are core to the tutorial's economy**: they give classless, Principle-less characters verbs beyond posture and position. Be generous with shards, stingy with pills.
 
 ---
 
@@ -155,5 +181,5 @@ This chapter covers F-Grade items only. Deferred for later development:
 - **Crafted equipment and named weapons.** Once the Professions system is designed, players can craft, refine, and name their own gear.
 - **Principle-attuned items.** Weapons and tools that resonate with specific Principles and grant attunement bonuses.
 - **Set bonuses and equipment synergies.** Multi-piece kits with cumulative effects.
-- **E-Grade and higher item tiers.** When the campaign scales, the same six categories scale ×10 per Grade.
+- **E-Grade and higher item tiers.** When the campaign scales, the same categories scale ×10 per Grade.
 - **Bespoke artifacts.** Story-tier items with unique mechanical and narrative weight, generated by the System AI and the GM in collaboration.
