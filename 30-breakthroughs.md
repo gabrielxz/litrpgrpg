@@ -102,12 +102,12 @@ HRT is the anchor: every Breakthrough is a trial of will. The second Force expre
 | Quality Enhancer item consumed | no roll modifier (affects tier) |
 | Tribulation Ward consumed | no roll modifier (affects failure severity) |
 
-**HVE Coherence Bonus:** A character with a sharp, consistent behavioral signature across the HVE axes generates a cleaner trial. Mechanically, the GM evaluates the character's HVE profile:
+**HVE Coherence Bonus:** A character with a sharp, consistent behavioral signature across the HVE axes generates a cleaner trial. Read the character's profile band from the Deep rows of their HVE sheet (The Hidden Vector Engine, "What the Engine Drives"):
 
-- **Scattered** (no axis above ±3.0 intensity): +0. The character's identity is diffuse. The trial has no shape to latch onto.
-- **Leaning** (one axis above ±5.0): +5. A direction is emerging.
-- **Defined** (one axis above ±8.0, or two above ±5.0): +10. The character knows who they are.
-- **Singular** (one axis above ±12.0, or a dominant multi-axis archetype): +20. The trial practically writes itself.
+- **Scattered:** +0. The character's identity is diffuse. The trial has no shape to latch onto.
+- **Leaning:** +5. A direction is emerging.
+- **Defined:** +10. The character knows who they are.
+- **Singular:** +20. The trial practically writes itself.
 
 The GM does not need to calculate this precisely; it is a qualitative read of the HVE profile, expressed as a modifier. Characters who have lived with conviction are rewarded. Characters who have drifted aimlessly face a harder road.
 

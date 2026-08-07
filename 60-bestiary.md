@@ -47,10 +47,6 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **Def Force (DEX, scampering):** 12
 - **Tactics:** Always attempts to flank. When two or more Frenzy Rats share a Zone with their target, all of them gain +10 (Flanking).
 
----
-
-## Peer Tier (Moderate)
-
 ### Pre-System Brigand
 *A surviving human bandit, integrated but unambitious. Cowardly, predictable.*
 
@@ -59,6 +55,10 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **Off Force (STR, club; or DEX, knife):** 08 / 07
 - **Def Force (FOR or DEX):** 07 / 07
 - **Tactics:** Flees when Turned Aside or when reduced below 50% HP. Carries 1d3 Stuttering Tinctures and a crude weapon.
+
+---
+
+## Peer Tier (Moderate)
 
 ### Snarljaw
 *A pack-hunting beast, maw lined with serrated bone.*
@@ -165,6 +165,8 @@ When in doubt, use the Grade Reference Card. A character with Force 30 fighting 
 
 These ratios assume a balanced party with reasonable equipment. Adjust upward for well-prepared parties; adjust downward when the party is wounded, low on Aether, or out of consumables.
 
-Combat should resolve in 3–5 rounds. If a fight is dragging into round 6+, raise the stakes: introduce a complication, escalate the enemy's tactics, or end it decisively.
+The Hard column assumes the top of the level band. At the bottom of a band, a Hard fight can put the whole party on the floor; run one with a telegraphed escape route or an enemy that has reasons not to finish the job. At Levels 1–3, any landed hit can exceed Max HP: a character hitting the floor is a normal fight, and the Downed rules are the safety net.
+
+Against small enemy groups, a party of four resolves most fights in one or two rounds; only peer-Force walls (a Husk Sentinel, a boss) run longer. To make a fight last, add bodies rather than raising tiers. If a fight drags past round 5, raise the stakes: introduce a complication, escalate the enemy's tactics, or end it decisively.
 
 **When a player character goes Downed:** mindless creatures (Husk Crawlers, Glow-Motes, Frenzy Rats) do not execute; they turn to the nearest live threat, or begin dragging prey away, which is its own kind of clock. Pack hunters guard a kill rather than finish it. Intelligent enemies (Brigands, Rival Initiates, the Warden) may execute, and the threat should be telegraphed a Beat early so the table can react. See Core Mechanics, "Downed and Death."

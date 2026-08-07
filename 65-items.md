@@ -28,7 +28,7 @@ E-Grade pills heal ×10 the listed amount, still capped by Max HP, which an F-Gr
 
 **Healing pills cap at the user's Max HP.** Excess healing is wasted.
 
-#### Pill Saturation in Combat
+#### Pill Limit in Combat
 
 The body accepts only so much pill-borne help under stress. **The first two Healing Pills a character takes in a fight work in full. From the third on, pills have no effect on that character until they have spent ten quiet minutes out of combat.** Aether Pills follow the same rule, counted separately: two of each kind work per fight.
 
@@ -126,7 +126,7 @@ Devastating weapon, one charge. Common in tutorial scavenger zones.
 
 ### Other Tutorial-Grade Items
 
-- **Battered Medkit:** Heals 10 HP when used as a 1-Beat action on yourself or an ally in the same Zone. Does not count toward pill saturation. Three uses before the supplies are exhausted.
+- **Battered Medkit:** Heals 10 HP when used as a 1-Beat action on yourself or an ally in the same Zone. Does not count toward the pill limit. Three uses before the supplies are exhausted.
 - **Low-Grade Armor Scraps:** Heavy. Grants +5 Defense Force when defending with FOR; imposes −5 to DEX-based Clashes (offensive or defensive). Stackable up to one set per character.
 - **Sensory Tool (Generic):** Spend 1 Beat. Reveal one hidden feature within your Zone. Single use unless specified otherwise.
 - **Battered Communicator:** Allows short-range communication between paired devices. Frequently malfunctions. Useful for the Civic Fragment terminal interaction in the tutorial.
