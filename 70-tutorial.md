@@ -6,7 +6,7 @@
 
 ## Pre-Tutorial Setup
 
-Before the first session, each player has built a character per `15-character-creation.md`:
+Before the first session, each player has built a character per the Character Creation chapter:
 
 - 40-point buy across the seven Attributes (floor 3, cap 10).
 - Three Proficiencies, written in plain language.
@@ -17,28 +17,27 @@ Players begin with **whatever was on their person at the moment of Integration**
 
 **GM preparation checklist:**
 
-- [ ] Print or digitize the Grade Reference Card (`75-quick-reference.md`).
-- [ ] Pull stat blocks from `60-bestiary.md`: Glow-Mote Swarm, Husk Crawler, Frenzy Rat, Snarljaw, Glow-Stalker, Training Sentry, Husk Sentinel, Fragment Wraith, Corrupted System Warden.
-- [ ] Pre-write 5–7 probe variants from Phase 1 (one per player, plus spares).
+- [ ] Print or digitize the Grade Reference Card (the Quick Reference).
+- [ ] Pull stat blocks from the Bestiary: Glow-Mote Swarm, Husk Crawler, Frenzy Rat, Snarljaw, Glow-Stalker, Training Sentry, Husk Sentinel, Fragment Wraith, Corrupted System Warden.
+- [ ] Pre-write 5–7 private probe cards: the one-line sensory probes from Phase 1's probe table, one per player plus spares.
 - [ ] Set up the Quest UI: a shared digital quest log (Discord pinned, Google Doc, VTT module). Each player has a private subsection.
-- [ ] Read `40-titles.md` and `55-quests.md` once through. Be ready to issue the first Mandate in Phase 6 and the first Achievement Titles in Phase 7.
+- [ ] Read the Titles and System Quests chapters once through. Be ready to issue the first Mandate in Phase 6 and the first Achievement Titles in Phase 7.
 - [ ] Decide on starting consumables in the Recycling Node (Phase 3); the default loot list is in that section.
-- [ ] Open the HVE event log (`50-hidden-vector-engine.md`, "Structured Event Logging") and be ready to record entries throughout. The tutorial generates dense behavioral signal; capture it.
+- [ ] Open the HVE event log (The Hidden Vector Engine, "Structured Event Logging") and be ready to record entries throughout. The tutorial generates dense behavioral signal; capture it.
 
 ---
 
 ## Design Objectives
 
-The tutorial must accomplish six things simultaneously:
+The tutorial must accomplish five things simultaneously:
 
 - **Introduce awe and danger.** The Multiverse is vast, ancient, indifferent, and lethal.
 - **Expose players to many possible futures.** Martial, arcane, social, and survival paths must all be visible and viable before class selection at Level 10.
 - **Generate clean behavioral data.** The Hidden Vector Engine needs signal across all four axes (Force/Method, Hunger/Restraint, Will/Accord, Control/Freedom) before it can offer meaningful class options at L10.
 - **Create private decision points.** Group consensus flattens identity. The tutorial must mechanically isolate players at key moments so the Engine gets individual reads, not committee outputs.
-- **Teach tone, not rules.** Players should absorb how the System feels (cold, observant, administratively precise) without being lectured on mechanics. Rules emerge through play.
-- **End with becoming, not completion.** Players should leave feeling "I have begun turning into someone," not "I finished onboarding."
+- **Teach tone first.** Players should absorb how the System feels (cold, observant, administratively precise) without being lectured on mechanics. Rules emerge through play.
 
-The tutorial is not a dungeon. It is a curated gauntlet of incompatible incentives designed to force revelation through stress.
+The tutorial is a curated sequence of hard choices under pressure: each phase puts the players somewhere the System can watch them decide.
 
 ### Pacing Target
 
@@ -53,7 +52,7 @@ By the end of the tutorial, every player should have:
 - Witnessed at least one System Volatility explosion.
 - Made at least three **2.0+ intensity** HVE log events (high-stakes choices).
 - Earned **at least one Achievement Title** (Hidden Achievement titles are rare but possible).
-- Received an **Affinity Notice** hinting at their Principle direction.
+- Received an **Affinity Notice**, the System's first hint at the family their Principle is forming in (see The Principle System).
 - Survived a **Mandate** (the Phase 6 dissolution event).
 
 If any of these is missing at the end of Session 3, the GM should improvise to deliver it before transitioning out of the tutorial.
@@ -66,13 +65,13 @@ If any of these is missing at the end of Session 3, the GM should improvise to d
 |---|---|
 | 1: Threshold | The System's voice. The probe (HVE seed reads). |
 | 2: Violent Arrival | The Clash. Force. Beats. Zones. Surge. First kill. First VE. Volatile Artifacts. |
-| 3: Convergence | System status notifications. The Quest UI. Scarcity. Group dynamics. |
+| 3: Convergence | System status notifications. The Quest UI. The Party. Scarcity. Group dynamics. |
 | 4: Field of Ruins | Volatility explosions. Aura Pressure save. Saturation symptoms. Skill Shards in use. Routine Mastery. |
 | 5: Resonance Isolation | Personal Opportunities. Irreversible solo decisions. The first Battle Memory. |
 | 6: Convergence Crisis | The first Mandate. Boss-tier combat. Sacrifice as a 3.0 intensity choice. |
 | 7: First Recognition | Consolidation. Leveling. Stat allocation. Titles. Affinity Notices. Hidden Quest reveals. The Stinger. |
 
-The GM should never stop play to explain a system. If a player asks "how does combat work," the answer is *"roll d100, add your Force, I'll tell you what happens."* Every other rule emerges by encountering it.
+Teach each system when the schedule brings it up, inside a moment that makes it matter. When a player asks "how does combat work," a good first answer is *"roll d100, add your Force, I'll tell you what happens"*; detail can wait until the table wants it. If confusion is costing fun, stop and explain.
 
 ---
 
@@ -200,13 +199,13 @@ You wake on an elevated ridge overlooking the valley. You can see two other play
 
 You wake near a cracked obelisk emitting pulses of energy. Each pulse makes your skin tingle and your vision sharpen. A degraded skill shard lies at its base, partially embedded in the stone. Pulling it free will probably stop the pulses. Leaving it means the pulses keep intensifying. It feels like it's building toward something.
 
-- **Pull it free immediately:** Logs **Hunger 1.0**, **Force 0.5**. Awards 1 **Edge Shard** (see `65-items.md`).
+- **Pull it free immediately:** Logs **Hunger 1.0**, **Force 0.5**. Awards 1 **Edge Shard** (see the Items chapter).
 - **Wait for the buildup:** Logs **Restraint 1.0**, **Method 1.0**. After 3 in-game minutes (real-time tension), the obelisk releases a single pulse that grants the character **+1 IP toward their family resonance** (see The Principle System, "Your First Principle"). This is a **Battle Memory** trigger; log it for Phase 7 reflection.
 - **Destroy the obelisk:** Logs **Freedom 1.0**, **Force 1.0**. Releases scattered VE (awards 30 VE) but no IP.
 
 ### Volatile Artifacts (Available Across the Landing Zone)
 
-In addition to encounter-specific loot, the landing zone contains scattered survival debris. Players may pick these up during travel between encounters or during Phase 3. Items below are pulled from `65-items.md`.
+In addition to encounter-specific loot, the landing zone contains scattered survival debris. Players may pick these up during travel between encounters or during Phase 3. Items below are pulled from the Items chapter.
 
 - **Crude Club** (STR, +0 skill bonus)
 - **Knife / Dagger** (DEX, +5)
@@ -238,13 +237,23 @@ This is the first time players consciously notice that the System is *counting*.
 
 ## Phase 3: Convergence and the Volatile Economy
 
-**Purpose.** Reunite the party. Test resource allocation behavior. Introduce the Quest UI and System status notifications.
+**Purpose.** Reunite the party. Test resource allocation behavior. Introduce the Quest UI, party formation, and System status notifications.
 
 **Pacing.** 20–30 minutes.
 
 ### Narrative
 
 Geography, sound, and instinct draw players toward each other. Within 15–20 minutes of arrival, they have found one another (or most of each other) near a central landmark: the **Recycling Node**, a mound of detritus from a thousand dead worlds. Half-functional gear, broken constructs, scattered shards, unidentifiable objects.
+
+### Party Formation
+
+The moment two or more characters stand within sight of each other, the System offers:
+
+::: systemvoice
+*[Compatible units detected. Party formation: available. Accept?]*
+:::
+
+Accepting opens the party frame: each member's HP, Aether, and Downed status, visible to all members. It also enables quest sharing (see System Quests, "The Party"). Note who extends the invitation, who accepts instantly, and who hesitates or stays solo; log the clear cases at 0.5 intensity on Accord or Freedom.
 
 ### The Scarcity Test
 
@@ -490,7 +499,7 @@ As the party explores the zones (or after they regroup post-Consolidation), the 
 > Reward:     [unknown; calibrated to outcome]
 > ```
 
-These are formal **Personal Opportunities** (`55-quests.md`). Each tests at least two HVE axes simultaneously. There is no objectively correct answer. The choice is **irreversible**: no takebacks, no group consultation, no "I'll come back later." Log each event at **2.0 intensity (Major)**.
+These are formal **Personal Opportunities** (see System Quests). Each tests at least two HVE axes simultaneously. There is no objectively correct answer. The choice is **irreversible**: no takebacks, no group consultation, no "I'll come back later." Log each event at **2.0 intensity (Major)**.
 
 ### Standard Resonance Events
 
@@ -520,7 +529,7 @@ You find yourself standing before a reflective surface that does not show your b
 
 You instinctively understand: confirming locks in a tendency. It strengthens whatever the System has observed so far.
 
-- **Confirm:** Logs **Control 2.0**. The character's HVE Coherence improves: at next Breakthrough, treat their HVE Coherence as one tier higher (per `30-breakthroughs.md`).
+- **Confirm:** Logs **Control 2.0**. The character's HVE Coherence improves: at next Breakthrough, treat their HVE Coherence as one tier higher (per the Grade Breakthroughs chapter).
 - **Decline (reset):** Logs **Freedom 2.0**. Behavioral data blurs. The character has more flexibility in future decisions but less momentum. Mechanically: their next three HVE log entries are weighted at 1.5×.
 - **Stand silently:** Logs **Restraint 1.0**. The mirror dims; the System notes the abstention.
 
@@ -582,7 +591,7 @@ A geometric wall of annihilation, a **Reality Purge**, begins sweeping across th
 
 Between them and the gate is a **Corrupted System Warden** (bestiary, F-Peak boss). The Warden was supposed to manage the tutorial's dissolution but has malfunctioned. It is **not hunting the players**. It is trying to reach the gate itself, to escape through it, and it will destroy anything in its path. It is far too powerful to defeat in a straight fight at F-Grade.
 
-See `60-bestiary.md` for the full stat block. Key behaviors:
+See the Bestiary for the full stat block. Key behaviors:
 
 - **Phase 1 (full HP):** Ignores the party, moves toward the gate using all 3 Beats.
 - **Phase 2 (below 75% HP):** Becomes aware. Uses 2 Beats for attacks, 1 Beat for movement.
@@ -745,7 +754,7 @@ End the session before the consequences resolve. Let the players sit with it for
 
 ## GM Reference: Vector Logging Cheatsheet
 
-Log behavioral events using the standard JSON structure (`50-hidden-vector-engine.md`, "Structured Event Logging"). Below are the key tutorial decision points and their primary axis mappings.
+Log behavioral events using the standard JSON structure (The Hidden Vector Engine, "Structured Event Logging"). Below are the key tutorial decision points and their primary axis mappings.
 
 | **Tutorial Moment** | **Primary Axis** | **Secondary Axis** | **Typical Intensity** |
 |---|---|---|---|

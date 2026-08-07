@@ -33,7 +33,7 @@ linestretch: 1.18
 # Headings & numbering
 numbersections: true
 toc-depth: 2
-secnumdepth: 3   # number chapters, sections, subsections
+secnumdepth: 2   # number chapters, sections, subsections; deeper headings stay unnumbered
 
 # Code & listings
 listings-disable-line-numbers: true

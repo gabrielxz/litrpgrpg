@@ -44,11 +44,25 @@ For Hidden Quests, the entry appears differently; see Hidden Quest Conventions b
 
 ---
 
+## The Party
+
+The System supports formal parties. Any Integrated being can extend a party invitation to another within line of sight; accepting is a thought. Membership persists until a member leaves, the party disbands, or a member dies.
+
+A party grants three things:
+
+- **Status sharing.** Every member's UI shows a party frame: each member's current HP, Maximum HP, Aether, and whether they are Downed. In the genre this is why strangers party up before they trust each other; seeing an ally's true condition changes every triage decision.
+- **Quest sharing.** A member may share a Routine, Faction, or Bestowed quest with the party. The entry appears in every member's log with the same objectives, and completion pays every member who meaningfully participated. Mandates need no sharing (they already bind everyone in scope), and Personal Opportunities cannot be shared; they are addressed to one behavioral signature.
+- **Reward splitting.** Shared quest VE splits evenly among meaningful participants, the same rule as combat VE pooling (see Cultivation, "Awarding VE").
+
+Party formation is itself HVE signal: who invites, who accepts instantly, who stays solo.
+
+---
+
 ## Quest Categories
 
 ### Mandates
 
-Already established (`45-system-ai.md`). Server-wide directives, cold and impersonal, with real consequences for noncompliance.
+Server-wide directives, cold and impersonal, with real consequences for noncompliance.
 
 **Shape:** A System-issued objective binding on every Initiate within a region or population. Story-driving, multi-session, often party-converging.
 
@@ -64,7 +78,7 @@ The System notices something specific about a character and offers a tailored qu
 
 **The same situation generates different Personal Opportunities for different characters at the same table.** A Force-aligned character might receive *"Hostile detected within Zone. Eliminate within 6 hours: reward proportional to threat."* A Method-aligned character in the same situation receives *"Unstable formation detected. Stabilize before collapse: reward proportional to elegance of solution."*
 
-This is where the System feels personal. Personal Opportunities are also the primary lever by which the System nudges or tests the character: the offer can affirm an existing pattern or quietly invite the character to step against it.
+This is where the System feels personal. Personal Opportunities are also the primary lever by which the System nudges or tests the character: the offer can affirm an existing pattern or quietly invite the character to step against it. By default it affirms, and offers flow with the character's recent behavior. It tends to test against the pattern when recent behavior and long-term identity disagree (the Current and Deep Vectors point different ways), and occasionally for no visible reason at all; the choice is the System's, and the System is unpredictable. A GM in doubt should affirm.
 
 ### Routine Quests
 
@@ -121,6 +135,12 @@ A quest's difficulty determines:
 - The reward magnitude (see Reward Reference Table).
 - The Mandate-tier consequences for refusal or failure (if applicable).
 
+### Performance-Scaled Rewards
+
+Some quests state a reward as a proportionality clause instead of a fixed amount: *"reward proportional to threat,"* *"reward proportional to elegance of solution."* The System judges the performance at completion and sets the payout. Speed, thoroughness, collateral damage, and style all weigh in, and the criteria are never published. The GM, or the System AI in assisted modes, sets the final number within the difficulty's band on the Reward Reference Table; the judged quality moves it toward the top or bottom of that band.
+
+Use these for quests where how the thing gets done matters as much as whether. They pair naturally with Personal Opportunities, and the judgment itself is HVE signal: a player who starts optimizing for the System's approval is telling the Engine something.
+
 ### Refusal and Failure Consequences
 
 Consequences scale by quest type. Below is the operational taxonomy.
@@ -167,7 +187,7 @@ Failure is distinct from refusal: the character tried and lost. Consequences are
 - **Personal Opportunity:** No reward. Often no further consequence; the System notes the attempt and may offer a related opportunity later.
 - **Mandate:** Real systemic consequence per Mandate text. Usually the same as refusal, sometimes mitigated by demonstrated effort.
 - **Faction:** Reputation hit, possible follow-up quest to recover standing.
-- **Hidden:** The character usually never knows.
+- **Hidden:** Sometimes the character never knows; sometimes the log marks a hidden entry failed with its objective still obscured.
 
 The System recognizes effort. A character who attempts a Mandate and fails honestly is treated differently from one who refuses outright. The HVE log distinguishes the two.
 
@@ -212,7 +232,7 @@ Personal Opportunity rewards are weighted to the character's HVE alignment: a Fo
 - **Routine quests** rarely grant titles directly, but contribute to Achievement title thresholds (a "kill ten Snarljaws" routine quest progresses the Snarljaw-related Achievement counter).
 - **Personal Opportunities** can grant Achievement titles immediately on completion, or contribute to HVE-Resonant title progression.
 - **Mandates** may grant Bestowed titles on completion (or negative Bestowed titles on refusal). High-difficulty Mandates often grant a unique Bestowed title that becomes part of the character's identity.
-- **Hidden Quests** are the primary delivery mechanism for **Hidden Achievement titles** (see `40-titles.md`). A Hidden Quest's reward is often *the title itself*, plus a smaller VE/item award.
+- **Hidden Quests** are the primary delivery mechanism for **Hidden Achievement titles** (see Titles). A Hidden Quest's reward is often *the title itself*, plus a smaller VE/item award.
 - **Faction quests** grant reputation, which is a faction-tracked stat that gates further faction quests, access, and eventual Bestowed faction titles.
 
 ### Narrative Rewards
@@ -356,7 +376,6 @@ Deferred until playtest data or campaign progression demands them:
 
 - **Server-wide Mandate cadence.** How often should Mandates fire? What's the right campaign rhythm: one per arc, one per Grade, opportunistic? Will be tuned with playtest.
 - **Mandate-driven faction politics.** When the System issues a Mandate that benefits one faction over another, the political implications cascade. Needs a faction-relations subsystem to formalize.
-- **Group quests and shared rewards.** When the System issues a quest to the whole party, how are rewards apportioned? Equal split, role-based, contribution-weighted? Likely table-preference, but a default rule is missing.
 - **Quest chains and arc tracking.** Long-running multi-quest arcs need a structural representation in the UI: parent quest with child objectives, prerequisite gating, optional branches.
 - **Reputation as a tracked stat.** Faction reputation is referenced throughout but not formalized. Needs a numeric or tiered system tied to faction quests, Mandate compliance, and Bestowed title eligibility.
 - **PvP quests.** Can the System issue a quest targeting another player character? The Hidden Vector Engine tracks PvP coercion as high-intensity Will events; a Mandate that pits PCs against each other is a powerful but volatile design space.

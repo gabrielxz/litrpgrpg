@@ -162,6 +162,7 @@ The System processes the result. This is the payoff: the moment the numbers chan
 The Breakthrough fails. The overcharged VE backlashes through the cultivator's system.
 
 - **VE Backlash:** All stored VE is burned off in the failed attempt; none of it becomes level progress. The stat cost of the backlash scales by Grade (see the Grade-Specific sections below).
+- **Battle Memory:** A failed Breakthrough always grants a Battle Memory Card: the trial is the kind of moment Battle Memories exist to capture. The GM narrates what the character glimpsed as it slipped away.
 - **Lockout Period:** The character cannot attempt another Breakthrough for a minimum number of sessions determined by Grade (F→E: 2 sessions, E→D: 3 sessions, D→C: 4 sessions). This is narrative: the character's channels are damaged and must heal.
 - **Stat Consequences:** Scale by Grade (see Grade-Specific sections below).
 - **Tribulation Ward Effect:** If a Tribulation Ward was consumed, the Cracked result is upgraded to Stable. The Ward absorbs the backlash. This is the insurance item: expensive, rare, but it turns catastrophe into mediocrity.
@@ -306,7 +307,7 @@ A well-built F-Grade cap character (POW ~75, HRT ~60) has Force 75 + Force 60 = 
 
 ### D → C and Beyond
 
-This book covers F→E and E→D in full; D→C and beyond arrive in a future supplement. The universal blueprint applies: the four-beat structure, the Overcharge Ratio, the Quality Tier system, and the Breakthrough Check formula all extend unchanged. What changes is the thematic content of the trial (D→C likely introduces true Heart Demon confrontation as an adversarial internal entity), the severity of failure, the scale of external phenomena (D-Grade tribulations may attract attention from entities beyond the local System), and the magnitude of Transcendent rewards.
+This book covers F→E and E→D in full; D→C and beyond arrive in a future supplement. The universal blueprint applies: the four-stage structure, the Overcharge Ratio, the Quality Tier system, and the Breakthrough Check formula all extend unchanged. What changes is the thematic content of the trial (D→C likely introduces true Heart Demon confrontation as an adversarial internal entity), the severity of failure, the scale of external phenomena (D-Grade tribulations may attract attention from entities beyond the local System), and the magnitude of Transcendent rewards.
 
 ---
 

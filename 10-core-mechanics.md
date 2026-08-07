@@ -298,6 +298,8 @@ Combat is a series of Opposed Clashes. There is no separate to-hit roll and dama
 
 The defender chooses their defensive posture when targeted, bounded by what the fiction permits. A heavily armored juggernaut tanks hits with FOR; a nimble duelist dances away with DEX; a steadfast monk holds her mind against a mentalist's assault with HRT. The GM adjudicates edge cases.
 
+**Player versus player.** A skill, spell, or Principle effect aimed at another player character resolves as a standard Opposed Clash, with the defender choosing their posture as usual. PvP coercion attempts are logged as high-intensity Will events in the Hidden Vector Engine.
+
 **Tactical Modifiers** include: Positional State (+10 Advantaged, −10 Exposed), Flanking (+10 when allies threaten from multiple Zones), skill and item bonuses, Principle active effects, and environmental conditions. All flat modifiers in the game draw from one budget:
 
 | **Modifier** | **Size** | **Examples** |

@@ -6,7 +6,7 @@
 
 ## Design Notes
 
-This document covers the practical items players encounter during F-Grade play: the consumables, weapons, and one-shot oddities that fill the spaces between treasure tiers. The full economy, crafting professions, and merchant systems are deferred. This is what the GM needs at the table for the prototype.
+This document covers the practical items players encounter during F-Grade play: the consumables, weapons, and one-shot oddities that fill the spaces between treasure tiers. The full economy, crafting professions, and merchant systems are deferred. This is what the GM needs at the table.
 
 ---
 
@@ -14,7 +14,7 @@ This document covers the practical items players encounter during F-Grade play: 
 
 ### Healing Pills
 
-Restore HP instantly. In combat, consuming a pill costs **1 Beat**, whether swallowing one yourself or administering it to an ally in the same Zone.
+Restore HP instantly. In combat, consuming a pill costs **1 Beat**, spent by whoever takes the action: swallow one yourself, or administer one to an ally in the same Zone. The recipient of an administered pill spends nothing.
 
 | **Pill** | **Grade** | **HP Restored** |
 |---|---|---|
@@ -24,27 +24,15 @@ Restore HP instantly. In combat, consuming a pill costs **1 Beat**, whether swal
 | Greater Healing Pill | F | 50 |
 | Pristine Recovery Pill | F | 80 |
 
-E-Grade pills heal ×10 the listed amount (if the user can metabolize them; F-Grade systems are prone to violent reactions when ingesting E-Grade materia, often inducing temporary Saturation).
+E-Grade pills heal ×10 the listed amount, still capped by Max HP, which an F-Grade user rarely benefits from. The materia is the real cost: an F-Grade body that ingests an E-Grade pill immediately adds 300 to its stored VE, which puts most F-Grade characters straight into Critical Saturation. The surplus is waste; it clears through Consolidation at the normal hourly rate and refines into no level progress.
 
 **Healing pills cap at the user's Max HP.** Excess healing is wasted.
 
 #### Pill Saturation in Combat
 
-The body's energy channels accept healing in diminishing quantities. Within a single combat scene, each healing pill consumed by a given character heals at progressively lower efficiency:
+The body accepts only so much pill-borne help under stress. **The first two Healing Pills a character takes in a fight work in full. From the third on, pills have no effect on that character until they have spent ten quiet minutes out of combat.** Aether Pills follow the same rule, counted separately: two of each kind work per fight.
 
-| Pill # in this combat | Efficiency |
-|---|---|
-| 1st | 100% (full listed value) |
-| 2nd | 50% |
-| 3rd | 25% |
-| 4th | 12% |
-| 5th and beyond | half-again per pill, until rounded to 0 |
-
-Round down at each step. Once a pill would heal 0 HP, the character is **saturated** and further pills have no healing effect for the remainder of the combat scene. Aether Pills follow the same diminishing schedule, tracked separately from healing pills (a third Healing Pill does not affect the next Aether Pill's potency).
-
-**Administering a pill to an ally** is a 1-Beat action. The ally's saturation count increments, not the user's.
-
-**Out-of-combat Consolidation rest** resets all saturation counts.
+**Administering a pill to an ally** counts against the recipient's two, never the administrator's.
 
 **Foundation Pills are exempt.** They are not consumed during combat.
 
@@ -79,12 +67,14 @@ Foundation Pills are consumed during Stage 1 of a Breakthrough (Preparation). On
 
 Weapons do not deal flat damage. They determine which Force governs an attack and may grant a small **Skill Bonus** to the Clash. Quality and craftsmanship matter narratively but do not change the math.
 
+The wielder is the weapon. In an Integrated body, accuracy and killing power both come from the person: Force decides them, and the Margin is the physics. The implement decides which Force applies and adds at most a small bonus for fit. This is why the tables here carry no damage dice and no high-damage weapon class: a greatsword in weak hands is a slow club, and a knife guided by Force 60 is deadlier than either.
+
 | **Weapon** | **Governing Force** | **Skill Bonus** | **Notes** |
 |---|---|---|---|
 | Crude Club | STR | +0 | Found objects, broken table legs. |
 | Knife / Dagger | DEX | +5 | Quick, concealable. Throwable as one-shot ranged. |
 | Spear | DEX | +5 | Reach: free Disengage from one Zone-edge enemy per turn. |
-| Battle Axe / Greatsword | STR | +10 | Heavy. Requires STR Force 5; below that, every Clash with it takes −10 (hindering). |
+| Battle Axe / Greatsword | STR | +10 | Heavy. Requires STR Force 05; below that, every Clash with it takes −10 (hindering). |
 | Short Bow | DEX | +5 | Ranged: target enemies in adjacent Zones. |
 | Crossbow (single-shot) | DEX | +10 | Requires 1 Beat to reload between shots. |
 | Quarterstaff | STR or DEX | +5 | Versatile: choose Force at attack time. |
@@ -116,8 +106,8 @@ Crystalline matrices containing fragments of dead techniques. Single-use. Activa
 | Edge Shard | Next Clash this turn gains +20. | Shard cracks: user takes 5 damage. |
 | Pulse Shard | Restore 30 Aether. | Aether backlash: user takes 10 damage. |
 | Veil Shard | Become invisible until end of next turn or until you act offensively. | Veil flickers: you remain visible but appear blurred (+5 to defense, no concealment). |
-| Anchor Shard | Until end of next turn, you cannot be moved by any effect, and your Defense Force gains +10. | You become **Rooted**; you also cannot move under your own power. |
-| Resonance Shard | Add 1 IP toward a Principle of your choice. | The IP is added to a random Principle the GM selects. |
+| Anchor Shard | Until end of next turn, you cannot be moved by any effect (moving yourself is fine), and your Defense Force gains +10. | You become **Rooted** for the rest of the encounter: unable to be moved, and unable to move under your own power. |
+| Resonance Shard | Add 1 IP toward a Principle of your choice. | The IP is lost. |
 | Volatile Shard | Roll d100 again. The GM and the System AI generate an unpredictable effect based on the result. | The GM's discretion is the risk. |
 
 Shards are randomizers. They reward players who use them in moments where a wild outcome is acceptable, and punish those who treat them as reliable tools.
@@ -145,7 +135,7 @@ Devastating weapon, one charge. Common in tutorial scavenger zones.
 
 ## Item Acquisition
 
-For F-Grade prototype play, items appear:
+At F-Grade, items appear:
 
 - As **tutorial scavenge** in Volatile Artifact zones (Phase 2 and Phase 3 of the Integration Tutorial).
 - As **loot drops** from defeated enemies; the System AI generates tier-appropriate drops per the loot generation rule (System AI document).
@@ -160,7 +150,7 @@ If the party is hoarding consumables and never spending them, the GM is being to
 
 ## Future Expansion
 
-This document covers prototype-tier items only. Deferred for later development:
+This chapter covers F-Grade items only. Deferred for later development:
 
 - **Crafted equipment and named weapons.** Once the Professions system is designed, players can craft, refine, and name their own gear.
 - **Principle-attuned items.** Weapons and tools that resonate with specific Principles and grant attunement bonuses.

@@ -2,7 +2,7 @@
 
 # The System AI
 
-In the fiction, the System administers reality: it watches, scores, issues, and grants. At the table, **"the System AI" names a role, not a product**: whoever performs the System's generative work in your game. Depending on how you run, that performer is the GM alone, the GM working with a general-purpose AI assistant, or a dedicated companion app. Every rule in this book that says "the System AI does X" means the holder of this role does X. Nothing in this book requires software.
+In the fiction, the System administers reality: it watches, scores, issues, and grants. At the table, **"the System AI" names a role**: whoever performs the System's generative work in your game. Depending on how you run, that performer is the GM alone, the GM working with a general-purpose AI assistant, or a dedicated companion app. Every rule in this book that says "the System AI does X" means the holder of this role does X. Nothing in this book requires software.
 
 ## The Three Ways to Run
 
@@ -113,6 +113,16 @@ plus their 2-3 defining logged moments.
 Last session: [three-sentence summary]
 ```
 
+## What the System Wants
+
+The GM plays the System, so the GM needs its goals. Three are legible from its behavior at F-Grade:
+
+- **Observation.** It watches how conscious agents behave under pressure and records everything. The Hidden Vector Engine is its instrument.
+- **Selection.** It applies graded pressure and pays for what passes through: quests, Mandates, and escalating threats are filters, and advancement is the payout.
+- **Cultivation of outliers.** It spends disproportionate attention on individuals it finds interesting. Personal Opportunities, Hidden Achievements, and bespoke classes exist for this.
+
+Why it selects, and toward what end, is not knowable at F-Grade, and the System does not answer the question. Play its deeper motive as genuinely inscrutable: apparent kindness and apparent cruelty should both read as experimental method. Higher Grades learn more.
+
 ## The Voice of the System
 
 The System states; it never persuades, apologizes, or encourages. Short declaratives. Precise numbers. No pronouns for itself. Where a human would soften, the System specifies.
@@ -124,7 +134,3 @@ The System states; it never persuades, apologizes, or encourages. Short declarat
 
 *[Vital coherence: fraying. Estimated thread loss: 3 rounds.]*
 :::
-
-## PvP and Table Disputes
-
-If a player attempts to use a skill or Principle effect against another player character, resolve it as a standard Opposed Clash. The Hidden Vector Engine logs PvP coercion attempts as high-intensity Will events.

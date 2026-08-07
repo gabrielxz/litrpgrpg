@@ -10,7 +10,7 @@
 
 The Hidden Vector Engine tracks how a character actually behaves under pressure and converts those patterns into a structured identity that the System can use.
 
-This identity is not moral alignment. It is not a role selection. It is an evolving behavioral signature derived from repeated actions. The engine answers the question: *How does this conscious agent manage entropy and adapt to the unknown?*
+This identity is an evolving behavioral signature derived from repeated actions. It records conduct without judging it; moral alignment plays no part. The engine answers the question: *How does this conscious agent manage entropy and adapt to the unknown?*
 
 The engine enables: dynamic class generation based on lived behavior, forging of personalized Principles tailored to the character's systemic footprint, adaptive world reactions from factions, environments, and entities, and long-term narrative coherence across sessions.
 
@@ -22,7 +22,7 @@ Players should feel observed. They should not see the underlying numbers. The sy
 
 The engine follows five constraints:
 
-- **Orthogonality:** Each axis measures one thing. No overlap, no ambiguity.
+- **Orthogonality:** Each axis measures one thing.
 - **Weight:** Meaningful moments outweigh routine play. Important decisions shape identity more than filler activity.
 - **Recency:** Identity evolves. Recent behavior matters more than distant history.
 - **Structure:** Inputs are structured. The system interprets clearly defined events, not vague narrative summaries.
@@ -97,7 +97,7 @@ Behavior is recorded through discrete events, not session summaries. Each event 
 
 ## Structured Event Logging
 
-Events must be recorded in a consistent JSON format: player, event_summary, context, intent, outcome, primary_axis, intensity, secondary_axis. This ensures reliable interpretation by the System AI. PvP coercion attempts should always be logged as high-intensity Will events.
+Events must be recorded in a consistent JSON format: player, event_summary, context, intent, outcome, primary_axis, intensity, secondary_axis. This ensures reliable interpretation by the System AI.
 
 The structured log is the format for AI-assisted and companion-app play. GMs running unplugged use "Tracking by Hand" (below) instead.
 
