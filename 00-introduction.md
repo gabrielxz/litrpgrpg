@@ -70,11 +70,11 @@ Kara (Strength 8 and Fortitude 7, written STR 8, FOR 7 on her sheet) and Andre (
 
 **Andre:** Before we climb in, I look it over. Has anything been through here?
 
-**GM:** You have tracking and fieldcraft, so the obvious reads are free: the dust is disturbed, and something heavy dragged itself through, recently. How recently is a harder question. Roll d100 plus your Perception Force, plus 10 for the Proficiency.
+**GM:** You have tracking and fieldcraft, so the obvious reads are free: the dust is disturbed, and something heavy dragged itself through, recently. How recently is a harder question. Roll d100 plus your Perception Force, plus 5 for the Proficiency.
 
-**Andre:** *(rolls 55)* 55 plus 9, plus 10. That's 74.
+**Andre:** *(rolls 55)* 55 plus 9, plus 5. That's 69.
 
-**GM:** Against a Moderate Resistance of 90. Not enough, but close, so it's a Soft Failure, which means partial progress instead of a dead end: you learn which direction it went, deeper in, but not when. You're at the stair mouth when the rubble above Kara shifts.
+**GM:** Against a Moderate Resistance of 90. Not enough, so it's a Soft Failure, which means partial progress instead of a dead end: you learn which direction it went, deeper in, but not when. You're at the stair mouth when the rubble above Kara shifts.
 
 **Kara:** Of course it does.
 

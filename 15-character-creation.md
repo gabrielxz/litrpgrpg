@@ -34,7 +34,9 @@ These are illustrations, not templates. Players should build what makes sense fo
 
 ## Proficiencies
 
-Choose **three Proficiencies**, broad domains of competence written in plain language. See Core Mechanics, "Proficiencies and Skill Checks," for the full rules.
+Choose **three Proficiencies**, broad domains of competence written in plain language. All three begin at **Trained**: +5 to Clashes and skill checks in the domain, Routine Mastery on Trivial and Easy tasks, and access to whatever the GM has gated behind training. They deepen to Seasoned and then Master through Marks, earned in play. See Core Mechanics, "Proficiencies and Skill Checks," for the full rules.
+
+A Proficiency covers weapons in its domain. A character with "close combat" adds their tier bonus when swinging an axe; a character without it adds nothing.
 
 Proficiencies should reflect the character's life before Integration: what they trained in, what they were good at, what they spent years doing. A soldier might take "close combat," "field medicine," and "tactical awareness." A professor might take "ancient languages," "research methodology," and "persuasion." A mechanic might take "mechanical tinkering," "jury-rigging," and "vehicle operation."
 

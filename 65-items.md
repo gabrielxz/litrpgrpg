@@ -71,24 +71,24 @@ Foundation Pills are consumed during Stage 1 of a Breakthrough (Preparation). On
 
 ## Weapons (F-Grade Reference)
 
-Weapons do not deal flat damage. They determine which Force governs an attack and may grant a small **Skill Bonus** to the Clash. Quality and craftsmanship matter narratively but do not change the math.
+Weapons do not deal flat damage and carry no bonus of their own. They determine which Force governs an attack and what the implement makes possible. The bonus to the Clash comes from the wielder's Proficiency: **+5 at Trained, +10 at Seasoned or Master, nothing at all untrained.**
 
-The wielder is the weapon. In an Integrated body, accuracy and killing power both come from the person: Force decides them, and the Margin is the physics. The implement decides which Force applies and adds at most a small bonus for fit. This is why the tables here carry no damage dice and no high-damage weapon class: a greatsword in weak hands is a slow club, and a knife guided by Force 60 is deadlier than either.
+The wielder is the weapon. In an Integrated body, accuracy and killing power both come from the person: Force decides them, and the Margin is the physics. The implement decides which Force applies and what reach or range it grants. This is why the tables here carry no damage dice and no high-damage weapon class: a greatsword in weak hands is a slow club, and a knife guided by Force 60 is deadlier than either.
 
-| **Weapon** | **Governing Force** | **Skill Bonus** | **Notes** |
-|---|---|---|---|
-| Crude Club | STR | +0 | Found objects, broken table legs. |
-| Knife / Dagger | DEX | +5 | Quick, concealable. Throwable as one-shot ranged. |
-| Spear | DEX | +5 | Reach: free Disengage from one Zone-edge enemy per turn. |
-| Battle Axe / Greatsword | STR | +10 | Heavy. Requires STR Force 05; below that, every Clash with it takes −10 (hindering). |
-| Short Bow | DEX | +5 | Ranged: target enemies in adjacent Zones. |
-| Crossbow (single-shot) | DEX | +10 | Requires 1 Beat to reload between shots. |
-| Quarterstaff | STR or DEX | +5 | Versatile: choose Force at attack time. |
-| Hand Axe (thrown) | STR | +5 | Ranged: one Zone. Recoverable. |
+| **Weapon** | **Governing Force** | **Notes** |
+|---|---|---|
+| Improvised object | STR | Broken table legs, rocks, a length of pipe. No Proficiency bonus applies. |
+| Knife / Dagger | DEX | Quick, concealable. Throwable as one-shot ranged. |
+| Spear | DEX | Reach: free Disengage from one Zone-edge enemy per turn. |
+| Battle Axe / Greatsword | STR | Heavy. Requires STR Force 05; below that, every Clash with it takes −10 (hindering). |
+| Short Bow | DEX | Ranged: target enemies in adjacent Zones. |
+| Crossbow (single-shot) | DEX | Requires 1 Beat to reload between shots. |
+| Quarterstaff | STR or DEX | Versatile: choose Force at attack time. |
+| Hand Axe (thrown) | STR | Ranged: one Zone. Recoverable. |
 
 These are the starting and recovery tier. Higher-quality weapons (named, System-forged, Principle-attuned) are bespoke items the GM designs as treasure or quest rewards.
 
-**Wielding without proficiency:** A character with no relevant Proficiency may still use a weapon, but loses the Skill Bonus. A trained soldier with a Greatsword adds +10; a librarian swinging the same blade adds +0.
+**Wielding without a Proficiency:** a character with no relevant Proficiency may still pick up any weapon and adds nothing to the Clash. A Seasoned soldier with a greatsword adds +10; a librarian swinging the same blade adds +0.
 
 ---
 
@@ -117,8 +117,10 @@ Shards are randomizers. They reward players who use them in moments where a wild
 
 A small shield that absorbs one impact before its protective field collapses. The pattern for defensive artifacts generally: one negation, a visible discharge, a recharge tied to Consolidation, and stated limits.
 
-- **Effect:** Once per encounter, when the wielder would take damage from a physical Clash, reduce that damage to 0. The buckler's field discharges visibly and does not reset until the next Consolidation.
-- **Limitations:** Does not protect against mental, spiritual, or illusion-based attacks. Does not negate the Margin; it only converts damage to 0 after the Clash resolves. Does not work against attacks the wielder did not see coming (Surprise Beat hits, ambushes from Hidden enemies).
+- **Effect:** Once per encounter, when the wielder would take damage from a physical Clash, reduce that damage to 0 **without giving up any Beats**. The buckler's field discharges visibly and does not reset until the next Consolidation.
+- **Limitations:** Does not protect against mental, spiritual, or illusion-based attacks. Does not work against attacks the wielder did not see coming (Surprise Beat hits, ambushes from Hidden enemies). Does not move the wielder, so it is no help against being Driven Back.
+
+The buckler covers the blow a character would otherwise have paid a whole turn to survive. Yielding alongside it is wasted; the damage is already zero.
 
 ### Single-Use Ranged Relic (Worked Example: Expended Weapons)
 

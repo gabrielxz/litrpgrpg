@@ -12,8 +12,9 @@
 - **Volatility:** In combat, if the **natural d100** (before any modifiers) meets the Grade threshold, roll again and add. Each cascade die also checks its own natural result. Applies to combat Clash rolls and Will Saves (either side), plus the Breakthrough Check; skill checks never explode. A cascade of 2+ extra dice on a PC's roll grants a Battle Memory Card.
 - **Advantaged:** +10 to roll (fiction-derived positional edge). **Exposed:** −10 to roll. **Flanking:** +10 to roll. **Environment:** −10 hindering / −20 crippling.
 - **Turned Aside:** defender wins by Margin 40+ → attacker Exposed until end of their next turn. Defensive win with an explosion → Momentum shifts next round.
+- **Driven Back:** attacker wins by Margin 40+ → defender takes the damage and is Exposed until end of their next turn; the attacker may drive them one Zone (no free strike).
 - **Skill check failure:** fail by 1–39 soft (success at a cost), 40+ hard (failure plus consequence), natural 01–05 catastrophic. Margin 40+ on any success is dominant.
-- **Exceptional Success:** natural 96–100 on a skill check. Success: narrate a step beyond what was asked. Failure: Soft regardless of margin. No extra dice.
+- **Exceptional Success:** natural roll at or above your Volatility Threshold on a skill check. Success: narrate a step beyond what was asked. Failure: Soft regardless of margin. No extra dice.
 - **Cross-Grade Auto-Success:** vs. passive obstacles, Force + Cross-Grade Adjustment ≥ Resistance = no roll (2+ Grades up never rolls).
 - **Momentum:** Opposed Momentum Roll: d100 + DEX or PER Force (whichever is higher). Winning side acts first each round.
 - **Free Step:** DEX Force 50+ grants one free Zone move or in-Zone reposition per turn.
@@ -41,7 +42,9 @@
 
 **Grade Multipliers:** F-Grade: ×1 | E-Grade: ×10 | D-Grade: ×100 | C-Grade: ×1,000
 
-**Volatility Thresholds (natural die; combat Clashes, Will Saves, and the Breakthrough Check):** F: 96+ | E: 95+ | D: 94+ | C: 93+ | B: 92+ | S: 91+ (starts at 96, falls 1 per Grade). Skill checks never explode.
+**Volatility Thresholds (natural die):** F: 96+ | E: 95+ | D: 94+ | C: 93+ | B: 92+ | S: 91+ (starts at 96, falls 1 per Grade).
+
+One number at the top of the die. On a Clash it explodes (combat Clashes, Will Saves, and the Breakthrough Check; skill checks never explode). On a skill check it is an Exceptional Success. On either it earns a **Mark** in the Proficiency you were using. A cascade of 2+ extra dice on a PC's roll also grants a Battle Memory Card.
 
 **Cross-Grade Adjustment:** The higher-Grade side gains +100 per Grade of difference. In Opposed Rolls, the higher-Grade combatant adds +100 to their total per Grade above the opponent. In Resistance Rolls, add +100 per Grade of difference to whichever side is higher (the challenger's roll if challenging a lower-Grade obstacle, the obstacle's Resistance if challenging a higher-Grade obstacle). Same Grade, no adjustment.
 
@@ -52,6 +55,18 @@
 **Consolidation:** each full hour clears one fifth of VE Tolerance from stored VE (full tank ≈ 5 hours) and recovers 20% Max HP. Interruption keeps completed hours.
 
 **Surge:** spend half your Maximum Aether (round up) for +5 on one Clash roll you make. Declare before rolling. No Beat. Stacks with everything; available to everyone.
+
+**Yield:** once the Margin is known and before damage lands, give up Beats from your **next** turn. Each Beat cuts the incoming Margin by 20. Your next turn has two Beats, so two is the most you can give. One Beat: you give ground where you stand. Two Beats: you are driven one Zone, attacker's choice, no free strike. **Cornered** (nowhere to be driven): one Beat only. Creatures Yield only if their stat block says so.
+
+**Proficiencies:** three at creation, all **Trained**.
+
+| Tier | Effect |
+|---|---|
+| Trained | +5 to Clashes and skill checks in the domain. Routine Mastery (auto-succeed Trivial and Easy). Specialist Gating access. |
+| Seasoned | +10 in place of the +5. **3 Marks.** |
+| Master | +10, and once on your turn your first action using it costs no Beat. **10 Marks**, and an E-Grade body. |
+
+Weapons carry no bonus of their own; the bonus is the wielder's tier. Untrained is +0. **3 Marks in a domain you have no Proficiency in:** the System grants it at Trained, spending those Marks.
 
 **Downed:** at 0 HP: no Beats, no defense; dies at the end of their third round unless stabilized (any healing, or 1 Beat + Moderate 90 check, field-medicine Proficiencies apply). One hit ≥ 10× Max HP kills outright. Attacking a Downed character: 1 Beat, no roll, kills. Surviving being Downed grants a Battle Memory Card.
 

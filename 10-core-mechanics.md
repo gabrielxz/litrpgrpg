@@ -123,20 +123,48 @@ The GM only calls for a roll when there is genuine uncertainty, when Force is be
 
 Each character begins with three Proficiencies: broad domains of competence written in plain language. Examples: "wilderness survival," "ancient languages," "mechanical tinkering," "intimidation," "field medicine," "stealth and infiltration."
 
+A Proficiency covers its whole domain, weapons included. "Close combat" governs the axe in your hands the same way "field medicine" governs the wound you are packing.
+
+#### The Three Tiers
+
+| **Tier** | **Effect** |
+|---|---|
+| **Trained** | +5 to Clashes and skill checks in the domain. Routine Mastery. Specialist Gating access. |
+| **Seasoned** | +10 in place of the +5. |
+| **Master** | +10, and once on your turn your first action using the Proficiency costs no Beat. Requires an E-Grade body. |
+
+Characters begin play with three Proficiencies at Trained. Proficiencies deepen through Marks, below.
+
 **Skill Check Formula:**
 
 - **Base Modifier:** Your Relevant Attribute's **Force** (e.g., intimidating a guard uses CHA Force; breaking down a barricade uses STR Force; tracking a creature uses PER Force; resisting an interrogator's coercion uses HRT Force).
-- **Proficiency Bonus:** If you possess a relevant Proficiency, add a flat **+10** to your roll.
+- **Proficiency Bonus:** +5 at Trained, +10 at Seasoned or Master.
 
 Opposed checks resolve as Opposed Rolls (above): both sides roll d100 + Force, higher wins. Passive obstacles resolve as Resistance Rolls; the GM assigns a Resistance from the Grade Reference Card and the character must meet or exceed it.
 
 The GM decides which Attribute applies. Resisting coercion is HRT; reading an interrogator's tells is PER; outlasting physical torture is FOR. Deciphering Principle script might be PER if it is analytical, POW if it is intuitive, or even a Principle affinity check if the script resonates with the reader's own cultivation.
 
-**Routine Mastery:** With a relevant Proficiency, you automatically succeed at Trivial and Easy tasks of your own Grade, no roll. A field medic does not roll to dress a wound; a tracker does not roll to follow a day-old trail in soft earth; a scout notices what a scout would notice. Roll only when risk, time pressure, or opposition pushes the task to Moderate or above.
+**Routine Mastery:** With a relevant Proficiency at any tier, you automatically succeed at Trivial and Easy tasks of your own Grade, no roll. A field medic does not roll to dress a wound; a tracker does not roll to follow a day-old trail in soft earth; a scout notices what a scout would notice. Roll only when risk, time pressure, or opposition pushes the task to Moderate or above.
 
 **Specialist Gating:** Some tasks cannot be attempted at all without the relevant Proficiency, regardless of Force: surgery, deciphering ancient scripts, formation-craft. The GM decides which tasks are gated. An unskilled character with high Force can attempt anything physical or intuitive; they cannot brute-force trained knowledge they do not have.
 
-**Gaining New Proficiencies:** Characters can earn new Proficiencies through play. The System AI may award them as class features, Hidden Achievement rewards, or Consolidation visions.
+**The Master's free action.** Once on your turn, the first action drawing on a Mastered Proficiency costs no Beat. The axe Master's first swing is free. The field medic's first act of medicine is free, so an ally can be stabilized without giving up half a turn. The infiltrator's first act of stealth is free.
+
+It is not a Beat and cannot be treated as one. It cannot be given up to Yield, cannot be held over for later in the round, and cannot be spent on anything outside the Proficiency. A Master who gave up both Beats to Yield arrives at their turn with nothing to spend and still takes it.
+
+#### Marks
+
+When a natural d100 meets or exceeds your Volatility Threshold on a Clash or a skill check, the System marks the Proficiency you were using. Record it as a tally on the sheet. Where a roll could belong to more than one domain, or to none the character holds, the GM names the domain.
+
+::: systemvoice
+**[Technique noted: Close Combat. 2/3.]**
+:::
+
+- **3 Marks:** Trained becomes Seasoned.
+- **10 Marks:** Seasoned becomes Master. Mastery requires an E-Grade body; an F-Grade character banks Marks past 10 and advances at the Breakthrough.
+- **3 Marks in a domain the character has no Proficiency in:** the System grants that Proficiency at Trained. Those three Marks are spent in the granting, and the new Proficiency begins at zero.
+
+Marks land where the character actually works. A fighter who never puts down the axe reaches Master with an axe and stays Trained in everything else.
 
 ### System Volatility (Exploding Dice)
 
@@ -154,6 +182,8 @@ The System's energy density at elevated Grades creates cascading instabilities i
 | S-Grade | 91–100 | 10% |
 
 The threshold starts at 96 and falls one point per Grade.
+
+**One number at the top of the die.** The Volatility Threshold governs everything that happens at the high end of a natural d100. On a Clash it explodes. On a skill check it is an Exceptional Success. On either it marks the Proficiency in use (see "Proficiencies and Skill Checks"). A player tracks one number, and it moves only with their Grade.
 
 **Symmetry: Offensive and Defensive Explosions.** Volatility applies to every **Clash roll and Will Save in combat**, by either side: attacker's roll, defender's roll, and both sides of any Opposed Clash. Skill checks never explode, even mid-combat; a battlefield surgery resolves on the standard d100. An offensive explosion spikes the Margin upward. A defensive explosion drives the attacker's Margin sharply negative; the attack lands harmlessly. A winning defender deals no damage from the Clash itself.
 
@@ -243,6 +273,8 @@ Every character has **two Beats** per turn by default. Creature stat blocks may 
 
 **Aura Pressure and Beat Loss:** When Aura Pressure reduces a character's Beats, they drop to one Beat (moderate suppression) or zero Beats (severe suppression). See "Aura Pressure" below.
 
+**Beats given up to Yield** are taken from the character's next turn, not the current one. A character who yielded twice since their last turn has no Beats at all when their turn arrives. See "Yield" below.
+
 ### Movement: Zones and Position
 
 Combat does not use grids or measured distance. Each combat scene is divided into **Zones**: loose areas defined by the fiction. The GM establishes Zones at scene start; players propose, the GM rules.
@@ -304,8 +336,8 @@ The defender chooses their defensive posture when targeted, bounded by what the 
 
 | **Modifier** | **Size** | **Examples** |
 |---|---|---|
-| Minor bonus | +5 | Basic weapon Skill Bonus, Surge, minor blessings |
-| Standard bonus | +10 | Advantaged, Flanking, Proficiency, most System-granted skills |
+| Minor bonus | +5 | Trained Proficiency, Surge, minor blessings |
+| Standard bonus | +10 | Advantaged, Flanking, Seasoned and Master Proficiency, most System-granted skills |
 | Peak bonus (rare) | +15 to +20 | Peak abilities, one-shot relics, Hidden Achievement rewards |
 | Hindering environment | −10 | Darkness, difficult footing, driving rain |
 | Crippling environment | −20 | Blindness, restrained, fighting submerged |
@@ -319,6 +351,10 @@ Highest Clash Total wins. Tie goes to the attacker (the initiator).
 If the **defender wins**, the attack is deflected, dodged, or absorbed harmlessly. The defender deals no damage unless they used a specific Counter ability.
 
 **Turned Aside:** If the defender wins by a Margin of 40 or more, the attacker is **Exposed** until the end of their next turn (off-balance, overextended, or mentally reeling from the failed attempt). A defensive win that includes a Volatility explosion also counts as a Decisive Tactical Reversal: Momentum shifts to the defender's side at the start of the next round. Turned Aside applies to every defensive posture; a mentalist whose assault is shrugged off by 40+ suffers the backlash the same as a swordsman whose lunge is turned.
+
+**Driven Back:** If the attacker wins by a Margin of 40 or more, the defender takes the damage and is **Exposed** until the end of their next turn. The attacker may also drive them one Zone; forced movement does not provoke a free strike. Driving an enemy off costs you the reach to follow up, which makes it worth doing when you want them away from a wounded ally, out of a doorway, or off the thing they were reaching for.
+
+Turned Aside and Driven Back are the same number read from either side of the Clash: win by 40 and your opponent is off balance.
 
 If the **attacker wins**, calculate the **Margin:**
 
@@ -338,6 +374,30 @@ Take the Margin and multiply it by the attacker's Grade Magnitude:
 | C-Grade | 3 | Damage = Margin × 1,000 |
 
 Apply this damage directly to the defender's HP. There is no Damage Reduction subtraction step. Armor, toughness, and defensive capability were already factored into the defender's Clash roll.
+
+### Yield
+
+Losing a Clash does not have to mean taking the whole blow. You can give way.
+
+> **Yield: once the Margin is known and before damage is applied, give up Beats from your next turn. Each Beat reduces the incoming Margin by 20.**
+
+Your next turn has two Beats, so two is all you have to give.
+
+- **One Beat:** you give ground where you stand, and half of your next turn is gone.
+- **Two Beats:** you are driven out of your Zone. The attacker chooses which adjacent Zone you land in, forced movement does not provoke a free strike, and your next turn is gone entirely.
+
+Damage is the remaining Margin times the attacker's Grade multiplier. A Margin reduced to zero or below deals nothing.
+
+**Worked example.** A Snarljaw beats Marta by 37. She is at 30 HP, so the bite would put her on the floor.
+
+- She gives up one Beat. Margin 37 − 20 = 17. She takes 17, stands at 13 HP, and has one Beat on her turn.
+- She gives up both. Margin 37 − 40 is below zero, so the jaws close on nothing. She is thrown into the next Zone and does not act at all next turn.
+
+**Cornered.** If there is nowhere to be driven, you can give up only one Beat. A corridor, a sealed chamber, a ledge, or a closed ring of enemies makes a fight far more dangerous without changing a number on any stat block.
+
+**Yield at every Grade.** Yield subtracts from the Margin, before the Grade multiplier reaches it, so one Beat is worth 20 Margin at F-Grade and 20 Margin at D-Grade. The number never scales and never appears on a table. Against a higher-Grade attacker the Cross-Grade Adjustment is already inside the Margin, so giving ground rarely saves anyone from something above their Grade.
+
+**Creatures.** A creature yields only if its stat block says it can. See the Bestiary.
 
 ### Multi-Target & AoE Resolution
 
@@ -362,7 +422,7 @@ These tiers apply to **skill checks**; combat Clashes carry their own outcomes (
 
 The GM may shift the tier one step when the fictional stakes demand it, and softens or sharpens the consequence to fit the scene.
 
-**Exceptional Success:** the other end of the die. A natural 96–100 on a skill check adds no dice and no math; it makes the outcome remarkable. If the total succeeds, the GM narrates one step beyond what was asked: the merchant agrees, then offers more than anyone put on the table. If the total still fails, the failure is Soft regardless of margin. An Exceptional Success is mortal skill at its peak; explosions belong to the System, and skill checks never explode.
+**Exceptional Success:** the other end of the die. A natural roll that meets or exceeds your Volatility Threshold on a skill check adds no dice and no math; it makes the outcome remarkable. If the total succeeds, the GM narrates one step beyond what was asked: the merchant agrees, then offers more than anyone put on the table. If the total still fails, the failure is Soft regardless of margin. Skill checks never explode; the same natural die that would cascade a Clash instead makes a skill remarkable, and marks the Proficiency in use.
 
 ### Downed and Death
 
@@ -377,7 +437,7 @@ The GM may shift the tier one step when the fictional stakes demand it, and soft
 **Stabilizing.** Two paths:
 
 - **Any HP restoration.** A healing pill, medkit, or healing skill administered by an ally in the same Zone (1 Beat) returns the character to consciousness at the restored HP.
-- **Bare hands.** 1 Beat and a Moderate (90) skill check; a relevant Proficiency (field medicine and the like) adds its +10. Success stops the countdown. The character is stable but remains Downed at 0 HP; a stable character regains consciousness when the scene ends, at 1 HP.
+- **Bare hands.** 1 Beat and a Moderate (90) skill check; a relevant Proficiency (field medicine and the like) adds its bonus. Success stops the countdown. The character is stable but remains Downed at 0 HP; a stable character regains consciousness when the scene ends, at 1 HP.
 
 **Annihilation.** If a single hit deals damage equal to or greater than **10 × the target's Max HP**, there is no Downed state and no countdown: the character is destroyed outright. A fresh initiate with 12 Max HP takes an E-Grade glancing blow for 130 damage (130 ≥ 120) and is simply gone; a FOR 40 scout with 80 Max HP takes the same blow (130 < 800) and drops, Downed and counting.
 
