@@ -57,7 +57,7 @@ Granted by external entities: factions, higher-Grade beings, ancient Principles,
 
 **Bestowed titles can be negative.** "Oathbroken" is granted automatically by the System when a sworn agreement is violated. Negative Bestowed titles cannot be unequipped or removed without specific in-fiction action: fulfilling an oath, completing a penance, defeating a specific entity. They create real consequence for behavior the System judges.
 
-**Examples:** "Hand of the Iron Court" (faction-granted), "Witnessed by the Mountain" (granted by a Principle-rich location), "Oathbroken" (System-granted, negative), "Marked by the Wild" (Bestowed by a creature or biome).
+**Examples:** "Hand of the Iron Court" (faction-granted), "Witnessed by the Mountain" (granted by a Principle-rich location), "Oathbroken" (System-granted, negative), "Salvaged" (System-granted, negative, conferred when the System recovers an Initiate it was about to lose to its own administrative failure), "Marked by the Wild" (Bestowed by a creature or biome).
 
 ---
 
@@ -138,6 +138,8 @@ A negative Bestowed title cannot be unequipped or removed without specific in-fi
 **Common shape:** a flat penalty (−2 to a stat, +10 difficulty against a specific entity) plus a concrete social consequence (NPCs of a faction turn hostile on sight, wildlife that once ignored you now hunts you).
 
 **Release conditions** are written into the title itself when granted. "Oathbroken" is released by fulfilling a new sworn oath under witness. "Marked for the Hunt" is released by defeating the entity that marked you. The System AI generates the release condition based on the violation.
+
+**A released negative title may convert rather than vanish.** Where the release condition is the same test the character originally failed, the System replaces it with an Achievement title commemorating the second attempt: "Salvaged" becomes "Came Back Whole." Use conversion when the character earned the release through the fiction; use plain removal when it was bought, bargained for, or granted by an authority.
 
 ### Passive Recognition
 

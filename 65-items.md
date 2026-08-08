@@ -169,10 +169,12 @@ If the party is hoarding consumables and never spending them, the GM is being to
 The Integration Tutorial draws its economy from this chapter. What the tutorial expects:
 
 - **Phases 2 and 3 are the scavenge phases.** Starting weapons, armor, and consumables all come from landing-zone debris and the Recycling Node; the default loot list lives in the tutorial's Phase 3.
-- **The Recycling Node's scarcity is deliberate.** One superior weapon, one armor set, one buckler, two shards, one pill, one Resonance Glass for a full party: the shortfall is the point, and the division of it is HVE signal.
-- **The Battered Communicator** exists for the Civic Fragment terminal interaction in Phase 5; seed one in Phase 2 or 3 scavenge.
-- **The Single-Use Ranged Relic** is common in tutorial scavenger zones and is one of the sanctioned answers to the Phase 6 boss; place at least one where exploration finds it.
+- **The Recycling Node's scarcity is deliberate.** One spear, one armor set, one buckler, four shards, one pill, one Resonance Glass for a full party: the shortfall is the point, and the division of it is HVE signal.
+- **One Resonance Shard sits in that pile and it is the sharpest test in the tutorial.** Everything else on offer is power this afternoon; the Resonance Shard is one point of insight toward a Principle the character cannot yet name or price. Say only that it resonates.
+- **The Battered Communicator** bridges the dead command terminal in the tutorial's Civic Fragment (Phase 4); seed one in Phase 2 or 3 scavenge.
+- **The Single-Use Ranged Relic** is common in tutorial scavenger zones and is one of the sanctioned answers to the Phase 5 boss; place at least one where exploration finds it.
 - **Volatile Artifacts are core to the tutorial's economy**: they give classless, Principle-less characters verbs beyond posture and position. Be generous with shards, stingy with pills.
+- **Items fill three roles for a classless character,** and the tutorial leans on all three: shards and one-shots are **verbs** (a move available once), weapons and armor are **vessels** (no bonus of their own, they decide which Force governs and route Marks toward the domains a character uses), and Resonance Shards and affinity treasures are **seeds** (insight paid forward).
 
 ---
 
