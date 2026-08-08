@@ -8,6 +8,33 @@
 
 **Goal:** a stranger can be handed the book, read it cold, run the Integration Tutorial, and continue into a campaign. Assessment (2026-07-08): the system is mechanically cohesive after the note-review cycle; the book is ready for a Levels 1–9 playtest once Tier 1 lands. The two structural boundaries are the Level 10 class wall (class generation is fully delegated to the System AI with no framework behind it; a campaign hits this around session 6) and the System AI being invoked throughout but explained nowhere. The book's deeper hand-off problem: it is a GM reference that assumes you already know the game — it opens with a reference card, buries the premise in the Principles ontology and the tutorial, and never shows what play sounds like.
 
+### Release Benchmarks and Near-Term Plan (agreed 2026-08-08)
+
+Two distinct targets with different completion bars.
+
+**Benchmark 1 — Nerd Weekend (≈ 2026-08-28, three weeks from 2026-08-08): a runnable game, Gabriel GMing.** Critical path, in order:
+
+1. **Proficiency + combat brainstorming session** (Tier 1 item 10 holds both positions).
+2. **Tutorial chapter full rewrite** (absorbs Tier 1 item 5; written to the post-brainstorm rules; Claude drafts, Gabriel inks on the Kindle Scribe).
+3. **Full book read-through** on the Kindle (Gabriel).
+4. **Pregens + starting-human stat table** (Tier 1 item 11).
+5. **Table kit:** printable character sheet (HVE tally rows on the GM copy) + GM screen card (Tier 3 item 12, promoted for the event).
+
+Explicitly not needed for the event: example of play, art, classes, the early-game chapter, worldbuilding. **Possible pivot once this list lands:** Gabriel may build the companion-app prototype in time for Nerd Weekend and run the event with it (doubling as the Mode A rehearsal).
+
+**Benchmark 2 — Publishable prototype (online release).** Everything above, plus:
+
+- Example of play + narrated combat round (Tier 1 item 6).
+- Early-game engine chapter (Tier 2 item 9).
+- **Content through the E-Grade Breakthrough (Gabriel's scope call, 2026-08-08).** The prototype must carry a table through Level 10 class selection and the F→E Breakthrough, even if lightly: example classes (a starter set from the class framework, Tier 2 item 8), more Principle material for that stretch, and GM guidance for the run-up. Suggestions-level content is acceptable; releasing a prototype that stops at Level 9 is not (option considered and declined).
+- Glossary + internal link pass (Tier 2 item 11).
+- The "X, not Y" sweep and a final front-to-back prose pass (Tier 3 item 13).
+- Worldbuilding minimum: the System opening-message rewrite and the marked story slots; whether vignettes make v1 or v1.1 is open.
+- Production polish (cover title check, chapter art for the four bare chapters, callout styling): wanted, not gating.
+- **IP / trademark scrub (added 2026-08-08, publish-gating).** "Conqueror's Haki" in the HVE affinity lists is One Piece IP; sweep for other borrowed coinages; check the "LitRPG" trademark situation as it bears on the title "LitRPG: RPG".
+- **Venue + license decisions (added 2026-08-08, publish-gating).** Storefront (itch.io / DriveThruRPG / own site), license, free vs. pay-what-you-want, feedback channel. Check current storefront AI-content policies before choosing; they interact with the transparency section and the AI-generated art.
+- **"How This Book Was Written" front matter (added 2026-08-08).** Gabriel drafts first, Claude edits after. Contents: the AI co-design process told as a story (the annotate-and-rewrite loop, the combat sims, the arguments), abbreviated and interesting rather than an essay; transparency is the point and leaning into the genre's all-powerful-AI-System resonance is the tone. Possibly folded into a single author's opening essay together with a meta mini-chapter on who the game is for and the recursion joke: a tabletop RPG of a literary genre that imitates video games that descend from tabletop RPGs ("LitRPG: RPG: The Movie").
+
 ### The Three Ways to Run (decision in progress)
 
 Context, captured 2026-07-08. Gabriel's long-standing plan is a **companion app**: an AI listening app at the table that transcribes play and writes HVE log entries (axis, intensity, context) automatically — the app *is* the Hidden Vector Engine's bookkeeper, and could also run the System AI generation functions (classes, Personal Opportunities, visions). Whether it exists before the first playtest is ~50/50. He has been hedging: wanting the game runnable without the app but not committing to that in the text. The three modes to document in the expanded System AI chapter:
