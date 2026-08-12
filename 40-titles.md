@@ -2,11 +2,15 @@
 
 # Titles
 
+Titles are the System's achievement layer, and they run on one loop: a character does something the System considers worth recording, a notification lands mid-session with a name and a bonus attached, and the bonus stays on the record forever. Kill your tenth beast and "Ten-Slayer" arrives with +1 STR. Survive something you had no business surviving and something rarer shows up. Nobody picks them from a menu and nobody sees the thresholds in advance.
+
+This chapter covers the four shapes a title comes in, what their bonuses are worth, and who can see them. The behavior the System is reading to generate them is the Hidden Vector Engine's business, and the titles the Integration Tutorial hands out are listed there.
+
 ---
 
 ## Design Intent
 
-Titles are the System's achievement layer: notifications that land mid-session, each with a name worth reading aloud and a bonus attached. Kill your tenth beast and "Ten-Slayer" pops up with +1 STR. Survive something you had no business surviving and something rarer appears. Collecting them is fun, comparing them is fun, and a good stack adds up to real power.
+Collecting titles is fun, comparing them is fun, and a good stack adds up to real power.
 
 **Stacking is the point.** Title bonuses are calibrated so that a single title is a satisfying nudge, but a creatively constructed stack of five to ten produces visible, decisive power. Players are expected to hunt titles, plan around combinations, and lean on the stack when conditions converge.
 
@@ -14,7 +18,7 @@ Titles arrive in four shapes (Achievement, Hidden Achievement, HVE-Resonant, Bes
 
 **Pacing target (soft):**
 
-- **Achievement titles:** every 2–3 sessions
+- **Achievement titles:** every 3–4 sessions across the party, rather than per character
 - **HVE-Resonant titles:** every Grade or major behavioral shift
 - **Hidden Achievement titles:** 1–3 times per campaign arc
 - **Bestowed titles:** whenever the fiction earns them
@@ -143,7 +147,7 @@ A negative Bestowed title cannot be unequipped or removed without specific in-fi
 
 ### Passive Recognition
 
-All earned titles are visible to the System and to anyone with appropriate inspection skills (see Inspection and Visibility below). They affect NPC reactions, faction relationships, and System-generated content **regardless of how many are mechanically "active"**. There is no concept of "equipping" titles. They are part of the character's record, always.
+All earned titles are visible to the System, and to other characters within the limits in What Can Be Seen. They affect NPC reactions, faction relationships, and System-generated content **regardless of how many are mechanically "active"**. There is no concept of "equipping" titles. They are part of the character's record, always.
 
 The mechanical bonuses always apply. The narrative weight always applies. Stacking is automatic.
 
@@ -173,25 +177,9 @@ How HVE-Resonant titles change over time.
 
 ## Inspection and Visibility
 
-Who can see what.
-
 **The System always sees all titles.** Every title affects System-generated content (encounters, opportunities, Mandates, faction reactions) regardless of who else can see it.
 
-**Inspection by other characters** depends on Grade differential and inspection skill quality:
-
-| **Inspector's Grade vs. Target** | **What They See** |
-|---|---|
-| Lower Grade | Nothing. Cannot inspect a higher-Grade target. |
-| Same Grade | Achievement and HVE-Resonant titles. |
-| One Grade higher | Achievement, HVE-Resonant, and *worn* Bestowed titles. |
-| Two Grades higher | All of the above plus *hidden* Bestowed titles. |
-| Three or more Grades higher | Everything, including Hidden Achievement titles. |
-
-**Bestowed titles can be "worn" or "hidden" at the character's discretion.** A worn title is visible to all same-or-higher-Grade observers. A hidden title is concealed from same-Grade inspection but pierced by Grades above. Toggling between worn and hidden is a free narrative action.
-
-**Hidden Achievement titles are private to the character by default.** The character may *reveal* a Hidden Achievement title at will; once revealed, it remains visible to inspection at the same level as a worn Bestowed title. Revealing is irreversible. Players brag about these titles by choice.
-
-**Negative titles are always worn.** The System imposes visibility: "Oathbroken" cannot be hidden. This is the public consequence of the System's judgment.
+Titles are the only part of a character that other people can read, which is what makes them function as reputation. Who can read which ones, how Bestowed titles are worn or hidden, and why negative titles cannot be concealed are all in the What Can Be Seen chapter.
 
 ---
 

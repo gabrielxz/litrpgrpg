@@ -30,7 +30,7 @@ Restore HP instantly. In combat, consuming a pill costs **1 Beat**, spent by who
 | Greater Healing Pill | F | 50 |
 | Pristine Recovery Pill | F | 80 |
 
-E-Grade pills heal ×10 the listed amount, still capped by Max HP, which an F-Grade user rarely benefits from. The materia is the real cost: an F-Grade body that ingests an E-Grade pill immediately adds 300 to its stored VE, which puts most F-Grade characters straight into Critical Saturation. The surplus is waste; it clears through Consolidation at the normal hourly rate and refines into no level progress.
+E-Grade pills heal ×10 the listed amount for an E-Grade body. **An F-Grade body cannot process one at all:** the concentration is wrong for the frame holding it, and the pill does nothing but leave a metallic burn in the throat and a bad hour afterward. Hoarding higher-Grade medicine against a future Grade is sensible; swallowing it now is a waste of a valuable thing.
 
 **Healing pills cap at the user's Max HP.** Excess healing is wasted.
 
@@ -96,13 +96,13 @@ These are the starting and recovery tier. Higher-quality weapons (named, System-
 
 <!-- worldbuilding pass: opening story slot (related-thread survivor) -->
 
-Volatile Artifacts are scavenged debris from dead worlds, half-functioning constructs, and degraded shards of higher-tier equipment. They are unreliable and frequently single-use. They are also disposable verbs: an artifact in a pocket is a whole new move a character can make exactly once, and which one a player hoards, spends, or hands away tells the System something.
+Volatile Artifacts are scavenged debris from dead worlds, half-functioning constructs, and degraded shards of higher-tier equipment. They are thick on the ground in the Integration Tutorial, which is where most tables meet them first. They are unreliable and frequently single-use. They are also disposable verbs: an artifact in a pocket is a whole new move a character can make exactly once, and which one a player hoards, spends, or hands away tells the System something.
 
 ### Degraded Skill Shards (Category)
 
 Crystalline matrices containing fragments of dead techniques. Single-use. Activate as a 1-Beat action; the user describes intent and the GM rolls for backfire. Roll **1d100** when activating.
 
-| **Shard Type** | **Effect** | **Backfire (on d100 ≤ 10)** |
+| **Shard Type** | **Effect** | **Backfire (on natural 01–05)** |
 |---|---|---|
 | Edge Shard | Next Clash this turn gains +20. | Shard cracks: user takes 5 damage. |
 | Pulse Shard | Restore 30 Aether. | Aether backlash: user takes 10 damage. |
@@ -111,7 +111,7 @@ Crystalline matrices containing fragments of dead techniques. Single-use. Activa
 | Resonance Shard | Add 1 IP toward a Principle of your choice. | The IP is lost. |
 | Volatile Shard | Roll d100 again. The GM and the System AI generate an unpredictable effect based on the result. | The GM's discretion is the risk. |
 
-Shards are randomizers. They reward players who use them in moments where a wild outcome is acceptable, and punish those who treat them as reliable tools. New shard types price their effects against the Modifier Budget and keep the d100 ≤ 10 backfire shape.
+Shards are randomizers. They reward players who use them in moments where a wild outcome is acceptable, and punish those who treat them as reliable tools. New shard types price their effects against the Modifier Budget and keep the natural 01–05 backfire, the same bottom-of-the-die number that governs Catastrophic Failure.
 
 ### The Reactive Buckler (Worked Example: Protective One-Shots)
 

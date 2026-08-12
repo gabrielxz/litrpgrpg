@@ -27,6 +27,7 @@ SOURCES := \
   45-system-ai.md \
   50-hidden-vector-engine.md \
   55-quests.md \
+  57-what-can-be-seen.md \
   60-bestiary.md \
   65-items.md \
   70-tutorial.md \

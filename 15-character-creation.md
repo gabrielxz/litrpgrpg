@@ -40,20 +40,62 @@ A Proficiency covers weapons in its domain. A character with "close combat" adds
 
 Proficiencies should reflect the character's life before Integration: what they trained in, what they were good at, what they spent years doing. A soldier might take "close combat," "field medicine," and "tactical awareness." A professor might take "ancient languages," "research methodology," and "persuasion." A mechanic might take "mechanical tinkering," "jury-rigging," and "vehicle operation."
 
-**A menu of thirty.** Pick from this list or use it as a model. It is deliberately incomplete: players and GMs should invent new Proficiencies together, named in plain language and scoped like these.
+**A sample of thirty.** Pick from this list or use it as a model. It is deliberately incomplete: players and GMs should invent new Proficiencies together, named in plain language and scoped like these. They are grouped by the kind of work they cover.
 
-| | | |
-|---|---|---|
-| close combat | wilderness survival | mechanical tinkering |
-| archery and marksmanship | tracking and fieldcraft | jury-rigging |
-| military tactics | foraging and herblore | electronics |
-| athletics | animal handling | construction |
-| endurance training | navigation | vehicle operation |
-| persuasion | research methodology | stealth and infiltration |
-| intimidation | ancient languages | lockpicking and security |
-| deception | field medicine | streetwise |
-| performance | chemistry | sleight of hand |
-| leadership | logistics and accounting | teaching |
+**Fighting**
+
+| **Proficiency** | **Covers** |
+|---|---|
+| close combat | Anything swung, thrust, or thrown by hand, and the footwork behind it. |
+| archery and marksmanship | Bows, crossbows, firearms, and judging distance and wind. |
+| military tactics | Formations, ground, supply, and reading an enemy's plan. |
+| athletics | Climbing, swimming, jumping, lifting, and long pursuit. |
+| endurance training | Outlasting cold, thirst, pain, and sleeplessness. |
+
+**Living Outdoors**
+
+| **Proficiency** | **Covers** |
+|---|---|
+| wilderness survival | Shelter, fire, water, and not dying in weather. |
+| tracking and fieldcraft | Following a trail, reading sign, moving without leaving one. |
+| foraging and herblore | What is edible, what is medicine, what kills. |
+| animal handling | Calming, driving, riding, and reading beasts. |
+| navigation | Staying found, by stars, landmarks, or instruments. |
+
+**People**
+
+| **Proficiency** | **Covers** |
+|---|---|
+| persuasion | Argument, appeal, and finding what someone actually wants. |
+| intimidation | Making a threat land without having to carry it out. |
+| deception | Lies, disguise, false papers, and keeping a story straight. |
+| performance | Music, oratory, theatre, and holding a room. |
+| leadership | Getting frightened people to act together. |
+| teaching | Making someone else able to do what you can do. |
+| streetwise | Black markets, gangs, rumor, and who to ask. |
+
+**Knowledge**
+
+| **Proficiency** | **Covers** |
+|---|---|
+| research methodology | Finding the answer in a library, an archive, or a ruin. |
+| ancient languages | Dead scripts, inscriptions, and their conventions. |
+| field medicine | Wounds, poisons, fevers, and stabilizing the dying. |
+| chemistry | Reactions, compounds, solvents, and explosives. |
+| logistics and accounting | Ledgers, supply lines, and where the money went. |
+
+**Making and Breaking**
+
+| **Proficiency** | **Covers** |
+|---|---|
+| mechanical tinkering | Machines with moving parts: repair, modification, sabotage. |
+| jury-rigging | Making a thing work with the wrong materials, briefly. |
+| electronics | Circuits, sensors, and salvaged equipment. |
+| construction | Building, shoring, demolition, and judging what will hold. |
+| vehicle operation | Driving, piloting, and controlling a vehicle under stress. |
+| lockpicking and security | Locks, alarms, safes, and the habits of the people who set them. |
+| stealth and infiltration | Moving unseen and being somewhere you should not be. |
+| sleight of hand | Palming, planting, lifting, and misdirection. |
 
 ## Derived Stats
 
@@ -61,14 +103,14 @@ Calculate and record these values:
 
 - **Max HP:** Raw FOR × 2.
 - **Max Aether:** Equal to your Raw POW value.
-- **VE Tolerance:** (Raw FOR + Raw POW) / 2 × 10.
+- **VE Tolerance:** (Raw FOR + Raw HRT) / 2 × 10.
 - **VE Stored:** 0.
 - **Level:** 1.
 - **Grade:** F.
 
 At Level 1, HP is in the single to low double digits and Aether is single digits. Freshly integrated characters are fragile, and early encounters should feel dangerous. Growth comes fast.
 
-Aether matters to every character, caster or brawler: anyone can spend half their Maximum Aether to Surge (see Core Mechanics, "Surge").
+Aether matters to every character, caster or brawler: anyone can spend half their Maximum Aether to Surge (see Core Mechanics, "Surge"). Nearly every character will also end up walking the Principle track, whatever they built, because Insight comes from surviving hard things rather than from any choice made here.
 
 ## Starting Equipment
 

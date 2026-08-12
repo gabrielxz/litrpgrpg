@@ -50,9 +50,9 @@ The System supports formal parties. Any Integrated being can extend a party invi
 
 A party grants three things:
 
-- **Status sharing.** Every member's UI shows a party frame: each member's current HP, Maximum HP, Aether, and whether they are Downed. In the genre this is why strangers party up before they trust each other; seeing an ally's true condition changes every triage decision.
-- **Quest sharing.** A member may share a Routine, Faction, or Bestowed quest with the party. The entry appears in every member's log with the same objectives, and completion pays every member who meaningfully participated. Mandates need no sharing (they already bind everyone in scope), and Personal Opportunities cannot be shared; they are addressed to one behavioral signature.
-- **Reward splitting.** Shared quest VE splits evenly among meaningful participants, the same rule as combat VE pooling (see Cultivation, "Awarding VE").
+- **Status sharing.** Every member's UI shows a party frame: each member's current HP, Maximum HP, Aether, and whether they are Downed, and nothing else. In the genre this is why strangers party up before they trust each other; seeing an ally's true condition changes every triage decision. See What Can Be Seen.
+- **Quest sharing.** A member may share a Routine, Faction, or Bestowed quest with the party. The entry appears in every member's log with the same objectives, and completion pays every member who meaningfully participated. **A counted objective is one pool, not one per member:** a shared "eliminate ten" is ten between everybody, and any member's kill advances it. Mandates need no sharing (they already bind everyone in scope), and Personal Opportunities cannot be shared; they are addressed to one behavioral signature.
+- **Reward splitting.** Every member who meaningfully participated collects the quest's award at their own level, the same rule combat kills use (see Cultivation, "Awarding VE"). Nothing is divided.
 
 Party formation is itself HVE signal: who invites, who accepts instantly, who stays solo.
 

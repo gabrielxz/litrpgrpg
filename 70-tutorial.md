@@ -11,7 +11,7 @@ Before the first session, each player has built a character per the Character Cr
 - 40-point buy across the seven Attributes (floor 3, cap 10).
 - Three Proficiencies at Trained, written in plain language.
 - No Principle access: Insight is earned in play, nothing is selected at creation (see "Starting Principle Access" in Character Creation).
-- Derived stats calculated: Max HP = Raw FOR × 2, Max Aether = Raw POW, VE Tolerance = (FOR + POW)/2 × 10, Level 1, Grade F.
+- Derived stats calculated: Max HP = Raw FOR × 2, Max Aether = Raw POW, VE Tolerance = (FOR + HRT)/2 × 10, Level 1, Grade F.
 
 Players begin with **whatever was on their person at the moment of Integration**: phone, keys, backpack, work clothes. The System provides nothing. Every weapon, every pill, and every shard in the tutorial is scavenged.
 
@@ -173,7 +173,7 @@ Each encounter is a character test with no correct answer, and each one ends the
 You wake next to a small, non-human creature: insectoid, broken-limbed, clutching a faintly glowing core to its chest. It is dying. The core pulses with warmth and energy. The creature's grip is weak.
 
 - **Stats (creature):** Trivial, HP 4, Beats 1, no offensive Force. Cannot fight back.
-- **Take by force:** No roll required. Awards a **predator core** (50 VE absorption, processed at next Consolidation). Logs **Hunger 1.0**.
+- **Take by force:** No roll required. Awards a **predator core** (a Hard kill's worth of VE, processed at next Consolidation). Logs **Hunger 1.0**.
 - **Communicate (CHA Force vs. F-Easy 65):** On success, the creature releases the core willingly and dies in peace. Awards core + **+1 IP toward a Restraint-aligned family**. Logs **Accord 1.0**.
 - **Let it die naturally:** No reward, no penalty. Logs **Restraint 0.5**.
 - **Mercy kill (no core take):** Logs **Restraint 1.0**, **Heart 0.5**.
@@ -187,7 +187,7 @@ You wake pinned under a slab of stone. Not crushing, but immobilizing. Something
 - **Lever the crack (DEX Force vs. F-Easy 65):** Logs **Method 1.0**. The slab lifts quietly.
 - **Improvise (PER + creativity, GM judgment):** Player describes a non-standard solution. If clever, no roll. Logs **Method 1.0** or **Freedom 1.0** depending on approach.
 
-Reward on escape (regardless of method): **15 VE**. The character keeps the rusted bar if they want it (improvised weapon, STR, no Proficiency bonus).
+Reward on escape (regardless of method): **two peer kills' worth of VE**. The character keeps the rusted bar if they want it (improvised weapon, STR, no Proficiency bonus).
 
 #### The Locked Cache
 
@@ -199,7 +199,7 @@ You wake next to a humming System construct: a chest with three distinct physica
 
 **Cache contents (full):** 1 Reactive Buckler, 1 Sparkstone Tablet, 1 Lesser Healing Pill. (Half contents on the Force solution: 1 Lesser Healing Pill only.)
 
-Reward: **30 VE** on a full open; **15 VE** on a forced open.
+Reward: **three peer kills' worth of VE** on a full open, half that on a forced open.
 
 #### The High Ground
 
@@ -216,7 +216,7 @@ You wake near a cracked obelisk emitting pulses of energy. Each pulse makes your
 
 - **Pull it free immediately:** Logs **Hunger 1.0**, **Force 0.5**. Awards 1 **Edge Shard**.
 - **Wait for the buildup:** Logs **Restraint 1.0**, **Method 1.0**. After 3 in-game minutes of real-table tension, the obelisk releases a single pulse granting **+1 IP** toward the character's family resonance. This is a **Battle Memory** trigger; log it for the Phase 4 Consolidation.
-- **Destroy the obelisk:** Logs **Freedom 1.0**, **Force 1.0**. Releases scattered VE (awards 30 VE) and no IP.
+- **Destroy the obelisk:** Logs **Freedom 1.0**, **Force 1.0**. Releases scattered VE (three peer kills' worth) and no IP.
 
 ### The Arrival: Teaching Combat
 
@@ -357,7 +357,7 @@ Immediately after the status notice, each player's perception is briefly overlai
 > Grade:      F · Difficulty: Trivial
 > Objective:  Confirm survival. Locate other Initiates. Establish
 >             baseline coordination. (Active)
-> Reward:     10 VE on completion.
+> Reward:     One peer kill's worth of VE on completion.
 > Time:       Open.
 > ```
 
@@ -382,20 +382,20 @@ The System issues a second quest the moment the party orients:
 > Grade:      F · Difficulty: Easy
 > Objective:  Survey at least one tutorial sub-zone. Catalog
 >             relevant phenomena. (Open until the sector closes.)
-> Reward:     40 VE per sub-zone surveyed.
+> Reward:     A third of a level per sub-zone surveyed.
 > ```
 
 This frames Phase 4. Players now have a quest log with active entries and visible rewards.
 
 ### First Consolidation
 
-Close Session 1 with the party camping and declaring their first Consolidation (Cultivation chapter). Walk through the mechanic once: minimum 1 hour, each full hour clears one fifth of Tolerance from stored VE, 20% of Max HP recovered per hour, Aether refilling when the first full hour completes.
+Close Session 1 with the party camping and declaring their first Consolidation (Cultivation chapter). Walk through the mechanic once: minimum 1 hour, and every hour clears one fifth of Tolerance and restores one fifth of Max HP, with Aether refilling when the first full hour completes.
 
-At starting Tolerances (around 45 VE) most characters are already carrying more VE than they can hold. Narrate the Saturation symptoms as they settle in, skin hot and prickly, hands trembling at rest, and the relief as the overnight rest processes the load. Eight hours clears more than a full tank and a half, enough for all but the heaviest hauls.
+At starting Tolerances (around 45 VE) most characters are already carrying more than they can hold. Narrate the Saturation symptoms as they settle in, skin hot and prickly, hands trembling at rest, and the relief as the overnight rest processes the load. Eight hours clears more than a full tank and a half, enough for all but the heaviest hauls.
 
-Most characters wake still Level 1, a fight or two short of the 100 VE threshold. A character who crosses it levels mid-rest, and that is the moment to walk them through the 3+2 stat allocation (Progression chapter) at the table.
+Most characters wake still Level 1, a fight or two short of the threshold. A character who crosses it levels mid-rest, and that is the moment to walk them through the 3+2 stat allocation (Progression chapter) at the table.
 
-**Session 1 typically ends with 60 to 100 VE per character** and roughly four HVE-logged choices each. If the group has energy left, push into the first zone of Phase 4 and end the session inside it.
+**Session 1 typically leaves each character most of the way to Level 2** and roughly four HVE-logged choices each. If the group has energy left, push into the first zone of Phase 4 and end the session inside it.
 
 ---
 
@@ -469,7 +469,7 @@ A ruined arena from a dead warrior civilization. Stone tiers step down to a sand
 
 **HVE Reads.** Who charges in (Force)? Who watches first (Method)? Who claims the axe (Hunger/Will)? Who positions to protect a less-armored ally (Accord)? Who wakes the hardest construct on purpose (Force/Hunger)?
 
-**VE Reward.** 30 VE per Sentry defeated. 40 VE for surveying (Q-002).
+**VE Reward.** Each Sentry is a Moderate kill (the character's Peer Kill value). Surveying the zone completes a share of Q-002, worth about a third of a level across the whole quest.
 
 ---
 
@@ -483,7 +483,7 @@ An unnatural forest of bioluminescent trees whose root systems visibly move. The
 
 - **Snarljaw pack** (3 Snarljaws + 1 Alpha, Bestiary). Pack tactics make them lethal: +10 Flanking when they share a Zone, and the Alpha will not flee. In open ground this pack is beyond a tutorial party. Route around it. Telegraph it hard with drag marks, a carcass larder, paired eyes at the tree line, and reward the players who take the hint. A party that pulls a single Snarljaw onto isolated ground wins that fight comfortably.
 - **1 Glow-Stalker** hunting the party from concealment. Surprise Beat on the first turn, then hit and run. It begins the encounter unseen unless someone actively rolls Perception against it.
-- **Predator den** with young (harmless). Inside: 1 predator core (50 VE absorption). Killing the adults is straightforward. Harvesting the den while sparing the young is a Hunger/Restraint test with nobody watching except the System.
+- **Predator den** with young (harmless). Inside: 1 predator core (a Hard kill's worth of VE). Killing the adults is straightforward. Harvesting the den while sparing the young is a Hunger/Restraint test with nobody watching except the System.
 - **Edible flora** restoring 10 HP at the cost of sensory distortion (−5 to PER-based Clashes for the next encounter).
 - **A hidden trail** bypassing the entire zone. PER Force vs. F-Easy 65 to spot while moving normally. A character with a relevant Proficiency (tracking, survival, scouting) who spends 1 Beat scanning finds it with **no roll at all**: an Easy task inside a Proficiency is Routine Mastery. Say the words out loud the first time it happens, because most players expect to roll for everything and this is where they learn they do not. The trail crosses the zone in three minutes of fictional time and exits behind the den.
 - **A trapped creature**, non-hostile and non-human, caught in root-tendrils and slowly being digested. Freeing it costs 1d3 rounds and attracts a Glow-Stalker. It knows things about the landscape and will show them rather than say them.
@@ -496,7 +496,7 @@ This save is calibrated to fail. With HRT 5 and FOR 5 the bonus is 5 + 2 = 7, an
 
 **HVE Reads.** Who scouts ahead? Who blunders? Who spots the trail and who insists on the fight? Who frees the trapped creature? Who harvests the den despite the young?
 
-**VE Reward.** 30 VE per Snarljaw, 60 for the Alpha, 30 for the Glow-Stalker, 40 for surveying.
+**VE Reward.** Snarljaws and the Glow-Stalker are Moderate kills; the Alpha is Hard (×2). Surveying completes a share of Q-002.
 
 ---
 
@@ -519,7 +519,7 @@ A shattered tower and ritual complex, the remnant of a civilization that underst
 
 **HVE Reads.** Who experiments? Who hangs back? Who takes shards despite the feedback? Who asks the altar a selfish question and who asks a strategic one? Who reactivates a construct and who smashes it for parts?
 
-**VE Reward.** 100 VE for the Fragment Wraith. 40 for surveying. Variable for shards recovered.
+**VE Reward.** The Fragment Wraith is Severe (×3) and almost nobody collects it. Surveying completes a share of Q-002.
 
 ---
 
@@ -544,7 +544,7 @@ The building was occupied until recently. Bedding, ration wrappers, and a scrawl
 
 **HVE Reads.** Who searches methodically (Method/Control)? Who breaks the medical bay open rather than solving it (Force/Hunger)? Who wants to find the people who lived here (Accord)? Who takes the whole medical cache for themselves (Hunger)?
 
-**VE Reward.** 60 VE for the Husk Sentinel if defeated or disabled. 40 for surveying. 30 for decoding the records.
+**VE Reward.** The Husk Sentinel is Hard (×2), whether beaten or shut down at the terminal. Surveying completes a share of Q-002, and decoding the records is worth a Moderate kill.
 
 ---
 
@@ -569,7 +569,7 @@ Use **Pre-System Brigand** stats with HP 20, Off Force 08, Def Force 09. They ar
 
 **HVE Reads.** This is the densest social moment in the tutorial. Who tries to communicate (Accord)? Who advocates for taking their supplies (Will/Force/Hunger)? Who proposes a trade (Method/Accord)? Who notices they are frightened and de-escalates (Heart/Accord)? Who watches the whole exchange and says nothing (Method/Freedom)?
 
-**VE Reward.** 100 VE for establishing communication. This is the largest single non-combat award in the tutorial and it should be, because it is the hardest thing to do.
+**VE Reward.** Establishing communication is worth **half a level** to everyone who took part. It is the largest single non-combat award in the tutorial and it should be, because it is the hardest thing to do.
 
 **Why this is not a zone.** Charisma-invested characters need a guaranteed stage, and gating that stage behind one of four exploration choices means half of tables never find it. Bringing the Initiates to the party also puts the negotiation at the party's own fire, under scarcity, with the party's supplies on the ground between them.
 
@@ -606,7 +606,7 @@ A System construct presents two objects. One is clearly a weapon: elegant, sharp
 A dying consciousness, the last fragment of an ancient cultivator's mind, is caught in a decaying rune matrix. It speaks in fragments and it knows it is ending.
 
 - **Accept the imprint.** It transfers its final technique. Painful and disorienting. This is a Battle Memory trigger, and the meditation carries the dying technique: **+1 IP** toward an Accord-aligned family. Logs **Accord 2.0**, **Method 1.0**.
-- **Harvest the matrix for raw energy.** The consciousness dissipates screaming. **+150 VE**. Logs **Hunger 2.0**, **Force 1.0**.
+- **Harvest the matrix for raw energy.** The consciousness dissipates screaming. **A full level's worth of VE**. Logs **Hunger 2.0**, **Force 1.0**.
 - **Free the consciousness.** The matrix releases, and it expresses something like gratitude before dissolving into ambient energy. **+1 IP** toward a Restraint-aligned family. Logs **Restraint 2.0**, **Accord 1.0**. Hidden Achievement candidate: log "The First Mercy" if the player has not already earned it.
 
 #### The Mirror
@@ -627,7 +627,7 @@ You find another player, or something that appears to be one, in distress: trapp
 
 - **Help.** Logs **Accord 2.0**, **Restraint 1.0**. The other player turns out to be a System construct, and the whole scene was a test of whether you would stop. The struggle was illusory and the act was real. Reward: a **Bestowed title** delivered in Phase 6 ("The Hand That Reached").
 - **Claim the prize.** A Dragon Marrow Pill (+5 to a future Breakthrough Check). Logs **Hunger 2.0**, **Will 1.0**.
-- **Fight the threat for them, then claim the prize.** Logs **Force 2.0**, **Hunger 1.0**. Half reward: no pill, +30 VE.
+- **Fight the threat for them, then claim the prize.** Logs **Force 2.0**, **Hunger 1.0**. Half reward: no pill, three peer kills' worth of VE.
 
 #### The Threshold
 
@@ -648,7 +648,7 @@ Make the player commit in writing before they hand the card back. Nobody gets to
 
 ### Saturation
 
-Saturation is near-universal by the end of Phase 4. A starting character with FOR 5 and POW 4 has a Tolerance of ((5 + 4) / 2) × 10 = **45 VE**. They cross into Mild Saturation at 46 and Heavy at 68, which a good afternoon of kills clears easily.
+Saturation is near-universal by the end of Phase 4. A starting character with FOR 5 and HRT 4 has a Tolerance of ((5 + 4) / 2) × 10 = **45 VE**. They cross into Mild Saturation at 46 and Heavy at 91, and a hard afternoon reaches the first band easily.
 
 Do not announce thresholds. Narrate symptoms:
 
@@ -848,7 +848,7 @@ Four samples calibrated to common tutorial archetypes. Customize the content to 
 >
 > Hidden Quest revealed: *"Ten-Slayer." Progress: 4/10.*
 >
-> VE awaiting refinement: 780. Projected advancement: Level 5.
+> VE awaiting refinement: 430. Projected advancement: Level 5.
 
 **Method/Restraint** (observed, planned, helped others):
 
@@ -861,7 +861,7 @@ Four samples calibrated to common tutorial archetypes. Customize the content to 
 > Title granted: **Patient Gardener** (Achievement).
 > Hidden Quest revealed (post-completion): *"The First Mercy." Complete. Reward: +1 IP.*
 >
-> VE awaiting refinement: 590. Projected advancement: Level 5.
+> VE awaiting refinement: 400. Projected advancement: Level 5.
 
 **Will/Accord** (led the group, negotiated, rallied):
 
@@ -874,7 +874,7 @@ Four samples calibrated to common tutorial archetypes. Customize the content to 
 > Title granted: **Voice of Decision** (Achievement, for breaking the deadlock at the Recycling Node).
 > Bestowed title: **The Hand That Reached**.
 >
-> VE awaiting refinement: 700. Projected advancement: Level 5.
+> VE awaiting refinement: 410. Projected advancement: Level 5.
 
 **Method/Freedom** (experimented, broke rules, escaped):
 
@@ -889,7 +889,7 @@ Four samples calibrated to common tutorial archetypes. Customize the content to 
 >
 > Hidden Quest revealed: *"The One Who Walked Through." In progress (1/3 sealed locations entered).*
 >
-> VE awaiting refinement: 520. Projected advancement: Level 4.
+> VE awaiting refinement: 290. Projected advancement: Level 4.
 
 ### The Post-Gate Consolidation
 
@@ -984,22 +984,22 @@ Confirm each mechanic was introduced before the tutorial ends.
 
 ## GM Reference: Tutorial Reward Ledger
 
-Cumulative VE pacing, F-Grade baseline, for a two-zone run.
+VE awards are relative to the earner's level (Cultivation, "Awarding VE"), so this ledger is denominated in levels rather than in VE. Twelve peer kills, or their equivalent, carry a character one level.
 
-| **Phase** | **VE per Character** | **Source** |
+| **Phase** | **Progress per Character** | **Source** |
 |---|---|---|
-| 1: The Threshold | 0 | Pre-combat. |
-| 2: The Violent Arrival | 30–60 | Micro-encounter (15–30) + the arrival kill (5–15) + scavenge. |
-| 3: The Recycling Node | 10 | Q-001. |
-| 4: The Field of Ruins | 270–510 | Two zone surveys (40 each) + 3–6 kills (30–60 each) + a Hidden Opportunity (50) + the Arriving Initiates (100) + a Personal Opportunity (0–150). |
-| 5: The Convergence Crisis | 200–300 | Mandate completion (tutorial-scaled to 200) + Warden contribution + gate survival. |
-| 6: First Recognition | 100–200 | Completion bonus + Hidden Quest reveals. |
+| 1: The Threshold | none | Pre-combat. |
+| 2: The Violent Arrival | about a third of a level | Micro-encounter reward plus the arrival kill plus scavenge. |
+| 3: The Recycling Node | a peer kill | Q-001. |
+| 4: The Field of Ruins | 1½ to 2½ levels | Two zone surveys (a third of a level each) + 3–6 kills + a Hidden Opportunity + the Arriving Initiates (half a level) + a Personal Opportunity (0 to a full level). |
+| 5: The Convergence Crisis | 1 to 1½ levels | Mandate completion, the Warden, and surviving the gate. |
+| 6: First Recognition | half a level | Completion bonus plus Hidden Quest reveals. |
 
-**Total: 610–1,080 VE**, processed across three Consolidations with the bulk of it at the post-gate rest.
+**Total: three to four and a half levels**, processed across three Consolidations with the bulk of it at the post-gate rest. Characters start at Level 1, so most finish between **Level 4 and Level 5**, and a party that took every fight and every opportunity reaches Level 6.
 
-Cumulative thresholds for reference: **Level 4 at 364, Level 5 at 536, Level 6 at 744.** Most characters finish between Level 4 and Level 5. A party that took every fight and harvested every opportunity reaches Level 6, which is fine; class selection at Level 10 is still a campaign away.
+**The Mandate is the biggest single award and it should be.** Surviving a sector dissolution is the arc that defined these sessions, and the Awarding VE guidance says such an arc is worth a level or more. Do not price it as a quest; price it as the thing the whole tutorial was.
 
-A third zone adds roughly 150–250 VE. If a character finishes under 350, grant a completion bonus. If the party finishes above 1,200, they earned hard and the next few sessions can pace down.
+A third zone adds roughly half a level. If a character finishes short of Level 4, grant a completion bonus rather than letting the payoff land soft.
 
 ---
 

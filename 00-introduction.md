@@ -93,13 +93,23 @@ Kara (Strength 8 and Fortitude 7, written STR 8, FOR 7 on her sheet) and Andre (
 **GM:** It defends at 8, minus 10 for Exposed: *(rolls 22)* 20. Margin 43, so 43 damage. It has 16 HP. The pipe goes through it, and it stops being a problem.
 
 ::: systemvoice
-*[Threat neutralized. Volatile Energy acquired: 5.]*
+*[Threat neutralized. Volatile Energy acquired: 2.]*
+
+*[Initiate 4,412,908 of 7,916,442,203. Observation continues.]*
 :::
 
-**Andre:** It says the same thing every time. It's never once said "good job."
+**Andre:** Four million and change. We're a line item.
 
-**GM:** It never will.
+**Kara:** It gave me two. What does a big one give?
 
-*(And on the GM's log, unseen: Kara, met the ambush head-on and held ground: Force, 1.0. Andre, scouted before entering: Method, 0.5.)*
+**GM:** The motes come off it pale and sink into Kara, because she is the one who earned them. You have no idea what a big one gives. Further down the stairwell, something that had been making noise stops making it.
 
-That is the whole loop: fiction first, one roll, numbers that mean something, and a System quietly deciding what each of you is becoming.
+**Kara:** How far down?
+
+**Andre:** Don't.
+
+**GM:** Two Zones. Do you want to find out?
+
+*(And on the GM's log, where nobody can see it: Kara met the ambush head-on and held her ground, Force 1.0, then asked what a bigger kill pays, Hunger 0.5. Andre counted himself among the numbered, Method 0.5, and told her to leave it alone, Restraint 0.5.)*
+
+That is the whole loop: fiction first, one roll, numbers that mean something, and a System quietly observing what each of you is becoming.

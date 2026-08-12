@@ -52,20 +52,20 @@ The cultivator deliberately floods their body with Volatile Energy, pushing past
 
 **Mechanic: The Overcharge Ratio**
 
-The cultivator must accumulate VE equal to at least **100% of their VE Tolerance** before igniting the Breakthrough. They may choose to push higher. The ratio of stored VE to Tolerance determines the **Overcharge Ratio**, which is the primary risk-reward dial the player controls.
+**The charge is usually banked long before this stage.** A character sitting at their Grade cap has been storing VE with nowhere to spend it, sometimes for many sessions (Cultivation, "Leveling: The VE Chart"). Stage 2 is not where gathering begins; it is where the cultivator commits what they have and tops off the difference on site. Consumables add more and ambient absorption closes the gap, and the GM sets how long the top-up takes from the location's density: minutes somewhere rich, hours of dangerous exposure somewhere barren.
 
-| Overcharge Ratio | VE Stored | Trial Difficulty | Quality Modifier |
-|---|---|---|---|
-| ×1.0 (Minimum) | 100% of Tolerance | Base difficulty | +0 |
-| ×1.5 (Aggressive) | 150% of Tolerance | +15 to Breakthrough DC | +1 Tier |
-| ×2.0 (Reckless) | 200% of Tolerance | +30 to Breakthrough DC | +2 Tiers |
-| ×2.5 (Suicidal) | 250% of Tolerance | +45 to Breakthrough DC | +3 Tiers |
+The cultivator needs VE equal to at least **one full Tolerance** to ignite, and may choose to carry more. The multiple of Tolerance they hold at Ignition is the **Overcharge Ratio**, the risk-reward dial the player controls:
 
-Ignition fuel is whatever the cultivator carries plus whatever the site provides. Stored VE from ordinary at-cap hunting counts in full, consumables add more, and environmental absorption tops up the rest. The GM determines how long the top-up takes based on location energy density: a high-density location might close the gap in minutes, a barren one in hours of dangerous exposure.
+| Overcharge Ratio | VE Stored | Saturation While Charging | Trial Difficulty | Quality Modifier |
+|---|---|---|---|---|
+| ×1.0 (Minimum) | One Tolerance | None | Base difficulty | +0 |
+| ×2.0 (Aggressive) | Twice Tolerance | Mild, −10 | +10 to Breakthrough DC | +1 Tier |
+| ×3.0 (Reckless) | Three times Tolerance | Heavy, −25 | +20 to Breakthrough DC | +2 Tiers |
+| ×4.0 (Suicidal) | Four times Tolerance | Critical, clock running | +40 to Breakthrough DC | +3 Tiers |
 
-**While overcharging, Saturation effects apply.** A cultivator pushing to ×2.0 is operating under Heavy Saturation penalties (−25 to all rolls, HP bleeding). This is the explicit price of ambition: the character is poisoning themselves with power to fuel a better outcome. The Saturation penalties do not apply to the Breakthrough Check itself (the ignition burns the VE as fuel), but they apply to everything else, including any actions the party must take during the Trial.
+**Saturation penalties never touch the Breakthrough Check.** The ignition burns that VE as fuel, so the weight a cultivator is carrying does not blunt the roll it is paying for. Those penalties apply to everything else, including whatever the party has to do during the Trial, and to the cultivator's own actions right up until they ignite.
 
-**The body can give out first.** The Critical Saturation collapse clock (Cultivation chapter) runs until the moment of Ignition. A cultivator holding 200%+ of Tolerance is rolling that d100 at the end of every full hour, and if the collapse fires before they ignite, they pass out on the spot: involuntary Consolidation, defenseless, the gathered charge draining away with nothing to show for it (at the cap there are no levels for it to become), 1 temporary Raw point of FOR or POW gone until the next full clean rest, and no Breakthrough attempt. This is why ×2.0 and above are gathered fast, in dense locations, with the ritual site already prepared: the last stretch of the charge is a race against the character's own body. Once Ignition is declared, Saturation rules are suspended; the ritual consumes the VE as fuel.
+**The body can give out first.** At ×4.0 the character is in Critical Saturation, and the collapse clock (Cultivation chapter) runs until the moment of Ignition: a d100 at the end of every full hour, escalating, automatic by the fourth. If it fires first they pass out on the spot: involuntary Consolidation, defenseless, the gathered charge draining away with nothing to show for it, 1 temporary Raw point of FOR or POW gone until the next clean rest, and no attempt. This is why the highest ratio is gathered fast, in a dense location, with the ritual site already prepared. Once Ignition is declared, Saturation is suspended and the ritual consumes the VE.
 
 **Once the cultivator declares Ignition, Stage 3 begins immediately. There is no going back.**
 
@@ -77,17 +77,17 @@ The dangerous part. A hybrid structure: an internal challenge for the cultivator
 
 The cultivator makes a single roll:
 
-> **d100 + HRT Force + Force of your highest Attribute vs. Breakthrough DC**
+> **d100 + HRT Force + preparation vs. Breakthrough DC**
 
-HRT is the anchor: every Breakthrough is a trial of will. The second Force expresses the path: a brawler refines body and Breaks Through on STR, a mage refines energy and Breaks Through on POW, a sect diplomat on CHA. The System tests what the character has actually built.
+Heart alone. Every Breakthrough is a trial of will, and no other Attribute is consulted, because no other Attribute is being asked anything. A career of carrying more raw power than the body wanted is exactly the training this roll tests, which is why Heart is also what sets VE Tolerance (Cultivation, "The Pressure Gauge"). The brawler and the diplomat make the same roll, and what separates them is how much they were willing to hold.
 
-**Breakthrough DC** is **240** at every Grade transition: Severe difficulty (140) on the Grade Reference Card plus the +100 Cross-Grade Adjustment (the target Grade is always exactly one above the challenger's). The Overcharge Ratio further modifies the DC.
+**Breakthrough DC** is **140** at every Grade transition: Severe difficulty, read straight off the Grade Reference Card. There is no Cross-Grade Adjustment, because the challenger is not facing something a Grade above them. They are becoming it. The Overcharge Ratio further modifies the DC.
 
-| Overcharge Ratio | ×1.0 | ×1.5 | ×2.0 | ×2.5 |
+| Overcharge Ratio | ×1.0 | ×2.0 | ×3.0 | ×4.0 |
 |---|---|---|---|---|
-| Effective DC | 240 | 255 | 270 | 285 |
+| Effective DC | 140 | 150 | 160 | 180 |
 
-**What the DC represents:** A challenger rolls d100 + HRT Force + their highest Attribute's Force against 240, with both Force values bounded 1–99 within the challenger's current Grade. Maximum natural roll: 100 + 99 + 99 = 298. A character who has grown their Heart alongside their strongest Attribute can reach 240; one who neglected Heart cannot, even on a perfect natural roll; willpower is the one investment no path skips. The math is identical at every Breakthrough: F→E, E→D, D→C.
+**What the DC represents:** a challenger rolls d100 + HRT Force against 140, with Heart bounded 1–99 inside their current Grade, and adds whatever preparation they brought. A character with Heart in the sixties and ordinary preparation is a little better than even. One who neglected Heart entirely needs both a fortune in preparation and a good die. The math is identical at every Breakthrough: F→E, E→D, D→C.
 
 **The Breakthrough Check explodes.** This is the one roll outside combat where System Volatility applies. The natural d100 checks the character's **current** Grade threshold and cascades as normal (see Core Mechanics, "System Volatility"): a rare surge at every transition, natural 96+ for an F-Grade cultivator, with the threshold falling one point per Grade. A cascade can carry an outmatched cultivator past the DC, or turn a safe attempt into a Transcendent one.
 
@@ -123,7 +123,7 @@ The Breakthrough Check margin (roll result minus DC) determines the base Quality
 | 40–59 | **Pristine** | Exceptional ascension. |
 | 60+ | **Transcendent** | One-of-a-kind ascension. |
 
-**Tier Adjustment:** On a successful check, apply the Overcharge Quality Modifier to the base tier from the margin table: ×1.5 raises the final tier one step, ×2.0 two steps, ×2.5 three steps. Quality Enhancer items push the final tier up one further step. Neither adjustment raises a tier above Transcendent, and neither applies on a failure: a check that misses the DC is Cracked no matter the Overcharge. This is the risk-reward loop: overcharging raises the DC, buying a better outcome on success at the price of a likelier failure.
+**Tier Adjustment:** On a successful check, apply the Overcharge Quality Modifier to the base tier from the margin table: ×2.0 raises the final tier one step, ×3.0 two steps, ×4.0 three steps. Quality Enhancer items push the final tier up one further step. Neither adjustment raises a tier above Transcendent, and neither applies on a failure: a check that misses the DC is Cracked no matter the Overcharge. This is the risk-reward loop: overcharging raises the DC, buying a better outcome on success at the price of a likelier failure.
 
 #### External Phenomena (The Party's Role)
 
@@ -276,7 +276,7 @@ Finding and securing a Breakthrough location is an adventure in itself. The GM s
 
 **Math Check (F→E):**
 
-A well-built F-Grade cap character (POW ~75, HRT ~60) has Force 75 + Force 60 = 135 before modifiers. The DC is 240 (E-Grade Severe). They need their d100 + modifiers to cover the remaining 105. Average d100 roll (50) leaves a gap of 55. With a Moderate location (+10), a Foundation Pill (+10), HVE Coherence of Defined (+10), and Party Anchor (+5 to +15), they are looking at +35 to +45 in modifiers, bringing the total needed from the d100 down to ~60–70: roughly one attempt in three succeeds, plus a small explosion tail. A maxed-prep character (POW 99, HRT 80, High density location, best pill, Singular coherence, strong Anchor) could make the check with a below-average roll and aim for Polished or better. Strong preparation makes success likely within an attempt or two (a Cracked F→E costs a temporary stat dip and a two-session lockout); maxed preparation makes it near-certain. Poorly prepared characters must roll well.
+A well-built F-cap character with HRT 60 sits 80 short of the DC before preparation, so the d100 has to cover 80 on its own: about one attempt in five. With a Moderate location (+10), a Foundation Pill (+10), Coherence of Defined (+10), and a Party Anchor (+5 to +15), preparation covers 35 to 45 of that gap and the roll needs 35 to 45: **roughly even odds, plus the explosion tail.** A character who pushed Heart into the eighties and brought maxed preparation clears the base DC on almost any roll and should be spending the margin on Overcharge instead, buying Quality with the odds they no longer need. A character who neglected Heart is not blocked, but they are buying their way through with consumables and a good night's dice.
 
 ### E → D: Soul Sea Expansion
 
@@ -313,7 +313,7 @@ This book covers F→E and E→D in full; D→C and beyond arrive in a future su
 
 ## The Breakthrough Check: Summary Reference
 
-> **Roll: d100 + HRT Force + Force of your highest Attribute**
+> **Roll: d100 + HRT Force + preparation, against DC 140**
 >
 > **vs. Breakthrough DC: Severe difficulty of the target Grade + Overcharge modifier**
 >

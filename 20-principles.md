@@ -18,6 +18,8 @@ Five terms carry this chapter:
 
 Everything else in the chapter is detail hanging off this loop:
 
+The loop below runs on one worked example, a brawler named Kara whose Principle turns out to be **Weight**. Her story follows in full.
+
 ![](./assets/principle_loop.png){width=88%}
 
 Principles advance on their own track. Levels and Grades measure how much power the System has integrated into your body; the Principle track measures how much of reality you understand. The two feed on the same dangerous life, so they usually rise together, but nothing forces them to. Grade matters to this track only once: the highest grant, the Domain, needs a D-Grade body. Everything below it advances at any Grade.
@@ -113,6 +115,8 @@ Slower roads exist. The System honors comprehension however it arrives, and the 
 No character chooses a Principle from a menu. The System watches what the character actually does and presents the truth their life has been spelling out. The procedure:
 
 1. **The System watches.** From the first session, the GM logs how the character behaves under pressure (the Hidden Vector Engine chapter). Every behavior pattern points at a family of Principles. There are eight families, and this is the complete set: Impact, Architecture, Consumption, Preservation, Imposition, Harmony, Governance, and Subversion. The behavior-to-family map is in that chapter.
+**Name the person, not the concept.** A family is read off behavior, so classify the character and let the Principle follow. Fire earned by someone who charges every line is Impact; Fire earned by someone who takes everything and leaves ash is Consumption. The two families that most often blur are **Architecture and Governance**: Architecture is how a character solves problems, and Governance is what they impose on the world. A meticulous planner is Architecture. Someone who writes rules other people must live by is Governance.
+
 2. **Resonance accrues.** When the character begins earning IP, the System reports it at the family level only: *[Resonance accruing: IMPACT. 2/3.]* The character knows a direction and nothing more.
 3. **At 3 IP, the Principle crystallizes.** The GM names one specific Principle, and the System announces it: *[Initial Insight: Weight.]* The slot fills for life, and the tier's minor passive arrives.
 4. **The player steers by playing.** What the character does is what the System reads. How the player describes their meditations shapes which Principle a memory feeds. And if the System's read drifts from the person over time, Refinement (below) steers the Principle back.
@@ -143,7 +147,19 @@ A slot, once filled, holds its Principle for life. The Principle can change shap
 
 **What the economy delivers in practice.** With IP gated behind pressure, a character who lives dangerously reaches Seed midway through F-Grade, works through the Fragment tiers across E-Grade and into D, and Distills a Domain at D-Grade. Nothing enforces that schedule; it bends toward the life lived. A cautious character reaches Seed late or never. A character the System keeps nearly killing runs ahead of it.
 
-**Tiers beyond Peak Fragment** exist at C-Grade and above. This book does not cover them; a future book will.
+**The ladder does not end at Domain.** Tiers beyond Peak Fragment exist at C-Grade and above, where a Principle stops being something a person holds and becomes something the world has to account for. They are outside the range this book covers, and a later volume will carry them.
+
+### The Axioms
+
+The eight families describe how a person behaves, so every Principle they produce is ultimately about the character who earned it. Some truths are not about anybody.
+
+**Time. Void. Luck. Truth. Distance.** These are **Axioms**: Principles that belong to reality rather than to temperament, and no amount of behavior points at one. A character who fights like an avalanche resonates with Impact and will never resonate with Time, however long they fight.
+
+Axioms are not earned from a pattern of living. They are earned from **exposure**: standing for a long while in a place where the thing is loose and wrong, and coming back out still able to think about it. A valley where an hour is not an hour. A hollow that objects fall into and do not arrive. A shrine whose answers are always true and never useful. The System does not offer an Axiom because it read the character; it offers one because the character was there and survived.
+
+At the Grades this book covers, an Axiom is a rumor. Very occasionally a GM will want one as the strangest thing a campaign ever finds, and the rules for holding one are the ordinary ones: a slot, the IP ladder, Distillation. Everything else about them, including what they do at the tiers where they matter, belongs to the later material with the higher rungs.
+
+For an F-Grade table the practical point is smaller: **when the eight families do not seem to fit a Principle a player wants, check whether they are reaching for an Axiom.** Usually they are reaching for a concept rather than a family, and the answer is that families come from behavior. Two characters can both end up holding Fire, one through Impact and one through Consumption, and the same word will mean different things on their sheets.
 
 ## Distillation
 
@@ -172,33 +188,32 @@ Three different changes can happen to a Principle a character already holds. The
 
 **Broadening changes the scope.** At a tier-up, the re-articulation sometimes outgrows the Principle's name, and the System recognizes the larger truth. Weight, articulated again at Fragment depth ("everything falls toward something, and I choose the direction"), can become **Gravity**; Gravity, lifetimes deeper, might become **Dominion**. Broadening is a possibility inside a tier-up Distillation, never a separate procedure and never owed: most tier-ups deepen the Principle under its own name. Existing Applications keep their names, costs, and scales; the new tier's grant takes the broadened identity.
 
-**Re-forging changes one Application's power.** Applications keep the cost and scale they were forged at (see "Applications: Cost and Scale" below). During any Distillation, a character may re-forge one Application they already know at their current Grade: it takes the new Grade's cost and scale, and the old version is gone the moment the new one exists. An F-forged Searing Strike stays 10 Aether forever, a lit match that a D-Grade warrior can flick all day. Re-forged at D-Grade it becomes a door-cutter that costs 1,000 a swing, and the lit match no longer exists. Keeping the cheap old trick or paying full price for real power is a genuine choice, made one Application at a time.
-
-**New Principles enter at the bottom.** Mastery is per-Principle and never transfers. Whether the second slot opens at E-Grade or Fusion frees a slot late in a career, a new Principle starts at 0 IP and climbs to Initial Insight and Seed like any novice's. Its IP must come from experiences aligned to the *new* Principle: attention and risk spent there instead of deepening what the character already holds. And its Applications are forged at F-Grade like everyone's first (below), then raised by re-forging if the character chooses.
+**New Principles enter at the bottom.** Mastery is per-Principle and never transfers. Whether the second slot opens at E-Grade or Fusion frees a slot late in a career, a new Principle starts at 0 IP and climbs to Initial Insight and Seed like any novice's. Its IP must come from experiences aligned to the *new* Principle: attention and risk spent there instead of deepening what the character already holds. Its Applications are priced by tier like everyone else's (below).
 
 ## Applications: Cost and Scale
 
-Every Application is an active technique costing 1 Beat plus Aether. Two numbers define it for life: its Aether cost and its **scale**, how much world the manifestation can touch. Both are fixed by its **forge Grade**.
+Every Application is an active technique costing 1 Beat plus Aether. Two numbers describe it: what it costs, and its **scale**, how much world the manifestation can touch.
 
-**Every Application is forged at F-Grade.** Whenever a Principle grants an Application, at whatever point in a career, the technique arrives at F-Grade cost and scale: **a Seed Application costs 10 Aether, an Early Fragment Application costs 15, and Infusion is free.** Those are the only Application prices a player needs until re-forging. A cost is set at the forge and never changes afterward (see Core Mechanics, "Aether Costs Are Set at Acquisition").
+**Cost is set by the tier that granted it, and never changes.**
 
-Raising an Application is what Re-forging is for: one Application per Distillation may be re-forged at the character's current Grade, taking the new Grade's cost and scale (see "Changing an Existing Principle"). Costs scale ×10 per Grade:
+| **Granted at** | **Aether Cost** |
+|---|---|
+| Seed | 10 |
+| Early Fragment | 15 |
+| Infusion (Mid Fragment) | none |
+| Domain (Peak Fragment) | 3,000 + 500 per round held |
 
-| **Re-forged at** | **Seed Application** | **Early Fragment Application** |
-|---|---|---|
-| E-Grade | 100 | 150 |
-| D-Grade | 1,000 | 1,500 |
-| C-Grade | 10,000 | 15,000 |
+That is the whole price list. It does not read off the character's Grade, so a prodigy who reaches Early Fragment while still F-Grade pays 15 like everyone else, and a Seed Application earned in the first month costs 10 for the rest of a life. A Domain sits at D-Grade pricing because a D-Grade body is required to form one at all.
 
-A Domain is the exception to F-forging: it can only be Distilled by a D-Grade body, so it is forged at the Grade of that Distillation. A D-forged Domain costs 3,000 Aether to activate plus 500 per round held; a C-forged Domain costs 30,000 plus 5,000 per round. Activation takes 1 Beat.
+**Scale follows the body.** An Application's reach grows with the character's current Grade, without re-earning or re-paying for it. The understanding was always the same; what changes is how much of it a body can push into the world.
 
-**What the Aether buys.** Every Seed Application grants a bonus inside the Modifier Budget, around +10, at every Grade; the table math never inflates. What scales is the technique's scale. **Searing Strike at three forge Grades** (the Seed Application of a Fire Principle):
+**Searing Strike** (the Seed Application of a Fire Principle) costs 10 Aether forever, and grants around +10 to the Clash forever, because table modifiers never inflate. What changes is what happens:
 
-- **F forge (10 Aether):** +10 to a Clash against targets vulnerable to fire. The flame wraps the weapon's edge, ignites cloth and dry wood, and leaves scorch lines on flesh.
-- **E forge (100 Aether):** the same +10. The flame runs white and dense: it chars through leather, ruins the temper of a parried blade, and the wounds it leaves cauterize shut, still smoking.
-- **D forge (1,000 Aether):** the same +10. The strike arrives as a sheet of fire with an edge in it. It passes through a steel door as through bread, and the Zone smells of ozone for hours.
+- **Carried by an F-Grade body:** the flame wraps the weapon's edge, ignites cloth and dry wood, and leaves scorch lines on flesh.
+- **Carried by an E-Grade body:** the flame runs white and dense. It chars through leather, ruins the temper of a parried blade, and the wounds it leaves cauterize shut, still smoking.
+- **Carried by a D-Grade body:** the strike arrives as a sheet of fire with an edge in it. It passes through a steel door as through bread, and the Zone smells of ozone for hours.
 
-Scale is fictional permission, priced by Grade. When a use collides with the world (can it burn this? can that survive it?), the GM reads the Application's forge Grade against the obstacle's Grade the same way any Cross-Grade question resolves.
+Scale is fictional permission. When a use collides with the world (can it burn this? can that survive it?), the GM reads the character's Grade against the obstacle's Grade the same way any Cross-Grade question resolves.
 
 **Principles and Spells:** A character's Principle passives always apply to matching spells automatically. Using an active Application alongside a spell requires Infusion tier. Below that, choose one per Beat: cast the spell or use the Application.
 

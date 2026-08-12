@@ -28,6 +28,13 @@ Phrases actually caught in this project's drafts, kept as calibration:
 
 Default to: state the rule, give a worked example when the math benefits from it, add GM guidance only when the rule has genuine ambiguity at the table. Sections labeled "Design Intent" exist for explicit design framing; write those informationally, not promotionally.
 
+Four rules derived from the 2026-08-11 full-book read-through, where each was the pattern behind several separate notes:
+
+- **Cut the closer.** If the last sentence of a rule block explains what the rule accomplishes, avoids, or spares the reader, delete it. This is where banned justification copy keeps reappearing: "The number never scales and never appears on a table," "the table answers the question every session," "never tracked hour by hour." The rule ends when the rule ends.
+- **Permission, not prescription.** GM-facing procedure states the default and names the dial; it does not foreclose judgment. "Do not give Yield to a group" becomes "giving Yield to a group turns a fight into a grind; use it on one enemy." Same information, no mandate. Reserve flat imperatives for things that break the math.
+- **Open every chapter the way Progression opens.** One paragraph stating the loop the chapter belongs to, then pointers to the chapters that own each piece. That opening was the only one to draw praise in the read-through.
+- **First substantive use defines.** The chapter that owns a term is where the term first appears, and a coined word used once is either defined or cut. Never cite a section that has not been written.
+
 WORKFLOW: 
 - Design discussions happen in chat.
 - When we agree on a change, confirm what you're about to do, then edit the project files directly. Don't output text for me to copy/paste — make the changes yourself.
@@ -36,6 +43,9 @@ WORKFLOW:
 - When I upload a revised file, that becomes the new working version.
 - When a rule, threshold, or number changes, grep every chapter for the old rule name, the old number, and any worked example that embeds either, and reconcile them all in the same edit. Stale references left behind by earlier rule changes are this book's most common defect.
 - When a new mechanic lands, sweep its surfaces in the same edit: the quick reference, the tutorial's teaching schedule and tracker, character creation if it touches a stat or resource, and every chapter that owns a system it interacts with.
+- **Sweep by noun, not by chapter.** When a mechanic creates an exception to a shared resource (Beats, Aether, HP, a die threshold), grep that resource name across the whole book and reconcile every sentence that quantifies it. The Master free action passed a chapter-level sweep and still broke three rules inside its own chapter.
+- **Thresholds come from a closed set.** Before coining a number, check it against 5, 10, 20, 40, 100 and the Volatility Threshold, and reuse rather than invent. Two numbers that mean "the die betrayed you" must be the same number.
+- **Test pacing against the source fiction.** When a subsystem's pacing is in question, run the genre's canonical arc (Zack's climb in *Defiance of the Fall*) through the actual numbers and check whether the fiction could still happen. This has caught more real defects than any internal review.
 
 When I paste in ideas from other AIs, synthesize critically — take what works, reject what contradicts the design priorities, and flag any conflicts with existing rules.
 

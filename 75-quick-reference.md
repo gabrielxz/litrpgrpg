@@ -10,15 +10,18 @@
 - **vs. Passive obstacle:** Beat the Resistance (from the Grade Reference Card).
 - **Auto-success:** If Force ≥ Resistance, no roll needed.
 - **Volatility:** In combat, if the **natural d100** (before any modifiers) meets the Grade threshold, roll again and add. Each cascade die also checks its own natural result. Applies to combat Clash rolls and Will Saves (either side), plus the Breakthrough Check; skill checks never explode. A cascade of 2+ extra dice on a PC's roll grants a Battle Memory Card.
-- **Advantaged:** +10 to roll (fiction-derived positional edge). **Exposed:** −10 to roll. **Flanking:** +10 to roll. **Environment:** −10 hindering / −20 crippling.
+- **Advantaged:** +10 to your rolls (fiction-derived positional edge). **Exposed:** −10 to your rolls. States are not reciprocal and are not free: changing your own or stripping an enemy's costs 1 Beat.
+- **Flanking:** +10 for every hostile engaging a target that two or more hostiles are engaging at once.
+- **Reach:** you can attack anyone in your Zone; ranged and most spells also reach adjacent Zones.
+- **Environment:** −10 hindering / −20 crippling.
 - **Turned Aside:** defender wins by Margin 40+ → attacker Exposed until end of their next turn. Defensive win with an explosion → Momentum shifts next round.
 - **Driven Back:** attacker wins by Margin 40+ → defender takes the damage and is Exposed until end of their next turn; the attacker may drive them one Zone (no free strike).
 - **Skill check failure:** fail by 1–39 soft (success at a cost), 40+ hard (failure plus consequence), natural 01–05 catastrophic. Margin 40+ on any success is dominant.
 - **Exceptional Success:** natural roll at or above your Volatility Threshold on a skill check. Success: narrate a step beyond what was asked. Failure: Soft regardless of margin. No extra dice.
 - **Cross-Grade Auto-Success:** vs. passive obstacles, Force + Cross-Grade Adjustment ≥ Resistance = no roll (2+ Grades up never rolls).
 - **Momentum:** Opposed Momentum Roll: d100 + DEX or PER Force (whichever is higher). Winning side acts first each round.
-- **Free Step:** DEX Force 50+ grants one free Zone move or in-Zone reposition per turn.
-- **Cross-Grade movement:** the higher Grade auto-wins movement contests; +1 free Zone move per turn per Grade above the highest-Grade hostile.
+- **Free Step:** DEX Force 50+ grants one free Zone move per turn.
+- **Cross-Grade movement:** the higher Grade auto-wins movement contests. A combatant a full Grade above every hostile present moves between Zones without spending Beats at all.
 
 **The Clash Formula:**
 
@@ -52,11 +55,15 @@ One number at the top of the die. On a Clash it explodes (combat Clashes, Will S
 
 **HP** = Raw FOR × 2. **Aether** = Raw POW. Aether refills only on Consolidation, after the first full hour (no in-combat or passive regen).
 
-**Consolidation:** each full hour clears one fifth of VE Tolerance from stored VE (full tank ≈ 5 hours) and recovers 20% Max HP. Interruption keeps completed hours.
+**VE Tolerance:** (Raw FOR + Raw HRT) / 2 × 10. **Saturation:** past one Tolerance −10, past twice −25, past three times the collapse clock.
+
+**Consolidation:** every hour clears one fifth of VE Tolerance and restores one fifth of Max HP (full tank ≈ 5 hours); Aether refills at the first full hour. Interruption keeps completed hours.
+
+**Breakthrough Check:** d100 + HRT Force + preparation vs. **DC 140** (Severe, flat, no Cross-Grade Adjustment). Overcharge ×1/×2/×3/×4 raises it to 140/150/160/180 and buys +0/+1/+2/+3 Quality Tiers.
 
 **Surge:** spend half your Maximum Aether (round up) for +5 on one Clash roll you make. Declare before rolling. No Beat. Stacks with everything; available to everyone.
 
-**Yield:** once the Margin is known and before damage lands, give up Beats from your **next** turn. Each Beat cuts the incoming Margin by 20. Your next turn has two Beats, so two is the most you can give. One Beat: you give ground where you stand. Two Beats: you are driven one Zone, attacker's choice, no free strike. **Cornered** (nowhere to be driven): one Beat only. Creatures Yield only if their stat block says so.
+**Yield:** once the Margin is known and before damage lands, give up Beats from your **next** turn. Each Beat cuts the incoming Margin by 20. Your next turn has two Beats, so two is the most you can give. One Beat: you give ground where you stand. Two Beats: your turn is gone and the attacker may drive you one Zone of their choosing, or leave you where you are; no free strike either way. Against an AoE, each target Yields on their own Margin and two Beats throws them clear. **Cornered** (nowhere to be driven): one Beat only. Creatures Yield only if their stat block says so.
 
 **Proficiencies:** three at creation, all **Trained**.
 
@@ -70,7 +77,7 @@ Weapons carry no bonus of their own; the bonus is the wielder's tier. Untrained 
 
 **Downed:** at 0 HP: no Beats, no defense; dies at the end of their third round unless stabilized (any healing, or 1 Beat + Moderate 90 check, field-medicine Proficiencies apply). One hit ≥ 10× Max HP kills outright. Attacking a Downed character: 1 Beat, no roll, kills. Surviving being Downed grants a Battle Memory Card.
 
-**Principle / Skill Aether Costs (by forge Grade, ×10 per Grade):** Seed App: 10 (F) / 100 (E) / 1,000 (D) | Early Fragment App: 15 (F) / 150 (E) / 1,500 (D) | Infusion: free | Domain: 3,000 + 500/round (D) / 30,000 + 5,000/round (C). Applications are forged at F-Grade when granted; re-forging (one per Distillation) sets a new forge Grade. Domains require a D-Grade body. Cost is permanently fixed at the forge.
+**Principle Application Costs (by tier, never by Grade):** Seed 10 | Early Fragment 15 | Infusion free | Domain 3,000 + 500/round. A cost is fixed by the tier that granted it and never changes. Scale grows with the character's current Grade. Domains require a D-Grade body. Spells and class skills are fixed by the Grade they were acquired at, ×10 per Grade.
 
 **Aura Pressure Save:** d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance. Aura Resistance is the flat card value, no Cross-Grade Adjustment: calm presence Hard (115), flaring Severe (140). At 3+ Grades of difference the GM may skip the save.
 

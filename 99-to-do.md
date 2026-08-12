@@ -4,6 +4,193 @@
 
 ---
 
+## Read-Through Triage: Full-Book Pass (Gabriel, 2026-08-11)
+
+*Everything except the Tutorial, read on the Scribe against build `20260808-183206`. 62 notes across 32 pages. Ink detected by rendering both PDFs and diffing ink density, so page coverage is exhaustive rather than sampled. Status key: **DO** = uncontested, just apply. **DECIDE** = needs Gabriel. **PUSH** = Claude disagrees or sees a coupling Gabriel did not. **CLUSTER** = symptom of a structural item below.*
+
+### Introduction
+
+- **R1** (p6) Andre/GM exchange circled: "I think we can make this stronger." — **DO.** Folds into the example-of-play rewrite (Tier 1 item 6).
+- **R2** (p6) "a System quietly *deciding* what each of you is becoming" → **OBSERVING**. — **DO.** He is right; "deciding" contradicts the HVE's stated stance that it records conduct without judging it.
+
+### Core Mechanics
+
+- **R3** (p18) "Stats are raw and unfiltered" — "??" — **DO.** "Unfiltered" is doing no work. Cut to "Stats are raw."
+- **R4** (p18) Momentum ties go to the players → "I think just roll again." — **DO.**
+- **R5** (p18) Surprise Beat: "Do axe Masters get their free swing?" — **DECIDE.** See CLUSTER-A.
+- **R6** (p19) Seize Momentum: "Is it the Beat-user's stat or the side's highest again?" — **DO.** It is the seizing character's own. Say so.
+- **R7** (p19) "Effects that grant a third Beat are the rarest form of power" — "Not exactly any more. Should say 'except for Mastery...'" — **DO.** See CLUSTER-A.
+- **R8** (p20) Aura Pressure Beat loss: "Are Master's free Beat?" — **DECIDE.** See CLUSTER-A.
+- **R9** (p20) "Can't remember how we solved an E-Grade w/200 DEX not having Free Step, but an E-Grade w/90 DEX does." — **PUSH / DECIDE.** We never solved it. See CLUSTER-D.
+- **R10** (p20) Cross-Grade Movement circled: "even a DEX dump stat E-Grade." — Same as R9.
+- **R11** (p21) "Spending 1 Beat to reposition within a Zone" — "I thought within-Zone movement was free?" — **DO.** Direct contradiction with the Movement Rules and the Free Actions list two pages earlier. Free movement is repositioning that does not change Positional State; buying a state change costs the Beat. Say that once, in one place.
+- **R12** (p21) "Specify if Positional Advantage is reciprocal. Does high ground give me +10 and my opponent −10?" — **DECIDE.** Recommend: no. One state per combatant, assigned independently. Reciprocal states double every terrain call to 20 points and break the Modifier Budget.
+- **R13** (p21) "Why can't a super strong warrior defend with his STR?" — **PUSH.** See below.
+- **R14** (p22) "Is this the only place we define Flanking?" — **DO.** It is. It is defined in a parenthetical inside a table. Promote it.
+- **R15** (p22) "Should we talk about flanks somewhere? Do you need to be in the same Zone to attack?" — **DO.** Melee reach is never stated anywhere in the book. Real hole.
+- **R16** (p24) Yield two Beats: "Should have option to not push them anywhere." — **PUSH.** Attacker's option only. See below.
+- **R17** (p24) Struck: "The number never scales and never appears on a table." — **DO.** See META-2.
+- **R18** (p24) "Can you Yield to AoE?" — **DECIDE.** Recommend yes, per target, and the two-Beat move throws you clear of the blast Zone.
+- **R19** (p25) Struck: "A character with a polearm does not get a free cleave; that's a class feature..." — **DO.** See META-2.
+- **R20** (p25) "Give guidance on Soft Failure. Most of the time it shouldn't be a success; do 'success with a cost' only when cinematically interesting." — **DO.** Genuine calibration change, not just wording: Soft Failure currently reads as success-by-default.
+- **R21** (p29) "Is this the 1st explanation of Aether? If so let's explain it: the universal lifeblood of the Multiverse." — **DO.** It is the first, and it opens mid-rule. See META-5.
+- **R22** (p29) "Newly integrated humans are intoxicated feeling it for the 1st time." — **DO.** Worldbuilding pass; Aether sensory anchor #2.
+- **R23** (p31) Forge-Grade Aether cost table: "I still don't like this. Can't we just say Seeds cost 10, Fragments cost 15? I'd rather invent more Principle tiers than have this Grade/type interaction." — **DECIDE, high impact.** See below.
+
+### Character Creation
+
+- **R24** (p36) "A menu of thirty" → "SAMPLE (or something)." — **DO.**
+- **R25** (p36) "Give full descriptions of each and group them alphabetically or by type of skill." — **DO.** Sizeable writing job; thirty entries.
+- **R26** (p36) On Surge being universal: "(and nearly all players will gain Principles)." — **DO.** Say it in Character Creation.
+
+### Progression
+
+- **R27** (p39) "Great opening. More chapters should open like this." — **DO.** See META-6.
+- **R28** (p39) "Specify if there is a relationship between VE and Aether in our world." — **DECIDE.** Worldbuilding. They are currently two unrelated energies with confusingly adjacent names.
+- **R29** (p40) "2 points... the attributes they deliberately train" → "Not exactly. They just apply them to stats on their character screen." — **DO.**
+- **R30** (p40) "Characters can pull up a 'System Interface' that includes their character sheet. Players should be able to delay applying stats. Call them 'free points' or 'unallocated'." — **DECIDE.** Two changes: a diegetic interface concept (new), and bankable stat points (new rule). See CLUSTER-B.
+- **R31** (p41) "The full class generation system is documented separately" — "? Is it?" — **DO.** It is not documented anywhere. The sentence promises a chapter that does not exist. Cut or mark as forthcoming.
+- **R32** (p41) "Have we sim'ed what stat growth looks like through Level 25?" — **DECIDE.** No. Worth doing; it is the input to the class framework.
+
+### The Principle System
+
+- **R33** (p45) "[Insight Gained: Weight 8/10]" — "Weight? Oh, is that the example Principle?" — **DO.** The diagram uses Weight before Kara's story introduces it.
+- **R34** (p45) Domain as highest grant: "There will be higher ones in later versions or other books." — **NOTE.** No action now.
+- **R35** (p47) "I know it would be a big rework, but in DotF, Zack gets his class way before his 1st Seed." — **DECIDE, high impact.** Class at Level 10 vs first Seed around Level 6. See META-7.
+- **R36** (p49) Eight families: "Have we tried coming up with random Principles and seeing if they fit in one of these?" — **DO.** Cheap and valuable: stress-test the taxonomy for coverage.
+
+### Cultivation
+
+- **R37** (p60) "Let's use 200% and 300% for thresholds for easy math." — **PUSH / DECIDE.** Agreed on the math; it silently breaks the Breakthrough Overcharge table. See below.
+- **R38** (p60) Struck HP bleeding from Heavy Saturation. — **DO**, coupled to R37 and R49.
+- **R39** (p60) "If you are over saturated, does it take longer than 5 hours to consolidate?" — **DO.** Yes, and the book never says it. Five hours clears one full Tolerance; 250% takes thirteen.
+- **R40** (p60) "Use the same language: either 'takes 5 hours' or '20% per hour', and note the symmetry." — **DO.** VE clears in fifths, HP in 20% steps. Same rate, two vocabularies, one page apart.
+- **R41** (p62) "Need to be able to do something if you are at the cap but not ready to break through." — **DECIDE.** Real gap. At cap, VE has nowhere to go and levels stop.
+- **R42** (p63) Struck: "The Saturation bands above are the rule; the table answers the question every session." — **DO.** See META-2.
+- **R43** (p63) "Shouldn't this be a wider scale? Zack sometimes gained several levels from a great kill. You'd need 40+ Peak monsters to go 24→25. And that's solo!" — **DECIDE, highest-impact note in the pass.** He is right and it is worse than he says. See below.
+- **R44** (p64) "Allow more variation in VE for quests, titles and achievements per GM discretion. These numbers feel low, like a ceiling." — **DO**, same fix as R43.
+- **R45** (p64) "Aether-Density **Hex** Absorption" — "?" — **DO.** "Hex" is an undefined map unit that appears nowhere else in the book.
+- **R46** (p64) Struck: "never tracked hour by hour at the table." — **DO.** See META-3.
+- **R47** (p65) "Let's not be so definitive. Offer this as permission not to micro-track, but if a GM wants to, that's fine." — **DO.** See META-3.
+
+### Grade Breakthroughs
+
+- **R48** (p70) "I'm confused. It sounds like you fill up on VE starting at Ignition, but you might have done it before, right?" — **DO.** Right. Stage 2 reads as though accumulation begins at Ignition; at-cap banking is described a chapter earlier.
+- **R49** (p70) "So, −25 to roll and +45 to Breakthrough DC?" — **DECIDE.** Yes, currently both. At ×2.5 that is a 70-point swing against you for a +3 Tier quality bump. Probably not intended.
+
+### Titles
+
+- **R50** (p88) Chapter opening: "We can do better." — **DO.** See META-6.
+- **R51** (p88) Pacing targets: "Too high. Too much work for GM." — **DECIDE.** Recommend a pre-written F-Grade Achievement title catalog with trigger conditions, so the GM recognizes rather than invents. Same shape as the static class catalog.
+- **R52** (p94) "We have to solve the problem of how to keep track of all these stat bonuses on the character sheet." — **CLUSTER-B.**
+- **R53** (p95) "Break Inspection out into its own chapter addressing generally what players can see of each other. Will need some thinking." — **DECIDE.** Agreed there is a missing chapter; it is bigger than Titles (party frame, inspection, HVE opacity, quest log visibility all answer "who can see what").
+- **R54** (p100) "Too many conditional bonuses or abilities is a large mental burden, and the character sheet documentation issue I mentioned." — **CLUSTER-B.**
+
+### The Hidden Vector Engine
+
+- **R55** (p109) "Will need to really think about character sheet for HVE or GM handout." — **CLUSTER-B.**
+
+### System Quests
+
+- **R56** (p119) "If you share a 'kill 10 boar' quest, does the team need to kill 10, or 10 more than 10 now?" — **DO.** Unspecified. Recommend: shared objectives are party-cumulative, one pool.
+- **R57** (p119) Missing comma in the party-frame list. — **DO.**
+
+### Bestiary
+
+- **R58** (p133) "Do not give Yield to a group" → "Advise against it, but don't mandate you can't." — **DO.** See META-3.
+
+### Items
+
+- **R59** (p143) "The materia is the real cost" — "?" — **DO.** "Materia" appears once in the book and is never defined.
+- **R60** (p143) "I don't like E-Grade pills giving you VE. It fits thematically, but I don't want to track a separate non-consolidatable VE." — **PUSH-lite / DECIDE.** Agreed on the burden; the VE exists to close a loophole. Cleaner fix below.
+- **R61** (p146) Volatile Artifacts: "Should mention they are common in the tutorial." — **DO.**
+- **R62** (p146) Shard backfire on d100 ≤ 10: "Can we make this ≤5? Isn't that the number we use for skill checks?" — **DO.** Yes. See META-4.
+
+### CLUSTER-B: The Character Sheet (its own session, scheduled before the table kit)
+
+Gabriel's call, 2026-08-12: this gets a dedicated session rather than being folded into the table kit. Everything known about it, collected so it survives the gap.
+
+**Where the pressure came from.** Four chapters independently generated "where does this live on the sheet?" in one read-through: Titles p94 ("we have to solve the problem of how to keep track of all these stat bonuses"), Titles p100 ("too many conditional bonuses or abilities is a large mental burden"), the HVE chapter p109 ("will need to really think about character sheet for HVE or GM handout"), and Progression p40 (unallocated points and the System interface). None of them is a layout problem. They are the same problem seen from four rooms.
+
+**What the sheet has to carry, as of 2026-08-12:**
+
+- Seven Attributes in **two columns, Raw and Force**. At F-Grade they are identical, which hides the problem until E-Grade, when every Raw change silently changes a Force.
+- **Derived values whose formulas all moved this session:** Max HP (Raw FOR × 2), Max Aether (Raw POW), VE Tolerance ((Raw FOR + Raw HRT)/2 × 10). Print the formula beside the box; these have each changed more than once.
+- **Three gauges rather than counters:** HP current/max, Aether current/max, and VE stored against Tolerance with the Saturation bands marked at 1×, 2×, and 3×.
+- **Ticking counters:** Marks per Proficiency (one tally per Proficiency, and the list grows when the System grants a fourth), IP per Principle, unallocated stat points, cumulative VE toward the next level.
+- **Proficiencies** with tier (Trained / Seasoned / Master) and their Mark tallies.
+- **Principle:** family or crystallized name, tier, IP, and each Application with its fixed cost.
+- **Titles**, which the Titles chapter expects to reach 8–15 by the end of a Grade.
+- **Volatile Artifacts and consumables**, which are the classless verb set and get spent constantly.
+
+**The three real design problems, in order of severity:**
+
+1. **Conditional bonuses cannot be pre-totaled, and that is the whole burden.** A flat +2 STR gets baked into the Raw column once and never thought about again. "+5 STR while outnumbered" has to be remembered, noticed, and added at the table, by a player holding several of them. Titles currently price conditional bonuses at 1.5×–2× flat ones *because* they are gated, which is exactly the incentive to collect the ones that cost the most attention. Options to weigh: cap how many conditional effects a character can hold active, convert most title bonuses to flat and reserve conditionals for Hidden Achievements, or give the sheet a dedicated "when X, add Y" strip that is read once per fight rather than per roll.
+2. **The HVE cannot appear on the player's sheet at all**, so there are two artifacts: a player sheet and a GM-side tracker with four axis pairs across Current and Deep. The GM tracker is per player, so a table of five needs five of them on one screen. This is the piece most likely to decide whether the Unplugged mode is actually pleasant to run.
+3. **Recompute cost at E-Grade and above.** Every title, treasure, and level changes Raw, and Force is derived from Raw. At F-Grade the derivation is invisible. The sheet should make re-deriving Force a marked step rather than something a player forgets for three sessions.
+
+**The opportunity, and the reason to do this as design rather than production.** Gabriel approved the diegetic **System Interface** (R30): characters can summon an interface showing their own sheet. If the printed sheet *is* that interface, its layout becomes canon rather than convenience, it teaches the game by showing what the System considers worth displaying, and it explains its own omissions in the fiction (the HVE is absent from the interface because the System does not show you that).
+
+**Use the sheet as a design audit.** If a subsystem will not fit on one page, that is evidence about the subsystem rather than about the page. This is the natural moment to test the unbounded title stack, the conditional-bonus economy, and the number of separate counters a player is asked to tick, against Gabriel's own "trim the fat" instinct. Expect the session to cut something.
+
+**Dependencies:** the "What Can Be Seen" chapter defines what the interface shows and what it withholds, so it should land first. The pregens (Tier 1 item 11) are the natural test: build them on the sheet and see what breaks.
+
+### Rulings from the triage (Gabriel, 2026-08-12)
+
+**All seven applied to the book on 2026-08-12**, together with the Core Mechanics rewrite and the DO items across every chapter. Build clean in both formats.
+
+**Correction to the D2 analysis:** the Breakthrough chapter already exempted the check from Saturation penalties; the sentence was buried at the end of a long paragraph, which is what made the page read as a double penalty. The Overcharge dial was never mathematically broken. D2 became a presentation fix, and the exemption is now stated up front.
+
+**Still open from the triage, eight items:** R1 (the Introduction's play example, folded into Tier 1 item 6), R28 (whether VE and Aether are related in the fiction, worldbuilding), R30's diegetic "System Interface" concept (worldbuilding), R32 (simulate stat growth through Level 25), R36 (stress-test the eight Principle families against invented Principles), R51's Achievement-title catalog so the GM recognizes rather than invents, R53 and CLUSTER-C (the missing "What Can Be Seen" chapter), and CLUSTER-B (the character sheet as design work, scheduled before the table kit).
+
+- **D1 — VE awards become relative (R43, R44).** The tier names are already relative to the party; only the payouts were absolute. The VE chart gains a grid of level band × difficulty tier so the award is a lookup with no arithmetic. Fixes the 13-to-883 kills-per-level drift inside F-Grade and lets a great kill be worth several levels the way the genre does it. Deletes the false claim that "the same number of peer kills spans a level at every Grade."
+- **D2 — Saturation penalties do not apply to the Breakthrough Check (R49).** They apply to everything else while charging. The overcharge is the fuel; it does not also blunt the roll. Removes the double penalty that made every Overcharge step strictly dominated and made Suicidal arithmetically impossible.
+- **D3 — Saturation bands and Overcharge ratios move together (R37, R38).** Bands become Mild 101–200%, Heavy 201–300%, Critical 300%+. HP bleed is cut from Heavy. Overcharge re-pins to the new bands as whole multiples:
+
+  | Ratio | VE Stored | Band while charging | DC | Quality |
+  |---|---|---|---|---|
+  | ×1.0 Minimum | 100% | none | +0 | +0 |
+  | ×2.0 Aggressive | 200% | top of Mild | +10 | +1 Tier |
+  | ×3.0 Reckless | 300% | top of Heavy | +20 | +2 Tiers |
+  | ×4.0 Suicidal | 400% | Critical, collapse clock running | +40 | +3 Tiers |
+
+  Ratios and DC steps both come out of the closed number set, replacing 1.5/2.5 and 15/30/45. The Critical collapse clock still fires at the top ratio, which the Breakthrough ritual depends on.
+- **D4 — Yield's forced move is the attacker's option (R16).** The attacker may decline to push. The defender may never decline, or Cornered stops meaning anything.
+- **D5 — An E-Grade pill in an F-Grade body does nothing (R60).** No healing beyond the cap, no VE, no separate untracked pool. Closes the level-up exploit without the bookkeeping.
+- **D6 — Core Mechanics gets a full rewrite (META-0).** On the Principles model, not a patch pass. It absorbs R3–R23 and CLUSTER-A and CLUSTER-D.
+- **D7 — Aether cost is set by Principle tier, flat, with no Grade interaction (R23).** Scope explicitly includes inventing more Principle tiers so that tier alone can carry the pricing. Forge Grade and the re-forging ladder are cut; the Distillation re-forge decision goes with them. Blocked on the Principles model question below.
+
+**Open, blocking D7:** Gabriel's stated position is that he thinks about Principles differently than the book presents them. The notes pointing at it are R23 (more tiers, flat cost), R34 (tiers above Domain exist in later material), R36 (stress-test the eight families against invented Principles), and R35 (class before first Seed). Needs a design conversation before the rewrite starts.
+
+### What the notes say about the book (meta)
+
+Note density by chapter: Core Mechanics 21, Cultivation 11, Progression 6, Titles 5, Principles 4, Items 4, Character Creation 3, Introduction 2, Breakthroughs 2, Quests 2, HVE 1, Bestiary 1.
+
+**META-0 — Note density tracks time since last rewrite, not chapter length or complexity.** The chapters rewritten whole in the last six weeks came back nearly clean: the HVE drew one note, the Bestiary one, Items four, Principles four. The two chapters that have only ever been patched drew half the pass between them. Core Mechanics is now the least coherent chapter in the book, and its notes are not stylistic; they are contradictions (within-Zone movement free in one place and 1 Beat in another), undefined terms (Flanking, melee reach), and rules that no longer describe the game (the third-Beat claim). **The indicated fix for Core Mechanics is a rewrite on the Principles model, not twenty-one patches.** Patching is what produced the state it is in.
+
+**META-1 — Sweep by noun, not by chapter.** CLUSTER-A is three separate defects from one cause: the Master free action landed and every neighbouring rule that quantifies Beats was left alone. The existing sweep rule says to check the chapters that own interacting systems, and that is what was done; all three misses are inside the chapter the mechanic landed in. The rule that would have caught it: **when a mechanic creates an exception to a shared resource (Beats, Aether, HP, a Beat count), grep the resource name across the book and reconcile every sentence that quantifies it.**
+
+**META-2 — Cut the closer.** Every strikeout but one was the last sentence of a rule block, and every one of those was a sentence about the rule rather than the rule: "The number never scales and never appears on a table." "The Saturation bands above are the rule; the table answers the question every session." "never tracked hour by hour at the table." "A character with a polearm does not get a free cleave." The style guide already bans justification copy, and it keeps coming back in this one disguise, at this one position. **New rule: if the last sentence of a rule block explains what the rule accomplishes, avoids, or spares the reader, cut it.**
+
+**META-3 — Write permission, not prescription.** Four notes ask for the same softening: "advise against it, but don't mandate you can't," "let's not be so definitive, offer this as permission," "allow more variation per GM discretion," "give guidance." **State the default, name the dial, and leave the judgment where it lives.** "Do not give Yield to a group" becomes "giving Yield to a group turns a fight into a grind; use it on one enemy." Same information, no mandate. This is separate from META-2: that one is about cutting, this one is about mood.
+
+**META-4 — The number vocabulary is a closed set, at both ends of the die.** The shard backfire fires on d100 ≤ 10 while Catastrophic Failure fires on 01–05, and he caught it on sight. The top of the die was unified in the last cycle; the bottom was not. **Before coining a threshold, check it against 5, 10, 20, 40, 100 and the Volatility Threshold, and reuse rather than invent.**
+
+**META-5 — First substantive use must define.** Six notes are the same shape: Aether's first appearance is mid-rule with no definition, Flanking is defined only inside a table cell, melee reach is defined nowhere, "materia" and "hex" appear exactly once each and are never explained, Weight is used as an example Principle before the story that introduces it, and class generation is cited as "documented separately" when it is documented nowhere. The glossary pass will catch the vocabulary half. It will not catch the promise to a chapter that does not exist. **Rule: the chapter that owns a term is where the term first appears, and never cite a section that has not been written.**
+
+**META-6 — Chapter openings are load-bearing and only one of them works.** The Progression opening drew "great opening, more chapters should open like this"; the Titles opening drew "we can do better." Progression's opening does one thing: it states the whole loop in one paragraph, then says which chapter owns each piece. That is the template. **Every chapter should open with the loop it belongs to in one paragraph, then the pointers.**
+
+**META-7 — The source fiction is a live design test.** Twice he checked the system against *Defiance of the Fall* and both times found a real defect: Zack gets his class well before his first Seed (our order is reversed), and Zack gains levels off single great kills (our curve makes that arithmetically impossible). **When a subsystem's pacing is in question, run the genre's canonical arc through it and see whether the fiction would still happen.** It caught more than any internal review has.
+
+**META-8 (vibe) — He edits assertions and questions couplings; he almost never touches numbers.** Of 62 notes, five are strikeouts and four of those are sentences about rules. Where he does hit numbers (the VE curve, the Saturation bands, the backfire threshold) it is always because two numbers disagree with each other or with the fiction, never because a number felt wrong on its own. The notes are overwhelmingly of two kinds: *this sentence claims something the rules do not support*, and *these two rules have not been introduced to each other*. Design taste is settled; **what the book needs is coherence work, not more design.**
+
+### Structural clusters
+
+- **CLUSTER-A — The Master free action was never swept.** R5, R7, R8. One mechanic landed and every neighbouring rule that quantifies Beats still reads as though it does not exist: the Surprise Beat, the "third Beat is the rarest form of power" claim, and Aura Pressure's Beat reduction. Recommended rulings: the Surprise Beat is a Beat, so a Master's free action is available in the surprise round; Suppression reduces Beats and does not touch the free action, because the free action is explicitly not a Beat; and the "rarest form of power" sentence gets its exception clause. **The general lesson is META-1.**
+- **CLUSTER-B — The character sheet is a design problem, not a production task.** R30, R52, R54, R55, and R44 in part. Four chapters independently generated "where does this live on the sheet?" Titles stack without bound and each carries flat and conditional bonuses; the HVE needs a GM-side tally; Marks and IP need counters; unallocated stat points need somewhere to sit. The book has been designing state for months without designing where state is written down. **This is the biggest structural finding in the read-through and it should be scheduled as design work before the table kit, not as part of it.**
+- **CLUSTER-C — A "What Can Be Seen" chapter is missing.** R53, plus the party frame (Quests), inspection (Titles), and HVE opacity (HVE). Four chapters each answer a slice of one question.
+- **CLUSTER-D — Absolute thresholds collide with the leading-zero Force model.** R9, R10. The Free Step triggers at DEX Force 50+, read at the character's own Grade, so an E-Grade character with Raw DEX 200 (Force 20) has no Free Step while an F-Grade with DEX 50 does, at the same time as Cross-Grade Movement declares that speed across a Grade gap is absolute. The two rules contradict each other. Audit for other absolute Force thresholds; this is a class of bug, not one bug.
+
 ## Current Cycle: Playtest & Hand-Off Readiness (established 2026-07-08)
 
 **Goal:** a stranger can be handed the book, read it cold, run the Integration Tutorial, and continue into a campaign. Assessment (2026-07-08): the system is mechanically cohesive after the note-review cycle; the book is ready for a Levels 1–9 playtest once Tier 1 lands. The two structural boundaries are the Level 10 class wall (class generation is fully delegated to the System AI with no framework behind it; a campaign hits this around session 6) and the System AI being invoked throughout but explained nowhere. The book's deeper hand-off problem: it is a GM reference that assumes you already know the game — it opens with a reference card, buries the premise in the Principles ontology and the tutorial, and never shows what play sounds like.
@@ -141,6 +328,8 @@ Complete as of 2026-07-08: Batch 1 mechanical fixes, Block A (combat feel), Bloc
 *(Promoted to the current cycle: tutorial reconciliation pass, pregens/sample characters, System AI prompt templates, GM screen card, starting-human stat table.)*
 
 ## Production / Visual Design
+
+- **Chapter art for `57-what-can-be-seen.md` (added 2026-08-12).** The new chapter temporarily borrows `assets/stable_abilities.png`, left over from the cut Stable Abilities chapter, so the build stays valid. It needs its own piece: the subject is being looked at by something that does not look back.
 
 - **Verify the title page cover treatment.** Eisvogel's `titlepage-background` overlays the default title/author/date text on top of the cover image. If the existing `assets/cover.png` already has the title baked in, the result will double up. Check the rendered title page; if doubled, set `titlepage-text-color` to match the background or move the title elsewhere.
 - **Bestiary art for every entry** (Gabriel, 2026-08-07): each of the 12 stat blocks eventually gets a creature illustration; batch with the chapter-art work below.

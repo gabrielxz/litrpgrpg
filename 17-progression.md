@@ -15,7 +15,9 @@ Levels are numbered continuously across Grades: each Grade spans 25 of them, so 
 Each level grants **5 stat points** at F-Grade:
 
 - **3 points assigned by the System.** Before a character has a class (Levels 2–9), the GM assigns these based on how the character has actually been behaving, using the Behavioral Stat Mapping table below. From Level 10 onward, the class's stat profile assigns them instead.
-- **2 points assigned freely by the player.** These represent the character's conscious self-improvement: the attributes they deliberately train.
+- **2 points assigned freely by the player.** The character applies these themselves, through the System interface, to whatever they choose.
+
+**Points can wait.** Freshly earned points arrive **unallocated** and sit there until the character spends them. A player who wants to see what the next fight demands before committing may hold them for as long as they like; the System does not press. Unallocated points do nothing while they wait, so holding them is a real cost paid for a real option.
 
 At higher Grades, the budget scales with Grade magnitude (×10 at E, ×100 at D, and so on), with the same 3-to-2 split.
 
@@ -53,7 +55,7 @@ A character who acted consistently toward one behavioral archetype will have a c
 
 ## Class Selection (Level 10)
 
-At Level 10, the System AI generates class options based on the character's Hidden Vector Engine profile, the cumulative record of their behavior across Levels 1–9. Three options is the default; some characters draw more. The full class generation system is documented separately, but the mechanical effect at this milestone is:
+At Level 10, the System AI generates class options based on the character's Hidden Vector Engine profile, the cumulative record of their behavior across Levels 1–9. Three options is the default; some characters draw more. The class generation framework is still in development and will appear in a later revision of this book. The mechanical effect at this milestone is:
 
 1. The player selects one of the offered classes.
 2. The character receives a **one-time bonus allocation of 5–10 stat points**, distributed according to the class's stat profile. These are not player-assigned; they represent the System attuning the character's body and spirit to their new role.
