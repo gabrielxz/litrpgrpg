@@ -110,9 +110,9 @@
 
 The stat-growth sim surfaced that attribute treasures were cited as a growth source in three chapters and quantified in none, leaving an unknown term in every progression estimate. Now a labelled Category in Items: Lesser +2, Standard +5, Greater +10 to one Attribute's Raw value, ×10 per Grade, absorbed in a few minutes of stillness.
 
-**The cost is a flood, not a counter.** Absorbing adds VE equal to the character's full Tolerance to their stored VE, so it is free on an empty tank and pushes a loaded one into Saturation. One number already on the sheet, no new tracking, and it produces the "take it somewhere safe" instinct on its own.
+**The cost is an hour spent defenseless**, on the same footing as a Consolidation: the body comes apart to be rebuilt. Free if taken during a rest the party was having anyway, expensive anywhere else, and it adds nothing to track.
 
-**A per-Attribute-per-Grade cap was proposed and rejected** (Gabriel, 2026-08-12): it was another thing to track, stat min-maxing is genre-appropriate, and runaway builds are already prevented by scarcity plus the Grade stat cap. He also rejected the hold-out-for-a-better-one tension it created; the intended feel is finding a treasure and happily gulping it. Do not reintroduce a brake here without a specific reason: the ceiling and the drop rate are the brake.
+**Two earlier versions were rejected, both by Gabriel on 2026-08-12.** First, a per-Attribute-per-Grade absorption cap: another thing to track, stat min-maxing is genre-appropriate, and runaway builds are already prevented by scarcity plus the Grade stat cap. It also manufactured a hold-out-for-a-better-one tension when the intended feel is finding a treasure and happily swallowing it. Second, a VE flood equal to the character's Tolerance: **he does not want items entangled with the VE tank at all.** Treat that as the general rule rather than a ruling about this item; it is the second time an item has been pushed away from VE (the first was E-Grade pills). The ceiling and the drop rate are the brake, and the timing cost is fictional.
 
 Expected haul is three or four across a Grade, roughly +15 to +25 points, taking the F-cap budget from ~194 to ~215. One Standard treasure is placed in the tutorial's Wild Fragment den as the price of killing the young.
 

@@ -79,13 +79,9 @@ Concentrated pieces of something that was strong: the heart of a beast that shou
 
 Values scale ×10 per Grade, matching everything else.
 
-**Absorbing takes a few minutes of stillness**, so it cannot be done mid-fight, and that is the only restriction on when.
+**It takes an hour, and it puts you on the floor.** The body has to come apart a little to be rebuilt. For that hour the character is as defenseless as they are during a Consolidation: no Beats, no defense, aware of very little. Heat under the breastbone, the taste of the thing they ate, and a long stretch where standing up seems like somebody else's idea.
 
-**It floods you.** Absorbing a treasure immediately adds **VE equal to your full Tolerance** to your stored VE. On an empty tank that is free: you finish exactly full and walk away stronger. On a tank that is already half loaded from a good afternoon's hunting, it puts you into Saturation and its penalties, and on a tank that was already over, it is genuinely dangerous.
-
-The body has to come apart a little to be rebuilt, and it uses the same energy it uses for everything else. Narrate it: heat under the breastbone, the taste of the thing you ate, a few minutes where standing up seems like somebody else's idea.
-
-**So take them clean.** The good moment is right after a Consolidation, when there is room, and the bad moment is the one where somebody says the words "let's just eat it now" with the tank three-quarters full. That is the whole decision, and it costs no tracking: the number is already on the sheet.
+The obvious time to do this is during a rest the party was taking anyway, where the hour costs nothing at all. The memorable time is the hour somebody spent lying on the floor of a ruin, changing, while their friends held the door.
 
 **Grade-locked in both directions,** on the same logic as pills. A treasure carries a concentration meant for a particular frame, so an F-Grade treasure does nothing for an E-Grade body, and an E-Grade treasure does nothing for an F-Grade one except leave a taste like hot metal. Sell it, trade it, or keep it until you have grown into it.
 
@@ -93,7 +89,7 @@ The body has to come apart a little to be rebuilt, and it uses the same energy i
 
 **How often.** Rare enough to be remembered. A character who hunts hard and explores thoroughly might absorb three or four across an entire Grade; a cautious one might find a single Lesser treasure and be pleased about it for a month. They are the reward for going somewhere dangerous on purpose, and they should never be for sale in a starting settlement. Scarcity is the dial here, and it is the GM's.
 
-**These are not Cores.** A Core or Affinity Crystal releases Volatile Energy, which is fuel for levels (see Cultivation). An Attribute Treasure changes the body itself, and happens to flood you on the way through. Both are eaten and only one of them shows up on the Attribute line.
+**These are not Cores.** A Core or Affinity Crystal releases Volatile Energy, which is fuel for levels (see Cultivation). An Attribute Treasure never touches stored VE at all; it changes the body directly. Both are eaten and only one of them shows up on the Attribute line.
 
 ## Weapons (F-Grade Reference)
 
