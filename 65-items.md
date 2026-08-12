@@ -67,6 +67,32 @@ See the Grade Breakthroughs chapter for full rules. Brief reference:
 
 Foundation Pills are consumed during Stage 1 of a Breakthrough (Preparation). Only one Foundation Pill effect applies per Breakthrough; the body cannot metabolize multiple at once.
 
+### Attribute Treasures (Category)
+
+Concentrated pieces of something that was strong: the heart of a beast that should not have been able to move that fast, sap from a tree that grew up through stone, marrow from a thing that kept standing. Absorbing one raises a single Attribute's Raw value permanently.
+
+| **Treasure** | **Grade** | **Raw Points** |
+|---|---|---|
+| Lesser | F | +2 |
+| Standard | F | +5 |
+| Greater | F | +10 |
+
+Values scale ×10 per Grade, matching everything else.
+
+**Absorbing one takes a Consolidation.** It is not a combat action and it cannot be rushed. The character declares which Attribute they are reaching for, the rest runs as normal, and they wake up changed.
+
+**One per Attribute per Grade.** A body remade along one axis does not remake the same way twice: once an Attribute has been raised by a treasure at the character's current Grade, further treasures aimed at that Attribute do nothing at all. Breaking through resets it, because the frame is new. Seven Attributes means seven possible absorptions per Grade, and almost nobody finds that many.
+
+That limit is the whole economy. It means a hoarder cannot pour six Greater treasures into Strength, it means the second treasure a character finds is a question rather than a formality, and it quietly rewards the broad character over the spike.
+
+**Grade-locked in both directions,** on the same logic as pills: a treasure carries a concentration meant for a particular frame. An F-Grade treasure does nothing for an E-Grade body, and an E-Grade treasure does nothing for an F-Grade one except leave a taste like hot metal. Sell it, trade it, or keep it until you have grown into it.
+
+**Excess above the Grade cap is lost.** A treasure that would push an Attribute past 99 at F-Grade raises it to 99 and no further.
+
+**How often.** Rare enough to be remembered. A character who hunts hard and explores thoroughly might absorb three or four across an entire Grade; a cautious one might find a single Lesser treasure and think about it for a month. They are the reward for going somewhere dangerous on purpose, and they should never be for sale in a starting settlement.
+
+**These are not Cores.** A Core or Affinity Crystal releases Volatile Energy, which is fuel for levels (see Cultivation). An Attribute Treasure changes the body itself. Both are eaten and only one of them shows up on the Attribute line.
+
 ---
 
 ## Weapons (F-Grade Reference)
@@ -171,6 +197,7 @@ The Integration Tutorial draws its economy from this chapter. What the tutorial 
 - **Phases 2 and 3 are the scavenge phases.** Starting weapons, armor, and consumables all come from landing-zone debris and the Recycling Node; the default loot list lives in the tutorial's Phase 3.
 - **The Recycling Node's scarcity is deliberate.** One spear, one armor set, one buckler, four shards, one pill, one Resonance Glass for a full party: the shortfall is the point, and the division of it is HVE signal.
 - **One Resonance Shard sits in that pile and it is the sharpest test in the tutorial.** Everything else on offer is power this afternoon; the Resonance Shard is one point of insight toward a Principle the character cannot yet name or price. Say only that it resonates.
+- **One Attribute Treasure** sits in the Wild Fragment's predator den, and it is the price of a decision rather than a find. Do not place a second one.
 - **The Battered Communicator** bridges the dead command terminal in the tutorial's Civic Fragment (Phase 4); seed one in Phase 2 or 3 scavenge.
 - **The Single-Use Ranged Relic** is common in tutorial scavenger zones and is one of the sanctioned answers to the Phase 5 boss; place at least one where exploration finds it.
 - **Volatile Artifacts are core to the tutorial's economy**: they give classless, Principle-less characters verbs beyond posture and position. Be generous with shards, stingy with pills.

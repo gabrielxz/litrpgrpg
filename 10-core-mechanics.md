@@ -48,7 +48,7 @@ At F-Grade, Force equals Raw Power; the number is already in the band. A fresh E
 
 ### Stat Growth and the Cap
 
-Stats increase through leveling at Consolidation, attribute-enhancing treasures, class evolution at milestones, and Title rewards.
+Stats increase through leveling at Consolidation, **Attribute Treasures** absorbed during a rest (Items), class evolution at milestones, and Title rewards.
 
 **Starting stats.** A freshly integrated human distributes **40 points** across seven Attributes, minimum 3 and maximum 10 per stat. Even a single point is meaningful: STR 8 is a competitive collegiate powerlifter, STR 9 a professional strongman, STR 10 among the strongest humans who ever lived. Character Creation has the full procedure.
 

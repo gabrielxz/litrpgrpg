@@ -131,7 +131,7 @@ The kill is priced by what died, whatever the method: a trap, an ambush, or a pl
 ### Environmental Sources
 
 - **Ambient Absorption:** Characters passively absorb VE in energy-dense terrain: 5 VE/hour at Moderate density, 15 at High, 30 at Extreme. Such places should be rare and notable, and the award batches per visit ("a day working the ridge: 100 VE"). This is the absorption that funds Breakthrough Ignition.
-- **Treasure Cores & Affinity Crystals:** VE awarded once, when consumed. F-Grade examples: minor core (50 VE), refined core (150 VE), pristine core (400 VE).
+- **Treasure Cores & Affinity Crystals:** VE awarded once, when consumed. F-Grade examples: minor core (50 VE), refined core (150 VE), pristine core (400 VE). These are fuel and nothing else; the treasures that raise an Attribute permanently are a separate category in the Items chapter.
 
 ### Pacing Reference (F-Grade)
 

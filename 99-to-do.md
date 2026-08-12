@@ -106,6 +106,10 @@
 - **R61** (p146) Volatile Artifacts: "Should mention they are common in the tutorial." — **DO.**
 - **R62** (p146) Shard backfire on d100 ≤ 10: "Can we make this ≤5? Isn't that the number we use for skill checks?" — **DO.** Yes. See META-4.
 
+### Resolved 2026-08-12: attribute treasures quantified
+
+The stat-growth sim surfaced that attribute treasures were cited as a growth source in three chapters and quantified in none, which left an unknown term in every progression estimate. Now a labelled Category in Items: Lesser +2, Standard +5, Greater +10 to one Attribute's Raw value, ×10 per Grade, absorbed during a Consolidation. **The brake is "one per Attribute per Grade"** rather than a diminishing-returns table, which costs one checkbox per stat and no arithmetic, and it pushes against the spike builds the Breakthrough sim showed were already over-rewarded. Grade-locked in both directions on the same logic as pills. Expected haul is three or four across an entire Grade, so roughly +15 to +25 points, taking the F-cap budget from ~194 to ~215. One Standard treasure is placed in the tutorial's Wild Fragment den as the price of killing the young.
+
 ### CLUSTER-B: The Character Sheet (its own session, scheduled before the table kit)
 
 Gabriel's call, 2026-08-12: this gets a dedicated session rather than being folded into the table kit. Everything known about it, collected so it survives the gap.

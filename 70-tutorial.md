@@ -483,7 +483,9 @@ An unnatural forest of bioluminescent trees whose root systems visibly move. The
 
 - **Snarljaw pack** (3 Snarljaws + 1 Alpha, Bestiary). Pack tactics make them lethal: +10 Flanking when they share a Zone, and the Alpha will not flee. In open ground this pack is beyond a tutorial party. Route around it. Telegraph it hard with drag marks, a carcass larder, paired eyes at the tree line, and reward the players who take the hint. A party that pulls a single Snarljaw onto isolated ground wins that fight comfortably.
 - **1 Glow-Stalker** hunting the party from concealment. Surprise Beat on the first turn, then hit and run. It begins the encounter unseen unless someone actively rolls Perception against it.
-- **Predator den** with young (harmless). Inside: 1 predator core (a Hard kill's worth of VE). Killing the adults is straightforward. Harvesting the den while sparing the young is a Hunger/Restraint test with nobody watching except the System.
+- **Predator den** with young (harmless). Killing the adults is straightforward; what is in the den is the test. A **predator core** (a Hard kill's worth of VE) lies in the bedding and can simply be taken. The **Snarljaw Heart**, still faintly warm, is inside one of the young, and getting it means killing them. It is a **Standard Attribute Treasure** (+5 to Raw STR or FOR, absorbed at a Consolidation; see Items), and it is the only one in the tutorial.
+
+  This is the sharpest Hunger and Restraint test in the zone and it happens with nobody watching except the System. Do not signpost it as a moral test, do not have the young do anything endearing, and do not editorialize afterward. State what is there, answer questions honestly, and log what the player does at **2.0 intensity**. A character who walks away has given up the only permanent stat gain available for weeks, which is what makes walking away mean something.
 - **Edible flora** restoring 10 HP at the cost of sensory distortion (−5 to PER-based Clashes for the next encounter).
 - **A hidden trail** bypassing the entire zone. PER Force vs. F-Easy 65 to spot while moving normally. A character with a relevant Proficiency (tracking, survival, scouting) who spends 1 Beat scanning finds it with **no roll at all**: an Easy task inside a Proficiency is Routine Mastery. Say the words out loud the first time it happens, because most players expect to roll for everything and this is where they learn they do not. The trail crosses the zone in three minutes of fictional time and exits behind the den.
 - **A trapped creature**, non-hostile and non-human, caught in root-tendrils and slowly being digested. Freeing it costs 1d3 rounds and attracts a Glow-Stalker. It knows things about the landscape and will show them rather than say them.
@@ -968,6 +970,7 @@ Confirm each mechanic was introduced before the tutorial ends.
 - [ ] **Aura Pressure save** delivered in Phase 4.
 - [ ] **Saturation symptoms** narrated for anyone pushing hard.
 - [ ] **A shard spent** by every player at least once.
+- [ ] **An Attribute Treasure** offered, taken or refused, in the Wild Fragment den.
 - [ ] **Personal Opportunity** card delivered to each player during Phase 4.
 - [ ] **Battle Memory** earned and meditated on by at least one player.
 - [ ] **First Principle crystallized** by whoever reached 3 IP.
