@@ -69,7 +69,7 @@ Foundation Pills are consumed during Stage 1 of a Breakthrough (Preparation). On
 
 ### Attribute Treasures (Category)
 
-Concentrated pieces of something that was strong: the heart of a beast that should not have been able to move that fast, sap from a tree that grew up through stone, marrow from a thing that kept standing. Absorbing one raises a single Attribute's Raw value permanently.
+Concentrated pieces of something that was strong: the heart of a beast that should not have been able to move that fast, sap from a tree that grew up through stone, marrow from a thing that kept standing. Absorbing one raises a single Attribute's Raw value permanently, and the character chooses which.
 
 | **Treasure** | **Grade** | **Raw Points** |
 |---|---|---|
@@ -79,21 +79,21 @@ Concentrated pieces of something that was strong: the heart of a beast that shou
 
 Values scale ×10 per Grade, matching everything else.
 
-**Absorbing one takes a Consolidation.** It is not a combat action and it cannot be rushed. The character declares which Attribute they are reaching for, the rest runs as normal, and they wake up changed.
+**Absorbing takes a few minutes of stillness**, so it cannot be done mid-fight, and that is the only restriction on when.
 
-**One per Attribute per Grade.** A body remade along one axis does not remake the same way twice: once an Attribute has been raised by a treasure at the character's current Grade, further treasures aimed at that Attribute do nothing at all. Breaking through resets it, because the frame is new. Seven Attributes means seven possible absorptions per Grade, and almost nobody finds that many.
+**It floods you.** Absorbing a treasure immediately adds **VE equal to your full Tolerance** to your stored VE. On an empty tank that is free: you finish exactly full and walk away stronger. On a tank that is already half loaded from a good afternoon's hunting, it puts you into Saturation and its penalties, and on a tank that was already over, it is genuinely dangerous.
 
-That limit is the whole economy. It means a hoarder cannot pour six Greater treasures into Strength, it means the second treasure a character finds is a question rather than a formality, and it quietly rewards the broad character over the spike.
+The body has to come apart a little to be rebuilt, and it uses the same energy it uses for everything else. Narrate it: heat under the breastbone, the taste of the thing you ate, a few minutes where standing up seems like somebody else's idea.
 
-**Grade-locked in both directions,** on the same logic as pills: a treasure carries a concentration meant for a particular frame. An F-Grade treasure does nothing for an E-Grade body, and an E-Grade treasure does nothing for an F-Grade one except leave a taste like hot metal. Sell it, trade it, or keep it until you have grown into it.
+**So take them clean.** The good moment is right after a Consolidation, when there is room, and the bad moment is the one where somebody says the words "let's just eat it now" with the tank three-quarters full. That is the whole decision, and it costs no tracking: the number is already on the sheet.
 
-**Excess above the Grade cap is lost.** A treasure that would push an Attribute past 99 at F-Grade raises it to 99 and no further.
+**Grade-locked in both directions,** on the same logic as pills. A treasure carries a concentration meant for a particular frame, so an F-Grade treasure does nothing for an E-Grade body, and an E-Grade treasure does nothing for an F-Grade one except leave a taste like hot metal. Sell it, trade it, or keep it until you have grown into it.
 
-**How often.** Rare enough to be remembered. A character who hunts hard and explores thoroughly might absorb three or four across an entire Grade; a cautious one might find a single Lesser treasure and think about it for a month. They are the reward for going somewhere dangerous on purpose, and they should never be for sale in a starting settlement.
+**Excess above the Grade cap is lost.** A treasure that would push an Attribute past 99 at F-Grade raises it to 99 and stops. Together with how rarely they appear, that is the entire brake on the economy: a character can absolutely pour every treasure they find into one Attribute and run it to the ceiling, and the genre expects nothing less.
 
-**These are not Cores.** A Core or Affinity Crystal releases Volatile Energy, which is fuel for levels (see Cultivation). An Attribute Treasure changes the body itself. Both are eaten and only one of them shows up on the Attribute line.
+**How often.** Rare enough to be remembered. A character who hunts hard and explores thoroughly might absorb three or four across an entire Grade; a cautious one might find a single Lesser treasure and be pleased about it for a month. They are the reward for going somewhere dangerous on purpose, and they should never be for sale in a starting settlement. Scarcity is the dial here, and it is the GM's.
 
----
+**These are not Cores.** A Core or Affinity Crystal releases Volatile Energy, which is fuel for levels (see Cultivation). An Attribute Treasure changes the body itself, and happens to flood you on the way through. Both are eaten and only one of them shows up on the Attribute line.
 
 ## Weapons (F-Grade Reference)
 
