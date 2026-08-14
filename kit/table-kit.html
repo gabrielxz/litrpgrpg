@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>LitRPG: RPG Table Kit</title>
+<style>
+  :root {
+    --paper: #FFFFFF;
+    --ink: #1C1B17;
+    --pencil: #716E65;
+    --rule: #93908A;
+    --faint: #CFCCC2;
+    --fill: #F1EFE7;
+  }
+  * { box-sizing: border-box; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    color: var(--ink);
+    font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.32;
+  }
+  @page { size: letter; margin: 0.3in; }
+
+  .sheet {
+    width: 880px;
+    zoom: 0.84;
+    background:
+      linear-gradient(var(--ink), var(--ink)) 0 0 / 20px 2.5px,
+      linear-gradient(var(--ink), var(--ink)) 0 0 / 2.5px 20px,
+      linear-gradient(var(--ink), var(--ink)) 100% 0 / 20px 2.5px,
+      linear-gradient(var(--ink), var(--ink)) 100% 0 / 2.5px 20px,
+      linear-gradient(var(--ink), var(--ink)) 0 100% / 20px 2.5px,
+      linear-gradient(var(--ink), var(--ink)) 0 100% / 2.5px 20px,
+      linear-gradient(var(--ink), var(--ink)) 100% 100% / 20px 2.5px,
+      linear-gradient(var(--ink), var(--ink)) 100% 100% / 2.5px 20px,
+      var(--paper);
+    background-repeat: no-repeat;
+    border: 1px solid var(--rule);
+    padding: 22px 28px 22px;
+    break-after: page;
+  }
+  .sheet:last-child { break-after: auto; }
+  .sheet.gm { background: var(--paper); }
+
+  @media screen {
+    body { background: #D8D6CD; padding: 30px 0; }
+    .sheet { margin: 0 auto 26px; box-shadow: 0 3px 12px rgba(30,28,20,0.16); }
+  }
+
+  /* ---------- masthead ---------- */
+  .masthead {
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+    border-bottom: 3px double var(--ink); padding-bottom: 8px; margin-bottom: 12px;
+  }
+  .logo { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .logo .lit { font-weight: 700; font-size: 15px; letter-spacing: 0.07em; }
+  .logo .rpg {
+    background: var(--ink); color: var(--paper); font-weight: 700; font-size: 12px;
+    letter-spacing: 0.12em; padding: 3px 7px;
+  }
+  .masthead .face {
+    font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+    font-size: 17px; letter-spacing: 0.14em; font-weight: 600; white-space: nowrap;
+    text-align: center;
+  }
+  .masthead .face-plain {
+    font-size: 15px; letter-spacing: 0.2em; font-weight: 600; white-space: nowrap;
+    text-align: center; text-transform: uppercase;
+  }
+  .masthead .badge { justify-self: end; }
+  .badge {
+    font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+    font-size: 11px; letter-spacing: 0.14em; font-weight: 600; white-space: nowrap;
+    border: 1.5px solid var(--ink); padding: 4px 10px; background: var(--fill);
+  }
+
+  /* ---------- fields ---------- */
+  .idrow { display: flex; gap: 18px; margin-bottom: 12px; align-items: flex-end; }
+  .field label {
+    display: block; white-space: nowrap;
+    font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+    font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--pencil);
+    margin-bottom: 4px;
+  }
+  .blank { border-bottom: 1.5px solid var(--ink); min-height: 24px; }
+  .boxed {
+    border: 1.5px solid var(--ink); min-height: 28px; min-width: 52px;
+    display: flex; align-items: center; justify-content: center;
+    font-variant-numeric: tabular-nums; background: #fff;
+  }
+  .slash { color: var(--pencil); font-size: 16px; padding: 0 2px; align-self: center; }
+  .pair { display: flex; gap: 6px; align-items: center; }
+
+  /* ---------- zones ---------- */
+  .zone { border: 1px solid var(--rule); margin-bottom: 12px; background: var(--paper); }
+  .zone:last-child { margin-bottom: 0; }
+  .zone > header {
+    font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+    font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;
+    background: var(--ink); color: var(--paper);
+    padding: 4px 12px; white-space: nowrap; overflow: hidden;
+  }
+  .zone > header.plainhead {
+    background: var(--fill); color: var(--ink);
+    border-bottom: 1px solid var(--rule); letter-spacing: 0.14em;
+  }
+  .zone .zbody { padding: 10px 12px 11px; }
+  .caption {
+    font-size: 11px; color: var(--pencil); margin: 0 0 8px; white-space: nowrap;
+    font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace; letter-spacing: 0.02em;
+  }
+
+  .cols { display: grid; grid-template-columns: 1fr 1.35fr; gap: 12px; align-items: stretch; }
+  .cols .zone { height: 100%; margin-bottom: 0; }
+  .colwrap { margin-bottom: 12px; }
+
+  /* ---------- attributes ---------- */
+  .statgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .statcard { border: 1.5px solid var(--ink); padding: 7px 10px 9px; background: #fff; }
+  .statcard .abbr {
+    font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+    font-weight: 700; font-size: 13px; letter-spacing: 0.08em;
+  }
+  .statcard .full { font-size: 10px; color: var(--pencil); margin-left: 5px; white-space: nowrap; }
+  .statcard .writebox { height: 32px; border-bottom: 1.5px solid var(--faint); margin-top: 5px; }
+  .statcard.free { border-style: dashed; background: var(--fill); }
+  .statcard.free .abbr { letter-spacing: 0.12em; font-size: 11px; }
+
+  /* ---------- gauges ---------- */
+  .gaugegrid { display: flex; flex-direction: column; gap: 12px; }
+  .gauge { display: flex; align-items: flex-start; gap: 10px; }
+  .gauge .glabel {
+    width: 76px; padding-top: 8px; white-space: nowrap;
+    font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+    font-size: 10.5px; letter-spacing: 0.12em; font-weight: 600;
+  }
+  .bigbox { flex: 1; }
+  .bigbox .boxed { height: 36px; width: 100%; }
+  .bigbox .sub {
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 8.5px; letter-spacing: 0.06em; color: var(--pencil);
+    text-align: center; margin-top: 3px; white-space: nowrap;
+  }
+
+  .bands { display: flex; gap: 10px; margin-top: 10px; }
+  .band { flex: 1; border: 1px solid var(--rule); padding: 6px 9px; white-space: nowrap; }
+  .band b {
+    display: block; font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 9.5px; letter-spacing: 0.12em; margin-bottom: 3px;
+  }
+  .band .writein { display: inline-block; min-width: 44px; border-bottom: 1.5px solid var(--ink); }
+  .band .pen { color: var(--pencil); font-size: 11px; }
+  .band.b2 { background: var(--fill); }
+  .band.b3 { background: #E4E1D6; }
+
+  /* ---------- tables ---------- */
+  table { border-collapse: collapse; width: 100%; }
+  th {
+    font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+    font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--pencil); font-weight: 600; text-align: left;
+    border-bottom: 1.5px solid var(--ink); padding: 4px 8px; white-space: nowrap;
+  }
+  td { border-bottom: 1px solid var(--faint); padding: 6px 8px; vertical-align: bottom; }
+  td.num, th.num { text-align: center; }
+
+  .tick {
+    width: 14px; height: 14px; border: 1.4px solid var(--ink);
+    display: inline-block; vertical-align: middle; background: #fff;
+  }
+  .ticks { display: inline-flex; gap: 4px; align-items: center; white-space: nowrap; }
+  .ticks .gap { margin-left: 12px; }
+  .tiertick { white-space: nowrap; font-size: 11.5px; }
+  .tiertick .tick { margin-right: 4px; }
+  .tiertick + .tiertick { margin-left: 14px; }
+
+  .rowline td { height: 28px; }
+
+  /* ---------- ruled lines ---------- */
+  .lines .line { border-bottom: 1px solid var(--faint); height: 27px; }
+  .twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
+
+  .endmark {
+    text-align: center; margin-top: 14px;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 10.5px; letter-spacing: 0.1em; color: var(--pencil); font-style: italic;
+  }
+
+  /* ---------- GM page ---------- */
+  .hve { table-layout: fixed; }
+  .hve th, .hve td { border: 1px solid var(--rule); }
+  .hve th.axis { width: 158px; white-space: nowrap; }
+  .hve td { height: 46px; padding: 3px 5px; }
+  .hve .subhead th {
+    font-size: 8.5px; border-bottom: 1px solid var(--rule); text-align: center; color: var(--pencil);
+  }
+  .hve .nameblank { border-bottom: 1.5px solid var(--ink); height: 18px; margin: 2px 6px; }
+  .hve td.deepcell { background: var(--fill); }
+  .hve td.moments { height: 58px; }
+  .gm .rowline td { height: 36px; }
+
+  .chips { display: flex; gap: 12px; }
+  .chip { border: 1px solid var(--rule); padding: 8px 11px; font-size: 11.5px; flex: 1; }
+  .chip b {
+    font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 9.5px;
+    letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 3px;
+  }
+
+  /* ---------- pregens ---------- */
+  .pregen3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .pcard { border: 1.5px solid var(--ink); background: #fff; }
+  .pcard > header {
+    font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+    font-size: 11px; letter-spacing: 0.14em; background: var(--ink); color: var(--paper);
+    padding: 5px 10px; white-space: nowrap;
+  }
+  .pcard .pbody { padding: 10px 12px 12px; font-size: 11.5px; }
+  .pcard .pstat { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 14px; margin-bottom: 8px; }
+  .pcard .pstat span { display: flex; justify-content: space-between; border-bottom: 1px solid var(--faint); padding: 1px 2px; }
+  .pcard .pstat b { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 10px; letter-spacing: 0.06em; }
+  .pv { color: #3B4A66; font-style: italic; font-family: Georgia, "Times New Roman", serif; }
+  .pcard .prow { margin: 3px 0; }
+  .pcard .plabel {
+    font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 9px;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--pencil);
+  }
+  .pcard .play { border-top: 1px solid var(--faint); margin-top: 8px; padding-top: 7px; font-size: 11px; }
+</style>
+</head>
+<body>
+
+  <!-- ================= PAGE 1 · SHEET FRONT ================= -->
+  <div class="sheet">
+      <div class="masthead">
+        <span class="logo"><span class="lit">LITRPG:</span><span class="rpg">RPG</span></span>
+        <span class="face">[ SYSTEM INTERFACE ]</span>
+        <span class="badge">GRADE F</span>
+      </div>
+
+      <div class="idrow">
+        <div class="field" style="flex: 2.6;"><label>Name</label><div class="blank"></div></div>
+        <div class="field"><label>Level</label><div class="boxed" style="height:32px; min-width:64px;"></div></div>
+        <div class="field" style="flex: 1.2;"><label>Level Progress &middot; VE</label>
+          <div class="pair"><div class="boxed" style="flex:1; height:32px;"></div><span class="slash">/</span><div class="boxed" style="flex:1; height:32px;"></div></div>
+        </div>
+      </div>
+
+      <div class="zone">
+        <header>[ ATTRIBUTES ]</header>
+        <div class="zbody">
+          <div class="statgrid">
+            <div class="statcard"><span class="abbr">STR</span><span class="full">Strength</span><div class="writebox"></div></div>
+            <div class="statcard"><span class="abbr">DEX</span><span class="full">Dexterity</span><div class="writebox"></div></div>
+            <div class="statcard"><span class="abbr">FOR</span><span class="full">Fortitude</span><div class="writebox"></div></div>
+            <div class="statcard"><span class="abbr">HRT</span><span class="full">Heart</span><div class="writebox"></div></div>
+            <div class="statcard"><span class="abbr">POW</span><span class="full">Power</span><div class="writebox"></div></div>
+            <div class="statcard"><span class="abbr">PER</span><span class="full">Perception</span><div class="writebox"></div></div>
+            <div class="statcard"><span class="abbr">CHA</span><span class="full">Charisma</span><div class="writebox"></div></div>
+            <div class="statcard free"><span class="abbr">FREE POINTS</span><span class="full">unallocated</span><div class="writebox"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cols colwrap">
+        <div class="zone">
+          <header>[ VITALS ]</header>
+          <div class="zbody gaugegrid">
+            <div class="gauge">
+              <span class="glabel">HEALTH</span>
+              <div class="bigbox"><div class="boxed"></div></div>
+              <span class="slash" style="padding-top:8px;">/</span>
+              <div class="bigbox"><div class="boxed"></div><div class="sub">MAX &middot; FOR &times; 2</div></div>
+            </div>
+            <div class="gauge">
+              <span class="glabel">AETHER</span>
+              <div class="bigbox"><div class="boxed"></div></div>
+              <span class="slash" style="padding-top:8px;">/</span>
+              <div class="bigbox"><div class="boxed"></div><div class="sub">MAX &middot; POW</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="zone">
+          <header>[ VOLATILE ENERGY ]</header>
+          <div class="zbody">
+            <div class="gauge">
+              <span class="glabel">STORED</span>
+              <div class="bigbox"><div class="boxed"></div></div>
+              <span class="glabel" style="width:auto; margin-left:10px;">TOLERANCE</span>
+              <div class="bigbox"><div class="boxed"></div><div class="sub">( FOR + HRT ) &divide; 2 &times; 10</div></div>
+            </div>
+            <div class="bands">
+              <div class="band"><b>MILD past</b><span class="writein"></span> <span class="pen">&minus;10</span></div>
+              <div class="band b2"><b>HEAVY past</b><span class="writein"></span> <span class="pen">&minus;25</span></div>
+              <div class="band b3"><b>CRITICAL past</b><span class="writein"></span> <span class="pen">collapse</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="zone">
+        <header>[ PROFICIENCIES ]</header>
+        <div class="zbody">
+          <p class="caption">Natural 96+ with this Proficiency: tick a Mark. &nbsp;3 Marks: Seasoned. &nbsp;10 Marks: Master.</p>
+          <table>
+            <tr><th style="width:34%;">Proficiency</th><th style="width:37%;">Tier</th><th>Marks</th></tr>
+            <tr class="rowline">
+              <td></td>
+              <td><span class="tiertick"><span class="tick"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
+              <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
+            </tr>
+            <tr class="rowline">
+              <td></td>
+              <td><span class="tiertick"><span class="tick"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
+              <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
+            </tr>
+            <tr class="rowline">
+              <td></td>
+              <td><span class="tiertick"><span class="tick"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
+              <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
+            </tr>
+            <tr class="rowline">
+              <td></td>
+              <td><span class="tiertick"><span class="tick"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
+              <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="zone">
+        <header>[ PRINCIPLE ]</header>
+        <div class="zbody">
+          <div class="idrow" style="margin-bottom:10px;">
+            <div class="field" style="flex:2.4;"><label>Family / Crystallized Name</label><div class="blank"></div></div>
+            <div class="field" style="flex:1;"><label>Tier</label><div class="blank"></div></div>
+            <div class="field"><label>Insight</label><div class="boxed" style="min-width:64px;"></div></div>
+            <div class="field"><label>Next Distillation At</label><div class="boxed" style="min-width:64px;"></div></div>
+          </div>
+          <table>
+            <tr><th style="width:24%;">Application</th><th class="num" style="width:10%;">Aether</th><th>Effect</th></tr>
+            <tr class="rowline"><td></td><td class="num"></td><td></td></tr>
+            <tr class="rowline"><td></td><td class="num"></td><td></td></tr>
+            <tr class="rowline"><td></td><td class="num"></td><td></td></tr>
+            <tr class="rowline"><td></td><td class="num"></td><td></td></tr>
+          </table>
+          <div style="margin-top:10px; white-space:nowrap;">
+            <span class="field" style="display:inline-block;"><label style="display:inline; margin-right:8px;">Battle Memories</label></span>
+            <span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="zone">
+        <header>[ NOTES ]</header>
+        <div class="zbody lines">
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+        </div>
+      </div>
+  </div>
+
+  <!-- ================= PAGE 2 · SHEET BACK ================= -->
+  <div class="sheet">
+      <div class="masthead">
+        <span class="logo"><span class="lit">LITRPG:</span><span class="rpg">RPG</span></span>
+        <span class="face">[ SYSTEM INTERFACE &middot; PAGE 2 ]</span>
+        <span class="badge">GRADE F</span>
+      </div>
+
+      <div class="zone">
+        <header>[ TITLES ]</header>
+        <div class="zbody">
+          <table>
+            <tr><th style="width:28%;">Title</th><th>Effect</th><th class="num" style="width:9%;">Added</th></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"><span class="tick"></span></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"><span class="tick"></span></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"><span class="tick"></span></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"><span class="tick"></span></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"><span class="tick"></span></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"><span class="tick"></span></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"><span class="tick"></span></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"><span class="tick"></span></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"><span class="tick"></span></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"><span class="tick"></span></td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="zone">
+        <header>[ QUEST LOG ]</header>
+        <div class="zbody">
+          <table>
+            <tr><th style="width:26%;">Quest</th><th>Objective &middot; Progress</th><th style="width:14%;">Status</th></tr>
+            <tr><td style="height:40px;"></td><td></td><td></td></tr>
+            <tr><td style="height:40px;"></td><td></td><td></td></tr>
+            <tr><td style="height:40px;"></td><td></td><td></td></tr>
+            <tr><td style="height:40px;"></td><td></td><td></td></tr>
+            <tr><td style="height:40px;"></td><td></td><td></td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="zone">
+        <header>[ INVENTORY ]</header>
+        <div class="zbody twocol lines">
+          <div>
+            <div class="line"></div><div class="line"></div><div class="line"></div>
+            <div class="line"></div><div class="line"></div><div class="line"></div>
+            <div class="line"></div>
+          </div>
+          <div>
+            <div class="line"></div><div class="line"></div><div class="line"></div>
+            <div class="line"></div><div class="line"></div><div class="line"></div>
+            <div class="line"></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="endmark">[ End of record. ]</p>
+  </div>
+
+  <!-- ================= PAGE 3 · GM HVE LOG ================= -->
+  <div class="sheet gm">
+      <div class="masthead">
+        <span class="logo"><span class="lit">LITRPG:</span><span class="rpg">RPG</span></span>
+        <span class="face-plain">HVE Log</span>
+        <span class="badge">GM ONLY</span>
+      </div>
+
+      <div class="zone">
+        <header class="plainhead">PARTY FRAME</header>
+        <div class="zbody">
+          <table>
+            <tr><th style="width:34%;">Member</th><th class="num">HP / Max</th><th class="num">Aether / Max</th><th class="num" style="width:14%;">Downed</th></tr>
+            <tr class="rowline"><td></td><td class="num"></td><td class="num"></td><td class="num"><span class="tick"></span></td></tr>
+            <tr class="rowline"><td></td><td class="num"></td><td class="num"></td><td class="num"><span class="tick"></span></td></tr>
+            <tr class="rowline"><td></td><td class="num"></td><td class="num"></td><td class="num"><span class="tick"></span></td></tr>
+            <tr class="rowline"><td></td><td class="num"></td><td class="num"></td><td class="num"><span class="tick"></span></td></tr>
+            <tr class="rowline"><td></td><td class="num"></td><td class="num"></td><td class="num"><span class="tick"></span></td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="zone">
+        <header class="plainhead">CURRENT &amp; DEEP</header>
+        <div class="zbody">
+          <table class="hve">
+            <tr>
+              <th class="axis"></th>
+              <th colspan="2"><div class="nameblank"></div></th>
+              <th colspan="2"><div class="nameblank"></div></th>
+              <th colspan="2"><div class="nameblank"></div></th>
+              <th colspan="2"><div class="nameblank"></div></th>
+              <th colspan="2"><div class="nameblank"></div></th>
+            </tr>
+            <tr class="subhead">
+              <th class="axis"></th>
+              <th>CUR</th><th>DEEP</th>
+              <th>CUR</th><th>DEEP</th>
+              <th>CUR</th><th>DEEP</th>
+              <th>CUR</th><th>DEEP</th>
+              <th>CUR</th><th>DEEP</th>
+            </tr>
+            <tr>
+              <th class="axis">Force &harr; Method</th>
+              <td></td><td class="deepcell"></td><td></td><td class="deepcell"></td><td></td><td class="deepcell"></td><td></td><td class="deepcell"></td><td></td><td class="deepcell"></td>
+            </tr>
+            <tr>
+              <th class="axis">Hunger &harr; Restraint</th>
+              <td></td><td class="deepcell"></td><td></td><td class="deepcell"></td><td></td><td class="deepcell"></td><td></td><td class="deepcell"></td><td></td><td class="deepcell"></td>
+            </tr>
+            <tr>
+              <th class="axis">Will &harr; Accord</th>
+              <td></td><td class="deepcell"></td><td></td><td class="deepcell"></td><td></td><td class="deepcell"></td><td></td><td class="deepcell"></td><td></td><td class="deepcell"></td>
+            </tr>
+            <tr>
+              <th class="axis">Control &harr; Freedom</th>
+              <td></td><td class="deepcell"></td><td></td><td class="deepcell"></td><td></td><td class="deepcell"></td><td></td><td class="deepcell"></td><td></td><td class="deepcell"></td>
+            </tr>
+            <tr>
+              <th class="axis">Circled moments</th>
+              <td class="moments" colspan="2"></td>
+              <td class="moments" colspan="2"></td>
+              <td class="moments" colspan="2"></td>
+              <td class="moments" colspan="2"></td>
+              <td class="moments" colspan="2"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="zone">
+        <header class="plainhead">RUNNING IT</header>
+        <div class="zbody chips">
+          <div class="chip"><b>Weights</b>Meaningful decision: 1 tally. Major, real risk: 2. Defining, the table goes quiet: 3, circled, with a one-line note.</div>
+          <div class="chip"><b>Session end</b>Per axis: if one side of Current leads by 2 or more, add one tally to that side of Deep. Then erase Current.</div>
+          <div class="chip"><b>Coherence, read off Deep</b>Leads by 3+: Leaning, +5. By 5+, or two axes at 3+: Defined, +10. By 8+: Singular, +20.</div>
+        </div>
+      </div>
+  </div>
+
+  <!-- ================= PAGE 4 · LEDGER ================= -->
+  <div class="sheet gm">
+      <div class="masthead">
+        <span class="logo"><span class="lit">LITRPG:</span><span class="rpg">RPG</span></span>
+        <span class="face-plain">Ledger</span>
+        <span class="badge">OPTIONAL</span>
+      </div>
+
+      <div class="zone">
+        <header class="plainhead">STAT CHANGES</header>
+        <div class="zbody">
+          <table>
+            <tr><th style="width:13%;">Session</th><th style="width:13%;">Stat</th><th class="num" style="width:12%;">Change</th><th>Source</th><th class="num" style="width:15%;">New Value</th></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+          </table>
+        </div>
+      </div>
+  </div>
+
+  <!-- ================= PAGE 5 · PREGENS ================= -->
+  <div class="sheet gm">
+      <div class="masthead">
+        <span class="logo"><span class="lit">LITRPG:</span><span class="rpg">RPG</span></span>
+        <span class="face-plain">Ready-Made Characters</span>
+        <span class="badge">GRADE F</span>
+      </div>
+      <div class="pregen3">
+        <div class="pcard">
+          <header>KARA &middot; LEVEL 1</header>
+          <div class="pbody">
+            <div class="pstat">
+              <span><b>STR</b><span class="pv">8</span></span><span><b>DEX</b><span class="pv">5</span></span>
+              <span><b>FOR</b><span class="pv">7</span></span><span><b>HRT</b><span class="pv">4</span></span>
+              <span><b>POW</b><span class="pv">6</span></span><span><b>PER</b><span class="pv">5</span></span>
+              <span><b>CHA</b><span class="pv">5</span></span><span><b>FREE</b><span class="pv">0</span></span>
+            </div>
+            <div class="prow"><span class="plabel">HP</span> <span class="pv">14</span> &nbsp; <span class="plabel">Aether</span> <span class="pv">6</span> &nbsp; <span class="plabel">Tolerance</span> <span class="pv">55</span></div>
+            <div class="prow"><span class="plabel">Bands</span> <span class="pv">55 / 110 / 165</span></div>
+            <div class="prow"><span class="plabel">Level progress</span> <span class="pv">0 / 100</span></div>
+            <div class="prow"><span class="plabel">Proficiencies</span> <span class="pv">close combat, athletics, streetwise</span></div>
+            <div class="play">Fight close and end it fast. Want things out loud: the better weapon, the bigger bounty, the pill nobody else has claimed.</div>
+          </div>
+        </div>
+        <div class="pcard">
+          <header>JOE &middot; LEVEL 1</header>
+          <div class="pbody">
+            <div class="pstat">
+              <span><b>STR</b><span class="pv">8</span></span><span><b>DEX</b><span class="pv">5</span></span>
+              <span><b>FOR</b><span class="pv">7</span></span><span><b>HRT</b><span class="pv">5</span></span>
+              <span><b>POW</b><span class="pv">4</span></span><span><b>PER</b><span class="pv">6</span></span>
+              <span><b>CHA</b><span class="pv">5</span></span><span><b>FREE</b><span class="pv">0</span></span>
+            </div>
+            <div class="prow"><span class="plabel">HP</span> <span class="pv">14</span> &nbsp; <span class="plabel">Aether</span> <span class="pv">4</span> &nbsp; <span class="plabel">Tolerance</span> <span class="pv">60</span></div>
+            <div class="prow"><span class="plabel">Bands</span> <span class="pv">60 / 120 / 180</span></div>
+            <div class="prow"><span class="plabel">Level progress</span> <span class="pv">0 / 100</span></div>
+            <div class="prow"><span class="plabel">Proficiencies</span> <span class="pv">close combat, endurance training, field medicine</span></div>
+            <div class="play">Stand between the danger and everyone else, and swing like the door needs breaking.</div>
+          </div>
+        </div>
+        <div class="pcard">
+          <header>ANDRE &middot; LEVEL 1</header>
+          <div class="pbody">
+            <div class="pstat">
+              <span><b>STR</b><span class="pv">4</span></span><span><b>DEX</b><span class="pv">7</span></span>
+              <span><b>FOR</b><span class="pv">5</span></span><span><b>HRT</b><span class="pv">6</span></span>
+              <span><b>POW</b><span class="pv">5</span></span><span><b>PER</b><span class="pv">9</span></span>
+              <span><b>CHA</b><span class="pv">4</span></span><span><b>FREE</b><span class="pv">0</span></span>
+            </div>
+            <div class="prow"><span class="plabel">HP</span> <span class="pv">10</span> &nbsp; <span class="plabel">Aether</span> <span class="pv">5</span> &nbsp; <span class="plabel">Tolerance</span> <span class="pv">55</span></div>
+            <div class="prow"><span class="plabel">Bands</span> <span class="pv">55 / 110 / 165</span></div>
+            <div class="prow"><span class="plabel">Level progress</span> <span class="pv">0 / 100</span></div>
+            <div class="prow"><span class="plabel">Proficiencies</span> <span class="pv">tracking and fieldcraft, archery and marksmanship, navigation</span></div>
+            <div class="play">Look before anyone moves, plan the way out before the way in, and take only what the plan needs.</div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+</body>
+</html>

@@ -56,9 +56,26 @@ COVER_TITLED := $(BUILD_DIR)/cover_titled.png
 TITLE_FONT   := /usr/share/texmf-dist/fonts/truetype/ndiscovered/cinzel/CinzelDecorative-Black.ttf
 BYLINE_FONT  := /usr/share/texmf-dist/fonts/opentype/public/ebgaramond/EBGaramond-Italic.otf
 
-.PHONY: all pdf epub clean
+.PHONY: all pdf epub kit clean
 
 all: pdf epub
+
+# --- Table kit -------------------------------------------------------------
+# The printable table kit (F-Grade character sheet front/back, GM HVE log,
+# optional ledger, pregen cards) renders from HTML via headless Chromium.
+CHROMIUM  := chromium
+KIT_SRC   := kit/table-kit.html
+KIT_BASE  := $(BUILD_DIR)/$(PROJECT)-table-kit.pdf
+KIT_OUT   := $(BUILD_DIR)/$(PROJECT)-table-kit-$(TIMESTAMP).pdf
+
+kit: $(KIT_SRC)
+	mkdir -p $(BUILD_DIR)
+	$(CHROMIUM) --headless --disable-gpu --no-pdf-header-footer \
+	  --print-to-pdf=$(KIT_BASE) $(KIT_SRC)
+	cp $(KIT_BASE) $(KIT_OUT)
+	@echo ""
+	@echo "Built: $(KIT_OUT)"
+	@echo "Size:  $$(du -h $(KIT_OUT) | cut -f1)"
 
 # --- Cover with baked title -----------------------------------------------
 # Bake "LITRPG: RPG" (top, Cinzel Decorative Black) and "by Gabriel Beal"
