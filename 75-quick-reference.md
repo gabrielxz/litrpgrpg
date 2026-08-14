@@ -45,7 +45,7 @@
 
 **Grade Multipliers:** F-Grade: ×1 | E-Grade: ×10 | D-Grade: ×100 | C-Grade: ×1,000
 
-**Volatility Thresholds (natural die):** F: 96+ | E: 95+ | D: 94+ | C: 93+ | B: 92+ | S: 91+ (starts at 96, falls 1 per Grade).
+**Volatility Thresholds (natural die):** F: 96+ | E: 95+ | D: 94+ | C: 93+ | B: 92+ | A: 91+ (starts at 96, falls 1 per Grade).
 
 One number at the top of the die. On a Clash it explodes (combat Clashes, Will Saves, and the Breakthrough Check; skill checks never explode). On a skill check it is an Exceptional Success. On either it earns a **Mark** in the Proficiency you were using. A cascade of 2+ extra dice on a PC's roll also grants a Battle Memory Card.
 

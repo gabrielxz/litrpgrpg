@@ -206,7 +206,7 @@ How HVE-Resonant titles change over time.
 **HVE-Resonant titles coexist when:**
 - The character develops a genuinely new axis pairing in addition to an existing one. A character who started Force + Hunger and develops an additional Will pattern may end up holding both "The Hungering Edge" and a new Will-based title. This is rare and the System AI is conservative about granting it.
 
-**Achievement titles never evolve.** They commemorate a specific milestone. The "Ten-Slayer" you earned at F-Grade is still on your record at S-Grade; its bonus is small, but it never goes away.
+**Achievement titles never evolve.** They commemorate a specific milestone. The "Ten-Slayer" you earned at F-Grade is still on your record at A-Grade; its bonus is small, but it never goes away.
 
 **Hidden Achievement titles never evolve.** They commemorate a specific moment. They keep their original bonus.
 

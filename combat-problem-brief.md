@@ -32,7 +32,7 @@ Working title: *LitRPG: RPG*. Single volume, GM-facing, intended to be playable 
 
 ### Grades and the two-number system
 
-Characters have a **Grade**: F, E, D, C, B, S. Each Grade spans 25 levels (Levels 1 to 25 are F-Grade, 26 to 50 are E-Grade, and so on). Grade is the fundamental power tier; the only way to advance a Grade is a dangerous ritual called a Breakthrough.
+Characters have a **Grade**: F, E, D, C, B, A. Each Grade spans 25 levels (Levels 1 to 25 are F-Grade, 26 to 50 are E-Grade, and so on). Grade is the fundamental power tier; the only way to advance a Grade is a dangerous ritual called a Breakthrough.
 
 Every Attribute has two readings:
 

@@ -64,7 +64,7 @@ The System's generative work (classes, quests, visions, titles, loot) can be per
 
 ## An Example of Play
 
-Kara (Strength 8 and Fortitude 7, written STR 8, FOR 7 on her sheet, with the Proficiency "close combat") and Andre (Perception 9, Dexterity 7, with "tracking and fieldcraft," "archery and marksmanship," and a scavenged hunting bow) are Level 2, three days integrated, crossing a dead city.
+Kara (Strength 8 and Fortitude 7, written STR 8, FOR 7 on her sheet, with the Proficiency "close combat") and Andre (Perception 9, Dexterity 7, with "tracking and fieldcraft," "archery and marksmanship," and a scavenged hunting bow) are Level 2, three days into their Integration Tutorial, crossing the dead district at its heart.
 
 **GM:** The overpass ahead has folded in on itself. There's a gap in the rubble, a service stair, half buried. It's the only way through that isn't a mile around.
 

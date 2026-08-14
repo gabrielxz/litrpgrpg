@@ -31,7 +31,7 @@ The engine tracks four bipolar axes. Each axis is a tension, and every character
 - **Force:** Aggressive engagement, applying pressure immediately, relying on overwhelming presence or impact. *Principle Affinity:* Impact family (Momentum, Weight, Shattering, Kinetic Energy, Heat).
 - **Method:** Planning, positioning, altering conditions before acting, solving situations indirectly. *Principle Affinity:* Architecture family (Space, Leverage, Misdirection, Shadows, Geometry).
 
-Worked moments: kicking the door and leading with a blade is a Force tally. Spending a Beat to collapse the shelf between you and the pack before anyone swings is a Method tally.
+Moments: kicking the door and leading with a blade is a Force tally. Spending a Beat to collapse the shelf between you and the pack before anyone swings is a Method tally.
 
 ### Hunger ↔ Restraint (Desire)
 
@@ -40,7 +40,7 @@ Worked moments: kicking the door and leading with a blade is a Force tally. Spen
 - **Hunger:** Pursuit of wealth, power, or advantage; prioritizing gain over safety. *Principle Affinity:* Consumption family (Devouring, Blood, The Void, Assimilation, Corrosion).
 - **Restraint:** Passing on excess reward, prioritizing mission or people over loot. *Principle Affinity:* Preservation family (Shielding, Purification, Iron, Stasis, Resilience).
 
-Worked moments: pushing into the red zone of Saturation to claim one more kill is a Hunger tally. Handing the party's only Greater Healing Pill to the hireling who got mauled is a Restraint tally.
+Moments: pushing into the red zone of Saturation to claim one more kill is a Hunger tally. Handing the party's only Greater Healing Pill to the hireling who got mauled is a Restraint tally.
 
 ### Will ↔ Accord (Social)
 
@@ -49,7 +49,7 @@ Worked moments: pushing into the red zone of Saturation to claim one more kill i
 - **Will:** Coercion, intimidation, dominance, shaping outcomes through pressure. *Principle Affinity:* Imposition family (Conqueror's Haki, Mind Control, Pressure, Fear, Sovereignty).
 - **Accord:** Negotiation, cooperation, adaptation, working within systems. *Principle Affinity:* Harmony family (Resonance, Symbiosis, Life, Empathy, The Hearth).
 
-Worked moments: telling the brigand he can drop the club or lose the arm is a Will tally. Talking him into joining the caravan for a share of the take is an Accord tally.
+Moments: telling the brigand he can drop the club or lose the arm is a Will tally. Talking him into joining the caravan for a share of the take is an Accord tally.
 
 ### Control ↔ Freedom (Governance)
 
@@ -58,7 +58,7 @@ Worked moments: telling the brigand he can drop the club or lose the arm is a Wi
 - **Control:** The drive to impose order, establish hierarchy, restrict variables. *Principle Affinity:* Governance family (Gravity, Chains, Dominion, Logic, Suppression).
 - **Freedom:** The drive to break chains, subvert authority, embrace emergence. *Principle Affinity:* Subversion family (Wind, Severance, Spatial Rupture, Entropy, Illusions).
 
-Worked moments: proposing the watch rotation and the loot-split rule is a Control tally. Slipping out alone at night to see what the ruins hold is a Freedom tally.
+Moments: proposing the watch rotation and the loot-split rule is a Control tally. Slipping out alone at night to see what the ruins hold is a Freedom tally.
 
 ## Tracking the Engine
 

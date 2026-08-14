@@ -192,7 +192,7 @@ The System's energy density creates cascading instabilities in every clash. The 
 | D-Grade | 94–100 | 7% |
 | C-Grade | 93–100 | 8% |
 | B-Grade | 92–100 | 9% |
-| S-Grade | 91–100 | 10% |
+| A-Grade | 91–100 | 10% |
 
 **One number at the top of the die.** The Volatility Threshold governs everything that happens at the high end of a natural d100. On a Clash it explodes. On a skill check it is an Exceptional Success. On either it marks the Proficiency in use. A player tracks one number and it moves only with their Grade.
 
