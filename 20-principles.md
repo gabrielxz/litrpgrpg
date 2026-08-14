@@ -22,7 +22,7 @@ The loop below runs on one example, a brawler named Kara whose Principle turns o
 
 ![](./assets/principle_loop.png){width=88%}
 
-Principles advance on their own track. Levels and Grades measure how much power the System has integrated into your body; the Principle track measures how much of reality you understand. The two feed on the same dangerous life, so they usually rise together, but nothing forces them to. Grade matters to this track only once: the highest grant, the Domain, needs a D-Grade body. Everything below it advances at any Grade.
+Principles advance on their own track. Levels and Grades measure how much power the System has integrated into your body; the Principle track measures how much of reality you understand. The two feed on the same dangerous life, so they usually rise together, but nothing forces them to. Grade matters to this track only once: a Domain needs a D-Grade body. Everything below it advances at any Grade.
 
 A Principle does not raise stats. What it grants, tier by tier, is capability: active techniques, resistances and affinities, and eventually a Domain, a zone where its truth is briefly law.
 
