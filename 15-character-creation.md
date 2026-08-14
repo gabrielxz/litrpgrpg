@@ -50,18 +50,22 @@ The anchors below calibrate every score in pre-Integration human terms. Even val
 
 Choose **three Proficiencies**, broad domains of competence written in plain language. All three begin at **Trained**: +5 to Clashes and skill checks in the domain, Routine Mastery on Trivial and Easy tasks, and access to whatever the GM has gated behind training. They deepen to Seasoned and then Master through Marks, earned in play. See Core Mechanics, "Proficiencies and Skill Checks," for the full rules.
 
-A Proficiency covers weapons in its domain. A character with "close combat" adds their tier bonus when swinging an axe; a character without it adds nothing.
+A Proficiency covers weapons in its domain. A character with "axes and hammers" adds their tier bonus when swinging a hatchet; a character without it adds nothing. Fighting domains are drawn by weapon shape, so picking up something outside your domain costs you the bonus until you have earned the Marks for it.
 
-Proficiencies should reflect the character's life before Integration: what they trained in, what they were good at, what they spent years doing. A soldier might take "close combat," "field medicine," and "tactical awareness." A professor might take "ancient languages," "research methodology," and "persuasion." A mechanic might take "mechanical tinkering," "jury-rigging," and "vehicle operation."
+Proficiencies should reflect the character's life before Integration: what they trained in, what they were good at, what they spent years doing. A soldier might take "blades," "field medicine," and "tactical awareness." A professor might take "ancient languages," "research methodology," and "persuasion." A mechanic might take "mechanical tinkering," "jury-rigging," and "vehicle operation."
 
-**A sample of thirty.** Pick from this list or use it as a model. It is deliberately incomplete: players and GMs should invent new Proficiencies together, named in plain language and scoped like these. They are grouped by the kind of work they cover.
+**A sample to work from.** Pick from this list or use it as a model. It is deliberately incomplete: players and GMs should invent new Proficiencies together, named in plain language and scoped like these. They are grouped by the kind of work they cover.
 
 **Fighting**
 
 | **Proficiency** | **Covers** |
 |---|---|
-| close combat | Anything swung, thrust, or thrown by hand, and the footwork behind it. |
-| archery and marksmanship | Bows, crossbows, firearms, and judging distance and wind. |
+| blades | Sword, knife, machete. An edge or a point, in one hand or two. |
+| axes and hammers | Weight on a handle: battle axe, hatchet, maul, club, crowbar, a length of pipe. |
+| spears and staves | Two-handed reach: spear, quarterstaff, polearm, scaffold pole. |
+| hand to hand | Fists, grapples, throws, and every martial art. |
+| archery and throwing | Bows, crossbows, slings, and anything you let go of. |
+| firearms | Pistols, rifles, shotguns, and the System-forged weapons built on the same principle. |
 | military tactics | Formations, ground, supply, and reading an enemy's plan. |
 | athletics | Climbing, swimming, jumping, lifting, and long pursuit. |
 | endurance training | Outlasting cold, thirst, pain, and sleeplessness. |
@@ -156,7 +160,7 @@ Three finished characters, built with this chapter's rules and nothing else: 40 
 | 8 | 5 | 7 | 4 | 6 | 5 | 5 |
 
 - **Max HP** 14 &middot; **Max Aether** 6 &middot; **VE Tolerance** 55 (Mild past 55, Heavy past 110, Critical past 165)
-- **Proficiencies (Trained, +5):** close combat, athletics, streetwise
+- **Proficiencies (Trained, +5):** axes and hammers, athletics, streetwise
 - **Playing her:** Fight close and end it fast. Want things out loud: the better weapon, the bigger bounty, the pill nobody else has claimed. Her generosity is real, and it is never first.
 :::
 
@@ -170,7 +174,7 @@ Three finished characters, built with this chapter's rules and nothing else: 40 
 | 8 | 5 | 7 | 5 | 4 | 6 | 5 |
 
 - **Max HP** 14 &middot; **Max Aether** 4 &middot; **VE Tolerance** 60 (Mild past 60, Heavy past 120, Critical past 180)
-- **Proficiencies (Trained, +5):** close combat, endurance training, field medicine
+- **Proficiencies (Trained, +5):** axes and hammers, endurance training, field medicine
 - **Playing him:** Stand between the danger and everyone else, and swing like the door needs breaking. He will take a bad trade if somebody weaker comes out ahead on it.
 :::
 
@@ -184,6 +188,6 @@ Three finished characters, built with this chapter's rules and nothing else: 40 
 | 4 | 7 | 5 | 6 | 5 | 9 | 4 |
 
 - **Max HP** 10 &middot; **Max Aether** 5 &middot; **VE Tolerance** 55 (Mild past 55, Heavy past 110, Critical past 165)
-- **Proficiencies (Trained, +5):** tracking and fieldcraft, archery and marksmanship, navigation
+- **Proficiencies (Trained, +5):** tracking and fieldcraft, archery and throwing, navigation
 - **Playing him:** Look before anyone moves, plan the way out before the way in, and take only what the plan needs. When the party gets loud, he is the one counting.
 :::

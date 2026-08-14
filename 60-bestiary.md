@@ -92,7 +92,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **Grade:** F · **Tier:** Hard- **HP:** 56 · **Aether:** 22 · **Beats:** 2
 - **Off Force (DEX, bladework):** 30
 - **Def Force (DEX or FOR):** 30 / 28
-- **Tactics:** **Yields.** Wields a Knife (Trained close combat, +5). Has one Seed Application: **Searing Strike** (costs 10 Aether, +10 to next Clash, deals damage as fire). Uses positioning intelligently and will retreat to advantageous terrain. Carries 1 Lesser Healing Pill.
+- **Tactics:** **Yields.** Wields a Knife (Trained blades, +5). Has one Seed Application: **Searing Strike** (costs 10 Aether, +10 to next Clash, deals damage as fire). Uses positioning intelligently and will retreat to advantageous terrain. Carries 1 Lesser Healing Pill.
 
 ### Husk Sentinel
 *A heavier construct from the Civic Fragment. Durable, counter-aggressive.*

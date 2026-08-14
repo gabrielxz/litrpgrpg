@@ -123,7 +123,9 @@ Call for a roll only when Force is below Resistance and the die could swing it.
 
 Each character begins with three Proficiencies: broad domains of competence written in plain language, such as "wilderness survival," "ancient languages," "field medicine," or "stealth and infiltration."
 
-A Proficiency covers its whole domain, weapons included. "Close combat" governs the axe in your hands the same way "field medicine" governs the wound you are packing.
+A Proficiency covers its whole domain, weapons included. "Axes and hammers" governs the hatchet in your hands the same way "field medicine" governs the wound you are packing.
+
+Fighting domains are drawn by weapon shape: blades, axes and hammers, spears and staves, hand to hand, archery and throwing, firearms. A character trained with an axe who picks up a sword adds nothing to the Clash until they have earned the Marks for blades.
 
 #### The Three Tiers
 
@@ -150,7 +152,7 @@ It is not a Beat and cannot be treated as one. It cannot be given up to Yield, h
 When a natural d100 meets or exceeds your Volatility Threshold (defined under "System Volatility," below) on a Clash or a skill check, the System marks the Proficiency you were using. Record it as a tally. Where a roll could belong to more than one domain, or to none the character holds, the GM names the domain.
 
 ::: systemvoice
-**[Technique noted: Close Combat. 2/3.]**
+**[Technique noted: Axes and Hammers. 2/3.]**
 :::
 
 - **3 Marks:** Trained becomes Seasoned.

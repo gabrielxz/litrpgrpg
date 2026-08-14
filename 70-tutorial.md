@@ -187,7 +187,7 @@ You wake pinned under a slab of stone. Not crushing, but immobilizing. Something
 - **Lever the crack (DEX Force vs. F-Easy 65):** Logs **Method 1.0**. The slab lifts quietly.
 - **Improvise (PER + creativity, GM judgment):** Player describes a non-standard solution. If clever, no roll. Logs **Method 1.0** or **Freedom 1.0** depending on approach.
 
-Reward on escape (regardless of method): **two peer kills' worth of VE**. The character keeps the rusted bar if they want it (improvised weapon, STR, no Proficiency bonus).
+Reward on escape (regardless of method): **two peer kills' worth of VE**. The character keeps the rusted bar if they want it (a club: STR, axes and hammers).
 
 #### The Locked Cache
 
@@ -266,7 +266,7 @@ The debris field holds equipment, and characters pick through it while traveling
 
 **Weapons carry no bonus of their own.** Whoever picks up the axe adds their own Proficiency tier to the Clash and nothing else: +5 at Trained, +10 at Seasoned, +0 with no relevant Proficiency at all. What the weapon decides is which Force governs the attack and what the implement makes possible. Tell a player this the first time they ask which weapon is best; the answer is the one that does what they want to do.
 
-**Picking up something you cannot use is a real play, and it is worth saying so once.** A character with no close-combat Proficiency who carries the spear anyway adds nothing today, but every natural die at or above their Volatility Threshold while using it marks that domain, and three Marks in a domain they never trained makes the System grant it. Junk becomes a fourth Proficiency in a month of play.
+**Picking up something you cannot use is a real play, and it is worth saying so once.** A character with no "spears and staves" Proficiency who carries the spear anyway adds nothing today, but every natural die at or above their Volatility Threshold while using it marks that domain, and three Marks in a domain they never trained makes the System grant it. Junk becomes a fourth Proficiency in a month of play. This is how a character trained on one weapon shape picks up another.
 
 Who grabs what, and who grabs nothing because they were busy helping someone else, is behavioral data. Log significant claims as **0.5 to 1.0 intensity** events.
 
@@ -434,7 +434,7 @@ When a natural die comes up 96 or higher:
 Do not script this and do not fudge dice to produce it. At 5% per roll it arrives on its own inside Phase 4's volume of rolls, on one side or the other. When it lands, slow down. Show the extra die. Then hand the player their first Mark and let them write the tally on their sheet.
 
 ::: systemvoice
-**[Technique noted: Close Combat. 1/3.]**
+**[Technique noted: Axes and Hammers. 1/3.]**
 :::
 
 If a cascade ever runs to two or more extra dice on a player character's roll, it grants a **Battle Memory Card** on the spot (Core Mechanics). Deliver it as the character's first.
@@ -843,7 +843,7 @@ Four samples calibrated to common tutorial archetypes. Customize the content to 
 >
 > *Resonance detected: IMPACT. Monitoring.*
 >
-> Close Combat: 3 Marks. **Seasoned.**
+> Axes and Hammers: 3 Marks. **Seasoned.**
 >
 > Title granted: **First Blood** (Achievement).
 > Hidden Achievement: **Cornerless** (survived a Clash at a quarter of Max HP or less).
@@ -871,7 +871,7 @@ Four samples calibrated to common tutorial archetypes. Customize the content to 
 >
 > *Resonance detected: HARMONY. Monitoring.*
 >
-> Negotiation: 3 Marks. **Seasoned.** Close Combat: 3 Marks, **granted at Trained.**
+> Negotiation: 3 Marks. **Seasoned.** Hand to Hand: 3 Marks, **granted at Trained.**
 >
 > Title granted: **Voice of Decision** (Achievement, for breaking the deadlock at the Recycling Node).
 > Bestowed title: **The Hand That Reached**.

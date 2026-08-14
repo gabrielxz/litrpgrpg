@@ -97,20 +97,24 @@ Weapons do not deal flat damage and carry no bonus of their own. They determine 
 
 The wielder is the weapon. In an Integrated body, accuracy and killing power both come from the person: Force decides them, and the Margin is the physics. The implement decides which Force applies and what reach or range it grants. This is why the tables here carry no damage dice and no high-damage weapon class: a greatsword in weak hands is a slow club, and a knife guided by Force 60 is deadlier than either.
 
-| **Weapon** | **Governing Force** | **Notes** |
-|---|---|---|
-| Improvised object | STR | Broken table legs, rocks, a length of pipe. No Proficiency bonus applies. |
-| Knife / Dagger | DEX | Quick, concealable. Throwable as one-shot ranged. |
-| Spear | DEX | Reach: free Disengage from one Zone-edge enemy per turn. |
-| Battle Axe / Greatsword | STR | Heavy. Requires STR Force 05; below that, every Clash with it takes −10 (hindering). |
-| Short Bow | DEX | Ranged: target enemies in adjacent Zones. |
-| Crossbow (single-shot) | DEX | Requires 1 Beat to reload between shots. |
-| Quarterstaff | STR or DEX | Versatile: choose Force at attack time. |
-| Hand Axe (thrown) | STR | Ranged: one Zone. Recoverable. |
+| **Weapon** | **Governing Force** | **Proficiency** | **Notes** |
+|---|---|---|---|
+| Improvised object | STR | none | A chair, a rock, a fire extinguisher. Nothing shaped like a weapon. |
+| Club / Pipe / Crowbar | STR | axes and hammers | Scavenged weight on a handle. |
+| Knife / Dagger | DEX | blades | Quick, concealable. Throwable as one-shot ranged. |
+| Greatsword | STR | blades | Heavy, two-handed. Requires STR Force 05; below that, every Clash with it takes −10 (hindering). |
+| Battle Axe / Maul | STR | axes and hammers | Heavy, two-handed. Requires STR Force 05; below that, every Clash with it takes −10 (hindering). |
+| Spear | DEX | spears and staves | Two-handed. Reach: free Disengage from one Zone-edge enemy per turn. |
+| Quarterstaff | STR or DEX | spears and staves | Two-handed. Versatile: choose Force at attack time. |
+| Short Bow | DEX | archery and throwing | Two-handed. Ranged: target enemies in adjacent Zones. |
+| Crossbow (single-shot) | DEX | archery and throwing | Two-handed. Requires 1 Beat to reload between shots. |
+| Hand Axe (thrown) | STR | archery and throwing | Ranged: one Zone. Recoverable. |
 
 These are the starting and recovery tier. Higher-quality weapons (named, System-forged, Principle-attuned) are bespoke items the GM designs as treasure or quest rewards.
 
-**Wielding without a Proficiency:** a character with no relevant Proficiency may still pick up any weapon and adds nothing to the Clash. A Seasoned soldier with a greatsword adds +10; a librarian swinging the same blade adds +0.
+**Anything you let go of is archery and throwing.** A hand axe swung is axes and hammers; the same axe thrown is archery and throwing. A character can be Master with one and untrained in the other.
+
+**Wielding without a Proficiency:** a character with no relevant Proficiency may still pick up any weapon and adds nothing to the Clash. A Seasoned soldier with a greatsword adds +10; a librarian swinging the same blade adds +0, and so does an axe Master who has never trained with an edge.
 
 ---
 
@@ -167,6 +171,7 @@ Mundane survival equipment, battered but functional. The pattern: small flat eff
 
 - **Battered Medkit:** Heals 10 HP when used as a 1-Beat action on yourself or an ally in the same Zone. Does not count toward the pill limit. Three uses before the supplies are exhausted.
 - **Low-Grade Armor Scraps:** Heavy. Grants +5 Defense Force when defending with FOR; imposes −5 to DEX-based Clashes (offensive or defensive). Stackable up to one set per character.
+- **Shield:** A riot shield, a car door, a bolted-together plate. Grants +5 to your Clash when defending. Occupies a hand, so it cannot be carried alongside a two-handed weapon. There is no shield Proficiency; the bonus applies whatever the wielder is trained in.
 - **Battered Communicator:** Allows short-range communication between paired devices. Frequently malfunctions.
 
 ---

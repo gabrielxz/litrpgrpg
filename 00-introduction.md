@@ -70,7 +70,7 @@ Any system this size has edge cases, and every table eventually finds a reading 
 
 ## An Example of Play
 
-Kara (Strength 8 and Fortitude 7, written STR 8, FOR 7 on her sheet, with the Proficiency "close combat") and Andre (Perception 9, Dexterity 7, with "tracking and fieldcraft," "archery and marksmanship," and a scavenged hunting bow) are Level 2, three days into their Integration Tutorial, crossing the dead district at its heart.
+Kara (Strength 8 and Fortitude 7, written STR 8, FOR 7 on her sheet, with the Proficiency "axes and hammers") and Andre (Perception 9, Dexterity 7, with "tracking and fieldcraft," "archery and throwing," and a scavenged hunting bow) are Level 2, three days into their Integration Tutorial, crossing the dead district at its heart.
 
 **GM:** The overpass ahead has folded in on itself. There's a gap in the rubble, a service stair, half buried. It's the only way through that isn't a mile around.
 
@@ -102,7 +102,7 @@ Kara (Strength 8 and Fortitude 7, written STR 8, FOR 7 on her sheet, with the Pr
 
 **GM:** It twists, Defensive Force 18: *(rolls 12)* 30. You win by 12: the arrow takes it in the shoulder. Twelve off its HP, and it is not impressed.
 
-**Kara:** My Beat. The pipe, Strength plus close combat: *(rolls 52)* 65.
+**Kara:** My Beat. The pipe, Strength plus axes and hammers: *(rolls 52)* 65.
 
 **GM:** *(rolls 44)* 62 to slip it. Margin 3: you clip its skull as it ducks the worst of it. Its turn. It goes for the archer: *(rolls 20)* 34. Andre?
 
