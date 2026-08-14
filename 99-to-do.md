@@ -156,6 +156,8 @@ Gabriel's call, 2026-08-12: this gets a dedicated session rather than being fold
 - **Done 2026-08-13: three pregens** (Kara, Joe, Andre, the book's recurring cast, canon numbers reconciled with the Introduction, Cultivation, and HVE vignettes) in Character Creation, "Ready-Made Characters." The starting-human stat table landed 2026-08-13 as "What a Score Means" beside the Sample Spreads, closing Tier 1 item 11.
 - **Sequencing before Nerd Weekend:** the combat/actions handout and the printed quick reference are built almost last, since the rules they summarize will keep moving until then. The bookkeeper's ledger exists as an optional page in the sheet mockup.
 - **Done 2026-08-13: pen references removed from the HVE chapter.** Current wipes at session end, Deep accumulates; no writing medium is specified anywhere.
+- **Decided 2026-08-14: the per-Grade pacing dial.** F-Grade pacing stays at Peer Kill = 8% of VE-to-next: 12 kills per level, about 2 sessions per level, flat across the Grade, no wall (the two stale wall sentences in Cultivation and Progression are cut; they predated relative VE). If later Grades should grind, the dial is the Peer Kill percentage when each Grade's chart is authored: sketch E ≈ 6% (17 kills per level), D ≈ 5% (20 kills per level). The ×10 spine and the curve stay untouched.
+- **Done 2026-08-14: capped-stat allocation.** Progression states that allocation never lands in a capped stat (player redirects free points, System assigns to the next-best behavioral match), that a dedicated build caps its favorite stat around Level 20 by design, and that automatic bonuses (titles, treasures) still overflow and are lost.
 
 ### Rulings from the triage (Gabriel, 2026-08-12)
 

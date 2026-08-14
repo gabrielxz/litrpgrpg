@@ -8,7 +8,7 @@ Characters grow on a single loop: fight, quest, and survive to accumulate Volati
 
 Every kill, completed quest, survived ordeal, and absorbed treasure adds VE to the character's stored pool. Stored VE does nothing on its own; it must be processed during a **Consolidation** rest. When a character's cumulative processed VE crosses the next threshold on the VE Chart (Cultivation, "Leveling: The VE Chart"), they level up on the spot, mid-rest. Levels arrive only at Consolidation: a character can end a battle carrying three levels' worth of unprocessed VE and still be the level they woke up as until they sit down and refine it.
 
-Levels are numbered continuously across Grades: each Grade spans 25 of them, so Levels 1–25 are F-Grade, 26–50 are E-Grade, and so on. Level thresholds grow on an exponential curve, so early levels come fast and the last few levels before a Grade's cap are a wall. At the cap, leveling stops; only a Grade Breakthrough (its own chapter) opens the next span.
+Levels are numbered continuously across Grades: each Grade spans 25 of them, so Levels 1–25 are F-Grade, 26–50 are E-Grade, and so on. Level thresholds grow on an exponential curve, and VE awards grow on the same curve, so the pace of leveling holds steady across a Grade. At the cap, leveling stops; only a Grade Breakthrough (its own chapter) opens the next span.
 
 ## Leveling Up
 
@@ -18,6 +18,8 @@ Each level grants **5 stat points** at F-Grade:
 - **2 points assigned freely by the player.** The character applies these themselves, through the System interface, to whatever they choose.
 
 **Points can wait.** Freshly earned points arrive **unallocated** and sit there until the character spends them. A player who wants to see what the next fight demands before committing may hold them for as long as they like; the System does not press. Unallocated points do nothing while they wait, so holding them is a real cost paid for a real option.
+
+**Capped stats.** A stat at the Grade maximum (99 at F-Grade) takes no further allocation: the player sends free points elsewhere, and the System assigns its points to the next-best behavioral match, never into a full stat. A dedicated build reaches its favorite stat's cap around Level 20, and the redirection over the last stretch of the Grade is expected; a body headed for Breakthrough ends up broader than the obsession that built it. Bonuses that arrive on their own, from titles or treasures, still overflow against a capped stat and are lost.
 
 At higher Grades, the budget scales with Grade magnitude (×10 at E, ×100 at D, and so on), with the same 3-to-2 split.
 

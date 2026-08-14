@@ -54,7 +54,7 @@ During the rest:
 
 ### Leveling: The VE Chart
 
-Levels are numbered continuously across Grades: **Levels 1–25 are F-Grade, 26–50 are E-Grade, 51–75 are D-Grade**, and so on. Each Grade spans 25 levels, and the last few before a Grade's cap are a wall; the pre-Breakthrough grind is built into the curve.
+Levels are numbered continuously across Grades: **Levels 1–25 are F-Grade, 26–50 are E-Grade, 51–75 are D-Grade**, and so on. Each Grade spans 25 levels. The thresholds climb steeply, but VE awards climb with them (see "Awarding VE" below), so the pace of leveling holds steady across the Grade.
 
 | Level | VE to Next | Cumulative VE | Peer Kill |
 |---|---|---|---|
