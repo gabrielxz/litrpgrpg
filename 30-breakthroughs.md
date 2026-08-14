@@ -6,7 +6,7 @@
 
 ## Design Intent
 
-A Breakthrough is a ritual moment: not a long rest, not a passive level-up, not bookkeeping. The mechanic is built around four principles:
+A Breakthrough is a single dramatic ritual, resolved at the table in one scene with the whole party watching. The mechanic is built around four principles:
 
 - **Visible Payoff.** Every successful Breakthrough produces stat changes, new options, and a System acknowledgment of the character's ascension.
 - **Single-Session Resolution.** A Breakthrough resolves in one dramatic sequence.
@@ -65,7 +65,7 @@ The cultivator needs VE equal to at least **one full Tolerance** to ignite, and 
 
 **Saturation penalties never touch the Breakthrough Check.** The ignition burns that VE as fuel, so the weight a cultivator is carrying does not blunt the roll it is paying for. Those penalties apply to everything else, including whatever the party has to do during the Trial, and to the cultivator's own actions right up until they ignite.
 
-**The body can give out first.** At ×4.0 the character is in Critical Saturation, and the collapse clock (Cultivation chapter) runs until the moment of Ignition: a d100 at the end of every full hour, escalating, automatic by the fourth. If it fires first they pass out on the spot: involuntary Consolidation, defenseless, the gathered charge draining away with nothing to show for it, 1 temporary Raw point of FOR or POW gone until the next clean rest, and no attempt. This is why the highest ratio is gathered fast, in a dense location, with the ritual site already prepared. Once Ignition is declared, Saturation is suspended and the ritual consumes the VE.
+**The body can give out first.** At ×4.0 the character is in Critical Saturation, and the collapse clock (Cultivation chapter) runs until the moment of Ignition: a d100 at the end of every full hour, escalating, automatic by the fourth. If it fires first they pass out on the spot into the collapse the Cultivation chapter defines: involuntary Consolidation, defenseless, the gathered charge draining away with nothing to show for it, and no attempt. This is why the highest ratio is gathered fast, in a dense location, with the ritual site already prepared. Once Ignition is declared, Saturation is suspended and the ritual consumes the VE.
 
 **Once the cultivator declares Ignition, Stage 3 begins immediately. There is no going back.**
 

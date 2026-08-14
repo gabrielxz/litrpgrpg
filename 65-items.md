@@ -93,7 +93,7 @@ The obvious time to do this is during a rest the party was taking anyway, where 
 
 ## Weapons (F-Grade Reference)
 
-Weapons do not deal flat damage and carry no bonus of their own. They determine which Force governs an attack and what the implement makes possible. The bonus to the Clash comes from the wielder's Proficiency: **+5 at Trained, +10 at Seasoned or Master, nothing at all untrained.**
+Weapons do not deal flat damage and carry no bonus of their own. They determine which Force governs an attack and what the implement makes possible. The bonus to the Clash comes from the wielder's Proficiency: **+5 at Trained, +10 at Seasoned or Master; an untrained wielder adds nothing.**
 
 The wielder is the weapon. In an Integrated body, accuracy and killing power both come from the person: Force decides them, and the Margin is the physics. The implement decides which Force applies and what reach or range it grants. This is why the tables here carry no damage dice and no high-damage weapon class: a greatsword in weak hands is a slow club, and a knife guided by Force 60 is deadlier than either.
 

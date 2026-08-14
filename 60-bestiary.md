@@ -159,11 +159,11 @@ These ratios assume a balanced party with reasonable equipment. Adjust upward fo
 
 The Hard column assumes the top of the level band. At the bottom of a band, a Hard fight can put the whole party on the floor; run one with a telegraphed escape route or an enemy that has reasons not to finish the job. At Levels 1–3, a landed hit can exceed Max HP outright, and a character at that level pays both Beats to survive one. Expect low-level fights to be spent giving ground. A character hitting the floor is a normal fight, and the Downed rules are the safety net.
 
-Against small enemy groups, a party of four resolves most fights in one or two rounds; only peer-Force walls (a Husk Sentinel, a boss) run longer.
+Against small enemy groups, a party of four resolves most fights in one or two rounds; only peer-Force elites (a Husk Sentinel, a boss) run longer.
 
 **To make a fight last, give one enemy Yield.** It buys length out of that creature's own action economy, so the fight grows without the danger growing at the same rate.
 
-**Adding bodies is the sharpest tool on this page and it cuts toward the party.** Every additional creature is two more attacks per round arriving at a party that can only give up so many Beats, so doubling the enemy count is closer to quadrupling the danger than to doubling it. Four peer-tier creatures against a party of four is near even odds of losing the whole party. Use extra bodies when you intend that, and never as a way to pad a fight's length.
+**Adding bodies multiplies danger.** Every additional creature is two more attacks per round arriving at a party that can only give up so many Beats, so doubling the enemy count is closer to quadrupling the danger than to doubling it. Four peer-tier creatures against a party of four is near even odds of losing the whole party. Use extra bodies when you intend that, and never as a way to pad a fight's length.
 
 **Terrain is a lethality dial.** A corridor, a sealed room, a ledge, or a closed ring of enemies leaves nowhere to be driven, which caps Yield at one Beat and roughly doubles the danger of the same stat blocks. Announce the geometry before the first roll so the table can choose to fight elsewhere.
 

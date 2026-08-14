@@ -113,7 +113,7 @@ A door built by an E-Grade formation master is Moderate, Resistance 90. An F-Gra
 
 ### Auto-Success
 
-If your Force alone meets the Resistance, you do not roll. A Moderate F-Grade lock is Resistance 90: DEX Force 30 rolls, DEX Force 92 simply opens it.
+If your Force alone meets the Resistance, you do not roll; you just succeed. A Moderate F-Grade lock is Resistance 90: DEX Force 30 rolls, DEX Force 92 simply opens it.
 
 Call for a roll only when Force is below Resistance and the die could swing it.
 
@@ -147,7 +147,7 @@ It is not a Beat and cannot be treated as one. It cannot be given up to Yield, h
 
 #### Marks
 
-When a natural d100 meets or exceeds your Volatility Threshold on a Clash or a skill check, the System marks the Proficiency you were using. Record it as a tally. Where a roll could belong to more than one domain, or to none the character holds, the GM names the domain.
+When a natural d100 meets or exceeds your Volatility Threshold (defined under "System Volatility," below) on a Clash or a skill check, the System marks the Proficiency you were using. Record it as a tally. Where a roll could belong to more than one domain, or to none the character holds, the GM names the domain.
 
 ::: systemvoice
 **[Technique noted: Close Combat. 2/3.]**
@@ -393,7 +393,7 @@ Multi-target capability is a property of specific abilities, spells, and effects
 
 ### Downed and Death
 
-**Downed at zero.** A character reduced to 0 HP is **Downed**: unconscious or barely conscious, prone, out of the fight, with no Beats and no defense. HP floors at 0. Creatures simply die at 0 unless the GM wants them alive; Downed applies to player characters and named NPCs.
+**Downed at zero.** A player character or named NPC reduced to 0 HP is **Downed**: unconscious or barely conscious, prone, out of the fight, with no Beats and no defense. HP floors at 0. Creatures die at 0 outright, unless the GM wants one alive.
 
 ::: systemvoice
 *[Vital coherence: fraying. Estimated thread loss: 3 rounds.]*

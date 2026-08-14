@@ -363,7 +363,7 @@ Reward: +1 IP toward a Restraint-aligned Principle.
 
 Players should sometimes feel the System watching even when no quest entry appears. Subtle signals:
 
-- A System voice notification: *"[Pattern detected. Monitoring.]"* This is a free, content-free hint that *something* is being tracked.
+- A System voice notification: *"[Pattern detected. Monitoring.]"* It tells the player *something* is being tracked, and nothing else.
 - An NPC reaction that doesn't quite match the situation (a stranger nods at the character in passing for no apparent reason).
 - A subtle change in environmental affinity (a location feels warmer to this character than to others).
 - A Battle Memory that resonates oddly during Consolidation, hinting at a pattern the player has not yet named.

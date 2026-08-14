@@ -2,11 +2,11 @@
 
 # The Principle System
 
-## What Happens to Your Character
+## How the Track Works
 
 During play, your character survives dangerous situations and starts noticing patterns in how reality behaves. The System remembers those moments. When the character meditates on them during rest, understanding accumulates as points. Collect enough points, say what your character has learned, and the System turns that understanding into power.
 
-Five terms carry this chapter:
+This chapter runs on five terms:
 
 | **Term** | **Meaning** |
 |---|---|
@@ -101,6 +101,7 @@ The character sees the number. What the System is forging from the number, it ke
 | Consuming an affinity treasure | 1–2 |
 | Consolidation vision | 1 |
 | Surviving a life-or-death situation through the Principle | 2 |
+| Any other Principle-aligned experience, GM's call | 1–3 |
 
 **Consolidation visions are rationed.** A vision arrives only at a Consolidation that follows meaningful Principle-aligned experience, and never more than once per session. Rest alone produces nothing to see.
 
