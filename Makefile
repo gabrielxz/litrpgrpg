@@ -31,7 +31,8 @@ SOURCES := \
   60-bestiary.md \
   65-items.md \
   70-tutorial.md \
-  75-quick-reference.md
+  75-quick-reference.md \
+  80-table-kit.md
 
 # Per-invocation timestamp (YYYYMMDD-HHMMSS) for the stamped output filenames.
 # `:=` evaluates once, so PDF and EPUB share the same timestamp on a given build.
@@ -68,10 +69,20 @@ KIT_SRC   := kit/table-kit.html
 KIT_BASE  := $(BUILD_DIR)/$(PROJECT)-table-kit.pdf
 KIT_OUT   := $(BUILD_DIR)/$(PROJECT)-table-kit-$(TIMESTAMP).pdf
 
-kit: $(KIT_SRC)
+KIT_PNG_DIR := $(BUILD_DIR)/kitpng
+KIT_PNGS    := $(KIT_PNG_DIR)/kit-1.png
+
+$(KIT_BASE): $(KIT_SRC)
 	mkdir -p $(BUILD_DIR)
 	$(CHROMIUM) --headless --disable-gpu --no-pdf-header-footer \
-	  --print-to-pdf=$(KIT_BASE) $(KIT_SRC)
+	  --print-to-pdf=$@ $(KIT_SRC)
+
+# Kit pages rendered to PNG for the EPUB's Table Kit appendix.
+$(KIT_PNGS): $(KIT_BASE)
+	mkdir -p $(KIT_PNG_DIR)
+	pdftoppm -png -r 150 $(KIT_BASE) $(KIT_PNG_DIR)/kit
+
+kit: $(KIT_BASE)
 	cp $(KIT_BASE) $(KIT_OUT)
 	@echo ""
 	@echo "Built: $(KIT_OUT)"
@@ -101,9 +112,10 @@ $(COVER_TITLED): $(COVER_BASE) | $(BUILD_DIR)
 $(PDF_DIR)/%.md: %.md | $(PDF_DIR)
 	sed -E \
 	  -e 's|^!\[[^]]*\]\(\./assets/([^)]+\.png)\)[[:space:]]*$$|\\fullpageart{./assets/\1}|' \
+	  -e '/kitpng/d' \
 	  $< > $@
 
-$(PDF_BASE): $(PDF_PROCESSED) $(METADATA) $(TEMPLATE) $(PREAMBLE) $(LUAFILTER) $(COVER_TITLED)
+$(PDF_BASE): $(PDF_PROCESSED) $(METADATA) $(TEMPLATE) $(PREAMBLE) $(LUAFILTER) $(COVER_TITLED) $(KIT_BASE)
 	pandoc \
 	  --from markdown \
 	  --to pdf \
@@ -135,7 +147,7 @@ pdf: $(PDF_BASE)
 $(EPUB_DIR)/%.md: %.md | $(EPUB_DIR)
 	cp $< $@
 
-$(EPUB_BASE): $(EPUB_PROCESSED) $(METADATA) $(COVER_TITLED)
+$(EPUB_BASE): $(EPUB_PROCESSED) $(METADATA) $(COVER_TITLED) $(KIT_PNGS)
 	pandoc \
 	  --from markdown \
 	  --to epub3 \

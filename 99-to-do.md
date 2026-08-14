@@ -231,7 +231,7 @@ Two distinct targets with different completion bars.
 2. **Tutorial chapter full rewrite** (absorbs Tier 1 item 5; written to the post-brainstorm rules; Claude drafts, Gabriel inks on the Kindle Scribe).
 3. **Full book read-through** on the Kindle (Gabriel).
 4. ~~**Pregens + starting-human stat table**~~ **DONE 2026-08-13** (Tier 1 item 11).
-5. **Table kit:** ~~printable character sheet~~ **sheet kit DONE 2026-08-14** (`make kit` renders the approved mockup: F-sheet front/back, GM HVE log, optional ledger, pregen cards). The GM screen card rides with the combat/actions handout, built last.
+5. **Table kit:** ~~printable character sheet~~ **sheet kit DONE 2026-08-14** (`make kit` renders the approved mockup: F-sheet front/back, GM HVE log, optional ledger, pregen cards), **and embedded in the book the same day** as the closing Table Kit appendix (`80-table-kit.md`): vector pages in the PDF via pdfpages, 150 DPI renders in the EPUB, one HTML source for all three surfaces. The GM screen card rides with the combat/actions handout, built last.
 
 Explicitly not needed for the event: example of play, art, classes, the early-game chapter, worldbuilding. **Possible pivot once this list lands:** Gabriel may build the companion-app prototype in time for Nerd Weekend and run the event with it (doubling as the Mode A rehearsal).
 

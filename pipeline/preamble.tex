@@ -51,6 +51,10 @@
 % -----------------------------------------------------
 \usepackage{tikz}
 
+% Table Kit appendix: the kit PDF (built by `make kit`) is inserted whole,
+% so the sheet is authored once in kit/table-kit.html and cannot drift.
+\usepackage{pdfpages}
+
 \newcommand{\fullpageart}[1]{%
   \clearpage%
   \thispagestyle{empty}%
