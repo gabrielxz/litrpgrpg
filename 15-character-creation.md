@@ -30,7 +30,7 @@ These numbers represent a freshly integrated human: someone pulled into the Syst
 | Natural Leader | 5 | 5 | 5 | 7 | 4 | 5 | 9 | 40 |
 | Generalist | 6 | 6 | 6 | 6 | 6 | 5 | 5 | 40 |
 
-These are illustrations, not templates. Players should build what makes sense for the person they are playing.
+These are illustrations, not templates. Players should build what makes sense for the person they are playing. Three finished characters built from these rules, the same three the book's worked examples follow, are at the end of this chapter.
 
 ## Proficiencies
 
@@ -125,3 +125,51 @@ Freshly integrated characters begin with no Principle access. Insight toward a P
 ## After Creation
 
 A finished character is Level 1, Grade F, with no class, no Principle access, and whatever was in their pockets. Everything from here is earned in play: levels and stat growth are covered in the Progression chapter, the VE economy that fuels them in Cultivation, and the class milestone at Level 10 in Progression, "Class Selection."
+
+---
+
+## Ready-Made Characters
+
+Three finished characters, built with this chapter's rules and nothing else: 40 points, three Proficiencies at Trained, derived stats computed, Saturation bands (Cultivation, "The Pressure Gauge") already worked out. Hand one across the table and play. They are also the book's recurring cast: Kara and Andre are the pair in the Introduction's example of play, and Joe is the hunter who opens Cultivation. None of them has a Principle, a title, or anything in their pockets beyond what survived Integration.
+
+::: statblock
+**KARA** &middot; Level 1 &middot; Grade F
+
+*Warehouse shift lead. First through the door, and first to ask what it pays.*
+
+| STR | DEX | FOR | HRT | POW | PER | CHA |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| 8 | 5 | 7 | 4 | 6 | 5 | 5 |
+
+- **Max HP** 14 &middot; **Max Aether** 6 &middot; **VE Tolerance** 55 (Mild past 55, Heavy past 110, Critical past 165)
+- **Proficiencies (Trained, +5):** close combat, athletics, streetwise
+- **Playing her:** Fight close and end it fast. Want things out loud: the better weapon, the bigger bounty, the pill nobody else has claimed. Her generosity is real, and it is never first.
+:::
+
+::: statblock
+**JOE** &middot; Level 1 &middot; Grade F
+
+*Volunteer firefighter. Hits hard so nobody else has to.*
+
+| STR | DEX | FOR | HRT | POW | PER | CHA |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| 8 | 5 | 7 | 5 | 4 | 6 | 5 |
+
+- **Max HP** 14 &middot; **Max Aether** 4 &middot; **VE Tolerance** 60 (Mild past 60, Heavy past 120, Critical past 180)
+- **Proficiencies (Trained, +5):** close combat, endurance training, field medicine
+- **Playing him:** Stand between the danger and everyone else, and swing like the door needs breaking. He will take a bad trade if somebody weaker comes out ahead on it.
+:::
+
+::: statblock
+**ANDRE** &middot; Level 1 &middot; Grade F
+
+*Land surveyor. Looks first, counts everything, and knows where the exits are.*
+
+| STR | DEX | FOR | HRT | POW | PER | CHA |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| 4 | 7 | 5 | 6 | 5 | 9 | 4 |
+
+- **Max HP** 10 &middot; **Max Aether** 5 &middot; **VE Tolerance** 55 (Mild past 55, Heavy past 110, Critical past 165)
+- **Proficiencies (Trained, +5):** tracking and fieldcraft, archery and marksmanship, navigation
+- **Playing him:** Look before anyone moves, plan the way out before the way in, and take only what the plan needs. When the party gets loud, he is the one counting.
+:::

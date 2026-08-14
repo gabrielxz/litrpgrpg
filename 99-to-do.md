@@ -145,6 +145,18 @@ Gabriel's call, 2026-08-12: this gets a dedicated session rather than being fold
 
 **Dependencies:** the "What Can Be Seen" chapter defines what the interface shows and what it withholds, so it should land first. The pregens (Tier 1 item 11) are the natural test: build them on the sheet and see what breaks.
 
+**Session rulings (2026-08-13, sheet session one).** The sheet is the System Interface in concept; function wins wherever the two pull apart. Sheets are per-Grade, F-Grade first, since Grade-specific content is expected to accumulate. **Trust the paper:** a stat that changes is erased and rewritten, and the sheet makes no promise that its recorded history re-derives the current number; an optional ledger page can serve players who like bookkeeping. Player sheets carry labels, not instructional text; every reminder rule (Surge, the Clash, Volatility Threshold, artifact recharge, pill limits) moves to a separate rules/actions handout. The conditional-effects strip becomes a plain lined Notes section.
+
+**Book passes queued by the sheet session:**
+
+- **Done 2026-08-13: percentage bonuses removed book-wide.** Titles rewrote Bonus Magnitudes (the Percent section is gone, damage-shaped percents became flat Clash bonuses, the IP drip became a one-time grant); Principles minor passives are defensive Clash bonuses; Cultivation healing reads in fifths; the Breakthroughs perk, backlash, and density modifiers converted; bestiary and tutorial HP thresholds read in halves and quarters. Probability statements (Volatility odds, loot chances) deliberately kept. The stray "hex" unit went in the same pass ("region" now).
+- **New chapter flagged: inventory and spatial storage** (spatial rings and their kin). Until it exists, the sheet carries a generic Inventory section and nothing item-specific.
+- **Decided 2026-08-13: Tolerance re-derives only at Consolidation.** Tolerance and its three Saturation band numbers are recalculated when the body rebuilds and VE clears, and stay frozen between Consolidations; mid-hunt stat gains have not been integrated yet. Fits the VE-and-Aether lore and keeps Heart's per-session job. Applied 2026-08-13: the rule sits with the Tolerance definition in Cultivation, and Core Mechanics and the Quick Reference carry the clause.
+- **Done 2026-08-13: the conditional-title retune.** Achievement titles mint flat bonuses only; conditionals are reserved for Hidden Achievement, HVE-Resonant, and Bestowed titles; the conditional premium is gone (conditionals price at parity with their class, and the trigger buys a spike rather than size). Applied with the percent pass: the conditional Achievement samples (First Blood, Patient Gardener, Stand, Lockbreaker, Unseen) were reflattened with their flavor moved into the trigger.
+- **Done 2026-08-13: three pregens** (Kara, Joe, Andre, the book's recurring cast, canon numbers reconciled with the Introduction, Cultivation, and HVE vignettes) in Character Creation, "Ready-Made Characters." The starting-human stat table, the other half of Tier 1 item 11, is still open.
+- **Sequencing before Nerd Weekend:** the combat/actions handout and the printed quick reference are built almost last, since the rules they summarize will keep moving until then. The bookkeeper's ledger exists as an optional page in the sheet mockup.
+- **Done 2026-08-13: pen references removed from the HVE chapter.** Current wipes at session end, Deep accumulates; no writing medium is specified anywhere.
+
 ### Rulings from the triage (Gabriel, 2026-08-12)
 
 **All seven applied to the book on 2026-08-12**, together with the Core Mechanics rewrite and the DO items across every chapter. Build clean in both formats.

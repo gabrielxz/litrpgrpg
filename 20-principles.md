@@ -62,7 +62,7 @@ The whole track, from first resonance to first power, looks like this at the tab
 
 The meditation earned 2 IP. That carried her past 3, and the Principle **crystallized**: the System named what her life had been spelling out, and the name filled her single F-Grade slot for life.
 
-> **Kara's sheet now.** Principle: Weight. Insight: 4/10. Tier: Initial Insight. Benefit: a minor passive (the System grants her +5% resistance to crushing force). Next: her first Application at 10 IP.
+> **Kara's sheet now.** Principle: Weight. Insight: 4/10. Tier: Initial Insight. Benefit: a minor passive (the System grants her +5 to defensive Clashes against crushing force). Next: her first Application at 10 IP.
 
 **The climb to 10.** A second Battle Memory (3 IP) and a Consolidation vision (1 IP) bring her to 8. Two sessions later a third Battle Memory (2 IP) carries her to 10. The number sits there; nothing happens on its own.
 
@@ -137,7 +137,7 @@ A slot, once filled, holds its Principle for life. The Principle can change shap
 
 | **Tier** | **Cumulative IP** | **Grants** |
 |---|---|---|
-| Initial Insight | 3 | The Principle crystallizes and is named; minor passive (e.g., +5% Fire Resistance) |
+| Initial Insight | 3 | The Principle crystallizes and is named; minor passive (e.g., +5 to defensive Clashes against fire) |
 | Seed | 10 | First Application; Attunements |
 | Early Fragment | 25 | Second Application; passive doubles |
 | Mid Fragment | 50 | Infusion: the Principle rides your ordinary actions at no Beat or Aether cost |

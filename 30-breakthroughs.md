@@ -182,13 +182,13 @@ The character successfully ascends. Clean, competent, unremarkable.
 
 Everything from Stable, plus:
 
-- **Bonus Stat Budget.** The class evolution infusion is increased by 50% (e.g., 75–150 points at E-Grade instead of 50–100). The additional points are distributed by the GM based on HVE profile, following the same behavioral mapping as pre-class stat allocation. A Polished ascension means the System noticed something extra and rewarded it.
+- **Bonus Stat Budget.** The class evolution infusion is increased by half: 75–150 points at E-Grade instead of 50–100. The additional points are distributed by the GM based on HVE profile, following the same behavioral mapping as pre-class stat allocation. A Polished ascension means the System noticed something extra and rewarded it.
 
 **Pristine (Exceptional Ascension):**
 
 Everything from Polished, plus:
 
-- **Bespoke Perk.** The System AI generates a one-of-a-kind ability, passive, or systemic advantage tailored to the character's HVE signature and Principle alignment. Examples: a Force-dominant warrior might receive "First Impact" (the first Clash of every combat gets +15), a Method-dominant planner might receive "Architect's Eye" (once per Consolidation, reveal the structural weakness of any single target), a Hunger-dominant cultivator might receive "Refined Consumption" (VE gained from kills is increased by 25%).
+- **Bespoke Perk.** The System AI generates a one-of-a-kind ability, passive, or systemic advantage tailored to the character's HVE signature and Principle alignment. Examples: a Force-dominant warrior might receive "First Impact" (the first Clash of every combat gets +15), a Method-dominant planner might receive "Architect's Eye" (once per Consolidation, reveal the structural weakness of any single target), a Hunger-dominant cultivator might receive "Refined Consumption" (kills award VE as if one difficulty tier harder on the VE Chart).
 - **Principle Bonus.** +10 Insight Points toward the character's highest-affinity Principle, representing the trial's resonance with their established pattern.
 
 **Transcendent (One-of-a-Kind Ascension):**
@@ -239,7 +239,7 @@ The tradeoff is explicit: better locations produce better Breakthroughs, but the
 
 ### Consolidation Bonus (Cross-Reference)
 
-Energy density also affects ordinary Consolidation (documented in the Cultivation section): Consolidating in a high-density hex reduces required time by 25%. The same environmental scouting that identifies good Breakthrough locations pays dividends during routine play.
+Energy density also affects ordinary Consolidation (documented in the Cultivation section): a high-density region clears one quarter of Tolerance per hour instead of one fifth. The same environmental scouting that identifies good Breakthrough locations pays dividends during routine play.
 
 ### Location Scouting
 
@@ -297,11 +297,11 @@ A well-built F-cap character with HRT 60 sits 80 short of the DC before preparat
 
 **Failure Consequences (Cracked at E→D):**
 
-- **Aether Ceiling Reduction:** Permanent. Max Aether is reduced by 10% until the next successful Breakthrough. The Soul Sea cracked but did not shatter; it holds, but leaks.
+- **Aether Ceiling Reduction:** Permanent. Max Aether is reduced by one tenth (drop fractions) until the next successful Breakthrough. The Soul Sea cracked but did not shatter; it holds, but leaks.
 - **Principle Regression:** The character loses IP equal to half their current total toward their highest Principle. Progress toward the current tier is set back, though the tier itself is not lost.
 - **Lockout:** 3 sessions before retry.
 - **Cracked Foundation Status:** The character gains the narrative status "Cracked Foundation." This is known to the System and to perceptive cultivators. Future Breakthrough attempts carry an additional −5 penalty until a successful Breakthrough clears the status. NPCs and faction leaders who can sense cultivation state may react accordingly.
-- **Stat Loss:** FOR and POW each drop by a value equal to 5% of their current Raw value (e.g., FOR 500 loses 25). This loss is permanent until recovered through leveling or treasures.
+- **Stat Loss:** FOR and POW each drop by one twentieth of their current Raw value, fractions dropped (FOR 500 loses 25). This loss is permanent until recovered through leveling or treasures.
 
 **Key Items/Locations:** Resonance Catalysts and Quality Enhancers become critical at E→D. The HVE Coherence bonus is more impactful because the trial's internal content is shaped by it: a character with a scattered HVE profile faces a chaotic, incoherent trial that is mechanically and narratively harder. Tribulation Wards are worth their weight in gold at this Grade, because Cracked consequences are now permanent.
 
@@ -338,7 +338,7 @@ This book covers F→E and E→D in full; D→C and beyond arrive in a future su
 
 The following elements are identified as future development targets. They are not forgotten; they are deliberately deferred until playtest data or campaign progression demands them.
 
-- **Environment & Energy Density as a full subsystem.** The tiers above are sufficient for Breakthroughs, but energy density also affects Consolidation efficiency, Principle resonance, monster spawning, and territorial control. A full hex-level energy density system is needed when the campaign begins involving planetary leadership or faction-scale territory management.
+- **Environment & Energy Density as a full subsystem.** The tiers above are sufficient for Breakthroughs, but energy density also affects Consolidation efficiency, Principle resonance, monster spawning, and territorial control. A full map-scale energy density system is needed when the campaign begins involving planetary leadership or faction-scale territory management.
 - **Higher-Grade Breakthrough themes.** D→C (Heart Demon confrontation), C→B (Cosmic attunement), B→A and beyond: each needs its own thematic layer within the universal blueprint.
 - **Breakthrough as a faction event.** At higher Grades, a Breakthrough may attract attention from Sects, Monarchs, or the System itself. The political and military implications of a known Breakthrough attempt are a rich design space.
 - **Bloodline interaction.** How does an active Bloodline modify the Breakthrough trial? Does it add an additional internal challenge, or does it provide a shortcut?

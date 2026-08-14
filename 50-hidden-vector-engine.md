@@ -10,7 +10,7 @@
 
 Three moments from an ordinary session:
 
-The party finds the Recycling Node, and while the others argue over the good weapon, Kara quietly takes the healing pill and says nothing. Nobody rolls anything. The GM makes one pencil tally under **Hunger**.
+The party finds the Recycling Node, and while the others argue over the good weapon, Kara quietly takes the healing pill and says nothing. Nobody rolls anything. The GM makes one tally under **Hunger**.
 
 Two sessions later, a wounded stranger stumbles into camp with a Snarljaw pack behind him. Joe steps over the fire and charges them alone so the others can drag the stranger clear. Two tallies under **Force**, and because it was done to protect, a note in the margin.
 
@@ -64,11 +64,11 @@ Worked moments: proposing the watch rotation and the loot-split rule is a Contro
 
 The whole engine runs on one half-page sheet per character. Everything else in this chapter (weights, decay, structured logs, the companion app) is this sheet by other means.
 
-**The sheet.** Four rows, one per axis: Force | Method, Hunger | Restraint, Will | Accord, Control | Freedom. Each row is split into a **Current** column, kept in pencil, and a **Deep** column, kept in pen.
+**The sheet.** Four rows, one per axis: Force | Method, Hunger | Restraint, Will | Accord, Control | Freedom. Each row is split into a **Current** column, wiped at every session end, and a **Deep** column, which accumulates.
 
-**During play.** When a meaningful decision lands, make one pencil tally on the matching side of Current. A major, high-stakes choice: two tallies. A defining, identity-shaping moment: three tallies, circled, with a one-line note in the sheet margin. Minor signals get no tally; let them stay impressions.
+**During play.** When a meaningful decision lands, make one tally on the matching side of Current. A major, high-stakes choice: two tallies. A defining, identity-shaping moment: three tallies, circled, with a one-line note in the sheet margin. Minor signals get no tally; let them stay impressions.
 
-**At session end.** For each axis: if one side of Current leads by 2 or more, add one pen tally to that side of Deep. Then erase Current. Recent behavior wipes every session; identity accretes slowly, in ink.
+**At session end.** For each axis: if one side of Current leads by 2 or more, add one tally to that side of Deep. Then erase Current. Recent behavior wipes every session; identity accretes slowly.
 
 **That is the entire procedure.** Expect three to six tallies in a normal session. If you are logging more, you are counting table talk; if you are logging none, no one was under pressure this session, which is its own information.
 
@@ -87,7 +87,7 @@ Calibration guidance: log the *decision* rather than the outcome; a failed roll 
 
 ### Kara's Sheet, End of Session Three
 
-| **Axis** | **Current (pencil)** | **Deep (pen)** |
+| **Axis** | **Current** | **Deep** |
 |---|---|---|
 | Force ↔ Method | Force: 2 | Force: 3 |
 | Hunger ↔ Restraint | Hunger: 1 | Hunger: 2 |
@@ -96,7 +96,7 @@ Calibration guidance: log the *decision* rather than the outcome; a failed roll 
 
 Margin notes, circled: *"S1: took the pill." "S2: held the door alone against the pack."*
 
-Reading it: Current says this session Kara hit hard and grabbed once; session end will add one pen tally to Force (leads by 2) and none elsewhere, then the pencil wipes. Deep says who she is becoming: an aggressive taker who cooperates when spoken to. Her resonance line is already accruing toward the Consumption family. If she reached a Breakthrough today, Deep Force leading by 3 makes her **Leaning** (+5 Coherence). The circled notes are what the System will quote back to her: in a title, in a vision, in a Personal Opportunity that arrives with her name on its logic.
+Reading it: Current says this session Kara hit hard and grabbed once; session end will add one tally to Force (leads by 2) and none elsewhere, then Current wipes. Deep says who she is becoming: an aggressive taker who cooperates when spoken to. Her resonance line is already accruing toward the Consumption family. If she reached a Breakthrough today, Deep Force leading by 3 makes her **Leaning** (+5 Coherence). The circled notes are what the System will quote back to her: in a title, in a vision, in a Personal Opportunity that arrives with her name on its logic.
 
 ## What the Engine Drives
 

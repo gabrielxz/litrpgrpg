@@ -55,7 +55,7 @@ One number at the top of the die. On a Clash it explodes (combat Clashes, Will S
 
 **HP** = Raw FOR × 2. **Aether** = Raw POW. Aether refills only on Consolidation, after the first full hour (no in-combat or passive regen).
 
-**VE Tolerance:** (Raw FOR + Raw HRT) / 2 × 10. **Saturation:** past one Tolerance −10, past twice −25, past three times the collapse clock.
+**VE Tolerance:** (Raw FOR + Raw HRT) / 2 × 10, re-derived at the first full hour of each Consolidation. **Saturation:** past one Tolerance −10, past twice −25, past three times the collapse clock.
 
 **Consolidation:** every hour clears one fifth of VE Tolerance and restores one fifth of Max HP (full tank ≈ 5 hours); Aether refills at the first full hour. Interruption keeps completed hours.
 

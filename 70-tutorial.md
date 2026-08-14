@@ -372,7 +372,7 @@ From the Node, the party can see the four major sub-zones of the tutorial landsc
 - **The Arcane Debris** (west): a shattered tower with runes still flickering, suspended fragments orbiting slowly.
 - **The Civic Fragment** (south): a partially intact administrative structure, distant lights.
 
-Beyond, distant landmarks suggest the world's true scale: a floating citadel, a creature so vast it blots out a section of sky, a wall of energy marking the tutorial boundary. The party can reach maybe 10% of what they can see; the rest is there to establish scale.
+Beyond, distant landmarks suggest the world's true scale: a floating citadel, a creature so vast it blots out a section of sky, a wall of energy marking the tutorial boundary. The party can reach maybe a tenth of what they can see; the rest is there to establish scale.
 
 The System issues a second quest the moment the party orients:
 
@@ -707,7 +707,7 @@ Between them and the gate is a **Corrupted System Warden** (Bestiary, Peak). The
 See the Bestiary for the full stat block. Key behaviors:
 
 - **Indifferent Mode (full HP):** ignores the party and moves toward the gate using all 3 Beats.
-- **Hostile Mode (below 75% HP):** becomes aware. Two Beats for attacks, one for movement.
+- **Hostile Mode (after losing a quarter of its HP):** becomes aware. Two Beats for attacks, one for movement.
 - **Glitch Cascade:** whenever the Warden's own roll explodes (natural 96 or higher), its targeting reroutes and the next attack against it gains +20.
 - **Yields.** It is too massive to be driven anywhere; giving up both Beats plants it in place and it absorbs.
 
@@ -846,7 +846,7 @@ Four samples calibrated to common tutorial archetypes. Customize the content to 
 > Close Combat: 3 Marks. **Seasoned.**
 >
 > Title granted: **First Blood** (Achievement).
-> Hidden Achievement: **Cornerless** (survived a Clash at 25% HP or less).
+> Hidden Achievement: **Cornerless** (survived a Clash at a quarter of Max HP or less).
 >
 > Hidden Quest revealed: *"Ten-Slayer." Progress: 4/10.*
 >

@@ -74,7 +74,7 @@ Seven Attributes, tracked as Raw Power and read as Force.
 
 - **Max HP:** Raw FOR × 2. FOR 75 gives 150 HP; FOR 8,500 gives 17,000.
 - **Max Aether:** equal to Raw POW.
-- **VE Tolerance:** (Raw FOR + Raw HRT) / 2 × 10. The frame holds it and the will holds it down. See Cultivation.
+- **VE Tolerance:** (Raw FOR + Raw HRT) / 2 × 10, re-derived at the first full hour of each Consolidation. The frame holds it and the will holds it down. See Cultivation.
 
 There is no Damage Reduction stat. Armor, toughness, and defensive training are folded into the defender's Clash total: strong defense makes the attacker's Margin small or negative.
 

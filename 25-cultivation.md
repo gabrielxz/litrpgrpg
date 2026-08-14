@@ -22,6 +22,8 @@ Body and will together: the frame contains the charge and the Heart refuses to l
 
 Joe, with FOR 7 and HRT 5, holds 60.
 
+Tolerance is measured when the body rebuilds. Re-derive it at the first full hour of Consolidation, the same moment Aether refills; between Consolidations it holds still, and Attribute gains that have not yet been through a Consolidation are not reflected in it. Recompute the three Saturation thresholds below at the same time.
+
 VE accumulates automatically after combat and from other sources. As long as stored VE remains below Tolerance, there is no penalty. Once VE exceeds Tolerance, the character enters **Saturation:**
 
 - **Mild Saturation (up to twice Tolerance):** −10 to all rolls.
@@ -46,7 +48,7 @@ During the rest:
 - **Interruption:** The character keeps every completed hour of processing and recovery. Unprocessed VE stays in the tank and remains subject to Saturation.
 - **Defenselessness:** A consolidating character is completely defenseless. The whole party may consolidate at once as a calculated risk; posting a guard means that character is not consolidating.
 
-**Environmental Modifiers:** Consolidating in a high-energy-density hex reduces the required time by a quarter. Consolidating while holding a Principle-affinity treasure grants a small bonus to Insight Points for that Principle.
+**Environmental Modifiers:** Consolidating in a high-energy-density region clears one quarter of Tolerance per hour instead of one fifth: a full tank in four hours. Consolidating while holding a Principle-affinity treasure grants a small bonus to Insight Points for that Principle.
 
 **Battle Memory Meditation:** Characters holding a Battle Memory Card process it during Consolidation. The System returns a cryptic vision and awards Insight Points; see The Principle System, and the vision procedure for every run mode in The System AI chapter.
 
@@ -169,7 +171,7 @@ For 0 HP, the Downed state, stabilization, and death, see Core Mechanics, "Downe
 
 Three paths, each with a cost:
 
-- **Rest Healing:** During Consolidation, characters recover 20% Max HP per hour. Safest option, but it requires time.
+- **Rest Healing:** During Consolidation, characters recover one fifth of Max HP per hour. Safest option, but it requires time.
 
 - **Healing Pills and Potions:** Instant recovery of a flat HP amount based on pill grade. Consuming one in combat costs 1 Beat, and only the first two pills a character takes in a fight have any effect (see Items, "Pill Limit in Combat").
 

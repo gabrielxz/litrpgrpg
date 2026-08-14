@@ -56,7 +56,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **HP:** 14 · **Beats:** 2
 - **Off Force (STR, club; or DEX, knife):** 08 / 07
 - **Def Force (FOR or DEX):** 07 / 07
-- **Tactics:** Flees when Turned Aside or when reduced below 50% HP. Carries 1d3 Stuttering Tinctures and a crude weapon.
+- **Tactics:** Flees when Turned Aside or when reduced below half HP. Carries 1d3 Stuttering Tinctures and a crude weapon.
 
 ---
 
@@ -78,7 +78,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **HP:** 20 · **Beats:** 2
 - **Off Force (DEX, ambush strike):** 22
 - **Def Force (DEX, fade):** 22
-- **Tactics:** Begins encounter unseen unless detected by an active Perception Clash. Surprise Beat on first turn. Withdraws to the Zone edge after striking; favors hit-and-run over sustained combat. If pinned, fights frantically, gaining +5 Off Force when below 50% HP.
+- **Tactics:** Begins encounter unseen unless detected by an active Perception Clash. Surprise Beat on first turn. Withdraws to the Zone edge after striking; favors hit-and-run over sustained combat. If pinned, fights frantically, gaining +5 Off Force when below half HP.
 
 ### Training Sentry
 *A military construct from the Martial Remnant. Predictable patterns; escalating threat.*
@@ -146,7 +146,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **Def Force (FOR, plating):** 95 · (DEX, evasive shift): 60
 - **Tactics:**
   - **Indifferent Mode:** While at full HP, the Warden ignores the party. It moves toward the gate using all 3 Beats per turn (one Zone of movement per Beat). It does not attack unless attacked.
-  - **Hostile Mode:** Once damaged below 75% HP, the Warden becomes aware. It uses 2 Beats for attacks and 1 Beat for movement.
+  - **Hostile Mode:** Once it has lost a quarter of its HP, the Warden becomes aware. It uses 2 Beats for attacks and 1 Beat for movement.
   - **Yields.** The Warden is too massive to be moved far; when it gives up both Beats it plants itself and absorbs, staying in its Zone.
   - **Glitch Cascade:** Whenever the Warden rolls a System Volatility explosion (natural d100 of 96+), the construct's targeting reroutes erratically. The next attack against the Warden by any combatant gains +20.
   - **Tutorial Note:** This encounter is **not winnable in a straight fight at F-Grade**. Players succeed by reaching the gate, slowing the Warden, exploiting Glitch Cascades, and using Volatile Artifacts (skill shards in particular). The Multi-Path Resolution in the Tutorial chapter describes how each tested competence can contribute.

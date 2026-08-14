@@ -81,9 +81,11 @@ Achievement, Hidden Achievement, and Bestowed titles never conflict with each ot
 
 Titles grant a mix of effect types. Magnitudes scale by the Grade at which the title was earned. The numbers below are calibrated assuming a player will stack 8–15 titles by the end of any given Grade.
 
+Every bonus is a flat number; nothing is expressed as a percentage. Conditional bonuses, action economy effects, and resistances appear only on Hidden Achievement, HVE-Resonant, and Bestowed titles, which arrive rarely enough that the list of things a player must remember mid-fight stays short.
+
 #### Flat Stat Bonuses (the workhorse)
 
-The most common bonus shape. Multiple flat bonuses to the same stat sum directly.
+The most common bonus shape, and the only shape an Achievement title grants. Multiple flat bonuses to the same stat sum directly, and a flat bonus is applied to the sheet once, the day it lands.
 
 | **Title Class** | **F-Grade Bonus** | **E-Grade Bonus** | **D-Grade Bonus** |
 |---|---|---|---|
@@ -94,33 +96,22 @@ The most common bonus shape. Multiple flat bonuses to the same stat sum directly
 | Bestowed (Common) | +2 to +5 across thematically appropriate stats | +20 to +50 | ×100 |
 | Bestowed (Major) | +5 to +10 across multiple stats | +50 to +100 | ×100 |
 
-**Example F-Grade stack ceiling:** A focused player with 12 active titles by F-Cap might accumulate roughly +25 to +40 stat points distributed across their key stats, about 15–25% on top of their accumulated stat budget. Strong, but not game-breaking. The same player at E-Cap, having evolved or replaced most of those titles, has an equivalent percentage boost on the E-Grade scale.
-
-#### Percent Bonuses (rare, build-defining)
-
-Reserved for Hidden Achievement titles, peak Bestowed titles, and Transcendent-tier rewards. Players build entire strategies around these.
-
-**Cap any single title's percent bonus at +15%.** Stacking percent bonuses across multiple titles is uncapped. A player who collects "+5% damage when outnumbered," "+10% damage to constructs," and "+5% damage at low HP" gets +20% damage when those conditions converge.
-
-**Common percent bonus shapes:**
-- +5% to +10% to a derived stat (Max HP, Max Aether, damage)
-- +5% to +15% to a specific damage type or against a specific enemy category
-- +5% to +10% to a Clash type (defensive Clashes, offensive Clashes when initiating, etc.)
+**Example F-Grade stack ceiling:** A focused player with 12 active titles by F-Cap might accumulate roughly +25 to +40 stat points distributed across their key stats, a meaningful slice of the roughly 200 points an F-cap character has gathered from every source. Strong, but not game-breaking. The same player at E-Cap, having evolved or replaced most of those titles, holds an equivalent share at the E-Grade scale.
 
 #### Conditional and Situational Bonuses
 
-Bonuses that trigger under specific circumstances: outnumbered, below half HP, against a specific enemy type, in a specific environment, after killing a foe.
+Bonuses that apply under a stated circumstance: outnumbered, below half HP, against a specific enemy category, in a specific environment, after killing a foe. Only Hidden Achievement, HVE-Resonant, and Bestowed titles carry them; an Achievement title's bonus is always flat.
 
-**Magnitude:** roughly 1.5×–2× a comparable flat bonus, because the trigger condition gates them. F-Grade conditional title might grant "+5 STR while outnumbered" where a comparable unconditional title grants "+2 STR."
+**Magnitude:** the same range as a flat bonus of the title's class. The trigger is not a discount that buys a bigger number; what it buys is a spike, and a player who orchestrates the conditions for their titles to light up is doing exactly what the System rewards. A character's conditionals belong in one place on the sheet, read once when a fight starts.
 
-These reward setup play. A player who orchestrates the conditions for their stack to light up is doing exactly what the system wants.
+Where a title wants to touch damage against a category of enemy, grant a flat Clash bonus against that category ("+10 to Clashes against constructs"); the Margin carries it into damage on its own.
 
 #### Action Economy Bonuses
 
 Free Beats or extra actions under specific conditions. Genuinely powerful; use sparingly.
 
 **F-Grade examples:**
-- "Once per encounter, when reduced to 25% HP or less, gain 1 free Beat."
+- "Once per encounter, when reduced to a quarter of Max HP or less, gain 1 free Beat."
 - "Your first attack of any combat does not consume a Beat."
 - "Once per Consolidation, take a free Beat outside the action economy when you have not yet acted this turn."
 
@@ -128,11 +119,11 @@ These should be rare, typically Hidden Achievement or peak Bestowed.
 
 #### Resistances and Affinities
 
-Damage reduction against specific damage types, Principle resonance bonuses, environmental tolerance.
+Standing defenses against specific damage types, Principle resonance gifts, environmental tolerance.
 
 **F-Grade magnitudes:**
-- 5%–10% damage reduction against a specific type
-- +1 to +3 IP per Consolidation toward an aligned Principle (over a fixed window, e.g., "for the next month after earning the title")
+- +5 to defensive Clashes against a named damage type or source
+- A one-time grant of 1 to 3 IP toward an aligned Principle, awarded with the title
 - Immunity to specific minor effects (heat exhaustion, mild poisons, sensory deception below a Force threshold)
 
 ### Negative Titles
@@ -192,17 +183,17 @@ The four archetypes from the Hidden Vector Engine chapter illustrate magnitude a
 | **Title** | **Class** | **Effect** |
 |---|---|---|
 | **Ten-Slayer** | Achievement | +1 STR. Triggered by tenth confirmed kill. |
-| **First Blood** | Achievement | +5 to the first Clash of any combat where you are the initial aggressor. |
+| **First Blood** | Achievement | +1 DEX. Triggered by drawing first blood in ten separate fights. |
 | **The Hungering Edge** | HVE-Resonant | +3 STR, +2 DEX. Once per encounter, when you reduce a foe to 0 HP, gain 1 Beat next turn. |
-| **Cornerless** | Hidden Achievement | When at 25% HP or less, +5 STR and +5 DEX. Triggered by surviving an encounter that the System assessed as 10× over-Grade. |
-| **Marked by the Wild** | Bestowed (Beast) | Predators recognize you as kin or rival: advantage on Clashes against beasts that flee, disadvantage on parley with hostile fauna. Granted by killing the alpha of a wild pack. |
+| **Cornerless** | Hidden Achievement | At a quarter of Max HP or less, +5 STR and +5 DEX. Triggered by surviving an encounter that the System assessed as 10× over-Grade. |
+| **Marked by the Wild** | Bestowed (Beast) | Predators recognize you as kin or rival: +5 to Clashes against beasts fleeing you, −5 on parley with hostile fauna. Granted by killing the alpha of a wild pack. |
 
 ### The System Architect (Method + Restraint + Accord + Control)
 
 | **Title** | **Class** | **Effect** |
 |---|---|---|
 | **Pillwright** | Achievement | +1 PER. Triggered by crafting or refining ten consumables. |
-| **Patient Gardener** | Achievement | +2 PER while observing without acting (no offensive Beat used this turn). |
+| **Patient Gardener** | Achievement | +1 PER, +1 HRT. Triggered by spending the first round of ten separate fights without an offensive Beat. |
 | **Quiet Architect** | HVE-Resonant | +3 PER, +2 HRT. Once per encounter, when an ally executes a plan you proposed, they gain +5 to that Clash. |
 | **The One Who Did Not Strike First** | Hidden Achievement | Once per encounter, when an enemy attacks you first in a Clash, gain +10 to that defensive Clash. Triggered by completing three consecutive encounters without making the first offensive move. |
 | **Witnessed by the Mountain** | Bestowed (Place) | +5 to all Clashes within terrain matching the witnessing site. Granted by completing a Consolidation at a Principle-resonant location. |
@@ -212,17 +203,17 @@ The four archetypes from the Hidden Vector Engine chapter illustrate magnitude a
 | **Title** | **Class** | **Effect** |
 |---|---|---|
 | **Vow-Keeper** | Achievement | +1 HRT. Triggered by fulfilling three sworn oaths. |
-| **Stand** | Achievement | +2 FOR while at or below 50% HP. |
+| **Stand** | Achievement | +1 FOR. Triggered by ending five separate fights below half HP and still standing. |
 | **The Iron Verdict** | HVE-Resonant | +3 FOR, +2 HRT. Once per encounter, when an ally is targeted in your Zone, you may interpose; the attack rerolls against you instead. |
-| **The Line That Did Not Move** | Hidden Achievement | +10% Max HP. Triggered by holding a position alone against three or more attackers without retreating, for three consecutive rounds. |
+| **The Line That Did Not Move** | Hidden Achievement | +5 FOR. Triggered by holding a position alone against three or more attackers without retreating, for three consecutive rounds. |
 | **Hand of the Iron Court** | Bestowed (Faction) | Faction-granted: bureaucratic recognition, access to Iron Court resources, +5 to social Clashes invoking lawful authority. |
 
 ### The Phantom Thief (Method + Hunger + Accord + Freedom)
 
 | **Title** | **Class** | **Effect** |
 |---|---|---|
-| **Lockbreaker** | Achievement | +5 to lock-related Clashes. Triggered by picking five non-trivial locks. |
-| **Unseen** | Achievement | +2 DEX while in concealment. |
+| **Lockbreaker** | Achievement | +1 PER. Triggered by picking five non-trivial locks. |
+| **Unseen** | Achievement | +1 DEX. Triggered by crossing ten guarded thresholds unseen. |
 | **The Severed Tether** | HVE-Resonant | +3 DEX, +2 PER. Once per encounter, when you would be detected by an enemy, the detection fails. |
 | **The One Who Walked Through** | Hidden Achievement | Once per Consolidation, ignore one closed door, lock, or non-magical barrier. Triggered by entering and exiting three sealed locations without leaving evidence. |
 | **The Open Hand** | Bestowed (Network) | Granted by an underworld figure. Access to black-market contacts; +5 to negotiation Clashes with criminal NPCs; merchants of the network offer favorable prices. |
