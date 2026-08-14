@@ -11,7 +11,7 @@ This chapter covers the practical items players encounter during F-Grade play: t
 Every entry here is one of three kinds, and each is labeled:
 
 - **Category.** A class of items. The listed members are the common forms; the GM builds variants inside the same price band and the same rules. Healing Pills and Degraded Skill Shards are categories.
-- **Worked example.** One fully specified item, usable exactly as written and meant as the pattern for building others of its kind. The Reactive Buckler is a worked example.
+- **Example.** One fully specified item, usable exactly as written and meant as the pattern for building others of its kind. The Reactive Buckler is an example.
 - **Unique.** A one-of-a-kind item. Nothing in this chapter is unique; at F-Grade, named and System-forged gear is bespoke treasure the GM designs for the moment.
 
 ---
@@ -135,7 +135,7 @@ Crystalline matrices containing fragments of dead techniques. Single-use. Activa
 
 Shards are randomizers. They reward players who use them in moments where a wild outcome is acceptable, and punish those who treat them as reliable tools. New shard types price their effects against the Modifier Budget and keep the natural 01–05 backfire, the same bottom-of-the-die number that governs Catastrophic Failure.
 
-### The Reactive Buckler (Worked Example: Protective One-Shots)
+### The Reactive Buckler (Example: Protective One-Shots)
 
 A small shield that absorbs one impact before its protective field collapses. The pattern for defensive artifacts generally: one negation, a visible discharge, a recharge tied to Consolidation, and stated limits.
 
@@ -144,7 +144,7 @@ A small shield that absorbs one impact before its protective field collapses. Th
 
 The buckler covers the blow a character would otherwise have paid a whole turn to survive. Yielding alongside it is wasted; the damage is already zero.
 
-### Single-Use Ranged Relic (Worked Example: Expended Weapons)
+### Single-Use Ranged Relic (Example: Expended Weapons)
 
 A devastating weapon with one charge, the pattern for burnt-out relics of higher-Grade arsenals.
 
@@ -161,7 +161,7 @@ Artifacts that reveal rather than harm.
 
 ---
 
-## Scavenged Field Gear (Worked Examples)
+## Scavenged Field Gear (Examples)
 
 Mundane survival equipment, battered but functional. The pattern: small flat effects, limited uses, no Aether interaction.
 

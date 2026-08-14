@@ -136,7 +136,7 @@ A Proficiency covers its whole domain, weapons included. "Close combat" governs 
 | **Tier** | **Effect** |
 |---|---|
 | **Trained** | +5 to Clashes and skill checks in the domain. Routine Mastery. Specialist Gating access. |
-| **Seasoned** | +10 in place of the +5. |
+| **Seasoned** | +10 (in place of the +5). |
 | **Master** | +10, and once on your turn your first action using the Proficiency costs no Beat. Requires an E-Grade body. |
 
 Characters begin with three Proficiencies at Trained and deepen them through Marks, below.
@@ -251,7 +251,7 @@ Every character has **two Beats** per turn by default; creature stat blocks may 
 - Disengage from a hostile
 - Attempt to seize Momentum
 
-**Free actions,** costing no Beat: speaking, drawing a weapon, dropping an object, and moving around inside your current Zone.
+**Free actions,** costing no Beat: speaking, drawing a weapon, dropping an object, and moving around inside your current Zone (up to the Positional State line; see Movement).
 
 **A third Beat is the rarest form of power.** Certain titles, class evolutions, and Grade milestones grant one, and anything that does says so explicitly. A Mastered Proficiency's free action is not a third Beat and is not a Beat at all; it is one specific action that costs nothing, and it is the only thing in the game shaped that way.
 
@@ -268,7 +268,7 @@ Combat has no grid and no measured distance. Each scene is divided into **Zones*
 
 **Movement:**
 
-- Moving around inside your Zone is free.
+- Moving around inside your Zone is free, up to the line where movement would claim or strip a Positional State; crossing that line is the 1-Beat action above.
 - Moving to an adjacent Zone costs one Beat.
 - Moving two Zones costs both Beats.
 
@@ -374,7 +374,7 @@ Your next turn has two Beats, so two is all you have to give.
 
 Damage is the remaining Margin times the attacker's Grade multiplier. A Margin reduced to zero or below deals nothing.
 
-**Worked example.** A Snarljaw beats Marta by 37. She is at 30 HP, so the bite would put her on the floor.
+**Example.** A Snarljaw beats Marta by 37. She is at 30 HP, so the bite would put her on the floor.
 
 - She gives up one Beat. Margin 37 − 20 = 17. She takes 17, stands at 13 HP, and has one Beat on her turn.
 - She gives up both. Margin 37 − 40 is below zero, so the jaws close on nothing. She acts not at all next turn, and the Snarljaw decides whether she is thrown clear or stays where she is.
@@ -435,7 +435,7 @@ Multi-target capability is a property of specific abilities, spells, and effects
 | 2 Grades higher | +200 |
 | 3+ Grades higher | +300 or more |
 
-**Worked example: F-Peak against E-Initiate.** The F-Grade Peak has STR 99. The E-Grade Initiate has FOR 120: Force 12, plus 100 for the gap, effective 112.
+**Example: F-Peak against E-Initiate.** The F-Grade Peak has STR 99. The E-Grade Initiate has FOR 120: Force 12, plus 100 for the gap, effective 112.
 
 If the F-Grade attacks, d100 + 99 against d100 + 112. Their peak Force nearly matches, and they can win on the dice. But F-Grade damage is Margin × 1: a Margin of 20 is 20 damage against 120 HP. A dent.
 
@@ -515,11 +515,11 @@ Every Integrated being can shove raw Aether into their own body: unshaped energy
 - It works on any Clash you make, attacking or defending.
 - Declare before the dice land, then pay.
 - It stacks with everything else on the roll.
-- The cost is always half your **Maximum** Aether, whatever you have left. Two Surges empty a full pool, and nothing refills until Consolidation.
+- The cost is always half your **Maximum** Aether, irrespective of what you currently have left. Two Surges empty a full pool, and nothing refills until Consolidation.
 
 **Example.** Kara has POW 6, so Maximum Aether 6 and a Surge costs 3. Cornered by a Snarljaw, she declares a Surge on her defensive roll, pays 3, and rolls at +5. She has one more Surge in her and nothing until she rests.
 
-A Seed Application grants +10 for a small fixed cost while Surge pays half a pool for +5. Raw energy is wasteful and shaped technique is the reason to walk the Principle track. What Surge offers is availability: it is there from the first minute of Integration to the last Grade, asking the same question every time.
+A Seed Application might grant +10 for a small fixed cost while Surge pays half a pool for +5. Raw energy is wasteful and shaped technique is the reason to walk the Principle track. What Surge offers is availability: it is there from the first minute of Integration to the last Grade, asking the same question every time.
 
 ### What Things Cost
 

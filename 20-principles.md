@@ -18,7 +18,7 @@ Five terms carry this chapter:
 
 Everything else in the chapter is detail hanging off this loop:
 
-The loop below runs on one worked example, a brawler named Kara whose Principle turns out to be **Weight**. Her story follows in full.
+The loop below runs on one example, a brawler named Kara whose Principle turns out to be **Weight**. Her story follows in full.
 
 ![](./assets/principle_loop.png){width=88%}
 

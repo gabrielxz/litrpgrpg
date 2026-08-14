@@ -30,7 +30,7 @@ These numbers represent a freshly integrated human: someone pulled into the Syst
 | Natural Leader | 5 | 5 | 5 | 7 | 4 | 5 | 9 | 40 |
 | Generalist | 6 | 6 | 6 | 6 | 6 | 5 | 5 | 40 |
 
-These are illustrations, not templates. Players should build what makes sense for the person they are playing. Three finished characters built from these rules, the same three the book's worked examples follow, are at the end of this chapter.
+These are illustrations, not templates. Players should build what makes sense for the person they are playing. Three finished characters built from these rules, the same three the book's examples follow, are at the end of this chapter.
 
 ### What a Score Means
 

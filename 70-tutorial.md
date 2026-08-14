@@ -242,7 +242,7 @@ Whether they spend it on the kill or hold it in reserve is the first read of the
 
 Then wait. Do not recommend an answer.
 
-**Worked example.** Dana has DEX 6, FOR 6, POW 5: 12 HP and 5 Aether. A Husk Crawler rolls 55 + Off Force 04 for 59. She dodges: 22 + DEX Force 6 for 28. The Crawler wins by 31, and 31 damage on a 12 HP character is the floor.
+**Example.** Dana has DEX 6, FOR 6, POW 5: 12 HP and 5 Aether. A Husk Crawler rolls 55 + Off Force 04 for 59. She dodges: 22 + DEX Force 6 for 28. The Crawler wins by 31, and 31 damage on a 12 HP character is the floor.
 
 - **She gives up one Beat.** Margin 31 − 20 = 11. She takes 11, stands at 1 HP, and has one Beat on her next turn. She is alive, in the same Zone, with a dead thing still clawing at her.
 - **She gives up both.** Margin 31 − 40 is below zero, so the claws close on nothing. The Crawler drives her into the next Zone and her next turn is gone entirely. She is untouched and cannot act while it closes the distance again.

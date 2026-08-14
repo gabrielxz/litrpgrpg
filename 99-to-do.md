@@ -17,10 +17,10 @@
 
 - **R3** (p18) "Stats are raw and unfiltered" — "??" — **DO.** "Unfiltered" is doing no work. Cut to "Stats are raw."
 - **R4** (p18) Momentum ties go to the players → "I think just roll again." — **DO.**
-- **R5** (p18) Surprise Beat: "Do axe Masters get their free swing?" — **DECIDE.** See CLUSTER-A.
+- **R5** (p18) Surprise Beat: "Do axe Masters get their free swing?" — **ANSWERED in the 2026-08-12 Core Mechanics rewrite, never reported back (caught 2026-08-14):** no. The Surprise Beat is a Beat outside a turn, so the free action arrives when the Master's turn does.
 - **R6** (p19) Seize Momentum: "Is it the Beat-user's stat or the side's highest again?" — **DO.** It is the seizing character's own. Say so.
 - **R7** (p19) "Effects that grant a third Beat are the rarest form of power" — "Not exactly any more. Should say 'except for Mastery...'" — **DO.** See CLUSTER-A.
-- **R8** (p20) Aura Pressure Beat loss: "Are Master's free Beat?" — **DECIDE.** See CLUSTER-A.
+- **R8** (p20) Aura Pressure Beat loss: "Are Master's free Beat?" — **ANSWERED in the 2026-08-12 rewrite, never reported back (caught 2026-08-14):** the free action survives. Aura Pressure reduces Beats and does not touch it; a Master reduced to zero Beats still takes the free action on their turn.
 - **R9** (p20) "Can't remember how we solved an E-Grade w/200 DEX not having Free Step, but an E-Grade w/90 DEX does." — **PUSH / DECIDE.** We never solved it. See CLUSTER-D.
 - **R10** (p20) Cross-Grade Movement circled: "even a DEX dump stat E-Grade." — Same as R9.
 - **R11** (p21) "Spending 1 Beat to reposition within a Zone" — "I thought within-Zone movement was free?" — **DO.** Direct contradiction with the Movement Rules and the Free Actions list two pages earlier. Free movement is repositioning that does not change Positional State; buying a state change costs the Beat. Say that once, in one place.
