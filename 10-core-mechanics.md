@@ -18,12 +18,6 @@ The game's numbers come in two sizes: the huge ones the story is about, and the 
 
 **Rounding:** all fractions round down, always.
 
-### Drama Over Simulation
-
-These rules chase the feel of the genre's fights: impossible speed, a sword arc that splits a hillside, the weak toppling the strong on nerve and timing. They are a camera, and the camera serves the story. A Zone is a piece of story geography; a Beat is a slice of dramatic time. Neither maps to meters or seconds, and pressing them for physical precision produces nonsense faster than answers.
-
-Any system this size has edge cases, and every table eventually finds a reading that is technically legal and completely ridiculous. When that happens the GM's tiebreaker is drama: rule for the version that belongs in the story the table is imagining. Exploiting a rules edge is often half the fun of progression fantasy, and the System itself rewards ingenuity, so the question is never whether players are optimizing. The question is whether the optimization makes the table lean in or check out. If everyone is grinning, let it ride and let the world react. If it is draining tension from a scene people cared about, name it, adjust it, and move on.
-
 ---
 
 ## Raw Power, Grade, and Force

@@ -62,6 +62,12 @@ The **Bestiary**, **Items**, and the **Quick Reference** at the back of the book
 
 The System's generative work (classes, quests, visions, titles, loot) can be performed three ways: **Unplugged**, where the GM does it all by hand and every rule in this book works with pencil and paper; **AI-Assisted**, where the GM uses any conversational AI between sessions with the prompt templates provided; or with the **Companion App**, software that listens to the session and drafts the System's bookkeeping for the GM's review. The System AI chapter defines all three. The rules are identical in every mode.
 
+## Drama Over Simulation
+
+These rules chase the feel of the genre's fights: impossible speed, a sword arc that splits a hillside, the weak toppling the strong on nerve and timing. They are a camera, and the camera serves the story. A Zone is a piece of story geography; a Beat is a slice of dramatic time. Neither maps to meters or seconds, and pressing them for physical precision produces nonsense faster than answers.
+
+Any system this size has edge cases, and every table eventually finds a reading that is technically legal and completely ridiculous. When that happens the GM's tiebreaker is drama: rule for the version that belongs in the story the table is imagining. Exploiting a rules edge is often half the fun of progression fantasy, and the System itself rewards ingenuity, so the question is never whether players are optimizing. The question is whether the optimization makes the table lean in or check out. If everyone is grinning, let it ride and let the world react. If it is draining tension from a scene people cared about, name it, adjust it, and move on.
+
 ## An Example of Play
 
 Kara (Strength 8 and Fortitude 7, written STR 8, FOR 7 on her sheet, with the Proficiency "close combat") and Andre (Perception 9, Dexterity 7, with "tracking and fieldcraft," "archery and marksmanship," and a scavenged hunting bow) are Level 2, three days into their Integration Tutorial, crossing the dead district at its heart.
