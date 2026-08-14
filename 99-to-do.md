@@ -92,7 +92,7 @@
 
 ### System Quests
 
-- **R56** (p119) "If you share a 'kill 10 boar' quest, does the team need to kill 10, or 10 more than 10 now?" — **DO.** Unspecified. Recommend: shared objectives are party-cumulative, one pool.
+- **R56** (p119) "If you share a 'kill 10 boar' quest, does the team need to kill 10, or 10 more than 10 now?" — **RE-RULED 2026-08-14.** The first fix (one pool) made sharing strictly optimal, which Gabriel caught on reread; counts now scale by holder count. His original ink was already pointing at scaling.
 - **R57** (p119) Missing comma in the party-frame list. — **DO.**
 
 ### Bestiary
