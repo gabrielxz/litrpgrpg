@@ -234,7 +234,7 @@ A character holding **two Principles at Seed tier or higher** may attempt to fus
 
 Fusion is a Resistance Roll:
 
-> **d100 + PER Force vs. Severe (140) of the character's Grade**
+> **d100 + HRT Force vs. Severe (140) of the character's Grade**
 
 - **Success:** the two Principles merge into a single fused Principle (Earth + Fire become **Magma**, Edge + Flow become **Severance**) at the **lower parent's tier**, occupying **one slot**. The System generates its Applications from both parent identities. The freed slot is empty and may later take a new Principle, entering at the bottom like any other.
 - **Failure:** the patterns refuse unification. The higher-tier parent loses 10 IP, and the fusion cannot be reattempted until after the character's next Breakthrough.
