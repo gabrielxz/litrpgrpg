@@ -32,6 +32,20 @@ These numbers represent a freshly integrated human: someone pulled into the Syst
 
 These are illustrations, not templates. Players should build what makes sense for the person they are playing. Three finished characters built from these rules, the same three the book's worked examples follow, are at the end of this chapter.
 
+### What a Score Means
+
+The anchors below calibrate every score in pre-Integration human terms. Even values sit between their neighbors. Scores of 1 and 2 exist below the creation floor: bodies and minds that are failing, and the System integrates them all the same.
+
+| **Attribute** | **3 (deficiency)** | **5 (average)** | **7 (gifted)** | **9 (elite)** | **10 (peak human)** |
+|---|---|---|---|---|---|
+| STR | Struggles with a full bucket | Carries the groceries in one trip | Moves furniture alone | College shot-putter | World-record deadlifter |
+| DEX | Drops what they carry | Catches keys tossed across a room | Amateur gymnast | Circus knife-thrower | Olympic-final gymnast |
+| FOR | Winded by one flight of stairs | Works a full shift on their feet | Runs marathons | Channel swimmer | Summits without oxygen |
+| HRT | Folds under a raised voice | Holds up in a crisis, shaken after | Steady hands in the ER | Hostage negotiator | Unbreakable under interrogation |
+| POW | Never notices the uncanny | Occasional gut feelings | Vivid dreams that sometimes land | The family everyone called witches | The monastery would have taken them |
+| PER | Misses the obvious | Notices a moved chair | Spots the tail on the drive home | Identifies birds by wingbeat | Counts the cards and the faces at once |
+| CHA | Empties a room slowly | Pleasant company | Closes the sale | Packs a town hall | Starts a movement |
+
 ## Proficiencies
 
 Choose **three Proficiencies**, broad domains of competence written in plain language. All three begin at **Trained**: +5 to Clashes and skill checks in the domain, Routine Mastery on Trivial and Easy tasks, and access to whatever the GM has gated behind training. They deepen to Seasoned and then Master through Marks, earned in play. See Core Mechanics, "Proficiencies and Skill Checks," for the full rules.

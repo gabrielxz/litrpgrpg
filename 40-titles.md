@@ -35,7 +35,7 @@ Generated when a player crosses a quantitative threshold the System tracks: kill
 
 Players don't see thresholds in advance, but after the second or third Achievement title they begin to feel the rhythm: *something* triggers titles, and the System is watching. This is the breadcrumb layer that makes the System feel constantly observant.
 
-**Examples:** "Ten-Slayer," "First Through the Gate," "Pillwright," "Hundredfoot," "Vow-Keeper," "Lockbreaker."
+The F-Grade catalog below holds twenty ready to grant, with their triggers.
 
 ### Hidden Achievement Titles
 
@@ -141,6 +141,54 @@ A negative Bestowed title cannot be unequipped or removed without specific in-fi
 All earned titles are visible to the System, and to other characters within the limits in What Can Be Seen. They affect NPC reactions, faction relationships, and System-generated content **regardless of how many are mechanically "active"**. There is no concept of "equipping" titles. They are part of the character's record, always.
 
 The mechanical bonuses always apply. The narrative weight always applies. Stacking is automatic.
+
+---
+
+## The F-Grade Achievement Catalog
+
+Twenty Achievement titles with their triggers, so the GM recognizes a threshold when the table crosses it rather than inventing one on the spot. The pacing target is an Achievement every 3 to 4 sessions across the party; when play crosses a row, grant it as written. New ones copy the shape: a countable deed, a flat bonus, a short name.
+
+**Slaughter**
+
+| **Title** | **Trigger** | **Bonus** |
+|---|---|---|
+| Ten-Slayer | Tenth confirmed kill | +1 STR |
+| Hundred-Slayer | Hundredth confirmed kill | +2 STR |
+| First Blood | Drew first blood in ten separate fights | +1 DEX |
+| Pack-Breaker | Killed three foes in a single fight | +1 STR |
+| Giant-Feller | Killed a Severe or Peak enemy | +2 FOR |
+
+**Survival**
+
+| **Title** | **Trigger** | **Bonus** |
+|---|---|---|
+| Stand | Ended five separate fights below half HP, still standing | +1 FOR |
+| First Down, First Up | Survived being Downed | +1 FOR |
+| Week One | Survived the first seven days after Integration | +1 to one stat, player's choice |
+| Empty-Handed | Won a fight with no weapon and no Aether spent | +1 STR |
+| Hundredfoot | Survived a climb or fall of a hundred feet | +1 DEX |
+
+**Craft and Ground**
+
+| **Title** | **Trigger** | **Bonus** |
+|---|---|---|
+| Pillwright | Crafted or refined ten consumables | +1 PER |
+| Forager | Fed the party from the land for three days | +1 PER |
+| Tinker | Repaired or jury-rigged five things mid-crisis | +1 DEX |
+| First Through the Gate | First of the party into a hostile site, ten times | +1 DEX |
+| Pathfinder | Led the party through unmapped ground five times | +1 PER |
+
+**Word and Bond**
+
+| **Title** | **Trigger** | **Bonus** |
+|---|---|---|
+| Vow-Keeper | Fulfilled three sworn oaths | +1 HRT |
+| Lockbreaker | Picked five non-trivial locks | +1 PER |
+| Unseen | Crossed ten guarded thresholds unseen | +1 DEX |
+| Peacemaker | Ended three fights with words after weapons were out | +1 CHA |
+| Deep Breather | Completed twenty Consolidations | +1 HRT |
+
+Where a catalog title also appears in a sample stack later in this chapter, the trigger and bonus here are the canonical ones.
 
 ---
 

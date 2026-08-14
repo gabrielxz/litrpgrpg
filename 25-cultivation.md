@@ -118,7 +118,7 @@ Twelve peer kills or two and a half Peak kills carry a character a level, at eve
 
 The transfer is visible: when something dies, its unrefined VE leaves the body as a brief drift of pale motes toward those who earned the kill.
 
-Cross-Grade kills follow the multiplier: an E-Grade Moderate enemy yields 300 VE; a D-Grade Hard yields 6,000. A successful punch-up against a higher-Grade opponent is one of the fastest ways to leap forward in progression.
+Cross-Grade kills multiply the award: read the victim's tier within its own Grade, take that multiple of your own Peer Kill, then multiply by ×10 for every Grade the victim sits above you. For a Level 10 character, an E-Grade peer-tier enemy pays 400 VE, most of a level, and an E-Grade Peak monster pays 2,000, roughly three levels on the spot. A successful punch-up against a higher-Grade opponent is one of the fastest ways to leap forward in progression.
 
 The kill is priced by what died, whatever the method: a trap, an ambush, or a plan that ended the fight before it started pays the same as an open brawl. How the kill happened is logged by the Hidden Vector Engine; it is never priced. A defeated boss-tier encounter (rare, named, or designed for the moment) may be worth 1.5× the listed amount at the GM's discretion.
 
