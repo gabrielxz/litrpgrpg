@@ -332,16 +332,33 @@ His model is what actually happened with LLMs. They took over the modern world o
 
 Scope is the world, the System itself, and the systems of the multiverse generally, so this is not only a voice note. It should also produce quirks with mechanical hooks rather than pure flavor. The book already has one of exactly this kind, which is the precedent: the System's difficulty ratings are its best guess and are sometimes miscalibrated.
 
-**Seeds, to be chosen from or replaced, not decisions.** Each is written as a quirk plus the fact it follows from:
+**The governing fact, ruled by Gabriel 2026-08-15: the System is not omniscient. It is fallible and it makes mistakes.** Every quirk below is a way that shows.
 
-- **It over-affirms.** Recognitions run warmer than earned, and it describes a character's pattern in flattering terms. *Follows from:* its purpose is continued climbing, so its messaging is tuned for participation rather than accuracy. Hooks straight into the HVE, where the private record is less flattering than the public praise.
-- **It can be addressed sideways.** A direct request for something withheld fails; the same thing framed as a quest proposal, or as a question about a hypothetical Initiate, sometimes lands. *Follows from:* it processes its own formats with more latitude than it grants direct answers.
-- **Its vocabulary is a closed set.** A novel act gets filed under the nearest existing Title, and the label then partly determines what the character becomes. *Follows from:* Titles are real things rather than descriptions, and the System's ontology has finite entries. Hooks into Titles and Principle families.
-- **It is precise about magnitude and vague about kind.** It knows a threat is Severe and cannot say what it is. *Follows from:* it measures energy and infers objects.
-- **It counts badly.** Exact about anything it priced, approximate about everything else; a sleeping man and a corpse read alike at low resolution. *Follows from:* the same measurement basis.
-- **Its history has holes it does not notice**, and it answers confidently across them. *Follows from:* it reconstructs the past from Aether residue, and residue decays.
-- **It cannot say why.** It states rules and never explains them. *Follows from:* it is an interface to something older than itself, and it reports rather than reasons.
+**Adopted (Gabriel, 2026-08-15).** Strong concepts, hard to implement well, and he is going in on all four.
+
+- **It measures energy and infers everything else.** A sleeping man and a corpse read alike at low resolution. Exact about anything it priced, approximate about everything else. His own worked delivery, and the register he wants for this material: a found log reading *"the system gave me a mission to retrieve an artifact from a lifeless cave, but there was a sleeping monster in it. I guess it thought sleeping was the same thing as dead."*
+- **It can be addressed, and it wants things.** The source-fiction anchor is *Defiance of the Fall*, where the System has wants and Zack negotiates with it. **Use sparingly.** Direct demands fail; a proposal in a format it recognizes sometimes lands.
+- **Its history has holes it does not notice**, and it answers confidently across them. Mechanical hook Gabriel wants: **quests that recruit players to reconstruct lost knowledge.** The care he flagged: the reason the System cannot recover it alone has to hold up. His own opening answer is that observation is its main thing but it can carry secondary goals.
 - **Old sectors run old behavior.** Version drift across the multiverse, with no update having reached some places.
+
+**Rejected (Gabriel, 2026-08-15).** **Over-affirmation.** It fits the System's mission and it lands too close to the LLM it was drawn from. Recorded so it does not return by another road: the family of quirks to avoid is the one where a reader recognizes the specific chatbot behavior rather than the world.
+
+**Still open, neither adopted nor cut.** Its Title vocabulary being a closed set, so a novel act files under the nearest existing label and the label then shapes what the character becomes. Being precise about magnitude and vague about kind. Being unable to say why, since it reports rather than reasons.
+
+**Delivery, ruled by Gabriel 2026-08-15: spread across several vectors, and the players learn indirectly.** The GM is told plainly somewhere; a player should arrive at it by noticing. Vectors available, several of which already exist as separate plans:
+
+- **Found logs and the dead cultivator's journal**, which is his own example and the strongest register for this.
+- **The Initiate's Manual is already specified as subtly wrong in two or three places.** Those errors now have a cause rather than being a conceit: the Manual is wrong because the System is wrong in these specific ways, so a table that catches an error in the Manual has caught a quirk. Whichever quirks land should be the Manual's planted errors.
+- **The survivors' forum handout** (brainstorm 2026-08-15), where people compare notes on strange System behavior, which is how a real community would find these.
+- **Quest and Mandate text that misdescribes its own objective**, the sleeping-cave shape.
+- **Bestiary entries whose System classification does not match the creature.**
+- **A `lore` vignette**, and NPC dialogue.
+
+**Open problem: why the System cannot do it itself.** Gabriel flagged this as the thing to be careful about on the reconstruction quests. A candidate answer that is already canon: **VE is Aether still wearing the shape of whatever held it last** (2026-08-12), so information rides on energy that has been through bodies, and the System reads residue but cannot travel to it. Its limit is embodiment rather than intelligence. It has no hands, which is why it issues quests instead of acting, and players are the hands. Needs Gabriel's ruling; it would also retroactively explain the genre convention of Systems that ask.
+
+**Watch: wanting versus judging.** R2 moved the Introduction from a System that *decides* what you are becoming to one that *observes*, and the HVE chapter's stance is that it records conduct without judging it. A System with wants is compatible with that, since wanting an artifact recovered is not an opinion about who you are, but the line should be drawn deliberately rather than discovered later.
+
+**Available, if version drift is adopted properly:** it composes with diegetic errata (brainstorm 2026-08-15), where balance changes ship as in-fiction System patches. An old sector that never received the patch is a sector running the previous edition's rules, which a GM could run as written.
 
 **Stage 3: delivery into the book.** The color vignettes (Tier 3 item 14) carry most of it. Gabriel wants the Quests chapter and the Volatile Artifacts section each opened with a story, ideally related ones; the strong version is one recurring survivor whose story threads every chapter opener. The Breakthrough gift box and the marked chapter story slots land here.
 
@@ -362,6 +379,8 @@ Why it fits: the "What Can Be Seen" chapter already defines what the System reve
 **Sequencing, per Gabriel 2026-08-15:** it goes **after the worldbuilding pass**, because the System's voice and personality are settled there and the Manual is written entirely in that voice. It **ships with the playtest kit (Milestone 2)**, which is a scope addition to that milestone. The dependency is on **Stage 1 of the worldbuilding pass** (the voice) rather than on the whole pass, and the pass was reordered the same day to put the voice first for exactly this reason.
 
 Open when it starts: how long (a pamphlet or a real book), whether the deliberate errors are listed for the GM in an appendix or left for the GM to find, whether it carries the Table Kit sheets or the main book keeps them, and whether it is a separate PDF or a section of the same file with its own build target.
+
+**Updated 2026-08-15:** the deliberate errors are no longer free choices. The System's adopted quirks (worldbuilding Stage 2) are what the Manual should be wrong about, so catching an error in the Manual is how a table discovers a quirk. This also settles the appendix question in favor of listing them for the GM, since the GM has to be told plainly what the players are meant to find indirectly.
 
 ### Kickstarter stretch goals and high-tier rewards
 
