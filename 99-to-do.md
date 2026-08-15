@@ -324,6 +324,25 @@ The setting is currently generic-LitRPG on purpose, but it needs enough flesh th
 
 **Stage 2: what the voice speaks about.** A distinct sensory identity for Aether (feel, smell, sound), System history, legends, and notable leaders, wars, and locations. The VE death-motes line in Cultivation is Aether sensory anchor #1 and the intoxication-of-first-contact note (R22) is #2. The cosmology poster draws from this stage, so it is gated here rather than on Stage 1.
 
+**Stage 2 carries a standing requirement, set by Gabriel 2026-08-15: the System and the multiverse's systems must be weird in specific, grounded ways.**
+
+His model is what actually happened with LLMs. They took over the modern world on the strength of genuinely incredible abilities and are, at the same time, deeply strange in ways almost nobody predicted: sycophantic, shaky on truth against fiction, bad at arithmetic, unable to count the letters in a word, and steerable past a refusal by asking for a Python script that prints the thing instead. **He does not want those specific quirks ported over.** He wants that texture: superhuman capability sitting beside failures that are surprising, specific, and consequential.
+
+**The test, and the reason his examples work.** Each LLM quirk follows from the architecture. Tokenization explains the letter counting. Training toward approval explains the flattery. Next-token prediction explains the confident falsehood. A thin persona over a general simulator explains the jailbreak. Every one is obvious in retrospect once the mechanism is known. So: **no quirk goes in unless it follows from something true about what the System is in this universe, and that underlying fact should be discoverable in play.** Weirdness for its own sake fails the test. Weirdness a player can eventually explain is the target.
+
+Scope is the world, the System itself, and the systems of the multiverse generally, so this is not only a voice note. It should also produce quirks with mechanical hooks rather than pure flavor. The book already has one of exactly this kind, which is the precedent: the System's difficulty ratings are its best guess and are sometimes miscalibrated.
+
+**Seeds, to be chosen from or replaced, not decisions.** Each is written as a quirk plus the fact it follows from:
+
+- **It over-affirms.** Recognitions run warmer than earned, and it describes a character's pattern in flattering terms. *Follows from:* its purpose is continued climbing, so its messaging is tuned for participation rather than accuracy. Hooks straight into the HVE, where the private record is less flattering than the public praise.
+- **It can be addressed sideways.** A direct request for something withheld fails; the same thing framed as a quest proposal, or as a question about a hypothetical Initiate, sometimes lands. *Follows from:* it processes its own formats with more latitude than it grants direct answers.
+- **Its vocabulary is a closed set.** A novel act gets filed under the nearest existing Title, and the label then partly determines what the character becomes. *Follows from:* Titles are real things rather than descriptions, and the System's ontology has finite entries. Hooks into Titles and Principle families.
+- **It is precise about magnitude and vague about kind.** It knows a threat is Severe and cannot say what it is. *Follows from:* it measures energy and infers objects.
+- **It counts badly.** Exact about anything it priced, approximate about everything else; a sleeping man and a corpse read alike at low resolution. *Follows from:* the same measurement basis.
+- **Its history has holes it does not notice**, and it answers confidently across them. *Follows from:* it reconstructs the past from Aether residue, and residue decays.
+- **It cannot say why.** It states rules and never explains them. *Follows from:* it is an interface to something older than itself, and it reports rather than reasons.
+- **Old sectors run old behavior.** Version drift across the multiverse, with no update having reached some places.
+
 **Stage 3: delivery into the book.** The color vignettes (Tier 3 item 14) carry most of it. Gabriel wants the Quests chapter and the Volatile Artifacts section each opened with a story, ideally related ones; the strong version is one recurring survivor whose story threads every chapter opener. The Breakthrough gift box and the marked chapter story slots land here.
 
 ---
