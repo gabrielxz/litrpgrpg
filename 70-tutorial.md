@@ -62,7 +62,7 @@ The zone count in Phase 4 is the dial. Two zones fit two sessions. A group that 
 
 By the end of the tutorial, every player should have:
 
-- Reached **Level 4 or 5**, or Level 6 if they took every fight and every opportunity.
+- Reached **Level 4**, or Level 5 if they took every fight and every opportunity.
 - Survived a Clash that would have killed them, by giving up their next turn to do it.
 - Seen a natural die land at or above the Volatility Threshold, and watched it explode, mark a Proficiency, or both.
 - At least one **Mark** on the sheet.
@@ -81,10 +81,10 @@ If any of these is missing at the end of the last session, improvise to deliver 
 |---|---|
 | 1: The Threshold | The System's voice. The probe. |
 | 2: The Violent Arrival | The Clash. Force. Beats. Zones. **Surge. Yield.** First kill. First VE. First scavenged gear. |
-| 3: The Recycling Node | System status notifications. The Quest UI. The Party. Scarcity. The shard economy. |
-| 4: The Field of Ruins | **The top of the die** (Volatility, Exceptional Success, Marks). **Driven Back.** Aura Pressure. Saturation. Routine Mastery. Shards in use. Personal Opportunities. The first Battle Memory. |
+| 3: The Recycling Node | System status notifications. The Quest UI. The Party. Scarcity. The shard economy. **Consolidation.** |
+| 4: The Field of Ruins | **The top of the die** (Volatility, Exceptional Success, Marks). **Driven Back.** Aura Pressure. Saturation. **Leveling. Stat allocation.** Routine Mastery. Shards in use. Personal Opportunities. The first Battle Memory. |
 | 5: The Convergence Crisis | The first Mandate. **Cornered.** Boss-tier combat. Sacrifice as a 3.0 intensity choice. |
-| 6: First Recognition | Consolidation. Leveling. Stat allocation. Titles. Affinity Notices. Hidden Quest reveals. The Stinger. |
+| 6: First Recognition | Titles. Affinity Notices. Hidden Quest reveals. The Stinger. |
 
 Teach each system when the schedule brings it up, inside a moment that makes it matter. When a player asks "how does combat work," a good first answer is *"roll d100, add your Force, I'll tell you what happens"*; detail can wait until the table wants it. If confusion is costing fun, stop and explain.
 
@@ -391,11 +391,11 @@ This frames Phase 4. Players now have a quest log with active entries and visibl
 
 Close Session 1 with the party camping and declaring their first Consolidation (Cultivation chapter). Walk through the mechanic once: minimum 1 hour, and every hour clears one fifth of Tolerance and restores one fifth of Max HP, with Aether refilling when the first full hour completes.
 
-At starting Tolerances (around 45 VE) most characters are already carrying more than they can hold. Narrate the Saturation symptoms as they settle in, skin hot and prickly, hands trembling at rest, and the relief as the overnight rest processes the load. Eight hours clears more than a full tank and a half, enough for all but the heaviest hauls.
+Session 1 pays each character 20 to 35 VE against a starting Tolerance of 45 to 60, so nobody is Saturated yet. Four hours clears the load. Narrate the tank emptying, the wounds closing, and the Aether returning at the first full hour. Saturation is taught in Phase 4, where it becomes near-universal.
 
-Most characters wake still Level 1, a fight or two short of the threshold. A character who crosses it levels mid-rest, and that is the moment to walk them through the 3+2 stat allocation (Progression chapter) at the table.
+Characters wake still Level 1, about a third of the way to the threshold. The first level lands at the next Consolidation, the camp between the Field of Ruins zones, and that is where the 3+2 stat allocation (Progression chapter) gets walked through at the table.
 
-**Session 1 typically leaves each character most of the way to Level 2** and roughly four HVE-logged choices each. If the group has energy left, push into the first zone of Phase 4 and end the session inside it.
+**Session 1 typically leaves each character about a third of the way to Level 2** and roughly four HVE-logged choices each. If the group has energy left, push into the first zone of Phase 4 and end the session at the camp that follows it.
 
 ---
 
@@ -403,7 +403,7 @@ Most characters wake still Level 1, a fight or two short of the threshold. A cha
 
 **Purpose.** Expose players to the breadth of possible futures. Seed affinities across martial, arcane, survival, and social paths. Create simultaneous incentives that fracture the party and produce individual data.
 
-**Pacing.** Roughly 150 minutes across two zones, split across the end of Session 1 and the start of Session 2.
+**Pacing.** Roughly 150 minutes across two zones, split across the end of Session 1 and the start of Session 2. The camp between the zones is where that break falls.
 
 ### Two Zones, Four Written
 
@@ -550,6 +550,22 @@ The building was occupied until recently. Bedding, ration wrappers, and a scrawl
 
 ---
 
+### The Camp Between Zones
+
+The party camps and Consolidates between the two zones. This is where the session break falls, and it is the rest the phase is built around.
+
+One zone pays about a level's worth of VE, which lands a character between one and two times their Tolerance. Two zones carried at once reaches three times Tolerance, which is Critical, and a party that walks into the second zone still full is rolling against collapse while they fight. The camp is what keeps the load in the band where Saturation is a pressure the players feel rather than a clock running against them.
+
+**What lands here:**
+
+- **The first level, for most characters.** Walk the player through the 3+2 stat allocation (Progression chapter) at the table, one player at a time. This is the first time the sheet changes from play, and it is worth the minutes.
+- **Tolerance re-derives** at the first full hour, along with the three Saturation thresholds, so anyone who put points into Fortitude or Heart can hold more going into the second zone.
+- **Battle Memories** may be meditated on here. Holding them for the rest at the end of the Ruins puts the first crystallization at the phase's close, where it has room to run slowly.
+
+**The choice is the point.** A party that wants the second zone before the world moves can break camp saturated. Pushing on past Tolerance logs **Hunger 1.0**; stopping until the tank clears logs **Restraint 1.0**. Say what their bodies are telling them and let them decide.
+
+---
+
 ### The Arriving Initiates
 
 **This encounter finds the party wherever they are.** Run it partway through their second zone, or at camp between zones. It does not live in a zone, because the social test is not optional and no party should miss it by choosing the wrong direction.
@@ -658,7 +674,7 @@ Do not announce thresholds. Narrate symptoms:
 - *"Your muscles cramp. Something under your breastbone flexes in ways that feel wrong."*
 - *"You taste copper. Your hands tremble when you stop moving."*
 
-Apply the penalties (−10 at Mild, −25 at Heavy, plus HP bleed at Heavy and above). The character then chooses: push on, or stop and consolidate. Both choices are loaded. Pushing past Heavy logs **Hunger 2.0**. Withdrawing to Consolidate logs **Restraint 1.0**.
+Apply the penalties (−10 at Mild, −25 at Heavy). The character then chooses: push on, or stop and consolidate. Both choices are loaded. Pushing past Heavy logs **Hunger 2.0**. Withdrawing to Consolidate logs **Restraint 1.0**.
 
 ### Consolidation and the End of the Ruins
 
@@ -795,6 +811,8 @@ If the party is doing badly, intervene in the fiction rather than the math. A pi
 
 The tutorial should end with the party through. The path should feel earned.
 
+**VE Reward.** The Warden and anything killed on the run pay their tiers as they fall. The Mandate itself pays on completion, past the gate, and at about a level's worth it is the largest single award in the tutorial. Paying it at the announcement instead puts the party three times past Tolerance for the crossing, with the collapse clock running through the climax.
+
 ---
 
 ## Phase 6: First Recognition
@@ -850,7 +868,7 @@ Four samples calibrated to common tutorial archetypes. Customize the content to 
 >
 > Hidden Quest revealed: *"Ten-Slayer." Progress: 4/10.*
 >
-> VE awaiting refinement: 430. Projected advancement: Level 5.
+> VE awaiting refinement: 331. Projected advancement: Level 5.
 
 **Method/Restraint** (observed, planned, helped others):
 
@@ -863,7 +881,7 @@ Four samples calibrated to common tutorial archetypes. Customize the content to 
 > Title granted: **Patient Gardener** (Achievement).
 > Hidden Quest revealed (post-completion): *"The First Mercy." Complete. Reward: +1 IP.*
 >
-> VE awaiting refinement: 400. Projected advancement: Level 5.
+> VE awaiting refinement: 260. Projected advancement: Level 4.
 
 **Will/Accord** (led the group, negotiated, rallied):
 
@@ -876,7 +894,7 @@ Four samples calibrated to common tutorial archetypes. Customize the content to 
 > Title granted: **Voice of Decision** (Achievement, for breaking the deadlock at the Recycling Node).
 > Bestowed title: **The Hand That Reached**.
 >
-> VE awaiting refinement: 410. Projected advancement: Level 5.
+> VE awaiting refinement: 274. Projected advancement: Level 5.
 
 **Method/Freedom** (experimented, broke rules, escaped):
 
@@ -891,11 +909,11 @@ Four samples calibrated to common tutorial archetypes. Customize the content to 
 >
 > Hidden Quest revealed: *"The One Who Walked Through." In progress (1/3 sealed locations entered).*
 >
-> VE awaiting refinement: 290. Projected advancement: Level 4.
+> VE awaiting refinement: 230. Projected advancement: Level 4.
 
 ### The Post-Gate Consolidation
 
-Levels arrive the way they always will: at Consolidation, as processed VE crosses each threshold (Progression chapter). This rest is the tutorial's longest. Real ground, no clock, and most of the tutorial's VE still sitting unrefined in the tank. Let it run as long as the fiction allows, which here is a full day or more of camp, and process the backlog.
+Levels arrive the way they always will: at Consolidation, as processed VE crosses each threshold (Progression chapter). This rest is the tutorial's longest. Real ground, no clock, and about half the tutorial's VE still sitting unrefined in the tank. Everyone comes through the gate deep into Critical Saturation, so if the recognition scene runs an hour in the fiction, someone collapses into an involuntary Consolidation before they choose to sit down. Let it happen to whoever it happens to; it costs a temporary point and it is the body making the decision the character was slow to make. Let it run as long as the fiction allows, which here is a full day or more of camp, and process the backlog.
 
 For each level as it lands, allocate **5 stat points**: 3 assigned by the GM from the player's tutorial behavior (Behavioral Stat Mapping, Progression chapter) and 2 chosen freely.
 
@@ -992,13 +1010,15 @@ VE awards are relative to the earner's level (Cultivation, "Awarding VE"), so th
 | **Phase** | **Progress per Character** | **Source** |
 |---|---|---|
 | 1: The Threshold | none | Pre-combat. |
-| 2: The Violent Arrival | about a third of a level | Micro-encounter reward plus the arrival kill plus scavenge. |
+| 2: The Violent Arrival | about a quarter of a level | Micro-encounter reward plus the arrival kill plus scavenge. |
 | 3: The Recycling Node | a peer kill | Q-001. |
 | 4: The Field of Ruins | 1½ to 2½ levels | Two zone surveys (a third of a level each) + 3–6 kills + a Hidden Opportunity + the Arriving Initiates (half a level) + a Personal Opportunity (0 to a full level). |
 | 5: The Convergence Crisis | 1 to 1½ levels | Mandate completion, the Warden, and surviving the gate. |
 | 6: First Recognition | half a level | Completion bonus plus Hidden Quest reveals. |
 
-**Total: three to four and a half levels**, processed across three Consolidations with the bulk of it at the post-gate rest. Characters start at Level 1, so most finish between **Level 4 and Level 5**, and a party that took every fight and every opportunity reaches Level 6.
+**Total: three to four and a half levels' worth**, processed across four Consolidations: the end of Session 1, the camp between the Field of Ruins zones, the end of the Ruins, and the long rest past the gate, which carries the bulk of it.
+
+A level's worth earned is not a level gained. Awards are priced at the level the character holds when they earn them, and thresholds climb as they refine, so VE carried across several phases buys slightly less than it would have bought if refined promptly. Over the tutorial that gap runs 5 to 10 percent. Characters start at Level 1, so most finish at **Level 4** with a good part of Level 5 banked, and a character who took every fight, the optional third zone, and every opportunity finishes at **Level 5**.
 
 **The Mandate is the biggest single award and it should be.** Surviving a sector dissolution is the arc that defined these sessions, and the Awarding VE guidance says such an arc is worth a level or more. Do not price it as a quest; price it as the thing the whole tutorial was.
 

@@ -219,7 +219,7 @@ The philosophical/cultivation track. A character earns **Insight Points** by act
 
 **Slots are deliberately scarce: one at F-Grade, a second unlocked at the E-Grade Breakthrough, lifetime maximum two.** The design intent was "few and deep," modeled on the one-or-two-Dao shape of the source fiction.
 
-A Principle grants **Applications**: active abilities costing Aether (a Seed Application costs 10 Aether at F-Grade, an early Fragment Application 15). Cost is fixed permanently at the Grade it was forged at, and every Application forges at F-Grade when granted. Domains require a D-Grade body.
+A Principle grants **Applications**: active abilities costing Aether. Cost is set by the Application's tier and never by Grade: Seed 10, early Fragment 15, Infusion free, Domain 3,000 plus 500 per round. Scale follows the character's current Grade, so an Application grows with the body. Domains require a D-Grade body.
 
 Practically: a character might have their first Application somewhere in the Level 3 to 6 range, and will have one or two active abilities by Level 9.
 
