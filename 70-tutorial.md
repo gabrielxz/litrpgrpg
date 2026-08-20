@@ -21,7 +21,7 @@ Players begin with **whatever was on their person at the moment of Integration**
 
 - [ ] Print or digitize the Grade Reference Card (the Quick Reference).
 - [ ] Pull stat blocks from the Bestiary: Glow-Mote Swarm, Husk Crawler, Frenzy Rat, Pre-System Brigand, Snarljaw, Alpha Snarljaw, Glow-Stalker, Training Sentry, Husk Sentinel, Fragment Wraith, Corrupted System Warden.
-- [ ] Pre-write 5–7 private probe cards: the one-line sensory probes from Phase 1's probe table, one per player plus spares.
+- [ ] Copy out the seven probes from Phase 1, one card each, and pick which player gets which.
 - [ ] Pre-write the Personal Opportunity cards (Phase 4), one per player. Hand these over during play; never read them aloud.
 - [ ] Set up the Quest UI: a shared digital quest log (Discord pinned, Google Doc, VTT module). Each player has a private channel.
 - [ ] Read the Titles and System Quests chapters once through. Be ready to issue the first Mandate in Phase 5 and the first Achievement Titles in Phase 6.
@@ -136,15 +136,33 @@ Before the void breaks, each player gets one private sensory event. Hand it over
 
 Log each player's response at **0.5 intensity (Minor)** on the axis indicated.
 
-| **Probe** | **Choice** | **HVE Read** |
-|---|---|---|
-| Somewhere below you something is repeating. Three sounds, the same three, over and over, and the third one is your name said wrong. | Go toward it / Hold still and work out the pattern. | Force / Method |
-| You are holding something. You cannot see your hands, but you can feel it: small, warm, and moving. | Hold on / Let go / Find out what it is. | Restraint / Restraint / Hunger |
-| A column of symbols stands in front of you. You can read it, and you are already forgetting the top line by the time you reach the bottom. | Read faster / Keep one line and let the rest go / Stop reading. | Force / Method / Restraint |
-| The void shows you the last thirty seconds before you arrived here, from outside your own body, as though you were standing across the room. It plays again. Then again. | Watch for what you missed / Look away / Try to change what you do in it. | Method / Restraint / Will |
-| Somebody else is here. You cannot see them, but the pressure changes when they move, the way a room changes when someone comes in behind you. | Say something / Put yourself between them and the way out / Stay still and track them. | Accord / Will / Method |
-| There is a current here. It has been carrying you since you arrived and you have only just noticed. | Set yourself against it / Let it take you / Try to steer. | Control / Freedom / Will |
-| A name arrives in your mouth, fully formed, and it is not yours. You know how to say it. You know it belongs to someone. | Say it / Hold it / Refuse it. | Accord / Restraint / Freedom |
+1. *Somewhere below you something is repeating. Three sounds, the same three, over and over, and the third one is your name said wrong.*
+
+    Go toward it → **Force**. Hold still and work out the pattern → **Method**.
+
+2. *You are holding something. You cannot see your hands, but you can feel it: small, warm, and moving.*
+
+    Hold on or let go → **Restraint**. Find out what it is → **Hunger**.
+
+3. *A column of symbols stands in front of you. You can read it, and you are already forgetting the top line by the time you reach the bottom.*
+
+    Read faster → **Force**. Keep one line and let the rest go → **Method**. Stop reading → **Restraint**.
+
+4. *The void shows you the last thirty seconds before you arrived here, from outside your own body, as though you were standing across the room. It plays again. Then again.*
+
+    Watch for what you missed → **Method**. Look away → **Restraint**. Try to change what you do in it → **Will**.
+
+5. *Somebody else is here. You cannot see them, but the pressure changes when they move, the way a room changes when someone comes in behind you.*
+
+    Say something → **Accord**. Put yourself between them and the way out → **Will**. Stay still and track them → **Method**.
+
+6. *There is a current here. It has been carrying you since you arrived and you have only just noticed.*
+
+    Set yourself against it → **Control**. Let it take you → **Freedom**. Try to steer → **Will**.
+
+7. *A name arrives in your mouth, fully formed, and it is not yours. You know how to say it. You know it belongs to someone.*
+
+    Say it → **Accord**. Hold it → **Restraint**. Refuse it → **Freedom**.
 
 After each player commits, give them one private System line calibrated to what they did. Keep them short, clinical, and a little wrong in a way they cannot place:
 

@@ -134,11 +134,12 @@
 
 % Read Aloud — boxed narration the GM says out loud, titled so it can be
 % found while scanning a page mid-session. White ground and a heavy dark
-% frame so it survives grayscale e-ink.
+% frame so it survives grayscale e-ink. Deliberately NOT breakable: a
+% read-aloud passage that splits across a page turn cannot be read cold,
+% so keep each block short enough to sit on one page.
 \newtcolorbox{readaloud}{
   enhanced,
-  breakable,
-  colback=white,
+  colback=black!8,
   colframe=black!75,
   coltitle=white,
   colbacktitle=black!75,
