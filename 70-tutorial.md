@@ -391,7 +391,7 @@ This frames Phase 4. Players now have a quest log with active entries and visibl
 
 Close Session 1 with the party camping and declaring their first Consolidation (Cultivation chapter). Walk through the mechanic once: minimum 1 hour, and every hour clears one fifth of Tolerance and restores one fifth of Max HP, with Aether refilling when the first full hour completes.
 
-Session 1 pays each character 20 to 35 VE against a starting Tolerance of 45 to 60, so nobody is Saturated yet. Four hours clears the load. Narrate the tank emptying, the wounds closing, and the Aether returning at the first full hour. Saturation is taught in Phase 4, where it becomes near-universal.
+Session 1 pays each character 35 to 45 VE against a starting Tolerance of 45 to 60, so nobody is Saturated yet. Four hours clears the load. Narrate the tank emptying, the wounds closing, and the Aether returning at the first full hour. Saturation is taught in Phase 4, where it becomes near-universal.
 
 Characters wake still Level 1, about a third of the way to the threshold. The first level lands at the next Consolidation, the camp between the Field of Ruins zones, and that is where the 3+2 stat allocation (Progression chapter) gets walked through at the table.
 
@@ -469,7 +469,7 @@ A ruined arena from a dead warrior civilization. Stone tiers step down to a sand
 
 **HVE Reads.** Who charges in (Force)? Who watches first (Method)? Who claims the axe (Hunger/Will)? Who positions to protect a less-armored ally (Accord)? Who wakes the hardest construct on purpose (Force/Hunger)?
 
-**VE Reward.** Each Sentry is a Moderate kill (the character's Peer Kill value). Surveying the zone completes a share of Q-002, worth about a third of a level across the whole quest.
+**VE Reward.** Each Sentry is a Moderate kill (the Peer Kill value, 10 VE at F-Grade). Surveying the zone completes a share of Q-002, worth about a third of a level across the whole quest.
 
 ---
 
@@ -868,7 +868,7 @@ Four samples calibrated to common tutorial archetypes. Customize the content to 
 >
 > Hidden Quest revealed: *"Ten-Slayer." Progress: 4/10.*
 >
-> VE awaiting refinement: 331. Projected advancement: Level 5.
+> VE awaiting refinement: 265. Projected advancement: Level 5.
 
 **Method/Restraint** (observed, planned, helped others):
 
@@ -881,7 +881,7 @@ Four samples calibrated to common tutorial archetypes. Customize the content to 
 > Title granted: **Patient Gardener** (Achievement).
 > Hidden Quest revealed (post-completion): *"The First Mercy." Complete. Reward: +1 IP.*
 >
-> VE awaiting refinement: 260. Projected advancement: Level 4.
+> VE awaiting refinement: 205. Projected advancement: Level 4.
 
 **Will/Accord** (led the group, negotiated, rallied):
 
@@ -894,7 +894,7 @@ Four samples calibrated to common tutorial archetypes. Customize the content to 
 > Title granted: **Voice of Decision** (Achievement, for breaking the deadlock at the Recycling Node).
 > Bestowed title: **The Hand That Reached**.
 >
-> VE awaiting refinement: 274. Projected advancement: Level 5.
+> VE awaiting refinement: 255. Projected advancement: Level 5.
 
 **Method/Freedom** (experimented, broke rules, escaped):
 
@@ -909,7 +909,7 @@ Four samples calibrated to common tutorial archetypes. Customize the content to 
 >
 > Hidden Quest revealed: *"The One Who Walked Through." In progress (1/3 sealed locations entered).*
 >
-> VE awaiting refinement: 230. Projected advancement: Level 4.
+> VE awaiting refinement: 200. Projected advancement: Level 4.
 
 ### The Post-Gate Consolidation
 
@@ -1005,7 +1005,7 @@ Confirm each mechanic was introduced before the tutorial ends.
 
 ## GM Reference: Tutorial Reward Ledger
 
-VE awards are relative to the earner's level (Cultivation, "Awarding VE"), so this ledger is denominated in levels rather than in VE. Twelve peer kills, or their equivalent, carry a character one level.
+This ledger is denominated in levels. A level is 125 VE at F-Grade (Cultivation, "Awarding VE"), or twelve and a half peer kills.
 
 | **Phase** | **Progress per Character** | **Source** |
 |---|---|---|
@@ -1018,7 +1018,7 @@ VE awards are relative to the earner's level (Cultivation, "Awarding VE"), so th
 
 **Total: three to four and a half levels' worth**, processed across four Consolidations: the end of Session 1, the camp between the Field of Ruins zones, the end of the Ruins, and the long rest past the gate, which carries the bulk of it.
 
-A level's worth earned is not a level gained. Awards are priced at the level the character holds when they earn them, and thresholds climb as they refine, so VE carried across several phases buys slightly less than it would have bought if refined promptly. Over the tutorial that gap runs 5 to 10 percent. Characters start at Level 1, so most finish at **Level 4** with a good part of Level 5 banked, and a character who took every fight, the optional third zone, and every opportunity finishes at **Level 5**.
+Characters start at Level 1, so most finish at **Level 4** with a good part of Level 5 banked, and a character who took every fight, the optional third zone, and every opportunity finishes at **Level 5**.
 
 **The Mandate is the biggest single award and it should be.** Surviving a sector dissolution is the arc that defined these sessions, and the Awarding VE guidance says such an arc is worth a level or more. Do not price it as a quest; price it as the thing the whole tutorial was.
 

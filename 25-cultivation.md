@@ -10,7 +10,7 @@ Characters do not gain traditional "Experience Points." They accumulate **Volati
 
 **Earn VE → watch your gauge → decide to push or rest → Consolidate → level up.**
 
-Joe has FOR 7 and HRT 5, so his VE Tolerance is 60. A morning of hunting earns him 35 VE; he is fine. Then the party finds the den, and Joe decides to risk it: two more fights push him to 70 VE, past his Tolerance, and now Joe feels uncomfortably full of energy: his skin prickles, his hands won't stay still, and everything is a little harder than it should be (Saturation, below: −10 to everything until he processes it). The party makes camp and Joe Consolidates. An hour in, his Aether is back. By the sixth hour the whole load is refined: his wounds are closed, the too-full feeling is gone, and all 70 VE is permanent progress toward his next level.
+Joe has FOR 7 and HRT 5, so his VE Tolerance is 60. A morning of hunting earns him 40 VE; he is fine. Then the party finds the den, and Joe decides to risk it: two more fights, one of them a Hard kill, push him to 70 VE, past his Tolerance, and now Joe feels uncomfortably full of energy: his skin prickles, his hands won't stay still, and everything is a little harder than it should be (Saturation, below: −10 to everything until he processes it). The party makes camp and Joe Consolidates. An hour in, his Aether is back. By the sixth hour the whole load is refined: his wounds are closed, the too-full feeling is gone, and all 70 VE is permanent progress toward his next level.
 
 ### The Pressure Gauge
 
@@ -42,7 +42,7 @@ A character carrying more than a full Tolerance takes proportionally longer: fiv
 
 During the rest:
 
-- **Growth:** Processed VE converts into permanent level progress. When cumulative processed VE crosses the next threshold on the VE Chart, the character levels up on the spot, mid-rest.
+- **Growth:** Processed VE converts into permanent level progress. When processed VE reaches the cost of the next level, the character levels up on the spot, mid-rest.
 - **Aether:** The pool refills completely when the first full hour completes. This is the only source of Aether regeneration; Aether does not recover in combat, between combats, or through passive time. See Core Mechanics, "The Aether System."
 - **Artifacts:** Items that recharge "at the next Consolidation" (the Reactive Buckler and similar) reset when the first full hour completes, on the same clock as Aether.
 - **Interruption:** The character keeps every completed hour of processing and recovery. Unprocessed VE stays in the tank and remains subject to Saturation.
@@ -52,38 +52,15 @@ During the rest:
 
 **Battle Memory Meditation:** Characters holding a Battle Memory Card process it during Consolidation. The System returns a cryptic vision and awards Insight Points; see The Principle System, and the vision procedure for every run mode in The System AI chapter.
 
-### Leveling: The VE Chart
+### Leveling: The Cost of a Level
 
-Levels are numbered continuously across Grades: **Levels 1–25 are F-Grade, 26–50 are E-Grade, 51–75 are D-Grade**, and so on. Each Grade spans 25 levels. The thresholds climb steeply, but VE awards climb with them (see "Awarding VE" below), so the pace of leveling holds steady across the Grade.
+Levels are numbered continuously across Grades: **Levels 1–25 are F-Grade, 26–50 are E-Grade, 51–75 are D-Grade**, and so on. Each Grade spans 25 levels.
 
-| Level | VE to Next | Cumulative VE | Peer Kill |
-|---|---|---|---|
-| 1 → 2 | 100 | 100 | 8 |
-| 2 → 3 | 120 | 220 | 10 |
-| 3 → 4 | 144 | 364 | 12 |
-| 4 → 5 | 173 | 537 | 14 |
-| 5 → 6 | 207 | 744 | 17 |
-| 6 → 7 | 249 | 993 | 20 |
-| 7 → 8 | 299 | 1,292 | 25 |
-| 8 → 9 | 358 | 1,650 | 30 |
-| 9 → 10 | 430 | 2,080 | 35 |
-| 10 → 11 | 516 | 2,596 | 40 |
-| 11 → 12 | 619 | 3,215 | 50 |
-| 12 → 13 | 743 | 3,958 | 60 |
-| 13 → 14 | 892 | 4,850 | 70 |
-| 14 → 15 | 1,070 | 5,920 | 85 |
-| 15 → 16 | 1,284 | 7,204 | 100 |
-| 16 → 17 | 1,541 | 8,745 | 120 |
-| 17 → 18 | 1,849 | 10,594 | 150 |
-| 18 → 19 | 2,219 | 12,813 | 180 |
-| 19 → 20 | 2,662 | 15,475 | 210 |
-| 20 → 21 | 3,195 | 18,670 | 260 |
-| 21 → 22 | 3,834 | 22,504 | 310 |
-| 22 → 23 | 4,601 | 27,105 | 370 |
-| 23 → 24 | 5,521 | 32,626 | 440 |
-| **24 → 25 (F cap)** | **6,625** | **39,251** | **530** |
+> **A level costs 125 VE at F-Grade**, and ×10 for each Grade above: 1,250 at E-Grade, 12,500 at D-Grade.
 
-**Grade Breakthrough:** At Level 25 the character cannot advance through ordinary Consolidation. Entering E-Grade (and Level 26) requires a **Grade Breakthrough**, a deliberate ritual with its own chapter. It is **not** an automatic level-up. The E-Grade span climbs the same curve at ×10 the cost; the numbers live in the GM reference at the end of this chapter.
+Every level inside a Grade costs the same. Twelve and a half peer kills carry a character from one F-Grade level to the next, and reaching the F-Grade cap at Level 25 takes 3,000 VE in all.
+
+**Grade Breakthrough:** At Level 25 the character cannot advance through ordinary Consolidation. Entering E-Grade (and Level 26) requires a **Grade Breakthrough**, a deliberate ritual with its own chapter. It is **not** an automatic level-up. The E-Grade span costs ×10 per level.
 
 At the cap, VE keeps accumulating with nowhere to go, and stored VE counts in full toward Breakthrough Ignition. Hunting at the cap is banking fuel for the ritual; Saturation applies to the stockpile as normal, which is why the last stretch of the charge gets gathered fast, on site.
 
@@ -101,43 +78,43 @@ The GM awards VE from multiple sources. The baseline rates below are tuned to F-
 
 ### Combat Kills
 
-**A kill is priced against the killer, not against a fixed table.** Difficulty tiers already describe an enemy relative to the party: a Moderate enemy is a peer, a Peak enemy is a monster. The award follows the same logic, so a peer fight is worth the same fraction of a level at Level 2 and at Level 22.
+**A kill is priced by what it was to the people who fought it.** Difficulty tiers already describe an enemy relative to the party: a Moderate enemy is a peer, a Peak enemy is a monster. The award follows the same logic, so a peer fight is worth the same fraction of a level at Level 2 and at Level 22.
 
-Read the **Peer Kill** value for the character's level off the VE Chart above. That is what one Moderate enemy of their own Grade pays them. Every other tier is a multiple of it:
+A **Peer Kill** is worth **10 VE** at F-Grade, and ×10 for each Grade above. That is what one Moderate enemy of the character's own Grade pays. Every other tier is a multiple of it:
 
-| **Difficulty** | **Award** | **At Level 1** | **At Level 24** |
-|---|---|---|---|
-| Trivial | Peer Kill × 0.2 | 2 | 105 |
-| Easy | Peer Kill × 0.5 | 4 | 265 |
-| Moderate (peer) | Peer Kill | 8 | 530 |
-| Hard | Peer Kill × 2 | 16 | 1,060 |
-| Severe | Peer Kill × 3 | 24 | 1,590 |
-| Peak | Peer Kill × 5 | 40 | 2,650 |
+| **Difficulty** | **Award** | **F-Grade VE** |
+|---|---|---|
+| Trivial | Peer Kill × 0.2 | 2 |
+| Easy | Peer Kill × 0.5 | 5 |
+| Moderate (peer) | Peer Kill | 10 |
+| Hard | Peer Kill × 2 | 20 |
+| Severe | Peer Kill × 3 | 30 |
+| Peak | Peer Kill × 5 | 50 |
 
-Twelve peer kills or two and a half Peak kills carry a character a level, at every level in the Grade.
+Twelve and a half peer kills, or two and a half Peak kills, carry a character a level.
 
 The transfer is visible: when something dies, its unrefined VE leaves the body as a brief drift of pale motes toward those who earned the kill.
 
-Cross-Grade kills multiply the award: read the victim's tier within its own Grade, take that multiple of your own Peer Kill, then multiply by ×10 for every Grade the victim sits above you. For a Level 10 character, an E-Grade peer-tier enemy pays 400 VE, most of a level, and an E-Grade Peak monster pays 2,000, roughly three levels on the spot. A successful punch-up against a higher-Grade opponent is one of the fastest ways to leap forward in progression.
+Cross-Grade kills multiply the award: read the victim's tier within its own Grade, take that multiple of your own Peer Kill, then multiply by ×10 for every Grade the victim sits above you. For an F-Grade character, an E-Grade peer-tier enemy pays 100 VE, most of a level, and an E-Grade Peak monster pays 500, four levels on the spot. A successful punch-up against a higher-Grade opponent is one of the fastest ways to leap forward in progression.
 
 The kill is priced by what died, whatever the method: a trap, an ambush, or a plan that ended the fight before it started pays the same as an open brawl. How the kill happened is logged by the Hidden Vector Engine; it is never priced. A defeated boss-tier encounter (rare, named, or designed for the moment) may be worth 1.5× the listed amount at the GM's discretion.
 
-**Who earns it.** Every character who meaningfully participated collects the award at their own level; there is nothing to pool and nothing to divide. Fighting, guarding, scouting the escape route, and controlling the field all participate; being elsewhere does not. The killing blow earns no extra share, and individual excellence reaches the System through the Hidden Vector Engine, titles, and Hidden Achievements instead. A party spread across levels is handled automatically, since each member reads their own row.
+**Who earns it.** Every character who meaningfully participated collects the full award; there is nothing to pool and nothing to divide. Fighting, guarding, scouting the escape route, and controlling the field all participate; being elsewhere does not. The killing blow earns no extra share, and individual excellence reaches the System through the Hidden Vector Engine, titles, and Hidden Achievements instead. A party spread across levels needs no adjustment to the award, though a creature that is a peer for the strongest character may be a Hard or Severe fight for the newest; price the tier per character when the spread runs that wide.
 
 ### Quest & Survival
 
-- **Session Survival:** 10 VE (F-Grade) per character per session, awarded for surviving meaningful play. Scales with Grade.
+- **Session Survival:** 5 VE (F-Grade) per character per session, awarded for surviving meaningful play. Scales with Grade.
 - **Quest Completion:** GM-assigned, and the useful unit is levels rather than VE. A small errand is worth a peer kill or two. A solid side quest runs a quarter to half a level. A quest arc that defined a stretch of play can be worth a full level or several, and should be when the table earned it.
 - **Hidden Achievements:** Rare, and worth being generous with: half a level to a full level, plus a Title or other narrative reward. These are the System noticing something, so let the number match the moment.
 
 ### Environmental Sources
 
-- **Ambient Absorption:** Characters passively absorb VE in energy-dense terrain: 5 VE/hour at Moderate density, 15 at High, 30 at Extreme. Such places should be rare and notable, and the award batches per visit ("a day working the ridge: 100 VE"). This is the absorption that funds Breakthrough Ignition.
-- **Treasure Cores & Affinity Crystals:** VE awarded once, when consumed. F-Grade examples: minor core (50 VE), refined core (150 VE), pristine core (400 VE). These are fuel and nothing else; the treasures that raise an Attribute permanently are a separate category in the Items chapter.
+- **Ambient Absorption:** Characters passively absorb VE in energy-dense terrain: 1 VE/hour at Moderate density, 3 at High, 6 at Extreme. Such places should be rare and notable, and the award batches per visit ("a day working the ridge: 20 VE"). This is the absorption that funds Breakthrough Ignition.
+- **Treasure Cores & Affinity Crystals:** VE awarded once, when consumed. F-Grade examples: minor core (5 VE), refined core (15 VE), pristine core (40 VE). These are fuel and nothing else; the treasures that raise an Attribute permanently are a separate category in the Items chapter.
 
 ### Pacing Reference (F-Grade)
 
-L1 → L2 requires 100 VE: roughly 7 Easy kills, 4 Moderate, or one strong quest plus survival. Reaching Level 10 requires 2,080 cumulative VE, across roughly 15–20 sessions of moderate-pace play. Reaching the F-Grade cap at Level 25 requires 39,251 VE; the final 3 levels alone account for nearly 17,000.
+L1 → L2 requires 125 VE: twelve or thirteen Moderate kills, twenty-five Easy ones, or a mix of hunting, quests, and survival over a session or two. Reaching Level 10 requires 1,125 VE, across roughly 15–20 sessions of moderate-pace play. Reaching the F-Grade cap at Level 25 requires 3,000 VE.
 
 Tracking every award as it lands is optional. Running totals between sessions, awarded in batches at rest points, keep the bookkeeping off the table for GMs who want it off; GMs who enjoy calling each number as it drops are not doing anything wrong.
 
@@ -145,13 +122,11 @@ Tracking every award as it lands is optional. Running totals between sessions, a
 
 Survival and quest completion guarantee baseline progression. Combat VE and environmental absorption are the accelerants. Characters who push into danger and time their rests well level faster than those who play it safe.
 
-### The Curve
+### The Cost of a Level
 
-The chart is generated by:
+> **VE to reach the next level = 125 × Grade Multiplier**
 
-> **VE to reach next level = 100 × 1.2^(level-within-Grade − 1) × Grade Multiplier**
-
-where level-within-Grade runs 1–24 inside each Grade and the Grade Multiplier is ×1 for F, ×10 for E, ×100 for D, the same multiplier used everywhere else in the system. The E-Grade chart is the F-Grade chart ×10, numbered 26–50. Class features, rare titles, or specific treasures may tweak the multiplier for individual characters, but the baseline curve applies to everyone.
+The Grade Multiplier is ×1 for F, ×10 for E, ×100 for D, the same multiplier used everywhere else in the system. Class features, rare titles, or specific treasures may tweak it for individual characters, but the baseline applies to everyone.
 
 The exact processing rate behind the one-fifth rule is (Raw FOR + Raw HRT) VE per hour, which equals one fifth of Tolerance by construction; the fifths phrasing is the same rule with no per-character arithmetic.
 

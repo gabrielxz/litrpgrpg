@@ -10,7 +10,7 @@ Every stat block lists only the values relevant for the Clash. Force values are 
 
 Most F-Grade enemies have Force values in the 04–40 range and HP in the 8–80 range. A mid-tier F-Grade enemy can threaten a starting character; by Level 10, the same enemy is trivial.
 
-**Difficulty tier maps to the Grade Reference Card and to VE reward**: a kill pays each participant the tier's multiple of their own Peer Kill (see Cultivation, "Awarding VE"). A "Moderate" enemy is balanced for a peer character (similar Force values); an "Easy" enemy is a clear underdog; a "Hard" enemy is a dangerous fight; a "Severe" or "Peak" enemy is boss-tier.
+**Difficulty tier maps to the Grade Reference Card and to VE reward**: a kill pays each participant the tier's multiple of the Peer Kill value (see Cultivation, "Awarding VE"). A "Moderate" enemy is balanced for a peer character (similar Force values); an "Easy" enemy is a clear underdog; a "Hard" enemy is a dangerous fight; a "Severe" or "Peak" enemy is boss-tier.
 
 **Yield.** A creature does not Yield unless its entry says **Yields**. One that does uses the rule characters use: it gives up Beats from its next turn to cut an incoming Margin by 20 each. This is the cleanest dial for making a single enemy last, because the creature buys its survival out of its own offense. A solo elite that Yields runs roughly a third longer and stays about as dangerous. Giving Yield to a whole group is usually a mistake: several enemies all yielding turns a fight into a grind while multiplying the attacks coming back at the party. Use it on one enemy, and reach for a group only when the grind is the point, as with a disciplined shield line that is meant to feel immovable.
 

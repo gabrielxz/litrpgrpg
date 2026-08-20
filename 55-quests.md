@@ -29,7 +29,7 @@ A handout-only or GM-narrated-only approach loses the in-fiction texture of the 
 Issuer:     System
 Grade:      F · Difficulty: Easy
 Objective:  Eliminate detected hostile (Glow-Stalker) within 6h.
-Reward:     30 VE, 1 Lesser Healing Pill
+Reward:     8 VE, 1 Lesser Healing Pill
 Time:       5h 47m remaining
 Status:     Active
 ```
@@ -93,7 +93,7 @@ Routine quests vary in scale: an "F-Grade, Trivial" hunt sits in the log alongsi
 > *[Q-181] Glow-Mote Cluster Containment.*
 > *Grade: F · Difficulty: Trivial.*
 > *Objective: Eliminate Glow-Mote swarms reported near the eastern perimeter. (0/3)*
-> *Reward: 15 VE, 1 Stuttering Tincture.*
+> *Reward: 3 VE, 1 Stuttering Tincture.*
 
 ### Hidden Quests
 
@@ -111,7 +111,7 @@ Issued by NPCs, organizations, mentors (not by the System directly). The System 
 > *Issuer: Civic Fragment Initiates (alien).*
 > *Grade: F · Difficulty: Hard.*
 > *Objective: Locate three missing patrol members last seen in the Wild Fragment.*
-> *Reward: Faction reputation +1, alien-script translation device, 60 VE.*
+> *Reward: Faction reputation +1, alien-script translation device, 50 VE.*
 
 ---
 
@@ -121,7 +121,7 @@ Issued by NPCs, organizations, mentors (not by the System directly). The System 
 
 **Both action VE and quest completion VE apply.** Combat kills, environmental absorption, and other VE sources accumulate normally during a quest. On completion, the quest's stated VE reward is awarded *additionally*.
 
-**Reasoning:** The genre treats it this way (the System awards both kill XP and quest completion XP), it preserves the value of action-by-action play, and it rewards seeking out quests as a multiplier on existing activity. A character who does ten Glow-Mote kills outside a quest gets 50 VE; the same character doing it as a quest gets 50 VE + 15 quest completion = 65 VE. The quest is worth pursuing without trivializing non-quest play.
+**Reasoning:** The genre treats it this way (the System awards both kill XP and quest completion XP), it preserves the value of action-by-action play, and it rewards seeking out quests as a multiplier on existing activity. A character who does ten Glow-Mote kills outside a quest gets 20 VE; the same character doing it as a quest gets 20 VE + 3 quest completion = 23 VE. The quest is worth pursuing without trivializing non-quest play.
 
 **Limit:** quest completion VE is awarded only once per quest, at completion. Quests cannot be "farmed" for repeat VE: once cleared, the same quest does not return on the same character.
 
@@ -201,14 +201,14 @@ The following tables calibrate quest rewards for the GM and the System AI. They 
 
 | **Difficulty** | **Routine VE** | **Personal Opportunity VE** | **Mandate VE** | **Faction VE** |
 |---|---|---|---|---|
-| Trivial | 10 | 20 | none | 15 |
-| Easy | 30 | 60 | 100 | 50 |
-| Moderate | 60 | 120 | 200 | 100 |
-| Hard | 120 | 240 | 500 | 200 |
-| Severe | 200 | 400 | 1,000 | 350 |
-| Peak | 350 | 700 | 2,000 | 600 |
+| Trivial | 3 | 5 | none | 4 |
+| Easy | 8 | 15 | 25 | 12 |
+| Moderate | 15 | 30 | 50 | 25 |
+| Hard | 30 | 60 | 125 | 50 |
+| Severe | 50 | 100 | 250 | 90 |
+| Peak | 90 | 175 | 500 | 150 |
 
-**Reading the table:** A Routine F-Grade Moderate quest awards 60 VE on completion (in addition to action VE earned during the quest). The same difficulty as a Personal Opportunity awards 120 VE: twice as much, reflecting the System's investment in tailored quests. Mandates pay the most because compliance is incentivized; refusal closes paths.
+**Reading the table:** A Routine F-Grade Moderate quest awards 15 VE on completion (in addition to action VE earned during the quest). The same difficulty as a Personal Opportunity awards 30 VE: twice as much, reflecting the System's investment in tailored quests. Mandates pay the most because compliance is incentivized; refusal closes paths.
 
 Hidden Quest VE rewards equal Personal Opportunity rewards at the same difficulty tier, with bonus VE possible when the System AI recognizes truly elegant or improbable resolution.
 
@@ -298,7 +298,7 @@ Grade:      F · Difficulty: Moderate
 Objective:  A Glow-Stalker injured during your last engagement
             has retreated to a den 1.2km north. Eliminate before
             it recovers (24h window).
-Reward:     60 VE, 1 predator core (50 VE absorption value)
+Reward:     30 VE, 1 predator core (5 VE absorption value)
 Hidden:     If the Glow-Stalker is captured alive and returned
             to the Wild Fragment uninjured beyond current state,
             +1 IP toward a Restraint-aligned Principle.

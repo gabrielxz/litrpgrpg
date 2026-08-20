@@ -52,7 +52,7 @@ The cultivator deliberately floods their body with Volatile Energy, pushing past
 
 **Mechanic: The Overcharge Ratio**
 
-**The charge is usually banked long before this stage.** A character sitting at their Grade cap has been storing VE with nowhere to spend it, sometimes for many sessions (Cultivation, "Leveling: The VE Chart"). Stage 2 is not where gathering begins; it is where the cultivator commits what they have and tops off the difference on site. Consumables add more and ambient absorption closes the gap, and the GM sets how long the top-up takes from the location's density: minutes somewhere rich, hours of dangerous exposure somewhere barren.
+**The charge is usually banked long before this stage.** A character sitting at their Grade cap has been storing VE with nowhere to spend it, sometimes for many sessions (Cultivation, "Leveling: The Cost of a Level"). Stage 2 is not where gathering begins; it is where the cultivator commits what they have and tops off the difference on site. Consumables add more and ambient absorption closes the gap, and the GM sets how long the top-up takes from the location's density: minutes somewhere rich, hours of dangerous exposure somewhere barren.
 
 The cultivator needs VE equal to at least **one full Tolerance** to ignite, and may choose to carry more. The multiple of Tolerance they hold at Ignition is the **Overcharge Ratio**, the risk-reward dial the player controls:
 
@@ -188,7 +188,7 @@ Everything from Stable, plus:
 
 Everything from Polished, plus:
 
-- **Bespoke Perk.** The System AI generates a one-of-a-kind ability, passive, or systemic advantage tailored to the character's HVE signature and Principle alignment. Examples: a Force-dominant warrior might receive "First Impact" (the first Clash of every combat gets +15), a Method-dominant planner might receive "Architect's Eye" (once per Consolidation, reveal the structural weakness of any single target), a Hunger-dominant cultivator might receive "Refined Consumption" (kills award VE as if one difficulty tier harder on the VE Chart).
+- **Bespoke Perk.** The System AI generates a one-of-a-kind ability, passive, or systemic advantage tailored to the character's HVE signature and Principle alignment. Examples: a Force-dominant warrior might receive "First Impact" (the first Clash of every combat gets +15), a Method-dominant planner might receive "Architect's Eye" (once per Consolidation, reveal the structural weakness of any single target), a Hunger-dominant cultivator might receive "Refined Consumption" (kills award VE as if one difficulty tier harder).
 - **Principle Bonus.** +10 Insight Points toward the character's highest-affinity Principle, representing the trial's resonance with their established pattern.
 
 **Transcendent (One-of-a-Kind Ascension):**
