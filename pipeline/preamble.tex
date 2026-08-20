@@ -132,6 +132,31 @@
   after skip=10pt
 }
 
+% Read Aloud — boxed narration the GM says out loud, titled so it can be
+% found while scanning a page mid-session. White ground and a heavy dark
+% frame so it survives grayscale e-ink.
+\newtcolorbox{readaloud}{
+  enhanced,
+  breakable,
+  colback=white,
+  colframe=black!75,
+  coltitle=white,
+  colbacktitle=black!75,
+  boxrule=0.8pt,
+  arc=0pt,
+  outer arc=0pt,
+  fonttitle=\footnotesize\sffamily\bfseries,
+  title={READ ALOUD},
+  parbox=false,
+  before upper={\setlength{\parindent}{0pt}\setlength{\parskip}{7pt}},
+  left=12pt,
+  right=12pt,
+  top=10pt,
+  bottom=10pt,
+  before skip=12pt,
+  after skip=12pt
+}
+
 % Running header fix: with scrbook + oneside, chapters only \markright,
 % so \leftmark keeps the table of contents' "Contents" mark for the whole
 % book. Mark both sides from the chapter so header-left (\leftmark in

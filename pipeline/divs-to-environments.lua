@@ -15,6 +15,7 @@
 --   * statblock     — monster / character stat blocks (gray, top-ruled)
 --   * questcard     — Quest log / Mandate / Personal Opportunity entries
 --   * lore          — in-world cosmology, legends, color vignettes (gray, left-ruled)
+--   * readaloud     — boxed narration the GM says out loud (white, titled)
 --
 -- Anything else passes through untouched.
 
@@ -23,6 +24,7 @@ local recognized = {
   statblock   = true,
   questcard   = true,
   lore        = true,
+  readaloud   = true,
 }
 
 function Div(el)

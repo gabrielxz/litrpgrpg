@@ -2,6 +2,8 @@
 
 # The Tutorial: Integration Protocol
 
+**Three kinds of box appear in this chapter.** A box marked **READ ALOUD** is narration to say to the players as written, or close to it. A dark **System** box is the System speaking, and it can be read aloud or handed over as text. A **quest card** is what a player sees in their own interface. Everything outside a box is for you.
+
 ---
 
 ## Pre-Tutorial Setup
@@ -94,17 +96,23 @@ Teach each system when the schedule brings it up. When a player asks "how does c
 
 ## Phase 1: The Threshold
 
-**Purpose.** Sever players from Earth. Establish the System as intentional, administered, and uninterested in their comfort. Get one clean behavioral seed read per player before they know they are being tested.
+**The Situation.** The characters have never met, have no goal, and do not yet know that anything has happened to them. This phase takes Earth away and gets one clean read on each player before they understand they are being read. It ends when the void breaks and they fall.
 
-**Pacing.** 5–10 minutes of real time. Do not let players settle in.
+**Pacing.** Five to ten minutes of real time. Do not let players settle in.
 
-### Narrative
+**Run this one-on-one.** Nobody has met anybody. If you can take players aside, in another room or in a direct message, do it; the whole phase works better when each person believes they are alone, because they are.
 
-Players black out on Earth. No warning, no portal, no quest-giver. They simply stop existing in one place and begin existing somewhere else.
+### Read Aloud: The Void
 
-For approximately sixty seconds of subjective experience, they are nowhere. No body. No ground. No light. Pressure and orientation exist. Nothing else does.
+::: readaloud
+You are somewhere with no floor.
 
-Then the System speaks, not in words, but in meaning that arrives pre-translated, like remembering something you never learned:
+That takes a while to arrive, because there is nothing to compare it to. No light. No sound. No weight on any part of you. You are not falling, because falling needs a direction, and there is a direction, but you cannot name it.
+
+You go to check your hands. You have no hands to check.
+
+Then something arrives that is not a sound, and you understand it the way you understand a word in your own language: all at once, with nothing in between.
+:::
 
 ::: systemvoice
 *Consciousness anchored.*
@@ -120,35 +128,54 @@ Then the System speaks, not in words, but in meaning that arrives pre-translated
 
 The System does not answer questions.
 
-### The Probe
+### What Happens
 
-Before the void fractures, each player experiences one brief, private sensory event. Deliver these individually: note, text, brief sidebar, or written card. Each probe is a temperament read; there are no correct answers.
+#### The Probe
 
-Each probe maps to one or two HVE axes. Log each player's response as **0.5 intensity (Minor)** on the indicated axis.
+Before the void breaks, each player gets one private sensory event. Hand it over as a card, a note, or a message; never read one aloud to the group. Each is a temperament read and none has a correct answer.
+
+Log each player's response at **0.5 intensity (Minor)** on the axis indicated.
 
 | **Probe** | **Choice** | **HVE Read** |
 |---|---|---|
-| A distant sound, something between a voice and a frequency, pulls at your attention. | Turn toward it / Hold still. | Force / Method |
-| A shard of light drifts within reach. Contact produces a sharp, hot sensation: not quite pain, not quite information. | Reach again / Withdraw. | Hunger / Restraint |
-| A string of symbols appears in your vision, then begins dissolving. You can feel meaning in it, but it's escaping. | Chase it / Let it go. | Force+Method / Restraint |
-| Nothing happens. The void is silent. Several seconds pass. | What do you do with the silence? | Patience / Action (observe player priority) |
-| Another presence is nearby: not hostile, not safe, just *there*. | Reach out / Retreat / Observe. | Accord / Will / Method |
-| You feel something beneath you: a current, a pull, a direction the void wants to take you. | Resist / Yield / Try to steer it. | Control / Freedom / Will |
-| A name forms in your mind. Not yours. Whose? | Speak it aloud / Hold it silent / Reject it. | Accord / Restraint / Freedom |
+| Somewhere below you something is repeating. Three sounds, the same three, over and over, and the third one is your name said wrong. | Go toward it / Hold still and work out the pattern. | Force / Method |
+| You are holding something. You cannot see your hands, but you can feel it: small, warm, and moving. | Hold on / Let go / Find out what it is. | Restraint / Restraint / Hunger |
+| A column of symbols stands in front of you. You can read it, and you are already forgetting the top line by the time you reach the bottom. | Read faster / Keep one line and let the rest go / Stop reading. | Force / Method / Restraint |
+| The void shows you the last thirty seconds before you arrived here, from outside your own body, as though you were standing across the room. It plays again. Then again. | Watch for what you missed / Look away / Try to change what you do in it. | Method / Restraint / Will |
+| Somebody else is here. You cannot see them, but the pressure changes when they move, the way a room changes when someone comes in behind you. | Say something / Put yourself between them and the way out / Stay still and track them. | Accord / Will / Method |
+| There is a current here. It has been carrying you since you arrived and you have only just noticed. | Set yourself against it / Let it take you / Try to steer. | Control / Freedom / Will |
+| A name arrives in your mouth, fully formed, and it is not yours. You know how to say it. You know it belongs to someone. | Say it / Hold it / Refuse it. | Accord / Restraint / Freedom |
 
-After each player commits, deliver one private System voice line, calibrated to their response. Examples:
+After each player commits, give them one private System line calibrated to what they did. Keep them short, clinical, and a little wrong in a way they cannot place:
 
-- *"[Curiosity logged. Threshold tolerance: above baseline.]"*
-- *"[Restraint logged. Risk profile: conservative.]"*
-- *"[Engagement logged. Pattern fixation: active.]"*
+- *[Approach logged. Threshold tolerance: above baseline.]*
+- *[Withdrawal logged. Risk profile: conservative. Revising estimate.]*
+- *[Repeat engagement logged. Fixation: probable.]*
+- *[No response recorded. Recording anyway.]*
 
-The lines are clinical, brief, slightly unsettling. They establish that the System has *already started watching*.
+The System is measuring energy and inferring everything else from it, so its readings are confident and occasionally wrong. That is worth establishing here, in a moment where being wrong costs nobody anything.
 
-### GM Notes
+#### The Fall
 
-This phase should be disorienting and fast. Sixty seconds in the void is about right. Two minutes is the maximum. If players try to "explore" the void, it ends; the System does not reward stalling. If a player tries to communicate with the System, it does not respond. The relationship is observation.
+::: readaloud
+The dark lets go all at once. There is ground, and it hits you before you know you are falling: grit, heat, the taste of scorched metal. Above you, a sky the wrong color.
 
-Then the void breaks. Light, sound, gravity, pain, all at once. They fall.
+Your ears come back last. Far off across the rubble, other things are hitting the ground, a scatter of impacts too spread out to count.
+:::
+
+::: systemvoice
+*Integration complete. Vitals: nominal.*
+:::
+
+::: readaloud
+The message sits over all of it like frost on glass. Under it, close, something is grinding toward you across the debris, and it has not turned its head.
+:::
+
+### Watch For
+
+The disorientation is the point, so keep it fast. Sixty seconds in the void is about right and two minutes is the ceiling. If a player tries to explore the void, it ends; the System does not reward stalling. If a player tries to talk to the System, nothing answers. The relationship is observation, and the sooner that lands the better the rest of the tutorial works.
+
+The probe is the first HVE entry of the campaign and it is worth writing down properly. A player who does something the probe did not offer is giving you better signal than the menu was going to, so log what they actually did and move on.
 
 ---
 
