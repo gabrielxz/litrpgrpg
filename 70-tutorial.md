@@ -21,7 +21,7 @@ Players begin with **whatever was on their person at the moment of Integration**
 - [ ] Pull stat blocks from the Bestiary: Glow-Mote Swarm, Husk Crawler, Frenzy Rat, Pre-System Brigand, Snarljaw, Alpha Snarljaw, Glow-Stalker, Training Sentry, Husk Sentinel, Fragment Wraith, Corrupted System Warden.
 - [ ] Pre-write 5–7 private probe cards: the one-line sensory probes from Phase 1's probe table, one per player plus spares.
 - [ ] Pre-write the Personal Opportunity cards (Phase 4), one per player. Hand these over during play; never read them aloud.
-- [ ] Set up the Quest UI: a shared digital quest log (Discord pinned, Google Doc, VTT module). Each player has a private subsection.
+- [ ] Set up the Quest UI: a shared digital quest log (Discord pinned, Google Doc, VTT module). Each player has a private channel.
 - [ ] Read the Titles and System Quests chapters once through. Be ready to issue the first Mandate in Phase 5 and the first Achievement Titles in Phase 6.
 - [ ] Check that every character sheet has room for a **Marks** tally and an **IP** count. Both start at zero and both should be visible to the player from the first session.
 - [ ] Open the HVE event log (The Hidden Vector Engine, "Structured Event Logging") and be ready to record entries throughout. The tutorial generates dense behavioral signal; capture it.
@@ -34,7 +34,7 @@ The tutorial must accomplish five things simultaneously:
 
 - **Introduce awe and danger.** The Multiverse is vast, ancient, indifferent, and lethal.
 - **Expose players to many possible futures.** Martial, arcane, social, and survival paths must all be visible and viable before class selection at Level 10. Classless characters do this through scavenged gear, so the tutorial's item economy is its menu of futures.
-- **Generate clean behavioral data.** The Hidden Vector Engine needs signal across all four axes (Force/Method, Hunger/Restraint, Will/Accord, Control/Freedom) before it can offer meaningful class options at Level 10.
+- **Generate clean behavioral data.** The Hidden Vector Engine needs signals across all four axes (Force/Method, Hunger/Restraint, Will/Accord, Control/Freedom) before it can offer meaningful class options at Level 10.
 - **Create private decision points.** Group consensus flattens identity. The tutorial must mechanically isolate players at key moments so the Engine gets individual reads rather than committee outputs.
 - **Teach tone first.** Players should absorb how the System feels (cold, observant, administratively precise) without being lectured on mechanics. Rules emerge through play.
 
@@ -56,14 +56,14 @@ The player watches the first two climb and cannot see the third at all. Say noth
 
 **Two sessions of 3½ to 4 hours.** Session 1 runs Phases 1 through 3 and then the party's first zone in Phase 4. Session 2 runs the second zone through the end.
 
-The zone count in Phase 4 is the dial. Two zones fit two sessions. A group that wants more time in the ruins plays three or four zones and the tutorial becomes three sessions. Nothing else expands or contracts well: the Threshold, the Arrival, the Crisis, and Recognition are all fixed beats.
+Phase 4 is where the tutorial stretches or shortens, by changing how many zones the party visits. Two zones fit two sessions. A group that wants more time in the ruins plays three or four zones and the tutorial becomes three sessions. Nothing else expands or contracts well: the Threshold, the Arrival, the Crisis, and Recognition are all fixed beats.
 
 ### Expected Outcomes
 
 By the end of the tutorial, every player should have:
 
 - Reached **Level 4**, or Level 5 if they took every fight and every opportunity.
-- Survived a Clash that would have killed them, by giving up their next turn to do it.
+- Survived a Clash that would have killed them, by choosing **Yield**.
 - Seen a natural die land at or above the Volatility Threshold, and watched it explode, mark a Proficiency, or both.
 - At least one **Mark** on the sheet.
 - Made at least three **2.0+ intensity** HVE log events (high-stakes choices).
@@ -77,7 +77,7 @@ If any of these is missing at the end of the last session, improvise to deliver 
 
 ## Mechanics Introduction Schedule
 
-| **Phase** | **What the Players Encounter for the First Time** |
+| **Phase** | **What the Tutorial Teaches Here** |
 |---|---|
 | 1: The Threshold | The System's voice. The probe. |
 | 2: The Violent Arrival | The Clash. Force. Beats. Zones. **Surge. Yield.** First kill. First VE. First scavenged gear. |
@@ -86,7 +86,9 @@ If any of these is missing at the end of the last session, improvise to deliver 
 | 5: The Convergence Crisis | The first Mandate. **Cornered.** Boss-tier combat. Sacrifice as a 3.0 intensity choice. |
 | 6: First Recognition | Titles. Affinity Notices. Hidden Quest reveals. The Stinger. |
 
-Teach each system when the schedule brings it up, inside a moment that makes it matter. When a player asks "how does combat work," a good first answer is *"roll d100, add your Force, I'll tell you what happens"*; detail can wait until the table wants it. If confusion is costing fun, stop and explain.
+Teach each system when the schedule brings it up. When a player asks "how does combat work," a good first answer is *"roll d100, add your Force, I'll tell you what happens"*; detail can wait until the table wants it. If confusion is costing fun, stop and explain.
+
+**The schedule is a teaching order, and the dice do not follow it.** A natural 96 can explode in the first Clash of Phase 2, and any Clash won by 40 or more is a Driven Back whenever it happens. When one arrives early, run it, name it, and treat it as taught; the phase that owns it then has one less thing to introduce.
 
 ---
 
@@ -116,7 +118,7 @@ Then the System speaks, not in words, but in meaning that arrives pre-translated
 *Prior exemptions: expired. Observation: begun.*
 :::
 
-The System does not answer questions. It does not wait for acknowledgment. It processes and moves on.
+The System does not answer questions.
 
 ### The Probe
 
@@ -222,9 +224,9 @@ You wake near a cracked obelisk emitting pulses of energy. Each pulse makes your
 
 However the micro-encounter resolved, something comes. A Husk Crawler drags itself out of the debris, a pair of Frenzy Rats break cover, a Glow-Mote Swarm finds the character's body heat. Pick from the Trash Tier of the Bestiary and match it to the terrain.
 
-This fight is where the entire combat loop gets taught, in this order, to one player at a time with nobody else at the table watching. Run it as five short scenes rather than one long one.
+This fight is where the entire combat loop gets taught, in this order, to one player at a time with nobody else at the table watching. Run it in the five short steps below.
 
-**Step 1. Roll and see what happens.** Do not explain the Clash first. Say *"roll d100 and add your STR Force"*, take the enemy's roll yourself, and narrate the result. Give the Margin as damage without naming it as a formula. Most characters will win their first exchange against Trash Tier.
+**Step 1. Roll and see what happens.** Do not explain the Clash first. Say *"roll d100 and add your STR Force"*, take the enemy's roll yourself, and narrate the result. Give the Margin as damage without naming it as a formula. A first exchange against Trash Tier is close to even, so be ready for the character to lose it; that is the fight teaching itself.
 
 **Step 2. Beats and Zones arrive as questions.** When the player asks whether they can do two things, they have discovered Beats: two per turn, and moving one Zone costs one. When they ask how far away something is, they have discovered Zones. Answer the question they asked and no more.
 
@@ -250,7 +252,7 @@ Then wait. Do not recommend an answer.
 
 Yielding both Beats logs **Restraint 1.0** or **Method 1.0**. Yielding one and holding the ground logs **Force 1.0**. Refusing entirely, with a character who nearly dies for it, logs **Force 2.0** and **Hunger 1.0**; that player has told the Engine something real about themselves in the first hour of play.
 
-**No arrival can kill.** A solo character has no ally to stabilize them, so a Downed result here would run the countdown out unopposed. If a character goes Downed alone, the creature loses interest or begins dragging them away (the Bestiary's guidance on Downed characters), and another Initiate's path crosses theirs before the count ends. The tutorial's one real death sits at the Phase 5 gate and nothing here preempts it.
+**The arrival fight never kills a character.** A solo character has no ally to stabilize them, so a Downed result here would run the countdown out unopposed. If a character goes Downed alone, the creature loses interest or begins dragging them away (the Bestiary's guidance on Downed characters), and another Initiate's path crosses theirs before the count ends. The tutorial's one real death sits at the Phase 5 gate and nothing here preempts it.
 
 ### Scavenging the Landing Zone
 
@@ -324,7 +326,7 @@ The party divides this. There is no System-imposed allocation and no roll for lo
 - **Who defers to others** → Restraint, Accord (1.0 intensity).
 - **Who proposes a system for distribution** → Control, Method (1.0 intensity).
 - **Who ignores the pile and explores the periphery** → Freedom, curiosity (0.5 intensity).
-- **Who takes the healing item** → self-preservation against group welfare (1.0 intensity, secondary axis depending on framing).
+- **Who takes the healing item while somebody else is visibly worse off** → Hunger (1.0 intensity). Handing it to whoever took the worst of the fight reads as Accord at the same intensity. The act alone says nothing; the read is who was hurt at the time.
 
 This is one of the richest behavioral data points in the tutorial. Do not rush it. Let the table dynamics play out.
 
@@ -405,13 +407,13 @@ Characters wake still Level 1, about a third of the way to the threshold. The fi
 
 **Pacing.** Roughly 150 minutes across two zones, split across the end of Session 1 and the start of Session 2. The camp between the zones is where that break falls.
 
-### Two Zones, Four Written
+### How Many Zones to Run
 
 Four zones are written below. **A party plays two of them.** Let the players choose, make the choice cost something by running the world on a clock, and leave the other two visible on the horizon for the rest of the tutorial. What they did not walk into is part of what makes the valley feel larger than the session.
 
 Engineer overlapping urgency so the choice has teeth. A tremor in the Arcane Debris coincides with a distress signal from the Civic Fragment. A hunting pack in the Wild Fragment moves toward the Recycling Node where the party left their gear. The world moves whether they engage with it or not, and the party should never feel that three zones are waiting patiently for them.
 
-A group with a third session available plays three or four zones. Nothing else in the tutorial expands this cleanly.
+A group with a third session available can play three or four zones.
 
 ### Threat Calibration
 
@@ -419,11 +421,11 @@ Three of the four zones hold a threat sized above a fresh party: the Wild Fragme
 
 The tutorial teaches threat assessment by making some fights losing propositions. Telegraph the danger through the fiction: a carcass larder, a keening in the tower, scorch marks fanning out from a doorway. Let players walk in anyway if they insist, and lean on Yield and the Downed rules rather than instant death when they do.
 
-**Terrain is the dial you already have.** A character who can be driven backward gives up two Beats and survives almost anything at this tier. A character in a corridor, a sealed chamber, or a closed ring of enemies gives up one and takes double. Announce the geometry before the first roll so the table can choose to fight somewhere else, and use enclosure deliberately when you want a fight to bite.
+**Use terrain to set how much a fight bites.** A character who can be driven backward gives up two Beats and survives almost anything at this tier. A character in a corridor, a sealed chamber, or a closed ring of enemies gives up one and takes double. Announce the geometry before the first roll so the table can choose to fight somewhere else, and use enclosure deliberately when you want a fight to bite.
 
 ### The Top of the Die
 
-One number governs everything that happens at the high end of a natural d100, and Phase 4 is where the table meets it. At F-Grade that number is **96**.
+One number governs everything that happens at the high end of a natural d100, and Phase 4 is where the table meets it. At F-Grade, that number is **96**.
 
 When a natural die comes up 96 or higher:
 
@@ -514,7 +516,7 @@ A shattered tower and ritual complex, the remnant of a civilization that underst
 - **Degraded skill shards** embedded in crystalline matrices. Pulling them free requires solving spatial puzzles (PER vs. F-Moderate 90) or enduring energy feedback (5 damage on failure). Inventory: 1 Edge Shard, 1 Pulse Shard, 1 Resonance Shard.
 - **Inactive runes** that respond to touch, voice, or proximity unpredictably. Roll d100 for the effect: 1–30 painful (5 damage), 31–70 neutral (a sensory glitch), 71–95 beneficial (+5 to the next Clash), 96–100 unstable (the rune detonates; everyone in the Zone makes an F-Easy 65 DEX save or takes 10 damage). This rewards experimentation under risk and it is the most common place for a first Volatility explosion to arrive.
 - **Resonance chamber.** A character can temporarily borrow a dead technique. Arcane power flows through them for one use, unstable and intoxicating, then it is gone. Improvise a one-use technique priced against the Modifier Budget (a +10 Clash effect or similar, 1 Beat), usable once during the next combat. It cannot be kept.
-- **Broken constructs**, partially reactivatable by characters who experiment (PER vs. F-Hard 115). On a success the construct fights for the party for 3 rounds (Off Force 12, Def Force 15, HP 30).
+- **Broken constructs**, partially reactivatable by characters who experiment (PER vs. F-Hard 115). On a success, the construct fights for the party for 3 rounds (Off Force 12, Def Force 15, HP 30).
 - **Corrupted data-altar.** Answers one question about the tutorial zone truthfully, but the question must be phrased precisely and the answer arrives in symbolic form requiring interpretation.
 
 **Hidden Opportunity.** At the top of the shattered tower a partially intact observation deck overlooks the entire valley. From here a character sees what is invisible from the ground: the geometric precision of the zone boundaries, the pattern in the terrain layout, the fact that the "random" debris is arranged in a spiral. **This is worth real advantage in Phase 5**, because a character who has seen the spiral can predict the Reality Purge's path. Whether the player shares the information is a Method/Control read; log it.

@@ -96,9 +96,9 @@ Kara (Strength 8 and Fortitude 7, written STR 8, FOR 7 on her sheet, with the Pr
 
 **Andre:** *(rolls 60)* 69.
 
-**GM:** *(rolls 33 for the Snarljaw)* 51. Your side holds Momentum and goes first, every round until someone takes it. Andre, two Beats. Kara, one: the other is paying for your arm.
+**GM:** *(rolls 33 for the Snarljaw)* 51. Your side holds Momentum and goes first. That order stays fixed every round until somebody takes Momentum away. Andre, two Beats. Kara, one: the other is paying for your arm.
 
-**Andre:** Beat one, I put the dead truck between us and draw. Beat two, loose. Dexterity, plus 5 for archery: *(rolls 30)* 30 plus 7, plus 5. That's 42.
+**Andre:** Beat one, I put the dead truck between us and draw. Beat two, I loose the arrow. Dexterity, plus 5 for archery: *(rolls 30)* 30 plus 7, plus 5. That's 42.
 
 **GM:** It twists, Defensive Force 18: *(rolls 12)* 30. You win by 12: the arrow takes it in the shoulder. Twelve off its HP, and it is not impressed.
 
@@ -126,7 +126,7 @@ Kara (Strength 8 and Fortitude 7, written STR 8, FOR 7 on her sheet, with the Pr
 
 **Andre:** Four million and change. We're a line item.
 
-**Kara:** It gave me ten. What does a big one give?
+**Kara:** It gave me ten VE. What does a big one give?
 
 **GM:** The motes come off it pale and find you both, because you both earned it. You have no idea what a big one gives. Down the stairwell, something that had been answering the Snarljaw's noise stops answering.
 

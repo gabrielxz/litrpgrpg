@@ -2,7 +2,7 @@
 
 # Core Mechanics
 
-Everything in this game resolves the same way: say what your character does, roll d100, add the one Force value that governs it, and compare. Against a living opponent they roll too, and the gap between the totals is the Margin, which says how well it went. In combat the Margin is the damage. That loop is the whole engine, and the rest of this chapter is the detail around it.
+Everything in this game resolves the same way: say what your character does, roll d100, add the one Force value that governs it, and compare. Against a living opponent they roll too, and the gap between the totals is the Margin, which says how well it went. In combat, the Margin is the damage. That loop is the whole engine, and the rest of this chapter is the detail around it.
 
 What lives elsewhere: how characters are built is in Character Creation, how they level is in Progression, where the energy to level comes from is in Cultivation, and the Principle track that most of these numbers eventually feed is in The Principle System.
 
@@ -86,7 +86,7 @@ Against another creature or character, both sides roll:
 
 > **Each side: d100 + relevant Force + Tactical Modifiers**
 
-Higher total wins; a tie goes to the initiator. The **Margin** is the winner's total minus the loser's. In combat the Margin drives damage. Outside combat the GM reads it narratively. **Forty is the swing number throughout these rules: win by 40 and the outcome is decisive, whatever the arena.**
+Higher total wins; a tie goes to the initiator. The **Margin** is the winner's total minus the loser's. In combat, the Margin drives damage. Outside combat the GM reads it narratively. **Forty is the swing number throughout these rules: win by 40 and the outcome is decisive, whatever the arena.**
 
 ### Resistance Rolls
 
@@ -490,7 +490,7 @@ A benevolent higher-Grade NPC may suppress their aura entirely, requiring no sav
 
 Aether is what you have. Volatile Energy is what you took.
 
-At the table the two never mix. Aether is spent and refills; VE accumulates and is refined. Cultivation owns the VE economy in full.
+At the table, the two never mix. Aether is spent and refills; VE accumulates and is refined. Cultivation owns the VE economy in full.
 
 At the table, Aether is the resource behind active Principle Applications, spells, and most active skills. Warriors and casters alike draw on it; anyone reaching for System-granted power spends Aether to do so.
 

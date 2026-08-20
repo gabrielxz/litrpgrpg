@@ -87,7 +87,7 @@ The obvious time to do this is during a rest the party was taking anyway, where 
 
 **Excess above the Grade cap is lost.** A treasure that would push an Attribute past 99 at F-Grade raises it to 99 and stops. Together with how rarely they appear, that is the entire brake on the economy: a character can absolutely pour every treasure they find into one Attribute and run it to the ceiling, and the genre expects nothing less.
 
-**How often.** Rare enough to be remembered. A character who hunts hard and explores thoroughly might absorb three or four across an entire Grade; a cautious one might find a single Lesser treasure and be pleased about it for a month. They are the reward for going somewhere dangerous on purpose, and they should never be for sale in a starting settlement. Scarcity is the dial here, and it is the GM's.
+**How often.** Rare enough to be remembered. A character who hunts hard and explores thoroughly might absorb three or four across an entire Grade; a cautious one might find a single Lesser treasure and be pleased about it for a month. They are the reward for going somewhere dangerous on purpose, and they should never be for sale in a starting settlement. Scarcity is what controls this, and the GM sets it.
 
 **These are not Cores.** A Core or Affinity Crystal releases Volatile Energy, which is fuel for levels (see Cultivation). An Attribute Treasure never touches stored VE at all; it changes the body directly. Both are eaten and only one of them shows up on the Attribute line.
 
