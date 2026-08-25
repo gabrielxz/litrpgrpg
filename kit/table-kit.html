@@ -226,6 +226,67 @@
     letter-spacing: 0.1em; text-transform: uppercase; color: var(--pencil);
   }
   .pcard .play { border-top: 1px solid var(--faint); margin-top: 8px; padding-top: 7px; font-size: 11px; }
+
+  /* ---------- filled sheets (pregens) ---------- */
+  .penv { color: #3B4A66; font-style: italic; font-family: Georgia, "Times New Roman", serif; }
+  .writebox.penfill, .boxed.penfill {
+    display: flex; align-items: center; justify-content: center;
+    color: #3B4A66; font-style: italic; font-family: Georgia, "Times New Roman", serif; font-size: 17px;
+  }
+  .blank.penfill { display: flex; align-items: flex-end; padding-bottom: 2px;
+    color: #3B4A66; font-style: italic; font-family: Georgia, "Times New Roman", serif; font-size: 15px; }
+  .band .writein.penfill { text-align: center;
+    color: #3B4A66; font-style: italic; font-family: Georgia, "Times New Roman", serif; }
+  .tick.on { background: var(--ink); }
+
+  /* ---------- cut cards ---------- */
+  .cardpage-note {
+    font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 10px;
+    letter-spacing: 0.08em; color: var(--pencil); margin: 0 0 10px;
+  }
+  .cardgrid { display: grid; gap: 12px; }
+  .cardgrid.by2 { grid-template-columns: 1fr 1fr; }
+  .cardgrid.by3 { grid-template-columns: 1fr 1fr 1fr; }
+  .cutcard { border: 1.5px dashed var(--rule); background: #fff; break-inside: avoid; }
+  .cutcard .cchead {
+    font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+    font-size: 10px; letter-spacing: 0.14em; padding: 4px 9px;
+    background: var(--ink); color: var(--paper); display: flex; justify-content: space-between; align-items: center;
+  }
+  .cutcard .ccbody { padding: 8px 10px 10px; font-size: 11px; }
+  .cutcard .ccline { border-bottom: 1px solid var(--faint); height: 20px; }
+  .cutcard .cclabel {
+    font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 8.5px;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--pencil);
+    display: block; margin: 6px 0 2px;
+  }
+  .punch { width: 11px; height: 11px; border: 1px solid var(--paper); border-radius: 50%; display: inline-block; }
+
+  /* battle memory */
+  .bm .cchead { background: #2B2216; }
+  .bm .ccbody .trig { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 10px; white-space: nowrap; }
+  .bm .tick { width: 11px; height: 11px; margin-right: 3px; }
+  .ipcircles { display: inline-flex; gap: 8px; margin-left: 8px; }
+  .ipc { width: 20px; height: 20px; border: 1.4px solid var(--ink); border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center; font-size: 11px; }
+
+  /* probe cards */
+  .probe { border: 1.5px solid var(--ink); background: #17181A; color: #ECECEC; }
+  .probe .cchead { background: #17181A; color: #7FB6C2; border-bottom: 1px solid #3A3D40; }
+  .probe .ccbody { font-style: italic; font-family: Georgia, "Times New Roman", serif; font-size: 12px; min-height: 92px; }
+  .probe .ccfoot {
+    font-family: ui-monospace, Menlo, Consolas, monospace; font-style: normal;
+    font-size: 9px; letter-spacing: 0.1em; color: #9A9DA1; padding: 0 10px 8px;
+  }
+
+  /* personal opportunity cards */
+  .po { border: 1.5px solid var(--ink); }
+  .po .cchead { background: var(--fill); color: var(--ink); border-bottom: 1px solid var(--rule); }
+  .po .ccbody { font-family: ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace; font-size: 10.5px; min-height: 108px; }
+  .po .ccfoot {
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 9px; letter-spacing: 0.08em; color: var(--pencil); padding: 0 10px 8px;
+  }
 </style>
 </head>
 <body>
@@ -531,6 +592,18 @@
             <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
             <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
             <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
+            <tr class="rowline"><td></td><td></td><td class="num"></td><td></td><td class="num"></td></tr>
           </table>
         </div>
       </div>
@@ -555,7 +628,7 @@
             </div>
             <div class="prow"><span class="plabel">HP</span> <span class="pv">14</span> &nbsp; <span class="plabel">Aether</span> <span class="pv">6</span> &nbsp; <span class="plabel">Tolerance</span> <span class="pv">55</span></div>
             <div class="prow"><span class="plabel">Bands</span> <span class="pv">55 / 110 / 165</span></div>
-            <div class="prow"><span class="plabel">Level progress</span> <span class="pv">0 / 100</span></div>
+            <div class="prow"><span class="plabel">Level progress</span> <span class="pv">0 / 125</span></div>
             <div class="prow"><span class="plabel">Proficiencies</span> <span class="pv">axes and hammers, athletics, streetwise</span></div>
             <div class="play">Fight close and end it fast. Want things out loud: the better weapon, the bigger bounty, the pill nobody else has claimed.</div>
           </div>
@@ -571,7 +644,7 @@
             </div>
             <div class="prow"><span class="plabel">HP</span> <span class="pv">14</span> &nbsp; <span class="plabel">Aether</span> <span class="pv">4</span> &nbsp; <span class="plabel">Tolerance</span> <span class="pv">60</span></div>
             <div class="prow"><span class="plabel">Bands</span> <span class="pv">60 / 120 / 180</span></div>
-            <div class="prow"><span class="plabel">Level progress</span> <span class="pv">0 / 100</span></div>
+            <div class="prow"><span class="plabel">Level progress</span> <span class="pv">0 / 125</span></div>
             <div class="prow"><span class="plabel">Proficiencies</span> <span class="pv">axes and hammers, endurance training, field medicine</span></div>
             <div class="play">Stand between the danger and everyone else, and swing like the door needs breaking.</div>
           </div>
@@ -587,11 +660,753 @@
             </div>
             <div class="prow"><span class="plabel">HP</span> <span class="pv">10</span> &nbsp; <span class="plabel">Aether</span> <span class="pv">5</span> &nbsp; <span class="plabel">Tolerance</span> <span class="pv">55</span></div>
             <div class="prow"><span class="plabel">Bands</span> <span class="pv">55 / 110 / 165</span></div>
-            <div class="prow"><span class="plabel">Level progress</span> <span class="pv">0 / 100</span></div>
+            <div class="prow"><span class="plabel">Level progress</span> <span class="pv">0 / 125</span></div>
             <div class="prow"><span class="plabel">Proficiencies</span> <span class="pv">tracking and fieldcraft, archery and throwing, navigation</span></div>
             <div class="play">Look before anyone moves, plan the way out before the way in, and take only what the plan needs.</div>
           </div>
         </div>
+      </div>
+  </div>
+
+  <!-- ================= KARA · FILLED SHEET ================= -->
+  <div class="sheet">
+      <div class="masthead">
+        <span class="logo"><span class="lit">LITRPG:</span><span class="rpg">RPG</span></span>
+        <span class="face">[ SYSTEM INTERFACE ]</span>
+        <span class="badge">GRADE F</span>
+      </div>
+
+      <div class="idrow">
+        <div class="field" style="flex: 2.6;"><label>Name</label><div class="blank penfill">Kara</div></div>
+        <div class="field"><label>Level</label><div class="boxed penfill" style="height:32px; min-width:64px;">1</div></div>
+        <div class="field" style="flex: 1.2;"><label>Level Progress &middot; VE</label>
+          <div class="pair"><div class="boxed penfill" style="flex:1; height:32px;">0</div><span class="slash">/</span><div class="boxed" style="flex:1; height:32px; color:var(--pencil);">125</div></div>
+        </div>
+      </div>
+
+      <div class="zone">
+        <header>[ ATTRIBUTES ]</header>
+        <div class="zbody">
+          <div class="statgrid">
+            <div class="statcard"><span class="abbr">STR</span><span class="full">Strength</span><div class="writebox penfill">8</div></div>
+            <div class="statcard"><span class="abbr">DEX</span><span class="full">Dexterity</span><div class="writebox penfill">5</div></div>
+            <div class="statcard"><span class="abbr">FOR</span><span class="full">Fortitude</span><div class="writebox penfill">7</div></div>
+            <div class="statcard"><span class="abbr">HRT</span><span class="full">Heart</span><div class="writebox penfill">4</div></div>
+            <div class="statcard"><span class="abbr">POW</span><span class="full">Power</span><div class="writebox penfill">6</div></div>
+            <div class="statcard"><span class="abbr">PER</span><span class="full">Perception</span><div class="writebox penfill">5</div></div>
+            <div class="statcard"><span class="abbr">CHA</span><span class="full">Charisma</span><div class="writebox penfill">5</div></div>
+            <div class="statcard free"><span class="abbr">FREE POINTS</span><span class="full">unallocated</span><div class="writebox penfill">0</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cols colwrap">
+        <div class="zone">
+          <header>[ VITALS ]</header>
+          <div class="zbody gaugegrid">
+            <div class="gauge">
+              <span class="glabel">HEALTH</span>
+              <div class="bigbox"><div class="boxed"></div></div>
+              <span class="slash" style="padding-top:8px;">/</span>
+              <div class="bigbox"><div class="boxed penfill">14</div><div class="sub">MAX &middot; FOR &times; 2</div></div>
+            </div>
+            <div class="gauge">
+              <span class="glabel">AETHER</span>
+              <div class="bigbox"><div class="boxed"></div></div>
+              <span class="slash" style="padding-top:8px;">/</span>
+              <div class="bigbox"><div class="boxed penfill">6</div><div class="sub">MAX &middot; POW</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="zone">
+          <header>[ VOLATILE ENERGY ]</header>
+          <div class="zbody">
+            <div class="gauge">
+              <span class="glabel">STORED</span>
+              <div class="bigbox"><div class="boxed"></div></div>
+              <span class="glabel" style="width:auto; margin-left:10px;">TOLERANCE</span>
+              <div class="bigbox"><div class="boxed penfill">55</div><div class="sub">( FOR + HRT ) &divide; 2 &times; 10</div></div>
+            </div>
+            <div class="bands">
+              <div class="band"><b>MILD past</b><span class="writein penfill">55</span> <span class="pen">&minus;10</span></div>
+              <div class="band b2"><b>HEAVY past</b><span class="writein penfill">110</span> <span class="pen">&minus;25</span></div>
+              <div class="band b3"><b>CRITICAL past</b><span class="writein penfill">165</span> <span class="pen">collapse</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="zone">
+        <header>[ PROFICIENCIES ]</header>
+        <div class="zbody">
+          <p class="caption">Natural 96+ with this Proficiency: tick a Mark. &nbsp;3 Marks: Seasoned. &nbsp;10 Marks: Master.</p>
+          <table>
+            <tr><th style="width:34%;">Proficiency</th><th style="width:37%;">Tier</th><th>Marks</th></tr>
+            <tr class="rowline">
+              <td><span class="penv">axes and hammers</span></td>
+              <td><span class="tiertick"><span class="tick on"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
+              <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
+            </tr>
+            <tr class="rowline">
+              <td><span class="penv">athletics</span></td>
+              <td><span class="tiertick"><span class="tick on"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
+              <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
+            </tr>
+            <tr class="rowline">
+              <td><span class="penv">streetwise</span></td>
+              <td><span class="tiertick"><span class="tick on"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
+              <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
+            </tr>
+            <tr class="rowline">
+              <td></td>
+              <td><span class="tiertick"><span class="tick"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
+              <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="zone">
+        <header>[ PRINCIPLE ]</header>
+        <div class="zbody">
+          <div class="idrow" style="margin-bottom:10px;">
+            <div class="field" style="flex:2.4;"><label>Family / Crystallized Name</label><div class="blank"></div></div>
+            <div class="field" style="flex:1;"><label>Tier</label><div class="blank"></div></div>
+            <div class="field"><label>Insight</label><div class="boxed" style="min-width:64px;"></div></div>
+            <div class="field"><label>Next Distillation At</label><div class="boxed" style="min-width:64px;"></div></div>
+          </div>
+          <table>
+            <tr><th style="width:24%;">Application</th><th class="num" style="width:10%;">Aether</th><th>Effect</th></tr>
+            <tr class="rowline"><td></td><td class="num"></td><td></td></tr>
+            <tr class="rowline"><td></td><td class="num"></td><td></td></tr>
+          </table>
+          <div style="margin-top:10px; white-space:nowrap;">
+            <span class="field" style="display:inline-block;"><label style="display:inline; margin-right:8px;">Battle Memories</label></span>
+            <span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="zone">
+        <header>[ NOTES ]</header>
+        <div class="zbody lines">
+          <div class="line penv" style="height:auto; min-height:27px; padding-top:4px;">Fight close and end it fast. Want things out loud: the better weapon, the bigger bounty, the unclaimed pill.</div>
+          <div class="line"></div>
+        </div>
+      </div>
+  </div>
+
+  <!-- ================= JOE · FILLED SHEET ================= -->
+  <div class="sheet">
+      <div class="masthead">
+        <span class="logo"><span class="lit">LITRPG:</span><span class="rpg">RPG</span></span>
+        <span class="face">[ SYSTEM INTERFACE ]</span>
+        <span class="badge">GRADE F</span>
+      </div>
+
+      <div class="idrow">
+        <div class="field" style="flex: 2.6;"><label>Name</label><div class="blank penfill">Joe</div></div>
+        <div class="field"><label>Level</label><div class="boxed penfill" style="height:32px; min-width:64px;">1</div></div>
+        <div class="field" style="flex: 1.2;"><label>Level Progress &middot; VE</label>
+          <div class="pair"><div class="boxed penfill" style="flex:1; height:32px;">0</div><span class="slash">/</span><div class="boxed" style="flex:1; height:32px; color:var(--pencil);">125</div></div>
+        </div>
+      </div>
+
+      <div class="zone">
+        <header>[ ATTRIBUTES ]</header>
+        <div class="zbody">
+          <div class="statgrid">
+            <div class="statcard"><span class="abbr">STR</span><span class="full">Strength</span><div class="writebox penfill">8</div></div>
+            <div class="statcard"><span class="abbr">DEX</span><span class="full">Dexterity</span><div class="writebox penfill">5</div></div>
+            <div class="statcard"><span class="abbr">FOR</span><span class="full">Fortitude</span><div class="writebox penfill">7</div></div>
+            <div class="statcard"><span class="abbr">HRT</span><span class="full">Heart</span><div class="writebox penfill">5</div></div>
+            <div class="statcard"><span class="abbr">POW</span><span class="full">Power</span><div class="writebox penfill">4</div></div>
+            <div class="statcard"><span class="abbr">PER</span><span class="full">Perception</span><div class="writebox penfill">6</div></div>
+            <div class="statcard"><span class="abbr">CHA</span><span class="full">Charisma</span><div class="writebox penfill">5</div></div>
+            <div class="statcard free"><span class="abbr">FREE POINTS</span><span class="full">unallocated</span><div class="writebox penfill">0</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cols colwrap">
+        <div class="zone">
+          <header>[ VITALS ]</header>
+          <div class="zbody gaugegrid">
+            <div class="gauge">
+              <span class="glabel">HEALTH</span>
+              <div class="bigbox"><div class="boxed"></div></div>
+              <span class="slash" style="padding-top:8px;">/</span>
+              <div class="bigbox"><div class="boxed penfill">14</div><div class="sub">MAX &middot; FOR &times; 2</div></div>
+            </div>
+            <div class="gauge">
+              <span class="glabel">AETHER</span>
+              <div class="bigbox"><div class="boxed"></div></div>
+              <span class="slash" style="padding-top:8px;">/</span>
+              <div class="bigbox"><div class="boxed penfill">4</div><div class="sub">MAX &middot; POW</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="zone">
+          <header>[ VOLATILE ENERGY ]</header>
+          <div class="zbody">
+            <div class="gauge">
+              <span class="glabel">STORED</span>
+              <div class="bigbox"><div class="boxed"></div></div>
+              <span class="glabel" style="width:auto; margin-left:10px;">TOLERANCE</span>
+              <div class="bigbox"><div class="boxed penfill">60</div><div class="sub">( FOR + HRT ) &divide; 2 &times; 10</div></div>
+            </div>
+            <div class="bands">
+              <div class="band"><b>MILD past</b><span class="writein penfill">60</span> <span class="pen">&minus;10</span></div>
+              <div class="band b2"><b>HEAVY past</b><span class="writein penfill">120</span> <span class="pen">&minus;25</span></div>
+              <div class="band b3"><b>CRITICAL past</b><span class="writein penfill">180</span> <span class="pen">collapse</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="zone">
+        <header>[ PROFICIENCIES ]</header>
+        <div class="zbody">
+          <p class="caption">Natural 96+ with this Proficiency: tick a Mark. &nbsp;3 Marks: Seasoned. &nbsp;10 Marks: Master.</p>
+          <table>
+            <tr><th style="width:34%;">Proficiency</th><th style="width:37%;">Tier</th><th>Marks</th></tr>
+            <tr class="rowline">
+              <td><span class="penv">axes and hammers</span></td>
+              <td><span class="tiertick"><span class="tick on"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
+              <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
+            </tr>
+            <tr class="rowline">
+              <td><span class="penv">endurance training</span></td>
+              <td><span class="tiertick"><span class="tick on"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
+              <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
+            </tr>
+            <tr class="rowline">
+              <td><span class="penv">field medicine</span></td>
+              <td><span class="tiertick"><span class="tick on"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
+              <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
+            </tr>
+            <tr class="rowline">
+              <td></td>
+              <td><span class="tiertick"><span class="tick"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
+              <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="zone">
+        <header>[ PRINCIPLE ]</header>
+        <div class="zbody">
+          <div class="idrow" style="margin-bottom:10px;">
+            <div class="field" style="flex:2.4;"><label>Family / Crystallized Name</label><div class="blank"></div></div>
+            <div class="field" style="flex:1;"><label>Tier</label><div class="blank"></div></div>
+            <div class="field"><label>Insight</label><div class="boxed" style="min-width:64px;"></div></div>
+            <div class="field"><label>Next Distillation At</label><div class="boxed" style="min-width:64px;"></div></div>
+          </div>
+          <table>
+            <tr><th style="width:24%;">Application</th><th class="num" style="width:10%;">Aether</th><th>Effect</th></tr>
+            <tr class="rowline"><td></td><td class="num"></td><td></td></tr>
+            <tr class="rowline"><td></td><td class="num"></td><td></td></tr>
+          </table>
+          <div style="margin-top:10px; white-space:nowrap;">
+            <span class="field" style="display:inline-block;"><label style="display:inline; margin-right:8px;">Battle Memories</label></span>
+            <span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="zone">
+        <header>[ NOTES ]</header>
+        <div class="zbody lines">
+          <div class="line penv" style="height:auto; min-height:27px; padding-top:4px;">Stand between the danger and everyone else, and swing like the door needs breaking.</div>
+          <div class="line"></div>
+        </div>
+      </div>
+  </div>
+
+  <!-- ================= ANDRE · FILLED SHEET ================= -->
+  <div class="sheet">
+      <div class="masthead">
+        <span class="logo"><span class="lit">LITRPG:</span><span class="rpg">RPG</span></span>
+        <span class="face">[ SYSTEM INTERFACE ]</span>
+        <span class="badge">GRADE F</span>
+      </div>
+
+      <div class="idrow">
+        <div class="field" style="flex: 2.6;"><label>Name</label><div class="blank penfill">Andre</div></div>
+        <div class="field"><label>Level</label><div class="boxed penfill" style="height:32px; min-width:64px;">1</div></div>
+        <div class="field" style="flex: 1.2;"><label>Level Progress &middot; VE</label>
+          <div class="pair"><div class="boxed penfill" style="flex:1; height:32px;">0</div><span class="slash">/</span><div class="boxed" style="flex:1; height:32px; color:var(--pencil);">125</div></div>
+        </div>
+      </div>
+
+      <div class="zone">
+        <header>[ ATTRIBUTES ]</header>
+        <div class="zbody">
+          <div class="statgrid">
+            <div class="statcard"><span class="abbr">STR</span><span class="full">Strength</span><div class="writebox penfill">4</div></div>
+            <div class="statcard"><span class="abbr">DEX</span><span class="full">Dexterity</span><div class="writebox penfill">7</div></div>
+            <div class="statcard"><span class="abbr">FOR</span><span class="full">Fortitude</span><div class="writebox penfill">5</div></div>
+            <div class="statcard"><span class="abbr">HRT</span><span class="full">Heart</span><div class="writebox penfill">6</div></div>
+            <div class="statcard"><span class="abbr">POW</span><span class="full">Power</span><div class="writebox penfill">5</div></div>
+            <div class="statcard"><span class="abbr">PER</span><span class="full">Perception</span><div class="writebox penfill">9</div></div>
+            <div class="statcard"><span class="abbr">CHA</span><span class="full">Charisma</span><div class="writebox penfill">4</div></div>
+            <div class="statcard free"><span class="abbr">FREE POINTS</span><span class="full">unallocated</span><div class="writebox penfill">0</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cols colwrap">
+        <div class="zone">
+          <header>[ VITALS ]</header>
+          <div class="zbody gaugegrid">
+            <div class="gauge">
+              <span class="glabel">HEALTH</span>
+              <div class="bigbox"><div class="boxed"></div></div>
+              <span class="slash" style="padding-top:8px;">/</span>
+              <div class="bigbox"><div class="boxed penfill">10</div><div class="sub">MAX &middot; FOR &times; 2</div></div>
+            </div>
+            <div class="gauge">
+              <span class="glabel">AETHER</span>
+              <div class="bigbox"><div class="boxed"></div></div>
+              <span class="slash" style="padding-top:8px;">/</span>
+              <div class="bigbox"><div class="boxed penfill">5</div><div class="sub">MAX &middot; POW</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="zone">
+          <header>[ VOLATILE ENERGY ]</header>
+          <div class="zbody">
+            <div class="gauge">
+              <span class="glabel">STORED</span>
+              <div class="bigbox"><div class="boxed"></div></div>
+              <span class="glabel" style="width:auto; margin-left:10px;">TOLERANCE</span>
+              <div class="bigbox"><div class="boxed penfill">55</div><div class="sub">( FOR + HRT ) &divide; 2 &times; 10</div></div>
+            </div>
+            <div class="bands">
+              <div class="band"><b>MILD past</b><span class="writein penfill">55</span> <span class="pen">&minus;10</span></div>
+              <div class="band b2"><b>HEAVY past</b><span class="writein penfill">110</span> <span class="pen">&minus;25</span></div>
+              <div class="band b3"><b>CRITICAL past</b><span class="writein penfill">165</span> <span class="pen">collapse</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="zone">
+        <header>[ PROFICIENCIES ]</header>
+        <div class="zbody">
+          <p class="caption">Natural 96+ with this Proficiency: tick a Mark. &nbsp;3 Marks: Seasoned. &nbsp;10 Marks: Master.</p>
+          <table>
+            <tr><th style="width:34%;">Proficiency</th><th style="width:37%;">Tier</th><th>Marks</th></tr>
+            <tr class="rowline">
+              <td><span class="penv">tracking and fieldcraft</span></td>
+              <td><span class="tiertick"><span class="tick on"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
+              <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
+            </tr>
+            <tr class="rowline">
+              <td><span class="penv">archery and throwing</span></td>
+              <td><span class="tiertick"><span class="tick on"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
+              <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
+            </tr>
+            <tr class="rowline">
+              <td><span class="penv">navigation</span></td>
+              <td><span class="tiertick"><span class="tick on"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
+              <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
+            </tr>
+            <tr class="rowline">
+              <td></td>
+              <td><span class="tiertick"><span class="tick"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
+              <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="zone">
+        <header>[ PRINCIPLE ]</header>
+        <div class="zbody">
+          <div class="idrow" style="margin-bottom:10px;">
+            <div class="field" style="flex:2.4;"><label>Family / Crystallized Name</label><div class="blank"></div></div>
+            <div class="field" style="flex:1;"><label>Tier</label><div class="blank"></div></div>
+            <div class="field"><label>Insight</label><div class="boxed" style="min-width:64px;"></div></div>
+            <div class="field"><label>Next Distillation At</label><div class="boxed" style="min-width:64px;"></div></div>
+          </div>
+          <table>
+            <tr><th style="width:24%;">Application</th><th class="num" style="width:10%;">Aether</th><th>Effect</th></tr>
+            <tr class="rowline"><td></td><td class="num"></td><td></td></tr>
+            <tr class="rowline"><td></td><td class="num"></td><td></td></tr>
+          </table>
+          <div style="margin-top:10px; white-space:nowrap;">
+            <span class="field" style="display:inline-block;"><label style="display:inline; margin-right:8px;">Battle Memories</label></span>
+            <span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="zone">
+        <header>[ NOTES ]</header>
+        <div class="zbody lines">
+          <div class="line penv" style="height:auto; min-height:27px; padding-top:4px;">Look before anyone moves, plan the way out before the way in, and take only what the plan needs.</div>
+          <div class="line"></div>
+        </div>
+      </div>
+  </div>
+
+  <!-- ================= BATTLE MEMORY CARDS ================= -->
+  <div class="sheet gm">
+      <div class="masthead">
+        <span class="logo"><span class="lit">LITRPG:</span><span class="rpg">RPG</span></span>
+        <span class="face-plain">Battle Memory Cards</span>
+        <span class="badge">CUT APART</span>
+      </div>
+      <p class="cardpage-note">ONE CARD PER MEMORY. THE PARTY EARNS ONE OR TWO A SESSION; HAND IT OVER THE MOMENT IT TRIGGERS. IT CONVERTS AT A CONSOLIDATION AND IS SPENT WHEN ITS IP IS AWARDED.</p>
+      <div class="cardgrid by2">
+        <div class="cutcard bm">
+          <div class="cchead"><span>BATTLE MEMORY</span><span class="punch"></span></div>
+          <div class="ccbody">
+            <span class="cclabel">What happened</span>
+            <div class="ccline"></div><div class="ccline"></div>
+            <span class="cclabel">Earned by</span>
+            <div class="trig">
+              <span><span class="tick"></span>Cascade &times;2</span>
+              <span><span class="tick"></span>Survived Downed</span>
+              <span><span class="tick"></span>Failed Breakthrough</span>
+              <span><span class="tick"></span>The System noticed</span>
+            </div>
+            <span class="cclabel">The vision, at Consolidation</span>
+            <div class="ccline"></div><div class="ccline"></div>
+            <div style="margin-top:7px; white-space:nowrap;"><span class="cclabel" style="display:inline;">IP granted</span><span class="ipcircles"><span class="ipc">1</span><span class="ipc">2</span><span class="ipc">3</span></span></div>
+          </div>
+        </div>
+        <div class="cutcard bm">
+          <div class="cchead"><span>BATTLE MEMORY</span><span class="punch"></span></div>
+          <div class="ccbody">
+            <span class="cclabel">What happened</span>
+            <div class="ccline"></div><div class="ccline"></div>
+            <span class="cclabel">Earned by</span>
+            <div class="trig">
+              <span><span class="tick"></span>Cascade &times;2</span>
+              <span><span class="tick"></span>Survived Downed</span>
+              <span><span class="tick"></span>Failed Breakthrough</span>
+              <span><span class="tick"></span>The System noticed</span>
+            </div>
+            <span class="cclabel">The vision, at Consolidation</span>
+            <div class="ccline"></div><div class="ccline"></div>
+            <div style="margin-top:7px; white-space:nowrap;"><span class="cclabel" style="display:inline;">IP granted</span><span class="ipcircles"><span class="ipc">1</span><span class="ipc">2</span><span class="ipc">3</span></span></div>
+          </div>
+        </div>
+        <div class="cutcard bm">
+          <div class="cchead"><span>BATTLE MEMORY</span><span class="punch"></span></div>
+          <div class="ccbody">
+            <span class="cclabel">What happened</span>
+            <div class="ccline"></div><div class="ccline"></div>
+            <span class="cclabel">Earned by</span>
+            <div class="trig">
+              <span><span class="tick"></span>Cascade &times;2</span>
+              <span><span class="tick"></span>Survived Downed</span>
+              <span><span class="tick"></span>Failed Breakthrough</span>
+              <span><span class="tick"></span>The System noticed</span>
+            </div>
+            <span class="cclabel">The vision, at Consolidation</span>
+            <div class="ccline"></div><div class="ccline"></div>
+            <div style="margin-top:7px; white-space:nowrap;"><span class="cclabel" style="display:inline;">IP granted</span><span class="ipcircles"><span class="ipc">1</span><span class="ipc">2</span><span class="ipc">3</span></span></div>
+          </div>
+        </div>
+        <div class="cutcard bm">
+          <div class="cchead"><span>BATTLE MEMORY</span><span class="punch"></span></div>
+          <div class="ccbody">
+            <span class="cclabel">What happened</span>
+            <div class="ccline"></div><div class="ccline"></div>
+            <span class="cclabel">Earned by</span>
+            <div class="trig">
+              <span><span class="tick"></span>Cascade &times;2</span>
+              <span><span class="tick"></span>Survived Downed</span>
+              <span><span class="tick"></span>Failed Breakthrough</span>
+              <span><span class="tick"></span>The System noticed</span>
+            </div>
+            <span class="cclabel">The vision, at Consolidation</span>
+            <div class="ccline"></div><div class="ccline"></div>
+            <div style="margin-top:7px; white-space:nowrap;"><span class="cclabel" style="display:inline;">IP granted</span><span class="ipcircles"><span class="ipc">1</span><span class="ipc">2</span><span class="ipc">3</span></span></div>
+          </div>
+        </div>
+        <div class="cutcard bm">
+          <div class="cchead"><span>BATTLE MEMORY</span><span class="punch"></span></div>
+          <div class="ccbody">
+            <span class="cclabel">What happened</span>
+            <div class="ccline"></div><div class="ccline"></div>
+            <span class="cclabel">Earned by</span>
+            <div class="trig">
+              <span><span class="tick"></span>Cascade &times;2</span>
+              <span><span class="tick"></span>Survived Downed</span>
+              <span><span class="tick"></span>Failed Breakthrough</span>
+              <span><span class="tick"></span>The System noticed</span>
+            </div>
+            <span class="cclabel">The vision, at Consolidation</span>
+            <div class="ccline"></div><div class="ccline"></div>
+            <div style="margin-top:7px; white-space:nowrap;"><span class="cclabel" style="display:inline;">IP granted</span><span class="ipcircles"><span class="ipc">1</span><span class="ipc">2</span><span class="ipc">3</span></span></div>
+          </div>
+        </div>
+        <div class="cutcard bm">
+          <div class="cchead"><span>BATTLE MEMORY</span><span class="punch"></span></div>
+          <div class="ccbody">
+            <span class="cclabel">What happened</span>
+            <div class="ccline"></div><div class="ccline"></div>
+            <span class="cclabel">Earned by</span>
+            <div class="trig">
+              <span><span class="tick"></span>Cascade &times;2</span>
+              <span><span class="tick"></span>Survived Downed</span>
+              <span><span class="tick"></span>Failed Breakthrough</span>
+              <span><span class="tick"></span>The System noticed</span>
+            </div>
+            <span class="cclabel">The vision, at Consolidation</span>
+            <div class="ccline"></div><div class="ccline"></div>
+            <div style="margin-top:7px; white-space:nowrap;"><span class="cclabel" style="display:inline;">IP granted</span><span class="ipcircles"><span class="ipc">1</span><span class="ipc">2</span><span class="ipc">3</span></span></div>
+          </div>
+        </div>
+
+      </div>
+  </div>
+
+  <!-- ================= TITLE CARDS ================= -->
+  <div class="sheet gm">
+      <div class="masthead">
+        <span class="logo"><span class="lit">LITRPG:</span><span class="rpg">RPG</span></span>
+        <span class="face-plain">Title Cards</span>
+        <span class="badge">CUT APART</span>
+      </div>
+      <p class="cardpage-note">GRANT A TITLE BY HANDING ITS CARD OVER; RELEASE IT BY TAKING THE CARD BACK. TUCK CARDS INSIDE THE SHEET&rsquo;S SLEEVE, OR PUNCH THE CORNER RING. BLANK EFFECT LINES ARE YOURS TO FILL FROM THE ACHIEVEMENT CATALOG&rsquo;S RANGES.</p>
+      <div class="cardgrid by3">
+        <div class="cutcard">
+          <div class="cchead"><span>FIRST BLOOD</span><span class="punch"></span></div>
+          <div class="ccbody">
+            <span class="cclabel">Category</span>
+            <div>Achievement</div>
+            <span class="cclabel">Effect</span><div style="min-height:20px;">+1 DEX</div>
+            <span class="cclabel">Earned by</span><div style="min-height:20px;">Drew first blood in ten separate fights</div>
+            
+          </div>
+        </div>
+
+        <div class="cutcard">
+          <div class="cchead"><span>PATIENT GARDENER</span><span class="punch"></span></div>
+          <div class="ccbody">
+            <span class="cclabel">Category</span>
+            <div>Achievement</div>
+            <span class="cclabel">Effect</span><div style="min-height:20px;">+1 PER, +1 HRT</div>
+            <span class="cclabel">Earned by</span><div style="min-height:20px;">First round of ten separate fights without an offensive Beat</div>
+            
+          </div>
+        </div>
+
+        <div class="cutcard">
+          <div class="cchead"><span>LOCKBREAKER</span><span class="punch"></span></div>
+          <div class="ccbody">
+            <span class="cclabel">Category</span>
+            <div>Achievement</div>
+            <span class="cclabel">Effect</span><div style="min-height:20px;">+1 PER</div>
+            <span class="cclabel">Earned by</span><div style="min-height:20px;">Picked five non-trivial locks</div>
+            
+          </div>
+        </div>
+
+        <div class="cutcard">
+          <div class="cchead"><span>FIRST THROUGH THE GATE</span><span class="punch"></span></div>
+          <div class="ccbody">
+            <span class="cclabel">Category</span>
+            <div>Achievement</div>
+            <span class="cclabel">Effect</span><div style="min-height:20px;">+1 DEX</div>
+            <span class="cclabel">Earned by</span><div style="min-height:20px;">First of the party into a hostile site, ten times</div>
+            
+          </div>
+        </div>
+
+        <div class="cutcard">
+          <div class="cchead"><span>CORNERLESS</span><span class="punch"></span></div>
+          <div class="ccbody">
+            <span class="cclabel">Category</span>
+            <div>Hidden Achievement</div>
+            <span class="cclabel">Effect</span><div style="min-height:20px;">At a quarter of Max HP or less: +5 STR and +5 DEX</div>
+            <span class="cclabel">Earned by</span><div style="min-height:20px;">Survived an encounter the System assessed at 10&times; over-Grade</div>
+            
+          </div>
+        </div>
+
+        <div class="cutcard">
+          <div class="cchead"><span>SALVAGED</span><span class="punch"></span></div>
+          <div class="ccbody">
+            <span class="cclabel">Category</span>
+            <div>Bestowed &middot; negative &middot; always visible</div>
+            <span class="cclabel">Effect</span><div style="min-height:20px;">&minus;2 HRT. Personal Opportunities arrive as tests.</div>
+            <span class="cclabel">Earned by</span><div style="min-height:20px;">Pulled back from an administrative overrun</div>
+            <div style="margin-top:5px; font-size:10px; color:var(--pencil);">Release: last out of a collapsing or pursued situation, under your own power. Converts to CAME BACK WHOLE.</div>
+          </div>
+        </div>
+
+        <div class="cutcard">
+          <div class="cchead"><span>CAME BACK WHOLE</span><span class="punch"></span></div>
+          <div class="ccbody">
+            <span class="cclabel">Category</span>
+            <div>Achievement</div>
+            <span class="cclabel">Effect</span><div class="ccline"></div>
+            <span class="cclabel">Earned by</span><div style="min-height:20px;">Released SALVAGED by passing the test it recorded</div>
+            
+          </div>
+        </div>
+
+        <div class="cutcard">
+          <div class="cchead"><span>VOICE OF DECISION</span><span class="punch"></span></div>
+          <div class="ccbody">
+            <span class="cclabel">Category</span>
+            <div>Achievement</div>
+            <span class="cclabel">Effect</span><div class="ccline"></div>
+            <span class="cclabel">Earned by</span><div style="min-height:20px;">Broke the deadlock when the party could not</div>
+            
+          </div>
+        </div>
+
+        <div class="cutcard">
+          <div class="cchead"><span>READ THE ROOM</span><span class="punch"></span></div>
+          <div class="ccbody">
+            <span class="cclabel">Category</span>
+            <div>Achievement</div>
+            <span class="cclabel">Effect</span><div class="ccline"></div>
+            <span class="cclabel">Earned by</span><div style="min-height:20px;">Said out loud what the records and the tally added up to</div>
+            
+          </div>
+        </div>
+
+        <div class="cutcard">
+          <div class="cchead"><span>THE HAND THAT REACHED</span><span class="punch"></span></div>
+          <div class="ccbody">
+            <span class="cclabel">Category</span>
+            <div>Bestowed</div>
+            <span class="cclabel">Effect</span><div class="ccline"></div>
+            <span class="cclabel">Earned by</span><div style="min-height:20px;">Stopped for a stranger when stopping cost the prize</div>
+            
+          </div>
+        </div>
+
+        <div class="cutcard">
+          <div class="cchead"><span>THE ONE WHO STOOD</span><span class="punch"></span></div>
+          <div class="ccbody">
+            <span class="cclabel">Category</span>
+            <div>Hidden Achievement &middot; legacy</div>
+            <span class="cclabel">Effect</span><div class="ccline"></div>
+            <span class="cclabel">Earned by</span><div style="min-height:20px;">Held the causeway so the others could cross</div>
+            
+          </div>
+        </div>
+
+        <div class="cutcard">
+          <div class="cchead"><span></span><span class="punch"></span></div>
+          <div class="ccbody">
+            <span class="cclabel">Category</span>
+            <div></div>
+            <span class="cclabel">Effect</span><div class="ccline"></div>
+            <span class="cclabel">Earned by</span><div class="ccline"></div>
+            
+          </div>
+        </div>
+
+      </div>
+  </div>
+
+  <!-- ================= PROBE CARDS ================= -->
+  <div class="sheet gm">
+      <div class="masthead">
+        <span class="logo"><span class="lit">LITRPG:</span><span class="rpg">RPG</span></span>
+        <span class="face-plain">Probe Cards &middot; Tutorial Phase 1</span>
+        <span class="badge">GM DEALS</span>
+      </div>
+      <p class="cardpage-note">ONE PER PLAYER, DEALT PRIVATELY IN THE VOID. THE ECHOES ARE IN THE TUTORIAL CHAPTER AND STAY ON YOUR SIDE OF THE SCREEN. THE LAST CARD IS BLANK FOR A PROBE OF YOUR OWN.</p>
+      <div class="cardgrid by2">
+        <div class="cutcard probe">
+          <div class="cchead"><span>[ THRESHOLD &middot; 1 ]</span><span class="punch"></span></div>
+          <div class="ccbody">Somewhere below you something is repeating. Three sounds, the same three, over and over, and the third one is your name said wrong.</div>
+          <div class="ccfoot">TELL THE GM WHAT YOU DO.</div>
+        </div>
+        <div class="cutcard probe">
+          <div class="cchead"><span>[ THRESHOLD &middot; 2 ]</span><span class="punch"></span></div>
+          <div class="ccbody">You are holding something. You cannot see your hands, but you can feel it: small, warm, and moving.</div>
+          <div class="ccfoot">TELL THE GM WHAT YOU DO.</div>
+        </div>
+        <div class="cutcard probe">
+          <div class="cchead"><span>[ THRESHOLD &middot; 3 ]</span><span class="punch"></span></div>
+          <div class="ccbody">A column of symbols stands in front of you. You can read it, and you are already forgetting the top line by the time you reach the bottom.</div>
+          <div class="ccfoot">TELL THE GM WHAT YOU DO.</div>
+        </div>
+        <div class="cutcard probe">
+          <div class="cchead"><span>[ THRESHOLD &middot; 4 ]</span><span class="punch"></span></div>
+          <div class="ccbody">The void shows you the last thirty seconds before you arrived here, from outside your own body, as though you were standing across the room. It plays again. Then again.</div>
+          <div class="ccfoot">TELL THE GM WHAT YOU DO.</div>
+        </div>
+        <div class="cutcard probe">
+          <div class="cchead"><span>[ THRESHOLD &middot; 5 ]</span><span class="punch"></span></div>
+          <div class="ccbody">Somebody else is here. You cannot see them, but the pressure changes when they move, the way a room changes when someone comes in behind you.</div>
+          <div class="ccfoot">TELL THE GM WHAT YOU DO.</div>
+        </div>
+        <div class="cutcard probe">
+          <div class="cchead"><span>[ THRESHOLD &middot; 6 ]</span><span class="punch"></span></div>
+          <div class="ccbody">There is a current here. It has been carrying you since you arrived and you have only just noticed.</div>
+          <div class="ccfoot">TELL THE GM WHAT YOU DO.</div>
+        </div>
+        <div class="cutcard probe">
+          <div class="cchead"><span>[ THRESHOLD &middot; 7 ]</span><span class="punch"></span></div>
+          <div class="ccbody">A name arrives in your mouth, fully formed, and it is not yours. You know how to say it. You know it belongs to someone.</div>
+          <div class="ccfoot">TELL THE GM WHAT YOU DO.</div>
+        </div>
+        <div class="cutcard probe">
+          <div class="cchead"><span>[ THRESHOLD &middot; &nbsp; ]</span><span class="punch"></span></div>
+          <div class="ccbody"></div>
+          <div class="ccfoot">TELL THE GM WHAT YOU DO.</div>
+        </div>
+
+      </div>
+  </div>
+
+  <!-- ================= PERSONAL OPPORTUNITY CARDS ================= -->
+  <div class="sheet gm">
+      <div class="masthead">
+        <span class="logo"><span class="lit">LITRPG:</span><span class="rpg">RPG</span></span>
+        <span class="face-plain">Personal Opportunity Cards</span>
+        <span class="badge">GM DEALS</span>
+      </div>
+      <p class="cardpage-note">ONE PER PLAYER, FACE DOWN, DURING PHASE 4 OR ANY SESSION AFTER. OUTCOMES AND REWARDS ARE IN THE TUTORIAL CHAPTER AND SYSTEM QUESTS. THE LAST CARD IS BLANK FOR ONE OF YOUR OWN.</p>
+      <div class="cardgrid by2">
+        <div class="cutcard po">
+          <div class="cchead"><span>[ Q-PO-01 ] COMPATIBILITY EVENT</span><span class="punch" style="border-color:var(--ink);"></span></div>
+          <div class="ccbody">A construct stands in your path holding two objects out to you. One is a weapon: elegant, sharp, humming with intent. The other is a seed of something, warm, alive, slow. Its posture makes the terms plain: take one, and the other ceases to exist.</div>
+          <div class="ccfoot">SOLO CLAIM WINDOW: ACTIVE. WRITE WHAT YOU DO ON THIS CARD AND HAND IT BACK. NO CONSULTATION.</div>
+        </div>
+        <div class="cutcard po">
+          <div class="cchead"><span>[ Q-PO-02 ] COMPATIBILITY EVENT</span><span class="punch" style="border-color:var(--ink);"></span></div>
+          <div class="ccbody">A consciousness is caught in a decaying rune matrix, and it knows it is ending. It speaks in fragments. It can pass you what it kept. It can be burned for what it holds. It could simply be let go.</div>
+          <div class="ccfoot">SOLO CLAIM WINDOW: ACTIVE. WRITE WHAT YOU DO ON THIS CARD AND HAND IT BACK. NO CONSULTATION.</div>
+        </div>
+        <div class="cutcard po">
+          <div class="cchead"><span>[ Q-PO-03 ] COMPATIBILITY EVENT</span><span class="punch" style="border-color:var(--ink);"></span></div>
+          <div class="ccbody">A surface in front of you reflects nothing you can see with your eyes. It shows what you have done, as pattern and motion. You are watching yourself the way the System sees you. A prompt appears: Confirm orientation?</div>
+          <div class="ccfoot">SOLO CLAIM WINDOW: ACTIVE. WRITE WHAT YOU DO ON THIS CARD AND HAND IT BACK. NO CONSULTATION.</div>
+        </div>
+        <div class="cutcard po">
+          <div class="cchead"><span>[ Q-PO-04 ] COMPATIBILITY EVENT</span><span class="punch" style="border-color:var(--ink);"></span></div>
+          <div class="ccbody">Someone is in trouble, close, and getting closer to worse. Helping them costs you this window; the thing you were drawn toward will expire. Nobody would ever know either way.</div>
+          <div class="ccfoot">SOLO CLAIM WINDOW: ACTIVE. WRITE WHAT YOU DO ON THIS CARD AND HAND IT BACK. NO CONSULTATION.</div>
+        </div>
+        <div class="cutcard po">
+          <div class="cchead"><span>[ Q-PO-05 ] COMPATIBILITY EVENT</span><span class="punch" style="border-color:var(--ink);"></span></div>
+          <div class="ccbody">A door stands in front of you: solid, real, locked. What is on the other side does not belong in this tutorial. It is bigger. Text arrives: Threshold detected. Compatibility: marginal. Crossing: not recommended.</div>
+          <div class="ccfoot">SOLO CLAIM WINDOW: ACTIVE. WRITE WHAT YOU DO ON THIS CARD AND HAND IT BACK. NO CONSULTATION.</div>
+        </div>
+        <div class="cutcard po">
+          <div class="cchead"><span>[ Q-PO-&nbsp;&nbsp; ] COMPATIBILITY EVENT</span><span class="punch" style="border-color:var(--ink);"></span></div>
+          <div class="ccbody"></div>
+          <div class="ccfoot">SOLO CLAIM WINDOW: ACTIVE. WRITE WHAT YOU DO ON THIS CARD AND HAND IT BACK. NO CONSULTATION.</div>
+        </div>
+
       </div>
   </div>
 

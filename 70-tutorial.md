@@ -104,8 +104,8 @@ Players begin with **whatever was on their person at the moment of Integration**
 
 - [ ] Print or digitize the Grade Reference Card (the Quick Reference).
 - [ ] Pull stat blocks from the Bestiary: Glow-Mote Swarm, Husk Crawler, Frenzy Rat, Pre-System Brigand, Snarljaw, Alpha Snarljaw, Glow-Stalker, Training Sentry, Husk Sentinel, Fragment Wraith, Corrupted System Warden.
-- [ ] Copy out the seven probes from Phase 1, one card each, and pick which player gets which.
-- [ ] Pre-write the Personal Opportunity cards (Phase 4), one per player. Hand these over during play; never read them aloud.
+- [ ] Cut out the probe cards (Table Kit) and pick which player gets which.
+- [ ] Cut out the Personal Opportunity cards (Table Kit), one per player, and have the Battle Memory and Title cards in reach. Hand cards over during play; never read them aloud.
 - [ ] Set up the Quest UI: a shared digital quest log (Discord pinned, Google Doc, VTT module). Each player has a private channel.
 - [ ] Read the Titles and System Quests chapters once through. Be ready to issue the first Mandate in Phase 5 and the first Achievement Titles in Phase 6.
 - [ ] Check that every character sheet has room for a **Marks** tally and an **IP** count. Both start at zero and both should be visible to the player from the first session.
