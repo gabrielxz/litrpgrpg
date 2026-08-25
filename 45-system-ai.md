@@ -25,7 +25,7 @@ Unplugged is the baseline this book is written against. The other two modes auto
 
 ### AI-Assisted
 
-The GM runs the table and keeps the paper log as normal, and uses any conversational AI between sessions for the generative work: paste the standing context (below), then the function prompt.
+The GM runs the table with nothing to track and does the HVE session-end sweep as normal, then uses any conversational AI between sessions for the generative work: paste the standing context (below), then the function prompt.
 
 - Keep one standing conversation per campaign; append a short summary after each session.
 - Treat every output as a draft. Reprice bonuses against the Modifier Budget, cut anything that breaks Grade math, keep what fits.
@@ -109,7 +109,7 @@ Campaign: [one-paragraph premise and current situation]
 Per character: name, level, Grade, stats (Raw), titles,
 Principles and tiers.
 Behavioral profile per character: one line per HVE axis (Deep Vector),
-plus their 2-3 defining logged moments.
+plus their two or three circled Defining moments.
 Last session: [three-sentence summary]
 ```
 

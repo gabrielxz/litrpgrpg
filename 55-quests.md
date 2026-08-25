@@ -189,7 +189,7 @@ Failure is distinct from refusal: the character tried and lost. Consequences are
 - **Faction:** Reputation hit, possible follow-up quest to recover standing.
 - **Hidden:** Sometimes the character never knows; sometimes the log marks a hidden entry failed with its objective still obscured.
 
-The System recognizes effort. A character who attempts a Mandate and fails honestly is treated differently from one who refuses outright. The HVE log distinguishes the two.
+The System recognizes effort. A character who attempts a Mandate and fails honestly is treated differently from one who refuses outright. The Engine distinguishes the two.
 
 ---
 
@@ -261,9 +261,10 @@ CHARACTER PROFILE:
 - Name: {character_name}
 - Grade: {grade}
 - Level (in-Grade): {level}
-- HVE Dominant Axis: {primary_axis} (intensity: {primary_value})
-- HVE Secondary Axis: {secondary_axis} (intensity: {secondary_value})
-- Recent Behavior Summary: {recent_events_summary}
+- HVE Dominant Lean: {axis and side, with Deep tally count or value}
+- HVE Secondary Lean: {axis and side, or "scattered"}
+- Defining Moments: {the circled margin notes, quoted}
+- Recent Behavior Summary: {the last sweep's three biggest moments}
 - Active Titles: {active_title_list}
 
 CURRENT SITUATION:
@@ -378,4 +379,4 @@ Deferred until playtest data or campaign progression demands them:
 - **Mandate-driven faction politics.** When the System issues a Mandate that benefits one faction over another, the political implications cascade. Needs a faction-relations subsystem to formalize.
 - **Quest chains and arc tracking.** Long-running multi-quest arcs need a structural representation in the UI: parent quest with child objectives, prerequisite gating, optional branches.
 - **Reputation as a tracked stat.** Faction reputation is referenced throughout but not formalized. Needs a numeric or tiered system tied to faction quests, Mandate compliance, and Bestowed title eligibility.
-- **PvP quests.** Can the System issue a quest targeting another player character? The Hidden Vector Engine tracks PvP coercion as high-intensity Will events; a Mandate that pits PCs against each other is a powerful but volatile design space.
+- **PvP quests.** Can the System issue a quest targeting another player character? The Hidden Vector Engine weighs PvP coercion heavily on the Will side; a Mandate that pits PCs against each other is a powerful but volatile design space.

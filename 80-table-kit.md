@@ -1,6 +1,6 @@
 # Table Kit
 
-The pages that follow are the print kit: the F-Grade character sheet, front and back, the GM's HVE log, the optional bookkeeper's ledger, and the three ready-made characters as cards. Photocopy them from here, or print the standalone kit PDF distributed alongside this book. The character sheet is one page per player, printed front and back.
+The pages that follow are the print kit: the F-Grade character sheet, front and back, the GM's HVE sweep sheet, the optional bookkeeper's ledger, and the three ready-made characters as cards. Photocopy them from here, or print the standalone kit PDF distributed alongside this book. The character sheet is one page per player, printed front and back.
 
 ```{=latex}
 \includepdf[pages=-]{./build/litrpg-rpg-table-kit.pdf}
@@ -10,7 +10,7 @@ The pages that follow are the print kit: the F-Grade character sheet, front and 
 
 ![The character sheet, back.](./build/kitpng/kit-2.png)
 
-![The GM's HVE log.](./build/kitpng/kit-3.png)
+![The GM's HVE sweep sheet.](./build/kitpng/kit-3.png)
 
 ![The bookkeeper's ledger.](./build/kitpng/kit-4.png)
 

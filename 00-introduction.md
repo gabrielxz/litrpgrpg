@@ -136,6 +136,6 @@ Kara (Strength 8 and Fortitude 7, written STR 8, FOR 7 on her sheet, with the Pr
 
 **GM:** Two Zones. Do you want to find out?
 
-*(And on the GM's log, where nobody can see it: Kara took the ambush head-on and gave one Beat rather than be moved, Force 1.0, then asked what a bigger kill pays, Hunger 0.5. Andre counted himself among the numbered, Method 0.5, and told her to leave it alone, Restraint 0.5.)*
+*(And in the GM's memory, where nobody can see it: Kara took the ambush head-on and gave one Beat rather than be moved, then asked what a bigger kill pays. Andre counted himself among the numbered, and told her to leave it alone. Both moments will still be there at the end of the session, which is when the Engine gets them.)*
 
 That is the whole loop: fiction first, one roll, numbers that mean something, and a System quietly observing what each of you is becoming.

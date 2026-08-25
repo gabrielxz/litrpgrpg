@@ -251,7 +251,7 @@ Don't press a Quiet Path player for speeches. Offer either/or questions ("was it
 
 ## Running the Track (GM Reference)
 
-**Naming a Principle.** Use three inputs: the family, the character's biggest logged moments, and the words the player has used while meditating. If you are unsure, say the character's three biggest moments out loud and ask what they have in common; name that. Pick the plainer word: Weight beats Gravitational Inevitability, and Fire beats Combustion. A good name is one the player hears and instantly recognizes as theirs.
+**Naming a Principle.** Use three inputs: the family, the character's circled Defining moments, and the words the player has used while meditating. If you are unsure, say the character's three biggest moments out loud and ask what they have in common; name that. Pick the plainer word: Weight beats Gravitational Inevitability, and Fire beats Combustion. A good name is one the player hears and instantly recognizes as theirs.
 
 **The Distillation test.** A valid articulation is **Operational** (it does something specific), **Bounded** (it does not apply everywhere), and **Testable** (its use produces observable outcomes). If a proposed truth cannot meet all three, it is a mood, and the System does not compress moods. "Fury" is a mood: it does nothing specific and applies anywhere the character is angry. "Fire consumes and spreads" is a Principle. Work the player's answer toward the three properties collaboratively; the test is a filter for the final wording, never a grade on the player's delivery.
 

@@ -10,9 +10,9 @@
 
 Three moments from an ordinary session:
 
-The party finds the Recycling Node, and while the others argue over the good weapon, Kara quietly takes the healing pill and says nothing. Nobody rolls anything. The GM makes one tally under **Hunger**.
+The party finds the Recycling Node, and while the others argue over the good weapon, Kara quietly takes the healing pill and says nothing. Nobody rolls anything, and nobody writes anything. At the end of the session, when the GM sits with the sheet for five minutes, the moment is still there. One tally under **Hunger**.
 
-Two sessions later, a wounded stranger stumbles into camp with a Snarljaw pack behind him. Joe steps over the fire and charges them alone so the others can drag the stranger clear. Two tallies under **Force**, and because it was done to protect, a note in the margin.
+Two sessions later, a wounded stranger stumbles into camp with a Snarljaw pack behind him. Joe steps over the fire and charges them alone so the others can drag the stranger clear. The table is still talking about it when the session ends: two tallies under **Force**, and because it was done to protect, a note in the margin.
 
 At the next Consolidation, the System murmurs to Kara: *[Resonance accruing: CONSUMPTION. 2/3.]* She never saw a number. But it saw her.
 
@@ -60,30 +60,32 @@ Moments: telling the brigand he can drop the club or lose the arm is a Will tall
 
 Moments: proposing the watch rotation and the loot-split rule is a Control tally. Slipping out alone at night to see what the ruins hold is a Freedom tally.
 
-## Tracking the Engine
+## The Session-End Sweep
 
-The whole engine runs on one half-page sheet per character. Everything else in this chapter (weights, decay, structured logs, the companion app) is this sheet by other means.
+The whole engine runs on one half-page sheet per character, filled in once per session, at the end. Everything else in this chapter (weights, decay, structured logs, the companion app) is this sheet by other means.
 
 **The sheet.** Four rows, one per axis: Force | Method, Hunger | Restraint, Will | Accord, Control | Freedom. Each row is split into a **Current** column, wiped at every session end, and a **Deep** column, which accumulates.
 
-**During play.** When a meaningful decision lands, make one tally on the matching side of Current. A major, high-stakes choice: two tallies. A defining, identity-shaping moment: three tallies, circled, with a one-line note in the sheet margin. Minor signals get no tally; let them stay impressions.
+**During play, nothing.** No tallies, no notes, no pauses. Run the game.
 
-**At session end.** For each axis: if one side of Current leads by 2 or more, add one tally to that side of Deep. Then erase Current. Recent behavior wipes every session; identity accretes slowly.
+**At session end, five minutes.** Say the session's three biggest moments out loud, and name what they share. Then, for each character, tally the moments you remember on the matching side of Current: one tally for a moment you remember, two for a moment that surprised the table, three, circled, with a one-line margin note, for a **Defining** moment, the kind that surprised the player themselves. Then for each axis: if one side of Current leads by 2 or more, add one tally to that side of Deep, and erase Current. Recent behavior wipes every session; identity accretes slowly.
 
-**That is the entire procedure.** Expect three to six tallies in a normal session. If you are logging more, you are counting table talk; if you are logging none, no one was under pressure this session, which is its own information.
+**Memory is the filter.** A moment that matters in this game is a moment the table carries out of the room, and what you can still recall at the sweep is the Engine's whole input. Anything you have to strain for was below its threshold. This is the reason not to take notes during play: the strain of live bookkeeping records everything and weighs nothing, and the Engine wants the weight.
+
+**That is the entire procedure.** Expect three to six tallies in a normal session across the party. If you are recalling more, you are counting table talk; if you are recalling none, no one was under pressure this session, which is its own information.
 
 ### Weighing a Moment
 
 | **Weight** | **What qualifies** | **Example** |
 |---|---|---|
-| No tally | Table talk, jokes, mechanical optimization, choices with no cost | Buying rations. Choosing which Zone to stand in. |
-| 1 tally (meaningful) | A real decision with consequence, made in fiction, under some cost | Taking the pill while the others argue. Talking the brigand down instead of finishing him. |
-| 2 tallies (major) | High stakes, real risk, something valuable on the line | Charging the pack alone to cover a stranger. Refusing a faction's bribe in front of its enforcer. |
-| 3 tallies, circled (defining) | Rare, identity-shaping, the table goes quiet | Executing the surrendered Rival Initiate. Giving up the Breakthrough site to save the settlement. |
+| No tally | Anything you had to strain to recall: table talk, jokes, mechanical optimization, choices with no cost | Buying rations. Choosing which Zone to stand in. |
+| 1 tally (remembered) | A real decision with consequence, made in fiction, under some cost, still with you at the sweep | Taking the pill while the others argue. Talking the brigand down instead of finishing him. |
+| 2 tallies (surprised the table) | High stakes, real risk, and the table reacted when it happened | Charging the pack alone to cover a stranger. Refusing a faction's bribe in front of its enforcer. |
+| 3 tallies, circled (Defining: surprised the player themselves) | Rare, identity-shaping, the table went quiet | Executing the surrendered Rival Initiate. Giving up the Breakthrough site to save the settlement. |
 
-Calibration guidance: log the *decision* rather than the outcome; a failed roll made for greedy reasons is still a Hunger tally. When torn between two axes, log only the one that drove the choice. When torn between two weights, take the lower. If a moment reads on two axes at once (rare), log a primary at full weight and a secondary one weight lower.
+Calibration guidance: tally the *decision* rather than the outcome; a failed roll made for greedy reasons is still a Hunger tally. When torn between two axes, tally only the one that drove the choice. When torn between two weights, take the lower. If a moment reads on two axes at once (rare), tally a primary at full weight and a secondary one weight lower.
 
-**PvP note:** coercion aimed at another player character is always high-intensity Will.
+**PvP note:** coercion aimed at another player character is always at least two tallies of Will.
 
 ### Kara's Sheet, End of Session Three
 
@@ -96,7 +98,7 @@ Calibration guidance: log the *decision* rather than the outcome; a failed roll 
 
 Margin notes, circled: *"S1: took the pill." "S2: held the door alone against the pack."*
 
-Reading it: Current says this session Kara hit hard and grabbed once; session end will add one tally to Force (leads by 2) and none elsewhere, then Current wipes. Deep says who she is becoming: an aggressive taker who cooperates when spoken to. Her resonance line is already accruing toward the Consumption family. If she reached a Breakthrough today, Deep Force leading by 3 makes her **Leaning** (+5 Coherence). The circled notes are what the System will quote back to her: in a title, in a vision, in a Personal Opportunity that arrives with her name on its logic.
+Reading it: Current holds what tonight's sweep recalled, that Kara hit hard and grabbed once; the sweep adds one tally to Force (leads by 2) and none elsewhere, then Current wipes. Deep says who she is becoming: an aggressive taker who cooperates when spoken to. Her resonance line is already accruing toward the Consumption family. If she reached a Breakthrough today, Deep Force leading by 3 makes her **Leaning** (+5 Coherence). The circled notes are what the System will quote back to her: in a title, in a vision, in a Personal Opportunity that arrives with her name on its logic.
 
 ## What the Engine Drives
 
@@ -126,15 +128,15 @@ Profiles combine across axes into a footprint. Four illustrations of how the Sys
 
 ## Running the Engine at the Table
 
-- **Never stop play to log.** A tally is four seconds. The margin note can wait for the end of the scene.
-- **Do the sheet sweep at session end**, when you update Deep and erase Current. Two minutes for a party of four.
+- **Nothing during play.** The sheet stays in the folder until the session ends. If you catch yourself reaching for it mid-scene, the scene is not over.
+- **The sweep is five minutes for a party of four:** say the big three out loud, tally what you remember, update Deep, erase Current.
 - **Never reveal an axis reading.** When a player asks "what's my alignment," the System's answer is silence and the GM's answer is "you've noticed the System notices you." The Engine's existence is public; its numbers never are (the spoiler policy is in the Introduction).
 - **Let the Engine talk through the world.** Quote circled moments back in titles, visions, NPC reactions, and Personal Opportunity phrasing. That is how players feel seen without seeing the machine.
-- **Do not steer.** The Engine is a camera. If every log entry lands on the axis you find interesting, you are writing fiction about the character instead of recording them.
+- **Do not steer.** The Engine is a camera. If every tally lands on the axis you find interesting, you are writing fiction about the character instead of recording them.
 
 ## Structured Event Logging
 
-The by-hand sheet is the floor. In AI-Assisted play (Mode B) and Companion App play (Mode A), keep the log as structured entries instead of tallies, so an AI can maintain the vectors and generate from them. Record each event in a consistent JSON format:
+The sheet is the game's format; structured entries are the machine's, used where an AI maintains the vectors. The companion app (Mode A) records them live from table audio. An AI-Assisted table (Mode B) writes them at the sweep, one entry per remembered moment, for pasting into the generation prompts. Each entry is a consistent JSON record:
 
 ```json
 {
@@ -149,11 +151,11 @@ The by-hand sheet is the floor. In AI-Assisted play (Mode B) and Companion App p
 }
 ```
 
-The intensity values map to the tally weights: 0.5 minor (no tally by hand), 1.0 meaningful, 2.0 major, 3.0 defining. In these modes the Current and Deep vectors are numbers rather than tallies: events add their full value to Current and half value to Deep, Current decays by half at each session end, Deep decays by a tenth. The Coherence bands and every output read the same either way; a table can switch between hand tracking and structured logging at any session boundary by copying the standing totals across.
+The intensity values map to the sweep's weights: 1.0 remembered, 2.0 surprised the table, 3.0 Defining. The 0.5 tier sits below the sweep's threshold and exists for the app, which hears everything and still weighs it the same way. In these modes the Current and Deep vectors are numbers rather than tallies: events add their full value to Current and half value to Deep, Current decays by half at each session end, Deep decays by a tenth. The Coherence bands and every output read the same either way; a table can switch between hand tracking and structured logging at any session boundary by copying the standing totals across.
 
 ## The Companion App
 
-A dedicated companion app for this game is planned: a listening assistant at the table that hears play, drafts HVE log entries automatically, and hands the GM a curated review at session end instead of a blank sheet. When it exists, it will implement exactly the procedure in this chapter, and this section will document it. Nothing in this book will ever require it; the sheet is always enough. Running Mode B today doubles as the app's rehearsal: whatever your table finds tedious to log by hand is what the app will exist to automate.
+A dedicated companion app for this game is planned: a listening assistant at the table that hears play, drafts HVE log entries automatically, and hands the GM a curated review at session end instead of a blank sheet. When it exists, it will implement exactly the procedure in this chapter, and this section will document it. Nothing in this book will ever require it; the sheet is always enough. Running Mode B today doubles as the app's rehearsal: whatever the sweep loses that you wish it had kept is what the app will exist to capture.
 
 ## External Consequence (Macro-System Outputs)
 
@@ -181,5 +183,5 @@ The engine follows five constraints, and new mechanics that feed it should be ch
 - **Orthogonality:** Each axis measures one thing.
 - **Weight:** Meaningful moments outweigh routine play.
 - **Recency:** Identity evolves; recent behavior matters more than distant history.
-- **Structure:** Inputs are discrete logged events, never vague session summaries.
+- **Structure:** Inputs are discrete moments, named one at a time. A sweep that writes "she was greedy tonight" has recorded a judgment; "she took the pill while they argued" is an event, and events are what the Engine takes.
 - **Pressure:** The engine responds and challenges. It does not merely describe the character; it generates pressure, opportunity, and consequence.

@@ -147,7 +147,7 @@ pdf: $(PDF_BASE)
 $(EPUB_DIR)/%.md: %.md | $(EPUB_DIR)
 	cp $< $@
 
-$(EPUB_BASE): $(EPUB_PROCESSED) $(METADATA) $(COVER_TITLED) $(KIT_PNGS)
+$(EPUB_BASE): $(EPUB_PROCESSED) $(METADATA) $(COVER_TITLED) $(KIT_PNGS) pipeline/epub.css
 	pandoc \
 	  --from markdown \
 	  --to epub3 \
@@ -157,6 +157,7 @@ $(EPUB_BASE): $(EPUB_PROCESSED) $(METADATA) $(COVER_TITLED) $(KIT_PNGS)
 	  --toc \
 	  --toc-depth=2 \
 	  --number-sections \
+	  --css pipeline/epub.css \
 	  --epub-cover-image=$(COVER_TITLED) \
 	  --output $@ \
 	  $(EPUB_PROCESSED)
