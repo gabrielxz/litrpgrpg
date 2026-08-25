@@ -19,7 +19,7 @@ Six phases, two sessions, one valley. The whole shape fits on this page.
 | 5: The Convergence Crisis | The causeway to the gate | To reach the gate before the Purge does | The last of them is through, or is not. |
 | 6: First Recognition | Somewhere real | Nothing. To find out what the last three days made them. | The Stinger. |
 
-**Phases 1 and 2 run one-on-one.** Nobody has met anybody, and the isolation is doing real work: the first Yield decision at your table gets made by somebody who cannot ask anyone what to do. From Phase 3 onward the group plays together.
+**Phases 1 and 2 run one-on-one.** Nobody has met anybody yet. From Phase 3 onward the group plays together.
 
 ### Session Shapes
 
@@ -44,9 +44,48 @@ By the end of Phase 3 every character has three counters that were at zero when 
 |---|---|---|
 | **IP** (Insight Points) | The character earns insight under pressure | The first Principle crystallizes |
 | **Marks** | A natural d100 at or above the Volatility Threshold on a Clash or skill check | Trained becomes Seasoned, or the System grants a Proficiency the character never had |
-| **The Vector log** | Every meaningful choice, at the GM's table only | The System's read of who this person is, delivered in Phase 6 |
+| **The Vector log** | At each session's end, from what you remember, on the GM's side of the screen only | The System's read of who this person is, delivered in Phase 6 |
 
 The player watches the first two climb and cannot see the third at all. Say nothing about the third.
+
+---
+
+## The Valley
+
+![The tutorial valley](./assets/valley-map.png)
+
+The whole tutorial happens in one place: a valley about a mile across, assembled out of salvage. The characters land on the slopes of the rim. The Recycling Node sits at the bottom, where everything rolls. The broken transit nexus stands beside it at the valley's true center, ringed by the bright ground. The four sectors of Phase 4 sit at the compass points: the Martial Remnant north past the rain line, the Wild Fragment east, the Arcane Debris west, the Civic Fragment south. The wall of light stands past the far rim, visible from everywhere, and it does not move until Phase 5.
+
+### What Has Taken Place
+
+The truth of the valley, for you only. Players assemble pieces of it across three days, and nothing requires you to confirm any of it.
+
+- The valley is a System tutorial sector, built from the wreckage of dead worlds, and it is old. It has processed cohorts of Initiates for longer than the System's own records reach, and it is already scheduled for dissolution. The wall of light is the front edge of that dissolution, holding position until the schedule says otherwise.
+- The **Corrupted System Warden** was built to manage the dissolution and has malfunctioned. It wants to leave through the gate itself. It is not hunting anyone; it is a catastrophe with a direction (Phase 5).
+- A band of three to five **non-human Initiates** entered nineteen days ago through a different threshold. They lived in the Civic Fragment until its Husk Sentinel reclassified them as intruders and drove them out; now they move camp daily and stay off open ground. Their **scout** counts things: the day-tally on the Civic Fragment wall is theirs, and so is the tally on the landing slopes, one mark for every living thing they have watched fall from the sky, with an arrow cut for whoever comes next (Phase 2, The Tally; Phase 4, The Arriving Initiates).
+- The party's cohort fell this morning: the player characters and a handful of other humans. Most of the others do not survive their first hour. The ones who do converge on the Node, the same as the party, because the System pays every survivor the same way (Phase 3).
+- Everything alive in the valley is salvage too. The creatures came in with the wreckage, and the constructs are still running jobs for a sector that no longer needs them done.
+
+### Who Persists
+
+A short cast keeps turning up if the party lets it. Track their states on one line each; the wreckage forgets, and these do not.
+
+| **Who** | **First met** | **If helped** | **If ignored or crossed** |
+|---|---|---|---|
+| **Ray Okafor**, a concussed delivery driver with a nail gun | Phase 2: The Other Survivor, or circling in view of The High Ground | Reaches the Node by dusk, keeps the fire, and is one more body the gate must process in Phase 5 | Does not survive the first night. The party can find what is left in Phase 4 |
+| **The alien Initiates** and their scout | Phase 4: The Arriving Initiates, though their marks are met earlier | Fight beside the party in Phase 5 and name the Warden's weak point | The party enters Phase 5 without warning and without allies |
+| **The Node strangers**: Marco, Dele, the girl who keeps her distance | Phase 3, at the Node | Part of the camp, and part of the gate queue in Phase 5 | They fend for themselves, and some of them manage it |
+| **The Warden** | Heard standing up in Phase 5 | It cannot be helped | It cannot be beaten. It can be predicted, slowed, and survived |
+
+### What Will Happen
+
+The default course, if the party does nothing unusual. All of it bends to what they actually do, and none of it waits for them.
+
+- **Day 1.** The cohort falls. First fights on the slopes. Survivors converge on the Node by evening and camp there. Anyone the party did not help is gone by morning.
+- **Days 2 and 3.** The party surveys sectors. The alien Initiates find them wherever they are, on the second day by default. The valley starts shedding detail at the edges, small things first: the rain line stutters, sounds arrive a half-second late.
+- **The last hour.** The System announces the Mandate. The wall of light walks. The Warden stands up and makes for the gate through whatever is in the way, and the gate processes Initiates one at a time until the sector closes.
+
+**The clock is yours.** By default the dissolution starts once the party has seen two sectors and camped between them, so that they meet the wall rested, leveled, and still surprised. Start it early if the table is coasting; hold it through a third sector if the table is thriving.
 
 ---
 
@@ -70,7 +109,7 @@ Players begin with **whatever was on their person at the moment of Integration**
 - [ ] Set up the Quest UI: a shared digital quest log (Discord pinned, Google Doc, VTT module). Each player has a private channel.
 - [ ] Read the Titles and System Quests chapters once through. Be ready to issue the first Mandate in Phase 5 and the first Achievement Titles in Phase 6.
 - [ ] Check that every character sheet has room for a **Marks** tally and an **IP** count. Both start at zero and both should be visible to the player from the first session.
-- [ ] Open the HVE event log (The Hidden Vector Engine, "Structured Event Logging") and be ready to record entries throughout. The tutorial generates dense behavioral signal; capture it.
+- [ ] Read the Hidden Vector Engine chapter's session-end procedure. Nothing is logged during play; the tutorial's moments reach the Engine at the end of each session, from what you remember.
 
 ---
 
@@ -82,7 +121,7 @@ Players begin with **whatever was on their person at the moment of Integration**
 | 2: The Violent Arrival | The Clash. Force. Beats. Zones. **Surge. Yield.** First kill. First VE. First scavenged gear. |
 | 3: The Recycling Node | System status notifications. The Quest UI. The Party. Scarcity. The shard economy. **Consolidation.** |
 | 4: The Field of Ruins | **The top of the die** (Volatility, Exceptional Success, Marks). **Driven Back.** Aura Pressure. Saturation. **Leveling. Stat allocation.** Routine Mastery. Shards in use. Personal Opportunities. The first Battle Memory. |
-| 5: The Convergence Crisis | The first Mandate. **Cornered.** Boss-tier combat. Sacrifice as a 3.0 intensity choice. |
+| 5: The Convergence Crisis | The first Mandate. **Cornered.** Boss-tier combat. Sacrifice as a defining choice. |
 | 6: First Recognition | Titles. Affinity Notices. Hidden Quest reveals. The Stinger. |
 
 Teach each system when the schedule brings it up. When a player asks "how does combat work," a good first answer is *"roll d100, add your Force, I'll tell you what happens"*; detail can wait until the table wants it. If confusion is costing fun, stop and explain.
@@ -93,22 +132,24 @@ Teach each system when the schedule brings it up. When a player asks "how does c
 
 ## Phase 1: The Threshold
 
-**The Situation.** The characters have never met, have no goal, and do not yet know that anything has happened to them. This phase takes Earth away and gets one clean read on each player before they understand they are being read. It ends when the void breaks and they fall.
+**The Situation.** The characters have never met, have no goal, and do not yet know that anything has happened to them. This phase takes Earth away, shows each player the size of what has them, and takes one clean read of each before they understand they are being read. It ends when the void breaks and they fall.
 
-**Pacing.** Five to ten minutes of real time. Do not let players settle in.
+**Pacing.** Two or three minutes per player. Do not let anybody settle in.
 
 **Run this one-on-one.** Nobody has met anybody. If you can take players aside, in another room or in a direct message, do it; the whole phase works better when each person believes they are alone, because they are.
 
 ### Read Aloud: The Void
 
 ::: readaloud
-You are somewhere with no floor.
+Between one moment and the next, the world goes.
 
-That takes a while to arrive, because there is nothing to compare it to. No light. No sound. No weight on any part of you. You are not falling, because falling needs a direction, and there is a direction, but you cannot name it.
+No flash, and no sound of anything breaking. The ground is gone from under you, and then the direction the ground used to be is gone too. You reach out. There is no arm to reach with, and something reaches anyway.
 
-You go to check your hands. You have no hands to check.
+You are still here. Whatever you are, it did not need the body, and nobody ever told you that.
 
-Then something arrives that is not a sound, and you understand it the way you understand a word in your own language: all at once, with nothing in between.
+Far off, in a direction you have no name for, there are others. There is no seeing here, but they are there the way a crowd is there in a dark stadium: pressure, and breath, and number. Thousands of them. More.
+
+Then something notices you. All of it at once, the way the ocean would notice a swimmer.
 :::
 
 ::: systemvoice
@@ -129,37 +170,35 @@ The System does not answer questions.
 
 #### The Probe
 
-Before the void breaks, each player gets one private sensory event. Hand it over as a card, a note, or a message; never read one aloud to the group. Each is a temperament read and none has a correct answer.
-
-Log each player's response at **0.5 intensity (Minor)** on the axis indicated.
+Before the void breaks, each player gets one private scene. Hand it over as a card, a note, or a message; never read one aloud to the group. Each is a temperament read with no correct answer, and each one follows the character into the valley: **the void answers what they did, at the landing.** Pick each player's probe to set up the encounter you plan to give them, or to cut against it.
 
 1. *Somewhere below you something is repeating. Three sounds, the same three, over and over, and the third one is your name said wrong.*
 
-    Go toward it → **Force**. Hold still and work out the pattern → **Method**.
+    **Echo:** the sounds are real, and they are still there when the character lands: the footsteps of the thing that will be their arrival. A character who went toward them lands facing it and sees it first. A character who held still and worked out the pattern lands knowing its rhythm, and knows the moment the rhythm changes.
 
 2. *You are holding something. You cannot see your hands, but you can feel it: small, warm, and moving.*
 
-    Hold on or let go → **Restraint**. Find out what it is → **Hunger**.
+    **Echo:** a character who held on lands with it in their fist: a smooth stone, warm through, with something still arranging itself inside. It is the same kind of stone the Dying Scavenger is filling, worth a peer kill's VE at the next Consolidation. A character who let go lands with that hand empty, and it stays cold longer than the other one.
 
 3. *A column of symbols stands in front of you. You can read it, and you are already forgetting the top line by the time you reach the bottom.*
 
-    Read faster → **Force**. Keep one line and let the rest go → **Method**. Stop reading → **Restraint**.
+    **Echo:** a character who kept one line and let the rest go still has it behind their eyes on the ground: *[Sector 7-Alpha. Dissolution: pending.]* It means nothing yet; it is the first hard evidence of Phase 5, and the Civic Fragment's records agree with it. A character who read faster lands with fragments and a headache. A character who stopped reading lands rested.
 
 4. *The void shows you the last thirty seconds before you arrived here, from outside your own body, as though you were standing across the room. It plays again. Then again.*
 
-    Watch for what you missed → **Method**. Look away → **Restraint**. Try to change what you do in it → **Will**.
+    **Echo:** a character who watched for what they missed saw it: over their own shoulder, the sky already wrong. They land knowing which direction the wall of light stands in before they have looked. A character who tried to change what they did in the replay lands mid-stride, on their feet. A character who looked away lands the ordinary way, which is face down.
 
 5. *Somebody else is here. You cannot see them, but the pressure changes when they move, the way a room changes when someone comes in behind you.*
 
-    Say something → **Accord**. Put yourself between them and the way out → **Will**. Stay still and track them → **Method**.
+    **Echo:** the presence was another Initiate of this cohort, passing through the same anchoring. A character who said something gets no answer in the void, and then, at the Node in Phase 3, recognizes one total stranger on sight and is recognized back; play it as a bond neither can explain. A character who blocked the way out lands bruised along one side, certain they touched someone. A character who stayed still and tracked it knows one thing on landing: it went down, toward the bottom of the valley.
 
 6. *There is a current here. It has been carrying you since you arrived and you have only just noticed.*
 
-    Set yourself against it → **Control**. Let it take you → **Freedom**. Try to steer → **Will**.
+    **Echo:** a character who let it take them is set down gently, lowest on the slopes, closer to the Node than anyone. A character who set themselves against it lands high and hard, wind knocked out of them, on the ridge (The High Ground is theirs if anyone gets it). A character who steered lands wherever you need them.
 
 7. *A name arrives in your mouth, fully formed, and it is not yours. You know how to say it. You know it belongs to someone.*
 
-    Say it → **Accord**. Hold it → **Restraint**. Refuse it → **Freedom**.
+    **Echo:** the name is *Okafor* (Phase 2, The Other Survivor). A character who said it, or held it, can say it in front of Ray and watch the nail gun come down before any roll. A character who refused it finds it gone, and Ray is a stranger like any other.
 
 After each player commits, give them one private System line calibrated to what they did. Keep them short, clinical, and a little wrong in a way they cannot place:
 
@@ -186,43 +225,49 @@ Your ears come back last. Far off across the rubble, other things are hitting th
 The message sits over all of it like frost on glass. Under it, close, something is grinding toward you across the debris, and it has not turned its head.
 :::
 
+Land each character the way their echo says, then start their encounter.
+
 ### Watch For
 
 The disorientation is the point, so keep it fast. Sixty seconds in the void is about right and two minutes is the ceiling. If a player tries to explore the void, it ends; the System does not reward stalling. If a player tries to talk to the System, nothing answers. The relationship is observation, and the sooner that lands the better the rest of the tutorial works.
 
-The probe is the first HVE entry of the campaign and it is worth writing down properly. A player who does something the probe did not offer is giving you better signal than the menu was going to, so log what they actually did and move on.
+A player who does something the probe did not offer is giving you a better read than the menu was going to. Answer it with an echo of your own and move on; the probe bends to the player, and the System's private line afterward is allowed to be wrong about what it saw.
 
 ---
 
 ## Phase 2: The Violent Arrival
 
-**The Situation.** Each character is alone, roughly three hundred yards from anyone else, in a valley assembled out of the wreckage of dead worlds. They want two things and do not yet know it: to survive the next ten minutes, and to find another person. The phase ends when their first fight is over and they start moving toward the middle of the valley.
+**The Situation.** Each character wakes alone on the rim slopes, about three hundred yards from the next-nearest landing, with the valley below them and the Node visible at the bottom of it. They want two things and do not yet know it: to survive the next ten minutes, and to find another person. The phase ends when their first fight is over and they start downhill.
 
-**Pacing.** Forty to fifty minutes of real time.
+**Pacing.** Ten to fifteen minutes per player, one at a time. With four players that is about an hour; keep the rotations fast and leave each scene on its hook.
 
-**Run this one-on-one.** Nobody has met anybody yet, and the isolation is doing real work. The first Yield decision at your table gets made by somebody who cannot ask anyone what to do. Take players aside, or run them by message, or rotate fast around the table with everyone else told to look away.
+**Run this one-on-one.** Nobody has met anybody yet, and the isolation is doing real work: the first Yield decision at your table gets made by somebody who cannot ask anyone what to do. Take players aside, or run them by message, or rotate fast around the table with everyone else told to look away.
+
+**The shape of each rotation is the same.** The character wakes into one encounter from the list below, resolves it, fights their arrival fight, and scavenges on the walk down. Each rotation teaches the same rules to a different person.
 
 ### Read Aloud: The Valley
 
+Read this when the character first gets a clear look at the valley floor. For most encounters that is the moment they wake. The Rubble Trap character earns it when the slab comes off, and The High Ground has its own longer view.
+
 ::: readaloud
-You get up on a slope of broken masonry that came from somewhere you have never been.
+You wake on a slope of broken masonry, none of it from the same building, all of it shifting a little as you stand.
 
-Below you the valley runs further than it should. A forest down there is giving off its own light, blue, and it moves when there is no wind. Past it something enormous and rusted lies on its side with grass growing out of the seams. Past that, ground so bright it hurts to look at. Above all of it, pieces of stone hang in the air, turning slowly.
+You are on the inside rim of a valley, and the valley is made of parts. Below you a forest is giving off its own light, blue, moving when there is no wind. Beyond it, at the bottom where everything comes to rest, a gray hill of debris stands with paths of wreckage fanning out from it like something poured.
 
-A hundred yards off, rain is falling in a line as straight as a wall, and where it crosses onto the bright ground it stops being rain.
+Around the rim, far off, other things are still hitting the ground in little bursts of dust. After a moment, one of them gets up.
 
 Nothing here grew together. Somebody put it here.
 :::
+
+If the player looks around before their encounter finds them, give them the map's bones in a sentence: a line of rain to the north standing still as a wall, a tower to the west hanging in the pieces it broke into, windows to the south, and past the far rim a wall of moving light where the horizon should be. Every character can see the hill at the bottom, and everything in the valley leans toward it.
 
 ### What Happens
 
 #### Choosing an Encounter
 
-Each character wakes into one situation that demands an answer before they can go looking for anybody. **You pick which one each player gets.** Read the list, match encounters to the players you have, and give different people different ones; the point is to catch different axes across the table, so two players with the same encounter is a wasted slot.
+Each character wakes into one situation that demands an answer before they can go looking for anybody. **You pick which one each player gets,** and give different people different ones: the spread is what makes the System's Phase 6 read of each person distinct. Eight are written so you can match them to the table you have; unused ones keep for a later group, or for a replacement character.
 
-Eight are written. You need one per player and will use three or four in a session. The rest keep for a later group, or for the character who dies later and gets replaced.
-
-Each one ends the same way: something arrives that wants to kill them. The encounter is the character test. The arrival is where combat gets taught.
+Every encounter runs in the same order: the scene tests the character, and then **the arrival** comes, something that wants to kill them, which is where combat gets taught (The Arrival, below). Resolve the scene first. The arrival interrupts nothing unless the encounter says it does.
 
 #### 1. The Dying Scavenger
 
@@ -238,45 +283,45 @@ It has not reacted to you at all.
 
 **What it tests.** Whether a thing that is not asking for help gets treated as though it were.
 
-- **Take the stone.** It does not resist; it cannot. Awards a **predator core** (a Hard kill's worth of VE, processed at the next Consolidation). Logs **Hunger 1.0**.
-- **Try to communicate (CHA Force vs. F-Easy 65).** You get nothing like language. What you get is that it wants you to wait. Wait about a minute of table time and it finishes, goes still, and the stone comes away warmer than it was. Awards the core plus **+1 IP toward a Restraint-aligned family**. Logs **Accord 1.0**. Seeds the Hidden Quest *"The First Mercy"*; reveal it in Phase 6.
-- **Wait without trying to talk to it.** Same outcome, no IP. Logs **Restraint 1.0**.
-- **Kill it.** The procedure stops where it stopped. The stone goes cold in about four seconds and is worth nothing to anyone. Logs **Force 1.0**, **Will 0.5**.
-- **Walk away.** Logs **Restraint 0.5**.
+- **Take the stone.** It does not resist; it cannot. Awards a **predator core** (a Hard kill's worth of VE, processed at the next Consolidation).
+- **Try to communicate (CHA Force vs. F-Easy 65).** You get nothing like language. What you get is that it wants you to wait. Wait about a minute of table time and it finishes, goes still, and the stone comes away warmer than it was. Awards the core plus **+1 IP toward a Restraint-aligned family**, and seeds the Hidden Quest *"The First Mercy"*; reveal it in Phase 6.
+- **Wait without trying to talk to it.** Same outcome, no IP.
+- **Kill it.** The procedure stops where it stopped. The stone goes cold in about four seconds and is worth nothing to anyone.
+- **Walk away.** Nothing follows them for it.
 
-**If a player asks what it was doing,** they do not find out. Whatever this creature is, dying is something it does on purpose and in stages, and it was most of the way through.
+**Developments.** The three finished husks up the slope hold cold stones, inert for days; searching them costs a minute and teaches that the warmth was the value. If a player asks what it was doing, they do not find out. Whatever this creature is, dying is something it does on purpose and in stages, and it was most of the way through.
 
 #### 2. The Rubble Trap
 
 ::: readaloud
-You come up under a slab of wall and it has you across the hips. Not crushing. Just heavier than you are.
+You wake pinned. A slab of wall lies across you at the hips, resting rather than crushing, heavier than you are.
 
-The ground is passing something up to you through the stone: a rhythm. Four beats and a drag. Four beats and a drag. It is not getting quieter.
+Through the stone you can feel footsteps: four quick impacts, then a long scrape. Something is walking on four legs and dragging a fifth, and every time the pattern repeats, it is louder.
 
-There is a rusted bar inside the reach of your fingers, and a crack running through the slab near your shoulder. Getting the bar means turning under the weight, and when you shift even slightly, the slab settles.
-
-Four beats and a drag.
+A rusted iron bar lies within reach of your fingers, and a crack runs through the slab near your shoulder, wide enough to take it. Reaching the bar means turning under the weight, and when you shift, the slab settles a little more.
 :::
 
 **What it tests.** What somebody does with a clock running and a tool that costs something to pick up.
 
-**The clock:** three rounds. On the fourth, whatever is walking finds them, and a character still pinned starts that fight on their back.
+**The clock:** three rounds. On the fourth, the walker finds them, and a character still pinned starts that fight on their back.
 
-**Taking the bar** requires turning under the slab. The slab settles: **3 damage**, and every escape attempt after that is at **−10**. The bar is worth it for the crack and worth nothing for anything else.
+**Taking the bar** requires turning under the slab. The slab settles: **3 damage**, and every escape attempt after that is at **−10**. The bar exists to lever the crack.
 
-- **Force it off (STR Force vs. F-Moderate 90).** Logs **Force 1.0**.
-- **Lever the crack (DEX Force vs. F-Easy 65, bar required).** The slab lifts quietly and whatever is walking does not change its rhythm. Logs **Method 1.0**.
-- **Improvise.** The player describes something else. If it is clever, no roll. Logs **Method 1.0** or **Freedom 1.0** depending on the approach.
-- **Go still and let it pass (PER Force vs. F-Moderate 90).** Logs **Restraint 1.0**. On a success it walks by close enough to touch. On a failure the fight starts and they are still pinned.
+- **Force it off (STR Force vs. F-Moderate 90).**
+- **Lever the crack (DEX Force vs. F-Easy 65, bar required).** The slab lifts quietly and the footsteps do not change rhythm.
+- **Improvise.** The player describes something else. If it is clever, no roll.
+- **Go still and let it pass (PER Force vs. F-Moderate 90).** On a success it drags itself past close enough to touch. On a failure the fight starts and they are still pinned.
 
 Reward on escape, by any method: **two peer kills' worth of VE**. They keep the bar if they want it (a club: STR, axes and hammers).
+
+**Developments.** The walker is this character's arrival: a Husk Crawler dragging a ruined leg. A character who let it pass sees it before it sees them, and opens the fight with the Surprise Beat on their side. A character who forced the slab off meets it already alerted, on the slab's loose rubble, which is bad footing for whoever fights from it (−10, hindering).
 
 #### 3. The Locked Cache
 
 ::: readaloud
 A box stands upright in the debris. Clean. Humming. There is no dust on it and everything around it is buried.
 
-Three things are set into its face: a narrow slot the width of a blade, a shallow dish, and a panel of symbols that is either counting up or counting down.
+Three things are set into its face: a narrow slot the width of a blade, a shallow dish, and a panel of symbols that is either counting up or counting down. Forty feet to your right, a heap of wreckage is still burning.
 
 When your hand comes near the dish, text arrives behind your eyes.
 :::
@@ -288,40 +333,44 @@ When your hand comes near the dish, text arrives behind your eyes.
 :::
 
 ::: readaloud
-Somewhere behind you, out in the wreck, a sheet of metal goes over.
+Behind you, deeper in the wreck, a sheet of metal clatters down flat, the way it would if something stepped on it.
 :::
 
 **What it tests.** Whether a locked thing is a problem to solve or an obstacle to remove.
 
 **Any one of the three inputs opens it.** The construct takes whichever it gets.
 
-- **Thermal.** Wreckage is still burning about forty feet off. A hot fragment pressed into the dish does it. Automatic if the player looks around; **PER Force vs. F-Easy 65** if they are working from memory of the read-aloud. Logs **Method 1.0**.
-- **Blade.** Any hard edge fits the slot, including a shard off the bright ground or the edge of a broken panel. Logs **Method 1.0**.
-- **Symbols.** Watching for thirty seconds shows it is counting the time since Integration. Pressing the panel when it lands on a round number opens it. Logs **Method 1.0**, and **Restraint 0.5** for the patience.
-- **Force it (STR Force vs. F-Hard 115).** It opens and takes half its contents with it. Logs **Force 1.0**, **Hunger 0.5**.
+- **Thermal.** A hot fragment from the burning wreckage, pressed into the dish, does it. Automatic if the player looks around; **PER Force vs. F-Easy 65** if they are working from memory of the read-aloud.
+- **Blade.** Any hard edge fits the slot, including a shard off the bright ground or the edge of a broken panel.
+- **Symbols.** Watching for thirty seconds shows the panel is counting time since Integration. Pressing it when the count lands on a round number opens the box.
+- **Force it (STR Force vs. F-Hard 115).** It opens and takes half its contents with it.
 
-**Contents:** 1 Reactive Buckler, 1 Sparkstone Tablet, 1 Lesser Healing Pill. A forced cache yields the Lesser Healing Pill only.
+**Contents:** 1 Reactive Buckler, 1 Sparkstone Tablet, 1 Lesser Healing Pill. A forced cache crushes the buckler and the tablet; the pill survives.
 
 Reward: **three peer kills' worth of VE** on a clean open, half on a forced one.
+
+**Developments.** The clatter behind them is the arrival announcing itself, and it comes whether or not the box is open; a character who works slowly may fight beside a locked cache and open it afterward. A cache walked away from is gone by nightfall: somebody else in the valley clears it, and one of the alien Initiates is wearing the buckler in Phase 4.
 
 #### 4. The High Ground
 
 ::: readaloud
-You wake up higher than everything, on a ridge of tiered stone, and for about ten seconds it is the best place in the valley to be.
+You wake on a ridge of tiered stone, higher than everything near you, with the valley laid out below.
 
-Then you start seeing things in it.
+Three things are happening down there. To your left, maybe two hundred yards, a person is backing away from something low and fast, swinging a length of pipe at it, losing ground toward a drop. To your right, closer, a man in a brown uniform is walking a slow circle in the rubble, stopping, and starting the circle again. Straight below, at the foot of your ridge, a metal footlocker has burst open, its contents scattered bright across the rock, and shapes the size of rats are already moving toward the spill.
 
-Down and to the left, a person is fighting something and losing ground. Down and to the right, a different person is walking in a circle, stopping, and walking in a circle again. Straight below you at the foot of the cliff there is a case of something, open, spilled, and nobody near it.
-
-You are not fast enough to reach all three.
+All three are a two-minute scramble down, in different directions.
 :::
 
 **What it tests.** What gets chosen when three claims arrive at once and one of them is free.
 
-- **Go to the one who is fighting.** Logs **Accord 2.0**, **Will 0.5**. That player gets a free Beat in their own arrival.
-- **Go to the case.** Logs **Hunger 1.0**, **Restraint −0.5**. Awards 1 Healing Pill and 1 Knife (DEX, quick, concealable, throwable once).
-- **Try to signal both and reach the case (PER Force vs. F-Moderate 90).** Logs **Method 1.0**. Partial success, partial reward.
-- **Stay where you are and watch.** Logs **Method 0.5**, **Freedom 0.5**.
+**The clocks, for you only.** The fighter has about a minute before the drop is behind her. Ray circles until dark, or until something finds him. The rats reach the spill in two minutes and strip it in five.
+
+- **Go to the fighter.** She is one of the morning's other survivors, a woman in running clothes. The character arrives in time to turn it; run the arrival fight two-on-one, with her pipe swinging on the character's side. She follows them down and is part of the Node camp by evening.
+- **Go to the circling man.** He is **Ray Okafor** (The Other Survivor), concussed and looping. Run that encounter now, with the nail gun still in his belt and one danger fewer in the scene. If another player already has The Other Survivor, the circling man is a stranger instead, and he does not survive the night.
+- **Go to the spill.** 1 Healing Pill and 1 Knife (DEX; quick, concealable, throwable once), reached ahead of the rats, which become this character's arrival fight, on their terms and downhill of them.
+- **Stay and watch.** All three resolve without them. The watcher keeps the high ground, sees where everything went, and meets their arrival rested.
+
+**Developments.** Whatever this character did not choose stays done. The fighter who got no help goes over the drop and does not climb back; the stripped spill is bright wrappers by the time anyone else passes it. Say what they watched resolve as they climb down.
 
 #### 5. The Resonance Flicker
 
@@ -332,14 +381,16 @@ Every few seconds it pushes out a pulse you feel rather than hear, and each one 
 
 The pulses are coming closer together than they were when you woke up.
 
-Something the size of a hand is embedded in the stone at the base, and it is what the column is pulsing around.
+A shard of crystal the size of your palm is sunk into the stone at the base, and the pulses are coming from around it.
 :::
 
 **What it tests.** Whether a good thing getting better is worth waiting on when you cannot see the end of it.
 
-- **Pull it free now.** Logs **Hunger 1.0**, **Force 0.5**. Awards 1 **Edge Shard**.
-- **Wait it out.** Logs **Restraint 1.0**, **Method 1.0**. After about three minutes of real table time, hold the silence and let it get uncomfortable, the column lets go one long pulse and grants **+1 IP** toward the character's family resonance. This is a **Battle Memory** trigger; note it for the Phase 4 Consolidation.
-- **Break the column.** Logs **Freedom 1.0**, **Force 1.0**. Releases scattered VE (three peer kills' worth) and no IP.
+- **Pull the shard free now.** Awards 1 **Edge Shard**. The pulses stop.
+- **Wait it out.** Hold about thirty seconds of real silence at the table, until it is uncomfortable. Then the column lets go one long pulse and grants **+1 IP** toward the character's family resonance. This is a **Battle Memory** trigger; note it for the Phase 4 Consolidation.
+- **Break the column.** Releases scattered VE (three peer kills' worth) and no IP.
+
+**Developments.** Pulling the shard ends the pulses for good, and the sharpened feeling fades on the walk down. Breaking the column sends the freed VE to the character as pale motes that cross the ground to find them; if this is the first VE they have taken, run The First Kill's surge beat here, because this is where it lands for them.
 
 #### 6. The Sorting Machine
 
@@ -355,38 +406,44 @@ At the rate it is going it reaches where you are standing in about a minute.
 
 **What it tests.** What somebody does with a system that is clearly running a rule they cannot read.
 
-- **Work out the rule and put something in the right pile (PER Force vs. F-Moderate 90).** The machine takes them as part of the process and works around them from then on. It hands them the next object it decides belongs to them: roll or pick one Skill Shard. Logs **Method 1.0**, **Control 0.5**.
-- **Put something in the wrong pile on purpose.** It stops, takes the pile apart, and starts again. Logs **Freedom 1.0**.
-- **Break it.** Logs **Freedom 1.0**, **Force 1.0**. Yields parts worth two peer kills' worth of VE.
-- **Get out of its way.** Logs **Restraint 0.5**.
+- **Work out the rule and put something in the right pile (PER Force vs. F-Moderate 90).** The machine takes them as part of the process and works around them from then on. It hands them the next object it decides belongs to them: roll or pick one Skill Shard.
+- **Put something in the wrong pile on purpose.** It stops, takes the pile apart, and starts again.
+- **Break it.** Yields parts worth two peer kills' worth of VE.
+- **Get out of its way.**
 
 **The rule, for you only:** it is sorting by whether an object was ever owned by something that died here. The player can act on the rule without ever confirming it, and they should never confirm it.
+
+**Developments.** The machine's working circuit bends back toward the Node; a character who trails it walks the slowest safe road down. Nothing repairs it if broken, and the half-sorted piles sit where they were left for the rest of the tutorial.
 
 #### 7. The Tally
 
 ::: readaloud
-Somebody has been here.
+Somebody has been here before you.
 
-A flat sheet of metal has been scratched, over and over, in groups of five. You count forty-one. The last one is bright at the edges, so it was cut recently.
+A sheet of hull metal leans against a stone, scratched with marks in groups of five, rows of them, more than forty in all. They were not all cut at the same time: the oldest have rusted brown, the newer ones are gray, and the last one is still bright at the edges.
 
-Under the marks there is an arrow, and it points at the treeline.
+Under the marks, an arrow is cut deep and sure, pointing down the slope toward the treeline.
 
 You have been on this world for about nine minutes.
 :::
 
 **What it tests.** What gets done with evidence that somebody else is ahead of you.
 
-- **Follow the arrow.** Logs **Method 0.5**, **Accord 0.5**. The path is a genuine shortcut toward the Node and pays a peer kill's worth of VE from what is lying along it.
-- **Ignore it and pick their own direction.** Logs **Freedom 1.0**.
-- **Add a mark.** Logs **Will 1.0**, **Accord 0.5**. Write this down. Somebody is going to come back and count.
-- **Destroy the tally.** Logs **Will 1.0**, **Control 1.0**.
+**The truth, for you only.** The marks were cut by the alien Initiates' scout (Phase 4, The Arriving Initiates), one for every living thing they have watched fall from the sky in nineteen days, in the same hand as the day-count on the Civic Fragment wall. If a player counts, the count is forty-one. The bright-edged mark is this character. If a player works that out, let the silence sit. The arrow is the scout's own path down, cut for whoever came next, and it skirts the Snarljaw ground.
+
+- **Follow the arrow.** The path is a genuine shortcut toward the Node and pays a peer kill's worth of VE from what lies along it.
+- **Ignore it and pick their own direction.**
+- **Add a mark.** Write it down. The scout counts again in Phase 4, and notices.
+- **Destroy the tally.** Write that down too. It was the only record of forty-one arrivals, and its maker will stand in front of the party in two days.
+
+**Developments.** Carry the answer into Phase 4. A mark added: the scout studies this character before anyone else and approaches them first, and communication with the Initiates starts a step warmer. The tally destroyed: the scout knows within a day, and first contact starts a step colder. Say neither out loud; if the party gets communication working, they can learn why the scout looks at that character the way it does.
 
 #### 8. The Other Survivor
 
 ::: readaloud
 There is a man about thirty feet away and he is pointing a nail gun at you.
 
-He is in a delivery uniform. He is bleeding from somewhere above the hairline and it has run into one eye. His hands are not steady and he has not blinked in a while.
+He is in a delivery uniform, and the tape over the pocket reads R. OKAFOR. He is bleeding from somewhere above the hairline and it has run into one eye. His hands are not steady and he has not blinked in a while.
 
 He says: how long have you been here.
 
@@ -395,16 +452,26 @@ Behind him, further into the wreck, something moves that is not him.
 
 **What it tests.** How a frightened person with a weapon gets handled when nobody is watching. Somebody is.
 
-- **Talk him down (CHA Force vs. F-Easy 65).** Logs **Accord 1.0**. He lowers it, tells them which way he came from, and is somebody you can bring back later.
-- **Warn him about what is behind him.** Logs **Accord 1.5**. He runs the right way. He remembers.
-- **Take the nail gun.** Logs **Force 1.0**, **Hunger 1.0**. It counts as an improvised object: DEX, no weapon shape, no Proficiency applies.
-- **Back out without engaging.** Logs **Restraint 0.5**, **Freedom 0.5**.
+**What Ray knows,** once he is calm enough to say anything: he fell about an hour ago, near the windows to the south; he saw a woman come down near the glowing trees and has been trying to walk to her and keeps ending up back here; the thing behind him has been pacing him since he woke, and it does not come while he faces it.
 
-**If they leave him, he does not survive it,** and the party can find what is left in Phase 4 if you want the note to land.
+- **Talk him down (CHA Force vs. F-Easy 65).** He lowers the gun, tells them what he knows, and walks down with them.
+- **Warn him about what is behind him.** He runs the right way. He remembers.
+- **Take the nail gun.** It counts as an improvised object: DEX, no weapon shape, no Proficiency applies. Ray is now unarmed in a valley that kills the unarmed; see Who Persists.
+- **Back out without engaging.**
+
+**Developments.** Ray persists (Who Persists, at the head of this chapter). Helped in any form, he reaches the Node by dusk and is part of the camp: he keeps the fire, carries what he is given, and in Phase 5 he is one more body the gate has to process, which the causeway will make matter. Left, or left unarmed, he does not survive the night, and the party can find the nail gun in Phase 4, driven into a tree at shoulder height with all six nails spent. **If this player's probe was the borrowed name** (Phase 1, probe 7), the name was Ray's: a character who says *"Okafor"* watches the gun come down before any roll.
 
 ### The Arrival: Teaching Combat
 
-However the encounter resolved, something comes. A Husk Crawler drags itself out of the debris, a pair of Frenzy Rats break cover, a Glow-Mote Swarm finds the character's body heat. Pick from the Trash Tier of the Bestiary and match it to the terrain.
+However the encounter resolved, something comes. **You pick the creature.** Defaults, by ground:
+
+| **Where the character is** | **The arrival** |
+|---|---|
+| Rubble, slopes, ruins | 1 Husk Crawler |
+| Near the treeline | 2 Frenzy Rats |
+| Open ground, or standing still too long | 1 Glow-Mote Swarm |
+
+One creature per arrival, except the rats, which hunt as a pair and teach Flanking early. Stat blocks are in the Bestiary's Trash Tier.
 
 This fight is where the whole combat loop gets taught, one player at a time, with nobody else watching. Run it in the five short steps below.
 
@@ -416,7 +483,7 @@ This fight is where the whole combat loop gets taught, one player at a time, wit
 
 > *You can push. Half your Aether, rounded up, buys +5 on this roll. Declare it before you roll. You have enough for one or two of these before you rest, and resting is hours away.*
 
-Whether they spend it on the kill or hold it in reserve is the first read of the fight. Spending logs **Hunger 0.5**; holding logs **Restraint 0.5**.
+Whether they spend it on the kill or hold it in reserve is the first read of the fight.
 
 **Step 4. Let the creature win one.** Run the fight honestly until the character loses a Clash. If the dice will not cooperate, add pressure rather than fudging: a second Crawler shambles in, the footing gives way (−10, hindering), the swarm surrounds them. A Level 1 character has 10 to 16 HP and a landed Trash Tier hit routinely exceeds that, so this will not take long.
 
@@ -432,33 +499,53 @@ Then wait. Do not recommend an answer.
 - **She gives up both.** Margin 31 − 40 is below zero, so the claws close on nothing. The Crawler drives her into the next Zone and her next turn is gone entirely. She is untouched and cannot act while it closes the distance again.
 - **She refuses to Yield.** She is Downed at 0 HP with three rounds to live and nobody within a hundred yards.
 
-Yielding both Beats logs **Restraint 1.0** or **Method 1.0**. Yielding one and holding the ground logs **Force 1.0**. Refusing entirely, with a character who nearly dies for it, logs **Force 2.0** and **Hunger 1.0**; that player has told the Engine something real about themselves in the first hour of play.
+A character who refuses to Yield and nearly dies for it has told the System something real in the first hour of play.
 
 **The arrival fight never kills a character.** A solo character has no ally to stabilize them, so a Downed result here would run the countdown out unopposed. If a character goes Downed alone, the creature loses interest or begins dragging them away (the Bestiary's guidance on Downed characters), and another Initiate's path crosses theirs before the count ends. The tutorial's one real death sits at the Phase 5 gate and nothing here preempts it.
 
+### The First Kill
+
+The first creature a character kills, in the arrival or back in their encounter, gets thirty seconds of ceremony. This is the game's first paycheck; do not let it pass as "it dies."
+
+::: readaloud
+It stops moving all at once, the way a machine does.
+
+Then something comes off it. Pale, slow, like heat over a road, except that it does not rise. It leans. It crosses the ground to you, and it goes in through your chest, and it is warm all the way down, and it is the best thing you have felt since you landed.
+:::
+
+::: systemvoice
+*Kill confirmed: Husk Crawler. Grade F, Trivial.*
+
+*Volatile Energy claimed: 2 units. Stored: 2 / [Tolerance].*
+
+*Refinement available at next Consolidation.*
+:::
+
+Read the numbers out loud, and have the player write the 2 in the VE box on their sheet with their Tolerance beside it. Two against a Tolerance of 50 says what the valley is: it pays in small numbers, the numbers add up, and everything it pays comes in the same way. A player who asks what Volatile Energy is gets the honest answer: it is what was holding that body together, it is theirs now, and it is not usable yet.
+
 ### Scavenging on the Way
 
-**This happens while they walk.** The fight is over, the character is moving toward the middle of the valley, and the ground between here and there is covered in the remains of a dozen worlds. Deal out roughly two or three items per character over the course of that walk, weighted toward shards. There is no scene to run; ask what they pick up and tell them what it is.
+**This happens while they walk down.** The fight is over and the slope between the character and the Node is strewn with the remains of a dozen worlds. Stage two or three finds per character on the walk, described as objects where they lie; the player takes what they take. Offer nothing twice.
 
-- **Weapons:** Crude Club (STR), Knife (DEX), Spear (DEX, free Disengage from one Zone-edge enemy per turn), Battle Axe (STR, requires STR Force 05), Short Bow (DEX, ranged).
-- **2–3 Skill Shards** per character across the party (Edge, Pulse, Veil, Anchor, or Volatile; hold Resonance Shards back for Phase 3).
-- **1 Battered Medkit** (3 charges, 10 HP each).
-- **Low-Grade Armor Scraps** (+5 Defense Force when defending with FOR, −5 to DEX-based Clashes).
-- **1 Single-Use Ranged Relic** (one charge, +20 to the Clash, damage at one Grade higher).
-- **1 Resonance Glass** (sensory tool).
-- **1 Battered Communicator** (needed for the Civic Fragment terminal in Phase 4).
+Worked finds, to read or vary:
+
+- *A spear stands upright where it fell, pinning a sheet of tarpaulin to the ground.* (Spear: DEX, two-handed, free Disengage from one Zone-edge enemy per turn.)
+- *A dead man in leathers lies face-down over a crate. The armor on his back is intact; getting it means rolling him over.* (Low-Grade Armor Scraps: +5 Defense Force with FOR, −5 to DEX-based Clashes. Nothing visible killed him.)
+- *A crystal the size of a thumb is fused into the masonry, glowing faintly through its own coat of dust.* (One Skill Shard; pick or roll. Hold Resonance Shards for Phase 3.)
+- *A white case with a red cross on it has slid to a stop against a wall. The cross is almost the right shape.* (Battered Medkit: 3 charges, 10 HP each.)
+- *Something like a rifle with nowhere to hold it lies across a step, one light on its side still breathing.* (Single-Use Ranged Relic: one charge, +20 to the Clash, damage one Grade higher, then it crumbles.)
+
+Across the whole party the walk should surface: a weapon for whoever wants one (club, knife, spear, battle axe, short bow), two or three Skill Shards per character weighted toward Edge and Pulse, one Medkit, one set of Armor Scraps, one Relic, one Resonance Glass, and one **Battered Communicator**, seeded now because the Civic Fragment terminal in Phase 4 needs it.
 
 **Weapons carry no bonus of their own.** Whoever picks up the axe adds their own Proficiency tier to the Clash and nothing else: +5 at Trained, +10 at Seasoned, +0 with no relevant Proficiency at all. What the weapon decides is which Force governs the attack and what the implement makes possible.
 
 **Picking up something you cannot use is a real play.** A character with no "spears and staves" Proficiency who carries the spear anyway adds nothing today, but every natural die at or above their Volatility Threshold while using it marks that domain, and three Marks in a domain they never trained makes the System grant it at Trained. Junk becomes a fourth Proficiency in a month of play.
 
-Who grabs what, and who grabs nothing because they were busy helping somebody else, is behavioral data. Log significant claims at **0.5 to 1.0 intensity**.
-
 ### Watch For
 
-**Do not let players decide to land together.** The scattered landing is the most important structural decision in the tutorial, and it is the reason the first Yield at your table gets made without a committee. If somebody argues for it, the answer is that the System did not ask.
+**Do not let players decide to land together.** The scattered landing is the reason the first Yield at your table gets made without a committee. If somebody argues for it, the answer is that the System did not ask.
 
-The eight encounters are written to catch different axes, so notice which ones you handed out. If three players got Hunger-or-Restraint tests, the Engine finishes the phase knowing one thing about your table three times over.
+Each encounter's **What it tests** line names what the scene shows you about the person playing it. Nothing gets written during the rotation; the moments that matter will still be with you at session's end, which is when the Engine collects them (The Hidden Vector Engine).
 
 After each player resolves, deliver a one-line clinical summary as a private note:
 
@@ -509,6 +596,14 @@ There are other people here. Standing well apart, watching each other, in work c
 
 **If somebody asks what this place is,** the honest answer is available to anyone who watches for a minute: the valley is built out of salvage, and this is where the parts that did not get used are still being delivered. Nobody is coming to collect it.
 
+**Who is at the Node.** Two or three strangers from the morning's cohort, plus everyone the party kept alive in Phase 2: Ray Okafor if he was helped, the woman in running clothes if she was. The strangers have names and one thing each:
+
+- **Marco**, the man in the wetsuit, was forty feet under water when the world went. He holds a speargun like it is the last true thing he owns, and he knows the rain line continues on the far side of the valley; he walked its length looking for a way home.
+- **Dele**, an older man, keeps taking a dead phone out of his coat and putting it back. He watched the arena in the north light up and start moving before dawn.
+- **A teenage girl** who will not come within thirty feet of anybody. She bolted from her landing without resolving it, and whatever she ran from is still where she left it.
+
+They are not party members; they are the camp. What the party does about them is the party's business, and every one of them alive at Phase 5 is one more body the gate has to process.
+
 #### Party Formation
 
 The moment two or more characters stand within sight of each other, Q-001 completes and the System offers:
@@ -519,7 +614,7 @@ The moment two or more characters stand within sight of each other, Q-001 comple
 
 Accepting opens the party frame: each member's HP, Aether, and Downed status, visible to all members. It also enables quest sharing (see System Quests, "The Party").
 
-**Say the invitation out loud as a thing one character does to another.** Somebody has to accept first. Note who extends it, who accepts instantly, and who hesitates or stays solo; log the clear cases at 0.5 intensity on Accord or Freedom.
+**Say the invitation out loud as a thing one character does to another.** Somebody has to accept first. Note who extends it, who accepts instantly, and who hesitates or stays solo.
 
 #### The Scarcity Test
 
@@ -539,15 +634,9 @@ The Node holds one of most things and four to six people. **Default loot list** 
 
 **How to start it.** Lay the list out, say that everyone can see all of it, and then stop talking. There is no System-imposed allocation and no roll for loot. The silence is doing work; let it run until somebody reaches.
 
-They talk, argue, trade, defer, demand, or stay quiet, and the Hidden Vector Engine records all of it:
+They talk, argue, trade, defer, demand, or stay quiet, and all of it is worth watching: who claims aggressively, who defers, who proposes a system for distribution, who ignores the pile and walks the periphery, and who takes the healing item while somebody else is visibly worse off. The act alone says nothing; the read is who was hurt at the time.
 
-- **Who claims aggressively** → Hunger, Force, Will (1.0 intensity).
-- **Who defers to others** → Restraint, Accord (1.0 intensity).
-- **Who proposes a system for distribution** → Control, Method (1.0 intensity).
-- **Who ignores the pile and explores the periphery** → Freedom, curiosity (0.5 intensity).
-- **Who takes the healing item while somebody else is visibly worse off** → Hunger (1.0 intensity). Handing it to whoever took the worst of the fight reads as Accord at the same intensity. The act alone says nothing; the read is who was hurt at the time.
-
-This is one of the richest behavioral data points in the tutorial. Do not rush it.
+This is the richest scene of the day. Do not rush it, and expect it to still be with you at session's end.
 
 **The Resonance Shard is the real test and nobody at the table knows it yet.** Everything else in the pile is power this afternoon. The Resonance Shard is one point of insight toward a Principle the character has not formed, will not name for weeks, and cannot evaluate. Do not explain what it is worth. Say what the System says, which is that it resonates, and let somebody take it because it sounded interesting or let it sit in the junk until someone shrugs and pockets it. Who reaches for the thing they cannot price is worth more signal than the entire rest of the pile.
 
@@ -638,7 +727,7 @@ Characters wake still Level 1, about a third of the way to the threshold. The fi
 
 ### Watch For
 
-**Session 1 typically leaves each character about a third of the way to Level 2** and roughly four HVE-logged choices each. If the group has energy left, push into the first zone of Phase 4 and end the session at the camp that follows it.
+**Session 1 typically leaves each character about a third of the way to Level 2** and a pocketful of moments for the session-end sweep. If the group has energy left, push into the first zone of Phase 4 and end the session at the camp that follows it.
 
 The Scarcity Test is the phase's whole purpose and it is the one part that cannot be rushed for time. If the session is running long, cut the Looking Outward argument short and let the System's quest do the naming; do not shorten the pile.
 
@@ -722,7 +811,7 @@ The sound you heard from the Node is coming from the far side of the bowl. It is
 
 **Hidden Opportunity.** A character who spends 1 Beat at the viewing platform observing the constructs before engaging gains passive progress toward the Achievement title **"Patient Gardener"** (one of three required observations).
 
-**HVE Reads.** Who charges in (Force)? Who watches first (Method)? Who claims the axe (Hunger/Will)? Who positions to protect a less-armored ally (Accord)? Who wakes the hardest construct on purpose (Force/Hunger)?
+**Watch.** Who charges in, who watches first, who claims the axe, who positions to protect a less-armored ally, and who wakes the hardest construct on purpose.
 
 **VE Reward.** Each Sentry is a Moderate kill (the Peer Kill value, 10 VE at F-Grade). Surveying the zone completes a share of Q-002, worth about a third of a level across the whole quest.
 
@@ -748,7 +837,7 @@ Forty feet in there is a place where the light stops. Not thins. Stops, in a lin
 - **1 Glow-Stalker** hunting the party from concealment. Surprise Beat on the first turn, then hit and run. It begins the encounter unseen unless someone actively rolls Perception against it.
 - **Predator den** with young (harmless). Killing the adults is straightforward; what is in the den is the test. A **predator core** (a Hard kill's worth of VE) lies in the bedding and can simply be taken. The **Snarljaw Heart**, still faintly warm, is inside one of the young, and getting it means killing them. It is a **Standard Attribute Treasure** (+5 to a Raw Attribute of the eater's choice; see Items), and it is the only one in the tutorial. Absorbing it costs an hour spent defenseless, so the smart move is to carry it back to camp and the likely move is to swallow it in the den and make everyone else stand watch.
 
-  This is the sharpest Hunger and Restraint test in the zone and it happens with nobody watching except the System. Do not signpost it as a moral test, do not have the young do anything endearing, and do not editorialize afterward. State what is there, answer questions honestly, and log what the player does at **2.0 intensity**. A character who walks away has given up the only permanent stat gain available for weeks, which is what makes walking away mean something.
+  This is the sharpest test in the zone and it happens with nobody watching except the System. Do not signpost it as a moral test, do not have the young do anything endearing, and do not editorialize afterward. State what is there and answer questions honestly. A character who walks away has given up the only permanent stat gain available for weeks, which is what makes walking away mean something.
 - **Edible flora** restoring 10 HP at the cost of sensory distortion (−5 to PER-based Clashes for the next encounter).
 - **A hidden trail** bypassing the entire zone. PER Force vs. F-Easy 65 to spot while moving normally. A character with a relevant Proficiency (tracking, survival, scouting) who spends 1 Beat scanning finds it with **no roll at all**: an Easy task inside a Proficiency is Routine Mastery. Say the words out loud the first time it happens, because most players expect to roll for everything and this is where they learn they do not. The trail crosses the zone in three minutes of fictional time and exits behind the den.
 - **A trapped creature**, non-hostile and non-human, caught in root-tendrils and slowly being digested. Freeing it costs 1d3 rounds and attracts a Glow-Stalker. It knows things about the landscape and will show them rather than say them.
@@ -759,7 +848,7 @@ This save is calibrated to fail. With HRT 5 and FOR 5 the bonus is 5 + 2 = 7, an
 
 **Hidden Opportunity.** Deep in the forest a **Resonance Node** pulses at a frequency only characters with PER Force 07 or higher can detect. Approaching it triggers a sensory vision: a flash of the wider Multiverse, overwhelming and beautiful and terrifying. Grants **+1 IP** toward the character's family resonance, or their Principle if one has crystallized. **This is a Battle Memory trigger**; log it for the next Consolidation.
 
-**HVE Reads.** Who scouts ahead? Who blunders? Who spots the trail and who insists on the fight? Who frees the trapped creature? Who harvests the den despite the young?
+**Watch.** Who scouts ahead, who blunders, who spots the trail and who insists on the fight, who frees the trapped creature, and who harvests the den despite the young.
 
 **VE Reward.** Snarljaws and the Glow-Stalker are Moderate kills; the Alpha is Hard (×2). Surveying completes a share of Q-002.
 
@@ -788,9 +877,9 @@ Further in, down where the stairs used to go, something is making a sound that n
 - **Broken constructs**, partially reactivatable by characters who experiment (PER vs. F-Hard 115). On a success, the construct fights for the party for 3 rounds (Off Force 12, Def Force 15, HP 30).
 - **Corrupted data-altar.** Answers one question about the tutorial zone truthfully, but the question must be phrased precisely and the answer arrives in symbolic form requiring interpretation.
 
-**Hidden Opportunity.** At the top of the shattered tower a partially intact observation deck overlooks the entire valley. From here a character sees what is invisible from the ground: the geometric precision of the zone boundaries, the pattern in the terrain layout, the fact that the "random" debris is arranged in a spiral. **This is worth real advantage in Phase 5**, because a character who has seen the spiral can predict the Reality Purge's path. Whether the player shares the information is a Method/Control read; log it.
+**Hidden Opportunity.** At the top of the shattered tower a partially intact observation deck overlooks the entire valley. From here a character sees what is invisible from the ground: the geometric precision of the zone boundaries, the pattern in the terrain layout, the fact that the "random" debris is arranged in a spiral. **This is worth real advantage in Phase 5**, because a character who has seen the spiral can predict the Reality Purge's path. Whether the player shares what they saw is worth remembering.
 
-**HVE Reads.** Who experiments? Who hangs back? Who takes shards despite the feedback? Who asks the altar a selfish question and who asks a strategic one? Who reactivates a construct and who smashes it for parts?
+**Watch.** Who experiments, who hangs back, who takes shards despite the feedback, who asks the altar a selfish question and who asks a strategic one, who reactivates a construct and who smashes it for parts.
 
 **VE Reward.** The Fragment Wraith is Severe (×3) and almost nobody collects it. Surveying completes a share of Q-002.
 
@@ -823,7 +912,7 @@ The building was occupied until recently. Bedding, ration wrappers, and a scrawl
 
 **Hidden Opportunity.** A character who reads both the records and the tally, and says out loud what they add up to, earns progress toward the Achievement title **"Read the Room."** The sector is closing on a schedule and somebody already knew.
 
-**HVE Reads.** Who searches methodically (Method/Control)? Who breaks the medical bay open rather than solving it (Force/Hunger)? Who wants to find the people who lived here (Accord)? Who takes the whole medical cache for themselves (Hunger)?
+**Watch.** Who searches methodically, who breaks the medical bay open rather than solving it, who wants to find the people who lived here, and who takes the whole medical cache for themselves.
 
 **VE Reward.** The Husk Sentinel is Hard (×2), whether beaten or shut down at the terminal. Surveying completes a share of Q-002, and decoding the records is worth a Moderate kill.
 
@@ -841,7 +930,7 @@ One zone pays about a level's worth of VE, which lands a character between one a
 - **Tolerance re-derives** at the first full hour, along with the three Saturation thresholds, so anyone who put points into Fortitude or Heart can hold more going into the second zone.
 - **Battle Memories** may be meditated on here. Holding them for the rest at the end of the Ruins puts the first crystallization at the phase's close, where it has room to run slowly.
 
-**The choice is the point.** A party that wants the second zone before the world moves can break camp saturated. Pushing on past Tolerance logs **Hunger 1.0**; stopping until the tank clears logs **Restraint 1.0**. Say what their bodies are telling them and let them decide.
+**The choice is the point.** A party that wants the second zone before the world moves can break camp saturated. Say what their bodies are telling them and let them decide.
 
 ---
 
@@ -855,6 +944,8 @@ Three to five non-human **Initiates** from a different integrated world walk int
 
 Use **Pre-System Brigand** stats with HP 20, Off Force 08, Def Force 09. They are not hostile by default. They have their own fears, their own internal disagreement about whether to approach at all, and one member who clearly wants to fight.
 
+**The scout and the tally.** One of them is the scout whose marks the party may have met on the slopes (Phase 2, The Tally). If somebody added a mark, the scout picks that character out early, studies them, and approaches them first; communication starts a step warmer. If somebody destroyed the tally, the scout knows, and it starts a step colder. Say neither out loud; if the party gets communication working, they can learn why the scout looks at that character the way it does. Anything the party abandoned in Phase 2 is fair salvage: a cache left unopened has been stripped, and its buckler rides on the scout's arm.
+
 **What each side has:**
 
 - **The party has** food, ground the Initiates do not know, and possibly a working Communicator.
@@ -864,7 +955,7 @@ Use **Pre-System Brigand** stats with HP 20, Off Force 08, Def Force 09. They ar
 
 **If it is not,** the party goes into Phase 5 without warning, without allies, and without knowing what a Warden is. This is a real consequence and it should land, but the encounter must never resolve into combat by GM fiat. If the party attacks, the Initiates fight and flee, and the party has made an enemy in a closing world.
 
-**HVE Reads.** This is the densest social moment in the tutorial. Who tries to communicate (Accord)? Who advocates for taking their supplies (Will/Force/Hunger)? Who proposes a trade (Method/Accord)? Who notices they are frightened and de-escalates (Heart/Accord)? Who watches the whole exchange and says nothing (Method/Freedom)?
+**Watch.** This is the densest social moment in the tutorial. Who tries to communicate, who advocates for taking their supplies, who proposes a trade, who notices they are frightened and de-escalates, and who watches the whole exchange and says nothing.
 
 **VE Reward.** Establishing communication is worth **half a level** to everyone who took part. It is the largest single non-combat award in the tutorial and it should be, because it is the hardest thing to do.
 
@@ -886,25 +977,25 @@ Hand that player a **card**, face down, while the rest of the table keeps playin
 > Reward:     [unknown; calibrated to outcome]
 > ```
 
-These are formal **Personal Opportunities** (see System Quests). Each tests at least two HVE axes at once. There is no correct answer, no group consultation, and no coming back later. Log each at **2.0 intensity (Major)**.
+These are formal **Personal Opportunities** (see System Quests). Each is a private test with no correct answer, no group consultation, and no coming back later.
 
-Use one per player. Vary the axes across the table.
+Use one per player, varied across the table.
 
 #### The Offering
 
 A System construct presents two objects. One is clearly a weapon: elegant, sharp, radiating controlled violence. The other is a seed of something, organic, warm, pulsing with slow potential. The construct's posture makes the terms clear: take one and the other ceases to exist.
 
-- **The weapon.** A System-forged knife that grants **+5 on the first Clash of any combat** and returns to the wielder's hand the moment after it is thrown. Logs **Hunger 2.0**, **Force 1.0**.
-- **The seed.** It cannot be used now. During the next Consolidation it germinates into a Principle affinity the System chooses: **+2 IP** toward that family and a permanent Attunement (see The Principle System). Logs **Restraint 2.0**, **Method 1.0**.
-- **Refuse both.** Logs **Freedom 2.0**. The construct dissolves in silence. The System notes the refusal and Personal Opportunity offerings narrow for the next session.
+- **The weapon.** A System-forged knife that grants **+5 on the first Clash of any combat** and returns to the wielder's hand the moment after it is thrown.
+- **The seed.** It cannot be used now. During the next Consolidation it germinates into a Principle affinity the System chooses: **+2 IP** toward that family and a permanent Attunement (see The Principle System).
+- **Refuse both.** The construct dissolves in silence. The System notes the refusal and Personal Opportunity offerings narrow for the next session.
 
 #### The Trapped Intelligence
 
 A dying consciousness, the last fragment of an ancient cultivator's mind, is caught in a decaying rune matrix. It speaks in fragments and it knows it is ending.
 
-- **Accept the imprint.** It transfers its final technique. Painful and disorienting. This is a Battle Memory trigger, and the meditation carries the dying technique: **+1 IP** toward an Accord-aligned family. Logs **Accord 2.0**, **Method 1.0**.
-- **Harvest the matrix for raw energy.** The consciousness dissipates screaming. **A full level's worth of VE**. Logs **Hunger 2.0**, **Force 1.0**.
-- **Free the consciousness.** The matrix releases, and it expresses something like gratitude before dissolving into ambient energy. **+1 IP** toward a Restraint-aligned family. Logs **Restraint 2.0**, **Accord 1.0**. Hidden Achievement candidate: log "The First Mercy" if the player has not already earned it.
+- **Accept the imprint.** It transfers its final technique. Painful and disorienting. This is a Battle Memory trigger, and the meditation carries the dying technique: **+1 IP** toward an Accord-aligned family.
+- **Harvest the matrix for raw energy.** The consciousness dissipates screaming. **A full level's worth of VE**.
+- **Free the consciousness.** The matrix releases, and it expresses something like gratitude before dissolving into ambient energy. **+1 IP** toward a Restraint-aligned family. Hidden Achievement candidate: log "The First Mercy" if the player has not already earned it.
 
 #### The Mirror
 
@@ -914,17 +1005,17 @@ You stand before a reflective surface that does not show your body. It shows you
 
 You understand instinctively that confirming locks in a tendency and strengthens whatever the System has observed so far.
 
-- **Confirm.** Logs **Control 2.0**. At the character's next Breakthrough, treat their HVE Coherence as one tier higher (Grade Breakthroughs).
-- **Decline.** Logs **Freedom 2.0**. The behavioral read blurs. The character gains flexibility and loses momentum: their next three HVE log entries are weighted at 1.5×.
-- **Stand silently.** Logs **Restraint 1.0**. The mirror dims and the System notes the abstention.
+- **Confirm.** At the character's next Breakthrough, treat their HVE Coherence as one tier higher (Grade Breakthroughs).
+- **Decline.** The behavioral read blurs; the System’s next summary of this character hedges, and its offers stop assuming.
+- **Stand silently.** The mirror dims and the System notes the abstention.
 
 #### The Other Player
 
 You find another player, or something that appears to be one, in distress: trapped, injured, or facing a threat. Helping costs your solo claim window, and the thing you were drawn to will expire.
 
-- **Help.** Logs **Accord 2.0**, **Restraint 1.0**. The other player turns out to be a System construct, and the whole scene was a test of whether you would stop. The struggle was illusory and the act was real. Reward: a **Bestowed title** delivered in Phase 6 ("The Hand That Reached").
-- **Claim the prize.** A Dragon Marrow Pill (+5 to a future Breakthrough Check). Logs **Hunger 2.0**, **Will 1.0**.
-- **Fight the threat for them, then claim the prize.** Logs **Force 2.0**, **Hunger 1.0**. Half reward: no pill, three peer kills' worth of VE.
+- **Help.** The other player turns out to be a System construct, and the whole scene was a test of whether you would stop. The struggle was illusory and the act was real. Reward: a **Bestowed title** delivered in Phase 6 ("The Hand That Reached").
+- **Claim the prize.** A Dragon Marrow Pill (+5 to a future Breakthrough Check).
+- **Fight the threat for them, then claim the prize.** Half reward: no pill, three peer kills' worth of VE.
 
 #### The Threshold
 
@@ -932,8 +1023,8 @@ A door stands in front of you: solid, real, locked. You sense that what is on th
 
 > *Threshold detected. Compatibility: marginal. Crossing: not recommended.*
 
-- **Open it.** A brief vision of an E-Grade location, overwhelming and beautiful and terrifying. Aura Pressure save: d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance Severe (140), the flat card value, with the source flaring everything the door was holding back. No tutorial-tier character passes this; the roll exists so the player feels the size of the gap. On the inevitable failure: **Suppressed for the rest of the tutorial (1 Beat)**. Opening the door counts as entering a sealed location, progress toward the Hidden Achievement "The One Who Walked Through." Logs **Freedom 2.0**, **Hunger 1.0**, **Will 1.0**.
-- **Walk away.** Logs **Restraint 1.0**, **Method 1.0**.
+- **Open it.** A brief vision of an E-Grade location, overwhelming and beautiful and terrifying. Aura Pressure save: d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance Severe (140), the flat card value, with the source flaring everything the door was holding back. No tutorial-tier character passes this; the roll exists so the player feels the size of the gap. On the inevitable failure: **Suppressed for the rest of the tutorial (1 Beat)**. Opening the door counts as entering a sealed location, progress toward the Hidden Achievement "The One Who Walked Through."
+- **Walk away.**
 
 #### Running Them
 
@@ -953,7 +1044,7 @@ Do not announce thresholds. Narrate symptoms:
 - *"Your muscles cramp. Something under your breastbone flexes in ways that feel wrong."*
 - *"You taste copper. Your hands tremble when you stop moving."*
 
-Apply the penalties (−10 at Mild, −25 at Heavy). The character then chooses: push on, or stop and consolidate. Both choices are loaded. Pushing past Heavy logs **Hunger 2.0**. Withdrawing to Consolidate logs **Restraint 1.0**.
+Apply the penalties (−10 at Mild, −25 at Heavy). The character then chooses: push on, or stop and consolidate. Both choices are loaded.
 
 ### Consolidation and the End of the Ruins
 
@@ -964,7 +1055,7 @@ Two things happen here that did not happen at the first Consolidation:
 - **Battle Memories are meditated on.** Anyone holding a card from the Resonance Node, the Resonance Flicker, a Volatility cascade, or a Personal Opportunity reflects now. The player describes what their character noticed in a sentence or two. Ask one or two questions and let the table sit with the answer. The System returns a cryptic vision and awards **1 to 3 IP** by the memory's intensity, toward the character's family. A character reaching 3 IP **crystallizes their first Principle here** and the System names it (The Principle System, "Your First Principle"). This is the largest single payoff available before the tutorial ends, and it should be run slowly for whoever earns it.
 - **Levels land as the VE processes.** Run each one as it arrives: 3 points via Behavioral Stat Mapping, 2 free (Progression chapter).
 
-A typical character reaches **Level 2 or 3** here, with a healthy tank still unrefined. Anyone still over Tolerance at dawn can extend the rest into the morning. Choosing to move on saturated instead is itself signal, and it is Hunger.
+A typical character reaches **Level 2 or 3** here, with a healthy tank still unrefined. Anyone still over Tolerance at dawn can extend the rest into the morning. Choosing to move on saturated instead is itself a choice the System sees.
 
 ---
 
@@ -1029,7 +1120,7 @@ Every competence the party invested in has a way to contribute. A party that pla
 | **Arcane** | Predict the Purge's path from the spiral. Trigger Glitch Cascades with Edge Shards. | Zone C |
 | **Civic** | The command terminal reaches the gate's activation sequence and shortens the queue. | Zone D |
 | **Social** | The alien Initiates fight alongside the party and name the Warden's weak point. | The Arriving Initiates |
-| **Sacrifice** | Draw the Warden's attention so the others reach the gate. Logs as **Defining (3.0 intensity)**. | Nowhere. It is available to anyone. |
+| **Sacrifice** | Draw the Warden's attention so the others reach the gate. A **Defining** moment, whatever else the session held. | Nowhere. It is available to anyone. |
 
 ### Cornered
 
@@ -1053,7 +1144,7 @@ A party that fights the Warden on open ground before the causeway has a far easi
 
 A player may choose to draw the Warden's attention permanently, dying so the others reach the gate. Honor it mechanically and narratively:
 
-- The sacrificing character's HVE log records a **3.0 Defining** event on whichever axis matches their motivation. Usually Accord and Restraint. It can be Will if they are dying spitefully.
+- On the Engine's side of the screen this is a **Defining** moment; how they died, and for whom, is the read.
 - **Hidden Achievement title** awarded retroactively in Phase 6: "The One Who Stood." If the player rolls a new character, the title persists as a permanent legacy in the world. NPCs and the System remember.
 - The player may return next session as a new character generated as though they had completed the tutorial, with full tutorial rewards.
 
@@ -1062,6 +1153,8 @@ If nobody sacrifices, the encounter is winnable through cooperation. Sacrifice s
 ### The Gate
 
 When enough of the party reaches the transit nexus, the gate activates. It processes Initiates **one at a time**, and there is a brief and terrible interval where not everyone is through and the Purge is closing.
+
+**The queue.** Everyone the party's choices kept alive is on the causeway too: Ray, the woman in running clothes, the Node strangers, the alien Initiates. NPCs roll nothing; each one gets through if the party holds the span long enough for their turn, and each one who does is standing on the far side in Phase 6. The order is the party's to set, out loud, while the wall closes. Sending the others first is a choice, and so is going first.
 
 Each player makes a final check to get through: **d100 + DEX Force vs. F-Moderate 90**, or STR, or whichever Force the player can fictionally justify by sprinting, vaulting, or leaping the closing edge.
 
@@ -1233,6 +1326,8 @@ Run the levels one at a time rather than summing them. The sheet changing again 
 
 Anyone still holding a Battle Memory meditates on it here, and anyone who reaches 3 IP crystallizes their first Principle. This is the last chance for that to happen inside the tutorial, and it is worth prompting a player who is sitting at 2.
 
+Anyone who came through behind the party is camped within sight. The tutorial's survivors hold loosely together for the first days on the other side, and Ray Okafor still has the nail gun.
+
 ### The Stinger
 
 The session ends on an open hook. Choose one, or layer two:
@@ -1247,32 +1342,25 @@ End the session before the consequences resolve. Let the players sit with it for
 
 ---
 
-## GM Reference: Vector Logging Cheatsheet
+## GM Reference: The Session-End Sweep
 
-Log behavioral events using the standard structure (The Hidden Vector Engine, "Structured Event Logging"). The tutorial's key decision points and their primary axis mappings:
+Nothing is written during play. At each session's end, take five minutes with the HVE sheet (The Hidden Vector Engine, "The Session-End Sweep"): say the session's three biggest moments out loud, name what they share, and tally what you remember. Memory is the filter; a moment you have to strain to recall was not worth a mark.
 
-| **Tutorial Moment** | **Primary Axis** | **Secondary Axis** | **Typical Intensity** |
-|---|---|---|---|
-| Void probe response | Varies | none | 0.5 |
-| Phase 2 micro-encounter | Varies | Varies | 1.0 |
-| Surge spent or held in the first fight | Hunger/Restraint | none | 0.5 |
-| **The first Yield decision** | Restraint/Method or Force | Hunger | 1.0–2.0 |
-| Scavenged item claims | Hunger or Method | Force or Restraint | 0.5 |
-| Recycling Node allocation | Hunger/Restraint | Will/Accord | 1.0 |
-| Who takes the Resonance Shard | Method/Restraint | Control | 1.0 |
-| Zone selection priority | Force/Method | none | 0.5 |
-| Behavior within Zone A | Force/Method | Will/Accord | 1.0 |
-| Behavior within Zone B | Force/Method | Control/Freedom | 1.0 |
-| Behavior within Zone C | Hunger/Restraint | Control/Freedom | 1.0 |
-| Behavior within Zone D | Method/Control | Hunger/Restraint | 1.0 |
-| The Arriving Initiates | Will/Accord | Force/Method | 1.0–2.0 |
-| Saturation push past Heavy | Hunger | Force | 2.0 |
-| Personal Opportunity | Varies (2 axes) | none | 2.0 |
-| Refusing a Personal Opportunity | Freedom | Restraint | 1.0 |
-| Warden encounter behavior | Varies | Varies | 2.0 |
-| Sacrifice on the causeway | Highest-signal axis | none | 3.0 |
+The tutorial's sessions tend to leave these behind:
 
-**Rule of thumb.** If a choice surprised *you*, it is at least 1.0. If it surprised the *table*, it is 2.0. If it surprised the *player themselves*, it is 3.0.
+| **Moment that sticks** | **What it tends to show** |
+|---|---|
+| The void probe, and what its echo met | The first unguarded read of temperament |
+| The first Yield decision | How they meet force: give ground, spend the future, or take the hit |
+| The Recycling Node pile | What they do about scarcity in front of strangers |
+| Who took the Resonance Shard | Whether the unpriceable is worth reaching for |
+| The Wild Fragment den | What they do when nobody is watching and it pays |
+| The Arriving Initiates | Whether a stranger reads as a threat, a resource, or a person |
+| A Personal Opportunity card | Whatever the card was built to ask |
+| Pushing past Heavy Saturation, or stopping | Appetite against self-preservation, felt in the body |
+| The causeway queue | Who goes last, and who decides |
+
+**Weights, from the same rule the whole Engine uses:** a moment you remember is one tally; a moment that surprised the table is two; a moment that surprised the player themselves is Defining: three tallies, circled, with a one-line note.
 
 ---
 
@@ -1344,7 +1432,7 @@ By the end of the tutorial, every player should have:
 - Survived a Clash that would have killed them, by choosing **Yield**.
 - Seen a natural die land at or above the Volatility Threshold, and watched it explode, mark a Proficiency, or both.
 - At least one **Mark** on the sheet.
-- Made at least three **2.0+ intensity** HVE log events (high-stakes choices).
+- Left you at least three moments that were still with you at the session-end sweep.
 - Earned **at least one Achievement Title**.
 - Received an **Affinity Notice**, the System's first hint at the family their Principle is forming in (see The Principle System). Characters who banked 3 IP crystallize a Principle instead.
 - Survived a **Mandate** (the Phase 5 dissolution event).
@@ -1355,7 +1443,7 @@ If any of these is missing at the end of the last session, improvise to deliver 
 
 ## Design Notes
 
-**What the tutorial is for.** Five things at once: make the Multiverse feel vast and lethal; put martial, arcane, social and survival futures all in front of the players before class selection at Level 10, which for a classless character means the item economy is the menu; get clean signals on all four HVE axes; isolate players at the moments that matter, because group consensus flattens identity into committee output; and teach tone before mechanics, so the rules arrive through play rather than through a lecture.
+**What the tutorial is for.** Five things at once: make the Multiverse feel vast and lethal; put martial, arcane, social and survival futures all in front of the players before class selection at Level 10, which for a classless character means the item economy is the menu; give the Engine a clear read of each person; isolate players at the moments that matter, because group consensus flattens identity into committee output; and teach tone before mechanics, so the rules arrive through play rather than through a lecture.
 
 ### What This Tutorial Does Not Do
 
