@@ -287,6 +287,17 @@
     font-family: ui-monospace, Menlo, Consolas, monospace;
     font-size: 9px; letter-spacing: 0.08em; color: var(--pencil); padding: 0 10px 8px;
   }
+
+  /* ---------- reference pages ---------- */
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .duo .zone { margin-bottom: 0; }
+  .ref .zbody { font-size: 12px; padding: 8px 11px 9px; }
+  .ref .zbody p { margin: 0 0 6px; }
+  .ref .zbody p:last-child { margin-bottom: 0; }
+  .ref .kv { display: flex; justify-content: space-between; border-bottom: 1px solid var(--faint); padding: 2px 0; }
+  .ref .kv:last-child { border-bottom: none; }
+  .ref .kv b { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 10px; letter-spacing: 0.08em; }
+  .ref .kv span { text-align: right; }
 </style>
 </head>
 <body>
@@ -1407,6 +1418,199 @@
           <div class="ccfoot">SOLO CLAIM WINDOW: ACTIVE. WRITE WHAT YOU DO ON THIS CARD AND HAND IT BACK. NO CONSULTATION.</div>
         </div>
 
+      </div>
+  </div>
+
+
+  <!-- ================= ACTIONS & COMBAT · PLAYER HANDOUT ================= -->
+  <div class="sheet ref">
+      <div class="masthead">
+        <span class="logo"><span class="lit">LITRPG:</span><span class="rpg">RPG</span></span>
+        <span class="face-plain">Actions &amp; Combat</span>
+        <span class="badge">PLAYER HANDOUT</span>
+      </div>
+
+      <div class="zone">
+        <header>[ YOUR TURN &middot; TWO BEATS ]</header>
+        <div class="zbody">
+          <p><b>One Beat buys:</b> an attack &middot; a spell &middot; a move to an adjacent Zone &middot; an item &middot; a Principle Application &middot; a skill check &middot; claiming or stripping a Positional State &middot; a Disengage &middot; a Seize Momentum attempt.</p>
+          <p><b>Free:</b> speaking, drawing a weapon, dropping something, drifting inside your Zone.</p>
+        </div>
+      </div>
+
+      <div class="duo">
+        <div class="zone">
+          <header>[ THE CLASH ]</header>
+          <div class="zbody">
+            <p><b>Roll d100 + Force</b> (+5 Trained, +10 Seasoned or Master). Both sides roll; high wins. The difference is the Margin, and at Grade F the Margin is the damage.</p>
+            <p><b>Defend with:</b> DEX to dodge &middot; FOR to absorb &middot; HRT against mental &middot; PER against illusion.</p>
+          </div>
+        </div>
+        <div class="zone">
+          <header>[ MODIFIERS ]</header>
+          <div class="zbody">
+            <div class="kv"><b>ADVANTAGED</b><span>+10 to your rolls</span></div>
+            <div class="kv"><b>EXPOSED</b><span>&minus;10 to your rolls</span></div>
+            <div class="kv"><b>FLANKING</b><span>+10 for every hostile on a shared target</span></div>
+            <div class="kv"><b>HINDERING GROUND</b><span>&minus;10</span></div>
+            <div class="kv"><b>SHIELD, DEFENDING</b><span>+5, occupies a hand</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="duo">
+        <div class="zone">
+          <header>[ ABOUT TO TAKE A HIT &middot; YIELD ]</header>
+          <div class="zbody">
+            <p>After the Margin is known, before damage lands: <b>give up Beats from your next turn.</b></p>
+            <div class="kv"><b>EACH BEAT</b><span>&minus;20 from the incoming Margin</span></div>
+            <div class="kv"><b>TWO BEATS</b><span>thrown one Zone, attacker&rsquo;s choice, no free strike</span></div>
+            <div class="kv"><b>CORNERED</b><span>nowhere to be driven: one Beat only</span></div>
+          </div>
+        </div>
+        <div class="zone">
+          <header>[ NEED IT TO LAND &middot; SURGE ]</header>
+          <div class="zbody">
+            <p><b>Spend half your Maximum Aether</b> (round up) for +5 on one Clash roll you make. Declare it before rolling. No Beat. Stacks with everything.</p>
+            <p>Aether refills only at Consolidation, so this is one or two uses between rests.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="duo">
+        <div class="zone">
+          <header>[ THE DIE TALKS ]</header>
+          <div class="zbody">
+            <div class="kv"><b>NATURAL 96+, CLASH</b><span>explodes: roll again and add</span></div>
+            <div class="kv"><b>NATURAL 96+, SKILL CHECK</b><span>a step beyond what you asked for</span></div>
+            <div class="kv"><b>EITHER WAY</b><span>tick a Mark in the Proficiency you used</span></div>
+            <div class="kv"><b>NATURAL 01&ndash;05</b><span>catastrophic</span></div>
+          </div>
+        </div>
+        <div class="zone">
+          <header>[ ITEMS IN A FIGHT ]</header>
+          <div class="zbody">
+            <p><b>1 Beat to use.</b> Pills: the first two of each kind per fight work in full; more do nothing until ten quiet minutes out of combat. Shards: backfire on a natural 01&ndash;05.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="duo">
+        <div class="zone">
+          <header>[ AT 0 HP &middot; DOWNED ]</header>
+          <div class="zbody">
+            <p>No Beats, no defense. <b>Dead at the end of your third round</b> unless stabilized: any healing, or an ally&rsquo;s 1 Beat and a Moderate (90) check. Survive it and the System hands you a Battle Memory.</p>
+          </div>
+        </div>
+        <div class="zone">
+          <header>[ AFTER THE FIGHT ]</header>
+          <div class="zbody">
+            <p>Kills pay <b>Volatile Energy</b> into your tank; it becomes levels at Consolidation. <b>Consolidation:</b> each full hour clears a fifth of your Tolerance and restores a fifth of your Max HP; Aether refills at the first full hour. You are defenseless for the duration.</p>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <!-- ================= GM SCREEN CARD ================= -->
+  <div class="sheet gm ref">
+      <div class="masthead">
+        <span class="logo"><span class="lit">LITRPG:</span><span class="rpg">RPG</span></span>
+        <span class="face-plain">GM Screen</span>
+        <span class="badge">GM ONLY</span>
+      </div>
+
+      <div class="duo">
+        <div class="zone">
+          <header class="plainhead">DIFFICULTY &middot; RESISTANCE</header>
+          <div class="zbody">
+            <div class="kv"><b>TRIVIAL 40 &middot; EASY 65</b><span>Proficient: no roll (Routine Mastery)</span></div>
+            <div class="kv"><b>MODERATE</b><span>90</span></div>
+            <div class="kv"><b>HARD</b><span>115</span></div>
+            <div class="kv"><b>SEVERE</b><span>140</span></div>
+            <div class="kv"><b>PEAK</b><span>165</span></div>
+            <div class="kv"><b>CROSS-GRADE</b><span>+100 per Grade to the higher side</span></div>
+          </div>
+        </div>
+        <div class="zone">
+          <header class="plainhead">SKILL CHECK OUTCOMES</header>
+          <div class="zbody">
+            <div class="kv"><b>FAIL BY 1&ndash;39</b><span>Soft: success at a cost, or a way forward</span></div>
+            <div class="kv"><b>FAIL BY 40+</b><span>Hard: failure plus consequence</span></div>
+            <div class="kv"><b>NATURAL 01&ndash;05</b><span>Catastrophic</span></div>
+            <div class="kv"><b>NATURAL 96+</b><span>Exceptional: beyond what was asked</span></div>
+            <div class="kv"><b>SUCCEED BY 40+</b><span>Dominant</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="duo">
+        <div class="zone">
+          <header class="plainhead">THE RULE OF 40, IN COMBAT</header>
+          <div class="zbody">
+            <div class="kv"><b>ATTACKER MARGIN 40+</b><span>Driven Back: damage, Exposed, may drive one Zone</span></div>
+            <div class="kv"><b>DEFENDER MARGIN 40+</b><span>Turned Aside: attacker Exposed</span></div>
+            <div class="kv"><b>DAMAGE</b><span>Margin &times; Grade (F &times;1 &middot; E &times;10 &middot; D &times;100)</span></div>
+            <div class="kv"><b>CREATURE YIELD</b><span>only if the stat block says Yields</span></div>
+          </div>
+        </div>
+        <div class="zone">
+          <header class="plainhead">VOLATILITY THRESHOLD</header>
+          <div class="zbody">
+            <div class="kv"><b>F 96+ &middot; E 95+ &middot; D 94+</b><span>C 93+ &middot; B 92+ &middot; A 91+</span></div>
+            <div class="kv"><b>EXPLODES ON</b><span>combat Clashes, Will Saves, the Breakthrough</span></div>
+            <div class="kv"><b>NEVER ON</b><span>skill checks</span></div>
+            <div class="kv"><b>CASCADE &times;2, PC ROLL</b><span>Battle Memory Card</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="duo">
+        <div class="zone">
+          <header class="plainhead">VE AWARDS, F-GRADE (&times;10 PER GRADE)</header>
+          <div class="zbody">
+            <div class="kv"><b>A LEVEL</b><span>125</span></div>
+            <div class="kv"><b>KILL BY TIER</b><span>2 / 5 / 10 / 20 / 30 / 50</span></div>
+            <div class="kv"><b>SESSION SURVIVAL</b><span>5</span></div>
+            <div class="kv"><b>CROSS-GRADE KILL</b><span>victim&rsquo;s tier at its Grade, &times;10 per Grade up</span></div>
+          </div>
+        </div>
+        <div class="zone">
+          <header class="plainhead">SATURATION &middot; CONSOLIDATION</header>
+          <div class="zbody">
+            <div class="kv"><b>PAST TOLERANCE</b><span>&minus;10 &middot; past &times;2: &minus;25 &middot; past &times;3: collapse clock</span></div>
+            <div class="kv"><b>COLLAPSE ROLL</b><span>hourly d100 &le; 25 / 50 / 75, automatic 4th</span></div>
+            <div class="kv"><b>EACH FULL HOUR</b><span>clears &#8533; Tolerance, restores &#8533; Max HP</span></div>
+            <div class="kv"><b>FIRST FULL HOUR</b><span>Aether refills; Tolerance re-derives</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="duo">
+        <div class="zone">
+          <header class="plainhead">BIG ROLLS</header>
+          <div class="zbody">
+            <div class="kv"><b>AURA PRESSURE</b><span>d100 + HRT + (FOR&divide;2) vs 115 calm / 140 flaring</span></div>
+            <div class="kv"><b>BREAKTHROUGH</b><span>d100 + HRT Force + prep vs 140</span></div>
+            <div class="kv"><b>OVERCHARGE</b><span>150 / 160 / 180 buys +1 / +2 / +3 Quality</span></div>
+            <div class="kv"><b>MOMENTUM</b><span>opposed d100 + DEX or PER Force, high side acts first</span></div>
+          </div>
+        </div>
+        <div class="zone">
+          <header class="plainhead">DOWNED &middot; DEATH</header>
+          <div class="zbody">
+            <div class="kv"><b>AT 0 HP</b><span>dies end of third round unless stabilized</span></div>
+            <div class="kv"><b>STABILIZE</b><span>any healing, or 1 Beat + Moderate 90</span></div>
+            <div class="kv"><b>EXECUTION</b><span>1 Beat, no roll, deliberate only</span></div>
+            <div class="kv"><b>ONE HIT &ge; 10&times; MAX HP</b><span>annihilated outright</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="zone">
+        <header class="plainhead">AT SESSION&rsquo;S END</header>
+        <div class="zbody">
+          <p>Sweep the HVE sheet: say the three biggest moments out loud, name what they share, tally what you remember. Remembered: 1. Surprised the table: 2. Surprised the player themselves: 3, circled, with a note.</p>
+        </div>
       </div>
   </div>
 

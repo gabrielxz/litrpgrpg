@@ -410,7 +410,7 @@ Multi-target capability is a property of specific abilities, spells, and effects
 
 **Annihilation.** A single hit dealing **10 × the target's Max HP** or more destroys them outright, with no Downed state and no countdown. A fresh initiate with 12 Max HP takes an E-Grade glancing blow for 130 and is gone; a FOR 40 scout with 80 Max HP takes the same blow and drops, Downed and counting.
 
-**Executions.** A deliberate attack on a Downed character kills them: 1 Beat, no roll. Mindless creatures rarely bother; they turn to the nearest live threat or drag prey away. Intelligent enemies may. A player character executing a Downed enemy is a high-intensity Will or Hunger event for the Hidden Vector Engine.
+**Executions.** A deliberate attack on a Downed character kills them: 1 Beat, no roll. Mindless creatures rarely bother; they turn to the nearest live threat or drag prey away. Intelligent enemies may. A player character executing a Downed enemy weighs heavily in the Hidden Vector Engine, on the Will or Hunger side.
 
 **Death is permanent.** At the Grades this book covers, nothing returns the dead.
 

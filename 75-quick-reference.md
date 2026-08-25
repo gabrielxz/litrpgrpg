@@ -2,6 +2,12 @@
 
 # Quick Reference
 
+## The Turn
+
+**Two Beats.** One Beat buys: an attack, a spell, a Zone move, an item, a Principle Application, a skill check, claiming or stripping a Positional State, a Disengage, or a Seize Momentum attempt. **Free:** speaking, drawing a weapon, dropping something, drifting inside your Zone.
+
+**Surprise Beat:** ambushers act once before the first round. **Master's free action:** once on your turn, the first action using a Mastered Proficiency costs no Beat; it is not a Beat and cannot be given up to Yield.
+
 ## The Clash
 
 **Roll d100 + Force + Tactics. High wins.**
@@ -75,6 +81,8 @@ One number at the top of the die. On a Clash it explodes (combat Clashes, Will S
 
 Weapons carry no bonus of their own; the bonus is the wielder's tier. Untrained is +0. **3 Marks in a domain you have no Proficiency in:** the System grants it at Trained, spending those Marks.
 
+**Gear:** a shield adds +5 to your Clash when defending and occupies a hand; there is no shield Proficiency. Armor Scraps add +5 Defense Force with FOR and impose −5 on DEX-based Clashes. Pills take 1 Beat; the first two of each kind per fight work in full, and further pills do nothing until ten quiet minutes out of combat.
+
 **Fighting domains, by weapon shape:** blades | axes and hammers | spears and staves | hand to hand | archery and throwing | firearms. Anything you let go of is archery and throwing.
 
 **Downed:** at 0 HP: no Beats, no defense; dies at the end of their third round unless stabilized (any healing, or 1 Beat + Moderate 90 check, field-medicine Proficiencies apply). One hit ≥ 10× Max HP kills outright. Attacking a Downed character: 1 Beat, no roll, kills. Surviving being Downed grants a Battle Memory Card.
@@ -104,6 +112,15 @@ Resistance is read straight off the card for same-Grade encounters. For Cross-Gr
 | E-Grade | 100–999 | 10–99 | ×10 |
 | D-Grade | 1,000–9,999 | 10–99 | ×100 |
 | C-Grade | 10,000–99,999 | 10–99 | ×1,000 |
+
+| **VE at F-Grade** | **Amount** |
+|---|---|
+| A level | 125 |
+| Kill, by tier: Trivial / Easy / Moderate / Hard / Severe / Peak | 2 / 5 / 10 / 20 / 30 / 50 |
+| Session survival | 5 |
+| Cross-Grade kill | the victim's tier read at its own Grade, ×10 per Grade above the killer |
+
+All VE values scale ×10 per Grade.
 
 ---
 
