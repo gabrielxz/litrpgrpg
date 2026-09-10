@@ -1,8 +1,58 @@
 # Design Backlog
 
-*Active items, deferred items, and recently resolved decisions for the LitRPG: RPG project. Not part of the published book.*
+*Active items, deferred items, and recently resolved decisions for Gradebreaker. Not part of the published book.*
 
 ---
+
+## Starter Kit Release Checklist (proposed 2026-09-10, for Gabriel to cut)
+
+The next release is a starter PDF kit: the book as it stands plus the table kit, put in front of strangers. Everything below is the full surface; **Gating** is Claude's proposal for what the kit cannot ship without, **Wanted** improves it, **Deferred** belongs to the full release. Gabriel cuts.
+
+**The scope call that decides the rest.** The 2026-08-08 benchmark said a publishable prototype must carry a table through Level 10 class selection and the F→E Breakthrough, and declined the Level-9 stop. A *starter* kit is the Level-9 stop under an honest label: tutorial plus Levels 1–9, with the class framework in the full release. Claude recommends the starter framing, because the class framework is the largest unbuilt system in the game and gating a first release on it means no strangers play for a long time. If the starter framing is taken, the early-game engine chapter becomes the most important missing chapter, since the tutorial delivers sessions 1–3 and the kit then has to make sessions 4–15 fun on its own.
+
+**Gating (proposed):**
+
+- [ ] **Tutorial re-read and notes applied** (Gabriel, week of 2026-09-10).
+- [ ] **Run the tutorial at least once, Gabriel GMing.** The hand-off goal also wants one run by a GM who is not Gabriel, reading cold; that run is the real test of the cycle's stated goal.
+- [ ] **Valley map redone**: which image becomes `assets/valley-map.png`, the phase-key sidebar's home, whether the GM keeps a separate schematic. See Open Now.
+- [ ] **Early-game engine chapter** (Levels 4–10; Tier 2 item 9). Gating only under the starter framing.
+- [ ] **Heart gets a job** (Pending Design Decisions). A stat that only saves you is not fun, and the kit ships the stat.
+- [ ] **New cover** for Gradebreaker. The current bake writes the new block onto the old art; real cover art is wanted before release.
+- [ ] **Art**: chapter art for Progression and What Can Be Seen (both currently borrow art from cut chapters), plus the tutorial's phase art and handouts.
+- [ ] **Layout pass** (Gabriel wants to play with it). Eisvogel is the current template; decide whether it survives.
+- [ ] **Front matter**: Gabriel's own Introduction (backlogged 2026-08-20), and "How This Book Was Written" (the AI co-design story; Gabriel drafts, Claude edits).
+- [ ] **Worldbuilding minimum**: the System opening-message rewrite and the marked story slots.
+- [ ] **Glossary + internal-link pass** (Tier 2 item 11). Forward references are the read-through's most repeated complaint and a stranger has no one to ask.
+- [ ] **Prose pass**: the "X, not Y" sweep, the closer cut, and a front-to-back read for the banned constructions.
+- [ ] **IP scrub**: "Conqueror's Haki" and any other borrowed coinage; USPTO clearance for GRADEBREAKER; register the domains.
+- [ ] **Venue, license, price, feedback channel**: itch.io / DriveThruRPG / own site; license; free or pay-what-you-want; where playtest feedback goes and what the form asks. Check current storefront AI-content policies, which interact with the transparency front matter and the AI-generated art.
+- [ ] **A version and date on the cover** ("Starter Kit 0.1, 2026-xx"), and a one-page "what this kit is and is not" inside the front cover: Levels 1–9, no classes yet, the app is optional.
+- [ ] **Final proofread of the release build** on the Scribe, with the ink-detection method.
+
+**Wanted:**
+
+- [ ] **Encounter sizing sims** (the Master free action is still unsimulated); correct the sizing table where they disagree.
+- [ ] **Printable GM handout page** (quest cards above all), open from the 08-20 read-through; belongs with the kit.
+- [ ] **Companion app beta** (TBD). If it exists at release: a player-consent note for recording, a one-page quickstart, and the kit's GM screen pointing at it under Mode A. If it does not, nothing in the kit may depend on it (the Unplugged Floor).
+- [ ] **PDF production**: bookmarks and internal links working in the PDF, a screen-reading layout question (7×10 trim on a phone), the kit as its own download alongside the book, and no bleed unless print-on-demand is on the table.
+- [ ] **Color vignettes** (Tier 3 item 14) for the systems that carry them: Aether felt for the first time, Aura Pressure, the philosopher.
+- [ ] **The Gradebreaker title** designed (Pending Design Decisions). Deferrable; the kit's play never reaches a full-Grade-up kill.
+
+**Deferred to the full release:**
+
+- Class design framework and the starter class catalog; content through the E-Grade Breakthrough.
+- Inventory / spatial storage chapter.
+- The Initiate's Manual (Milestone 2 in the Kickstarter framing; written in the System's voice, so it waits on the worldbuilding pass).
+- The worldbuilding pass proper, and the tropes chapter.
+- Kickstarter artifacts (marginalia edition, Volatility dice, stickers, poster, personalized pregens).
+
+## Naming (decided 2026-09-10)
+
+**The game is Gradebreaker.** One word, capital G; "Grade Breaker" is tolerated informally and never appears in our own materials. Cover block: **GRADEBREAKER / The LitRPG RPG / Power is not granted.** The subtitle and the tagline are locked (the "A LitRPG: RPG" variant and "Break through. Become more." are dead). The tagline is the closing line of the Principles chapter. **No engine name.** "Magnitude, the system Gradebreaker runs on" was proposed and dropped the same day: "magnitude" is already a plain noun in the rules text and the name of the Magnitude Gap Rule, so an engine called Magnitude would make one word carry three meanings. Rejected titles: Overgrade, Magnitude, Tenfold, Ungranted, Integrant, and the whole Sovereign / Threshold / Index / Ascendant / Vector family; Threshold is doubly dead, since a funded Gamefound board game of that name sits on the same shelf and Volatility Threshold is a rules term.
+
+**Clearance status.** Registry check (itch, DriveThru, BGG) clean per Gabriel, 2026-09-10; a web search the same day found no game, novel, or board game named Gradebreaker. **USPTO clearance still pending before the Kickstarter.** The LITRPG word mark (Reg. 5377086, Aleron Kong, registered 2018-01-09) shows as cancelled under Section 8 on 2024-07-22, which retires most of the 2026-08-08 concern about the subtitle; confirm on TSDR during the Gradebreaker search, since a cancelled mark can be refiled. **Domains:** gradebreaker.com, gradebreakerrpg.com, and gradebreaker.games all returned unregistered from the registries' RDAP servers on 2026-09-10; `.rpg` is not a delegated top-level domain, so gradebreaker.rpg cannot exist. Register before announcing.
+
+**Applied 2026-09-10:** CLAUDE.md, the Introduction's opening sentence, the EPUB metadata (title and subtitle), the cover bake (title, subtitle, tagline, byline), the kit's badge on five pages and its page title, pipeline comments. Nothing in the book used "Magnitude" to mean the game.
 
 ## Open Now
 
@@ -430,6 +480,7 @@ Complete as of 2026-07-08: Batch 1 mechanical fixes, Block A (combat feel), Bloc
 ## Pending Design Decisions (Not in Current Cycle)
 
 - **Proficiency rework — parked pending a brainstorming session (Gabriel, 2026-08-07); see the high-priority Tier 1 item.**
+- **The Gradebreaker title (stub, 2026-09-10; do not design yet).** A System-granted title named for the game, awarded for defeating an opponent a full Grade above the character, under conditions to be defined; it should carry real mechanical weight. Two facts for whoever designs it: (1) the trigger coincides with a guaranteed collapse (an E-Grade kill pays an F-Grade character 100 to 500 VE against a Critical line of 240), so the title lands on someone waking from an involuntary Consolidation, which is the right scene; (2) "mechanical weight" means Hidden Achievement class, since Achievement titles are flat +1 to +5 only under the 2026-08-13 retune, and Giant-Feller (Severe or Peak kill, +2 FOR) is the rung below it in the catalog. The "specific build path" principle cited in the naming memo is not in the book; the book's actual texture is that a full-Grade-up kill is a party-wide gamble the +100 makes near-impossible by default. Sits beside CLUSTER-D (Grade differentiation).
 - **Heart needs a job (Gabriel, 2026-09-10).** Tolerance went flat, so HRT no longer decides anything every session; what remains is mental and spiritual defense, Aura Pressure saves, the Fusion roll, and the Breakthrough Check. Gabriel's position: a stat that only saves you from bad things is not fun, and the 08-12 ruling still stands in spirit (a Breakthrough-mandated stat has to pay off along the way). Brainstorm later; constraint from the same day's rulings is that the job must not touch the VE tank.
 - **Mini-map / System map UI — declined for now (2026-08-07).** Map-reveal quest rewards stay narrative; revisit if the table wants cartography.
 

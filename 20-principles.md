@@ -276,5 +276,5 @@ The System exists to discover and refine stable patterns of reality that cannot 
 
 Patterns that succeed across contexts are compressed, formalized, and made reusable. That is a Principle, and that is why the System pressures its holders: dominant strategies are challenged, over-reliance is punished, and no single approach remains optimal forever. The System does not ask "Did you win?" It asks "How do you win, and what does that reveal?"
 
-Power is not granted. It is recognized, compressed, and returned to those who discovered it.
+Power is not granted. It is recognized, distilled, and returned to those who discovered it.
 :::

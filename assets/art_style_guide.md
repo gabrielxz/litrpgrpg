@@ -1,4 +1,4 @@
-# LitRPG: RPG Art Style Guide: Kinetic Ink & The Stenciled System
+# Gradebreaker Art Style Guide: Kinetic Ink & The Stenciled System
 
 ## Prime Directive: Visual Chaos
 

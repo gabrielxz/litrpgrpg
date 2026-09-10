@@ -12,7 +12,7 @@ On the day of Integration, every human being on Earth heard the same voice at th
 *Prior exemptions: expired. Observation: begun.*
 :::
 
-**LitRPG: RPG** is a tabletop roleplaying game of System-driven progression fantasy, the genre of stories like *Defiance of the Fall* and *Primal Hunter*: ordinary people pulled into a multiverse that keeps score, where every level is paid for in blood and sweat, quests arrive in cold blue status screens, and the only deal on offer is grow, or die. Each player takes the role of one freshly integrated human. One player, the Game Master (GM), plays everything else: the world, its monsters and factions, and the System itself.
+**Gradebreaker** is a tabletop roleplaying game of System-driven progression fantasy, the genre of stories like *Defiance of the Fall* and *Primal Hunter*: ordinary people pulled into a multiverse that keeps score, where every level is paid for in blood and sweat, quests arrive in cold blue status screens, and the only deal on offer is grow, or die. Each player takes the role of one freshly integrated human. One player, the Game Master (GM), plays everything else: the world, its monsters and factions, and the System itself.
 
 ## The System
 

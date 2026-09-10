@@ -1,4 +1,4 @@
-# LitRPG: RPG — Build Pipeline
+# Gradebreaker — Build Pipeline
 # Run `make` (or `make all`) to build PDF + EPUB.
 # Run `make pdf` or `make epub` to build just one.
 # Each invocation copies the build to a timestamped filename.
@@ -91,21 +91,40 @@ kit: $(KIT_BASE)
 	@echo "Size:  $$(du -h $(KIT_OUT) | cut -f1)"
 
 # --- Cover with baked title -----------------------------------------------
-# Bake "LITRPG: RPG" (top, Cinzel Decorative Black) and "by Gabriel Beal"
-# (bottom-right, EB Garamond Italic) onto the cover image. Both PDF and
-# EPUB consume the result so the cover treatment is identical across formats.
+# Bake the cover block onto the cover image: title (top, Cinzel Decorative
+# Black), subtitle beneath it and tagline bottom-left (EB Garamond Italic),
+# byline bottom-right. Both PDF and EPUB consume the result so the cover
+# treatment is identical across formats.
+TITLE_TEXT    := GRADEBREAKER
+SUBTITLE_TEXT := The LitRPG RPG
+TAGLINE_TEXT  := Power is not granted.
+BYLINE_TEXT   := by Gabriel Beal
+
 $(COVER_TITLED): $(COVER_BASE) | $(BUILD_DIR)
 	magick $(COVER_BASE) \
 	  -gravity North \
 	  -font $(TITLE_FONT) \
-	  -pointsize 95 \
+	  -pointsize 72 \
 	  -stroke black -strokewidth 3 -fill white \
-	  -annotate +0+45 "LITRPG: RPG" \
-	  -gravity SouthEast \
+	  -annotate +0+40 "$(TITLE_TEXT)" \
 	  -font $(BYLINE_FONT) \
-	  -pointsize 26 \
+	  -pointsize 40 \
+	  -stroke black -strokewidth 5 -fill black \
+	  -annotate +0+128 "$(SUBTITLE_TEXT)" \
 	  -stroke none -fill white \
-	  -annotate +30+30 "by Gabriel Beal" \
+	  -annotate +0+128 "$(SUBTITLE_TEXT)" \
+	  -gravity SouthWest \
+	  -pointsize 28 \
+	  -stroke black -strokewidth 4 -fill black \
+	  -annotate +30+30 "$(TAGLINE_TEXT)" \
+	  -stroke none -fill white \
+	  -annotate +30+30 "$(TAGLINE_TEXT)" \
+	  -gravity SouthEast \
+	  -pointsize 26 \
+	  -stroke black -strokewidth 3 -fill black \
+	  -annotate +30+30 "$(BYLINE_TEXT)" \
+	  -stroke none -fill white \
+	  -annotate +30+30 "$(BYLINE_TEXT)" \
 	  $@
 
 # --- PDF -------------------------------------------------------------------

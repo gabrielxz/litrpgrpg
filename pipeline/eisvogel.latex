@@ -948,7 +948,7 @@ $endif$
 $if(titlepage-background)$
 \tikz[remember picture,overlay] \node[inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{$titlepage-background$}};
 $endif$
-% ===== LitRPG: RPG custom titlepage =====
+% ===== Gradebreaker custom titlepage =====
 % The cover image already has title and byline baked in by ImageMagick
 % (see the cover-titled rule in the Makefile), so this block only
 % suppresses Eisvogel's default text overlay and sets the page style.
