@@ -59,7 +59,7 @@ Seven Attributes, tracked as Raw Power and read as Force.
 - **Strength (STR):** Physical power and carry capacity. Governs heavy melee.
 - **Dexterity (DEX):** Precision, speed, manual agility. Governs evasion, finesse melee, and ranged attacks.
 - **Fortitude (FOR):** Endurance and structural integrity. Governs Health and standing your ground.
-- **Heart (HRT):** Resolve, mental fortitude, spiritual anchor. Governs how much raw Volatile Energy you can carry before it starts to burn, defense against mental, spiritual, and coercive attacks, Aura Pressure, and the Breakthrough.
+- **Heart (HRT):** Resolve, mental fortitude, spiritual anchor. Governs defense against mental, spiritual, and coercive attacks, Aura Pressure, and the Breakthrough.
 - **Power (POW):** Magnitude of energy-based output. Governs spells, Applications, and the Aether pool.
 - **Perception (PER):** Awareness and sensory sharpness. Governs detection, Principle insight, and defense against illusion.
 - **Charisma (CHA):** Force of personality and social leverage.
@@ -68,7 +68,7 @@ Seven Attributes, tracked as Raw Power and read as Force.
 
 - **Max HP:** Raw FOR × 2. FOR 75 gives 150 HP; FOR 8,500 gives 17,000.
 - **Max Aether:** equal to Raw POW.
-- **VE Tolerance:** (Raw FOR + Raw HRT) / 2 × 10, re-derived at the first full hour of each Consolidation. The frame holds it and the will holds it down. See Cultivation.
+- **VE Tolerance:** 80 at F-Grade, ×10 per Grade, the same for every character of the Grade. See Cultivation.
 
 There is no Damage Reduction stat. Armor, toughness, and defensive training are folded into the defender's Clash total: strong defense makes the attacker's Margin small or negative.
 

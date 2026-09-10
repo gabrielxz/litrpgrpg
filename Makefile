@@ -64,7 +64,8 @@ all: pdf epub
 # --- Table kit -------------------------------------------------------------
 # The printable table kit (F-Grade character sheet front/back, GM HVE log,
 # optional ledger, pregen cards) renders from HTML via headless Chromium.
-CHROMIUM  := chromium
+# First Chromium-family binary found on PATH; override with `make CHROMIUM=...`.
+CHROMIUM  ?= $(shell command -v chromium || command -v chromium-browser || command -v google-chrome || echo chromium)
 KIT_SRC   := kit/table-kit.html
 KIT_BASE  := $(BUILD_DIR)/$(PROJECT)-table-kit.pdf
 KIT_OUT   := $(BUILD_DIR)/$(PROJECT)-table-kit-$(TIMESTAMP).pdf

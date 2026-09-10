@@ -121,7 +121,7 @@ Calculate and record these values:
 
 - **Max HP:** Raw FOR × 2.
 - **Max Aether:** Equal to your Raw POW value.
-- **VE Tolerance:** (Raw FOR + Raw HRT) / 2 × 10.
+- **VE Tolerance:** 80. Every F-Grade character holds the same.
 - **VE Stored:** 0.
 - **Level:** 1.
 - **Grade:** F.
@@ -159,7 +159,7 @@ Three finished characters, built with this chapter's rules and nothing else: 40 
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | 8 | 5 | 7 | 4 | 6 | 5 | 5 |
 
-- **Max HP** 14 &middot; **Max Aether** 6 &middot; **VE Tolerance** 55 (Mild past 55, Heavy past 110, Critical past 165)
+- **Max HP** 14 &middot; **Max Aether** 6 &middot; **VE Tolerance** 80 (Mild past 80, Heavy past 160, Critical past 240)
 - **Proficiencies (Trained, +5):** axes and hammers, athletics, streetwise
 - **Playing her:** Fight close and end it fast. Want things out loud: the better weapon, the bigger bounty, the pill nobody else has claimed. Her generosity is real, and it is never first.
 :::
@@ -173,7 +173,7 @@ Three finished characters, built with this chapter's rules and nothing else: 40 
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | 8 | 5 | 7 | 5 | 4 | 6 | 5 |
 
-- **Max HP** 14 &middot; **Max Aether** 4 &middot; **VE Tolerance** 60 (Mild past 60, Heavy past 120, Critical past 180)
+- **Max HP** 14 &middot; **Max Aether** 4 &middot; **VE Tolerance** 80 (Mild past 80, Heavy past 160, Critical past 240)
 - **Proficiencies (Trained, +5):** axes and hammers, endurance training, field medicine
 - **Playing him:** Stand between the danger and everyone else, and swing like the door needs breaking. He will take a bad trade if somebody weaker comes out ahead on it.
 :::
@@ -187,7 +187,7 @@ Three finished characters, built with this chapter's rules and nothing else: 40 
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | 4 | 7 | 5 | 6 | 5 | 9 | 4 |
 
-- **Max HP** 10 &middot; **Max Aether** 5 &middot; **VE Tolerance** 55 (Mild past 55, Heavy past 110, Critical past 165)
+- **Max HP** 10 &middot; **Max Aether** 5 &middot; **VE Tolerance** 80 (Mild past 80, Heavy past 160, Critical past 240)
 - **Proficiencies (Trained, +5):** tracking and fieldcraft, archery and throwing, navigation
 - **Playing him:** Look before anyone moves, plan the way out before the way in, and take only what the plan needs. When the party gets loud, he is the one counting.
 :::

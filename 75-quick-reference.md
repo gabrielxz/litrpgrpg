@@ -61,11 +61,11 @@ One number at the top of the die. On a Clash it explodes (combat Clashes, Will S
 
 **HP** = Raw FOR × 2. **Aether** = Raw POW. Aether refills only on Consolidation, after the first full hour (no in-combat or passive regen).
 
-**VE Tolerance:** (Raw FOR + Raw HRT) / 2 × 10, re-derived at the first full hour of each Consolidation. **Saturation:** past one Tolerance −10, past twice −25, past three times the collapse clock.
+**VE Tolerance:** 80 at F-Grade for every character, ×10 per Grade. **Saturation:** past 80 −10, past 160 −25, past 240 the collapse clock.
 
-**Consolidation:** every hour clears one fifth of VE Tolerance and restores one fifth of Max HP (full tank ≈ 5 hours); Aether refills at the first full hour. Interruption keeps completed hours.
+**Consolidation:** every hour refines 20 VE (×10 per Grade) and restores one fifth of Max HP; a level's worth clears in 6 hours; Aether refills at the first full hour. Interruption keeps completed hours.
 
-**Breakthrough Check:** d100 + HRT Force + preparation vs. **DC 140** (Severe, flat, no Cross-Grade Adjustment). Overcharge ×1/×2/×3/×4 raises it to 140/150/160/180 and buys +0/+1/+2/+3 Quality Tiers.
+**Breakthrough Check:** d100 + HRT Force + preparation vs. **DC 140** (Severe, flat, no Cross-Grade Adjustment). Overcharge ×1/×2/×3/×4 (80/160/240/320 VE at F) raises it to 140/150/160/180 and buys +0/+1/+2/+3 Quality Tiers.
 
 **Surge:** spend half your Maximum Aether (round up) for +5 on one Clash roll you make. Declare before rolling. No Beat. Stacks with everything; available to everyone.
 
@@ -115,7 +115,7 @@ Resistance is read straight off the card for same-Grade encounters. For Cross-Gr
 
 | **VE at F-Grade** | **Amount** |
 |---|---|
-| A level | 125 |
+| A level | 120 |
 | Kill, by tier: Trivial / Easy / Moderate / Hard / Severe / Peak | 2 / 5 / 10 / 20 / 30 / 50 |
 | Session survival | 5 |
 | Cross-Grade kill | the victim's tier read at its own Grade, ×10 per Grade above the killer |

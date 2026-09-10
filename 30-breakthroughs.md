@@ -63,6 +63,8 @@ The cultivator needs VE equal to at least **one full Tolerance** to ignite, and 
 | ×3.0 (Reckless) | Three times Tolerance | Heavy, −25 | +20 to Breakthrough DC | +2 Tiers |
 | ×4.0 (Suicidal) | Four times Tolerance | Critical, clock running | +40 to Breakthrough DC | +3 Tiers |
 
+At the F-Grade cap those are 80, 160, 240, and 320 VE; ×10 for each Grade above.
+
 **Saturation penalties never touch the Breakthrough Check.** The ignition burns that VE as fuel, so the weight a cultivator is carrying does not blunt the roll it is paying for. Those penalties apply to everything else, including whatever the party has to do during the Trial, and to the cultivator's own actions right up until they ignite.
 
 **The body can give out first.** At ×4.0 the character is in Critical Saturation, and the collapse clock (Cultivation chapter) runs until the moment of Ignition: a d100 at the end of every full hour, escalating, automatic by the fourth. If it fires first they pass out on the spot into the collapse the Cultivation chapter defines: involuntary Consolidation, defenseless, the gathered charge draining away with nothing to show for it, and no attempt. This is why the highest ratio is gathered fast, in a dense location, with the ritual site already prepared. Once Ignition is declared, Saturation is suspended and the ritual consumes the VE.
@@ -79,7 +81,7 @@ The cultivator makes a single roll:
 
 > **d100 + HRT Force + preparation vs. Breakthrough DC**
 
-Heart alone. Every Breakthrough is a trial of will, and no other Attribute is consulted, because no other Attribute is being asked anything. A career of carrying more raw power than the body wanted is exactly the training this roll tests, which is why Heart is also what sets VE Tolerance (Cultivation, "The Pressure Gauge"). The brawler and the diplomat make the same roll, and what separates them is how much they were willing to hold.
+Heart alone. Every Breakthrough is a trial of will, and no other Attribute is consulted, because no other Attribute is being asked anything. A career of carrying more raw power than the body wanted is exactly the training this roll tests. The brawler and the diplomat make the same roll, and what separates them is how much they were willing to hold.
 
 **Breakthrough DC** is **140** at every Grade transition: Severe difficulty, read straight off the Grade Reference Card. There is no Cross-Grade Adjustment, because the challenger is not facing something a Grade above them. They are becoming it. The Overcharge Ratio further modifies the DC.
 
@@ -239,7 +241,7 @@ The tradeoff is explicit: better locations produce better Breakthroughs, but the
 
 ### Consolidation Bonus (Cross-Reference)
 
-Energy density also affects ordinary Consolidation (documented in the Cultivation section): a high-density region clears one quarter of Tolerance per hour instead of one fifth. The same environmental scouting that identifies good Breakthrough locations pays dividends during routine play.
+Energy density also affects ordinary Consolidation (documented in the Cultivation section): a high-density region refines 40 VE per hour instead of 20. The same environmental scouting that identifies good Breakthrough locations pays dividends during routine play.
 
 ### Location Scouting
 

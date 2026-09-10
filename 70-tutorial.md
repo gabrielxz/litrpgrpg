@@ -96,7 +96,7 @@ Before the first session, each player has built a character per the Character Cr
 - 40-point buy across the seven Attributes (floor 3, cap 10).
 - Three Proficiencies at Trained, written in plain language.
 - No Principle access: Insight is earned in play, nothing is selected at creation (see "Starting Principle Access" in Character Creation).
-- Derived stats calculated: Max HP = Raw FOR × 2, Max Aether = Raw POW, VE Tolerance = (FOR + HRT)/2 × 10, Level 1, Grade F.
+- Derived stats calculated: Max HP = Raw FOR × 2, Max Aether = Raw POW, VE Tolerance 80, Level 1, Grade F.
 
 Players begin with **whatever was on their person at the moment of Integration**: phone, keys, backpack, work clothes. The System provides nothing. Every weapon, every pill, and every shard in the tutorial is scavenged.
 
@@ -521,7 +521,7 @@ Then something comes off it. Pale, slow, like heat over a road, except that it d
 *Refinement available at next Consolidation.*
 :::
 
-Read the numbers out loud, and have the player write the 2 in the VE box on their sheet with their Tolerance beside it. Two against a Tolerance of 50 says what the valley is: it pays in small numbers, the numbers add up, and everything it pays comes in the same way. A player who asks what Volatile Energy is gets the honest answer: it is what was holding that body together, it is theirs now, and it is not usable yet.
+Read the numbers out loud, and have the player write the 2 in the VE box on their sheet with their Tolerance beside it. Two against a Tolerance of 80 says what the valley is: it pays in small numbers, the numbers add up, and everything it pays comes in the same way. A player who asks what Volatile Energy is gets the honest answer: it is what was holding that body together, it is theirs now, and it is not usable yet.
 
 ### Scavenging on the Way
 
@@ -717,9 +717,9 @@ That last line is the whole rest mechanic in one sentence, and somebody at the t
 
 #### First Consolidation
 
-Close Session 1 with the party camping and declaring their first Consolidation (Cultivation chapter). Walk through the mechanic once: minimum 1 hour, and every hour clears one fifth of Tolerance and restores one fifth of Max HP, with Aether refilling when the first full hour completes.
+Close Session 1 with the party camping and declaring their first Consolidation (Cultivation chapter). Walk through the mechanic once: minimum 1 hour, and every hour refines 20 VE and restores one fifth of Max HP, with Aether refilling when the first full hour completes.
 
-Session 1 pays each character 35 to 45 VE against a starting Tolerance of 45 to 60, so nobody is Saturated yet. Four hours clears the load. Narrate the tank emptying, the wounds closing, and the Aether returning at the first full hour. Saturation is taught in Phase 4, where it becomes near-universal.
+Session 1 pays each character 35 to 45 VE against a Tolerance of 80, so nobody is Saturated yet. Three hours clears the load. Narrate the tank emptying, the wounds closing, and the Aether returning at the first full hour. Saturation is taught in Phase 4, where it becomes near-universal.
 
 **Somebody should stay awake.** A character on watch is not consolidating, and whoever volunteers is making a real trade in front of the Engine. Nothing attacks them tonight.
 
@@ -922,12 +922,11 @@ The building was occupied until recently. Bedding, ration wrappers, and a scrawl
 
 The party camps and Consolidates between the two zones. This is where the session break falls, and it is the rest the phase is built around.
 
-One zone pays about a level's worth of VE, which lands a character between one and two times their Tolerance. Two zones carried at once reaches three times Tolerance, which is Critical, and a party that walks into the second zone still full is rolling against collapse while they fight. The camp is what keeps the load in the band where Saturation is a pressure the players feel rather than a clock running against them.
+One zone pays about a level's worth of VE, 120 against a Tolerance of 80, which is Mild Saturation for everyone. Two zones carried at once lands on the Critical line at 240, and a party that walks into the second zone still full is rolling against collapse before the zone is half done. The camp is what keeps the load in the band where Saturation is a pressure the players feel rather than a clock running against them.
 
 **What lands here:**
 
 - **The first level, for most characters.** Walk the player through the 3+2 stat allocation (Progression chapter) at the table, one player at a time. This is the first time the sheet changes from play, and it is worth the minutes.
-- **Tolerance re-derives** at the first full hour, along with the three Saturation thresholds, so anyone who put points into Fortitude or Heart can hold more going into the second zone.
 - **Battle Memories** may be meditated on here. Holding them for the rest at the end of the Ruins puts the first crystallization at the phase's close, where it has room to run slowly.
 
 **The choice is the point.** A party that wants the second zone before the world moves can break camp saturated. Say what their bodies are telling them and let them decide.
@@ -1036,7 +1035,7 @@ Make the player commit in writing before they hand the card back. Nobody gets to
 
 ### Saturation
 
-Saturation is near-universal by the end of Phase 4. A starting character with FOR 5 and HRT 4 has a Tolerance of ((5 + 4) / 2) × 10 = **45 VE**. They cross into Mild Saturation at 46 and Heavy at 91, and a hard afternoon reaches the first band easily.
+Saturation is near-universal by the end of Phase 4. Every F-Grade character holds **80 VE**; Mild Saturation begins past 80 and Heavy past 160, and one zone of the Ruins pays about 120, so a hard afternoon reaches the first band on its own.
 
 Do not announce thresholds. Narrate symptoms:
 
@@ -1318,7 +1317,7 @@ Four samples calibrated to common tutorial archetypes. Customize the content to 
 
 ### The Post-Gate Consolidation
 
-Levels arrive the way they always will: at Consolidation, as processed VE crosses each threshold (Progression chapter). This rest is the tutorial's longest. Real ground, no clock, and about half the tutorial's VE still sitting unrefined in the tank. Everyone comes through the gate deep into Critical Saturation, so if the recognition scene runs an hour in the fiction, someone collapses into an involuntary Consolidation before they choose to sit down. Let it happen to whoever it happens to; it costs a temporary point and it is the body making the decision the character was slow to make. Let it run as long as the fiction allows, which here is a full day or more of camp, and process the backlog.
+Levels arrive the way they always will: at Consolidation, as processed VE crosses each threshold (Progression chapter). This rest is the tutorial's longest. Real ground, no clock, and about half the tutorial's VE still sitting unrefined in the tank. Everyone comes through the gate at Heavy Saturation at least, and anyone who carried a full tank out of the Ruins is Critical, so if the recognition scene runs an hour in the fiction, someone collapses into an involuntary Consolidation before they choose to sit down. Let it happen to whoever it happens to; it costs a temporary point and it is the body making the decision the character was slow to make. Let it run as long as the fiction allows, which here is a full day or more of camp, and process the backlog.
 
 For each level as it lands, allocate **5 stat points**: 3 assigned by the GM from the player's tutorial behavior (Behavioral Stat Mapping, Progression chapter) and 2 chosen freely.
 
@@ -1403,7 +1402,7 @@ Confirm each mechanic was introduced before the tutorial ends.
 
 ## GM Reference: Tutorial Reward Ledger
 
-This ledger is denominated in levels. A level is 125 VE at F-Grade (Cultivation, "Awarding VE"), or twelve and a half peer kills.
+This ledger is denominated in levels. A level is 120 VE at F-Grade (Cultivation, "Awarding VE"), or twelve peer kills.
 
 | **Phase** | **Progress per Character** | **Source** |
 |---|---|---|

@@ -10,25 +10,25 @@ Characters do not gain traditional "Experience Points." They accumulate **Volati
 
 **Earn VE → watch your gauge → decide to push or rest → Consolidate → level up.**
 
-Joe has FOR 7 and HRT 5, so his VE Tolerance is 60. A morning of hunting earns him 40 VE; he is fine. Then the party finds the den, and Joe decides to risk it: two more fights, one of them a Hard kill, push him to 70 VE, past his Tolerance, and now Joe feels uncomfortably full of energy: his skin prickles, his hands won't stay still, and everything is a little harder than it should be (Saturation, below: −10 to everything until he processes it). The party makes camp and Joe Consolidates. An hour in, his Aether is back. By the sixth hour the whole load is refined: his wounds are closed, the too-full feeling is gone, and all 70 VE is permanent progress toward his next level.
+Joe can hold 80 VE before it starts to burn. A morning of hunting earns him 60 VE; he is fine. Then the party finds the den, and Joe decides to risk it: two more fights, one of them a Hard kill, push him to 90 VE, past his Tolerance, and now Joe feels uncomfortably full of energy: his skin prickles, his hands won't stay still, and everything is a little harder than it should be (Saturation, below: −10 to everything until he processes it). The party makes camp and Joe Consolidates. An hour in, his Aether is back. By the fifth hour the whole load is refined: his wounds are closed, the too-full feeling is gone, and all 90 VE is permanent progress toward his next level.
 
 ### The Pressure Gauge
 
 Every character has a **VE Tolerance** representing the raw energy their body and spirit can hold before refinement:
 
-> **VE Tolerance = (Raw FOR + Raw HRT) / 2 × 10**
+> **VE Tolerance = 80 VE at F-Grade**, and ×10 for each Grade above: 800 at E-Grade, 8,000 at D-Grade.
 
-Body and will together: the frame contains the charge and the Heart refuses to let go of it. Heart is the stat that decides how long a character can keep hunting between rests, which makes it the most-consulted number in this chapter.
+Every character of a Grade holds the same amount. No Attribute raises it and no Attribute speeds the refining; what differs between characters is what they do with a full tank.
 
-Joe, with FOR 7 and HRT 5, holds 60.
+VE accumulates automatically after combat and from other sources. As long as stored VE remains at or below Tolerance, there is no penalty. Once VE exceeds Tolerance, the character enters **Saturation:**
 
-Tolerance is measured when the body rebuilds. Re-derive it at the first full hour of Consolidation, the same moment Aether refills; between Consolidations it holds still, and Attribute gains that have not yet been through a Consolidation are not reflected in it. Recompute the three Saturation thresholds below at the same time.
+- **Mild Saturation (past 80, up to 160):** −10 to all rolls.
+- **Heavy Saturation (past 160, up to 240):** −25 to all rolls.
+- **Critical Saturation (past 240):** Heavy Saturation penalties continue, and the body starts fighting to vent. At the end of each full hour spent at Critical, roll d100: the character collapses on a result of 25 or less. The threshold rises by 25 each hour (50 the second hour, 75 the third), and in the fourth hour the collapse is automatic. A collapsed character drops into involuntary Consolidation on the spot: defenseless, processing at the normal rate, unwakeable until stored VE falls below Tolerance. The collapse also costs 1 temporary Raw point of FOR or POW (player's choice), which returns after the character's next full clean Consolidation.
 
-VE accumulates automatically after combat and from other sources. As long as stored VE remains below Tolerance, there is no penalty. Once VE exceeds Tolerance, the character enters **Saturation:**
+A level's worth of VE, 120, is Mild. Two levels, 240, sits on the Critical line, and the next kill after that starts the clock.
 
-- **Mild Saturation (up to twice Tolerance):** −10 to all rolls.
-- **Heavy Saturation (up to three times Tolerance):** −25 to all rolls.
-- **Critical Saturation (past three times Tolerance):** Heavy Saturation penalties continue, and the body starts fighting to vent. At the end of each full hour spent at Critical, roll d100: the character collapses on a result of 25 or less. The threshold rises by 25 each hour (50 the second hour, 75 the third), and in the fourth hour the collapse is automatic. A collapsed character drops into involuntary Consolidation on the spot: defenseless, processing at the normal rate, unwakeable until stored VE falls below Tolerance. The collapse also costs 1 temporary Raw point of FOR or POW (player's choice), which returns after the character's next full clean Consolidation.
+**A cross-Grade windfall is a collapse.** An E-Grade peer kill pays an F-Grade character 100 VE and an E-Grade Peak monster pays 500, far past Critical. A character who takes one is on the collapse clock from that moment, and at 20 VE an hour the body needs the better part of a day to bring 500 VE back under Tolerance. Several levels from one great kill, and a day unconscious paying for them, is the genre's oldest beat; let it happen.
 
 **GM Note on Saturation:** The System does not announce band thresholds to the character. Narrate symptoms instead: skin feels hot and prickly, vision tunnels at the edges, muscles cramp, something under the breastbone flexes in ways that feel wrong. Let players learn the pattern by experience. This generates rich Hidden Vector signal: who pushes into the red zone chasing one more kill? (Hunger.) Who pulls back at the first warning? (Restraint.)
 
@@ -36,9 +36,9 @@ VE accumulates automatically after combat and from other sources. As long as sto
 
 To process VE, a character declares a **Consolidation** rest and states what they are reaching for: process everything, process until the next level, or process a specific amount. The goal matters because the GM may interrupt for narrative reasons, and the player should know what they were reaching for.
 
-One rule covers the clock: **every hour of Consolidation clears one fifth of your Tolerance from stored VE and restores one fifth of your Max HP.** Both run in fifths, so a full tank and a full set of wounds both close in five hours, and a night's rest covers them with margin. The minimum is 1 hour of in-game time, however little VE needs processing.
+One rule covers the clock: **every hour of Consolidation refines 20 VE at F-Grade and restores one fifth of your Max HP.** The refining rate is ×10 per Grade (200 at E-Grade) and the same for every character of the Grade, so a resting party shares one clock. A full Tolerance clears in four hours, a level's worth of VE in six, and a full set of wounds in five; a night's rest covers all three with margin. The minimum is 1 hour of in-game time, however little VE needs processing.
 
-A character carrying more than a full Tolerance takes proportionally longer: five hours clears one Tolerance, so someone holding twice that needs ten, and a body at Critical can be down most of a day.
+A character carrying more takes proportionally longer: someone holding 160 needs eight hours, and a body at Critical can be down most of a day.
 
 During the rest:
 
@@ -48,7 +48,7 @@ During the rest:
 - **Interruption:** The character keeps every completed hour of processing and recovery. Unprocessed VE stays in the tank and remains subject to Saturation.
 - **Defenselessness:** A consolidating character is completely defenseless. A consolidating character who is attacked or roused wakes at once, keeping completed hours per the interruption rule; only the collapse at Critical Saturation is unwakeable. The whole party may consolidate at once as a calculated risk; posting a guard means that character is not consolidating.
 
-**Environmental Modifiers:** Consolidating in a high-energy-density region clears one quarter of Tolerance per hour instead of one fifth: a full tank in four hours. Consolidating while holding a Principle-affinity treasure grants a small bonus to Insight Points for that Principle.
+**Environmental Modifiers:** Consolidating in a high-energy-density region refines 40 VE per hour instead of 20: a full Tolerance in two hours, a level in three. Consolidating while holding a Principle-affinity treasure grants a small bonus to Insight Points for that Principle.
 
 **Battle Memory Meditation:** Characters holding a Battle Memory Card process it during Consolidation. The System returns a cryptic vision and awards Insight Points; see The Principle System, and the vision procedure for every run mode in The System AI chapter.
 
@@ -56,9 +56,9 @@ During the rest:
 
 Levels are numbered continuously across Grades: **Levels 1–25 are F-Grade, 26–50 are E-Grade, 51–75 are D-Grade**, and so on. Each Grade spans 25 levels.
 
-> **A level costs 125 VE at F-Grade**, and ×10 for each Grade above: 1,250 at E-Grade, 12,500 at D-Grade.
+> **A level costs 120 VE at F-Grade**, and ×10 for each Grade above: 1,200 at E-Grade, 12,000 at D-Grade.
 
-Every level inside a Grade costs the same. Twelve and a half peer kills carry a character from one F-Grade level to the next, and reaching the F-Grade cap at Level 25 takes 3,000 VE in all.
+Every level inside a Grade costs the same. Twelve peer kills carry a character from one F-Grade level to the next, and reaching the F-Grade cap at Level 25 takes 2,880 VE in all.
 
 **Grade Breakthrough:** At Level 25 the character cannot advance through ordinary Consolidation. Entering E-Grade (and Level 26) requires a **Grade Breakthrough**, a deliberate ritual with its own chapter. It is **not** an automatic level-up. The E-Grade span costs ×10 per level.
 
@@ -91,11 +91,11 @@ A **Peer Kill** is worth **10 VE** at F-Grade, and ×10 for each Grade above. Th
 | Severe | Peer Kill × 3 | 30 |
 | Peak | Peer Kill × 5 | 50 |
 
-Twelve and a half peer kills, or two and a half Peak kills, carry a character a level.
+Twelve peer kills, or two Peak kills and a Hard one, carry a character a level.
 
 The transfer is visible: when something dies, its unrefined VE leaves the body as a brief drift of pale motes toward those who earned the kill.
 
-Cross-Grade kills multiply the award: read the victim's tier within its own Grade, take that multiple of your own Peer Kill, then multiply by ×10 for every Grade the victim sits above you. For an F-Grade character, an E-Grade peer-tier enemy pays 100 VE, most of a level, and an E-Grade Peak monster pays 500, four levels on the spot. A successful punch-up against a higher-Grade opponent is one of the fastest ways to leap forward in progression.
+Cross-Grade kills multiply the award: read the victim's tier within its own Grade, take that multiple of your own Peer Kill, then multiply by ×10 for every Grade the victim sits above you. For an F-Grade character, an E-Grade peer-tier enemy pays 100 VE, most of a level, and an E-Grade Peak monster pays 500, four levels on the spot and a collapse with them ("The Pressure Gauge", above). A successful punch-up against a higher-Grade opponent is one of the fastest ways to leap forward in progression.
 
 The kill is priced by what died, whatever the method: a trap, an ambush, or a plan that ended the fight before it started pays the same as an open brawl. How the kill happened is logged by the Hidden Vector Engine; it is never priced. A defeated boss-tier encounter (rare, named, or designed for the moment) may be worth 1.5× the listed amount at the GM's discretion.
 
@@ -114,7 +114,7 @@ The kill is priced by what died, whatever the method: a trap, an ambush, or a pl
 
 ### Pacing Reference (F-Grade)
 
-L1 → L2 requires 125 VE: twelve or thirteen Moderate kills, twenty-five Easy ones, or a mix of hunting, quests, and survival over a session or two. Reaching Level 10 requires 1,125 VE, across roughly 15–20 sessions of moderate-pace play. Reaching the F-Grade cap at Level 25 requires 3,000 VE.
+L1 → L2 requires 120 VE: twelve Moderate kills, twenty-four Easy ones, or a mix of hunting, quests, and survival over a session or two. Reaching Level 10 requires 1,080 VE, across roughly 15–20 sessions of moderate-pace play. Reaching the F-Grade cap at Level 25 requires 2,880 VE.
 
 Tracking every award as it lands is optional. Running totals between sessions, awarded in batches at rest points, keep the bookkeeping off the table for GMs who want it off; GMs who enjoy calling each number as it drops are not doing anything wrong.
 
@@ -124,11 +124,9 @@ Survival and quest completion guarantee baseline progression. Combat VE and envi
 
 ### The Cost of a Level
 
-> **VE to reach the next level = 125 × Grade Multiplier**
+> **VE to reach the next level = 120 × Grade Multiplier**
 
 The Grade Multiplier is ×1 for F, ×10 for E, ×100 for D, the same multiplier used everywhere else in the system. Class features, rare titles, or specific treasures may tweak it for individual characters, but the baseline applies to everyone.
-
-The exact processing rate behind the one-fifth rule is (Raw FOR + Raw HRT) VE per hour, which equals one fifth of Tolerance by construction; the fifths phrasing is the same rule with no per-character arithmetic.
 
 On paper the pace is flat across Grades: rewards and costs both scale ×10, so the same number of peer kills spans a level at every Grade. In play, later Grades run slower anyway. Sub-Grade kills pay next to nothing, peer prey is rarer and defends better territory, and every peer fight is genuinely dangerous. Expect each Grade to take more sessions than the one before without touching the numbers.
 
