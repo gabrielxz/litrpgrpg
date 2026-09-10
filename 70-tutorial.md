@@ -1268,7 +1268,7 @@ Four samples calibrated to common tutorial archetypes. Customize the content to 
 >
 > Axes and Hammers: 3 Marks. **Seasoned.**
 >
-> Title granted: **First Blood** (Achievement).
+> Title granted: **Pack-Breaker** (Achievement, three kills in one fight).
 > Hidden Achievement: **Cornerless** (survived a Clash at a quarter of Max HP or less).
 >
 > Hidden Quest revealed: *"Ten-Slayer." Progress: 4/10.*
