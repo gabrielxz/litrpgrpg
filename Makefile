@@ -54,8 +54,9 @@ EPUB_OUT   := $(BUILD_DIR)/$(PROJECT)-$(TIMESTAMP).epub
 # does not overlay text on the cover image, hence the bake.
 COVER_BASE   := assets/cover.png
 COVER_TITLED := $(BUILD_DIR)/cover_titled.png
-TITLE_FONT   := /usr/share/texmf-dist/fonts/truetype/ndiscovered/cinzel/CinzelDecorative-Black.ttf
-BYLINE_FONT  := /usr/share/texmf-dist/fonts/opentype/public/ebgaramond/EBGaramond-Italic.otf
+# Resolved through kpsewhich so the TeX tree's layout (Arch, Debian, ...) does not matter.
+TITLE_FONT   := $(shell kpsewhich CinzelDecorative-Black.ttf)
+BYLINE_FONT  := $(shell kpsewhich EBGaramond-Italic.otf)
 
 .PHONY: all pdf epub kit clean
 

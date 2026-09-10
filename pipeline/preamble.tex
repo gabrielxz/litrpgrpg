@@ -4,13 +4,12 @@
 % =====================================================
 
 % -----------------------------------------------------
-% Fonts (Path= into TeX Live's bundled fonts)
+% Fonts (TeX Live's bundled fonts, found by file name through kpathsea)
 % -----------------------------------------------------
 \usepackage{fontspec}
 
 % Body: EB Garamond — classic book serif
 \setmainfont{EBGaramond}[
-  Path=/usr/share/texmf-dist/fonts/opentype/public/ebgaramond/,
   Extension=.otf,
   UprightFont=*-Regular,
   ItalicFont=*-Italic,
@@ -20,7 +19,6 @@
 
 % Sans: Alegreya Sans — used by some elements
 \setsansfont{Alegreya}[
-  Path=/usr/share/texmf-dist/fonts/opentype/huerta/alegreya/,
   Extension=.otf,
   UprightFont=*-Regular,
   ItalicFont=*-Italic,
@@ -28,12 +26,18 @@
   BoldItalicFont=*-BoldItalic
 ]
 
-% Monospace: JetBrains Mono (fontconfig finds it)
-\setmonofont{JetBrains Mono}[Scale=0.82]
+% Monospace: JetBrains Mono, from the TeX tree
+\setmonofont{JetBrainsMono}[
+  Extension=.otf,
+  UprightFont=*-Regular,
+  ItalicFont=*-Italic,
+  BoldFont=*-Bold,
+  BoldItalicFont=*-BoldItalic,
+  Scale=0.82
+]
 
 % Heading font: Alegreya Black — display serif with weight
 \newfontfamily\headingfont{Alegreya}[
-  Path=/usr/share/texmf-dist/fonts/opentype/huerta/alegreya/,
   Extension=.otf,
   UprightFont=*-Black,
   ItalicFont=*-BlackItalic
