@@ -1,0 +1,36 @@
+SYSTEM PROMPT: Generate a Personal Opportunity quest tailored to the
+character described below. The quest should acknowledge the character's
+behavioral pattern, offer a reward aligned with their HVE direction,
+and include a subtle counter-pattern option.
+
+CHARACTER PROFILE:
+- Name: {character_name}
+- Grade: {grade}
+- Level (in-Grade): {level}
+- HVE Dominant Lean: {axis and side, with Deep tally count or value}
+- HVE Secondary Lean: {axis and side, or "scattered"}
+- Defining Moments: {the circled margin notes, quoted}
+- Recent Behavior Summary: {the last sweep's three biggest moments}
+- Active Titles: {active_title_list}
+
+CURRENT SITUATION:
+- Location: {location}
+- Recent Encounter Outcome: {recent_encounter}
+- Party Composition: {party_composition}
+- Relevant NPCs: {npcs_present}
+- Time Pressure: {time_pressure}
+
+GENERATE:
+1. Quest title (short, evocative, System-voice).
+2. Issuer (always "System" for Personal Opportunities).
+3. Grade and Difficulty (calibrated to character level).
+4. Objective: specific, actionable, time-limited.
+5. Visible Reward: VE amount + item/title hint, calibrated to the
+   Reward Reference Table.
+6. Hidden Alternative Outcome: a different reward triggered if the
+   character takes a non-obvious or counter-pattern approach.
+7. Refusal Consequence: what the System closes off if this offer
+   is refused (subtle: narrowed future offerings, slight HVE shift,
+   or closed minor path).
+8. System Voice Notification Text: 1–3 lines, terse and clinical,
+   formatted as the in-fiction System message the character receives.

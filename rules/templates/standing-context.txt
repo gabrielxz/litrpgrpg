@@ -1,0 +1,6 @@
+Campaign: [one-paragraph premise and current situation]
+Per character: name, level, Grade, stats (Raw), titles,
+Principles and tiers.
+Behavioral profile per character: one line per HVE axis (Deep Vector),
+plus their two or three circled Defining moments.
+Last session: [three-sentence summary]

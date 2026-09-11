@@ -95,6 +95,7 @@ The character sees the number. What the System is forging from the number, it ke
 
 **Earning IP.** IP accrues only from experiences aligned with the Principle (before crystallization, with its family), and nearly all of it is earned under pressure. A character cannot grind generic experience into Sharpness insight: they must cut, be cut, study cutting, survive the edge.
 
+<!-- rules:table ip-sources -->
 | **Source** | **IP Awarded** |
 |---|---|
 | Battle Memory meditation | 1–3, by the memory's intensity |
@@ -102,6 +103,7 @@ The character sees the number. What the System is forging from the number, it ke
 | Consolidation vision | 1 |
 | Surviving a life-or-death situation through the Principle | 2 |
 | Any other Principle-aligned experience, GM's call | 1–3 |
+<!-- /rules:table -->
 
 **Consolidation visions are rationed.** A vision arrives only at a Consolidation that follows meaningful Principle-aligned experience, and never more than once per session. Rest alone produces nothing to see.
 
@@ -136,6 +138,7 @@ A slot, once filled, holds its Principle for life. The Principle can change shap
 
 ### The Progression Ladder
 
+<!-- rules:table principle-ladder -->
 | **Tier** | **Cumulative IP** | **Grants** |
 |---|---|---|
 | Initial Insight | 3 | The Principle crystallizes and is named; minor passive (e.g., +5 to defensive Clashes against fire) |
@@ -143,6 +146,7 @@ A slot, once filled, holds its Principle for life. The Principle can change shap
 | Early Fragment | 25 | Second Application; passive doubles |
 | Mid Fragment | 50 | Infusion: the Principle rides your ordinary actions at no Beat or Aether cost |
 | Peak Fragment | 100 | Domain: a zone where your Principle is briefly law |
+<!-- /rules:table -->
 
 **The Domain gate.** A Domain requires a **D-Grade body**. The insight can be complete at any Grade: a character may hold 100 IP and a fully formed Peak Fragment understanding while still E-Grade. The body is the limit; holding open a zone of law takes a frame rebuilt twice by Breakthrough. IP accrues normally past 100, and the Domain Distillation waits for D-Grade.
 
@@ -197,12 +201,14 @@ Every Application is an active technique costing 1 Beat plus Aether. Two numbers
 
 **Cost is set by the tier that granted it, and never changes.**
 
+<!-- rules:table application-costs -->
 | **Granted at** | **Aether Cost** |
 |---|---|
 | Seed | 10 |
 | Early Fragment | 15 |
 | Infusion (Mid Fragment) | none |
 | Domain (Peak Fragment) | 3,000 + 500 per round held |
+<!-- /rules:table -->
 
 That is the whole price list. It does not read off the character's Grade, so a prodigy who reaches Early Fragment while still F-Grade pays 15 like everyone else, and a Seed Application earned in the first month costs 10 for the rest of a life. A Domain sits at D-Grade pricing because a D-Grade body is required to form one at all.
 

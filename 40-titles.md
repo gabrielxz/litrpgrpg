@@ -87,6 +87,7 @@ Every bonus is a flat number; nothing is expressed as a percentage. Conditional 
 
 The most common bonus shape, and the only shape an Achievement title grants. Multiple flat bonuses to the same stat sum directly, and a flat bonus is applied to the sheet once, the day it lands.
 
+<!-- rules:table bonus-magnitudes -->
 | **Title Class** | **F-Grade Bonus** | **E-Grade Bonus** | **D-Grade Bonus** |
 |---|---|---|---|
 | Common Achievement | +1 to +2 to one stat | +10 to +20 | +100 to +200 |
@@ -95,6 +96,7 @@ The most common bonus shape, and the only shape an Achievement title grants. Mul
 | Hidden Achievement | +3 to +5 to one stat | +30 to +50 | ×100 |
 | Bestowed (Common) | +2 to +5 across thematically appropriate stats | +20 to +50 | ×100 |
 | Bestowed (Major) | +5 to +10 across multiple stats | +50 to +100 | ×100 |
+<!-- /rules:table -->
 
 **Example F-Grade stack ceiling:** A focused player with 12 active titles by F-Cap might accumulate roughly +25 to +40 stat points distributed across their key stats, a meaningful slice of the roughly 200 points an F-cap character has gathered from every source. Strong, but not game-breaking. The same player at E-Cap, having evolved or replaced most of those titles, holds an equivalent share at the E-Grade scale.
 
@@ -150,6 +152,7 @@ Twenty Achievement titles with their triggers, so the GM recognizes a threshold 
 
 **Slaughter**
 
+<!-- rules:table catalog-slaughter -->
 | **Title** | **Trigger** | **Bonus** |
 |---|---|---|
 | Ten-Slayer | Tenth confirmed kill | +1 STR |
@@ -157,9 +160,11 @@ Twenty Achievement titles with their triggers, so the GM recognizes a threshold 
 | First Blood | Drew first blood in ten separate fights | +1 DEX |
 | Pack-Breaker | Killed three foes in a single fight | +1 STR |
 | Giant-Feller | Killed a Severe or Peak enemy | +2 FOR |
+<!-- /rules:table -->
 
 **Survival**
 
+<!-- rules:table catalog-survival -->
 | **Title** | **Trigger** | **Bonus** |
 |---|---|---|
 | Stand | Ended five separate fights below half HP, still standing | +1 FOR |
@@ -167,9 +172,11 @@ Twenty Achievement titles with their triggers, so the GM recognizes a threshold 
 | Week One | Survived the first seven days after Integration | +1 to one stat, player's choice |
 | Empty-Handed | Won a fight with no weapon and no Aether spent | +1 STR |
 | Hundredfoot | Survived a climb or fall of a hundred feet | +1 DEX |
+<!-- /rules:table -->
 
 **Craft and Ground**
 
+<!-- rules:table catalog-craft -->
 | **Title** | **Trigger** | **Bonus** |
 |---|---|---|
 | Pillwright | Crafted or refined ten consumables | +1 PER |
@@ -177,9 +184,11 @@ Twenty Achievement titles with their triggers, so the GM recognizes a threshold 
 | Tinker | Repaired or jury-rigged five things mid-crisis | +1 DEX |
 | First Through the Gate | First of the party into a hostile site, ten times | +1 DEX |
 | Pathfinder | Led the party through unmapped ground five times | +1 PER |
+<!-- /rules:table -->
 
 **Word and Bond**
 
+<!-- rules:table catalog-word -->
 | **Title** | **Trigger** | **Bonus** |
 |---|---|---|
 | Vow-Keeper | Fulfilled three sworn oaths | +1 HRT |
@@ -187,6 +196,7 @@ Twenty Achievement titles with their triggers, so the GM recognizes a threshold 
 | Unseen | Crossed ten guarded thresholds unseen | +1 DEX |
 | Peacemaker | Ended three fights with words after weapons were out | +1 CHA |
 | Deep Breather | Completed twenty Consolidations | +1 HRT |
+<!-- /rules:table -->
 
 Where a catalog title also appears in a sample stack later in this chapter, the trigger and bonus here are the canonical ones.
 
@@ -228,6 +238,7 @@ The four archetypes from the Hidden Vector Engine chapter illustrate magnitude a
 
 ### The Apex Predator (Force + Hunger + Will + Freedom)
 
+<!-- rules:table stack-apex -->
 | **Title** | **Class** | **Effect** |
 |---|---|---|
 | **Ten-Slayer** | Achievement | +1 STR. Triggered by tenth confirmed kill. |
@@ -235,9 +246,11 @@ The four archetypes from the Hidden Vector Engine chapter illustrate magnitude a
 | **The Hungering Edge** | HVE-Resonant | +3 STR, +2 DEX. Once per encounter, when you reduce a foe to 0 HP, gain 1 Beat next turn. |
 | **Cornerless** | Hidden Achievement | At a quarter of Max HP or less, +5 STR and +5 DEX. Triggered by surviving an encounter that the System assessed as 10× over-Grade. |
 | **Marked by the Wild** | Bestowed (Beast) | Predators recognize you as kin or rival: +5 to Clashes against beasts fleeing you, −5 on parley with hostile fauna. Granted by killing the alpha of a wild pack. |
+<!-- /rules:table -->
 
 ### The System Architect (Method + Restraint + Accord + Control)
 
+<!-- rules:table stack-architect -->
 | **Title** | **Class** | **Effect** |
 |---|---|---|
 | **Pillwright** | Achievement | +1 PER. Triggered by crafting or refining ten consumables. |
@@ -245,9 +258,11 @@ The four archetypes from the Hidden Vector Engine chapter illustrate magnitude a
 | **Quiet Architect** | HVE-Resonant | +3 PER, +2 HRT. Once per encounter, when an ally executes a plan you proposed, they gain +5 to that Clash. |
 | **The One Who Did Not Strike First** | Hidden Achievement | Once per encounter, when an enemy attacks you first in a Clash, gain +10 to that defensive Clash. Triggered by completing three consecutive encounters without making the first offensive move. |
 | **Witnessed by the Mountain** | Bestowed (Place) | +5 to all Clashes within terrain matching the witnessing site. Granted by completing a Consolidation at a Principle-resonant location. |
+<!-- /rules:table -->
 
 ### The Iron Adjudicator (Force + Restraint + Will + Control)
 
+<!-- rules:table stack-adjudicator -->
 | **Title** | **Class** | **Effect** |
 |---|---|---|
 | **Vow-Keeper** | Achievement | +1 HRT. Triggered by fulfilling three sworn oaths. |
@@ -255,9 +270,11 @@ The four archetypes from the Hidden Vector Engine chapter illustrate magnitude a
 | **The Iron Verdict** | HVE-Resonant | +3 FOR, +2 HRT. Once per encounter, when an ally is targeted in your Zone, you may interpose; the attack rerolls against you instead. |
 | **The Line That Did Not Move** | Hidden Achievement | +5 FOR. Triggered by holding a position alone against three or more attackers without retreating, for three consecutive rounds. |
 | **Hand of the Iron Court** | Bestowed (Faction) | Faction-granted: bureaucratic recognition, access to Iron Court resources, +5 to social Clashes invoking lawful authority. |
+<!-- /rules:table -->
 
 ### The Phantom Thief (Method + Hunger + Accord + Freedom)
 
+<!-- rules:table stack-thief -->
 | **Title** | **Class** | **Effect** |
 |---|---|---|
 | **Lockbreaker** | Achievement | +1 PER. Triggered by picking five non-trivial locks. |
@@ -265,6 +282,7 @@ The four archetypes from the Hidden Vector Engine chapter illustrate magnitude a
 | **The Severed Tether** | HVE-Resonant | +3 DEX, +2 PER. Once per encounter, when you would be detected by an enemy, the detection fails. |
 | **The One Who Walked Through** | Hidden Achievement | Once per Consolidation, ignore one closed door, lock, or non-magical barrier. Triggered by entering and exiting three sealed locations without leaving evidence. |
 | **The Open Hand** | Bestowed (Network) | Granted by an underworld figure. Access to black-market contacts; +5 to negotiation Clashes with criminal NPCs; merchants of the network offer favorable prices. |
+<!-- /rules:table -->
 
 ---
 

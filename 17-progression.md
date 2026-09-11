@@ -8,7 +8,7 @@ Characters grow on a single loop: fight, quest, and survive to accumulate Volati
 
 Every kill, completed quest, survived ordeal, and absorbed treasure adds VE to the character's stored pool. Stored VE does nothing on its own; it must be processed during a **Consolidation** rest. When a character's processed VE reaches the cost of the next level (Cultivation, "Leveling: The Cost of a Level"), they level up on the spot, mid-rest. Levels arrive only at Consolidation: a character can end a battle carrying three levels' worth of unprocessed VE and still be the level they woke up as until they sit down and refine it.
 
-Levels are numbered continuously across Grades: each Grade spans 25 of them, so Levels 1–25 are F-Grade, 26–50 are E-Grade, and so on. Level thresholds grow on an exponential curve, and VE awards grow on the same curve, so the pace of leveling holds steady across a Grade. At the cap, leveling stops; only a Grade Breakthrough (its own chapter) opens the next span.
+Levels are numbered continuously across Grades: each Grade spans 25 of them, so Levels 1–25 are F-Grade, 26–50 are E-Grade, and so on. Every level inside a Grade costs the same, and awards are priced against the character who earned them, so the pace of leveling holds steady across a Grade. At the cap, leveling stops; only a Grade Breakthrough (its own chapter) opens the next span.
 
 ## Leveling Up
 
@@ -27,6 +27,7 @@ At higher Grades, the budget scales with Grade magnitude (×10 at E, ×100 at D,
 
 At each level-up during the pre-class window, review what the character has done since the last level and assign the 3 System points to the stats that best match their behavior. Use the table as a guide rather than a rigid formula.
 
+<!-- rules:table behavioral-mapping -->
 | Behavior Pattern | Primary Stat | Secondary Stat |
 |---|---|---|
 | Solves problems with direct force, charges in | STR | FOR |
@@ -37,6 +38,7 @@ At each level-up during the pre-class window, review what the character has done
 | Cooperates, negotiates, builds alliances | CHA | HRT |
 | Imposes structure, creates systems, controls variables | PER | POW |
 | Breaks rules, improvises, embraces chaos | DEX | POW |
+<!-- /rules:table -->
 
 **How to read the table:** If a character spent the last level charging into fights and solving problems through brute force, the GM puts 2 points into STR and 1 into FOR (or all 3 into STR if the behavior was extreme and unambiguous). A character who planned every engagement and used terrain might get 2 PER and 1 DEX. Mixed behavior? Split accordingly; 1 STR, 1 PER, 1 CHA is a perfectly valid assignment for a character who fought, planned, and negotiated in equal measure.
 
@@ -46,12 +48,14 @@ The GM's rule: **reward what the character actually did rather than what the pla
 
 By Level 9, a character has accumulated:
 
+<!-- rules:table nine-levels -->
 | Source | Points |
 |---|---|
 | Point buy (creation) | 40 |
 | System-assigned (3 × 8 levels) | 24 |
 | Free allocation (2 × 8 levels) | 16 |
 | **Total at Level 9** | **80** |
+<!-- /rules:table -->
 
 A character who acted consistently toward one behavioral archetype will have a clear stat skew heading into class selection. A character who played eclectically will be more balanced. Both paths are valid, but the class options offered at Level 10 will differ dramatically between them.
 

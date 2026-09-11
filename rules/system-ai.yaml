@@ -1,0 +1,55 @@
+# The System AI: a role, performed by the GM alone, the GM with a general assistant, or the companion app.
+# source: 45-system-ai.md
+
+run_modes:
+  - {name: Unplugged,         description: "Pencil, paper, and the book. The GM performs every System function by hand. The baseline the book is written against."}
+  - {name: AI-Assisted,       description: "The GM runs the table with nothing to track, does the session-end sweep, and uses any conversational AI between sessions for the generative work."}
+  - {name: The Companion App, description: "Software that listens to the session, transcribes it, drafts HVE log entries for the GM's review, and runs the generation functions live. Recording requires every player's explicit consent."}
+mode_letters: none     # the book names the modes; it never letters them
+division_of_labor: the System AI proposes; the GM decides; nothing enters play unreviewed
+unplugged_floor: nothing in the book requires software
+
+functions:
+  - name: Class Generation (Level 10)
+    inputs: [HVE profile (Deep reads and defining moments), stats, favored weapons and tactics, Principles and affinities, titles held]
+    outputs: three class options (rarity Common to Epic), each with a name, a one-line identity, a stat profile (the 3 fixed points per level), and one Signature Skill with Beat and Aether costs
+    rarities: [Common, Uncommon, Rare, Epic]
+    signature_skill_aether_at_f: [10, 15]
+    unplugged: one class that amplifies the dominant pattern, one that formalizes the secondary pattern, one hybrid; stat profiles from Behavioral Stat Mapping; bonuses priced against the Modifier Budget
+    template: templates/class-generation.txt
+  - name: Personal Opportunities
+    template: templates/personal-opportunity.txt
+    unplugged: use the template as a worksheet
+  - name: Battle Memory Visions
+    inputs: [the memory's context, the player's meditation description]
+    outputs: a cryptic vision in the System's voice and an IP award (1 to 3)
+    unplugged: three images (the moment stripped of one load-bearing detail; the Principle in a pure or alien form; one image that overreaches or misleads)
+  - name: Hidden Achievements and Titles
+    unplugged: invent within the four categories; criteria never shown to players in any mode
+  - name: Loot
+    inputs: [enemy difficulty tier, circumstances of the kill]
+    unplugged: the table below; bosses and named enemies drop one step up
+  - name: Skill Synthesis
+    inputs: [two or more source effects]
+    outputs: one merged skill, priced
+    unplugged: combine one property from each source, price against the Modifier Budget, Aether from the origin-Grade table, attach one limitation if the merged bonus lands above +20
+  - name: Identify and Inspect
+    unplugged: GM narrates; visibility per What Can Be Seen
+
+loot_table:
+  - {tier: Trivial,  drop: "Nothing, or salvage on a memorable kill"}
+  - {tier: Easy,     drop: "50% chance of one minor consumable"}
+  - {tier: Moderate, drop: "One consumable"}
+  - {tier: Hard,     drop: "One consumable, plus a 25% chance of a skill shard or equipment"}
+  - {tier: Severe,   drop: "One meaningful item, guaranteed"}
+  - {tier: Peak,     drop: "One meaningful item plus one bespoke drop"}
+
+standing_context_template: templates/standing-context.txt
+
+system_goals: [Observation, Selection, Cultivation of outliers]
+voice:
+  rules: [states; never persuades, apologizes, or encourages; short declaratives; precise numbers; no pronouns for itself; where a human would soften, the System specifies]
+  examples:
+    - "[Threat neutralized. Volatile Energy acquired: 15.]"
+    - "[Request denied. Insufficient authority.]"
+    - "[Vital coherence: fraying. Estimated thread loss: 3 rounds.]"

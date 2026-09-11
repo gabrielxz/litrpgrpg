@@ -73,11 +73,13 @@ One number at the top of the die. On a Clash it explodes (combat Clashes, Will S
 
 **Proficiencies:** three at creation, all **Trained**.
 
+<!-- rules:table quickref-proficiency -->
 | Tier | Effect |
 |---|---|
 | Trained | +5 to Clashes and skill checks in the domain. Routine Mastery (auto-succeed Trivial and Easy). Specialist Gating access. |
 | Seasoned | +10 in place of the +5. **3 Marks.** |
 | Master | +10, and once on your turn your first action using it costs no Beat. **10 Marks**, and an E-Grade body. |
+<!-- /rules:table -->
 
 Weapons carry no bonus of their own; the bonus is the wielder's tier. Untrained is +0. **3 Marks in a domain you have no Proficiency in:** the System grants it at Trained, spending those Marks.
 
@@ -95,6 +97,7 @@ Weapons carry no bonus of their own; the bonus is the wielder's tier. Untrained 
 
 ## Grade Reference Card
 
+<!-- rules:table quickref-resistance -->
 | **Difficulty** | **Resistance** |
 |---|---|
 | Trivial | 40 |
@@ -103,22 +106,27 @@ Weapons carry no bonus of their own; the bonus is the wielder's tier. Untrained 
 | Hard | 115 |
 | Severe | 140 |
 | Peak | 165 |
+<!-- /rules:table -->
 
 Resistance is read straight off the card for same-Grade encounters. For Cross-Grade, apply the +100/Grade adjustment to whichever side is higher (see above).
 
+<!-- rules:table quickref-grades -->
 | **Grade** | **Raw Stat Range** | **Force Range** | **Damage Multiplier** |
 |---|---|---|---|
 | F-Grade | 1–99 | 1–99 | ×1 |
 | E-Grade | 100–999 | 10–99 | ×10 |
 | D-Grade | 1,000–9,999 | 10–99 | ×100 |
 | C-Grade | 10,000–99,999 | 10–99 | ×1,000 |
+<!-- /rules:table -->
 
+<!-- rules:table quickref-ve -->
 | **VE at F-Grade** | **Amount** |
 |---|---|
 | A level | 120 |
 | Kill, by tier: Trivial / Easy / Moderate / Hard / Severe / Peak | 2 / 5 / 10 / 20 / 30 / 50 |
 | Session survival | 5 |
 | Cross-Grade kill | the victim's tier read at its own Grade, ×10 per Grade above the killer |
+<!-- /rules:table -->
 
 All VE values scale ×10 per Grade.
 

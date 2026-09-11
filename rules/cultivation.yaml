@@ -1,0 +1,76 @@
+# Cultivation: the VE tank, Saturation, Consolidation, the level cost, awards.
+# source: 25-cultivation.md
+# All VE values are F-Grade and scale ×10 per Grade (grades.yaml).
+
+tolerance:
+  base: 80                       # every character of the Grade holds the same; no Attribute term
+  scales_with_grade: true
+
+saturation:
+  # Bands are multiples of Tolerance. "past" means strictly greater than.
+  bands:
+    - name: Mild
+      past_multiple: 1           # past 80, up to 160 at F
+      penalty: -10
+    - name: Heavy
+      past_multiple: 2           # past 160, up to 240 at F
+      penalty: -25
+    - name: Critical
+      past_multiple: 3           # past 240 at F
+      penalty: -25
+      collapse_clock: true
+  collapse_clock:
+    hourly_roll: d100
+    collapse_at_or_below: [25, 50, 75]   # end of hours 1, 2, 3 at Critical
+    automatic_hour: 4
+    cost: 1 temporary Raw point of FOR or POW, player's choice, returned after the next full clean Consolidation
+    wakes_when: stored VE falls below Tolerance
+  gm_narrates_symptoms: true     # the System does not announce band thresholds
+
+consolidation:
+  refine_per_hour: 20            # F-Grade; ×10 per Grade; the same for every character of the Grade
+  refine_per_hour_high_density: 40
+  hp_restored_per_hour: one fifth of Max HP
+  minimum_hours: 1
+  aether_refills_at_full_hour: 1
+  artifacts_recharge_at_full_hour: 1
+  interruption: keeps every completed hour
+  defenseless: true
+  levels_land_mid_rest: true     # when refined VE reaches the next level's cost
+  battle_memory_meditation: during Consolidation
+
+level_cost:
+  base: 120                      # F-Grade, every level in the Grade; ×10 per Grade
+  scales_with_grade: true
+  levels_per_grade: 25
+  f_grade_cap_total: 2880        # 24 levels × 120
+  f_grade_level_10_total: 1080   # 9 levels × 120
+  at_cap: VE keeps accumulating and counts in full toward Breakthrough Ignition
+
+awards:
+  peer_kill: 10                  # one Moderate enemy of the character's own Grade
+  kill_tiers:
+    - {difficulty: Trivial,  multiple: 0.2, ve: 2}
+    - {difficulty: Easy,     multiple: 0.5, ve: 5}
+    - {difficulty: Moderate, multiple: 1,   ve: 10}
+    - {difficulty: Hard,     multiple: 2,   ve: 20}
+    - {difficulty: Severe,   multiple: 3,   ve: 30}
+    - {difficulty: Peak,     multiple: 5,   ve: 50}
+  peer_kills_per_level: 12
+  cross_grade_kill: victim's tier within its own Grade × the killer's Peer Kill × 10 per Grade the victim sits above the killer
+  boss_multiplier_gm_discretion: 1.5
+  per_participant: full award to every character who meaningfully participated; nothing pooled or divided
+  session_survival: 5
+  quest_completion: GM-assigned in levels (a small errand a peer kill or two; a side quest a quarter to half a level; an arc a level or more)
+  hidden_achievement: half a level to a full level, plus a Title or narrative reward
+  ambient_absorption_per_hour:
+    Moderate: 1
+    High: 3
+    Extreme: 6
+  cores:
+    - {name: minor core, ve: 5}
+    - {name: refined core, ve: 15}
+    - {name: pristine core, ve: 40}
+
+# Items never touch the VE tank (standing constraint). An E-Grade pill in an F-Grade body does nothing.
+items_touch_ve: false

@@ -1,0 +1,198 @@
+# Worked examples from Core Mechanics (10-core-mechanics.md).
+cases:
+  - name: Force of a D-Grade STR 4,520 is 45
+    source: 10-core-mechanics.md, "Raw Power, Grade, and Force"
+    fn: force
+    args: {raw: 4520, code: D}
+    expect: 45
+  - name: Force of a D-Grade FOR 3,100 is 31
+    source: 10-core-mechanics.md, "Raw Power, Grade, and Force"
+    fn: force
+    args: {raw: 3100, code: D}
+    expect: 31
+  - name: A fresh E-Grade STR 120 reads Force 12
+    source: 10-core-mechanics.md, "Raw Power, Grade, and Force"
+    fn: force
+    args: {raw: 120, code: E}
+    expect: 12
+  - name: At F-Grade Force equals Raw (STR 80)
+    source: 10-core-mechanics.md, "Raw Power, Grade, and Force"
+    fn: force
+    args: {raw: 80, code: F}
+    expect: 80
+  - name: Lagging stat, E-Grade STR 65 is 065, Force 06
+    source: 10-core-mechanics.md, "Lagging Stats"
+    fn: force
+    args: {raw: 65, code: E}
+    expect: 6
+  - name: Lagging stat, the same STR 65 at D-Grade reads Force 0
+    source: 10-core-mechanics.md, "Lagging Stats"
+    fn: force
+    args: {raw: 65, code: D}
+    expect: 0
+  - name: FOR 75 gives 150 HP
+    source: 10-core-mechanics.md, "Attributes and Derived Stats"
+    fn: max_hp
+    args: {raw_for: 75}
+    expect: 150
+  - name: FOR 8,500 gives 17,000 HP
+    source: 10-core-mechanics.md, "Attributes and Derived Stats"
+    fn: max_hp
+    args: {raw_for: 8500}
+    expect: 17000
+  - name: An E-Grade formation master's Moderate door faces an F-Grade challenger at 190
+    source: 10-core-mechanics.md, "The Grade Reference Card"
+    fn: effective_resistance
+    args: {difficulty: Moderate, obstacle_grade: E, challenger_grade: F}
+    expect: 190
+  - name: An E-Grade peer faces the same door at 90
+    source: 10-core-mechanics.md, "The Grade Reference Card"
+    fn: effective_resistance
+    args: {difficulty: Moderate, obstacle_grade: E, challenger_grade: E}
+    expect: 90
+  - name: A Moderate F-Grade lock, DEX Force 30 rolls
+    source: 10-core-mechanics.md, "Auto-Success"
+    fn: auto_success
+    args: {force_value: 30, difficulty: Moderate}
+    expect: false
+  - name: A Moderate F-Grade lock, DEX Force 92 simply opens it
+    source: 10-core-mechanics.md, "Auto-Success"
+    fn: auto_success
+    args: {force_value: 92, difficulty: Moderate}
+    expect: true
+  - name: A challenger two Grades above a passive obstacle never rolls
+    source: 10-core-mechanics.md, "Auto-Success"
+    fn: auto_success
+    args: {force_value: 10, difficulty: Peak, obstacle_grade: F, challenger_grade: D}
+    expect: true
+  - name: Volatility threshold at F is 96
+    source: 10-core-mechanics.md, "System Volatility"
+    fn: volatility_threshold
+    args: {code: F}
+    expect: 96
+  - name: Volatility threshold at A is 91
+    source: 10-core-mechanics.md, "System Volatility"
+    fn: volatility_threshold
+    args: {code: A}
+    expect: 91
+  - name: Explosion probability at F is 5 percent
+    source: 10-core-mechanics.md, "System Volatility"
+    fn: volatility_probability_percent
+    args: {code: F}
+    expect: 5
+  - name: Explosion probability at A is 10 percent
+    source: 10-core-mechanics.md, "System Volatility"
+    fn: volatility_probability_percent
+    args: {code: A}
+    expect: 10
+  - name: Soft Failure, fail by 30
+    source: 10-core-mechanics.md, "Failure and Exceptional Success"
+    fn: skill_check_outcome
+    args: {total: 60, target: 90, natural: 40}
+    expect: soft
+  - name: Hard Failure, fail by 40
+    source: 10-core-mechanics.md, "Failure and Exceptional Success"
+    fn: skill_check_outcome
+    args: {total: 50, target: 90, natural: 30}
+    expect: hard
+  - name: Catastrophic Failure on a natural 03, whatever the margin
+    source: 10-core-mechanics.md, "Failure and Exceptional Success"
+    fn: skill_check_outcome
+    args: {total: 95, target: 90, natural: 3}
+    expect: catastrophic
+  - name: Exceptional Success on a natural 97 at F
+    source: 10-core-mechanics.md, "Failure and Exceptional Success"
+    fn: skill_check_outcome
+    args: {total: 140, target: 90, natural: 97}
+    expect: exceptional
+  - name: Exceptional on a failed total is Soft whatever the margin
+    source: 10-core-mechanics.md, "Failure and Exceptional Success"
+    fn: skill_check_outcome
+    args: {total: 105, target: 165, natural: 98}
+    expect: soft
+  - name: Yield one Beat against Margin 37, 17 gets through
+    source: 10-core-mechanics.md, "Yield"
+    fn: yield_margin
+    args: {margin: 37, beats: 1}
+    expect: 17
+  - name: Yield both Beats against Margin 37, the jaws close on nothing
+    source: 10-core-mechanics.md, "Yield"
+    fn: yield_margin
+    args: {margin: 37, beats: 2}
+    expect: 0
+  - name: Cornered, only one Beat can be given
+    source: 10-core-mechanics.md, "Yield"
+    fn: yield_margin
+    args: {margin: 37, beats: 2, cornered: true}
+    expect_error: ValueError
+    expect: null
+  - name: Yield is worth 20 Margin at D-Grade too
+    source: 10-core-mechanics.md, "Yield"
+    fn: damage_after_yield
+    args: {margin: 30, beats: 1, att_grade: D}
+    expect: 1000
+  - name: A fresh initiate with 12 Max HP taking 130 is annihilated
+    source: 10-core-mechanics.md, "Downed and Death"
+    fn: annihilated
+    args: {damage: 130, max_hp_value: 12}
+    expect: true
+  - name: A FOR 40 scout with 80 Max HP taking 130 drops, Downed and counting
+    source: 10-core-mechanics.md, "Downed and Death"
+    fn: annihilated
+    args: {damage: 130, max_hp_value: 80}
+    expect: false
+  - name: F-Peak attacks E-Initiate, Margin 20 is 20 damage
+    source: 10-core-mechanics.md, "The Grade Gap Rule"
+    fn: clash
+    args: {att_die: 50, att_force: 99, def_die: 17, def_force: 12, att_grade: F, def_grade: E}
+    expect: {attacker_total: 149, defender_total: 129, margin: 20, damage: 20}
+  - name: E-Initiate attacks F-Peak, an average exchange is 162 against 149, 130 damage
+    source: 10-core-mechanics.md, "The Grade Gap Rule"
+    fn: clash
+    args: {att_die: 50, att_force: 12, def_die: 50, def_force: 99, att_grade: E, def_grade: F}
+    expect: {attacker_total: 162, defender_total: 149, margin: 13, damage: 130}
+  - name: An E-Grade scholar (Force 06) against an F-Grade dockworker adds the +100
+    source: 10-core-mechanics.md, "Lagging Stats"
+    fn: clash
+    args: {att_die: 50, att_force: 6, def_die: 50, def_force: 80, att_grade: E, def_grade: F}
+    expect: {attacker_total: 156, defender_total: 130}
+  - name: Aura Pressure, calm presence is Hard 115
+    source: 10-core-mechanics.md, "Aura Pressure"
+    fn: aura_resistance
+    args: {flaring: false}
+    expect: 115
+  - name: Aura Pressure, flaring is Severe 140
+    source: 10-core-mechanics.md, "Aura Pressure"
+    fn: aura_resistance
+    args: {flaring: true}
+    expect: 140
+  - name: Will Save adds HRT Force and half FOR Force, fractions dropped
+    source: 10-core-mechanics.md, "Aura Pressure"
+    fn: aura_save_total
+    args: {die: 50, hrt_force: 40, for_force: 31}
+    expect: 105
+  - name: Kara has POW 6, so a Surge costs 3
+    source: 10-core-mechanics.md, "Surge"
+    fn: surge_cost
+    args: {max_aether_value: 6}
+    expect: 3
+  - name: An F-Peak caster with 99 Aether gets about ten uses of a Seed Application
+    source: "10-core-mechanics.md, 'What Things Cost' (the book says 'about ten'; nine and a remainder)"
+    fn: application_uses
+    args: {max_aether_value: 99, granted_at: Seed}
+    expect: 9
+  - name: At E-Peak with 999 Aether the same Application is ninety-nine uses
+    source: 10-core-mechanics.md, "What Things Cost"
+    fn: application_uses
+    args: {max_aether_value: 999, granted_at: Seed}
+    expect: 99
+  - name: A skill acquired fresh at E-Grade costs 100 a use
+    source: 10-core-mechanics.md, "What Things Cost"
+    fn: skill_cost_at_grade
+    args: {cost_at_f: 10, acquired_grade: E}
+    expect: 100
+  - name: Momentum roller uses the higher of DEX and PER Force
+    source: "10-core-mechanics.md, 'Initiative: The Momentum System'"
+    fn: momentum_value
+    args: {dex_force: 7, per_force: 9}
+    expect: 9

@@ -1,0 +1,13 @@
+# Fully Obscured
+[Q-???] Hidden Objective: ???
+Status: Active
+
+# Partial Reveal
+[Q-???] Hidden Objective: "The First Mercy"
+Conditions: Unclear.
+Status:     Active.
+
+# Post-Completion Only
+[Q-HID-014] "The First Mercy": Complete.
+Reward: +1 IP toward a Restraint-aligned Principle.
+        New Hidden Achievement: "The One Who Stayed Their Hand."

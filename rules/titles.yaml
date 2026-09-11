@@ -1,0 +1,104 @@
+# Titles: the System's achievement layer.
+# source: 40-titles.md
+
+categories:
+  - {name: Achievement,        shape: "Quantitative threshold the System tracks. Common, flat bonus only."}
+  - {name: Hidden Achievement, shape: "Statistically improbable accomplishment. Rare, meaningfully buffed, may be conditional."}
+  - {name: HVE-Resonant,       shape: "A settled behavioral pattern. One per axis pair; evolves at Breakthrough."}
+  - {name: Bestowed,           shape: "Granted by an external entity. Variable, narratively heavy, may be negative."}
+
+pacing_targets:
+  Achievement: every 3–4 sessions across the party
+  HVE-Resonant: every Grade or major behavioral shift
+  Hidden Achievement: 1–3 times per campaign arc
+  Bestowed: whenever the fiction earns them
+
+stacking:
+  cap: none
+  hve_resonant_per_axis_pair: 1     # a new one supersedes; the old is logged as Echoed
+  equipping: none                   # all titles always apply
+  percentages: banned               # every bonus is a flat number
+
+# Calibrated assuming 8–15 titles by the end of a Grade. F-Grade ranges; ×10 at E, ×100 at D.
+bonus_magnitudes:
+  - {class: Common Achievement,  f_grade: "+1 to +2 to one stat",                                e_grade: "+10 to +20",                   d_grade: "+100 to +200"}
+  - {class: Notable Achievement, f_grade: "+2 to +3 to one stat, or +1 across two stats",        e_grade: "+20 to +30, or +10 across two", d_grade: "×100"}
+  - {class: HVE-Resonant,        f_grade: "+2 to +4 across one or two thematic stats",           e_grade: "+20 to +40 across one or two",  d_grade: "×100"}
+  - {class: Hidden Achievement,  f_grade: "+3 to +5 to one stat",                                e_grade: "+30 to +50",                   d_grade: "×100"}
+  - {class: Bestowed (Common),   f_grade: "+2 to +5 across thematically appropriate stats",      e_grade: "+20 to +50",                   d_grade: "×100"}
+  - {class: Bestowed (Major),    f_grade: "+5 to +10 across multiple stats",                     e_grade: "+50 to +100",                  d_grade: "×100"}
+f_grade_stack_ceiling: "+25 to +40 stat points across 12 active titles"
+
+conditional_bonuses:
+  allowed_on: [Hidden Achievement, HVE-Resonant, Bestowed]
+  magnitude: same range as a flat bonus of the title's class
+  damage_vs_category: a flat Clash bonus against that category (+10 to Clashes against constructs)
+action_economy_bonuses: rare; Hidden Achievement or peak Bestowed
+resistances_and_affinities_f_grade:
+  - +5 to defensive Clashes against a named damage type or source
+  - a one-time grant of 1 to 3 IP toward an aligned Principle
+  - immunity to specific minor effects
+
+negative_titles:
+  common_shape: a flat penalty (−2 to a stat, +10 difficulty against a specific entity) plus a social consequence
+  release: written into the title when granted; may convert to an Achievement when earned through the fiction ("Salvaged" becomes "Came Back Whole")
+
+# Twenty ready to grant. A countable deed, a flat bonus, a short name.
+achievement_catalog:
+  Slaughter:
+    - {title: Ten-Slayer,      trigger: Tenth confirmed kill,                          bonus: "+1 STR"}
+    - {title: Hundred-Slayer,  trigger: Hundredth confirmed kill,                      bonus: "+2 STR"}
+    - {title: First Blood,     trigger: Drew first blood in ten separate fights,       bonus: "+1 DEX"}
+    - {title: Pack-Breaker,    trigger: Killed three foes in a single fight,           bonus: "+1 STR"}
+    - {title: Giant-Feller,    trigger: Killed a Severe or Peak enemy,                 bonus: "+2 FOR"}
+  Survival:
+    - {title: Stand,                 trigger: "Ended five separate fights below half HP, still standing", bonus: "+1 FOR"}
+    - {title: "First Down, First Up", trigger: Survived being Downed,                                    bonus: "+1 FOR"}
+    - {title: Week One,              trigger: Survived the first seven days after Integration,          bonus: "+1 to one stat, player's choice"}
+    - {title: Empty-Handed,          trigger: Won a fight with no weapon and no Aether spent,           bonus: "+1 STR"}
+    - {title: Hundredfoot,           trigger: Survived a climb or fall of a hundred feet,               bonus: "+1 DEX"}
+  Craft and Ground:
+    - {title: Pillwright,            trigger: Crafted or refined ten consumables,                        bonus: "+1 PER"}
+    - {title: Forager,               trigger: Fed the party from the land for three days,                bonus: "+1 PER"}
+    - {title: Tinker,                trigger: Repaired or jury-rigged five things mid-crisis,            bonus: "+1 DEX"}
+    - {title: First Through the Gate, trigger: "First of the party into a hostile site, ten times",     bonus: "+1 DEX"}
+    - {title: Pathfinder,            trigger: Led the party through unmapped ground five times,          bonus: "+1 PER"}
+  Word and Bond:
+    - {title: Vow-Keeper,            trigger: Fulfilled three sworn oaths,                               bonus: "+1 HRT"}
+    - {title: Lockbreaker,           trigger: Picked five non-trivial locks,                             bonus: "+1 PER"}
+    - {title: Unseen,                trigger: Crossed ten guarded thresholds unseen,                     bonus: "+1 DEX"}
+    - {title: Peacemaker,            trigger: Ended three fights with words after weapons were out,      bonus: "+1 CHA"}
+    - {title: Deep Breather,         trigger: Completed twenty Consolidations,                           bonus: "+1 HRT"}
+
+evolution:
+  Achievement: never
+  Hidden Achievement: never
+  HVE-Resonant: at Breakthrough (automatic, same axis pair, new Grade's magnitude) or when the signature intensifies; replaced (Echoed) when the signature shifts
+  Bestowed: only by external action
+
+# Calibration references, not menus. Five per archetype spanning the four categories.
+sample_stacks:
+  The Apex Predator:
+    - {title: Ten-Slayer,          class: Achievement,        effect: "+1 STR. Triggered by tenth confirmed kill."}
+    - {title: First Blood,         class: Achievement,        effect: "+1 DEX. Triggered by drawing first blood in ten separate fights."}
+    - {title: The Hungering Edge,  class: HVE-Resonant,       effect: "+3 STR, +2 DEX. Once per encounter, when you reduce a foe to 0 HP, gain 1 Beat next turn."}
+    - {title: Cornerless,          class: Hidden Achievement, effect: "At a quarter of Max HP or less, +5 STR and +5 DEX. Triggered by surviving an encounter that the System assessed as 10× over-Grade."}
+    - {title: Marked by the Wild,  class: Bestowed (Beast),   effect: "Predators recognize you as kin or rival: +5 to Clashes against beasts fleeing you, −5 on parley with hostile fauna. Granted by killing the alpha of a wild pack."}
+  The System Architect:
+    - {title: Pillwright,                     class: Achievement,        effect: "+1 PER. Triggered by crafting or refining ten consumables."}
+    - {title: Patient Gardener,               class: Achievement,        effect: "+1 PER, +1 HRT. Triggered by spending the first round of ten separate fights without an offensive Beat."}
+    - {title: Quiet Architect,                class: HVE-Resonant,       effect: "+3 PER, +2 HRT. Once per encounter, when an ally executes a plan you proposed, they gain +5 to that Clash."}
+    - {title: The One Who Did Not Strike First, class: Hidden Achievement, effect: "Once per encounter, when an enemy attacks you first in a Clash, gain +10 to that defensive Clash. Triggered by completing three consecutive encounters without making the first offensive move."}
+    - {title: Witnessed by the Mountain,      class: Bestowed (Place),   effect: "+5 to all Clashes within terrain matching the witnessing site. Granted by completing a Consolidation at a Principle-resonant location."}
+  The Iron Adjudicator:
+    - {title: Vow-Keeper,               class: Achievement,        effect: "+1 HRT. Triggered by fulfilling three sworn oaths."}
+    - {title: Stand,                    class: Achievement,        effect: "+1 FOR. Triggered by ending five separate fights below half HP and still standing."}
+    - {title: The Iron Verdict,         class: HVE-Resonant,       effect: "+3 FOR, +2 HRT. Once per encounter, when an ally is targeted in your Zone, you may interpose; the attack rerolls against you instead."}
+    - {title: The Line That Did Not Move, class: Hidden Achievement, effect: "+5 FOR. Triggered by holding a position alone against three or more attackers without retreating, for three consecutive rounds."}
+    - {title: Hand of the Iron Court,   class: Bestowed (Faction), effect: "Faction-granted: bureaucratic recognition, access to Iron Court resources, +5 to social Clashes invoking lawful authority."}
+  The Phantom Thief:
+    - {title: Lockbreaker,             class: Achievement,        effect: "+1 PER. Triggered by picking five non-trivial locks."}
+    - {title: Unseen,                  class: Achievement,        effect: "+1 DEX. Triggered by crossing ten guarded thresholds unseen."}
+    - {title: The Severed Tether,      class: HVE-Resonant,       effect: "+3 DEX, +2 PER. Once per encounter, when you would be detected by an enemy, the detection fails."}
+    - {title: The One Who Walked Through, class: Hidden Achievement, effect: "Once per Consolidation, ignore one closed door, lock, or non-magical barrier. Triggered by entering and exiting three sealed locations without leaving evidence."}
+    - {title: The Open Hand,           class: Bestowed (Network), effect: "Granted by an underworld figure. Access to black-market contacts; +5 to negotiation Clashes with criminal NPCs; merchants of the network offer favorable prices."}

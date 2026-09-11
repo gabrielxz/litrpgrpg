@@ -22,6 +22,7 @@ These numbers represent a freshly integrated human: someone pulled into the Syst
 
 **Sample Spreads:**
 
+<!-- rules:table sample-spreads -->
 | Archetype | STR | DEX | FOR | HRT | POW | PER | CHA | Total |
 |---|---|---|---|---|---|---|---|---|
 | Brawler | 10 | 6 | 8 | 4 | 3 | 5 | 4 | 40 |
@@ -29,6 +30,7 @@ These numbers represent a freshly integrated human: someone pulled into the Syst
 | Aspiring Cultivator | 4 | 5 | 5 | 6 | 10 | 7 | 3 | 40 |
 | Natural Leader | 5 | 5 | 5 | 7 | 4 | 5 | 9 | 40 |
 | Generalist | 6 | 6 | 6 | 6 | 6 | 5 | 5 | 40 |
+<!-- /rules:table -->
 
 These are illustrations, not templates. Players should build what makes sense for the person they are playing. Three finished characters built from these rules, the same three the book's examples follow, are at the end of this chapter.
 
@@ -36,6 +38,7 @@ These are illustrations, not templates. Players should build what makes sense fo
 
 The anchors below calibrate every score in pre-Integration human terms. Even values sit between their neighbors. Scores of 1 and 2 exist below the creation floor: bodies and minds that are failing, and the System integrates them all the same.
 
+<!-- rules:table stat-anchors -->
 | **Attribute** | **3 (deficiency)** | **5 (average)** | **7 (gifted)** | **9 (elite)** | **10 (peak human)** |
 |---|---|---|---|---|---|
 | STR | Struggles with a full bucket | Carries the groceries in one trip | Moves furniture alone | College shot-putter | World-record deadlifter |
@@ -45,6 +48,7 @@ The anchors below calibrate every score in pre-Integration human terms. Even val
 | POW | Never notices the uncanny | Occasional gut feelings | Vivid dreams that sometimes land | The family everyone called witches | The monastery would have taken them |
 | PER | Misses the obvious | Notices a moved chair | Spots the tail on the drive home | Identifies birds by wingbeat | Counts the cards and the faces at once |
 | CHA | Empties a room slowly | Pleasant company | Closes the sale | Packs a town hall | Starts a movement |
+<!-- /rules:table -->
 
 ## Proficiencies
 
@@ -58,6 +62,7 @@ Proficiencies should reflect the character's life before Integration: what they 
 
 **Fighting**
 
+<!-- rules:table proficiencies-fighting -->
 | **Proficiency** | **Covers** |
 |---|---|
 | blades | Sword, knife, machete. An edge or a point, in one hand or two. |
@@ -69,9 +74,11 @@ Proficiencies should reflect the character's life before Integration: what they 
 | military tactics | Formations, ground, supply, and reading an enemy's plan. |
 | athletics | Climbing, swimming, jumping, lifting, and long pursuit. |
 | endurance training | Outlasting cold, thirst, pain, and sleeplessness. |
+<!-- /rules:table -->
 
 **Living Outdoors**
 
+<!-- rules:table proficiencies-outdoors -->
 | **Proficiency** | **Covers** |
 |---|---|
 | wilderness survival | Shelter, fire, water, and not dying in weather. |
@@ -79,9 +86,11 @@ Proficiencies should reflect the character's life before Integration: what they 
 | foraging and herblore | What is edible, what is medicine, what kills. |
 | animal handling | Calming, driving, riding, and reading beasts. |
 | navigation | Staying found, by stars, landmarks, or instruments. |
+<!-- /rules:table -->
 
 **People**
 
+<!-- rules:table proficiencies-people -->
 | **Proficiency** | **Covers** |
 |---|---|
 | persuasion | Argument, appeal, and finding what someone actually wants. |
@@ -91,9 +100,11 @@ Proficiencies should reflect the character's life before Integration: what they 
 | leadership | Getting frightened people to act together. |
 | teaching | Making someone else able to do what you can do. |
 | streetwise | Black markets, gangs, rumor, and who to ask. |
+<!-- /rules:table -->
 
 **Knowledge**
 
+<!-- rules:table proficiencies-knowledge -->
 | **Proficiency** | **Covers** |
 |---|---|
 | research methodology | Finding the answer in a library, an archive, or a ruin. |
@@ -101,9 +112,11 @@ Proficiencies should reflect the character's life before Integration: what they 
 | field medicine | Wounds, poisons, fevers, and stabilizing the dying. |
 | chemistry | Reactions, compounds, solvents, and explosives. |
 | logistics and accounting | Ledgers, supply lines, and where the money went. |
+<!-- /rules:table -->
 
 **Making and Breaking**
 
+<!-- rules:table proficiencies-making -->
 | **Proficiency** | **Covers** |
 |---|---|
 | mechanical tinkering | Machines with moving parts: repair, modification, sabotage. |
@@ -114,6 +127,7 @@ Proficiencies should reflect the character's life before Integration: what they 
 | lockpicking and security | Locks, alarms, safes, and the habits of the people who set them. |
 | stealth and infiltration | Moving unseen and being somewhere you should not be. |
 | sleight of hand | Palming, planting, lifting, and misdirection. |
+<!-- /rules:table -->
 
 ## Derived Stats
 

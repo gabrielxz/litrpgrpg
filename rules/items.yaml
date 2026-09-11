@@ -1,0 +1,88 @@
+# Items, consumables, and Volatile Artifacts (F-Grade).
+# source: 65-items.md
+
+pill_use:
+  cost_beats: 1                    # paid by whoever takes the action; the recipient of an administered pill spends nothing
+  per_fight_limit_per_kind: 2      # the first two work in full; further pills do nothing until ten quiet minutes out of combat
+  reset_after_quiet_minutes: 10
+  administered_counts_against: recipient
+  foundation_pills_exempt: true
+  heal_cap: Max HP
+  higher_grade_pill_in_lower_body: no effect
+  e_grade_pills_heal: ×10 for an E-Grade body
+
+healing_pills:
+  - {name: Stuttering Tincture,    grade: F, hp: 5}
+  - {name: Lesser Healing Pill,    grade: F, hp: 15}
+  - {name: Healing Pill,           grade: F, hp: 30}
+  - {name: Greater Healing Pill,   grade: F, hp: 50}
+  - {name: Pristine Recovery Pill, grade: F, hp: 80}
+
+aether_pills:
+  - {name: Sparkstone Tablet,   grade: F, aether: 10}
+  - {name: Lesser Aether Pill,  grade: F, aether: 25}
+  - {name: Aether Pill,         grade: F, aether: 50}
+  - {name: Greater Aether Pill, grade: F, aether: 80}
+
+foundation_pills:
+  - {name: Dragon Marrow Pill,       grade: F, breakthrough_bonus: 5}
+  - {name: Nine Leaf Essence,        grade: F, breakthrough_bonus: 10}
+  - {name: Heavenly Foundation Pill, grade: F, breakthrough_bonus: 15}
+foundation_pill_limit_per_breakthrough: 1
+
+attribute_treasures:
+  - {name: Lesser,   grade: F, raw_points: 2}
+  - {name: Standard, grade: F, raw_points: 5}
+  - {name: Greater,  grade: F, raw_points: 10}
+attribute_treasure_rules:
+  scales_with_grade: true
+  cost: one hour defenseless, as during a Consolidation
+  grade_locked_both_directions: true
+  excess_above_cap_lost: true
+  per_attribute_cap: none
+  expected_per_grade: [3, 4]
+  touches_ve: false
+
+weapons:
+  - {name: Improvised object,       force: STR,        proficiency: none,                  notes: "A chair, a rock, a fire extinguisher. Nothing shaped like a weapon."}
+  - {name: Club / Pipe / Crowbar,   force: STR,        proficiency: axes and hammers,      notes: "Scavenged weight on a handle."}
+  - {name: Knife / Dagger,          force: DEX,        proficiency: blades,                notes: "Quick, concealable. Throwable as one-shot ranged."}
+  - {name: Greatsword,              force: STR,        proficiency: blades,                notes: "Heavy, two-handed. Requires STR Force 05; below that, every Clash with it takes −10 (hindering)."}
+  - {name: Battle Axe / Maul,       force: STR,        proficiency: axes and hammers,      notes: "Heavy, two-handed. Requires STR Force 05; below that, every Clash with it takes −10 (hindering)."}
+  - {name: Spear,                   force: DEX,        proficiency: spears and staves,     notes: "Two-handed. Reach: free Disengage from one Zone-edge enemy per turn."}
+  - {name: Quarterstaff,            force: STR or DEX, proficiency: spears and staves,     notes: "Two-handed. Versatile: choose Force at attack time."}
+  - {name: Short Bow,               force: DEX,        proficiency: archery and throwing,  notes: "Two-handed. Ranged: target enemies in adjacent Zones."}
+  - {name: Crossbow (single-shot),  force: DEX,        proficiency: archery and throwing,  notes: "Two-handed. Requires 1 Beat to reload between shots."}
+  - {name: Hand Axe (thrown),       force: STR,        proficiency: archery and throwing,  notes: "Ranged: one Zone. Recoverable."}
+weapon_bonus: the wielder's Proficiency tier (+5 Trained, +10 Seasoned or Master, +0 untrained)
+heavy_weapon_min_str_force: 5
+heavy_weapon_below_min_penalty: -10
+
+skill_shards:
+  activation_cost_beats: 1
+  backfire_natural: [1, 5]
+  types:
+    - {name: Edge Shard,      effect: "Next Clash this turn gains +20.",                                                                      backfire: "Shard cracks: user takes 5 damage."}
+    - {name: Pulse Shard,     effect: "Restore 30 Aether.",                                                                                   backfire: "Aether backlash: user takes 10 damage."}
+    - {name: Veil Shard,      effect: "Become invisible until end of next turn or until you act offensively.",                                backfire: "Veil flickers: you remain visible but appear blurred (+5 to defense, no concealment)."}
+    - {name: Anchor Shard,    effect: "Until end of next turn, you cannot be moved by any effect (moving yourself is fine), and your Defense Force gains +10.", backfire: "You become **Rooted** for the rest of the encounter: unable to be moved, and unable to move under your own power."}
+    - {name: Resonance Shard, effect: "Add 1 IP toward a Principle of your choice.",                                                          backfire: "The IP is lost."}
+    - {name: Volatile Shard,  effect: "Roll d100 again. The GM and the System AI generate an unpredictable effect based on the result.",      backfire: "The GM's discretion is the risk."}
+
+artifacts:
+  reactive_buckler:
+    effect: once per encounter, reduce the damage of one physical Clash to 0 without giving up any Beats; resets at the next Consolidation
+    limits: [not mental, spiritual, or illusion attacks, not attacks the wielder did not see coming, does not prevent Driven Back]
+  single_use_ranged_relic:
+    effect: ranged Clash with DEX or POW Force at +20; on hit, damage as if the user's Grade were one higher; burns out after use
+  sensory_tools:
+    - {name: Resonance Glass, effect: "1 Beat. Reveals hidden energy signatures in your Zone. Reusable."}
+    - {name: Truthbinder Cuff, effect: "Forces a single yes/no answer from one detained, non-hostile target. Single use."}
+
+field_gear:
+  - {name: Battered Medkit,        effect: "Heals 10 HP as a 1-Beat action on yourself or an ally in the same Zone. Does not count toward the pill limit. Three uses."}
+  - {name: Low-Grade Armor Scraps, effect: "+5 Defense Force when defending with FOR; −5 to DEX-based Clashes. One set per character."}
+  - {name: Shield,                 effect: "+5 to your Clash when defending. Occupies a hand. No shield Proficiency; applies whatever the wielder is trained in."}
+  - {name: Battered Communicator,  effect: "Short-range communication between paired devices. Frequently malfunctions."}
+armor_scraps: {defense_bonus_with_for: 5, dex_penalty: -5}
+shield_bonus: 5

@@ -12,7 +12,7 @@ Pencil, paper, and this book. The GM performs every System function by hand, usi
 
 | **Function** | **Where the manual procedure lives** |
 |---|---|
-| HVE tracking | Hidden Vector Engine, "Tracking the Engine" |
+| HVE tracking | The Hidden Vector Engine, "The Session-End Sweep" |
 | Principle crystallization | The Principle System, "Your First Principle" |
 | Class generation | This chapter, "Class Generation" |
 | Personal Opportunities | System Quests, the generation template (used as a worksheet) |
@@ -81,6 +81,7 @@ The Titles chapter defines the four categories and their calibrated bonus magnit
 
 **In:** enemy difficulty tier and the circumstances of the kill. **Out:** drops, drawn from the Items chapter or invented inside its price bands.
 
+<!-- rules:table loot -->
 | **Enemy tier** | **Default drop (F-Grade)** |
 |---|---|
 | Trivial | Nothing, or salvage on a memorable kill |
@@ -89,6 +90,7 @@ The Titles chapter defines the four categories and their calibrated bonus magnit
 | Hard | One consumable, plus a 25% chance of a skill shard or equipment |
 | Severe | One meaningful item, guaranteed |
 | Peak | One meaningful item plus one bespoke drop |
+<!-- /rules:table -->
 
 Bosses and named enemies drop one step up the table. At higher Grades, the same table applies to that Grade's catalog.
 

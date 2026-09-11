@@ -43,7 +43,7 @@ A character carrying more takes proportionally longer: someone holding 160 needs
 During the rest:
 
 - **Growth:** Processed VE converts into permanent level progress. When processed VE reaches the cost of the next level, the character levels up on the spot, mid-rest.
-- **Aether:** The pool refills completely when the first full hour completes. This is the only source of Aether regeneration; Aether does not recover in combat, between combats, or through passive time. See Core Mechanics, "The Aether System."
+- **Aether:** The pool refills completely when the first full hour completes. This is the only source of Aether regeneration; Aether does not recover in combat, between combats, or through passive time. See Core Mechanics, "Aether."
 - **Artifacts:** Items that recharge "at the next Consolidation" (the Reactive Buckler and similar) reset when the first full hour completes, on the same clock as Aether.
 - **Interruption:** The character keeps every completed hour of processing and recovery. Unprocessed VE stays in the tank and remains subject to Saturation.
 - **Defenselessness:** A consolidating character is completely defenseless. A consolidating character who is attacked or roused wakes at once, keeping completed hours per the interruption rule; only the collapse at Critical Saturation is unwakeable. The whole party may consolidate at once as a calculated risk; posting a guard means that character is not consolidating.
@@ -82,6 +82,7 @@ The GM awards VE from multiple sources. The baseline rates below are tuned to F-
 
 A **Peer Kill** is worth **10 VE** at F-Grade, and ×10 for each Grade above. That is what one Moderate enemy of the character's own Grade pays. Every other tier is a multiple of it:
 
+<!-- rules:table kill-tiers -->
 | **Difficulty** | **Award** | **F-Grade VE** |
 |---|---|---|
 | Trivial | Peer Kill × 0.2 | 2 |
@@ -90,6 +91,7 @@ A **Peer Kill** is worth **10 VE** at F-Grade, and ×10 for each Grade above. Th
 | Hard | Peer Kill × 2 | 20 |
 | Severe | Peer Kill × 3 | 30 |
 | Peak | Peer Kill × 5 | 50 |
+<!-- /rules:table -->
 
 Twelve peer kills, or two Peak kills and a Hard one, carry a character a level.
 

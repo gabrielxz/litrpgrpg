@@ -1,0 +1,184 @@
+# Characters: Attributes, point buy, derived stats, leveling budget, Proficiencies, the pregens.
+# source: 15-character-creation.md; 17-progression.md; 10-core-mechanics.md "Proficiencies and Skill Checks"
+
+attributes:
+  - code: STR
+    name: Strength
+    governs: Physical power and carry capacity. Heavy melee.
+  - code: DEX
+    name: Dexterity
+    governs: Precision, speed, manual agility. Evasion, finesse melee, ranged attacks.
+  - code: FOR
+    name: Fortitude
+    governs: Endurance and structural integrity. Health and standing your ground.
+  - code: HRT
+    name: Heart
+    governs: Resolve and spiritual anchor. Defense against mental, spiritual, and coercive attacks, Aura Pressure, the Breakthrough.
+  - code: POW
+    name: Power
+    governs: Supernatural output. Spells, Applications, the Aether pool.
+  - code: PER
+    name: Perception
+    governs: Awareness and sensory sharpness. Detection, Principle insight, defense against illusion.
+  - code: CHA
+    name: Charisma
+    governs: Force of personality and social leverage.
+
+point_buy:
+  points: 40
+  min_per_stat: 3
+  max_per_stat: 10
+
+derived:
+  max_hp: Raw FOR × 2
+  max_aether: Raw POW
+  ve_tolerance: cultivation.yaml tolerance (80 at F, ×10 per Grade)
+  starting_level: 1
+  starting_grade: F
+  starting_ve: 0
+
+sample_spreads:
+  - {archetype: Brawler,             STR: 10, DEX: 6, FOR: 8, HRT: 4, POW: 3,  PER: 5,  CHA: 4}
+  - {archetype: Scout,               STR: 4,  DEX: 9, FOR: 5, HRT: 4, POW: 3,  PER: 10, CHA: 5}
+  - {archetype: Aspiring Cultivator, STR: 4,  DEX: 5, FOR: 5, HRT: 6, POW: 10, PER: 7,  CHA: 3}
+  - {archetype: Natural Leader,      STR: 5,  DEX: 5, FOR: 5, HRT: 7, POW: 4,  PER: 5,  CHA: 9}
+  - {archetype: Generalist,          STR: 6,  DEX: 6, FOR: 6, HRT: 6, POW: 6,  PER: 5,  CHA: 5}
+
+# What a score means, in pre-Integration human terms. Even values sit between neighbors.
+stat_anchors:
+  scores: [3, 5, 7, 9, 10]
+  labels: [deficiency, average, gifted, elite, peak human]
+  STR: [Struggles with a full bucket, Carries the groceries in one trip, Moves furniture alone, College shot-putter, World-record deadlifter]
+  DEX: [Drops what they carry, Catches keys tossed across a room, Amateur gymnast, Circus knife-thrower, Olympic-final gymnast]
+  FOR: [Winded by one flight of stairs, Works a full shift on their feet, Runs marathons, Channel swimmer, Summits without oxygen]
+  HRT: [Folds under a raised voice, "Holds up in a crisis, shaken after", Steady hands in the ER, Hostage negotiator, Unbreakable under interrogation]
+  POW: [Never notices the uncanny, Occasional gut feelings, Vivid dreams that sometimes land, The family everyone called witches, The monastery would have taken them]
+  PER: [Misses the obvious, Notices a moved chair, Spots the tail on the drive home, Identifies birds by wingbeat, Counts the cards and the faces at once]
+  CHA: [Empties a room slowly, Pleasant company, Closes the sale, Packs a town hall, Starts a movement]
+
+leveling:
+  points_per_level: 5
+  system_assigned: 3            # by the GM from behavior before a class (Levels 2–9), by the class profile from Level 10
+  free: 2
+  scales_with_grade: true       # ×10 at E, ×100 at D, same 3-to-2 split
+  points_can_wait: true         # unallocated until spent
+  capped_stat_takes_no_allocation: true   # free points redirect; System points go to the next-best behavioral match
+  class_level: 10
+  class_options_default: 3
+  class_bonus_points_min: 5
+  class_bonus_points_max: 10
+  points_by_level_9:
+    point_buy: 40
+    system_assigned: 24         # 3 × 8 levels
+    free: 16                    # 2 × 8 levels
+    total: 80
+
+# Pre-class stat assignment: the GM matches behavior since the last level.
+behavioral_stat_mapping:
+  - {behavior: "Solves problems with direct force, charges in",              primary: STR, secondary: FOR}
+  - {behavior: "Plans ahead, positions carefully, uses finesse",             primary: DEX, secondary: PER}
+  - {behavior: "Pursues power aggressively, takes risks for gain",           primary: POW, secondary: STR}
+  - {behavior: "Shows restraint, endures hardship, holds the line",          primary: FOR, secondary: HRT}
+  - {behavior: "Dominates socially, intimidates, commands",                  primary: CHA, secondary: STR}
+  - {behavior: "Cooperates, negotiates, builds alliances",                   primary: CHA, secondary: HRT}
+  - {behavior: "Imposes structure, creates systems, controls variables",     primary: PER, secondary: POW}
+  - {behavior: "Breaks rules, improvises, embraces chaos",                   primary: DEX, secondary: POW}
+
+proficiencies:
+  at_creation: 3
+  starting_tier: Trained
+  tiers:
+    - name: Trained
+      bonus: 5
+      grants: [Routine Mastery, Specialist Gating access]
+    - name: Seasoned
+      bonus: 10
+      marks_required: 3
+    - name: Master
+      bonus: 10
+      marks_required: 10
+      requires_grade: E           # an F-Grade character banks Marks past 10 and advances at the Breakthrough
+      free_action: once on your turn, the first action using the Proficiency costs no Beat
+  untrained_bonus: 0
+  unheld_domain_grant_marks: 3    # 3 Marks in a domain you have no Proficiency in: granted at Trained, Marks spent
+  mark_trigger: natural d100 at or above the Volatility Threshold on a Clash or skill check using the domain
+  routine_mastery: auto-succeed Trivial and Easy tasks of your own Grade with any relevant tier
+  weapons_carry_bonus: false      # the bonus is the wielder's tier
+
+fighting_domains:
+  - blades
+  - axes and hammers
+  - spears and staves
+  - hand to hand
+  - archery and throwing
+  - firearms
+fighting_domain_rules:
+  anything_let_go_of: archery and throwing
+  improvised_object: no domain; a thing with no weapon shape
+  a_pipe_is_a_club: axes and hammers
+  shield_proficiency: none
+
+sample_proficiencies:
+  Fighting:
+    - {name: blades, covers: "Sword, knife, machete. An edge or a point, in one hand or two."}
+    - {name: axes and hammers, covers: "Weight on a handle: battle axe, hatchet, maul, club, crowbar, a length of pipe."}
+    - {name: spears and staves, covers: "Two-handed reach: spear, quarterstaff, polearm, scaffold pole."}
+    - {name: hand to hand, covers: "Fists, grapples, throws, and every martial art."}
+    - {name: archery and throwing, covers: "Bows, crossbows, slings, and anything you let go of."}
+    - {name: firearms, covers: "Pistols, rifles, shotguns, and the System-forged weapons built on the same principle."}
+    - {name: military tactics, covers: "Formations, ground, supply, and reading an enemy's plan."}
+    - {name: athletics, covers: "Climbing, swimming, jumping, lifting, and long pursuit."}
+    - {name: endurance training, covers: "Outlasting cold, thirst, pain, and sleeplessness."}
+  Living Outdoors:
+    - {name: wilderness survival, covers: "Shelter, fire, water, and not dying in weather."}
+    - {name: tracking and fieldcraft, covers: "Following a trail, reading sign, moving without leaving one."}
+    - {name: foraging and herblore, covers: "What is edible, what is medicine, what kills."}
+    - {name: animal handling, covers: "Calming, driving, riding, and reading beasts."}
+    - {name: navigation, covers: "Staying found, by stars, landmarks, or instruments."}
+  People:
+    - {name: persuasion, covers: "Argument, appeal, and finding what someone actually wants."}
+    - {name: intimidation, covers: "Making a threat land without having to carry it out."}
+    - {name: deception, covers: "Lies, disguise, false papers, and keeping a story straight."}
+    - {name: performance, covers: "Music, oratory, theatre, and holding a room."}
+    - {name: leadership, covers: "Getting frightened people to act together."}
+    - {name: teaching, covers: "Making someone else able to do what you can do."}
+    - {name: streetwise, covers: "Black markets, gangs, rumor, and who to ask."}
+  Knowledge:
+    - {name: research methodology, covers: "Finding the answer in a library, an archive, or a ruin."}
+    - {name: ancient languages, covers: "Dead scripts, inscriptions, and their conventions."}
+    - {name: field medicine, covers: "Wounds, poisons, fevers, and stabilizing the dying."}
+    - {name: chemistry, covers: "Reactions, compounds, solvents, and explosives."}
+    - {name: logistics and accounting, covers: "Ledgers, supply lines, and where the money went."}
+  Making and Breaking:
+    - {name: mechanical tinkering, covers: "Machines with moving parts: repair, modification, sabotage."}
+    - {name: jury-rigging, covers: "Making a thing work with the wrong materials, briefly."}
+    - {name: electronics, covers: "Circuits, sensors, and salvaged equipment."}
+    - {name: construction, covers: "Building, shoring, demolition, and judging what will hold."}
+    - {name: vehicle operation, covers: "Driving, piloting, and controlling a vehicle under stress."}
+    - {name: lockpicking and security, covers: "Locks, alarms, safes, and the habits of the people who set them."}
+    - {name: stealth and infiltration, covers: "Moving unseen and being somewhere you should not be."}
+    - {name: sleight of hand, covers: "Palming, planting, lifting, and misdirection."}
+
+# The book's recurring cast. Any worked example touching them must reconcile with these numbers.
+pregens:
+  - name: Kara
+    level: 1
+    grade: F
+    tagline: "Warehouse shift lead. First through the door, and first to ask what it pays."
+    stats: {STR: 8, DEX: 5, FOR: 7, HRT: 4, POW: 6, PER: 5, CHA: 5}
+    proficiencies: [axes and hammers, athletics, streetwise]
+    playing: "Fight close and end it fast. Want things out loud: the better weapon, the bigger bounty, the pill nobody else has claimed. Her generosity is real, and it is never first."
+  - name: Joe
+    level: 1
+    grade: F
+    tagline: "Volunteer firefighter. Hits hard so nobody else has to."
+    stats: {STR: 8, DEX: 5, FOR: 7, HRT: 5, POW: 4, PER: 6, CHA: 5}
+    proficiencies: [axes and hammers, endurance training, field medicine]
+    playing: "Stand between the danger and everyone else, and swing like the door needs breaking. He will take a bad trade if somebody weaker comes out ahead on it."
+  - name: Andre
+    level: 1
+    grade: F
+    tagline: "Land surveyor. Looks first, counts everything, and knows where the exits are."
+    stats: {STR: 4, DEX: 7, FOR: 5, HRT: 6, POW: 5, PER: 9, CHA: 4}
+    proficiencies: [tracking and fieldcraft, archery and throwing, navigation]
+    playing: "Look before anyone moves, plan the way out before the way in, and take only what the plan needs. When the party gets loud, he is the one counting."

@@ -1,0 +1,52 @@
+# Values and names the book has retired. tools/lint_prose.py fails if any of
+# these appear in a chapter, the kit, or the pipeline. Add a line whenever a
+# rule changes: the pattern, what replaced it, and the date.
+patterns:
+  - {pattern: '\b125 VE\b',                       replaced_by: "120 VE",                                     since: 2026-09-10}
+  - {pattern: '\btwelve and a half\b',            replaced_by: "twelve peer kills",                           since: 2026-09-10}
+  - {pattern: '\b3,000 VE\b',                     replaced_by: "2,880 VE",                                    since: 2026-09-10}
+  - {pattern: '\(Raw FOR \+ Raw HRT\)',           replaced_by: "flat Tolerance 80",                           since: 2026-09-10}
+  - {pattern: '\(FOR \+ HRT\)',                   replaced_by: "flat Tolerance 80",                           since: 2026-09-10}
+  - {pattern: '\(Raw FOR \+ Raw POW\)',           replaced_by: "flat Tolerance 80",                           since: 2026-08-12}
+  - {pattern: 're-deriv',                         replaced_by: "Tolerance is fixed; nothing re-derives",      since: 2026-09-10}
+  - {pattern: 'one fifth of (VE )?Tolerance',     replaced_by: "20 VE per hour",                              since: 2026-09-10}
+  - {pattern: '\bMode [ABC]\b',                   replaced_by: "Unplugged / AI-Assisted / the Companion App", since: 2026-09-10}
+  - {pattern: 'Magnitude Gap',                    replaced_by: "Grade Gap Rule",                              since: 2026-09-10}
+  - {pattern: '\bForge Grade\b',                  replaced_by: "cost by tier, scale by body",                 since: 2026-08-12}
+  - {pattern: '\bStable Abilit',                  replaced_by: "cut",                                         since: 2026-08-06}
+  - {pattern: '\bS-Grade\b',                      replaced_by: "A-Grade",                                     since: 2026-08-14}
+  - {pattern: '\bCompression\b',                  replaced_by: "Distillation",                                since: 2026-08-06}
+  - {pattern: '1\.2\^',                           replaced_by: "flat level cost",                             since: 2026-08-20}
+  - {pattern: 'exponential curve',                replaced_by: "flat level cost",                             since: 2026-08-20}
+  - {pattern: '\bEnergy Pills?\b',                replaced_by: "Aether Pill",                                 since: 2026-07-08}
+  - {pattern: 'DC 240',                           replaced_by: "DC 140",                                      since: 2026-08-12}
+  - {pattern: 'Highest Attribute Force',          replaced_by: "cut from the Breakthrough Check",             since: 2026-08-12}
+  - {pattern: '\+0 to \+45',                      replaced_by: "+0 to +40",                                   since: 2026-08-12}
+  - {pattern: 'Tracking the Engine',              replaced_by: "The Session-End Sweep",                       since: 2026-08-25}
+  - {pattern: 'Vector Logging Cheatsheet',        replaced_by: "The Session-End Sweep",                       since: 2026-08-25}
+  - {pattern: 'Passive Awareness',                replaced_by: "Routine Mastery",                             since: 2026-07-02}
+  - {pattern: '\bBreakthrough Beats?\b',          replaced_by: "Stages",                                      since: 2026-08-06}
+  - {pattern: '\bMateria\b',                      replaced_by: "cut",                                         since: 2026-08-12}
+  - {pattern: '\+\d+%',                           replaced_by: "flat bonuses only",                           since: 2026-08-13}
+  - {pattern: 'LitRPG: RPG',                      replaced_by: "Gradebreaker",                                since: 2026-09-10}
+  - {pattern: 'Toxin',                            replaced_by: "cut",                                         since: 2026-08-04}
+  - {pattern: 'Concept slot',                     replaced_by: "Principle slot",                              since: 2026-08-04}
+
+# Chapter names as the book cites them, for the cross-reference check.
+chapters:
+  Introduction: 00-introduction.md
+  Core Mechanics: 10-core-mechanics.md
+  Character Creation: 15-character-creation.md
+  Progression: 17-progression.md
+  The Principle System: 20-principles.md
+  Cultivation: 25-cultivation.md
+  Grade Breakthroughs: 30-breakthroughs.md
+  Titles: 40-titles.md
+  The System AI: 45-system-ai.md
+  The Hidden Vector Engine: 50-hidden-vector-engine.md
+  System Quests: 55-quests.md
+  What Can Be Seen: 57-what-can-be-seen.md
+  Bestiary: 60-bestiary.md
+  Items: 65-items.md
+  The Tutorial: 70-tutorial.md
+  Quick Reference: 75-quick-reference.md

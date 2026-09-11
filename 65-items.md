@@ -22,6 +22,7 @@ Every entry here is one of three kinds, and each is labeled:
 
 Restore HP instantly. In combat, consuming a pill costs **1 Beat**, spent by whoever takes the action: swallow one yourself, or administer one to an ally in the same Zone. The recipient of an administered pill spends nothing.
 
+<!-- rules:table healing-pills -->
 | **Pill** | **Grade** | **HP Restored** |
 |---|---|---|
 | Stuttering Tincture | F | 5 |
@@ -29,6 +30,7 @@ Restore HP instantly. In combat, consuming a pill costs **1 Beat**, spent by who
 | Healing Pill | F | 30 |
 | Greater Healing Pill | F | 50 |
 | Pristine Recovery Pill | F | 80 |
+<!-- /rules:table -->
 
 E-Grade pills heal ×10 the listed amount for an E-Grade body. **An F-Grade body cannot process one at all:** the concentration is wrong for the frame holding it, and the pill does nothing but leave a metallic burn in the throat and a bad hour afterward. Hoarding higher-Grade medicine against a future Grade is sensible; swallowing it now is a waste of a valuable thing.
 
@@ -46,12 +48,14 @@ The body accepts only so much pill-borne help under stress. **The first two Heal
 
 Restore Aether mid-encounter. In combat, consuming one costs **1 Beat**.
 
+<!-- rules:table aether-pills -->
 | **Pill** | **Grade** | **Aether Restored** |
 |---|---|---|
 | Sparkstone Tablet | F | 10 |
 | Lesser Aether Pill | F | 25 |
 | Aether Pill | F | 50 |
 | Greater Aether Pill | F | 80 |
+<!-- /rules:table -->
 
 Aether Pills should be rare. Aether primarily refills through Consolidation; widely available Aether Pills would collapse the scarcity the Aether system is built on.
 
@@ -59,11 +63,13 @@ Aether Pills should be rare. Aether primarily refills through Consolidation; wid
 
 See the Grade Breakthroughs chapter for full rules. Brief reference:
 
+<!-- rules:table foundation-pills -->
 | **Pill** | **Grade** | **Breakthrough Bonus** |
 |---|---|---|
 | Dragon Marrow Pill | F | +5 |
 | Nine Leaf Essence | F | +10 |
 | Heavenly Foundation Pill | F | +15 |
+<!-- /rules:table -->
 
 Foundation Pills are consumed during Stage 1 of a Breakthrough (Preparation). Only one Foundation Pill effect applies per Breakthrough; the body cannot metabolize multiple at once.
 
@@ -71,11 +77,13 @@ Foundation Pills are consumed during Stage 1 of a Breakthrough (Preparation). On
 
 Concentrated pieces of something that was strong: the heart of a beast that should not have been able to move that fast, sap from a tree that grew up through stone, marrow from a thing that kept standing. Absorbing one raises a single Attribute's Raw value permanently, and the character chooses which.
 
+<!-- rules:table treasures -->
 | **Treasure** | **Grade** | **Raw Points** |
 |---|---|---|
 | Lesser | F | +2 |
 | Standard | F | +5 |
 | Greater | F | +10 |
+<!-- /rules:table -->
 
 Values scale ×10 per Grade, matching everything else.
 
@@ -97,6 +105,7 @@ Weapons do not deal flat damage and carry no bonus of their own. They determine 
 
 The wielder is the weapon. In an Integrated body, accuracy and killing power both come from the person: Force decides them, and the Margin is the physics. The implement decides which Force applies and what reach or range it grants. This is why the tables here carry no damage dice and no high-damage weapon class: a greatsword in weak hands is a slow club, and a knife guided by Force 60 is deadlier than either.
 
+<!-- rules:table weapons -->
 | **Weapon** | **Governing Force** | **Proficiency** | **Notes** |
 |---|---|---|---|
 | Improvised object | STR | none | A chair, a rock, a fire extinguisher. Nothing shaped like a weapon. |
@@ -109,6 +118,7 @@ The wielder is the weapon. In an Integrated body, accuracy and killing power bot
 | Short Bow | DEX | archery and throwing | Two-handed. Ranged: target enemies in adjacent Zones. |
 | Crossbow (single-shot) | DEX | archery and throwing | Two-handed. Requires 1 Beat to reload between shots. |
 | Hand Axe (thrown) | STR | archery and throwing | Ranged: one Zone. Recoverable. |
+<!-- /rules:table -->
 
 These are the starting and recovery tier. Higher-quality weapons (named, System-forged, Principle-attuned) are bespoke items the GM designs as treasure or quest rewards.
 
@@ -128,6 +138,7 @@ Volatile Artifacts are scavenged debris from dead worlds, half-functioning const
 
 Crystalline matrices containing fragments of dead techniques. Single-use. Activate as a 1-Beat action; the user describes intent and the GM rolls for backfire. Roll **1d100** when activating.
 
+<!-- rules:table shards -->
 | **Shard Type** | **Effect** | **Backfire (on natural 01–05)** |
 |---|---|---|
 | Edge Shard | Next Clash this turn gains +20. | Shard cracks: user takes 5 damage. |
@@ -136,6 +147,7 @@ Crystalline matrices containing fragments of dead techniques. Single-use. Activa
 | Anchor Shard | Until end of next turn, you cannot be moved by any effect (moving yourself is fine), and your Defense Force gains +10. | You become **Rooted** for the rest of the encounter: unable to be moved, and unable to move under your own power. |
 | Resonance Shard | Add 1 IP toward a Principle of your choice. | The IP is lost. |
 | Volatile Shard | Roll d100 again. The GM and the System AI generate an unpredictable effect based on the result. | The GM's discretion is the risk. |
+<!-- /rules:table -->
 
 Shards are randomizers. They reward players who use them in moments where a wild outcome is acceptable, and punish those who treat them as reliable tools. New shard types price their effects against the Modifier Budget and keep the natural 01–05 backfire, the same bottom-of-the-die number that governs Catastrophic Failure.
 

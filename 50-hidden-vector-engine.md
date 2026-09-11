@@ -76,12 +76,14 @@ The whole engine runs on one half-page sheet per character, filled in once per s
 
 ### Weighing a Moment
 
+<!-- rules:table sweep-weights -->
 | **Weight** | **What qualifies** | **Example** |
 |---|---|---|
 | No tally | Anything you had to strain to recall: table talk, jokes, mechanical optimization, choices with no cost | Buying rations. Choosing which Zone to stand in. |
 | 1 tally (remembered) | A real decision with consequence, made in fiction, under some cost, still with you at the sweep | Taking the pill while the others argue. Talking the brigand down instead of finishing him. |
 | 2 tallies (surprised the table) | High stakes, real risk, and the table reacted when it happened | Charging the pack alone to cover a stranger. Refusing a faction's bribe in front of its enforcer. |
 | 3 tallies, circled (Defining: surprised the player themselves) | Rare, identity-shaping, the table went quiet | Executing the surrendered Rival Initiate. Giving up the Breakthrough site to save the settlement. |
+<!-- /rules:table -->
 
 Calibration guidance: tally the *decision* rather than the outcome; a failed roll made for greedy reasons is still a Hunger tally. When torn between two axes, tally only the one that drove the choice. When torn between two weights, take the lower. If a moment reads on two axes at once (rare), tally a primary at full weight and a secondary one weight lower.
 
@@ -110,12 +112,14 @@ Deep is the character's long-term identity. It is the input to:
 - **Personal Opportunities.** Offers affirm the current pattern by default and occasionally test against it; see System Quests.
 - **The Breakthrough Coherence bonus.** Read the Deep rows:
 
+<!-- rules:table coherence -->
 | **Profile** | **Deep tallies** | **Coherence Bonus** |
 |---|---|---|
 | Scattered | No side leads by 3+ | +0 |
 | Leaning | One side leads by 3+ | +5 |
 | Defined | One side leads by 5+, or two sides by 3+ | +10 |
 | Singular | One side leads by 8+ | +20 |
+<!-- /rules:table -->
 
 These bands are the game's single definition of Coherence; Grade Breakthroughs reads them from here. In structured logging, read Deep numeric values against the same 3/5/8 thresholds.
 
@@ -155,7 +159,7 @@ The intensity values map to the sweep's weights: 1.0 remembered, 2.0 surprised t
 
 ## The Companion App
 
-A dedicated companion app for this game is planned: a listening assistant at the table that hears play, drafts HVE log entries automatically, and hands the GM a curated review at session end instead of a blank sheet. When it exists, it will implement exactly the procedure in this chapter, and this section will document it. Nothing in this book will ever require it; the sheet is always enough. Running Mode B today doubles as the app's rehearsal: whatever the sweep loses that you wish it had kept is what the app will exist to capture.
+A dedicated companion app for this game is planned: a listening assistant at the table that hears play, drafts HVE log entries automatically, and hands the GM a curated review at session end instead of a blank sheet. When it exists, it will implement exactly the procedure in this chapter, and this section will document it. Nothing in this book will ever require it; the sheet is always enough. Running an AI-Assisted table today doubles as the app's rehearsal: whatever the sweep loses that you wish it had kept is what the app will exist to capture.
 
 ## External Consequence (Macro-System Outputs)
 

@@ -1,0 +1,183 @@
+# Worked examples from Cultivation (25-cultivation.md) and System Quests.
+cases:
+  - name: Tolerance is 80 at F
+    source: 25-cultivation.md, "The Pressure Gauge"
+    fn: tolerance
+    args: {code: F}
+    expect: 80
+  - name: Tolerance is 800 at E
+    source: 25-cultivation.md, "The Pressure Gauge"
+    fn: tolerance
+    args: {code: E}
+    expect: 800
+  - name: Tolerance is 8,000 at D
+    source: 25-cultivation.md, "The Pressure Gauge"
+    fn: tolerance
+    args: {code: D}
+    expect: 8000
+  - name: Joe at 60 VE is fine
+    source: 25-cultivation.md, opening example
+    fn: saturation
+    args: {stored_ve: 60}
+    expect: {band: None, penalty: 0}
+  - name: Joe at 90 VE is past his Tolerance, −10 to everything
+    source: 25-cultivation.md, opening example
+    fn: saturation
+    args: {stored_ve: 90}
+    expect: {band: Mild, penalty: -10}
+  - name: Joe's 90 VE is refined by the fifth hour
+    source: 25-cultivation.md, opening example
+    fn: refine_hours
+    args: {stored_ve: 90}
+    expect: 5
+  - name: Exactly 80 is at Tolerance, no penalty
+    source: 25-cultivation.md, "The Pressure Gauge"
+    fn: saturation
+    args: {stored_ve: 80}
+    expect: {band: None}
+  - name: A level's worth, 120, is Mild
+    source: 25-cultivation.md, "The Pressure Gauge"
+    fn: saturation
+    args: {stored_ve: 120}
+    expect: {band: Mild}
+  - name: Past 160 is Heavy, −25
+    source: 25-cultivation.md, "The Pressure Gauge"
+    fn: saturation
+    args: {stored_ve: 161}
+    expect: {band: Heavy, penalty: -25}
+  - name: Two levels, 240, sits on the Critical line and is still Heavy
+    source: 25-cultivation.md, "The Pressure Gauge"
+    fn: saturation
+    args: {stored_ve: 240}
+    expect: {band: Heavy, collapse_clock: false}
+  - name: The next kill after two banked levels starts the clock
+    source: 25-cultivation.md, "The Pressure Gauge"
+    fn: saturation
+    args: {stored_ve: 250}
+    expect: {band: Critical, collapse_clock: true}
+  - name: An E-Grade Peak kill's 500 VE is far past Critical
+    source: 25-cultivation.md, "A cross-Grade windfall is a collapse"
+    fn: saturation
+    args: {stored_ve: 500}
+    expect: {band: Critical, collapse_clock: true}
+  - name: Bringing 500 VE under Tolerance takes the better part of a day
+    source: 25-cultivation.md, "A cross-Grade windfall is a collapse"
+    fn: refine_hours
+    args: {stored_ve: 500}
+    expect: 25
+  - name: A full Tolerance clears in four hours
+    source: 25-cultivation.md, "Consolidation (Structured Rest)"
+    fn: refine_hours
+    args: {stored_ve: 80}
+    expect: 4
+  - name: A level's worth of VE clears in six hours
+    source: 25-cultivation.md, "Consolidation (Structured Rest)"
+    fn: refine_hours
+    args: {stored_ve: 120}
+    expect: 6
+  - name: Someone holding 160 needs eight hours
+    source: 25-cultivation.md, "Consolidation (Structured Rest)"
+    fn: refine_hours
+    args: {stored_ve: 160}
+    expect: 8
+  - name: High density, a full Tolerance in two hours
+    source: 25-cultivation.md, "Environmental Modifiers"
+    fn: refine_hours
+    args: {stored_ve: 80, high_density: true}
+    expect: 2
+  - name: High density, a level in three hours
+    source: 25-cultivation.md, "Environmental Modifiers"
+    fn: refine_hours
+    args: {stored_ve: 120, high_density: true}
+    expect: 3
+  - name: E-Grade refines 200 an hour
+    source: 25-cultivation.md, "Consolidation (Structured Rest)"
+    fn: refine_rate
+    args: {code: E}
+    expect: 200
+  - name: A level costs 120 at F
+    source: "25-cultivation.md, 'Leveling: The Cost of a Level'"
+    fn: level_cost
+    args: {code: F}
+    expect: 120
+  - name: A level costs 1,200 at E
+    source: "25-cultivation.md, 'Leveling: The Cost of a Level'"
+    fn: level_cost
+    args: {code: E}
+    expect: 1200
+  - name: A level costs 12,000 at D
+    source: "25-cultivation.md, 'Leveling: The Cost of a Level'"
+    fn: level_cost
+    args: {code: D}
+    expect: 12000
+  - name: Reaching Level 10 requires 1,080 VE
+    source: 25-cultivation.md, "Pacing Reference (F-Grade)"
+    fn: cumulative_ve_to_level
+    args: {level: 10}
+    expect: 1080
+  - name: Reaching the F-Grade cap at Level 25 takes 2,880 VE
+    source: 25-cultivation.md, "Pacing Reference (F-Grade)"
+    fn: cumulative_ve_to_level
+    args: {level: 25}
+    expect: 2880
+  - name: A Peer Kill is 10 VE
+    source: 25-cultivation.md, "Combat Kills"
+    fn: kill_ve
+    args: {tier: Moderate}
+    expect: 10
+  - name: A Trivial kill is 2
+    source: 25-cultivation.md, "Combat Kills"
+    fn: kill_ve
+    args: {tier: Trivial}
+    expect: 2
+  - name: A Peak kill is 50
+    source: 25-cultivation.md, "Combat Kills"
+    fn: kill_ve
+    args: {tier: Peak}
+    expect: 50
+  - name: An E-Grade peer-tier enemy pays an F-Grade character 100
+    source: 25-cultivation.md, "Combat Kills"
+    fn: kill_ve
+    args: {tier: Moderate, killer_grade: F, victim_grade: E}
+    expect: 100
+  - name: An E-Grade Peak monster pays an F-Grade character 500
+    source: 25-cultivation.md, "Combat Kills"
+    fn: kill_ve
+    args: {tier: Peak, killer_grade: F, victim_grade: E}
+    expect: 500
+  - name: 500 VE is four levels on the spot
+    source: 25-cultivation.md, "Combat Kills"
+    fn: levels_from_ve
+    args: {unrefined_ve: 500}
+    expect: 4
+  - name: An E-Grade peer kill by an E-Grade character is 100
+    source: 25-cultivation.md, "Combat Kills"
+    fn: kill_ve
+    args: {tier: Moderate, killer_grade: E, victim_grade: E}
+    expect: 100
+  - name: Sub-Grade kills are not priced in the book
+    source: "25-cultivation.md, 'The Cost of a Level' ('Sub-Grade kills pay next to nothing')"
+    fn: kill_ve
+    args: {tier: Moderate, killer_grade: E, victim_grade: F}
+    expect_error: RulesGap
+    expect: null
+  - name: A Routine Moderate quest awards 15 VE on completion
+    source: 55-quests.md, "VE Rewards by Quest Category and Difficulty"
+    fn: quest_ve
+    args: {category: Routine, difficulty: Moderate}
+    expect: 15
+  - name: The same difficulty as a Personal Opportunity awards 30
+    source: 55-quests.md, "VE Rewards by Quest Category and Difficulty"
+    fn: quest_ve
+    args: {category: Personal Opportunity, difficulty: Moderate}
+    expect: 30
+  - name: Ten Glow-Mote kills as a Trivial Routine quest, the quest adds 3
+    source: "55-quests.md, 'Quest VE Policy' (20 VE of kills plus 3 completion is 23)"
+    fn: quest_ve
+    args: {category: Routine, difficulty: Trivial}
+    expect: 3
+  - name: A Trivial Mandate does not exist
+    source: 55-quests.md, "VE Rewards by Quest Category and Difficulty"
+    fn: quest_ve
+    args: {category: Mandate, difficulty: Trivial}
+    expect: null

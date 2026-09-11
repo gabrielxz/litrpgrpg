@@ -147,6 +147,7 @@ When in doubt, use the Grade Reference Card. A character with Force 30 fighting 
 
 **Encounter sizing for an F-Grade party of 4:**
 
+<!-- rules:table encounter-sizing -->
 | Party Level | Easy Fight | Standard Fight | Hard Fight |
 |---|---|---|---|
 | L1–3 | 2 Trivial | 1 Easy + 1 Trivial | 1 Moderate or 2 Easy |
@@ -154,6 +155,7 @@ When in doubt, use the Grade Reference Card. A character with Force 30 fighting 
 | L8–12 | 2 Moderate | 1 Hard + 1 Moderate | 1 Severe or 2 Hard + 1 Easy |
 | L13–20 | 2 Hard | 1 Severe + 1 Hard | 1 Peak or 2 Severe |
 | L21–25 | 2 Severe | 1 Peak + 1 Hard | Boss + adds |
+<!-- /rules:table -->
 
 These ratios assume a balanced party with reasonable equipment. Adjust upward for well-prepared parties; adjust downward when the party is wounded, low on Aether, or out of consumables.
 

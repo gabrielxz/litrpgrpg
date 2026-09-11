@@ -1,0 +1,42 @@
+# The three worked Clashes in the Quick Reference (75-quick-reference.md).
+cases:
+  - name: Example 1, F-Grade peer Clash, 115 against 90, Margin 25, damage 25
+    source: 75-quick-reference.md, "Examples" (1)
+    fn: clash
+    args: {att_die: 60, att_force: 55, def_die: 50, def_force: 40}
+    expect: {attacker_total: 115, defender_total: 90, margin: 25, damage: 25, driven_back: false}
+  - name: Example 2, D-Grade natural 97 explodes on 94+, rolls 40, total die 137
+    source: 75-quick-reference.md, "Examples" (2)
+    fn: explode
+    args: {natural_dice: [97, 40], code: D}
+    expect: {total: 137, extra_dice: 1, battle_memory: false}
+  - name: Example 2, D-Grade Clash 222 against 145, Margin 77, damage 7,700
+    source: 75-quick-reference.md, "Examples" (2)
+    fn: clash
+    args: {att_die: 137, att_force: 85, def_die: 75, def_force: 70, att_grade: D, def_grade: D}
+    expect: {attacker_total: 222, defender_total: 145, margin: 77, damage: 7700, driven_back: true}
+  - name: Example 3, F-Peak rolls 85 against E-Initiate's 20, Margin 52, damage 52
+    source: 75-quick-reference.md, "Examples" (3)
+    fn: clash
+    args: {att_die: 85, att_force: 99, def_die: 20, def_force: 12, att_grade: F, def_grade: E}
+    expect: {attacker_total: 184, defender_total: 132, margin: 52, damage: 52}
+  - name: Example 3, E-Initiate attacks, 162 against 149, Margin 13, damage 130
+    source: 75-quick-reference.md, "Examples" (3)
+    fn: clash
+    args: {att_die: 50, att_force: 12, def_die: 50, def_force: 99, att_grade: E, def_grade: F}
+    expect: {attacker_total: 162, defender_total: 149, margin: 13, damage: 130}
+  - name: E-Initiate FOR 120 has 240 HP
+    source: 75-quick-reference.md, "Examples" (3)
+    fn: max_hp
+    args: {raw_for: 120}
+    expect: 240
+  - name: F-Peak FOR 99 has 198 HP
+    source: 75-quick-reference.md, "Examples" (3)
+    fn: max_hp
+    args: {raw_for: 99}
+    expect: 198
+  - name: A cascade of two extra dice grants a Battle Memory Card
+    source: 75-quick-reference.md, "Volatility"
+    fn: explode
+    args: {natural_dice: [96, 98, 12], code: F}
+    expect: {total: 206, extra_dice: 2, battle_memory: true}

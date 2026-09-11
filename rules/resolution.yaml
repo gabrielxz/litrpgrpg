@@ -1,0 +1,73 @@
+# Core resolution: d100 + Force + Tactical Modifiers, compare.
+# source: 10-core-mechanics.md, "Core Resolution"
+
+die: d100
+
+# The Grade Reference Card. Same-Grade Resistance reads straight off it; across a
+# Grade gap the higher side adds the Cross-Grade Adjustment (grades.yaml).
+resistance_card:
+  - difficulty: Trivial
+    resistance: 40
+  - difficulty: Easy
+    resistance: 65
+  - difficulty: Moderate
+    resistance: 90
+  - difficulty: Hard
+    resistance: 115
+  - difficulty: Severe
+    resistance: 140
+  - difficulty: Peak
+    resistance: 165
+
+# If Force alone (plus any Cross-Grade Adjustment) meets the Resistance, no roll.
+# Two or more Grades above a passive obstacle never rolls. Living opposition always rolls.
+auto_success:
+  passive_obstacles_only: true
+  never_rolls_at_grade_gap: 2
+
+ties:
+  opposed_roll: initiator
+  clash: attacker
+  momentum_roll: reroll
+
+# Forty is the swing number throughout the rules.
+rule_of_40:
+  dominant_margin: 40          # win by this and the outcome is decisive, whatever the arena
+  turned_aside_margin: 40      # defender wins by this: attacker Exposed until end of their next turn
+  driven_back_margin: 40       # attacker wins by this: defender Exposed, may be driven one Zone
+  hard_failure_margin: 40      # skill check fails by this or more: failure plus consequence
+
+# Skill-check outcomes (combat Clashes carry their own).
+failure_tiers:
+  soft: {fail_by_min: 1, fail_by_max: 39}
+  hard: {fail_by_min: 40}
+  catastrophic_natural: [1, 5]        # natural 01–05, whatever the margin
+exceptional_success: volatility_threshold   # natural die at or above the roller's Grade threshold; no extra dice
+
+# Every Tactical Modifier draws from one budget. New skills, items, and class
+# features price against it.
+modifier_budget:
+  - name: Minor bonus
+    size: 5
+    examples: [Trained Proficiency, Surge, minor blessings]
+  - name: Standard bonus
+    size: 10
+    examples: [Advantaged, Flanking, Seasoned and Master Proficiency, most System-granted skills]
+  - name: Peak bonus (rare)
+    size_min: 15
+    size_max: 20
+    examples: [Peak abilities, one-shot relics, Hidden Achievement rewards]
+  - name: Hindering environment
+    size: -10
+    examples: [Darkness, difficult footing, driving rain]
+  - name: Crippling environment
+    size: -20
+    examples: [Blindness, restrained, fighting submerged]
+
+positional_states:
+  advantaged: 10
+  neutral: 0
+  exposed: -10
+  reciprocal: false             # each combatant's state affects only their own rolls
+  change_cost_beats: 1          # claiming your own or stripping an enemy's
+flanking_bonus: 10              # for every hostile engaging a target that two or more engage at once

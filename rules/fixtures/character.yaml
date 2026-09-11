@@ -1,0 +1,62 @@
+# The pregens, the point buy, the leveling budget, and Proficiencies.
+cases:
+  - name: Kara, HP 14, Aether 6, Tolerance 80, bands 80/160/240
+    source: 15-character-creation.md, "Ready-Made Characters"
+    fn: pregen_derived
+    args: {name: Kara}
+    expect: {points: 40, max_hp: 14, max_aether: 6, tolerance: 80, bands: [80, 160, 240], surge_cost: 3}
+  - name: Joe, HP 14, Aether 4
+    source: 15-character-creation.md, "Ready-Made Characters"
+    fn: pregen_derived
+    args: {name: Joe}
+    expect: {points: 40, max_hp: 14, max_aether: 4, tolerance: 80}
+  - name: Andre, HP 10, Aether 5
+    source: 15-character-creation.md, "Ready-Made Characters"
+    fn: pregen_derived
+    args: {name: Andre}
+    expect: {points: 40, max_hp: 10, max_aether: 5, tolerance: 80}
+  - name: By Level 9 a character has 80 points from creation and levels
+    source: 17-progression.md, "What Nine Levels Produce"
+    fn: points_by_level
+    args: {level: 9}
+    expect: 80
+  - name: Trained is +5
+    source: 10-core-mechanics.md, "The Three Tiers"
+    fn: proficiency_bonus
+    args: {tier: Trained}
+    expect: 5
+  - name: Seasoned is +10
+    source: 10-core-mechanics.md, "The Three Tiers"
+    fn: proficiency_bonus
+    args: {tier: Seasoned}
+    expect: 10
+  - name: Master is +10
+    source: 10-core-mechanics.md, "The Three Tiers"
+    fn: proficiency_bonus
+    args: {tier: Master}
+    expect: 10
+  - name: Untrained adds nothing
+    source: 65-items.md, "Weapons (F-Grade Reference)"
+    fn: proficiency_bonus
+    args: {tier: untrained}
+    expect: 0
+  - name: 3 Marks makes Seasoned
+    source: 10-core-mechanics.md, "Marks"
+    fn: tier_for_marks
+    args: {marks: 3}
+    expect: Seasoned
+  - name: 10 Marks in an F-Grade body banks; still Seasoned
+    source: 10-core-mechanics.md, "Marks"
+    fn: tier_for_marks
+    args: {marks: 10, body_grade: F}
+    expect: Seasoned
+  - name: 10 Marks in an E-Grade body makes Master
+    source: 10-core-mechanics.md, "Marks"
+    fn: tier_for_marks
+    args: {marks: 10, body_grade: E}
+    expect: Master
+  - name: Two Marks is still Trained
+    source: 10-core-mechanics.md, "Marks"
+    fn: tier_for_marks
+    args: {marks: 2}
+    expect: Trained

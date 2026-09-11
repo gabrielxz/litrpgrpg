@@ -58,7 +58,7 @@ COVER_TITLED := $(BUILD_DIR)/cover_titled.png
 TITLE_FONT   := $(shell kpsewhich CinzelDecorative-Black.ttf)
 BYLINE_FONT  := $(shell kpsewhich EBGaramond-Italic.otf)
 
-.PHONY: all pdf epub kit tutorial clean
+.PHONY: all pdf epub kit tutorial tables test check clean
 
 all: pdf epub
 
@@ -188,6 +188,22 @@ epub: $(EPUB_BASE)
 	@echo ""
 	@echo "Built: $(EPUB_OUT)"
 	@echo "Size:  $$(du -h $(EPUB_OUT) | cut -f1)"
+
+# --- Rules data: tables, tests, lint --------------------------------------
+# The book's rules tables render from rules/*.yaml; the worked examples in the
+# book are fixtures the reference engine runs; the prose lint fails on retired
+# values and dead cross-references. `make check` runs all three read-only.
+tables:
+	python3 tools/render_tables.py
+
+test:
+	python3 tools/test_rules.py
+	python3 tools/lint_prose.py
+
+check:
+	python3 tools/render_tables.py --check
+	python3 tools/test_rules.py
+	python3 tools/lint_prose.py
 
 # --- Tutorial-only PDF -----------------------------------------------------
 # Pages from the Tutorial chapter (its art page) to the end of the book, cut

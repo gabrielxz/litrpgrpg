@@ -1,0 +1,16 @@
+[Q-PO-091] The Wounded Beast
+Issuer:     System
+Grade:      F · Difficulty: Moderate
+Objective:  A Glow-Stalker injured during your last engagement
+            has retreated to a den 1.2km north. Eliminate before
+            it recovers (24h window).
+Reward:     30 VE, 1 predator core (5 VE absorption value)
+Hidden:     If the Glow-Stalker is captured alive and returned
+            to the Wild Fragment uninjured beyond current state,
+            +1 IP toward a Restraint-aligned Principle.
+Refusal:    Predator-tier opportunities offered less frequently
+            for the next session.
+
+System Voice:
+"Predator wounded: 1.2km, 8°. Recovery imminent.
+Opportunity window: 24h. Engagement recommended."

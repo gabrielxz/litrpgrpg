@@ -56,12 +56,14 @@ The cultivator deliberately floods their body with Volatile Energy, pushing past
 
 The cultivator needs VE equal to at least **one full Tolerance** to ignite, and may choose to carry more. The multiple of Tolerance they hold at Ignition is the **Overcharge Ratio**, the risk-reward dial the player controls:
 
+<!-- rules:table overcharge -->
 | Overcharge Ratio | VE Stored | Saturation While Charging | Trial Difficulty | Quality Modifier |
 |---|---|---|---|---|
 | ×1.0 (Minimum) | One Tolerance | None | Base difficulty | +0 |
 | ×2.0 (Aggressive) | Twice Tolerance | Mild, −10 | +10 to Breakthrough DC | +1 Tier |
 | ×3.0 (Reckless) | Three times Tolerance | Heavy, −25 | +20 to Breakthrough DC | +2 Tiers |
 | ×4.0 (Suicidal) | Four times Tolerance | Critical, clock running | +40 to Breakthrough DC | +3 Tiers |
+<!-- /rules:table -->
 
 At the F-Grade cap those are 80, 160, 240, and 320 VE; ×10 for each Grade above.
 
@@ -85,9 +87,11 @@ Heart alone. Every Breakthrough is a trial of will, and no other Attribute is co
 
 **Breakthrough DC** is **140** at every Grade transition: Severe difficulty, read straight off the Grade Reference Card. There is no Cross-Grade Adjustment, because the challenger is not facing something a Grade above them. They are becoming it. The Overcharge Ratio further modifies the DC.
 
+<!-- rules:table overcharge-dc -->
 | Overcharge Ratio | ×1.0 | ×2.0 | ×3.0 | ×4.0 |
 |---|---|---|---|---|
 | Effective DC | 140 | 150 | 160 | 180 |
+<!-- /rules:table -->
 
 **What the DC represents:** a challenger rolls d100 + HRT Force against 140, with Heart bounded 1–99 inside their current Grade, and adds whatever preparation they brought. A character with Heart in the sixties and ordinary preparation is a little better than even. One who neglected Heart entirely needs both a fortune in preparation and a good die. The math is identical at every Breakthrough: F→E, E→D, D→C.
 
@@ -95,14 +99,16 @@ Heart alone. Every Breakthrough is a trial of will, and no other Attribute is co
 
 **Modifiers to the Breakthrough Check:**
 
+<!-- rules:table breakthrough-modifiers -->
 | Source | Modifier |
 |---|---|
-| Location Energy Density (see below) | +5 to +25 |
+| Location Energy Density (see below) | +0 to +25 |
 | Foundation Pills consumed | +5 to +15 |
 | HVE Coherence Bonus (see below) | +0 to +20 |
 | Party Support (see below) | +5 to +15 |
 | Quality Enhancer item consumed | no roll modifier (affects tier) |
 | Tribulation Ward consumed | no roll modifier (affects failure severity) |
+<!-- /rules:table -->
 
 **HVE Coherence Bonus:** A character with a sharp, consistent behavioral signature across the HVE axes generates a cleaner trial. Read the character's profile band from the Deep rows of their HVE sheet (The Hidden Vector Engine, "What the Engine Drives"):
 
@@ -117,6 +123,7 @@ The GM does not need to calculate this precisely; it is a qualitative read of th
 
 The Breakthrough Check margin (roll result minus DC) determines the base Quality Tier. Overcharge and item bonuses can push the tier higher.
 
+<!-- rules:table quality-tiers -->
 | Margin | Base Tier | Description |
 |---|---|---|
 | Below 0 | **Cracked** | Failure. |
@@ -124,6 +131,7 @@ The Breakthrough Check margin (roll result minus DC) determines the base Quality
 | 20–39 | **Polished** | Above-average ascension. |
 | 40–59 | **Pristine** | Exceptional ascension. |
 | 60+ | **Transcendent** | One-of-a-kind ascension. |
+<!-- /rules:table -->
 
 **Tier Adjustment:** On a successful check, apply the Overcharge Quality Modifier to the base tier from the margin table: ×2.0 raises the final tier one step, ×3.0 two steps, ×4.0 three steps. Quality Enhancer items push the final tier up one further step. Neither adjustment raises a tier above Transcendent, and neither applies on a failure: a check that misses the DC is Cracked no matter the Overcharge. This is the risk-reward loop: overcharging raises the DC, buying a better outcome on success at the price of a likelier failure.
 
@@ -229,6 +237,7 @@ The location where a Breakthrough occurs matters. Energy density (the concentrat
 
 ### Energy Density Tiers
 
+<!-- rules:table energy-density -->
 | Tier | Breakthrough Bonus | Phenomena Intensity | Example Locations |
 |---|---|---|---|
 | **Barren** | +0 | Minimal (1 weak threat) | Urban ruins, depleted zones, mundane terrain |
@@ -236,6 +245,7 @@ The location where a Breakthrough occurs matters. Energy density (the concentrat
 | **Moderate** | +10 | Standard (2 moderate threats) | Established energy nexus, active ley-line intersection |
 | **High** | +20 | Heavy (2–3 strong threats) | Deep dungeon core, natural treasure ground, ancient formation |
 | **Extreme** | +25 | Severe (3 strong threats, possible Grade+ entity) | Mystic realm convergence point, heart of an Incursion zone |
+<!-- /rules:table -->
 
 The tradeoff is explicit: better locations produce better Breakthroughs, but they also attract more dangerous tribulation phenomena. A party that can handle the external threats should always seek the highest-density location available. A solo cultivator must weigh the bonus against the automatic phenomenon penalties they will eat.
 
@@ -327,12 +337,11 @@ This book covers F→E and E→D in full; D→C and beyond arrive in a future su
 |---|---|---|
 | Base Roll | d100 (Volatility-live; explodes at the current Grade's threshold) | 1–100+ |
 | HRT Force | Character stat | 10–99 |
-| Highest Attribute Force | Character stat | 10–99 |
 | Location | Environment tier | +0 to +25 |
 | Foundation Pill | Consumed item | +5 to +15 |
 | HVE Coherence | GM behavioral read | +0 to +20 |
 | Party Anchor | Ally support roll | +5 to +15 |
-| Overcharge | Player choice (added to DC) | +0 to +45 |
+| Overcharge | Player choice (added to DC) | +0 to +40 |
 
 ---
 

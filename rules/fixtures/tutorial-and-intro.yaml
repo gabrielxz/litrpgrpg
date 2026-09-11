@@ -1,0 +1,57 @@
+# Numbers the tutorial ledger and the Introduction's example of play depend on.
+cases:
+  - name: The first kill, a Husk Crawler, pays 2 VE
+    source: 70-tutorial.md, Phase 2, "The First Kill"
+    fn: kill_ve
+    args: {tier: Trivial}
+    expect: 2
+  - name: Session 1 pays 35 to 45 VE, nobody is Saturated
+    source: 70-tutorial.md, Phase 3, "First Consolidation"
+    fn: saturation
+    args: {stored_ve: 45}
+    expect: {band: None}
+  - name: Session 1's load clears in three hours
+    source: 70-tutorial.md, Phase 3, "First Consolidation"
+    fn: refine_hours
+    args: {stored_ve: 45}
+    expect: 3
+  - name: One Ruins zone, about 120, is Mild Saturation for everyone
+    source: 70-tutorial.md, Phase 4, "The Camp Between Zones"
+    fn: saturation
+    args: {stored_ve: 120}
+    expect: {band: Mild}
+  - name: Two zones carried at once land on the Critical line, still Heavy
+    source: 70-tutorial.md, Phase 4, "The Camp Between Zones"
+    fn: saturation
+    args: {stored_ve: 240}
+    expect: {band: Heavy, collapse_clock: false}
+  - name: The Force/Hunger sample's 265 VE awaiting refinement is two more levels
+    source: 70-tutorial.md, Phase 6, "Sample Summaries by Archetype"
+    fn: levels_from_ve
+    args: {unrefined_ve: 265}
+    expect: 2
+  - name: The Force/Hunger sample's 265 VE is Critical at the gate
+    source: 70-tutorial.md, Phase 6, "The Post-Gate Consolidation"
+    fn: saturation
+    args: {stored_ve: 265}
+    expect: {band: Critical}
+  - name: The Method/Restraint sample's 205 VE is one more level
+    source: 70-tutorial.md, Phase 6, "Sample Summaries by Archetype"
+    fn: levels_from_ve
+    args: {unrefined_ve: 205}
+    expect: 1
+  - name: The Method/Restraint sample's 205 VE is Heavy at the gate
+    source: 70-tutorial.md, Phase 6, "The Post-Gate Consolidation"
+    fn: saturation
+    args: {stored_ve: 205}
+    expect: {band: Heavy}
+  - name: Example of play, the Snarljaw wins by 30 and Kara gives up one Beat, 10 gets through
+    source: 00-introduction.md, "An Example of Play"
+    fn: yield_margin
+    args: {margin: 30, beats: 1}
+    expect: 10
+  - name: Example of play, a Snarljaw kill gave Kara ten VE
+    source: 00-introduction.md, "An Example of Play"
+    fn: kill_ve
+    args: {tier: Moderate}
+    expect: 10

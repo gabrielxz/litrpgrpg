@@ -1,0 +1,147 @@
+# The F-Grade bestiary. Force values are pre-extracted at the creature's Grade.
+# source: 60-bestiary.md
+
+conventions:
+  hp: 2 × the creature's effective Raw FOR
+  force_printed_as: two digits at the creature's Grade; leading zero below the band
+  yields_only_if_stated: true
+  tier_maps_to: Grade Reference Card difficulty and the VE kill tier
+
+creatures:
+  - name: Glow-Mote Swarm
+    tier_group: Trash
+    grade: F
+    tier: Trivial
+    hp: 10
+    beats: 1
+    offense: [{force: 5, stat: DEX, means: sting}]
+    defense: [{force: 8, stat: DEX, means: evasion}]
+    yields: false
+    tactics: "On a successful hit, target is Exposed for one round (vision dazzle from bioluminescence)."
+  - name: Husk Crawler
+    tier_group: Trash
+    grade: F
+    tier: Trivial
+    hp: 16
+    beats: 1
+    offense: [{force: 4, stat: STR, means: claws}]
+    defense: [{force: 8, stat: FOR, means: dead flesh}]
+    yields: false
+    tactics: "Will not flee. Ignores Free Strikes when leaving a Zone; it does not register the threat."
+  - name: Frenzy Rat
+    tier_group: Trash
+    grade: F
+    tier: Easy
+    hp: 12
+    beats: 2
+    offense: [{force: 12, stat: DEX, means: bite}]
+    defense: [{force: 12, stat: DEX, means: scampering}]
+    yields: false
+    tactics: "Always attempts to flank. When two or more Frenzy Rats share a Zone with their target, all of them gain +10 (Flanking)."
+  - name: Pre-System Brigand
+    tier_group: Trash
+    grade: F
+    tier: Easy
+    hp: 14
+    beats: 2
+    offense: [{force: 8, stat: STR, means: club}, {force: 7, stat: DEX, means: knife}]
+    defense: [{force: 7, stat: FOR}, {force: 7, stat: DEX}]
+    yields: false
+    tactics: "Flees when Turned Aside or when reduced below half HP. Carries 1d3 Stuttering Tinctures and a crude weapon."
+  - name: Snarljaw
+    tier_group: Peer
+    grade: F
+    tier: Moderate
+    hp: 24
+    beats: 2
+    offense: [{force: 14, stat: STR, means: fang and claw}]
+    defense: [{force: 18, stat: DEX}]
+    yields: false
+    tactics: "Pack hunter: gains +10 (Flanking) when another Snarljaw is in the same Zone. On a successful hit, may spend its second Beat instead of attacking again to drag prey down (target becomes Exposed for next round)."
+  - name: Glow-Stalker
+    tier_group: Peer
+    grade: F
+    tier: Moderate
+    hp: 20
+    beats: 2
+    offense: [{force: 22, stat: DEX, means: ambush strike}]
+    defense: [{force: 22, stat: DEX, means: fade}]
+    yields: false
+    tactics: "Begins encounter unseen unless detected by an active Perception Clash. Surprise Beat on first turn. Withdraws to the Zone edge after striking; favors hit-and-run over sustained combat. If pinned, fights frantically, gaining +5 Off Force when below half HP."
+  - name: Training Sentry
+    tier_group: Peer
+    grade: F
+    tier: Moderate
+    hp: 50
+    beats: 2
+    offense: [{force: 18, stat: STR, means: hammerblow}]
+    defense: [{force: 25, stat: FOR, means: plating}]
+    yields: false
+    tactics: "Immune to mental and coercive attacks (no HRT layer). A character may spend 1 Beat observing instead of attacking; their next Clash against the Sentry gains +5 (study). Escalation: after 3 rounds of combat, the Sentry shifts to combat-mode protocols and its Force values increase by +5."
+  - name: Rival Initiate
+    tier_group: Elite
+    grade: F
+    tier: Hard
+    hp: 56
+    aether: 22
+    beats: 2
+    offense: [{force: 30, stat: DEX, means: bladework}]
+    defense: [{force: 30, stat: DEX}, {force: 28, stat: FOR}]
+    yields: true
+    tactics: "Wields a Knife (Trained blades, +5). Has one Seed Application: Searing Strike (costs 10 Aether, +10 to next Clash, deals damage as fire). Uses positioning intelligently and will retreat to advantageous terrain. Carries 1 Lesser Healing Pill."
+  - name: Husk Sentinel
+    tier_group: Elite
+    grade: F
+    tier: Hard
+    hp: 80
+    beats: 2
+    offense: [{force: 35, stat: STR, means: glaive sweep}]
+    defense: [{force: 40, stat: FOR, means: plating}]
+    yields: true
+    tactics: "When the Sentinel wins a defensive Clash, it gains a free Counterstrike: one Clash at no Beat cost against the failed attacker. Resistant to mental attacks (treat HRT Force as 25 for defensive purposes)."
+  - name: Alpha Snarljaw
+    tier_group: Elite
+    grade: F
+    tier: Hard
+    hp: 64
+    beats: 2
+    offense: [{force: 30, stat: STR, means: sundering bite}]
+    defense: [{force: 28, stat: DEX}]
+    yields: false
+    tactics: "Pack Tactics. While any other Snarljaw is in the same Zone, all of them gain +10 to Clashes. When the Alpha lands a hit, it deals +5 bonus damage on the Margin (sundering jaw). Will not flee; defends the pack to death."
+  - name: Fragment Wraith
+    tier_group: Boss
+    grade: F
+    tier: Severe
+    hp: 120
+    aether: 65
+    beats: 2
+    offense: [{force: 65, stat: POW, means: mind-leach}]
+    defense: [{force: 60, stat: HRT, means: spectral}, {force: 70, stat: PER, means: vs. illusion-piercing}]
+    yields: true
+    tactics: "Gives ground as smoke does, sliding out of a Zone rather than taking the blow. Incorporeal: STR/DEX physical attacks are at −10 unless the weapon or attack carries an active Principle infusion. Mind-Leach (1 Beat, 10 Aether): target rolls HRT defense; on a hit, deal damage as normal and drain 1 Aether from the target per damage point dealt, added to the Wraith's pool up to its Max. Vulnerability: PER-based attacks deal +10 bonus damage on the Margin."
+  - name: Corrupted System Warden
+    tier_group: Boss
+    grade: F
+    tier: Peak
+    hp: 190
+    aether: 75
+    beats: 3
+    offense: [{force: 80, stat: STR, means: gauntlet smash}, {force: 75, stat: POW, means: energy lash}]
+    defense: [{force: 95, stat: FOR, means: plating}, {force: 60, stat: DEX, means: evasive shift}]
+    yields: true
+    tutorial_boss: true
+    tactics: "Indifferent Mode: at full HP it ignores the party and moves toward the gate with all 3 Beats. Hostile Mode: after losing a quarter of its HP it uses 2 Beats for attacks and 1 for movement. Yields by planting itself; it is too massive to be moved far. Glitch Cascade: on a Volatility explosion (natural 96+), the next attack against it by any combatant gains +20. Not winnable in a straight fight at F-Grade."
+
+# For an F-Grade party of 4.
+encounter_sizing:
+  - {party_level: "L1–3",   easy: "2 Trivial",  standard: "1 Easy + 1 Trivial",     hard: "1 Moderate or 2 Easy"}
+  - {party_level: "L4–7",   easy: "2 Easy",     standard: "1 Moderate + 1 Easy",    hard: "1 Hard or 2 Moderate"}
+  - {party_level: "L8–12",  easy: "2 Moderate", standard: "1 Hard + 1 Moderate",    hard: "1 Severe or 2 Hard + 1 Easy"}
+  - {party_level: "L13–20", easy: "2 Hard",     standard: "1 Severe + 1 Hard",      hard: "1 Peak or 2 Severe"}
+  - {party_level: "L21–25", easy: "2 Severe",   standard: "1 Peak + 1 Hard",        hard: "Boss + adds"}
+encounter_guidance:
+  peer_fight: equal Force
+  tougher: +10 enemy Force
+  drags_past_round: 5
+  yield_lengthens_by: about a third

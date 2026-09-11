@@ -30,6 +30,7 @@ Every stat has three readings.
 
 A character with STR 4,520 is D-Grade, so their STR Force is 45. An opponent with FOR 3,100 at D-Grade has Force 31.
 
+<!-- rules:table grade-table -->
 | **Grade** | **Raw Stat Range** | **Divisor** | **Force Range** | **Damage Multiplier** |
 |---|---|---|---|---|
 | F-Grade | 1–99 | 1 | 1–99 | ×1 |
@@ -37,6 +38,7 @@ A character with STR 4,520 is D-Grade, so their STR Force is 45. An opponent wit
 | D-Grade | 1,000–9,999 | 100 | 10–99 | ×100 |
 | C-Grade | 10,000–99,999 | 1,000 | 10–99 | ×1,000 |
 | B-Grade | 100,000–999,999 | 10,000 | 10–99 | ×10,000 |
+<!-- /rules:table -->
 
 At F-Grade, Force equals Raw Power; the number is already in the band. A fresh E-Grade character with STR 120 has Force 12: weak within their Grade, and still carrying the Grade's ×10 damage multiplier, which is what makes cross-Grade combat asymmetric.
 
@@ -98,6 +100,7 @@ Meet or exceed to succeed.
 
 ### The Grade Reference Card
 
+<!-- rules:table resistance-card -->
 | **Difficulty** | **Resistance** |
 |---|---|
 | Trivial | 40 |
@@ -106,6 +109,7 @@ Meet or exceed to succeed.
 | Hard | 115 |
 | Severe | 140 |
 | Peak | 165 |
+<!-- /rules:table -->
 
 **Cross-Grade Adjustment.** When the obstacle's Grade differs from the challenger's, the higher-Grade side gains **+100 per Grade of difference**, applied to the challenger's roll or to the obstacle's Resistance, whichever is higher. Same Grade, no adjustment.
 
@@ -129,11 +133,13 @@ Fighting domains are drawn by weapon shape: blades, axes and hammers, spears and
 
 #### The Three Tiers
 
+<!-- rules:table proficiency-tiers -->
 | **Tier** | **Effect** |
 |---|---|
 | **Trained** | +5 to Clashes and skill checks in the domain. Routine Mastery. Specialist Gating access. |
 | **Seasoned** | +10 (in place of the +5). |
 | **Master** | +10, and once on your turn your first action using the Proficiency costs no Beat. Requires an E-Grade body. |
+<!-- /rules:table -->
 
 Characters begin with three Proficiencies at Trained and deepen them through Marks, below.
 
@@ -181,6 +187,7 @@ The System's energy density creates cascading instabilities in every clash. The 
 
 **The trigger** is the **natural d100 before any modifiers**. Force, Tactical Modifiers, Cross-Grade Adjustments, item and ability bonuses are all ignored for triggering. If the natural die meets or exceeds the Volatility Threshold for the roller's Grade, roll again and add. Each new die can cascade on the same threshold.
 
+<!-- rules:table volatility -->
 | **Grade** | **Explodes On (natural)** | **Probability** |
 |---|---|---|
 | F-Grade | 96–100 | 5% |
@@ -189,6 +196,7 @@ The System's energy density creates cascading instabilities in every clash. The 
 | C-Grade | 93–100 | 8% |
 | B-Grade | 92–100 | 9% |
 | A-Grade | 91–100 | 10% |
+<!-- /rules:table -->
 
 **One number at the top of the die.** The Volatility Threshold governs everything that happens at the high end of a natural d100. On a Clash it explodes. On a skill check it is an Exceptional Success. On either it marks the Proficiency in use. A player tracks one number and it moves only with their Grade.
 
@@ -322,6 +330,7 @@ The defender picks their posture when targeted, bounded by what the fiction perm
 
 **Tactical Modifiers** all draw from one budget:
 
+<!-- rules:table modifier-budget -->
 | **Modifier** | **Size** | **Examples** |
 |---|---|---|
 | Minor bonus | +5 | Trained Proficiency, Surge, minor blessings |
@@ -329,6 +338,7 @@ The defender picks their posture when targeted, bounded by what the fiction perm
 | Peak bonus (rare) | +15 to +20 | Peak abilities, one-shot relics, Hidden Achievement rewards |
 | Hindering environment | −10 | Darkness, difficult footing, driving rain |
 | Crippling environment | −20 | Blindness, restrained, fighting submerged |
+<!-- /rules:table -->
 
 New skills, items, and class features price their bonuses against this table.
 
@@ -348,12 +358,14 @@ Turned Aside and Driven Back are the same number read from either side of the Cl
 >
 > **Damage = Margin × the attacker's Grade multiplier**
 
+<!-- rules:table damage-table -->
 | **Attacker's Grade** | **Damage** |
 |---|---|
 | F-Grade | Margin × 1 |
 | E-Grade | Margin × 10 |
 | D-Grade | Margin × 100 |
 | C-Grade | Margin × 1,000 |
+<!-- /rules:table -->
 
 Apply it straight to HP. There is no reduction step; the defender's toughness was already in their roll.
 
@@ -424,12 +436,14 @@ Multi-target capability is a property of specific abilities, spells, and effects
 
 **For every Grade of difference, the higher-Grade combatant adds +100 to their Force in all Clashes and opposed checks.**
 
+<!-- rules:table grade-gap -->
 | **Grade Gap** | **Higher-Grade Bonus** |
 |---|---|
 | Same Grade | +0 |
 | 1 Grade higher | +100 |
 | 2 Grades higher | +200 |
 | 3+ Grades higher | +300 or more |
+<!-- /rules:table -->
 
 **Example: F-Peak against E-Initiate.** The F-Grade Peak has STR 99. The E-Grade Initiate has FOR 120: Force 12, plus 100 for the gap, effective 112.
 
@@ -521,12 +535,14 @@ A Seed Application might grant +10 for a small fixed cost while Surge pays half 
 
 **Every Principle Application costs 1 Beat plus a fixed amount of Aether, set by the tier that granted it.** The price never changes afterward.
 
+<!-- rules:table application-costs-core -->
 | **Granted at** | **Aether Cost** |
 |---|---|
 | Seed Application | 10 |
 | Early Fragment Application | 15 |
 | Infusion (Mid Fragment) | none |
 | Domain (Peak Fragment) | 3,000 + 500 per round sustained |
+<!-- /rules:table -->
 
 A Domain requires a D-Grade body, which is why its price sits at D-Grade scale; the rest are priced for the Grades a character usually holds when they earn them. Nothing here reads off the character's Grade, so a prodigy who reaches Early Fragment while still F-Grade pays 15 for it like everyone else.
 

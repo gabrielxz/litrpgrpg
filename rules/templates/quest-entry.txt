@@ -1,0 +1,7 @@
+[Q-217] Hostile Detected: Sector 12-Beta
+Issuer:     System
+Grade:      F · Difficulty: Easy
+Objective:  Eliminate detected hostile (Glow-Stalker) within 6h.
+Reward:     8 VE, 1 Lesser Healing Pill
+Time:       5h 47m remaining
+Status:     Active

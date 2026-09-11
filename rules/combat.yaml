@@ -1,0 +1,90 @@
+# Combat: Momentum, Beats, Zones, the Clash, Yield, Downed, Aura Pressure, Surge.
+# source: 10-core-mechanics.md, "Combat", "The Grade Gap", "Aether"
+
+beats_per_turn: 2
+beat_actions:
+  - Attack, melee or ranged
+  - Cast a spell
+  - Move to an adjacent Zone
+  - Use an item
+  - Activate a Principle Application
+  - Attempt a skill check
+  - Claim or strip a Positional State
+  - Disengage from a hostile
+  - Attempt to seize Momentum
+free_actions:
+  - Speaking
+  - Drawing a weapon
+  - Dropping an object
+  - Moving inside your current Zone, up to the Positional State line
+
+surprise_beat: 1                # each surprising character takes one free Beat before Initial Momentum
+
+momentum:
+  roll: d100 + max(DEX Force, PER Force) of the side's best such combatant
+  seize_cost_beats: 1           # roller uses their own DEX or PER Force; the holding side answers with its highest
+  shift_triggers: [Reinforcement Arrival, Decisive Tactical Reversal, Seize Momentum]
+
+movement:
+  adjacent_zone_cost_beats: 1
+  two_zones_cost_beats: 2
+  free_step_dex_force: 50       # one additional Zone move per turn at no Beat; does not bypass Engagement
+  cross_grade_free_movement: true   # a full Grade above every hostile present: Zone moves cost no Beats
+  disengage_cost_beats: 1       # leaving a shared Zone without Disengaging provokes a free strike
+
+reach:
+  melee: own_zone
+  ranged_and_spells: adjacent_zones
+
+offensive_force:
+  heavy_melee: STR
+  finesse_melee: DEX
+  ranged: DEX
+  spells_and_abilities: POW
+defensive_force:
+  dodge: DEX
+  absorb: FOR
+  mental_spiritual_coercive: HRT
+  illusion_sensory: PER
+strength_defends: false
+
+clash:
+  formula: d100 + Force + Tactical Modifiers, each side
+  damage: margin × attacker's Grade damage multiplier   # applied straight to HP; no reduction step
+  damage_reduction_stat: none
+
+yield:
+  margin_reduction_per_beat: 20 # subtracted before the Grade multiplier, so it never scales
+  max_beats: 2                  # your next turn's two Beats
+  cornered_max_beats: 1         # nowhere to be driven
+  two_beats_drive_zones: 1      # attacker's choice, may decline; no free strike
+  aoe_two_beats: throws the target clear of the blast; no attacker choice
+  creatures: only if the stat block says Yields
+
+downed:
+  hp_floor: 0
+  dies_at_end_of_round: 3
+  stabilize_check: {difficulty: Moderate, resistance: 90, cost_beats: 1}   # Proficiency bonus applies
+  stabilize_by_healing: any HP restoration from an ally in the same Zone, 1 Beat
+  annihilation_multiple_of_max_hp: 10
+  execution: {cost_beats: 1, roll: false}
+  death: permanent
+  survivor_gets_battle_memory: true
+
+aura_pressure:
+  will_save: d100 + HRT Force + floor(FOR Force / 2) vs Aura Resistance
+  resistance_calm: 115          # Hard, flat, no Cross-Grade Adjustment
+  resistance_flaring: 140       # Severe
+  gm_may_skip_at_grade_gap: 3
+  suppressed_beats: 1
+
+surge:
+  cost: half of Maximum Aether, rounded up
+  bonus: 5
+  cost_beats: 0
+  declare: before rolling
+  stacks: true
+
+pvp:
+  resolves_as: standard Opposed Clash
+  hve: coercion aimed at another player character is at least two tallies of Will

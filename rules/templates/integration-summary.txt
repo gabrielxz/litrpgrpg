@@ -1,0 +1,10 @@
+══════════════════════════════════════════
+    INTEGRATION COMPLETE: INITIATE [name]
+══════════════════════════════════════════
+[Summary observation: 2–3 lines, clinical.]
+[Affinity Notice, or crystallized Principle.]
+[Proficiency status: Marks accrued, tiers gained.]
+[Title(s) granted: list.]
+[Hidden Quest reveals: list with rewards.]
+[VE awaiting refinement: number + projected level.]
+══════════════════════════════════════════

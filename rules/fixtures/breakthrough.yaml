@@ -1,0 +1,102 @@
+# Worked examples from Grade Breakthroughs (30-breakthroughs.md) and the HVE Coherence bands.
+cases:
+  - name: Base DC is 140
+    source: 30-breakthroughs.md, "The Breakthrough Check"
+    fn: breakthrough_dc
+    args: {overcharge_ratio: 1}
+    expect: 140
+  - name: Overcharge ×2 is DC 150
+    source: 30-breakthroughs.md, "The Breakthrough Check"
+    fn: breakthrough_dc
+    args: {overcharge_ratio: 2}
+    expect: 150
+  - name: Overcharge ×3 is DC 160
+    source: 30-breakthroughs.md, "The Breakthrough Check"
+    fn: breakthrough_dc
+    args: {overcharge_ratio: 3}
+    expect: 160
+  - name: Overcharge ×4 is DC 180
+    source: 30-breakthroughs.md, "The Breakthrough Check"
+    fn: breakthrough_dc
+    args: {overcharge_ratio: 4}
+    expect: 180
+  - name: At the F cap, ×1 is 80 VE
+    source: 30-breakthroughs.md, "The Overcharge Ratio"
+    fn: overcharge_ve
+    args: {overcharge_ratio: 1, code: F}
+    expect: 80
+  - name: At the F cap, ×4 is 320 VE
+    source: 30-breakthroughs.md, "The Overcharge Ratio"
+    fn: overcharge_ve
+    args: {overcharge_ratio: 4, code: F}
+    expect: 320
+  - name: Margin 10 is Stable
+    source: 30-breakthroughs.md, "The Quality Tier"
+    fn: quality_tier
+    args: {total: 150}
+    expect: {margin: 10, tier: Stable, success: true}
+  - name: Margin 10 at ×2 is raised one step to Polished
+    source: 30-breakthroughs.md, "Tier Adjustment"
+    fn: quality_tier
+    args: {total: 160, overcharge_ratio: 2}
+    expect: {margin: 10, tier: Polished}
+  - name: Margin 45 is Pristine
+    source: 30-breakthroughs.md, "The Quality Tier"
+    fn: quality_tier
+    args: {total: 185}
+    expect: {tier: Pristine}
+  - name: Margin 45 at ×3 caps at Transcendent
+    source: 30-breakthroughs.md, "Tier Adjustment"
+    fn: quality_tier
+    args: {total: 205, overcharge_ratio: 3}
+    expect: {margin: 45, tier: Transcendent}
+  - name: A Quality Enhancer pushes one step further
+    source: 30-breakthroughs.md, "Tier Adjustment"
+    fn: quality_tier
+    args: {total: 150, quality_enhancer: true}
+    expect: {tier: Polished}
+  - name: A check that misses the DC is Cracked no matter the Overcharge
+    source: 30-breakthroughs.md, "Tier Adjustment"
+    fn: quality_tier
+    args: {total: 175, overcharge_ratio: 4}
+    expect: {tier: Cracked, success: false}
+  - name: Anchor success grants +5
+    source: 30-breakthroughs.md, "Active Support"
+    fn: anchor_bonus
+    args: {margin: 10}
+    expect: 5
+  - name: Anchor Margin 20+ grants +10
+    source: 30-breakthroughs.md, "Active Support"
+    fn: anchor_bonus
+    args: {margin: 25}
+    expect: 10
+  - name: Anchor Margin 40+ grants +15
+    source: 30-breakthroughs.md, "Active Support"
+    fn: anchor_bonus
+    args: {margin: 44}
+    expect: 15
+  - name: Kara's Deep Force leading by 3 makes her Leaning, +5
+    source: 50-hidden-vector-engine.md, "Kara's Sheet, End of Session Three"
+    fn: coherence
+    args: {deep_leads: [3, 2, 1, 0]}
+    expect: {profile: Leaning, bonus: 5}
+  - name: No side leading by 3 is Scattered
+    source: 50-hidden-vector-engine.md, "What the Engine Drives"
+    fn: coherence
+    args: {deep_leads: [2, 2, 1, 0]}
+    expect: {profile: Scattered, bonus: 0}
+  - name: One side leading by 5 is Defined, +10
+    source: 50-hidden-vector-engine.md, "What the Engine Drives"
+    fn: coherence
+    args: {deep_leads: [5, 0, 0, 0]}
+    expect: {profile: Defined, bonus: 10}
+  - name: Two sides leading by 3 is Defined
+    source: 50-hidden-vector-engine.md, "What the Engine Drives"
+    fn: coherence
+    args: {deep_leads: [3, 3, 0, 0]}
+    expect: {profile: Defined, bonus: 10}
+  - name: One side leading by 8 is Singular, +20
+    source: 50-hidden-vector-engine.md, "What the Engine Drives"
+    fn: coherence
+    args: {deep_leads: [8, 1, 0, 0]}
+    expect: {profile: Singular, bonus: 20}

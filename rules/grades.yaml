@@ -1,0 +1,97 @@
+# Grades: the order of magnitude a body operates at.
+# source: 10-core-mechanics.md, "Raw Power, Grade, and Force"; "System Volatility"; "The Grade Gap"
+
+rounding: down            # every fraction, everywhere
+
+# ×10 per Grade is the universal scaling constant: damage, costs, VE, stat caps.
+scale_per_grade: 10
+
+# The higher-Grade side of any Opposed Roll or Resistance Roll adds this per Grade of difference.
+cross_grade_adjustment_per_grade: 100
+
+# Levels are numbered continuously; each Grade spans this many.
+levels_per_grade: 25
+
+grades:
+  - code: F
+    name: F-Grade
+    order: 0
+    raw_min: 1
+    raw_max: 99
+    divisor: 1
+    force_min: 1
+    force_max: 99
+    damage_multiplier: 1
+    volatility_threshold: 96     # natural d100 at or above this explodes on a Clash, is Exceptional on a skill check, and earns a Mark
+    level_range: [1, 25]
+  - code: E
+    name: E-Grade
+    order: 1
+    raw_min: 100
+    raw_max: 999
+    divisor: 10
+    force_min: 10
+    force_max: 99
+    damage_multiplier: 10
+    volatility_threshold: 95
+    level_range: [26, 50]
+  - code: D
+    name: D-Grade
+    order: 2
+    raw_min: 1000
+    raw_max: 9999
+    divisor: 100
+    force_min: 10
+    force_max: 99
+    damage_multiplier: 100
+    volatility_threshold: 94
+    level_range: [51, 75]
+  - code: C
+    name: C-Grade
+    order: 3
+    raw_min: 10000
+    raw_max: 99999
+    divisor: 1000
+    force_min: 10
+    force_max: 99
+    damage_multiplier: 1000
+    volatility_threshold: 93
+    level_range: [76, 100]
+  - code: B
+    name: B-Grade
+    order: 4
+    raw_min: 100000
+    raw_max: 999999
+    divisor: 10000
+    force_min: 10
+    force_max: 99
+    damage_multiplier: 10000
+    volatility_threshold: 92
+    level_range: [101, 125]
+  - code: A
+    name: A-Grade
+    order: 5
+    raw_min: 1000000
+    raw_max: 9999999
+    divisor: 100000
+    force_min: 10
+    force_max: 99
+    damage_multiplier: 100000
+    volatility_threshold: 91
+    level_range: [126, 150]
+
+# Force = Raw divided by the Grade's divisor, fractions dropped. A stat below the
+# Grade band pads with leading zeros (E-Grade STR 65 → 065 → Force 06). Every
+# Grade-keyed rule reads the character's Grade, for every stat.
+force_rule: raw_div_divisor_floor
+
+# Stats cannot exceed the Grade maximum; excess from any source is lost.
+stat_cap_rule: raw_max_of_grade
+
+# Volatility: the threshold starts at 96 and falls one per Grade above F.
+volatility:
+  base_threshold: 96
+  falls_per_grade: 1
+  applies_to: [combat_clash, will_save, breakthrough_check]   # skill checks never explode
+  both_sides: true
+  battle_memory_cascade_dice: 2    # a cascade of this many extra dice on a PC roll grants a Battle Memory Card

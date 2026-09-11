@@ -1,0 +1,75 @@
+# The Principle track.
+# source: 20-principles.md; 10-core-mechanics.md "What Things Cost"
+
+terms:
+  Principle: "The conceptual truth your character is learning: Weight, Fire, Edge."
+  Insight Points (IP): "Accumulated understanding. A visible number."
+  Battle Memory: "An extreme moment the System kept. Meditating on it earns IP."
+  Distillation: "The act that turns enough IP into an advancement: say the truth, receive its expression."
+  Application: "An active technique granted by a Principle."
+
+slots:
+  at_f_grade: 1
+  unlocked_at_breakthrough: F->E      # the second slot
+  lifetime_max: 2
+  slot_frees_only_by: Fusion
+
+ladder:
+  - {tier: Initial Insight, cumulative_ip: 3,   grants: "The Principle crystallizes and is named; minor passive"}
+  - {tier: Seed,            cumulative_ip: 10,  grants: "First Application; Attunements"}
+  - {tier: Early Fragment,  cumulative_ip: 25,  grants: "Second Application; passive doubles"}
+  - {tier: Mid Fragment,    cumulative_ip: 50,  grants: "Infusion: the Principle rides your ordinary actions at no Beat or Aether cost"}
+  - {tier: Peak Fragment,   cumulative_ip: 100, grants: "Domain: a zone where your Principle is briefly law"}
+domain_requires_grade: D             # IP banks past 100 until then
+initial_insight_passive_example: +5 to defensive Clashes against the Principle's element
+crystallizes_at_ip: 3
+advancement_requires_distillation: true   # meeting a threshold does nothing on its own
+
+ip_sources:
+  - {source: Battle Memory meditation,                                  ip_min: 1, ip_max: 3, note: by the memory's intensity}
+  - {source: Consuming an affinity treasure,                            ip_min: 1, ip_max: 2}
+  - {source: Consolidation vision,                                      ip_min: 1, ip_max: 1, note: at most once per session, only after Principle-aligned experience}
+  - {source: Surviving a life-or-death situation through the Principle, ip_min: 2, ip_max: 2}
+  - {source: "Any other Principle-aligned experience, GM's call",       ip_min: 1, ip_max: 3}
+
+battle_memory_triggers:
+  automatic:
+    - a Volatility cascade of two or more extra dice on a player character's roll
+    - surviving being Downed
+    - a failed Breakthrough Check
+  gm_granted: moments of extreme stress the System deems statistically improbable
+
+# Application cost is set by the tier that granted it and never changes; scale follows the body's current Grade.
+application_costs:
+  - {granted_at: Seed,                    aether: 10}
+  - {granted_at: Early Fragment,          aether: 15}
+  - {granted_at: Infusion (Mid Fragment), aether: 0}
+  - {granted_at: Domain (Peak Fragment),  aether: 3000, per_round_sustained: 500}
+application_cost_beats: 1
+application_bonus_pricing: modifier_budget      # +5 minor, +10 standard, +15 to +20 peak
+spells_and_class_skills_cost: fixed by the Grade at acquisition, ×10 per Grade, never changes
+
+fusion:
+  requires: two Principles at Seed tier or higher
+  roll: d100 + HRT Force vs Severe (140) of the character's Grade
+  success: merge into one Principle at the lower parent's tier, one slot; the freed slot may take a new Principle at 0 IP
+  failure: the higher-tier parent loses 10 IP; no reattempt until after the next Breakthrough
+
+distillation_test: [Operational, Bounded, Testable]   # a truth that fails any one is a mood, and the System does not compress moods
+
+families:
+  - {name: Impact,       axis: Force ↔ Method,     pole: Force,     affinities: [Momentum, Weight, Shattering, Kinetic Energy, Heat]}
+  - {name: Architecture, axis: Force ↔ Method,     pole: Method,    affinities: [Space, Leverage, Misdirection, Shadows, Geometry]}
+  - {name: Consumption,  axis: Hunger ↔ Restraint, pole: Hunger,    affinities: [Devouring, Blood, The Void, Assimilation, Corrosion]}
+  - {name: Preservation, axis: Hunger ↔ Restraint, pole: Restraint, affinities: [Shielding, Purification, Iron, Stasis, Resilience]}
+  - {name: Imposition,   axis: Will ↔ Accord,      pole: Will,      affinities: [Conqueror's Haki, Mind Control, Pressure, Fear, Sovereignty]}
+  - {name: Harmony,      axis: Will ↔ Accord,      pole: Accord,    affinities: [Resonance, Symbiosis, Life, Empathy, The Hearth]}
+  - {name: Governance,   axis: Control ↔ Freedom,  pole: Control,   affinities: [Gravity, Chains, Dominion, Logic, Suppression]}
+  - {name: Subversion,   axis: Control ↔ Freedom,  pole: Freedom,   affinities: [Wind, Severance, Spatial Rupture, Entropy, Illusions]}
+
+# Principles that belong to reality rather than temperament; earned by exposure, never by behavior. A rumor at F-Grade.
+axioms: [Time, Void, Luck, Truth, Distance]
+
+visions:
+  max_per_session: 1
+  procedure: three images (the moment stripped of one load-bearing detail; the Principle in a pure or alien form; one image that overreaches or misleads)

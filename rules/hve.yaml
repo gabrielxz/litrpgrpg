@@ -1,0 +1,84 @@
+# The Hidden Vector Engine.
+# source: 50-hidden-vector-engine.md
+
+axes:
+  - name: Force ↔ Method
+    question: How does the character solve problems?
+    poles:
+      - {name: Force,  family: Impact,       description: Aggressive engagement, applying pressure immediately, relying on overwhelming presence or impact.}
+      - {name: Method, family: Architecture, description: Planning, positioning, altering conditions before acting, solving situations indirectly.}
+  - name: Hunger ↔ Restraint
+    question: What is the character's relationship to gain?
+    poles:
+      - {name: Hunger,    family: Consumption,  description: Pursuit of wealth, power, or advantage; prioritizing gain over safety.}
+      - {name: Restraint, family: Preservation, description: Passing on excess reward, prioritizing mission or people over loot.}
+  - name: Will ↔ Accord
+    question: How does the character relate to others and systems of order?
+    poles:
+      - {name: Will,   family: Imposition, description: Coercion, intimidation, dominance, shaping outcomes through pressure.}
+      - {name: Accord, family: Harmony,    description: Negotiation, cooperation, adaptation, working within systems.}
+  - name: Control ↔ Freedom
+    question: Does the character impose structure, or let outcomes emerge?
+    poles:
+      - {name: Control, family: Governance, description: The drive to impose order, establish hierarchy, restrict variables.}
+      - {name: Freedom, family: Subversion, description: The drive to break chains, subvert authority, embrace emergence.}
+
+# The session-end sweep: nothing during play; five minutes at the end.
+sweep:
+  during_play: nothing
+  weights:
+    - {tallies: 0, name: No tally,                  qualifies: "Anything you had to strain to recall: table talk, jokes, mechanical optimization, choices with no cost", example: "Buying rations. Choosing which Zone to stand in."}
+    - {tallies: 1, name: Remembered,                qualifies: "A real decision with consequence, made in fiction, under some cost, still with you at the sweep", example: "Taking the pill while the others argue. Talking the brigand down instead of finishing him."}
+    - {tallies: 2, name: Surprised the table,       qualifies: "High stakes, real risk, and the table reacted when it happened", example: "Charging the pack alone to cover a stranger. Refusing a faction's bribe in front of its enforcer."}
+    - {tallies: 3, name: Defining (surprised the player), qualifies: "Rare, identity-shaping, the table went quiet", example: "Executing the surrendered Rival Initiate. Giving up the Breakthrough site to save the settlement.", circled: true, margin_note: true}
+  deep_update:
+    current_lead_required: 2      # if one side of Current leads by this or more, add one tally to that side of Deep
+    deep_tally_added: 1
+    current_wiped_each_session: true
+  expected_tallies_per_session_party: [3, 6]
+  calibration:
+    - tally the decision rather than the outcome
+    - when torn between two axes, tally only the one that drove the choice
+    - when torn between two weights, take the lower
+    - a moment on two axes: primary at full weight, secondary one weight lower
+  pvp_coercion_min_will_tallies: 2
+
+# The machine format, where an AI maintains the vectors.
+structured_logging:
+  intensities: {below_threshold: 0.5, remembered: 1.0, surprised_the_table: 2.0, defining: 3.0}
+  half_tier_app_only: true
+  current_adds: 1.0               # of the event's intensity
+  deep_adds: 0.5
+  current_decay_per_session: 0.5  # Current halves at each session end
+  deep_decay_per_session: 0.1     # Deep loses a tenth
+  entry_fields: [player, event_summary, context, intent, outcome, primary_axis, intensity, secondary_axis]
+  switchable_at_session_boundary: true   # copy the standing totals across
+
+# The game's single definition of Coherence. Read from the Deep rows; structured values use the same thresholds.
+coherence_bands:
+  - {profile: Scattered, rule: No side leads by 3+,                          bonus: 0}
+  - {profile: Leaning,   rule: One side leads by 3+,                         bonus: 5}
+  - {profile: Defined,   rule: "One side leads by 5+, or two sides by 3+",   bonus: 10}
+  - {profile: Singular,  rule: One side leads by 8+,                         bonus: 20}
+coherence_thresholds: {leaning: 3, defined: 5, singular: 8, defined_two_sides: 3}
+
+archetypes:
+  - {name: The Apex Predator,    poles: [Force, Hunger, Will, Freedom],        read: "overwhelming violence in service of appetite, bowing to nothing. The System grants volatile, destructive Principles."}
+  - {name: The System Architect, poles: [Method, Restraint, Accord, Control],  read: "plans, takes only what is required, builds alliances, enforces laws. Sprawling, environmental Principles."}
+  - {name: The Iron Adjudicator, poles: [Force, Restraint, Will, Control],     read: "a frontline juggernaut with a personal code. Heavy, crushing, defensive Principles."}
+  - {name: The Phantom Thief,    poles: [Method, Hunger, Accord, Freedom],     read: "leverage and stealth in service of acquisition, aligned incentives instead of corpses. Elusive, spatial Principles."}
+
+drives: [class generation at Level 10, Principle crystallization, HVE-Resonant Titles, Personal Opportunities, the Breakthrough Coherence bonus]
+
+world_response:
+  Hunger: risky opportunities, black-market factions, corrupting rewards
+  Accord: diplomatic pathways, followers, lower merchant prices
+  Control: structured opportunities, stable alliances, invitations from bureaucratic Sects
+  Freedom: volatile opportunities, emergent events, bounties from authoritarian factions
+adversarial_design:
+  Force: enemies that punish physical contact or use kinetic reflection
+  Control: incursions of pure chaos, swarm enemies, morphing environments
+  Method: ticking-clock scenarios where planning time is reduced to zero
+
+design_constraints: [Orthogonality, Weight, Recency, Structure, Pressure]
+players_see_numbers: false

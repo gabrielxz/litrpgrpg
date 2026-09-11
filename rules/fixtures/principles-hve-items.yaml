@@ -1,0 +1,77 @@
+# Kara's story, the HVE sweep, and the pill rules.
+cases:
+  - name: Kara's meditation carries her to 4 IP, past 3, and the Principle crystallizes at Initial Insight
+    source: 20-principles.md, "Kara's Story"
+    fn: principle_tier
+    args: {ip: 4}
+    expect: Initial Insight
+  - name: 10 IP is the Seed threshold
+    source: 20-principles.md, "The Progression Ladder"
+    fn: principle_tier
+    args: {ip: 10}
+    expect: Seed
+  - name: 25 IP is Early Fragment
+    source: 20-principles.md, "The Progression Ladder"
+    fn: principle_tier
+    args: {ip: 25}
+    expect: Early Fragment
+  - name: 2 IP has not crystallized
+    source: 20-principles.md, "Your First Principle"
+    fn: principle_tier
+    args: {ip: 2}
+    expect: null
+  - name: Sudden Weight costs 10 Aether, Seed pricing
+    source: 20-principles.md, "Kara's Story"
+    fn: application_cost
+    args: {granted_at: Seed}
+    expect: 10
+  - name: Kara at POW 18 can cast Sudden Weight exactly once per fight with room to spare
+    source: 20-principles.md, "Kara's Story"
+    fn: application_uses
+    args: {max_aether_value: 18, granted_at: Seed}
+    expect: 1
+  - name: Early Fragment Applications cost 15
+    source: "20-principles.md, 'Applications: Cost and Scale'"
+    fn: application_cost
+    args: {granted_at: Early Fragment}
+    expect: 15
+  - name: A Domain costs 3,000
+    source: "20-principles.md, 'Applications: Cost and Scale'"
+    fn: application_cost
+    args: {granted_at: Domain}
+    expect: 3000
+  - name: Kara's sweep, Current Force 2 against Method 0, adds one to Deep Force and wipes Current
+    source: 50-hidden-vector-engine.md, "Kara's Sheet, End of Session Three"
+    fn: sweep_update
+    args: {current: {Force: 2, Method: 0}, deep: {Force: 3, Method: 0}}
+    expect: {deep: {Force: 4, Method: 0}, current: {Force: 0, Method: 0}}
+  - name: Kara's sweep, Hunger 1 does not lead by 2, Deep unchanged
+    source: 50-hidden-vector-engine.md, "Kara's Sheet, End of Session Three"
+    fn: sweep_update
+    args: {current: {Hunger: 1, Restraint: 0}, deep: {Hunger: 2, Restraint: 0}}
+    expect: {deep: {Hunger: 2, Restraint: 0}}
+  - name: Structured logging, a 2.0 event adds full value to Current and half to Deep
+    source: 50-hidden-vector-engine.md, "Structured Event Logging"
+    fn: structured_add
+    args: {current: 0, deep: 0, intensity: 2.0}
+    expect: {current: 2.0, deep: 1.0}
+  - name: Structured logging, Current halves and Deep loses a tenth at session end
+    source: 50-hidden-vector-engine.md, "Structured Event Logging"
+    fn: structured_decay
+    args: {current: 4.0, deep: 10.0}
+    expect: {current: 2.0, deep: 9.0}
+  - name: A Lesser Healing Pill restores 15 to an F-Grade body
+    source: 65-items.md, "Healing Pills"
+    fn: pill_effect
+    args: {listed_amount: 15, pill_grade: F, body_grade: F}
+    expect: 15
+  - name: An E-Grade pill does nothing for an F-Grade body
+    source: 65-items.md, "Healing Pills"
+    fn: pill_effect
+    args: {listed_amount: 15, pill_grade: E, body_grade: F}
+    expect: 0
+  - name: An E-Grade pill heals ×10 the listed amount for an E-Grade body
+    source: 65-items.md, "Healing Pills"
+    fn: pill_effect
+    args: {listed_amount: 15, pill_grade: E, body_grade: E}
+    expect: 150
