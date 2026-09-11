@@ -125,7 +125,7 @@ Resistance is read straight off the card for same-Grade encounters. For Cross-Gr
 | A level | 120 |
 | Kill, by tier: Trivial / Easy / Moderate / Hard / Severe / Peak | 2 / 5 / 10 / 20 / 30 / 50 |
 | Session survival | 5 |
-| Cross-Grade kill | the victim's tier read at its own Grade, ×10 per Grade above the killer |
+| Cross-Grade kill | the victim's tier read at its own Grade, ×10 per Grade above the killer; a victim below your Grade pays nothing |
 <!-- /rules:table -->
 
 All VE values scale ×10 per Grade.
