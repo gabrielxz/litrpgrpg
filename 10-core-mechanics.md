@@ -420,7 +420,7 @@ Multi-target capability is a property of specific abilities, spells, and effects
 
 ## The Grade Gap
 
-### The Magnitude Gap Rule
+### The Grade Gap Rule
 
 **For every Grade of difference, the higher-Grade combatant adds +100 to their Force in all Clashes and opposed checks.**
 
