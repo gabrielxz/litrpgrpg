@@ -58,7 +58,7 @@ COVER_TITLED := $(BUILD_DIR)/cover_titled.png
 TITLE_FONT   := $(shell kpsewhich CinzelDecorative-Black.ttf)
 BYLINE_FONT  := $(shell kpsewhich EBGaramond-Italic.otf)
 
-.PHONY: all pdf epub kit clean
+.PHONY: all pdf epub kit tutorial clean
 
 all: pdf epub
 
@@ -188,6 +188,26 @@ epub: $(EPUB_BASE)
 	@echo ""
 	@echo "Built: $(EPUB_OUT)"
 	@echo "Size:  $$(du -h $(EPUB_OUT) | cut -f1)"
+
+# --- Tutorial-only PDF -----------------------------------------------------
+# Pages from the Tutorial chapter (its art page) to the end of the book, cut
+# out of the full build (mutool, which keeps shared resources shared) so page
+# numbers match the full book. For the Scribe,
+# which chokes on the full file.
+TUTORIAL_BASE := $(BUILD_DIR)/$(PROJECT)-tutorial.pdf
+TUTORIAL_OUT  := $(BUILD_DIR)/$(PROJECT)-tutorial-$(TIMESTAMP).pdf
+
+tutorial: $(PDF_BASE)
+	@N=$$(pdfinfo $(PDF_BASE) | awk '/^Pages/{print $$2}'); \
+	START=""; \
+	for i in $$(seq 1 $$N); do \
+	  if pdftotext -f $$i -l $$i -layout $(PDF_BASE) - | grep -Eq "^ *[0-9]+ +The Tutorial: Integration Protocol *$$"; then START=$$((i-1)); break; fi; \
+	done; \
+	test -n "$$START" || { echo "Tutorial heading not found"; exit 1; }; \
+	mutool merge -o $(TUTORIAL_BASE) $(PDF_BASE) $$START-$$N; \
+	cp $(TUTORIAL_BASE) $(TUTORIAL_OUT); \
+	echo ""; echo "Built: $(TUTORIAL_OUT) (pages $$START to $$N of the full book)"; \
+	echo "Size:  $$(du -h $(TUTORIAL_OUT) | cut -f1)"
 
 # --- Directories & clean ---------------------------------------------------
 $(PDF_DIR) $(EPUB_DIR):
