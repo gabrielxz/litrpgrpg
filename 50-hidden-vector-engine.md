@@ -136,7 +136,7 @@ Profiles combine across axes into a footprint. Four illustrations of how the Sys
 
 ## Structured Event Logging
 
-The sheet is the game's format; structured entries are the machine's, used where an AI maintains the vectors. The companion app (Mode A) records them live from table audio. An AI-Assisted table (Mode B) writes them at the sweep, one entry per remembered moment, for pasting into the generation prompts. Each entry is a consistent JSON record:
+The sheet is the game's format; structured entries are the machine's, used where an AI maintains the vectors. The companion app records them live from table audio. An AI-Assisted table writes them at the sweep, one entry per remembered moment, for pasting into the generation prompts. Each entry is a consistent JSON record:
 
 ```json
 {

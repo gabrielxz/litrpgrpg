@@ -62,6 +62,6 @@ Blocks: Stage 0 complete, the release build proofread.
 
 - **License.** Creative Commons on the rules text (BY-NC-SA keeps commercial rights and invites fan content; BY is the open-content play; a proprietary license with a fan policy is the conservative one), with the art excluded in every case. This decision gates Stage 2's community content and should be made before Stage 0.
 - **Disclosure wording.** Where the AI statement appears on each storefront and on the site, and whether it leads or follows the pitch. Recommendation: it leads on the site and in the front matter, and appears wherever a storefront asks.
-- **The app at launch.** Whether the pitch mentions it. If it is not real, the waitlist exists and the pitch does not.
+- **The app at launch.** Decided 2026-09-10: some version of the app ships with the release, so the pitch mentions it and the waitlist becomes the beta sign-up.
 - **Who answers the Discord.** Support is a job; decide how much of it Gabriel does.
 - **Solo mode.** A cheap way for a reader with no group to play at all, and possibly the best conversion tool for the reader audience. Listed as Maybe in the backlog; the reader-first strategy raises its priority.
