@@ -155,12 +155,11 @@ cases:
     fn: kill_ve
     args: {tier: Moderate, killer_grade: E, victim_grade: E}
     expect: 100
-  - name: Sub-Grade kills are not priced in the book
-    source: "25-cultivation.md, 'The Cost of a Level' ('Sub-Grade kills pay next to nothing')"
+  - name: A victim below your Grade pays nothing
+    source: 25-cultivation.md, "Combat Kills"
     fn: kill_ve
     args: {tier: Moderate, killer_grade: E, victim_grade: F}
-    expect_error: RulesGap
-    expect: null
+    expect: 0
   - name: A Routine Moderate quest awards 15 VE on completion
     source: 55-quests.md, "VE Rewards by Quest Category and Difficulty"
     fn: quest_ve

@@ -58,6 +58,7 @@ awards:
     - {difficulty: Peak,     multiple: 5,   ve: 50}
   peer_kills_per_level: 12
   cross_grade_kill: victim's tier within its own Grade × the killer's Peer Kill × 10 per Grade the victim sits above the killer
+  sub_grade_kill: 0                # a victim below the killer's Grade pays nothing (Gabriel, 2026-09-11)
   boss_multiplier_gm_discretion: 1.5
   per_participant: full award to every character who meaningfully participated; nothing pooled or divided
   session_survival: 5

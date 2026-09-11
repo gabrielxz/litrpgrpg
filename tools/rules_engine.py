@@ -310,7 +310,7 @@ def kill_ve(tier: str, killer_grade: str = "F", victim_grade: str = "F") -> int:
     """The victim's tier within its own Grade, as a multiple of the killer's Peer Kill, ×10 per Grade the victim sits above."""
     gap = grade_order(victim_grade) - grade_order(killer_grade)
     if gap < 0:
-        raise RulesGap('sub-Grade kills "pay next to nothing" (Cultivation); the book gives no number')
+        return load("cultivation")["awards"]["sub_grade_kill"]
     peer = load("cultivation")["awards"]["peer_kill"] * scale(killer_grade)
     return int(peer * kill_tier_multiple(tier) * load("grades")["scale_per_grade"] ** gap)
 

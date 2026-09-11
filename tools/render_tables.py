@@ -133,7 +133,7 @@ def g_quickref_ve():
     rows = [["A level", c["level_cost"]["base"]],
             [f"Kill, by tier: {tiers}", vals],
             ["Session survival", c["awards"]["session_survival"]],
-            ["Cross-Grade kill", "the victim's tier read at its own Grade, ×10 per Grade above the killer"]]
+            ["Cross-Grade kill", "the victim's tier read at its own Grade, ×10 per Grade above the killer; a victim below your Grade pays nothing"]]
     return table(["VE at F-Grade", "Amount"], rows)
 
 

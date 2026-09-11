@@ -97,7 +97,7 @@ Twelve peer kills, or two Peak kills and a Hard one, carry a character a level.
 
 The transfer is visible: when something dies, its unrefined VE leaves the body as a brief drift of pale motes toward those who earned the kill.
 
-Cross-Grade kills multiply the award: read the victim's tier within its own Grade, take that multiple of your own Peer Kill, then multiply by ×10 for every Grade the victim sits above you. For an F-Grade character, an E-Grade peer-tier enemy pays 100 VE, most of a level, and an E-Grade Peak monster pays 500, four levels on the spot and a collapse with them ("The Pressure Gauge", above). A successful punch-up against a higher-Grade opponent is one of the fastest ways to leap forward in progression.
+Cross-Grade kills multiply the award: read the victim's tier within its own Grade, take that multiple of your own Peer Kill, then multiply by ×10 for every Grade the victim sits above you. For an F-Grade character, an E-Grade peer-tier enemy pays 100 VE, most of a level, and an E-Grade Peak monster pays 500, four levels on the spot and a collapse with them ("The Pressure Gauge", above). A successful punch-up against a higher-Grade opponent is one of the fastest ways to leap forward in progression. **A victim below your Grade pays nothing.** Its VE is too thin a shape for an ascended body to refine; an E-Grade hunter clearing a valley of F-Grade beasts is doing it for some other reason.
 
 The kill is priced by what died, whatever the method: a trap, an ambush, or a plan that ended the fight before it started pays the same as an open brawl. How the kill happened is logged by the Hidden Vector Engine; it is never priced. A defeated boss-tier encounter (rare, named, or designed for the moment) may be worth 1.5× the listed amount at the GM's discretion.
 
@@ -130,7 +130,7 @@ Survival and quest completion guarantee baseline progression. Combat VE and envi
 
 The Grade Multiplier is ×1 for F, ×10 for E, ×100 for D, the same multiplier used everywhere else in the system. Class features, rare titles, or specific treasures may tweak it for individual characters, but the baseline applies to everyone.
 
-On paper the pace is flat across Grades: rewards and costs both scale ×10, so the same number of peer kills spans a level at every Grade. In play, later Grades run slower anyway. Sub-Grade kills pay next to nothing, peer prey is rarer and defends better territory, and every peer fight is genuinely dangerous. Expect each Grade to take more sessions than the one before without touching the numbers.
+On paper the pace is flat across Grades: rewards and costs both scale ×10, so the same number of peer kills spans a level at every Grade. In play, later Grades run slower anyway. Sub-Grade kills pay nothing, peer prey is rarer and defends better territory, and every peer fight is genuinely dangerous. Expect each Grade to take more sessions than the one before without touching the numbers.
 
 ---
 

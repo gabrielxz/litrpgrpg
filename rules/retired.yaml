@@ -29,6 +29,7 @@ patterns:
   - {pattern: '\bMateria\b',                      replaced_by: "cut",                                         since: 2026-08-12}
   - {pattern: '\+\d+%',                           replaced_by: "flat bonuses only",                           since: 2026-08-13}
   - {pattern: 'LitRPG: RPG',                      replaced_by: "Gradebreaker",                                since: 2026-09-10}
+  - {pattern: 'next to nothing',              replaced_by: "a number (sub-Grade kills pay 0)",             since: 2026-09-11}
   - {pattern: 'Toxin',                            replaced_by: "cut",                                         since: 2026-08-04}
   - {pattern: 'Concept slot',                     replaced_by: "Principle slot",                              since: 2026-08-04}
 
