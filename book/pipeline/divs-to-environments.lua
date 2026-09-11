@@ -10,7 +10,7 @@
 --     \textit{Consciousness anchored. Native world: Earth.}
 --     \end{systemvoice}
 --
--- Recognized classes (defined in pipeline/preamble.tex):
+-- Recognized classes (defined in book/pipeline/preamble.tex):
 --   * systemvoice   — in-fiction System messages (dark, cyan-ruled)
 --   * statblock     — monster / character stat blocks (gray, top-ruled)
 --   * questcard     — Quest log / Mandate / Personal Opportunity entries

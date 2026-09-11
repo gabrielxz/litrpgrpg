@@ -20,8 +20,9 @@ import sys
 import yaml
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CHAPTERS = sorted(glob.glob(os.path.join(ROOT, "[0-8][0-9]-*.md")))
-EXTRA = [os.path.join(ROOT, "kit", "table-kit.html"), os.path.join(ROOT, "pipeline", "metadata.yaml")]
+BOOK = os.path.join(ROOT, "book")
+CHAPTERS = sorted(glob.glob(os.path.join(BOOK, "[0-8][0-9]-*.md")))
+EXTRA = [os.path.join(BOOK, "kit", "table-kit.html"), os.path.join(BOOK, "pipeline", "metadata.yaml")]
 
 
 def headings(path: str) -> set[str]:
@@ -62,7 +63,7 @@ def main() -> int:
                         problems.append(f"{os.path.relpath(path, ROOT)}:{n}: retired `{p['pattern']}` (now: {p['replaced_by']}, since {p['since']})\n    {line.strip()[:140]}")
 
     # 2. cross-references
-    chapter_files = {name: os.path.join(ROOT, f) for name, f in cfg["chapters"].items()}
+    chapter_files = {name: os.path.join(BOOK, f) for name, f in cfg["chapters"].items()}
     heads = {name: headings(f) for name, f in chapter_files.items() if os.path.exists(f)}
     names = "|".join(re.escape(n) for n in sorted(chapter_files, key=len, reverse=True))
     ref = re.compile(rf'(?<![\w-])({names})(?: chapter)?, ["“]([^"”]+)["”]')

@@ -1,4 +1,6 @@
 # Gradebreaker — Build Pipeline
+# Layout: book/ (chapters, assets, pipeline, kit), rules/ (data, templates,
+# fixtures), tools/ (engine, lint, table renderer), app/ (the companion app).
 # Run `make` (or `make all`) to build PDF + EPUB.
 # Run `make pdf` or `make epub` to build just one.
 # Each invocation copies the build to a timestamped filename.
@@ -6,13 +8,14 @@
 
 PROJECT     := litrpg-rpg
 BUILD_DIR   := build
-PIPELINE    := pipeline
+BOOK        := book
+PIPELINE    := $(BOOK)/pipeline
 TEMPLATE    := $(PIPELINE)/eisvogel.latex
 METADATA    := $(PIPELINE)/metadata.yaml
 PREAMBLE    := $(PIPELINE)/preamble.tex
 LUAFILTER   := $(PIPELINE)/divs-to-environments.lua
 
-# Source files in canonical order. 99-to-do is excluded by design.
+# Chapter files under $(BOOK), in canonical order. 99-to-do is excluded by design.
 # Numeric prefixes use a gap-of-5 scheme to allow new chapters to slot in
 # between existing ones without renumbering.
 SOURCES := \
@@ -52,7 +55,7 @@ EPUB_OUT   := $(BUILD_DIR)/$(PROJECT)-$(TIMESTAMP).epub
 # Used by BOTH the PDF titlepage-background and the EPUB --epub-cover-image,
 # so the cover treatment is identical across formats. Pandoc's EPUB writer
 # does not overlay text on the cover image, hence the bake.
-COVER_BASE   := assets/cover.png
+COVER_BASE   := $(BOOK)/assets/cover.png
 COVER_TITLED := $(BUILD_DIR)/cover_titled.png
 # Resolved through kpsewhich so the TeX tree's layout (Arch, Debian, ...) does not matter.
 TITLE_FONT   := $(shell kpsewhich CinzelDecorative-Black.ttf)
@@ -67,7 +70,7 @@ all: pdf epub
 # optional ledger, pregen cards) renders from HTML via headless Chromium.
 # First Chromium-family binary found on PATH; override with `make CHROMIUM=...`.
 CHROMIUM  ?= $(shell command -v chromium || command -v chromium-browser || command -v google-chrome || echo chromium)
-KIT_SRC   := kit/table-kit.html
+KIT_SRC   := $(BOOK)/kit/table-kit.html
 KIT_BASE  := $(BUILD_DIR)/$(PROJECT)-table-kit.pdf
 KIT_OUT   := $(BUILD_DIR)/$(PROJECT)-table-kit-$(TIMESTAMP).pdf
 
@@ -129,10 +132,10 @@ $(COVER_TITLED): $(COVER_BASE) | $(BUILD_DIR)
 
 # --- PDF -------------------------------------------------------------------
 # Per-file pre-processing: convert chapter art image syntax into a full-page
-# bleed-edge LaTeX command. Pattern: ![alt](./assets/foo.png) -> \fullpageart{./assets/foo.png}
-$(PDF_DIR)/%.md: %.md | $(PDF_DIR)
+# bleed-edge LaTeX command. Pattern: ![alt](./assets/foo.png) -> \fullpageart{./book/assets/foo.png}
+$(PDF_DIR)/%.md: $(BOOK)/%.md Makefile | $(PDF_DIR)
 	sed -E \
-	  -e 's|^!\[[^]]*\]\(\./assets/([^)]+\.png)\)[[:space:]]*$$|\\fullpageart{./assets/\1}|' \
+	  -e 's|^!\[[^]]*\]\(\./assets/([^)]+\.png)\)[[:space:]]*$$|\\fullpageart{./$(BOOK)/assets/\1}|' \
 	  -e '/kitpng/d' \
 	  $< > $@
 
@@ -145,7 +148,7 @@ $(PDF_BASE): $(PDF_PROCESSED) $(METADATA) $(TEMPLATE) $(PREAMBLE) $(LUAFILTER) $
 	  --metadata-file=$(METADATA) \
 	  --include-in-header=$(PREAMBLE) \
 	  --lua-filter=$(LUAFILTER) \
-	  --resource-path=. \
+	  --resource-path=.:$(BOOK) \
 	  --top-level-division=chapter \
 	  --toc \
 	  --toc-depth=2 \
@@ -165,20 +168,20 @@ pdf: $(PDF_BASE)
 # substitution is skipped so chapter art renders as a normal inline image.
 # The LaTeX-only preamble and lua filter are also skipped — fenced divs
 # (::: systemvoice etc.) pass through as <div class="..."> for CSS styling.
-$(EPUB_DIR)/%.md: %.md | $(EPUB_DIR)
+$(EPUB_DIR)/%.md: $(BOOK)/%.md Makefile | $(EPUB_DIR)
 	cp $< $@
 
-$(EPUB_BASE): $(EPUB_PROCESSED) $(METADATA) $(COVER_TITLED) $(KIT_PNGS) pipeline/epub.css
+$(EPUB_BASE): $(EPUB_PROCESSED) $(METADATA) $(COVER_TITLED) $(KIT_PNGS) $(PIPELINE)/epub.css
 	pandoc \
 	  --from markdown \
 	  --to epub3 \
 	  --metadata-file=$(METADATA) \
-	  --resource-path=. \
+	  --resource-path=.:$(BOOK) \
 	  --top-level-division=chapter \
 	  --toc \
 	  --toc-depth=2 \
 	  --number-sections \
-	  --css pipeline/epub.css \
+	  --css $(PIPELINE)/epub.css \
 	  --epub-cover-image=$(COVER_TITLED) \
 	  --output $@ \
 	  $(EPUB_PROCESSED)

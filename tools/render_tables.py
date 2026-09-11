@@ -25,6 +25,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import rules_engine as E  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BOOK = os.path.join(ROOT, "book")
 OPEN = "<!-- rules:table {} -->"
 CLOSE = "<!-- /rules:table -->"
 
@@ -368,7 +369,7 @@ def install():
     for tid, (f, header, label, _) in REGISTRY.items():
         by_file.setdefault(f, []).append((tid, header, label))
     for f, entries in by_file.items():
-        path = os.path.join(ROOT, f)
+        path = os.path.join(BOOK, f)
         lines = read(path)
         for tid, header, label in entries:
             if OPEN.format(tid) in lines:
@@ -391,7 +392,7 @@ def render(check: bool = False) -> int:
     for tid, (f, _, _, gen) in REGISTRY.items():
         by_file.setdefault(f, {})[tid] = gen
     for f, gens in by_file.items():
-        path = os.path.join(ROOT, f)
+        path = os.path.join(BOOK, f)
         lines = read(path)
         out, i, changed = [], 0, False
         while i < len(lines):
@@ -411,7 +412,7 @@ def render(check: bool = False) -> int:
         if changed and not check:
             write(path, out)
     missing = [f"{f}: {tid} (no markers; run --install)" for tid, (f, _, _, _) in REGISTRY.items()
-               if OPEN.format(tid) not in read(os.path.join(ROOT, f))]
+               if OPEN.format(tid) not in read(os.path.join(BOOK, f))]
     if check:
         for s in stale + missing:
             print("stale: " + s)
