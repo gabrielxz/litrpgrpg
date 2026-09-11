@@ -23,7 +23,7 @@ The next release is **the F-Grade book**: Gradebreaker as a complete game for on
 - [ ] **Art**: chapter art for Progression and What Can Be Seen (both currently borrow art from cut chapters), plus the tutorial's phase art and handouts.
 - [ ] **Layout pass** (Gabriel wants to play with it). Eisvogel is the current template; decide whether it survives.
 - [ ] **Front matter**: Gabriel's own Introduction (backlogged 2026-08-20), and "How This Book Was Written" (the AI co-design story; Gabriel drafts, Claude edits).
-- [ ] **Worldbuilding minimum**: the System opening-message rewrite and the marked story slots.
+- [ ] **Worldbuilding and story (must-do, Gabriel 2026-09-11).** Promoted from a minimum to a gating item on the vision statement (the game + app + AI intersection at the technical edge, with a human, story-first element in the Roberta Williams tradition). Ships: the System opening-message rewrite, the marked story slots, the color vignettes (Aether felt for the first time, Aura Pressure, the philosopher), and the lore callouts wherever a system has one to carry. The cut line inside the worldbuilding project (see "Next Major Project: Worldbuilding") is still Gabriel's to set.
 - [ ] **Glossary + internal-link pass** (Tier 2 item 11). Forward references are the read-through's most repeated complaint and a stranger has no one to ask.
 - [ ] **Prose pass**: the "X, not Y" sweep, the closer cut, and a front-to-back read for the banned constructions.
 - [ ] **IP scrub**: "Conqueror's Haki" and any other borrowed coinage; USPTO clearance for GRADEBREAKER; register the domains.
@@ -42,9 +42,8 @@ The next release is **the F-Grade book**: Gradebreaker as a complete game for on
 
 - [ ] **Encounter sizing sims** (the Master free action is still unsimulated), extended past Level 9 once classes exist; correct the sizing table where they disagree.
 - [ ] **Printable GM handout page** (quest cards above all), open from the 08-20 read-through; belongs with the kit.
-- [ ] **Companion app at release** (decided 2026-09-10: it ships in some form). Needs a player-consent note for recording, a one-page quickstart, and the kit's GM screen pointing at it under the companion-app mode. Nothing in the book may depend on it (the Unplugged Floor).
+- [ ] **Companion app at release** (decided 2026-09-10: it ships in some form; 2026-09-11: it is the no-brainer, and this repo houses it). Gabriel is drafting the feature list; Claude develops. North star: the GM's job stays manageable, so the feature list starts from what the GM has to remember (the Quick Reference and the GM screen are the first draft of it). Needs a player-consent note for recording, a one-page quickstart, and the kit's GM screen pointing at it. Nothing in the book may depend on it (the Unplugged Floor). Decisions before code: repo layout (book and app side by side), platform (web-first is the fastest path to a phone at the table), what the LLM does live versus between sessions, whether the app is paid.
 - [ ] **PDF production**: bookmarks and internal links working in the PDF, a screen-reading layout question (7×10 trim on a phone), the kit as its own download alongside the book, and no bleed unless print-on-demand is on the table.
-- [ ] **Color vignettes** (Tier 3 item 14) for the systems that carry them: Aether felt for the first time, Aura Pressure, the philosopher.
 - [ ] **The Gradebreaker title** designed (Pending Design Decisions). Deferrable; the kit's play never reaches a full-Grade-up kill.
 
 **Deferred to a later book:**
