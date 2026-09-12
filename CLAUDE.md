@@ -35,6 +35,23 @@ Four rules derived from the 2026-08-11 full-book read-through, where each was th
 - **Open every chapter the way Progression opens.** One paragraph stating the loop the chapter belongs to, then pointers to the chapters that own each piece. That opening was the only one to draw praise in the read-through.
 - **First substantive use defines.** The chapter that owns a term is where the term first appears, and a coined word used once is either defined or cut. Never cite a section that has not been written.
 
+SCENARIO VOICE (from the 2026-09-11 tutorial diagnosis; binds the tutorial, every future scenario, and the Initiate's Manual):
+
+- **Four registers, each with its own job.** GM procedure is one experienced GM telling another how to run the scene: actor, trigger, check, consequence, next step. Read-aloud is sensory, speakable, and stays inside what the character can perceive. The System is clinical, confident, and allowed to be wrong. Design notes explain a purpose once. The same ominous narrator must not leak across all four.
+- **Name the referent.** No "something," "a thing," "what it holds," or "wherever you need them" where the GM needs an answer. If the fiction is meant to stay unresolved, mark it as an open mystery and still give the GM what the scene needs to run.
+- **No performed gravitas.** Cut sentences that announce depth instead of supplying an image or an instruction ("the wreckage forgets, and these do not"). One strong line per scene is fine; the habit is the defect.
+- **Write the positive description first.** The negation-and-revelation ending ("Nobody is watching. Somebody is." / "Not thins. Stops.") is a one-off, never a paragraph's default close.
+- **Observable strangeness over adjectives.** Delayed echoes and tower pieces hanging where they broke; never "thick in a way that has nothing to do with weather" or "overwhelming and beautiful and terrifying."
+- **Game terms in procedure.** Refine VE, end the phase, tally at the sweep. A day is not refined and a phase has no hinge. "Zone" is combat; "sector" is an exploration destination.
+- **Describe what the GM presents; never script the players.** No predicted arguments, swallowed treasures, manufactured silences, or prescribed feelings. Bodily sensation is fine where the fiction or a rule causes it; beliefs, motives, and emotions belong to the player.
+- **The GM records the character.** "What it tests" is "Choices to notice." A refused Yield from someone who did not understand the rule is not evidence of temperament. The System may misread; the GM text does not present the misreading as truth.
+- **Stakes live in the situation.** State who is harmed, what is gained, what was known, and what the System records. No "selfish," "smart," or "real" verdicts beside a choice the text claims has no correct answer.
+- **The System's coercion is fiction; table instruction is plain.** "The System did not ask" and "the System does not reward stalling" are not GM procedure. A player may ask what a card means.
+- **Precise claims need a rule behind them.** "Calibrated to fail" concealed an exploding save. Say "may," "typically," or "if" where the outcome is conditional, and write the missing procedure instead of hedging it.
+- **Teach enough for the decision.** Hidden lore is one thing; hidden consequences of the player's own resource counter make a choice evidence of ignorance. Decide deliberately what is hidden, and answer a direct rules question.
+- **No superlatives about the scene's own design.** "The richest scene of the day" prioritizes nothing. Give pacing allocations and what the scene introduces.
+- **Structure fits the content.** An "At three" column must not hold three different systems; a taxonomy in a design note must not replace the actual item rules; a reference card must keep every exception the rule has.
+
 WORKFLOW: 
 - Design discussions happen in chat.
 - When we agree on a change, confirm what you're about to do, then edit the project files directly. Don't output text for me to copy/paste — make the changes yourself.

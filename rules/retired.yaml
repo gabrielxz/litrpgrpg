@@ -32,6 +32,10 @@ patterns:
   - {pattern: 'next to nothing',              replaced_by: "a number (sub-Grade kills pay 0)",             since: 2026-09-11}
   - {pattern: 'Toxin',                            replaced_by: "cut",                                         since: 2026-08-04}
   - {pattern: 'Concept slot',                     replaced_by: "Principle slot",                              since: 2026-08-04}
+  - {pattern: '35 to 45 VE',                      replaced_by: "15 to 45 VE (per-branch arithmetic)",        since: 2026-09-11}
+  - {pattern: 'one of three required observations', replaced_by: "progress toward the catalog trigger",     since: 2026-09-11}
+  - {pattern: 'calibrated to fail',               replaced_by: "fails unless the die explodes",             since: 2026-09-11}
+  - {pattern: 'What it tests',                    replaced_by: "Choices to notice",                         since: 2026-09-11}
 
 # Chapter names as the book cites them, for the cross-reference check.
 chapters:

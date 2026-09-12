@@ -5,7 +5,7 @@ cases:
     fn: kill_ve
     args: {tier: Trivial}
     expect: 2
-  - name: Session 1 pays 35 to 45 VE, nobody is Saturated
+  - name: Session 1 pays up to 45 VE, nobody is Saturated
     source: 70-tutorial.md, Phase 3, "First Consolidation"
     fn: saturation
     args: {stored_ve: 45}
@@ -15,12 +15,12 @@ cases:
     fn: refine_hours
     args: {stored_ve: 45}
     expect: 3
-  - name: One Ruins zone, about 120, is Mild Saturation for everyone
+  - name: One Ruins sector, about 120, is Mild Saturation for everyone
     source: 70-tutorial.md, Phase 4, "The Camp Between Zones"
     fn: saturation
     args: {stored_ve: 120}
     expect: {band: Mild}
-  - name: Two zones carried at once land on the Critical line, still Heavy
+  - name: Two sectors carried at once land on the Critical line, still Heavy
     source: 70-tutorial.md, Phase 4, "The Camp Between Zones"
     fn: saturation
     args: {stored_ve: 240}

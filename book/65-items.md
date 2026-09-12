@@ -212,9 +212,9 @@ The Integration Tutorial draws its economy from this chapter. What the tutorial 
 - **One Resonance Shard sits in that pile and it is the sharpest test in the tutorial.** Everything else on offer is power this afternoon; the Resonance Shard is one point of insight toward a Principle the character cannot yet name or price. Say only that it resonates.
 - **One Attribute Treasure** sits in the Wild Fragment's predator den, and it is the price of a decision rather than a find. Do not place a second one.
 - **The Battered Communicator** bridges the dead command terminal in the tutorial's Civic Fragment (Phase 4); seed one in Phase 2 or 3 scavenge.
-- **The Single-Use Ranged Relic** is common in tutorial scavenger zones and is one of the sanctioned answers to the Phase 5 boss; place at least one where exploration finds it.
+- **The Single-Use Ranged Relic** is common on the tutorial's scavenger slopes and is one of the sanctioned answers to the Phase 5 boss; place at least one where exploration finds it.
 - **Volatile Artifacts are core to the tutorial's economy**: they give classless, Principle-less characters verbs beyond posture and position. Be generous with shards, stingy with pills.
-- **Items fill three roles for a classless character,** and the tutorial leans on all three: shards and one-shots are **verbs** (a move available once), weapons and armor are **vessels** (no bonus of their own, they decide which Force governs and route Marks toward the domains a character uses), and Resonance Shards and affinity treasures are **seeds** (insight paid forward).
+- **Items fill three roles for a classless character,** and the tutorial leans on all three: shards and one-shots are **verbs** (a move available once), weapons and armor are **vessels** (a weapon carries no bonus of its own and decides which Force governs, routing Marks toward the domains a character uses; armor's modifiers are listed on it), and Resonance Shards and affinity treasures are **seeds** (insight paid forward).
 
 ---
 
