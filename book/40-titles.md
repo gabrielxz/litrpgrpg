@@ -200,6 +200,25 @@ Twenty Achievement titles with their triggers, so the GM recognizes a threshold 
 
 Where a catalog title also appears in a sample stack later in this chapter, the trigger and bonus here are the canonical ones.
 
+### The Tutorial's Titles
+
+The Integration Tutorial grants its own set, earned once in the valley. None of these names appears in the catalog above, and the tutorial's cards in the Table Kit carry these effects.
+
+<!-- rules:table tutorial-titles -->
+| **Title** | **Category** | **Earned by** | **Effect** |
+|---|---|---|---|
+| **Gate-Runner** | Achievement | First character through the tutorial gate | +1 DEX |
+| **Wrong Key** | Achievement | Opened the cache without any of its three inputs | +1 PER |
+| **Watched First** | Achievement | Spent a Beat observing the constructs before engaging | +1 PER |
+| **Read the Room** | Achievement | Said what the Civic Fragment's records and tally add up to | +1 PER |
+| **Voice of Decision** | Achievement | Broke the deadlock at the Recycling Node pile | +1 CHA |
+| **Thin Margin** | Hidden Achievement | Survived a Clash at a quarter of Max HP or less | +1 FOR |
+| **Not Recommended** | Hidden Achievement | Opened the Threshold door after the System's warning | +1 HRT |
+| **The Hand That Reached** | Bestowed | Stopped for the staged Initiate when stopping cost the prize | +1 CHA |
+| **The One Who Stood** | Hidden Achievement | The causeway sacrifice | Legacy only; the character is dead and the world remembers |
+<!-- /rules:table -->
+
+
 ---
 
 ## Title Evolution

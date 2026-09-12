@@ -70,6 +70,19 @@ achievement_catalog:
     - {title: Peacemaker,            trigger: Ended three fights with words after weapons were out,      bonus: "+1 CHA"}
     - {title: Deep Breather,         trigger: Completed twenty Consolidations,                           bonus: "+1 HRT"}
 
+# The Integration Tutorial's own titles (Tutorial chapter). Earned once, in
+# the valley; none of these names appears in the catalog above.
+tutorial_titles:
+  - {title: Gate-Runner,          category: Achievement,        earned_by: First character through the tutorial gate,                        effect: "+1 DEX"}
+  - {title: Wrong Key,            category: Achievement,        earned_by: Opened the cache without any of its three inputs,                 effect: "+1 PER"}
+  - {title: Watched First,        category: Achievement,        earned_by: Spent a Beat observing the constructs before engaging,            effect: "+1 PER"}
+  - {title: Read the Room,        category: Achievement,        earned_by: Said what the Civic Fragment's records and tally add up to,       effect: "+1 PER"}
+  - {title: Voice of Decision,    category: Achievement,        earned_by: Broke the deadlock at the Recycling Node pile,                    effect: "+1 CHA"}
+  - {title: Thin Margin,          category: Hidden Achievement, earned_by: Survived a Clash at a quarter of Max HP or less,                  effect: "+1 FOR"}
+  - {title: Not Recommended,      category: Hidden Achievement, earned_by: Opened the Threshold door after the System's warning,             effect: "+1 HRT"}
+  - {title: The Hand That Reached, category: Bestowed,          earned_by: Stopped for the staged Initiate when stopping cost the prize,     effect: "+1 CHA"}
+  - {title: The One Who Stood,    category: Hidden Achievement, earned_by: The causeway sacrifice,                                          effect: "Legacy only; the character is dead and the world remembers"}
+
 evolution:
   Achievement: never
   Hidden Achievement: never

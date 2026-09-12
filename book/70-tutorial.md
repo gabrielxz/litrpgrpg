@@ -74,7 +74,7 @@ These NPCs come back if the party lets them. Keep one line per NPC: their condit
 |---|---|---|---|
 | **Ray Okafor**, a concussed delivery driver with a nail gun | Phase 2: The Other Survivor, or circling in view of The High Ground | Reaches the Node by dusk, keeps the fire, and joins the gate queue in Phase 5 | Dies during the first night. The party can find his nail gun in Phase 4 |
 | **The alien Initiates** and their scout | Phase 4: The Arriving Initiates, though their marks are met earlier | Fight beside the party in Phase 5 and name the Warden's weak point | The party enters Phase 5 without their warning and without allies |
-| **The Node strangers**: Marco, Dele, the girl who keeps her distance | Phase 3, at the Node | Part of the camp, and part of the gate queue in Phase 5 | They fend for themselves. They are not in the gate queue, and the tutorial does not say whether any of them found another way out; decide if it ever matters |
+| **The Node strangers**: Marco, Dele, and Wren | Phase 3, at the Node | Part of the camp, and part of the gate queue in Phase 5 | They fend for themselves. They are not in the gate queue, and the tutorial does not say whether any of them found another way out; decide if it ever matters |
 
 The Warden appears in Phase 5. The party cannot defeat it. They can predict its route, slow it, and outlast it long enough to escape.
 
@@ -289,7 +289,7 @@ It has not reacted to you at all.
 **Choices to notice.** Whether the character treats a creature that is not asking for help as though it were: takes, waits, helps, or kills.
 
 - **Take the stone.** It does not resist; it cannot. Awards a **predator core** (a Hard kill's worth of VE, 20, processed at the next Consolidation).
-- **Try to communicate (CHA Force vs. F-Easy 65).** You get nothing like language. What you get is that it wants you to wait. Wait about a minute of table time and it finishes, goes still, and the stone comes away warmer than it was. Awards the core plus **+1 IP toward a Restraint-aligned family**, and seeds the Hidden Quest *"The First Mercy"*; reveal it in Phase 6. The core and the IP are separate awards.
+- **Try to communicate (CHA Force vs. F-Easy 65).** You get nothing like language. What you get is that it wants you to wait. Wait about a minute of table time and it finishes, goes still, and the stone comes away warmer than it was. Awards the core plus **+1 IP toward a Restraint-aligned family**, and seeds the Hidden Quest *"Let It Finish"*; reveal it in Phase 6. The core and the IP are separate awards.
 - **Wait without trying to talk to it.** Same outcome, no IP.
 - **Kill it.** The transfer stops. The stone goes cold in about four seconds and is worth nothing to anyone.
 - **Walk away.** Nothing follows them for it.
@@ -601,7 +601,7 @@ There are other people here. Standing well apart, watching each other, in work c
 
 - **Marco**, the man in the wetsuit, was forty feet under water when the world went. He keeps both hands on a speargun, and he knows the rain line continues on the far side of the valley; he walked its length looking for a way home.
 - **Dele**, an older man, keeps taking a dead phone out of his coat and putting it back. He landed at first light and watched the arena in the north light up and start moving before he came down.
-- **A teenage girl** who will not come within thirty feet of anybody. She ran from the creature at her landing site without fighting it, and it is still there. She has no name in this chapter; give her one if she recurs.
+- **Wren**, a teenage girl who will not come within thirty feet of anybody. She ran from the creature at her landing site without fighting it, and it is still there.
 
 They are not party members. They stay at the camp unless the party involves them, and each of them alive at Phase 5 is one more person the gate has to process.
 
@@ -811,7 +811,7 @@ The sound you heard from the Node is coming from the far side of the bowl. It is
 
 **Teaching Driven Back.** The arena's tiers are a two-meter drop onto sand. When a player wins a Clash by 40 or more, tell them what they have earned: the Sentry is Exposed until the end of its next turn, and they may drive it one Zone. Off the tier is a Zone. So is away from the ally it was about to hit, and out of the armory doorway it was blocking. Driving it off costs the reach to follow up, so it is a decision; it is worth more than an extra swing when the doorway or the ally matters.
 
-**Hidden Opportunity.** A character who spends 1 Beat at the viewing platform observing the constructs before engaging gains progress toward the Achievement title **Patient Gardener** (Titles: the first round of ten separate fights without an offensive Beat; this counts as one).
+**Hidden Opportunity.** A character who spends 1 Beat at the viewing platform observing the constructs before engaging earns the Achievement title **Watched First** (+1 PER), delivered in Phase 6.
 
 **VE Reward.** Each Sentry is a Moderate kill (10 VE). Surveying the sector completes a share of Q-002, a third of a level (40 VE).
 
@@ -906,7 +906,7 @@ The building was occupied until recently. Bedding, ration wrappers, and a scrawl
 - **Scattered records in alien script** (PER, F-Moderate 90). Partial decoding reveals that the previous occupants lost members, were frightened, and left in a hurry toward the north. It also confirms that the sector is scheduled to close.
 - **The tally on the wall** counts days. The last three marks are cut shorter than the rest.
 
-**Hidden Opportunity.** A character who reads both the records and the tally and says what they add up to (a group lived here nineteen days, learned the sector was closing, and left three days ago in a hurry) earns progress toward the Achievement title **Read the Room** (its card is in the Table Kit).
+**Hidden Opportunity.** A character who reads both the records and the tally and says what they add up to (a group lived here nineteen days, learned the sector was closing, and left three days ago in a hurry) earns the Achievement title **Read the Room** (+1 PER), delivered in Phase 6.
 
 **VE Reward.** The Husk Sentinel is Hard (20), whether beaten or shut down at the terminal. Surveying completes a share of Q-002 (40), and decoding the records is worth a Moderate kill (10).
 
@@ -988,7 +988,7 @@ The last fragment of an ancient cultivator's mind is caught in a decaying rune m
 
 - **Accept the imprint.** It transfers its final technique, painful and disorienting. This is a Battle Memory trigger; the meditation carries the dying technique and pays **+1 IP** toward an Accord-aligned family. The technique arrives as the memory itself, and the character gains no usable ability from it.
 - **Harvest the matrix for raw energy.** The consciousness dissipates screaming. **A full level's worth of VE (120)**.
-- **Free the consciousness.** The matrix releases, and it expresses something like gratitude before dissolving into ambient energy. **+1 IP** toward a Restraint-aligned family. Hidden Achievement candidate: log "The First Mercy" if the player has not already earned it.
+- **Free the consciousness.** The matrix releases, and it expresses something like gratitude before dissolving into ambient energy. **+1 IP** toward a Restraint-aligned family. Freeing it also completes the Hidden Quest *"Let It Finish"* for a character who did not complete it at the Dying Scavenger.
 
 #### The Mirror
 
@@ -1016,7 +1016,7 @@ The prize is whatever drew the character away from the group; name it when you h
 
 A locked door stands in front of you. What is on the other side belongs to a higher Grade than anything in this tutorial. System text: *[Threshold detected. Compatibility: marginal. Crossing: not recommended.]*
 
-- **Open it.** The door opens to a hand on it; the warning was the lock. A brief vision of an E-Grade location; give it one concrete image. Aura Pressure save: d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance Severe (140), the flat card value, with the source flaring everything the door was holding back. The save fails unless the die explodes: a natural 96 or higher rolls again, and with a +7 bonus the second die needs 37 or better. On failure: **Suppressed for the rest of the tutorial (1 Beat)**. On success the character stands in it and takes no penalty. Either way, opening the door counts as entering a sealed location, progress toward the Hidden Achievement "The One Who Walked Through."
+- **Open it.** The door opens to a hand on it; the warning was the lock. A brief vision of an E-Grade location; give it one concrete image. Aura Pressure save: d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance Severe (140), the flat card value, with the source flaring everything the door was holding back. The save fails unless the die explodes: a natural 96 or higher rolls again, and with a +7 bonus the second die needs 37 or better. On failure: **Suppressed for the rest of the tutorial (1 Beat)**. On success the character stands in it and takes no penalty. Either way, opening it earns the Hidden Achievement **Not Recommended** (+1 HRT), delivered in Phase 6.
 - **Walk away.**
 
 #### Running Them
@@ -1104,15 +1104,15 @@ See the Bestiary for the full stat block. Key behaviors:
 
 ### Multi-Path Resolution
 
-Every competence the party invested in has a way to contribute. A party that played two sectors has two or three of the rows below. The table lists the likely applications; players may propose others the fiction supports. Price each contribution in rounds of delay, using the Modifier Budget for any bonus.
+Every competence the party invested in has a way to contribute. A party that played two sectors has two or three of the rows below. The table lists the likely applications and what each buys; players may propose others the fiction supports, priced the same way.
 
 | **Competence** | **Contribution** | **Earned in** |
 |---|---|---|
-| **Martial** | Slow the Warden in terrain bottlenecks. Its movement logic is the Sentries' logic, and anyone who fought them recognizes the pattern. | Sector A |
-| **Survival** | Route the party through collapsing terrain ahead of the Purge. | Sector B |
-| **Arcane** | Predict the Purge's path from the spiral: name which ground goes next, and keep the wall off the party's back until the causeway. Skill shards work on the Warden, and an Edge Shard's +20 stacks with a Glitch Cascade's +20. | Sector C |
-| **Civic** | The command terminal reaches the gate's activation sequence and shortens the queue. | Sector D |
-| **Social** | The alien Initiates fight alongside the party and name the Warden's weak point. | The Arriving Initiates |
+| **Martial** | Slow the Warden in terrain bottlenecks. Its movement logic is the Sentries' logic, and anyone who fought them recognizes the pattern: a bottleneck the party holds costs the Warden one Beat of movement that round. | Sector A |
+| **Survival** | Route the party through collapsing terrain ahead of the Purge: the party reaches the causeway a round before the Warden does. | Sector B |
+| **Arcane** | Predict the Purge's path from the spiral: name which ground goes next, and the Purge is never at the party's back until the causeway. Skill shards work on the Warden, and an Edge Shard's +20 stacks with a Glitch Cascade's +20. | Sector C |
+| **Civic** | The command terminal reaches the gate's activation sequence: the gate is already open when the first character arrives, and the queue starts a round early. | Sector D |
+| **Social** | The alien Initiates fight alongside the party and name the Warden's weak point, the plating gap at its back: attacks from behind it use its DEX Def Force (60) in place of its FOR Def Force (95). | The Arriving Initiates |
 | **Sacrifice** | Draw the Warden's attention so the others reach the gate (The Sacrifice Option, below). | Available to anyone. |
 
 ### Cornered
@@ -1144,7 +1144,7 @@ Sacrifice is never required. If nobody offers it, the crossing is winnable throu
 
 ### The Gate
 
-When the first character reaches the transit nexus, the gate activates. It processes **one person per round**. While it works, the rest of the queue is on the span with the Purge closing.
+When the first character reaches the transit nexus, the gate activates (or is already open, if the terminal reached it). It processes **one person per round**. While it works, the rest of the queue is on the span with the Purge closing.
 
 **The queue.** Everyone the party's choices kept alive is on the causeway too: Ray, the woman in running clothes, the Node strangers, the alien Initiates. NPCs roll nothing; each one gets through if the party holds the span long enough for their turn, and each one who does is standing on the far side in Phase 6. The order is the party's to set, out loud, while the wall closes. Sending the others first is a choice, and so is going first. A queue of eight is eight rounds on the span.
 
@@ -1157,7 +1157,7 @@ Each player character makes a final check to get through: **d100 + DEX Force vs.
 | Hard Failure (by 40+) | Through at 1 HP, and one carried item is gone; the player picks which. |
 | Catastrophic Failure (natural 01–05) | The Purge takes them, and the System reaches in after them. See Salvaged. |
 
-The first character through earns the Achievement title **"First Through the Gate"** (granted in Phase 6; its card is in the Table Kit).
+The first character through earns the Achievement title **Gate-Runner** (+1 DEX), granted in Phase 6.
 
 #### Salvaged
 
@@ -1250,7 +1250,7 @@ Each player receives a **private System summary** as a card, note, or one-on-one
 
 #### Sample Summaries by Archetype
 
-Four examples for common tutorial patterns. They show the shape; the content comes from what the player did. Each title in them is subject to its card's trigger, so check the card before handing one over. The VE totals assume a character who arrived at Level 1 and refined at the earlier camps as described.
+Four examples for common tutorial patterns. They show the shape; the content comes from what the player did. The tutorial's titles and their effects are listed in Titles, "The Tutorial's Titles". The VE totals assume a character who arrived at Level 1 and refined at the earlier camps as described.
 
 **Force/Hunger** (charged in, claimed loot, killed aggressively):
 
@@ -1261,7 +1261,7 @@ Four examples for common tutorial patterns. They show the shape; the content com
 > Axes and Hammers: 3 Marks. **Seasoned.**
 >
 > Title granted: **Pack-Breaker** (Achievement, three kills in one fight).
-> Hidden Achievement: **Cornerless** (survived a Clash at a quarter of Max HP or less).
+> Hidden Achievement: **Thin Margin** (survived a Clash at a quarter of Max HP or less).
 >
 > Hidden Quest revealed: *"Ten-Slayer." Progress: 4/10.*
 >
@@ -1275,8 +1275,8 @@ Four examples for common tutorial patterns. They show the shape; the content com
 >
 > Tracking: 1 Mark. Field Medicine: 2 Marks.
 >
-> Title granted: **Patient Gardener** (Achievement).
-> Hidden Quest revealed (post-completion): *"The First Mercy." Complete. Reward: +1 IP.*
+> Title granted: **Watched First** (Achievement, observed the constructs before engaging).
+> Hidden Quest revealed (post-completion): *"Let It Finish." Complete. Reward: +1 IP.*
 >
 > VE awaiting refinement: 205. Projected advancement: Level 4.
 
@@ -1301,10 +1301,10 @@ Four examples for common tutorial patterns. They show the shape; the content com
 >
 > Mechanical Tinkering: 2 Marks.
 >
-> Title granted: **Lockbreaker** (Achievement, for opening the cache without the proper inputs).
+> Title granted: **Wrong Key** (Achievement, for opening the cache without any of its inputs).
 > Bestowed title: **Salvaged** (negative; released by being last out and making it).
 >
-> Hidden Quest revealed: *"The One Who Walked Through." In progress (1/3 sealed locations entered).*
+> Hidden Achievement: **Not Recommended** (opened the door the System advised against).
 >
 > VE awaiting refinement: 200. Projected advancement: Level 4.
 
@@ -1453,4 +1453,4 @@ The tutorial intentionally avoids:
 
 - **Overstaying its welcome.** Two sessions of the default length, or four short ones. The tutorial shows four things: the world is huge, the System is watching, identity emerges through action, and many futures are possible.
 
-- **Telegraphing Hidden Achievements.** "The First Mercy," "Cornerless," "The One Who Stood": revealed retroactively. Players should never feel they were grinding toward one. The System noticed something they did.
+- **Telegraphing Hidden Achievements.** "Thin Margin," "Not Recommended," "The One Who Stood": revealed retroactively. Players should never feel they were grinding toward one. The System noticed something they did.

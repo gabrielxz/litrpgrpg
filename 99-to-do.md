@@ -75,7 +75,7 @@ The next release is **the F-Grade book**: Gradebreaker as a complete game for on
 
 **Do first: the companion app feature-list brainstorm, in chat, with Gabriel.** He chose to do it here rather than draft it alone. Inputs to load before starting: [[vision-and-app]] in memory (the app is diegetic: it *is* the System; the game+app+AI intersection at the technical edge is the point; GM load is icing; story is a must-do), the rules data under `rules/` (the app's engine imports it), the System AI chapter (the three modes and the generative functions are the app's first feature list), the Quick Reference and GM screen (what the GM has to remember), and the HVE chapter's structured-logging section (the machine format). Decisions that ride with the list: repo layout (`book/`, `rules/`, `app/`), platform (web-first PWA is the fastest path to a phone at the table), what the LLM does live versus between sessions, whether the listener records audio or transcribes and discards, a rough AI cost per session written next to every AI feature, and the business model deferred on purpose. Separate the assistant the GM talks to from the listener that hears the table; if the listener is in the first release, spike it first because it is the piece that can fail.
 
-**Then, in any order:** the voice-pass decisions (Tutorial Voice Pass, below), Gabriel's further tutorial notes, Heart's new job, the valley map.
+**Then, in any order:** Gabriel's verdict on the rewritten tutorial's voice, Heart's new job, the valley map.
 
 ## Tutorial Voice Pass (applied 2026-09-11, from ChatGPT's editorial change log)
 
@@ -83,7 +83,7 @@ Gabriel's re-read found the tutorial's voice wrong throughout; ChatGPT diagnosed
 
 **Resolved from the book and applied (no decision needed):** Surge costs half Maximum Aether; Will Saves explode, so both Aura Pressure scenes say "fails unless the die explodes" and the Stinger entity uses the three-Grades skip rule; the rune table is an effect roll; Driven Back is the attacker's 40 and Turned Aside the defender's; an Exceptional Success whose total fails is Soft (tutorial, handout, GM screen); Master needs an E-Grade body (sheet captions); two-Beat Yield lets the attacker drive or leave (handout, Dana example); characters are classless until the Level 10 class; Patient Gardener now counts toward the catalog's ten-fight trigger (rules/titles.yaml is the number's truth); Salvaged's −2 is Raw HRT and "arrives as tests" is the quests chapter's test mode; Q-002 pays per sector (three sources against one); the Saturation thresholds are on the sheet, so "do not announce thresholds" is gone; the HVE reads the character ("Choices to notice"), the sweep is private, scene bookkeeping is distinguished from the Engine, and the memory-filter rule stays as the HVE chapter states it (ChatGPT's softening was not imported); session formats reconciled (two default, four short; "three at the outside" cut); status-notice times come from play; Dele's timing fixed; the Mandate timer is thirty fictional minutes with a real clock optional; the Vector log is no longer "a counter at three"; the exploration destinations are **sectors** throughout, Zone stays combat-only; "The Other Player" is "The Other Initiate."
 
-**Numbers and procedures Claude supplied to fill gaps (provisional; say yes or change them):**
+**Numbers and procedures Claude supplied to fill gaps (all RULED yes, 2026-09-11):**
 
 1. Locked Cache symbol counter: press on a multiple of 100 seconds since Integration (was "a round number").
 2. The High Ground: the fighter has two minutes (was one, unreachable by a two-minute scramble); the substitute circling stranger survives if helped (was: dies regardless, unexplained).
@@ -103,18 +103,18 @@ Gabriel's re-read found the tutorial's voice wrong throughout; ChatGPT diagnosed
 16. A Rubble Trap character who let the Crawler pass meets it again on the walk down (the arrival fight stays mandatory).
 17. The Node strangers without help are written as "not in the queue; whether any got out is never confirmed."
 
-**Still open (not applied; Gabriel decides):**
+**Ruled 2026-09-11 (all applied):**
 
-- **Title triggers (C21).** First Through the Gate (tutorial: first through this gate; catalog: first into a hostile site ten times), Lockbreaker (the cache vs. five locks), Cornerless (sample: survived at a quarter HP; catalog: a 10× over-Grade encounter), Read the Room and Voice of Decision (no catalog entry, blank effects), The First Mercy and The One Who Walked Through (Hidden Quest in one place, Hidden Achievement in another). Recommendation: the tutorial grants progress toward catalog triggers; the sample summaries show only titles the tutorial can complete; the tutorial-only titles get catalog entries with effects.
+- **Title triggers (C21): RULED.** Gabriel rejected both proposals (no two things with one name; no progress-toward-titles). The tutorial grants nine unique titles that appear nowhere else: Gate-Runner (+1 DEX), Wrong Key (+1 PER), Watched First (+1 PER), Read the Room (+1 PER), Voice of Decision (+1 CHA), Thin Margin (Hidden, +1 FOR), Not Recommended (Hidden, +1 HRT), The Hand That Reached (Bestowed, +1 CHA), The One Who Stood (Hidden, legacy). They live in `rules/titles.yaml` under `tutorial_titles` and render into Titles, "The Tutorial's Titles"; the kit cards carry the effects. The scavenger's Hidden Quest is renamed "Let It Finish" (the catalog keeps "The First Mercy" as a title example), and the quests chapter's example uses the new name. Pack-Breaker, Salvaged, and Came Back Whole stay, since the tutorial meets their real triggers. Note: the two Hidden Achievements sit at +1 where the magnitude guide says +3 to +5; Gabriel approved the +1s.
 - **Mandate VE (C12): RULED 2026-09-11.** M-00 is a Hard Mandate on the card and pays the table's 125 VE; the ledger totals moved by 5.
-- **IP stacking (C07).** The Flicker, the Resonance Node, and the Trapped Intelligence pay +1 IP on the spot and also grant a Battle Memory card that pays 1 to 3 IP at meditation; the text now says both are separate awards. Recommendation: keep both.
-- **Avoidance (C04).** The arrival fight is stated as mandatory. Recommendation: keep it; it is the combat lesson.
-- **The forced loss (C10).** Step 4 now says the fight has to produce a dropping hit and tells the GM to add pressure, with the worked example as the fallback if the creature dies first. Confirm.
+- **IP stacking (C07): RULED**, both awards stand.
+- **Avoidance (C04): RULED**, the arrival fight is mandatory.
+- **The forced loss (C10): RULED**, as written.
 - **The death rule (item 6): RULED 2026-09-11**, as written (told to players if they ask).
-- **Gate and Warden (items 4 and 5): RULED 2026-09-11**, as written. **Multi-Path values (C18, C19, C20)** stay priced by GM judgment in rounds of delay; the spiral gives route knowledge only. Open: whether to fix numbers (a held bottleneck costs the Warden one Beat of movement per round; the terminal opens the gate a round early; the weak point uses its DEX Def Force 60 from behind).
-- **Pregen play prompts (entry 105).** "Want things out loud," "swing like the door needs breaking," "take only what the plan needs" stay on the kit; ChatGPT says they prescribe what the HVE later reads. Decide.
-- **Quick Reference (entry 103).** "Anything you let go of is archery and throwing" stays as ruled 2026-08-14. Decide whether it narrows to "any weapon you let go of."
-- **The girl at the Node** has no name; name her if she is meant to recur.
+- **Gate and Warden (items 4 and 5): RULED 2026-09-11**, as written. **Multi-Path values (C18, C19, C20)** stay priced by GM judgment in rounds of delay; the spiral gives route knowledge only. **RULED:** the numbers are fixed in the Multi-Path table (a held bottleneck costs the Warden one Beat of movement that round; the terminal has the gate open on arrival and the queue starts a round early; the spiral keeps the Purge off the party's back until the causeway; the weak point uses its DEX Def Force 60 from behind; Survival reaches the causeway a round ahead).
+- **Pregen play prompts (entry 105): RULED**, they stay.
+- **Quick Reference (entry 103): RULED**, the 2026-08-14 wording stays.
+- **The girl at the Node** is Wren (RULED).
 
 ## Open Now
 

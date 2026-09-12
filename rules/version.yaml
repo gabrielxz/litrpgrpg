@@ -1,9 +1,10 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.1"
+version: "0.1.2"
 dated: "2026-09-11"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
   flat-value VE (Tolerance 80, level 120, 20 per hour), the Grade Gap Rule,
-  run modes by name. 0.1.1: sub-Grade kills pay 0.
+  run modes by name. 0.1.1: sub-Grade kills pay 0. 0.1.2: the tutorial's
+  nine unique titles added under tutorial_titles.

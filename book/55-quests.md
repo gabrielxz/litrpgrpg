@@ -343,7 +343,7 @@ The player knows *something* is happening. They don't know what. Encourages expl
 Appears when the character has made multiple choices that match the hidden pattern. The System is starting to "see" the shape but is not telling the character outright.
 
 ```
-[Q-???] Hidden Objective: "The First Mercy"
+[Q-???] Hidden Objective: "Let It Finish"
 Conditions: Unclear.
 Status:     Active.
 ```
@@ -355,7 +355,7 @@ The title is a clue. The conditions are not. Players must figure out what they a
 Appears retroactively after fulfillment, usually for one-shot moments of grace, sacrifice, or improbability.
 
 ```
-[Q-HID-014] "The First Mercy": Complete.
+[Q-HID-014] "Let It Finish": Complete.
 Reward: +1 IP toward a Restraint-aligned Principle.
         New Hidden Achievement: "The One Who Stayed Their Hand."
 ```

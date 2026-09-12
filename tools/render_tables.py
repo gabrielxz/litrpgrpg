@@ -216,6 +216,11 @@ def _catalog(group):
     return lambda: table(["Title", "Trigger", "Bonus"], [[t["title"], t["trigger"], t["bonus"]] for t in E.load("titles")["achievement_catalog"][group]])
 
 
+def g_tutorial_titles():
+    rows = [[f"**{t['title']}**", t["category"], t["earned_by"], t["effect"]] for t in E.load("titles")["tutorial_titles"]]
+    return table(["Title", "Category", "Earned by", "Effect"], rows)
+
+
 def _stack(arch):
     return lambda: table(["Title", "Class", "Effect"], [[f"**{t['title']}**", t["class"], t["effect"]] for t in E.load("titles")["sample_stacks"][arch]])
 
@@ -327,6 +332,7 @@ REGISTRY = {
     "catalog-survival":         ("40-titles.md", "| **Title** | **Trigger** | **Bonus** |", "**Survival**", _catalog("Survival")),
     "catalog-craft":            ("40-titles.md", "| **Title** | **Trigger** | **Bonus** |", "**Craft and Ground**", _catalog("Craft and Ground")),
     "catalog-word":             ("40-titles.md", "| **Title** | **Trigger** | **Bonus** |", "**Word and Bond**", _catalog("Word and Bond")),
+    "tutorial-titles":          ("40-titles.md", "| **Title** | **Category** | **Earned by** | **Effect** |", "### The Tutorial's Titles", g_tutorial_titles),
     "stack-apex":               ("40-titles.md", "| **Title** | **Class** | **Effect** |", "### The Apex Predator (Force + Hunger + Will + Freedom)", _stack("The Apex Predator")),
     "stack-architect":          ("40-titles.md", "| **Title** | **Class** | **Effect** |", "### The System Architect (Method + Restraint + Accord + Control)", _stack("The System Architect")),
     "stack-adjudicator":        ("40-titles.md", "| **Title** | **Class** | **Effect** |", "### The Iron Adjudicator (Force + Restraint + Will + Control)", _stack("The Iron Adjudicator")),
