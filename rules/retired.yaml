@@ -2,7 +2,7 @@
 # these appear in a chapter, the kit, or the pipeline. Add a line whenever a
 # rule changes: the pattern, what replaced it, and the date.
 patterns:
-  - {pattern: '\b125 VE\b',                       replaced_by: "120 VE",                                     since: 2026-09-10}
+  - {pattern: '[Ll]evel[^.\n]{0,40}\b125\b|\b125\b[^.\n]{0,20}\blevel', replaced_by: "a level is 120 VE (125 is still the Hard Mandate award)", since: 2026-09-10}
   - {pattern: '\btwelve and a half\b',            replaced_by: "twelve peer kills",                           since: 2026-09-10}
   - {pattern: '\b3,000 VE\b',                     replaced_by: "2,880 VE",                                    since: 2026-09-10}
   - {pattern: '\(Raw FOR \+ Raw HRT\)',           replaced_by: "flat Tolerance 80",                           since: 2026-09-10}

@@ -1077,7 +1077,7 @@ The System announces the dissolution as a formal **Mandate**:
 > ```
 > [MANDATE M-00] Tutorial Sector 7-Alpha: Controlled Dissolution
 > Issuer:     System
-> Grade:      F · Difficulty: Severe
+> Grade:      F · Difficulty: Hard
 > Objective:  Reach the transit gate at coordinates [0.0, 0.0]
 >             before structural coherence reaches zero. (Duration:
 >             approximately 30 minutes in-fiction.)
@@ -1195,7 +1195,7 @@ If the party is doing badly, intervene through the fiction: a piece of architect
 
 The tutorial should end with the party through.
 
-**VE Reward.** The Warden and anything killed on the run pay their tiers as they fall. The Mandate itself pays on completion, past the gate, about a level's worth (120 VE), the largest single award in the tutorial. Paying it at the announcement instead would put the party three times past Tolerance for the crossing, with the collapse clock running through the climax.
+**VE Reward.** The Warden and anything killed on the run pay their tiers as they fall. The Mandate itself pays on completion, past the gate: 125 VE, the Hard Mandate award (System Quests, "VE Rewards by Quest Category and Difficulty"), and the largest single award in the tutorial. Paying it at the announcement instead would put the party three times past Tolerance for the crossing, with the collapse clock running through the climax.
 
 ---
 
@@ -1405,12 +1405,12 @@ This ledger is denominated in VE and levels. A level is 120 VE at F-Grade (Culti
 | 2: The Violent Arrival | The arrival kill (2 to 4) and session survival (5) | The encounter's reward, 0 to 30 by encounter and choice |
 | 3: The Recycling Node | Q-001 (10) | none |
 | 4: The Field of Ruins | Two sector surveys (40 each) | Kills, 3 to 6 at 10 to 30 each; a Hidden Opportunity; the Arriving Initiates (60); a Personal Opportunity (0 to 120) |
-| 5: The Convergence Crisis | The Mandate (120) | Anything killed on the run |
+| 5: The Convergence Crisis | The Mandate (125) | Anything killed on the run |
 | 6: First Recognition | The completion bonus, below | Hidden Quest reveals |
 
-**Totals.** The guaranteed awards come to about 220 VE, just under two levels. A typical route (a rewarded encounter, four kills in the Ruins, the Initiates reached, a middling card) comes to about 360 VE, three levels, so most characters finish at **Level 4**. A character who took every fight, a third sector, and every opportunity finishes at **Level 5**. A low route (avoidance, no contact with the Initiates, a refused card) comes to about 260 VE, which is Level 3 with a third of a level banked. The VE is processed across four Consolidations: the end of Session 1, the camp between the sectors, the end of the Ruins, and the long rest past the gate, which carries the bulk of it.
+**Totals.** The guaranteed awards come to about 225 VE, just under two levels. A typical route (a rewarded encounter, four kills in the Ruins, the Initiates reached, a middling card) comes to about 365 VE, three levels, so most characters finish at **Level 4**. A character who took every fight, a third sector, and every opportunity finishes at **Level 5**. A low route (avoidance, no contact with the Initiates, a refused card) comes to about 265 VE, which is Level 3 with a third of a level banked. The VE is processed across four Consolidations: the end of Session 1, the camp between the sectors, the end of the Ruins, and the long rest past the gate, which carries the bulk of it.
 
-**The Mandate is the biggest single award.** Surviving a sector dissolution is the arc that defined these sessions, and Awarding VE prices such an arc at a level or more; the tutorial uses 120 VE.
+**The Mandate is the biggest single award.** Surviving a sector dissolution is the arc that defined these sessions, and Awarding VE prices such an arc at a level or more. The Hard Mandate award of 125 VE meets that.
 
 **Completion bonus.** The intended finishing level is 4. If a character is short of it at the post-gate Consolidation, award the difference as a completion bonus and say so. A third sector adds roughly half a level.
 

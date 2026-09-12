@@ -106,12 +106,12 @@ Gabriel's re-read found the tutorial's voice wrong throughout; ChatGPT diagnosed
 **Still open (not applied; Gabriel decides):**
 
 - **Title triggers (C21).** First Through the Gate (tutorial: first through this gate; catalog: first into a hostile site ten times), Lockbreaker (the cache vs. five locks), Cornerless (sample: survived at a quarter HP; catalog: a 10× over-Grade encounter), Read the Room and Voice of Decision (no catalog entry, blank effects), The First Mercy and The One Who Walked Through (Hidden Quest in one place, Hidden Achievement in another). Recommendation: the tutorial grants progress toward catalog triggers; the sample summaries show only titles the tutorial can complete; the tutorial-only titles get catalog entries with effects.
-- **Mandate VE (C12).** The tutorial pays M-00 about a level (120); the quests table prices a Severe Mandate at 250. Recommendation: keep 120 and mark M-00 Hard on the card (the table's Hard Mandate is 125), since 250 makes Level 5 the typical finish and the ledger was built on 120.
+- **Mandate VE (C12): RULED 2026-09-11.** M-00 is a Hard Mandate on the card and pays the table's 125 VE; the ledger totals moved by 5.
 - **IP stacking (C07).** The Flicker, the Resonance Node, and the Trapped Intelligence pay +1 IP on the spot and also grant a Battle Memory card that pays 1 to 3 IP at meditation; the text now says both are separate awards. Recommendation: keep both.
 - **Avoidance (C04).** The arrival fight is stated as mandatory. Recommendation: keep it; it is the combat lesson.
 - **The forced loss (C10).** Step 4 now says the fight has to produce a dropping hit and tells the GM to add pressure, with the worked example as the fallback if the creature dies first. Confirm.
-- **The death rule (item 6).** Confirm the override as written, and whether players are told up front.
-- **Multi-Path values (C18, C19, C20).** Contributions are priced by GM judgment in rounds of delay; the spiral gives route knowledge only. Decide whether to fix numbers (a held bottleneck costs the Warden one Beat of movement per round; the terminal opens the gate a round early; the weak point uses its DEX Def Force 60 from behind).
+- **The death rule (item 6): RULED 2026-09-11**, as written (told to players if they ask).
+- **Gate and Warden (items 4 and 5): RULED 2026-09-11**, as written. **Multi-Path values (C18, C19, C20)** stay priced by GM judgment in rounds of delay; the spiral gives route knowledge only. Open: whether to fix numbers (a held bottleneck costs the Warden one Beat of movement per round; the terminal opens the gate a round early; the weak point uses its DEX Def Force 60 from behind).
 - **Pregen play prompts (entry 105).** "Want things out loud," "swing like the door needs breaking," "take only what the plan needs" stay on the kit; ChatGPT says they prescribe what the HVE later reads. Decide.
 - **Quick Reference (entry 103).** "Anything you let go of is archery and throwing" stays as ruled 2026-08-14. Decide whether it narrows to "any weapon you let go of."
 - **The girl at the Node** has no name; name her if she is meant to recur.
