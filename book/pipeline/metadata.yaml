@@ -29,6 +29,31 @@ geometry:
   - headsep=0.3in
 
 fontsize: 11pt
+
+# Fonts, through the template's own variables. A \setmainfont in the preamble
+# is overridden by Eisvogel's default Source Sans block, which comes later.
+mainfont: "EBGaramond"
+mainfontoptions:
+  - Extension=.otf
+  - UprightFont=*-Regular
+  - ItalicFont=*-Italic
+  - BoldFont=*-Bold
+  - BoldItalicFont=*-BoldItalic
+sansfont: "AlegreyaSans"
+sansfontoptions:
+  - Extension=.otf
+  - UprightFont=*-Regular
+  - ItalicFont=*-Italic
+  - BoldFont=*-Bold
+  - BoldItalicFont=*-BoldItalic
+monofont: "JetBrainsMono"
+monofontoptions:
+  - Extension=.otf
+  - UprightFont=*-Regular
+  - ItalicFont=*-Italic
+  - BoldFont=*-Bold
+  - BoldItalicFont=*-BoldItalic
+  - Scale=0.82
 linestretch: 1.18
 
 # Headings & numbering
