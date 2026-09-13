@@ -94,23 +94,31 @@
   frame hidden,
   colback=gbink,
   coltext=gbbone,
-  coltitle=gbcyanlight,
-  colbacktitle=gbink,
-  fonttitle=\footnotesize\sffamily\bfseries,
-  title={THE SYSTEM},
   fontupper=\sffamily,
   boxrule=0pt,
   arc=0pt,
   outer arc=0pt,
-  left=14pt,
-  right=14pt,
-  top=6pt,
-  bottom=12pt,
-  before skip=10pt,
-  after skip=10pt,
-  overlay={
-    \draw[gbcyanlight, line width=1.1pt] ([yshift=-40pt]frame.north west) -- (frame.north west) -- ([xshift=60pt]frame.north west);
-    \draw[gbcyanlight, line width=1.1pt] ([xshift=-60pt]frame.south east) -- (frame.south east) -- ([yshift=40pt]frame.south east);
+  left=20pt,
+  right=18pt,
+  top=20pt,
+  bottom=18pt,
+  before skip=14pt,
+  after skip=14pt,
+  title={THE SYSTEM},
+  fonttitle=\footnotesize\sffamily\bfseries,
+  coltitle=gbcyanlight,
+  attach boxed title to top left={xshift=14pt, yshift=-\tcboxedtitleheight/2},
+  boxed title style={
+    colback=gbink,
+    colframe=gbcyanlight,
+    boxrule=0.6pt,
+    arc=0pt,
+    left=7pt, right=7pt, top=2pt, bottom=2pt
+  },
+  underlay={
+    \draw[gbcyanlight, line width=1.1pt] ([yshift=-18pt]frame.north west) -- (frame.south west) -- ([xshift=36pt]frame.south west);
+    \draw[gbcyanlight, line width=1.1pt] ([xshift=-72pt]frame.south east) -- (frame.south east) -- ([yshift=48pt]frame.south east);
+    \draw[gbcyanlight, line width=1.1pt] ([xshift=-40pt]frame.north east) -- (frame.north east);
   }
 }
 
@@ -158,26 +166,33 @@
   enhanced,
   frame hidden,
   colback=gbbonedeep,
-  coltitle=gbink,
-  colbacktitle=gbbonedeep,
   boxrule=0pt,
   arc=0pt,
   outer arc=0pt,
-  fonttitle=\footnotesize\sffamily\bfseries,
-  title={READ ALOUD},
   parbox=false,
   before upper={\setlength{\parindent}{0pt}\setlength{\parskip}{7pt}},
-  left=14pt,
-  right=14pt,
-  top=6pt,
-  bottom=12pt,
-  before skip=12pt,
-  after skip=12pt,
-  overlay={
-    \draw[gbink, line width=0.9pt] (frame.south west) -- (frame.north west) -- ([xshift=-70pt]frame.north east);
-    \draw[gbink, line width=0.9pt] ([xshift=-30pt]frame.north east) -- (frame.north east) -- ([yshift=-30pt]frame.north east);
-    \draw[gbink, line width=0.9pt] (frame.south west) -- ([xshift=90pt]frame.south west);
-    \draw[gbcyan, line width=1.4pt] ([xshift=104pt]frame.south west) -- ([xshift=128pt]frame.south west);
+  left=20pt,
+  right=18pt,
+  top=20pt,
+  bottom=18pt,
+  before skip=14pt,
+  after skip=14pt,
+  title={READ ALOUD},
+  fonttitle=\footnotesize\sffamily\bfseries,
+  coltitle=gbbone,
+  attach boxed title to top left={xshift=14pt, yshift=-\tcboxedtitleheight/2},
+  boxed title style={
+    colback=gbink,
+    colframe=gbink,
+    boxrule=0pt,
+    arc=0pt,
+    left=7pt, right=7pt, top=2pt, bottom=2pt
+  },
+  underlay={
+    \draw[gbink, line width=1.1pt] ([xshift=-96pt]frame.north east) -- (frame.north west) -- (frame.south west) -- ([xshift=110pt]frame.south west);
+    \draw[gbink, line width=1.1pt] ([xshift=-36pt]frame.north east) -- (frame.north east) -- ([yshift=-40pt]frame.north east);
+    \draw[gbink, line width=1.1pt] ([yshift=60pt]frame.south east) -- (frame.south east) -- ([xshift=-60pt]frame.south east);
+    \draw[gbcyan, line width=1.6pt] ([xshift=124pt]frame.south west) -- ([xshift=150pt]frame.south west);
   }
 }
 
