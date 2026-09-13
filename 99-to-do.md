@@ -435,6 +435,8 @@ Context, captured 2026-07-08. Gabriel's long-standing plan is a **companion app*
 
 ### Next Major Project: Worldbuilding (queued behind the proofread cycle, high priority — Gabriel, 2026-08-01)
 
+**Started 2026-09-12.** Gabriel's tutorial re-read (first 20 pages: happy overall, tweaks to format, details, and story coming) surfaced that the lore pass has to happen before the tutorial is finalized, because the tutorial is where players first meet the world and its hooks should point at real facts (his example: the alien Initiates should be a race the galaxy knows). The worksheet is `lore/questions.md`: Parts A and B (the tutorial's needs, the System) first, C through E after, F is Claude's delivery. Gabriel answers; Claude writes from the answers.
+
 The setting is currently generic-LitRPG on purpose, but it needs enough flesh that a GM has material to reach for while players stay free to tell any story.
 
 **Ordered in three stages, reordered 2026-08-15 by Gabriel.** The voice used to be one item among several. The Initiate's Manual is written entirely in it, so a whole book now depends on it being settled, and it goes first.
