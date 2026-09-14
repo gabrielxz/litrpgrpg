@@ -40,7 +40,7 @@
 \pagecolor{gbbone}
 \color{gbink}
 
-% Chapter titles carry an interrupted rule: a long dark segment, a gap, one short cyan segment.
+% Chapter titles carry an interrupted rule: a long dark segment, a gap, one short cyan segment, and the emblem.
 \makeatletter
 \renewcommand*{\chapterlinesformat}[3]{%
   \@hangfrom{#2}{#3}\par\nobreak
@@ -48,6 +48,7 @@
   \noindent\begin{tikzpicture}
     \draw[gbink, line width=0.9pt] (0,0) -- (0.60\textwidth,0);
     \draw[gbcyan, line width=1.4pt] (0.645\textwidth,0) -- (0.70\textwidth,0);
+    \node[anchor=west, inner sep=0pt] at (0.725\textwidth,0) {\includegraphics[height=20pt]{./book/art/emblem/emblem-a.png}};
   \end{tikzpicture}\par
 }
 \makeatother

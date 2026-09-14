@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Bake the cover: the GRADEBREAKER wordmark, subtitle, volume line, draft line,
-byline, and optionally an emblem (third argument)
+"""Bake the cover: the GRADEBREAKER wordmark, subtitle, the volume line bottom
+left, the byline, and optionally an emblem (third argument)
 onto the cover art. The wordmark is the heading face fractured between its
 two halves, the right half displaced, with one cyan segment completing the
 break (book/art/art-bible.md, section 7: one controlled interruption).
@@ -93,14 +93,13 @@ def main(src, dst, emblem=None):
         d.text(xy, s, font=f, fill=fill, anchor=anchor, stroke_width=ew, stroke_fill=edge)
     y_sub = int(44 * k) - reach + wm.height - int(wm.height * 0.30)
     text((W // 2, y_sub), "The LitRPG RPG", font("EBGaramond-Italic.otf", int(58 * k)), "ma", BONE, INK, max(2, int(2 * k)))
-    text((W // 2, y_sub + int(74 * k)), "THE F-GRADE VOLUME", font("AlegreyaSans-Bold.otf", int(26 * k)), "ma", CYAN, INK, max(1, int(2 * k)))
     if emblem:
         e = Image.open(emblem).convert("RGBA")
         side = int(110 * k)
         e = e.resize((side, side), Image.LANCZOS)
         im.alpha_composite(e, ((W - side) // 2, H - int(44 * k) - side))
-    text((int(44 * k), H - int(44 * k)), "Working draft, September 2026",
-         font("EBGaramond-Italic.otf", int(30 * k)), "ld", BONE, INK, max(2, int(3 * k)))
+    text((int(44 * k), H - int(44 * k)), "F-GRADE VOLUME",
+         font("AlegreyaSans-Bold.otf", int(34 * k)), "ld", CYAN, INK, max(2, int(3 * k)))
     text((W - int(44 * k), H - int(44 * k)), "by Gabriel Beal",
          font("EBGaramond-Italic.otf", int(38 * k)), "rd", BONE, INK, max(2, int(3 * k)))
     im.convert("RGB").save(dst)

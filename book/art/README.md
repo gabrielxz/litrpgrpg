@@ -10,4 +10,4 @@
 
 Superseded: the stencil-and-sumi-e guide that lived at `book/assets/art_style_guide.md` (in git history), and every image in `book/assets/` made under it. They stay in place as placeholders until their replacements land.
 
-`emblem/` holds the two emblem candidates from ChatGPT, keyed to transparent cyan (`emblem-a.png`: the compass ring; `emblem-b.png`: the torn ring). The cover art in `book/assets/art/cover.png` is stored mirrored from the generated file so its fracture meets the wordmark's break; `tools/cover.py` documents the alignment.
+`emblem/` holds the emblem, keyed to transparent cyan: `emblem-a.png`, the compass ring, is the mark (chosen 2026-09-13; it sits at the end of every chapter's rule and in the kit's masthead). `emblem-b.png`, the torn ring, is the rejected candidate. The cover art in `book/assets/art/cover.png` is stored mirrored from the generated file so its fracture meets the wordmark's break; `tools/cover.py` documents the alignment.
