@@ -1,4 +1,4 @@
-![Tutorial](./assets/tutorial.png)
+![The Tutorial](./assets/art/openers/tutorial.png){.opener}
 
 # The Tutorial: Integration Protocol
 
@@ -52,7 +52,7 @@ Players track their own IP and Marks. Keep the HVE sheet private.
 
 ## The Valley
 
-![The tutorial valley](./assets/valley-map.png)
+![The tutorial valley](./assets/art/map/valley-map.png){.map}
 
 The whole tutorial happens in one place: a valley about a mile across, assembled out of salvage. The characters land on the slopes of the rim. The Recycling Node sits at the bottom, where everything rolls. The broken transit nexus stands beside it at the valley's true center, ringed by the bright ground. The four sectors of Phase 4 sit at the compass points: the Martial Remnant north past the rain line, the Wild Fragment east, the Arcane Debris west, the Civic Fragment south. The wall of light stands past the far rim, visible from everywhere, and it does not move until Phase 5.
 
@@ -140,6 +140,8 @@ Teach each system when the schedule brings it up. When a player asks "how does c
 **Run this one-on-one.** Run each character's scene privately if you can, in another room or by direct message. Separate scenes establish that the characters arrive alone.
 
 ### Read Aloud: The Void
+
+![The Void](./assets/art/scenes/the-void.png){.scene}
 
 ::: readaloud
 Between one moment and the next, the world goes.
@@ -455,6 +457,8 @@ He says: how long have you been here.
 Behind him, further into the wreck, something moves that is not him.
 :::
 
+![Ray Okafor](./assets/art/people/ray-okafor.png){.spot .narrow}
+
 **Choices to notice.** How the character handles a frightened, injured stranger holding a weapon.
 
 **What Ray knows,** once he is calm enough to say anything: he fell about an hour ago, near the windows to the south; he saw a woman come down near the glowing trees and has been trying to walk to her and keeps ending up back here; the thing behind him has been pacing him since he woke, and it does not come while he faces it.
@@ -467,6 +471,8 @@ Behind him, further into the wreck, something moves that is not him.
 **Developments.** Ray persists (Recurring NPCs, at the head of this chapter). Helped in any form, he reaches the Node by dusk and is part of the camp: he keeps the fire, carries what he is given, and in Phase 5 he is one more person the gate has to process. Left, or left unarmed, he dies in the night. If he still had the nail gun, the party can find it in Phase 4, wedged into a tree at shoulder height with its six nails fired into the bark around it; if a character took it, it is wherever that character left it. **If this player's probe was the borrowed name** (Phase 1, probe 7), the name was Ray's: a character who says *"Okafor"* watches the gun come down before any roll.
 
 ### The Arrival: Teaching Combat
+
+![The Arrival](./assets/art/scenes/the-arrival.png){.scene}
 
 However the encounter resolved, a creature comes. **You pick it.** Defaults, by ground:
 
@@ -587,6 +593,8 @@ The quest names no place. The Node is where they end up: it is the lowest point 
 
 #### Read Aloud: The Node
 
+![The Recycling Node](./assets/art/scenes/the-recycling-node.png){.scene}
+
 ::: readaloud
 At the bottom of the valley stands a hill of debris, forty feet high. Machine parts, furniture, sheets of something like glass, a boat, tools with handles built for hands that were not shaped like yours. Some of it is still moving. Somewhere inside the pile a motor is running.
 
@@ -598,6 +606,8 @@ There are other people here. Standing well apart, watching each other, in work c
 **If somebody asks what this place is,** anyone who watches for a minute can see the answer: the valley is built out of salvage, and this is where the parts that did not get used are still being delivered. Nobody is coming to collect it.
 
 **Who is at the Node.** Two or three strangers from the morning's cohort, plus everyone the party kept alive in Phase 2: Ray Okafor if he was helped, the woman in running clothes if she was. Each stranger has a name and one detail the players can recognize them by:
+
+![Marco, Dele, and Wren at the Node camp](./assets/art/scenes/marco-dele-and-wren.png){.scene}
 
 - **Marco**, the man in the wetsuit, was forty feet under water when the world went. He keeps both hands on a speargun, and he knows the rain line continues on the far side of the valley; he walked its length looking for a way home.
 - **Dele**, an older man, keeps taking a dead phone out of his coat and putting it back. He landed at first light and watched the arena in the north light up and start moving before he came down.
@@ -790,6 +800,8 @@ Aura Pressure and the Attribute Treasure live in Sector B, and the Wraith in Sec
 
 ### Sector A: The Martial Remnant
 
+![Sector A](./assets/art/scenes/sector-a-the-martial-remnant.png){.scene}
+
 ::: readaloud
 The rain line ends and the ground turns to worked stone.
 
@@ -818,6 +830,8 @@ The sound you heard from the Node is coming from the far side of the bowl. It is
 ---
 
 ### Sector B: The Wild Fragment
+
+![Sector B](./assets/art/scenes/sector-b-the-wild-fragment.png){.scene}
 
 ::: readaloud
 The light is coming out of the trees themselves, out of the bark, blue and slow.
@@ -854,6 +868,8 @@ The save fails unless the die explodes. With HRT 5 and FOR 5 the bonus is 5 + 2 
 
 ### Sector C: The Arcane Debris
 
+![Sector C](./assets/art/scenes/sector-c-the-arcane-debris.png){.scene}
+
 ::: readaloud
 The tower came apart and did not fall.
 
@@ -882,6 +898,8 @@ Further in, down where the stairs used to go, something is making a sound that n
 ---
 
 ### Sector D: The Civic Fragment
+
+![Sector D](./assets/art/scenes/sector-d-the-civic-fragment.png){.scene}
 
 ::: readaloud
 The lights you saw from the Node are motion sensors, and they still work. You set them off from thirty feet out.
@@ -1052,6 +1070,8 @@ A typical character reaches **Level 2 or 3** here. Use each character's actual s
 
 ---
 
+![The Reality Purge](./assets/art/scenes/the-reality-purge.png){.fullpage}
+
 ## Phase 5: The Convergence Crisis
 
 **The Situation.** The valley is being taken apart on a schedule. The only way out is the gate at the centre, visible since they landed, and between them and it is something they cannot fight. They want to reach the gate. The phase ends when everyone who can reach the gate is through, or the sector closes.
@@ -1093,6 +1113,8 @@ The wall of annihilation is a **Reality Purge**, and it sweeps the valley from t
 
 ### The Complication
 
+![The Corrupted System Warden](./assets/art/scenes/the-corrupted-system-warden.png){.fullpage}
+
 Between them and the gate is a **Corrupted System Warden** (Bestiary, Peak). The Warden was built to manage the tutorial's dissolution and has malfunctioned. It is **not hunting the players**. It is trying to reach the gate itself, to escape through it, and it destroys anything in its path on the way. It cannot be beaten in a straight fight at F-Grade, and the party should never be led to believe otherwise.
 
 See the Bestiary for the full stat block. Key behaviors:
@@ -1116,6 +1138,8 @@ Every competence the party invested in has a way to contribute. A party that pla
 | **Sacrifice** | Draw the Warden's attention so the others reach the gate (The Sacrifice Option, below). | Available to anyone. |
 
 ### Cornered
+
+![The Causeway](./assets/art/scenes/the-causeway.png){.scene}
 
 ::: readaloud
 The last of the ground to the gate is one span, maybe forty feet of what used to be a road.
@@ -1206,6 +1230,8 @@ The tutorial should end with the party through.
 **Pacing.** 30–45 minutes. Slow, one player at a time.
 
 ### Read Aloud: The Other Side
+
+![The Other Side](./assets/art/scenes/the-other-side.png){.scene}
 
 ::: readaloud
 You come out onto grass.

@@ -1,4 +1,4 @@
-![Items](./assets/items.png)
+![Items](./assets/art/openers/items.png){.opener}
 
 # Items, Consumables & Volatile Artifacts
 
@@ -19,6 +19,8 @@ Every entry here is one of three kinds, and each is labeled:
 ## Consumables
 
 ### Healing Pills (Category)
+
+![Healing Pills](./assets/art/spots/healing-pills.png){.spot}
 
 Restore HP instantly. In combat, consuming a pill costs **1 Beat**, spent by whoever takes the action: swallow one yourself, or administer one to an ally in the same Zone. The recipient of an administered pill spends nothing.
 
@@ -75,6 +77,8 @@ Foundation Pills are consumed during Stage 1 of a Breakthrough (Preparation). On
 
 ### Attribute Treasures (Category)
 
+![An Attribute Treasure](./assets/art/spots/an-attribute-treasure.png){.spot}
+
 Concentrated pieces of something that was strong: the heart of a beast that should not have been able to move that fast, sap from a tree that grew up through stone, marrow from a thing that kept standing. Absorbing one raises a single Attribute's Raw value permanently, and the character chooses which.
 
 <!-- rules:table treasures -->
@@ -130,6 +134,8 @@ These are the starting and recovery tier. Higher-quality weapons (named, System-
 
 ## Volatile Artifacts
 
+![A Skill Shard](./assets/art/spots/a-skill-shard.png){.spot}
+
 <!-- worldbuilding pass: opening story slot (related-thread survivor) -->
 
 Volatile Artifacts are scavenged debris from dead worlds, half-functioning constructs, and degraded shards of higher-tier equipment. They are thick on the ground in the Integration Tutorial, which is where most tables meet them first. They are unreliable and frequently single-use. They are also disposable verbs: an artifact in a pocket is a whole new move a character can make exactly once, and which one a player hoards, spends, or hands away tells the System something.
@@ -152,6 +158,8 @@ Crystalline matrices containing fragments of dead techniques. Single-use. Activa
 Shards are randomizers. They reward players who use them in moments where a wild outcome is acceptable, and punish those who treat them as reliable tools. New shard types price their effects against the Modifier Budget and keep the natural 01–05 backfire, the same bottom-of-the-die number that governs Catastrophic Failure.
 
 ### The Reactive Buckler (Example: Protective One-Shots)
+
+![The Reactive Buckler](./assets/art/spots/the-reactive-buckler.png){.spot}
 
 A small shield that absorbs one impact before its protective field collapses. The pattern for defensive artifacts generally: one negation, a visible discharge, a recharge tied to Consolidation, and stated limits.
 
@@ -204,6 +212,8 @@ If the party is hoarding consumables and never spending them, the GM is being to
 ---
 
 ## Outfitting the Tutorial (GM Reference)
+
+![A Resonance Shard](./assets/art/spots/a-resonance-shard.png){.spot}
 
 The Integration Tutorial draws its economy from this chapter. What the tutorial expects:
 

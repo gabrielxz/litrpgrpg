@@ -1,4 +1,4 @@
-![Core Mechanics](./assets/core_mechanics.png)
+![Core Mechanics](./assets/art/openers/core-mechanics.png){.opener}
 
 # Core Mechanics
 
@@ -371,6 +371,8 @@ Apply it straight to HP. There is no reduction step; the defender's toughness wa
 
 ### Yield
 
+![Yield](./assets/art/scenes/yield.png){.scene}
+
 Losing a Clash does not have to mean taking the whole blow. You can give way.
 
 > **Yield: once the Margin is known and before damage is applied, give up Beats from your next turn. Each Beat reduces the incoming Margin by 20.**
@@ -406,6 +408,8 @@ When one attack or effect targets several creatures at once (an AoE spell, an Ap
 Multi-target capability is a property of specific abilities, spells, and effects rather than a baseline action.
 
 ### Downed and Death
+
+![Downed](./assets/art/scenes/downed.png){.scene}
 
 **Downed at zero.** A player character or named NPC reduced to 0 HP is **Downed**: unconscious or barely conscious, prone, out of the fight, with no Beats and no defense. HP floors at 0. Creatures die at 0 outright, unless the GM wants one alive.
 
@@ -472,6 +476,8 @@ Nothing else changes. The character's Grade governs the Cross-Grade Adjustment, 
 **In combat, a combatant who is one or more Grades above every hostile in the scene moves between Zones without spending Beats at all.** They are not stepping faster than the others; they are somewhere else by the time anyone registers the movement. This holds however low the higher-Grade character's DEX has fallen, and it is why the Free Step is a contest between peers rather than a measure of absolute speed.
 
 ### Aura Pressure
+
+![Aura Pressure](./assets/art/scenes/aura-pressure.png){.scene}
 
 The weight of a higher-Grade being's accumulated energy presses on weaker entities like gravity.
 

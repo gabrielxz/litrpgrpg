@@ -1,4 +1,4 @@
-![Principles](./assets/principles.png)
+![The Principle System](./assets/art/openers/principles.png){.opener}
 
 # The Principle System
 

@@ -55,10 +55,10 @@ EPUB_OUT   := $(BUILD_DIR)/$(PROJECT)-$(TIMESTAMP).epub
 # Used by BOTH the PDF titlepage-background and the EPUB --epub-cover-image,
 # so the cover treatment is identical across formats. Pandoc's EPUB writer
 # does not overlay text on the cover image, hence the bake.
-COVER_BASE   := $(BOOK)/assets/cover.png
+COVER_BASE   := $(BOOK)/assets/art/cover.png
 COVER_TITLED := $(BUILD_DIR)/cover_titled.png
 # Resolved through kpsewhich so the TeX tree's layout (Arch, Debian, ...) does not matter.
-TITLE_FONT   := $(shell kpsewhich CinzelDecorative-Black.ttf)
+TITLE_FONT   := $(shell kpsewhich Alegreya-Black.otf)
 BYLINE_FONT  := $(shell kpsewhich EBGaramond-Italic.otf)
 
 .PHONY: all pdf epub kit tutorial tables test check clean
@@ -94,8 +94,8 @@ kit: $(KIT_BASE)
 	@echo "Size:  $$(du -h $(KIT_OUT) | cut -f1)"
 
 # --- Cover with baked title -----------------------------------------------
-# Bake the cover block onto the cover image: title (top, Cinzel Decorative
-# Black), subtitle beneath it and tagline bottom-left (EB Garamond Italic),
+# Bake the cover block onto the cover image: title (top, Alegreya Black),
+# subtitle beneath it and tagline bottom-left (EB Garamond Italic),
 # byline bottom-right. Both PDF and EPUB consume the result so the cover
 # treatment is identical across formats.
 TITLE_TEXT    := GRADEBREAKER
@@ -107,41 +107,39 @@ $(COVER_TITLED): $(COVER_BASE) | $(BUILD_DIR)
 	magick $(COVER_BASE) \
 	  -gravity North \
 	  -font $(TITLE_FONT) \
-	  -pointsize 72 \
+	  -pointsize 105 \
 	  -stroke black -strokewidth 3 -fill white \
-	  -annotate +0+40 "$(TITLE_TEXT)" \
+	  -annotate +0+58 "$(TITLE_TEXT)" \
 	  -font $(BYLINE_FONT) \
-	  -pointsize 40 \
+	  -pointsize 58 \
 	  -stroke black -strokewidth 5 -fill black \
-	  -annotate +0+128 "$(SUBTITLE_TEXT)" \
+	  -annotate +0+188 "$(SUBTITLE_TEXT)" \
 	  -stroke none -fill white \
-	  -annotate +0+128 "$(SUBTITLE_TEXT)" \
+	  -annotate +0+188 "$(SUBTITLE_TEXT)" \
 	  -gravity SouthWest \
-	  -pointsize 28 \
+	  -pointsize 41 \
 	  -stroke black -strokewidth 4 -fill black \
-	  -annotate +30+30 "$(TAGLINE_TEXT)" \
+	  -annotate +44+44 "$(TAGLINE_TEXT)" \
 	  -stroke none -fill white \
-	  -annotate +30+30 "$(TAGLINE_TEXT)" \
+	  -annotate +44+44 "$(TAGLINE_TEXT)" \
 	  -gravity SouthEast \
-	  -pointsize 26 \
+	  -pointsize 38 \
 	  -stroke black -strokewidth 3 -fill black \
-	  -annotate +30+30 "$(BYLINE_TEXT)" \
+	  -annotate +44+44 "$(BYLINE_TEXT)" \
 	  -stroke none -fill white \
-	  -annotate +30+30 "$(BYLINE_TEXT)" \
+	  -annotate +44+44 "$(BYLINE_TEXT)" \
 	  $@
 
 # --- PDF -------------------------------------------------------------------
-# Per-file pre-processing: convert chapter art image syntax into a full-page
-# bleed-edge LaTeX command. Pattern: ![alt](./assets/foo.png) -> \fullpageart{./book/assets/foo.png}
+# Per-file pre-processing for the PDF: drop the EPUB-only kit renders. Art
+# placement (openers, scenes, spots, the map) is decided by image class in
+# the Lua filter, from ./assets/art/... paths.
 $(PDF_DIR)/%.md: $(BOOK)/%.md Makefile | $(PDF_DIR)
-	sed -E \
-	  -e 's|^!\[[^]]*\]\(\./assets/([^)]+\.png)\)[[:space:]]*$$|\\fullpageart{./$(BOOK)/assets/\1}|' \
-	  -e '/kitpng/d' \
-	  $< > $@
+	sed -E -e '/kitpng/d' $< > $@
 
 $(PDF_BASE): $(PDF_PROCESSED) $(METADATA) $(TEMPLATE) $(PREAMBLE) $(LUAFILTER) $(COVER_TITLED) $(KIT_BASE)
 	pandoc \
-	  --from markdown \
+	  --from markdown-implicit_figures \
 	  --to pdf \
 	  --pdf-engine=xelatex \
 	  --template=$(TEMPLATE) \
@@ -173,7 +171,7 @@ $(EPUB_DIR)/%.md: $(BOOK)/%.md Makefile | $(EPUB_DIR)
 
 $(EPUB_BASE): $(EPUB_PROCESSED) $(METADATA) $(COVER_TITLED) $(KIT_PNGS) $(PIPELINE)/epub.css
 	pandoc \
-	  --from markdown \
+	  --from markdown-implicit_figures \
 	  --to epub3 \
 	  --metadata-file=$(METADATA) \
 	  --resource-path=.:$(BOOK) \

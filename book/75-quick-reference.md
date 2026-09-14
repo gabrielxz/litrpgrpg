@@ -1,4 +1,4 @@
-![Quick Reference](./assets/quick_reference.png)
+![Quick Reference](./assets/art/openers/quick-reference.png){.opener}
 
 # Quick Reference
 

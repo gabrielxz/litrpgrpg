@@ -1,4 +1,4 @@
-![System AI](./assets/system_ai.png)
+![The System AI](./assets/art/openers/system-ai.png){.opener}
 
 # The System AI
 

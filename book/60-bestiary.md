@@ -1,4 +1,4 @@
-![Bestiary](./assets/bestiary.png)
+![Bestiary](./assets/art/openers/bestiary.png){.opener}
 
 # Bestiary
 
@@ -23,6 +23,9 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 ## Trash Tier (Trivial / Easy)
 
 ### Glow-Mote Swarm
+
+![Glow-Mote Swarm](./assets/art/spots/glow-mote-swarm.png){.spot}
+
 *A cloud of bioluminescent stinging insects, drawn to body heat.*
 
 - **Grade:** F · **Tier:** Trivial- **HP:** 10 · **Beats:** 1
@@ -31,6 +34,9 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **Tactics:** On a successful hit, target is **Exposed** for one round (vision dazzle from bioluminescence).
 
 ### Husk Crawler
+
+![Husk Crawler](./assets/art/spots/husk-crawler.png){.spot}
+
 *A pre-System corpse animated by residual integration energy. Slow, persistent, dumb.*
 
 - **Grade:** F · **Tier:** Trivial- **HP:** 16 · **Beats:** 1
@@ -39,6 +45,9 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **Tactics:** Will not flee. Ignores Free Strikes when leaving a Zone; it does not register the threat.
 
 ### Frenzy Rat
+
+![Frenzy Rat](./assets/art/spots/frenzy-rat.png){.spot}
+
 *A small, vicious creature warped by ambient energy. Scampers and bites.*
 
 - **Grade:** F · **Tier:** Easy- **HP:** 12 · **Beats:** 2
@@ -47,6 +56,9 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **Tactics:** Always attempts to flank. When two or more Frenzy Rats share a Zone with their target, all of them gain +10 (Flanking).
 
 ### Pre-System Brigand
+
+![Pre-System Brigand](./assets/art/spots/pre-system-brigand.png){.spot}
+
 *A surviving human bandit, integrated but unambitious. Cowardly, predictable.*
 
 - **Grade:** F · **Tier:** Easy- **HP:** 14 · **Beats:** 2
@@ -59,6 +71,9 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 ## Peer Tier (Moderate)
 
 ### Snarljaw
+
+![Snarljaw](./assets/art/spots/snarljaw.png){.spot}
+
 *A pack-hunting beast, maw lined with serrated bone.*
 
 - **Grade:** F · **Tier:** Moderate- **HP:** 24 · **Beats:** 2
@@ -67,6 +82,9 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **Tactics:** Pack hunter: gains +10 (Flanking) when another Snarljaw is in the same Zone. On a successful hit, may spend its second Beat instead of attacking again to drag prey down (target becomes **Exposed** for next round).
 
 ### Glow-Stalker
+
+![Glow-Stalker](./assets/art/spots/glow-stalker.png){.spot}
+
 *A camouflaged predator from the bioluminescent forests. Hunts via ambush.*
 
 - **Grade:** F · **Tier:** Moderate- **HP:** 20 · **Beats:** 2
@@ -75,6 +93,9 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **Tactics:** Begins encounter unseen unless detected by an active Perception Clash. Surprise Beat on first turn. Withdraws to the Zone edge after striking; favors hit-and-run over sustained combat. If pinned, fights frantically, gaining +5 Off Force when below half HP.
 
 ### Training Sentry
+
+![Training Sentry](./assets/art/spots/training-sentry.png){.spot}
+
 *A military construct from the Martial Remnant. Predictable patterns; escalating threat.*
 
 - **Grade:** F · **Tier:** Moderate- **HP:** 50 · **Beats:** 2
@@ -87,6 +108,9 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 ## Elite Tier (Hard)
 
 ### Rival Initiate
+
+![Rival Initiate](./assets/art/spots/rival-initiate.png){.spot}
+
 *Another integrated human, dropped from a parallel tutorial. Tactically competent, hostile.*
 
 - **Grade:** F · **Tier:** Hard- **HP:** 56 · **Aether:** 22 · **Beats:** 2
@@ -95,6 +119,9 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **Tactics:** **Yields.** Wields a Knife (Trained blades, +5). Has one Seed Application: **Searing Strike** (costs 10 Aether, +10 to next Clash, deals damage as fire). Uses positioning intelligently and will retreat to advantageous terrain. Carries 1 Lesser Healing Pill.
 
 ### Husk Sentinel
+
+![Husk Sentinel](./assets/art/spots/husk-sentinel.png){.spot}
+
 *A heavier construct from the Civic Fragment. Durable, counter-aggressive.*
 
 - **Grade:** F · **Tier:** Hard- **HP:** 80 · **Beats:** 2
@@ -103,6 +130,9 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **Tactics:** **Yields.** When the Sentinel wins a defensive Clash, it gains a free **Counterstrike**: one Clash at no Beat cost against the failed attacker. Resistant to mental attacks (treat HRT Force as 25 for defensive purposes).
 
 ### Alpha Snarljaw
+
+![Alpha Snarljaw](./assets/art/spots/alpha-snarljaw.png){.spot}
+
 *Pack leader. Coordinates lesser Snarljaws, hits with sundering force.*
 
 - **Grade:** F · **Tier:** Hard- **HP:** 64 · **Beats:** 2
@@ -115,6 +145,9 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 ## Boss Tier (Severe / Peak)
 
 ### Fragment Wraith
+
+![Fragment Wraith](./assets/art/spots/fragment-wraith.png){.spot}
+
 *A spiritual remnant: the dying coherence of a fallen cultivator's mind, given temporary form by ambient energy.*
 
 - **Grade:** F · **Tier:** Severe- **HP:** 120 · **Aether:** 65 · **Beats:** 2
@@ -127,6 +160,9 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
   - **Vulnerability:** PER-based attacks (Sensory Pulse, Light or Truth Principles, scanning skills) deal +10 bonus damage on the Margin.
 
 ### Corrupted System Warden (*Tutorial Boss*)
+
+![Corrupted System Warden](./assets/art/spots/corrupted-system-warden.png){.spot}
+
 *A massive maintenance construct that was supposed to manage the tutorial's dissolution. Now it is glitching, deranged, and trying to reach the gate before the Initiates do.*
 
 - **Grade:** F · **Tier:** Peak- **HP:** 190 · **Aether:** 75 · **Beats:** 3

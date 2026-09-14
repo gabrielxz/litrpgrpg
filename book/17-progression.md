@@ -1,4 +1,4 @@
-![Progression](./assets/proficiencies_skills.png)
+![Progression](./assets/art/openers/progression.png){.opener}
 
 # Progression
 

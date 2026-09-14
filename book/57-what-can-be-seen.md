@@ -1,4 +1,4 @@
-![What Can Be Seen](./assets/stable_abilities.png)
+![What Can Be Seen](./assets/art/openers/what-can-be-seen.png){.opener}
 
 # What Can Be Seen
 

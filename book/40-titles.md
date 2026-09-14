@@ -1,4 +1,4 @@
-![Titles](./assets/titles.png)
+![Titles](./assets/art/openers/titles.png){.opener}
 
 # Titles
 

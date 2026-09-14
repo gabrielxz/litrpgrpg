@@ -1,3 +1,5 @@
+![Table Kit](./assets/art/openers/table-kit.png){.opener}
+
 # Table Kit
 
 The pages that follow are the print kit: the F-Grade character sheet, front and back, the GM's HVE sweep sheet, the optional bookkeeper's ledger, the three ready-made characters as chooser cards and as filled sheets ready to play, Battle Memory Cards, Title cards, the tutorial's probe and Personal Opportunity cards, the player's actions and combat handout, and the GM screen card. Photocopy them from here, or print the standalone kit PDF distributed alongside this book. The character sheet is one page per player, printed front and back; the card pages print on card stock and cut apart.

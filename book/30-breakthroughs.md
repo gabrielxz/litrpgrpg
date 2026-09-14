@@ -1,4 +1,4 @@
-![Breakthroughs](./assets/breakthroughs.png)
+![Grade Breakthroughs](./assets/art/openers/breakthroughs.png){.opener}
 
 # Grade Breakthroughs
 
@@ -47,6 +47,8 @@ At the cap, VE has nowhere else to go: kills, quests, and absorption keep fillin
 **GM Note:** Stage 1 should feel deliberate, a ritual in motion. Describe the cultivator settling into position, consuming pills, the air growing heavy with unprocessed energy. The party arranging themselves. The world going quiet. Then transition to Stage 2.
 
 ### Stage 2: Ignition
+
+![The Breakthrough Check](./assets/art/scenes/the-breakthrough-check.png){.scene}
 
 The cultivator deliberately floods their body with Volatile Energy, pushing past Tolerance into Saturation. This overcharge is not an accident; it is the fuel that powers the ascension. The body must be forced past its current limits before it can be reshaped to hold the next Grade's capacity.
 

@@ -1,4 +1,4 @@
-![Introduction](./assets/system_glare.png)
+![Introduction](./assets/art/openers/introduction.png){.opener}
 
 # Introduction
 

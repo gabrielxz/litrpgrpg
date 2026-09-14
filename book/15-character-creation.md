@@ -1,4 +1,4 @@
-![Character Creation](./assets/character_creation.png)
+![Character Creation](./assets/art/openers/character-creation.png){.opener}
 
 # Character Creation
 
@@ -161,6 +161,8 @@ A finished character is Level 1, Grade F, with no class, no Principle access, an
 ---
 
 ## Ready-Made Characters
+
+![Kara, Joe, and Andre](./assets/art/people/pregens.png){.scene .pregens}
 
 Three finished characters, built with this chapter's rules and nothing else: 40 points, three Proficiencies at Trained, derived stats computed, Saturation bands (Cultivation, "The Pressure Gauge") already worked out. Hand one across the table and play. They are also the book's recurring cast: Kara and Andre are the pair in the Introduction's example of play, and Joe is the hunter who opens Cultivation. None of them has a Principle, a title, or anything in their pockets beyond what survived Integration.
 

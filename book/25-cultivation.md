@@ -1,4 +1,4 @@
-![Cultivation](./assets/cultivation.png)
+![Cultivation](./assets/art/openers/cultivation.png){.opener}
 
 # Cultivation
 
@@ -13,6 +13,8 @@ Characters do not gain traditional "Experience Points." They accumulate **Volati
 Joe can hold 80 VE before it starts to burn. A morning of hunting earns him 60 VE; he is fine. Then the party finds the den, and Joe decides to risk it: two more fights, one of them a Hard kill, push him to 90 VE, past his Tolerance, and now Joe feels uncomfortably full of energy: his skin prickles, his hands won't stay still, and everything is a little harder than it should be (Saturation, below: −10 to everything until he processes it). The party makes camp and Joe Consolidates. An hour in, his Aether is back. By the fifth hour the whole load is refined: his wounds are closed, the too-full feeling is gone, and all 90 VE is permanent progress toward his next level.
 
 ### The Pressure Gauge
+
+![Saturation](./assets/art/scenes/saturation.png){.scene}
 
 Every character has a **VE Tolerance** representing the raw energy their body and spirit can hold before refinement:
 
@@ -33,6 +35,8 @@ A level's worth of VE, 120, is Mild. Two levels, 240, sits on the Critical line,
 **GM Note on Saturation:** The System does not announce band thresholds to the character. Narrate symptoms instead: skin feels hot and prickly, vision tunnels at the edges, muscles cramp, something under the breastbone flexes in ways that feel wrong. Let players learn the pattern by experience. This generates rich Hidden Vector signal: who pushes into the red zone chasing one more kill? (Hunger.) Who pulls back at the first warning? (Restraint.)
 
 ### Consolidation (Structured Rest)
+
+![Consolidation](./assets/art/scenes/consolidation.png){.scene}
 
 To process VE, a character declares a **Consolidation** rest and states what they are reaching for: process everything, process until the next level, or process a specific amount. The goal matters because the GM may interrupt for narrative reasons, and the player should know what they were reaching for.
 

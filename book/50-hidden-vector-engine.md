@@ -1,4 +1,4 @@
-![Hidden Vector Engine](./assets/hidden_vector_engine.png)
+![The Hidden Vector Engine](./assets/art/openers/hidden-vector-engine.png){.opener}
 
 # The Hidden Vector Engine
 
@@ -61,6 +61,8 @@ Moments: telling the brigand he can drop the club or lose the arm is a Will tall
 Moments: proposing the watch rotation and the loot-split rule is a Control tally. Slipping out alone at night to see what the ruins hold is a Freedom tally.
 
 ## The Session-End Sweep
+
+![The Session-End Sweep](./assets/art/scenes/the-session-end-sweep.png){.scene}
 
 The whole engine runs on one half-page sheet per character, filled in once per session, at the end. Everything else in this chapter (weights, decay, structured logs, the companion app) is this sheet by other means.
 

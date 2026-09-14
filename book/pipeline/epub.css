@@ -8,8 +8,8 @@ div.readaloud, div.systemvoice, div.statblock, div.questcard, div.lore {
 }
 
 div.readaloud {
-  background-color: #ececec;
-  border: 1px solid #444444;
+  background-color: #EDDDC7;
+  border: 1px solid #131B20;
 }
 div.readaloud::before {
   content: "READ ALOUD";
@@ -22,9 +22,9 @@ div.readaloud::before {
 }
 
 div.systemvoice {
-  background-color: #111111;
-  color: #ffffff;
-  border-left: 4px solid #2a7a8c;
+  background-color: #131B20;
+  color: #F4EDE1;
+  border-left: 4px solid #8FE6EF;
   font-style: italic;
   font-family: sans-serif;
 }
@@ -40,8 +40,8 @@ div.systemvoice::before {
 }
 
 div.statblock {
-  background-color: #f2f2f2;
-  border-top: 3px solid #333333;
+  background-color: #F0E9DC;
+  border-top: 3px solid #131B20;
   border-bottom: 1px solid #999999;
 }
 
@@ -53,8 +53,14 @@ div.questcard {
 }
 
 div.lore {
-  border-left: 3px solid #888888;
+  border-left: 3px solid #AAA396;
   padding-left: 1em;
   font-style: italic;
   color: #333333;
 }
+
+/* Art placement, by image class (the PDF reads the same classes in the Lua filter). */
+img.opener, img.fullpage, img.map, img.scene { display: block; width: 100%; margin: 1em 0; }
+img.spot { float: right; width: 36%; margin: 0 0 0.8em 1em; }
+img.spot.narrow { width: 26%; }
+img.pregens { display: block; width: 100%; }

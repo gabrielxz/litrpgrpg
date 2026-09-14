@@ -1,4 +1,4 @@
-![Quests](./assets/quests.png)
+![System Quests](./assets/art/openers/quests.png){.opener}
 
 # System Quests
 
@@ -62,6 +62,8 @@ Party formation is itself HVE signal: who invites, who accepts instantly, who st
 
 ### Mandates
 
+![A Mandate](./assets/art/scenes/a-mandate.png){.scene}
+
 Server-wide directives, cold and impersonal, with real consequences for noncompliance.
 
 **Shape:** A System-issued objective binding on every Initiate within a region or population. Story-driving, multi-session, often party-converging.
@@ -73,6 +75,8 @@ Server-wide directives, cold and impersonal, with real consequences for noncompl
 Refusing a Mandate brands the character, attracts faction attention, and locks specific reward paths. Mandates are how the System bends the campaign.
 
 ### Personal Opportunities
+
+![The Offering](./assets/art/scenes/the-offering.png){.scene}
 
 The System notices something specific about a character and offers a tailored quest. Generated from current HVE state, recent behavior, and the immediate situation.
 
