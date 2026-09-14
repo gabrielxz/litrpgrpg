@@ -94,41 +94,16 @@ kit: $(KIT_BASE)
 	@echo "Size:  $$(du -h $(KIT_OUT) | cut -f1)"
 
 # --- Cover with baked title -----------------------------------------------
-# Bake the cover block onto the cover image: title (top, Alegreya Black),
-# subtitle beneath it and tagline bottom-left (EB Garamond Italic),
-# byline bottom-right. Both PDF and EPUB consume the result so the cover
-# treatment is identical across formats.
+# Bake the cover block onto the cover art with tools/cover.py: the fractured
+# GRADEBREAKER wordmark, subtitle, tagline, and byline. Both PDF and EPUB
+# consume the result so the cover treatment is identical across formats.
 TITLE_TEXT    := GRADEBREAKER
 SUBTITLE_TEXT := The LitRPG RPG
 TAGLINE_TEXT  := Power is not granted.
 BYLINE_TEXT   := by Gabriel Beal
 
-$(COVER_TITLED): $(COVER_BASE) | $(BUILD_DIR)
-	magick $(COVER_BASE) \
-	  -gravity North \
-	  -font $(TITLE_FONT) \
-	  -pointsize 105 \
-	  -stroke black -strokewidth 3 -fill white \
-	  -annotate +0+58 "$(TITLE_TEXT)" \
-	  -font $(BYLINE_FONT) \
-	  -pointsize 58 \
-	  -stroke black -strokewidth 5 -fill black \
-	  -annotate +0+188 "$(SUBTITLE_TEXT)" \
-	  -stroke none -fill white \
-	  -annotate +0+188 "$(SUBTITLE_TEXT)" \
-	  -gravity SouthWest \
-	  -pointsize 41 \
-	  -stroke black -strokewidth 4 -fill black \
-	  -annotate +44+44 "$(TAGLINE_TEXT)" \
-	  -stroke none -fill white \
-	  -annotate +44+44 "$(TAGLINE_TEXT)" \
-	  -gravity SouthEast \
-	  -pointsize 38 \
-	  -stroke black -strokewidth 3 -fill black \
-	  -annotate +44+44 "$(BYLINE_TEXT)" \
-	  -stroke none -fill white \
-	  -annotate +44+44 "$(BYLINE_TEXT)" \
-	  $@
+$(COVER_TITLED): $(COVER_BASE) tools/cover.py | $(BUILD_DIR)
+	python3 tools/cover.py $(COVER_BASE) $@
 
 # --- PDF -------------------------------------------------------------------
 # Per-file pre-processing for the PDF: drop the EPUB-only kit renders. Art

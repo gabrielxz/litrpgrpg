@@ -101,7 +101,7 @@ function Blocks(blocks)
       local imgw = narrow and "0.26" or "0.36"
       local txtw = narrow and "0.70" or "0.60"
       local side = {}
-      local maxside = narrow and 2 or 4
+      local maxside = narrow and 3 or 4
       local j = i + 1
       while j <= #blocks and #side < maxside do
         local t = blocks[j].t
@@ -110,14 +110,14 @@ function Blocks(blocks)
       end
       if #side == 0 then
         table.insert(out, pandoc.RawBlock("latex",
-          "\\begin{center}\\includegraphics[width=" .. imgw .. "\\textwidth]{" .. p .. "}\\end{center}"))
+          "\\noindent\\hfill\\begin{minipage}[t]{" .. imgw .. "\\textwidth}\\vspace{0pt}\\gbspotart{" .. p .. "}\\end{minipage}\\par\\vspace{10pt}"))
       else
         table.insert(out, pandoc.RawBlock("latex",
           "\\noindent\\begin{minipage}[t]{" .. txtw .. "\\textwidth}\\setlength{\\parskip}{6pt}"))
         for _, sb in ipairs(side) do table.insert(out, sb) end
         table.insert(out, pandoc.RawBlock("latex",
           "\\end{minipage}\\hfill\\begin{minipage}[t]{" .. imgw .. "\\textwidth}\\vspace{0pt}" ..
-          "\\includegraphics[width=\\textwidth]{" .. p .. "}\\end{minipage}\\par\\vspace{10pt}"))
+          "\\gbspotart{" .. p .. "}\\end{minipage}\\par\\vspace{10pt}"))
       end
       i = j
     else
