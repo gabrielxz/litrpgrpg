@@ -16,60 +16,68 @@ def font(name, size):
     return ImageFont.truetype(path, size)
 
 def wordmark(width):
-    """Render GRADEBREAKER at the given width, fractured after GRADE: ink
-    letters with a thin bone edge, the right half displaced, the break lit."""
-    f = font("Alegreya-Black.otf", 200)
+    """GRADEBREAKER in Montserrat Black, slightly condensed, cracked after
+    GRADE: the crack runs past the letters into the sky, branches, throws
+    shards, and is lit from inside. Returns the layer and the baseline y of
+    the letters within it."""
+    face = "Montserrat-Black.otf"
+    f = font(face, 200)
     probe = ImageDraw.Draw(Image.new("RGBA", (10, 10)))
     x0, y0, x1, y1 = probe.textbbox((0, 0), "GRADEBREAKER", font=f)
-    size = int(200 * width / (x1 - x0))
-    f = font("Alegreya-Black.otf", size)
+    condense = 0.92
+    size = int(200 * width / ((x1 - x0) * condense))
+    f = font(face, size)
     k = size / 200.0
-    edge = max(2, int(size * 0.012))
+    edge = max(2, int(size * 0.014))
     x0, y0, x1, y1 = probe.textbbox((0, 0), "GRADEBREAKER", font=f, stroke_width=edge)
+    tw, th = x1 - x0, y1 - y0
+    reach = int(th * 0.35)                     # how far the break runs above and below the letters
     pad = int(40 * k)
-    w, h = x1 - x0 + 2 * pad, y1 - y0 + 2 * pad
-    layer = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-    ImageDraw.Draw(layer).text((pad - x0, pad - y0), "GRADEBREAKER", font=f, fill=INK,
-                               stroke_width=edge, stroke_fill=BONE)
-    # the break: an angular line through the word just after GRADE
+    w, h = tw + 2 * pad, th + 2 * reach
+    letters = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    ImageDraw.Draw(letters).text((pad - x0, reach - y0), "GRADEBREAKER", font=f, fill=INK,
+                                 stroke_width=edge, stroke_fill=BONE)
+    letters = letters.resize((int(w * condense), h), Image.LANCZOS)
+    w = letters.width
+    # the crack: jagged, from above the word to below it, just after GRADE
     gx1 = probe.textbbox((0, 0), "GRADE", font=f)[2]
-    xs = pad - x0 + gx1 + int(6 * k)
-    path = [(xs - 18 * k, 0), (xs + 10 * k, h * 0.36), (xs - 8 * k, h * 0.56), (xs + 22 * k, h)]
-    gap = int(16 * k)
+    xs = int((pad - x0 + gx1) * condense) + int(4 * k)
+    top, bot = reach, reach + th
+    path = [(xs - 26 * k, 0), (xs - 6 * k, top * 0.6), (xs + 10 * k, top + th * 0.28),
+            (xs - 8 * k, top + th * 0.55), (xs + 22 * k, top + th * 0.82), (xs + 4 * k, h)]
+    gap = int(26 * k)
+    # split the letters along the crack; the right half drops and tilts
     mask_r = Image.new("L", (w, h), 0)
     ImageDraw.Draw(mask_r).polygon(path + [(w, h), (w, 0)], fill=255)
     blank = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-    right = Image.composite(layer, blank, mask_r)
-    left = Image.composite(blank, layer, mask_r)
-    dx, dy = int(14 * k), int(22 * k)
+    right = Image.composite(letters, blank, mask_r).rotate(-1.6, resample=Image.BICUBIC, center=(xs, top + th / 2))
+    left = Image.composite(blank, letters, mask_r)
+    dx, dy = int(16 * k), int(26 * k)
     out = Image.new("RGBA", (w + dx, h + dy), (0, 0, 0, 0))
     out.alpha_composite(left, (0, 0))
     out.alpha_composite(right, (dx, dy))
-    # clear the gap, then light it: a glow and a hard cyan line along the break
-    ImageDraw.Draw(out).line(path, fill=(0, 0, 0, 0), width=gap)
-    glow = Image.new("RGBA", out.size, (0, 0, 0, 0))
-    ImageDraw.Draw(glow).line(path, fill=CYAN + (255,), width=int(10 * k))
-    glow = glow.filter(ImageFilter.GaussianBlur(int(7 * k)))
-    out.alpha_composite(glow)
+    # clear the break; the picture shows through it, with a soft light behind
     d = ImageDraw.Draw(out)
-    d.line(path, fill=CYAN + (255,), width=int(4 * k))
-    # two fine System ticks beside the break, the observation grammar
-    for (px, py) in [(xs + 30 * k, h * 0.16), (xs - 30 * k, h * 0.80)]:
-        d.line([(px, py), (px, py + 14 * k)], fill=CYAN + (255,), width=int(2 * k))
-        d.line([(px - 5 * k, py), (px + 5 * k, py)], fill=CYAN + (255,), width=int(2 * k))
-    return out
+    d.line(path, fill=(0, 0, 0, 0), width=gap)
+    glow = Image.new("RGBA", out.size, (0, 0, 0, 0))
+    ImageDraw.Draw(glow).line(path, fill=(236, 252, 255, 150), width=int(22 * k))
+    out.alpha_composite(glow.filter(ImageFilter.GaussianBlur(int(14 * k))))
+    glow = Image.new("RGBA", out.size, (0, 0, 0, 0))
+    ImageDraw.Draw(glow).line(path, fill=CYAN + (210,), width=int(7 * k))
+    out.alpha_composite(glow.filter(ImageFilter.GaussianBlur(int(5 * k))))
+    return out, reach
 
 def main(src, dst):
     im = Image.open(src).convert("RGBA")
     W, H = im.size
     k = W / 1050.0
-    wm = wordmark(int(W * 0.92))
-    im.alpha_composite(wm, ((W - wm.width) // 2, int(34 * k)))
+    wm, reach = wordmark(int(W * 0.92))
+    im.alpha_composite(wm, ((W - wm.width) // 2, int(40 * k) - reach))
     d = ImageDraw.Draw(im)
     def text(xy, s, f, anchor, fill, edge, ew):
         d.text(xy, s, font=f, fill=fill, anchor=anchor, stroke_width=ew, stroke_fill=edge)
     # subtitle on the pale sky: ink with a hairline of bone
-    text((W // 2, int(34 * k) + wm.height + int(6 * k)), "The LitRPG RPG",
+    text((W // 2, int(40 * k) - reach + wm.height - int(reach * 0.55)), "The LitRPG RPG",
          font("EBGaramond-Italic.otf", int(58 * k)), "ma", INK, BONE, max(1, int(1 * k)))
     # tagline and byline on the dark ground: bone with an ink edge
     text((int(44 * k), H - int(44 * k)), "Power is not granted.",

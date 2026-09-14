@@ -61,14 +61,14 @@
 % A spot illustration anchored to the page: it runs from its column out to the
 % outer trim edge, with an ink rule on the inner edge and one cyan tick. Called
 % inside a minipage whose width is the column; the overflow is the outer margin.
-\newlength{\gboutermargin}
-\setlength{\gboutermargin}{0.7in}
+\newlength{\gbspotreach}
+\setlength{\gbspotreach}{0.38in}   % how far past the column the art reaches into the outer margin (0.7in), leaving air before the trim
 \newcommand{\gbspotart}[1]{%
   \begin{tikzpicture}[baseline=(img.north)]
     \node[anchor=north west, inner sep=0pt] (img) at (0,0)
-      {\includegraphics[width=\dimexpr\linewidth+\gboutermargin\relax]{#1}};
-    \draw[gbink, line width=0.9pt] ([xshift=-4pt]img.north west) -- ([xshift=-4pt]img.south west);
-    \draw[gbcyan, line width=1.6pt] ([xshift=-4pt, yshift=-10pt]img.north west) -- ([xshift=-4pt, yshift=-30pt]img.north west);
+      {\includegraphics[width=\dimexpr\linewidth+\gbspotreach\relax]{#1}};
+    \draw[gbink, line width=0.9pt] ([xshift=-7pt]img.north west) -- ([xshift=-7pt]img.south west);
+    \draw[gbcyan, line width=1.6pt] ([xshift=-7pt, yshift=-10pt]img.north west) -- ([xshift=-7pt, yshift=-30pt]img.north west);
   \end{tikzpicture}%
 }
 

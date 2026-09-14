@@ -98,8 +98,8 @@ function Blocks(blocks)
       local p = artpath(b.content[1].src)
       local narrow = false
       for _, c in ipairs(b.content[1].classes) do if c == "narrow" then narrow = true end end
-      local imgw = narrow and "0.26" or "0.36"
-      local txtw = narrow and "0.70" or "0.60"
+      local imgw = narrow and "0.25" or "0.33"
+      local txtw = narrow and "0.66" or "0.58"
       local side = {}
       local maxside = narrow and 3 or 4
       local j = i + 1
