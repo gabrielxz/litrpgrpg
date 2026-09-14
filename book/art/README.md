@@ -9,3 +9,5 @@
 `shot-list.md` is every image the book needs, with a description, placement, palette mode, System intent, and the size to request. ChatGPT is the generator for all of them.
 
 Superseded: the stencil-and-sumi-e guide that lived at `book/assets/art_style_guide.md` (in git history), and every image in `book/assets/` made under it. They stay in place as placeholders until their replacements land.
+
+`emblem/` holds the two emblem candidates from ChatGPT, keyed to transparent cyan (`emblem-a.png`: the compass ring; `emblem-b.png`: the torn ring). The cover art in `book/assets/art/cover.png` is stored mirrored from the generated file so its fracture meets the wordmark's break; `tools/cover.py` documents the alignment.
