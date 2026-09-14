@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Bake the cover: the GRADEBREAKER wordmark, subtitle, tagline, and byline
+"""Bake the cover: the GRADEBREAKER wordmark, subtitle, volume line, draft line,
+byline, and optionally an emblem (third argument)
 onto the cover art. The wordmark is the heading face fractured between its
 two halves, the right half displaced, with one cyan segment completing the
 break (book/art/art-bible.md, section 7: one controlled interruption).
@@ -71,25 +72,38 @@ def wordmark(page_w, break_x, max_frac=0.92):
     out.alpha_composite(glow.filter(ImageFilter.GaussianBlur(int(5 * k))))
     return out, reach, int(xs)
 
-def main(src, dst):
+def main(src, dst, emblem=None):
     im = Image.open(src).convert("RGBA")
     W, H = im.size
     k = W / 1050.0
+    # the title band: a dark gradient over the top of the picture, so whatever the
+    # art carries there (the diagram's upper rings) dims under the title
+    fade_h = int(H * 0.30)
+    fade = Image.new("L", (1, fade_h))
+    for y in range(fade_h):
+        t = y / fade_h
+        fade.putpixel((0, y), int(255 * (1 - t) ** 1.6 * 0.82))
+    fade = fade.resize((W, fade_h))
+    im.alpha_composite(Image.merge("RGBA", (*[Image.new("L", (W, fade_h), c) for c in INK], fade)), (0, 0))
     BREAK_X = 0.375   # where the picture's fracture meets the title band (cover.png is stored mirrored for this)
     wm, reach, xs = wordmark(W, BREAK_X)
     im.alpha_composite(wm, (int(BREAK_X * W) - xs, int(44 * k) - reach))
     d = ImageDraw.Draw(im)
     def text(xy, s, f, anchor, fill, edge, ew):
         d.text(xy, s, font=f, fill=fill, anchor=anchor, stroke_width=ew, stroke_fill=edge)
-    # subtitle on the pale sky: ink with a hairline of bone
-    text((W // 2, int(44 * k) - reach + wm.height - int(wm.height * 0.30)), "The LitRPG RPG",
-         font("EBGaramond-Italic.otf", int(58 * k)), "ma", BONE, INK, max(2, int(2 * k)))
-    # tagline and byline on the dark ground: bone with an ink edge
-    text((int(44 * k), H - int(44 * k)), "Power is not granted.",
-         font("EBGaramond-Italic.otf", int(41 * k)), "ld", BONE, INK, max(2, int(3 * k)))
+    y_sub = int(44 * k) - reach + wm.height - int(wm.height * 0.30)
+    text((W // 2, y_sub), "The LitRPG RPG", font("EBGaramond-Italic.otf", int(58 * k)), "ma", BONE, INK, max(2, int(2 * k)))
+    text((W // 2, y_sub + int(74 * k)), "THE F-GRADE VOLUME", font("AlegreyaSans-Bold.otf", int(26 * k)), "ma", CYAN, INK, max(1, int(2 * k)))
+    if emblem:
+        e = Image.open(emblem).convert("RGBA")
+        side = int(110 * k)
+        e = e.resize((side, side), Image.LANCZOS)
+        im.alpha_composite(e, ((W - side) // 2, H - int(44 * k) - side))
+    text((int(44 * k), H - int(44 * k)), "Working draft, September 2026",
+         font("EBGaramond-Italic.otf", int(30 * k)), "ld", BONE, INK, max(2, int(3 * k)))
     text((W - int(44 * k), H - int(44 * k)), "by Gabriel Beal",
          font("EBGaramond-Italic.otf", int(38 * k)), "rd", BONE, INK, max(2, int(3 * k)))
     im.convert("RGB").save(dst)
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2])
+    main(sys.argv[1], sys.argv[2], sys.argv[3] if len(sys.argv) > 3 else None)
