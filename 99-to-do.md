@@ -71,50 +71,13 @@ The next release is **the F-Grade book**: Gradebreaker as a complete game for on
 
 **Applied 2026-09-10:** CLAUDE.md, the Introduction's opening sentence, the EPUB metadata (title and subtitle), the cover bake (title, subtitle, tagline, byline), the kit's badge on five pages and its page title, pipeline comments. Nothing in the book used "Magnitude" to mean the game.
 
-## Next Session (handoff written 2026-09-11)
+## Next Session (handoff written 2026-09-15)
 
-**Do first: the companion app feature-list brainstorm, in chat, with Gabriel.** He chose to do it here rather than draft it alone. Inputs to load before starting: [[vision-and-app]] in memory (the app is diegetic: it *is* the System; the game+app+AI intersection at the technical edge is the point; GM load is icing; story is a must-do), the rules data under `rules/` (the app's engine imports it), the System AI chapter (the three modes and the generative functions are the app's first feature list), the Quick Reference and GM screen (what the GM has to remember), and the HVE chapter's structured-logging section (the machine format). Decisions that ride with the list: repo layout (`book/`, `rules/`, `app/`), platform (web-first PWA is the fastest path to a phone at the table), what the LLM does live versus between sessions, whether the listener records audio or transcribes and discards, a rough AI cost per session written next to every AI feature, and the business model deferred on purpose. Separate the assistant the GM talks to from the listener that hears the table; if the listener is in the first release, spike it first because it is the piece that can fail.
+**Gabriel brings two things: the lore answers (Parts A and B of `lore/questions.md`, finished, not the working draft in his Downloads) and more cover art.** He is still experimenting with the cover; the committed cover is the Void with the wordmark split on its fracture, and the bake (`tools/cover.py`) now reads any candidate's brightness and centers the word unless `--break-x` names a fracture. Two candidates from 2026-09-15 (the bus stop with the claw, the map table with the alien) are in his Downloads as `GBCover2.png` and `GBCover3.png`; Claude's read was that both belong inside the book (the map table at the Introduction or What Can Be Seen, the bus stop at the Other Side or the Introduction) and the Void stays the cover.
 
-**Then, in any order:** Gabriel's verdict on the rewritten tutorial's voice, Heart's new job, the valley map.
+**When the lore lands:** write the facts into `lore/` first (one line each, tagged `[everyone]` / `[GM]` / `[nobody]`), then the prose from the facts: the alien Initiates rewritten as their race, the two held images (the Initiates, the scout) briefed for ChatGPT, the tutorial's hooks mapped in Part E, the System voice document, the opening message.
 
-## Tutorial Voice Pass (applied 2026-09-11, from ChatGPT's editorial change log)
-
-Gabriel's re-read found the tutorial's voice wrong throughout; ChatGPT diagnosed the habits (performed gravitas, vagueness as mystery, negation-and-revelation endings, the GM diagnosing the player, prescribed emotions, superlatives, compression that drops exceptions) and listed 108 entries plus a 26-item clarification register. **The whole chapter was rewritten in the four-register voice**, the kit's probe/Opportunity/title cards, handout, GM screen, and sheet captions were synced, and the voice rules now live in CLAUDE.md ("SCENARIO VOICE"). Structure is unchanged (87 headings, 24 read-aloud boxes, 11 System boxes, 8 cards, 11 tables); the diff is the before/after.
-
-**Resolved from the book and applied (no decision needed):** Surge costs half Maximum Aether; Will Saves explode, so both Aura Pressure scenes say "fails unless the die explodes" and the Stinger entity uses the three-Grades skip rule; the rune table is an effect roll; Driven Back is the attacker's 40 and Turned Aside the defender's; an Exceptional Success whose total fails is Soft (tutorial, handout, GM screen); Master needs an E-Grade body (sheet captions); two-Beat Yield lets the attacker drive or leave (handout, Dana example); characters are classless until the Level 10 class; Patient Gardener now counts toward the catalog's ten-fight trigger (rules/titles.yaml is the number's truth); Salvaged's −2 is Raw HRT and "arrives as tests" is the quests chapter's test mode; Q-002 pays per sector (three sources against one); the Saturation thresholds are on the sheet, so "do not announce thresholds" is gone; the HVE reads the character ("Choices to notice"), the sweep is private, scene bookkeeping is distinguished from the Engine, and the memory-filter rule stays as the HVE chapter states it (ChatGPT's softening was not imported); session formats reconciled (two default, four short; "three at the outside" cut); status-notice times come from play; Dele's timing fixed; the Mandate timer is thirty fictional minutes with a real clock optional; the Vector log is no longer "a counter at three"; the exploration destinations are **sectors** throughout, Zone stays combat-only; "The Other Player" is "The Other Initiate."
-
-**Numbers and procedures Claude supplied to fill gaps (all RULED yes, 2026-09-11):**
-
-1. Locked Cache symbol counter: press on a multiple of 100 seconds since Integration (was "a round number").
-2. The High Ground: the fighter has two minutes (was one, unreachable by a two-minute scramble); the substitute circling stranger survives if helped (was: dies regardless, unexplained).
-3. Session 1 pays 15 to 45 VE (was 35 to 45; per-branch arithmetic is 17 to 47). Fixture renamed; retired value added.
-4. The gate activates when the first character arrives, processes one person per round, and a failed check does not delay the next (was "enough of the party," "one at a time," "a brief and terrible interval").
-5. The Warden in Hostile Mode attacks whoever last damaged it; the sacrifice works by attacking it and standing in its path (was undefined).
-6. Character death: no PC dies except by the sacrifice; a lethal result (solo Downed countdown, a hit at ten times Max HP) becomes Downed at 0 HP with an intervention; NPCs unprotected; told to players if they ask.
-7. Sentries activate when a character enters their Zone (was "by proximity"); the armory opens when its Sentry is destroyed or driven off the doorway ("beaten cleanly" and the kiting clause cut).
-8. The den: one adult stays with the young by day; the Heart shows to a Resonance Glass or a PER Moderate 90 check.
-9. The Wraith is hit by attacks aimed with PER Force, and by shards.
-10. The tribunal uses CHA Force; its decision is recorded by the System and unenforced outside the building.
-11. The Threshold door opens to a hand; the warning is the lock.
-12. Surveyed means inside the sector and able to describe its central feature; the bypass trail does not count.
-13. Sorting Machine success = predicting the next two placements without knowing why.
-14. Probe 6 steering lands the character where they aimed, with the GM choosing the fit.
-15. The Other Initiate's prize is named by the GM at hand-over; the window closes when the danger resolves.
-16. A Rubble Trap character who let the Crawler pass meets it again on the walk down (the arrival fight stays mandatory).
-17. The Node strangers without help are written as "not in the queue; whether any got out is never confirmed."
-
-**Ruled 2026-09-11 (all applied):**
-
-- **Title triggers (C21): RULED.** Gabriel rejected both proposals (no two things with one name; no progress-toward-titles). The tutorial grants nine unique titles that appear nowhere else: Gate-Runner (+1 DEX), Wrong Key (+1 PER), Watched First (+1 PER), Read the Room (+1 PER), Voice of Decision (+1 CHA), Thin Margin (Hidden, +1 FOR), Not Recommended (Hidden, +1 HRT), The Hand That Reached (Bestowed, +1 CHA), The One Who Stood (Hidden, legacy). They live in `rules/titles.yaml` under `tutorial_titles` and render into Titles, "The Tutorial's Titles"; the kit cards carry the effects. The scavenger's Hidden Quest is renamed "Let It Finish" (the catalog keeps "The First Mercy" as a title example), and the quests chapter's example uses the new name. Pack-Breaker, Salvaged, and Came Back Whole stay, since the tutorial meets their real triggers. Note: the two Hidden Achievements sit at +1 where the magnitude guide says +3 to +5; Gabriel approved the +1s.
-- **Mandate VE (C12): RULED 2026-09-11.** M-00 is a Hard Mandate on the card and pays the table's 125 VE; the ledger totals moved by 5.
-- **IP stacking (C07): RULED**, both awards stand.
-- **Avoidance (C04): RULED**, the arrival fight is mandatory.
-- **The forced loss (C10): RULED**, as written.
-- **The death rule (item 6): RULED 2026-09-11**, as written (told to players if they ask).
-- **Gate and Warden (items 4 and 5): RULED 2026-09-11**, as written. **Multi-Path values (C18, C19, C20)** stay priced by GM judgment in rounds of delay; the spiral gives route knowledge only. **RULED:** the numbers are fixed in the Multi-Path table (a held bottleneck costs the Warden one Beat of movement that round; the terminal has the gate open on arrival and the queue starts a round early; the spiral keeps the Purge off the party's back until the causeway; the weak point uses its DEX Def Force 60 from behind; Survival reaches the causeway a round ahead).
-- **Pregen play prompts (entry 105): RULED**, they stay.
-- **Quick Reference (entry 103): RULED**, the 2026-08-14 wording stays.
-- **The girl at the Node** is Wren (RULED).
+**Then, in any order:** the companion app feature-list brainstorm (diegetic app primary), Heart's new job, the map's geography checked against the tutorial text, a reading-size PDF target (the art makes the PDF 122 MB), pregen portraits on the kit's chooser cards, larger art masters before print.
 
 ## Open Now
 
