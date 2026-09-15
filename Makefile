@@ -56,6 +56,7 @@ EPUB_OUT   := $(BUILD_DIR)/$(PROJECT)-$(TIMESTAMP).epub
 # so the cover treatment is identical across formats. Pandoc's EPUB writer
 # does not overlay text on the cover image, hence the bake.
 COVER_BASE   := $(BOOK)/assets/art/cover.png
+COVER_ARGS   := --break-x 0.375   # the Void cover: where its fracture meets the title band
 COVER_TITLED := $(BUILD_DIR)/cover_titled.png
 # Resolved through kpsewhich so the TeX tree's layout (Arch, Debian, ...) does not matter.
 TITLE_FONT   := $(shell kpsewhich Alegreya-Black.otf)
@@ -103,7 +104,7 @@ TAGLINE_TEXT  := Power is not granted.
 BYLINE_TEXT   := by Gabriel Beal
 
 $(COVER_TITLED): $(COVER_BASE) tools/cover.py | $(BUILD_DIR)
-	python3 tools/cover.py $(COVER_BASE) $@
+	python3 tools/cover.py $(COVER_BASE) $@ $(COVER_ARGS)
 
 # --- PDF -------------------------------------------------------------------
 # Per-file pre-processing for the PDF: drop the EPUB-only kit renders. Art
