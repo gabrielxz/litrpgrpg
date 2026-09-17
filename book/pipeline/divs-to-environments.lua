@@ -51,7 +51,13 @@ end
 --   * scene    — text-width illustration under a heading
 --   * spot     — quarter-page illustration with the text wrapped beside it
 -- Paths in the chapters are ./assets/...; the PDF runs from the repo root.
+-- Art comes from the build's resampled tree when the Makefile sets GB_ART_DIR
+-- (it holds assets/art/... at the build's ppi); otherwise from the masters.
+local ART_ROOT = os.getenv("GB_ART_DIR") or "./book"
 local function artpath(src)
+  if src:match("^%./assets/art/") then
+    return (src:gsub("^%./assets/art/", ART_ROOT .. "/assets/art/"))
+  end
   return (src:gsub("^%./assets/", "./book/assets/"))
 end
 

@@ -58,11 +58,22 @@ EPUB_OUT   := $(BUILD_DIR)/$(PROJECT)-$(TIMESTAMP).epub
 COVER_BASE   := $(BOOK)/assets/art/cover.png
 COVER_ARGS   :=
 COVER_TITLED := $(BUILD_DIR)/cover_titled.png
+
+# Art masters live under book/assets/art/ at MASTER_PPI of the 7-inch trim
+# width (a full-page master is 2100 px wide; the cover alone is 3150). A build resamples them into
+# $(ART_DIR) at ART_PPI and Pandoc reads that tree first, so `make` gives a
+# reading-size book and `make pdf ART_PPI=300` a print-resolution one.
+ART_PPI    ?= 150
+MASTER_PPI := 300
+ART_SRC    := $(BOOK)/assets/art
+ART_DIR    := $(BUILD_DIR)/art-$(ART_PPI)
+ART_STAMP  := $(ART_DIR)/.stamp
+ART_MASTERS := $(shell find $(ART_SRC) -name '*.png')
 # Resolved through kpsewhich so the TeX tree's layout (Arch, Debian, ...) does not matter.
 TITLE_FONT   := $(shell kpsewhich Alegreya-Black.otf)
 BYLINE_FONT  := $(shell kpsewhich EBGaramond-Italic.otf)
 
-.PHONY: all pdf epub kit tutorial tables test check clean
+.PHONY: all pdf epub kit art tutorial tables test check clean
 
 all: pdf epub
 
@@ -106,6 +117,13 @@ BYLINE_TEXT   := by Gabriel Beal
 $(COVER_TITLED): $(COVER_BASE) tools/cover.py | $(BUILD_DIR)
 	python3 tools/cover.py $(COVER_BASE) $@ $(COVER_ARGS)
 
+# --- Art ---------------------------------------------------------------------
+$(ART_STAMP): $(ART_MASTERS) tools/resample_art.py | $(BUILD_DIR)
+	python3 tools/resample_art.py $(ART_SRC) $(ART_DIR)/assets/art --ppi $(ART_PPI) --master-ppi $(MASTER_PPI)
+	@touch $@
+
+art: $(ART_STAMP)
+
 # --- PDF -------------------------------------------------------------------
 # Per-file pre-processing for the PDF: drop the EPUB-only kit renders. Art
 # placement (openers, scenes, spots, the map) is decided by image class in
@@ -113,8 +131,8 @@ $(COVER_TITLED): $(COVER_BASE) tools/cover.py | $(BUILD_DIR)
 $(PDF_DIR)/%.md: $(BOOK)/%.md Makefile | $(PDF_DIR)
 	sed -E -e '/kitpng/d' $< > $@
 
-$(PDF_BASE): $(PDF_PROCESSED) $(METADATA) $(TEMPLATE) $(PREAMBLE) $(LUAFILTER) $(COVER_TITLED) $(KIT_BASE)
-	pandoc \
+$(PDF_BASE): $(PDF_PROCESSED) $(METADATA) $(TEMPLATE) $(PREAMBLE) $(LUAFILTER) $(COVER_TITLED) $(KIT_BASE) $(ART_STAMP)
+	GB_ART_DIR=$(ART_DIR) pandoc \
 	  --from markdown-implicit_figures \
 	  --to pdf \
 	  --pdf-engine=xelatex \
@@ -122,7 +140,7 @@ $(PDF_BASE): $(PDF_PROCESSED) $(METADATA) $(TEMPLATE) $(PREAMBLE) $(LUAFILTER) $
 	  --metadata-file=$(METADATA) \
 	  --include-in-header=$(PREAMBLE) \
 	  --lua-filter=$(LUAFILTER) \
-	  --resource-path=.:$(BOOK) \
+	  --resource-path=$(ART_DIR):.:$(BOOK) \
 	  --top-level-division=chapter \
 	  --toc \
 	  --toc-depth=2 \
@@ -145,12 +163,12 @@ pdf: $(PDF_BASE)
 $(EPUB_DIR)/%.md: $(BOOK)/%.md Makefile | $(EPUB_DIR)
 	cp $< $@
 
-$(EPUB_BASE): $(EPUB_PROCESSED) $(METADATA) $(COVER_TITLED) $(KIT_PNGS) $(PIPELINE)/epub.css
+$(EPUB_BASE): $(EPUB_PROCESSED) $(METADATA) $(COVER_TITLED) $(KIT_PNGS) $(PIPELINE)/epub.css $(ART_STAMP)
 	pandoc \
 	  --from markdown-implicit_figures \
 	  --to epub3 \
 	  --metadata-file=$(METADATA) \
-	  --resource-path=.:$(BOOK) \
+	  --resource-path=$(ART_DIR):.:$(BOOK) \
 	  --top-level-division=chapter \
 	  --toc \
 	  --toc-depth=2 \
