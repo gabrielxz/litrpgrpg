@@ -21,7 +21,7 @@ Request the largest size the tool offers for every image and inspect the file. U
 
 | Image | Scene | Palette | System intent |
 |---|---|---|---|
-| Cover | Integration day from a rooftop or a high window: a city stopped, people in the street looking up, and one vast System diagram standing in the sky over all of it, incomplete. One person in the foreground has already turned away from it and is looking at the reader. | Bone, with time-of-day light on the city | Observation over a whole world: fine, enormous, precise | **Delivered 2026-09-17** as `book/assets/art/cover.png`, 2100×3000 resampled from a 1050×1498 original; a true-detail upscale is still wanted before print. |
+| Cover | Integration day from a rooftop or a high window: a city stopped, people in the street looking up, and one vast System diagram standing in the sky over all of it, incomplete. One person in the foreground has already turned away from it and is looking at the reader. | Bone, with time-of-day light on the city | Observation over a whole world: fine, enormous, precise | **Delivered 2026-09-17** as `book/assets/art/cover.png`, 3150×4500, the 1050×1498 original upscaled 4× with Upscayl's high-fidelity model (Real-ESRGAN) and downsampled with Lanczos. |
 
 ## Chapter openers (full page, one per chapter)
 
