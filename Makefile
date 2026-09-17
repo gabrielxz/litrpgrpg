@@ -56,7 +56,7 @@ EPUB_OUT   := $(BUILD_DIR)/$(PROJECT)-$(TIMESTAMP).epub
 # so the cover treatment is identical across formats. Pandoc's EPUB writer
 # does not overlay text on the cover image, hence the bake.
 COVER_BASE   := $(BOOK)/assets/art/cover.png
-COVER_ARGS   := --break-x 0.375   # the Void cover: where its fracture meets the title band
+COVER_ARGS   :=
 COVER_TITLED := $(BUILD_DIR)/cover_titled.png
 # Resolved through kpsewhich so the TeX tree's layout (Arch, Debian, ...) does not matter.
 TITLE_FONT   := $(shell kpsewhich Alegreya-Black.otf)
@@ -95,8 +95,8 @@ kit: $(KIT_BASE)
 	@echo "Size:  $$(du -h $(KIT_OUT) | cut -f1)"
 
 # --- Cover with baked title -----------------------------------------------
-# Bake the cover block onto the cover art with tools/cover.py: the fractured
-# GRADEBREAKER wordmark, subtitle, tagline, and byline. Both PDF and EPUB
+# Bake the cover block onto the cover art with tools/cover.py: the eyebrow,
+# the GRADEBREAKER wordmark, the rules, and the edition bar. Both PDF and EPUB
 # consume the result so the cover treatment is identical across formats.
 TITLE_TEXT    := GRADEBREAKER
 SUBTITLE_TEXT := The LitRPG RPG

@@ -1,136 +1,116 @@
 #!/usr/bin/env python3
-"""Bake the cover: the GRADEBREAKER wordmark, subtitle, the volume line bottom
-left, the byline, and optionally an emblem (third argument)
-onto the cover art. The wordmark is the heading face fractured between its
-two halves, the right half displaced, with one cyan segment completing the
-break (book/art/art-bible.md, section 7: one controlled interruption).
+"""Bake the cover block onto the cover art.
 
-    python3 tools/cover.py book/assets/art/cover.png build/cover_titled.png
+Layout (fractions of the page, so any master size works):
+  a tracked small-caps subtitle at the top, a short gold rule under it,
+  the GRADEBREAKER wordmark, a hairline rule with a gold diamond at its
+  centre, and a dark bar along the bottom carrying the edition line on the
+  left and the byline on the right. Every string is a constant below.
+
+The art carries no text of its own; the bake renders the type at the
+master's size, so upscale the art, never a titled cover.
+
+Fonts resolve through kpathsea first and then book/assets/fonts/, so a face
+that is not in the TeX tree can be dropped into that folder.
 """
-import subprocess, sys
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
+import os, subprocess
+from PIL import Image, ImageDraw, ImageFont
 
-INK = (19, 27, 32); BONE = (244, 237, 225); CYAN = (143, 230, 239)
+INK  = (19, 27, 32)
+BONE = (244, 237, 225)
+CYAN = (143, 230, 239)
+GOLD = (125, 95, 30)          # #7d5f1e
+DIM  = (128, 136, 144)
+
+SUBTITLE  = "THE LITRPG RPG"
+WORDMARK  = "GRADEBREAKER"
+EDITION   = ["GRADE F", "VOL. 01", "CORE BOOK"]   # the F is set in cyan
+BYLINE    = "GABRIEL BEAL"
+
+FACE_WORDMARK = "Montserrat-Black.otf"      # stand-in until the cover face lands
+FACE_MONO     = "JetBrainsMono-Regular.otf"
+FACE_MONO_B   = "JetBrainsMono-Bold.otf"
+
+FONT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "book", "assets", "fonts")
 
 def font(name, size):
+    local = os.path.join(FONT_DIR, name)
+    if os.path.exists(local):
+        return ImageFont.truetype(local, size)
     path = subprocess.check_output(["kpsewhich", name], text=True).strip()
+    if not path:
+        raise SystemExit(f"font not found: {name} (TeX tree or {FONT_DIR})")
     return ImageFont.truetype(path, size)
 
-def wordmark(page_w, break_x, max_frac=0.92, fill=BONE, edge_col=INK, edge_w=0.014):
-    """GRADEBREAKER in Montserrat Black, slightly condensed, cracked after
-    GRADE: the crack runs past the letters into the sky, branches, throws
-    shards, and is lit from inside. Returns the layer and the baseline y of
-    the letters within it."""
-    face = "Montserrat-Black.otf"
-    f = font(face, 200)
-    probe = ImageDraw.Draw(Image.new("RGBA", (10, 10)))
-    x0, y0, x1, y1 = probe.textbbox((0, 0), "GRADEBREAKER", font=f)
-    condense = 0.92
-    # size the word so the break lands on break_x with margins of 4% either side
-    gfrac = probe.textbbox((0, 0), "GRADE", font=f)[2] / (x1 - x0)
-    width = min(max_frac * page_w, (break_x - 0.04) * page_w / gfrac, (0.96 - break_x) * page_w / (1 - gfrac))
-    size = int(200 * width / ((x1 - x0) * condense))
-    f = font(face, size)
-    k = size / 200.0
-    edge = max(2, int(size * edge_w))
-    x0, y0, x1, y1 = probe.textbbox((0, 0), "GRADEBREAKER", font=f, stroke_width=edge)
-    tw, th = x1 - x0, y1 - y0
-    reach = int(th * 0.25)                     # above the letters
-    below = int(th * 0.9)                      # below them, running into the picture's crack
-    pad = int(40 * k)
-    w, h = tw + 2 * pad, th + reach + below
-    letters = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-    ImageDraw.Draw(letters).text((pad - x0, reach - y0), "GRADEBREAKER", font=f, fill=fill,
-                                 stroke_width=edge, stroke_fill=edge_col)
-    letters = letters.resize((int(w * condense), h), Image.LANCZOS)
-    w = letters.width
-    # the crack: jagged, from above the word to below it, just after GRADE
-    gx1 = probe.textbbox((0, 0), "GRADE", font=f)[2]
-    xs = int((pad - x0 + gx1) * condense) + int(4 * k)
-    top, bot = reach, reach + th
-    path = [(xs - 26 * k, 0), (xs - 6 * k, top * 0.6), (xs + 10 * k, top + th * 0.28),
-            (xs - 8 * k, top + th * 0.55), (xs + 22 * k, top + th * 0.82), (xs + 4 * k, h)]
-    gap = int(26 * k)
-    # split the letters along the crack; the right half drops and tilts
-    mask_r = Image.new("L", (w, h), 0)
-    ImageDraw.Draw(mask_r).polygon(path + [(w, h), (w, 0)], fill=255)
-    blank = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-    right = Image.composite(letters, blank, mask_r).rotate(-1.6, resample=Image.BICUBIC, center=(xs, top + th / 2))
-    left = Image.composite(blank, letters, mask_r)
-    dx, dy = int(16 * k), int(26 * k)
-    out = Image.new("RGBA", (w + dx, h + dy), (0, 0, 0, 0))
-    out.alpha_composite(left, (0, 0))
-    out.alpha_composite(right, (dx, dy))
-    # clear the break; the picture shows through it, with a soft light behind
-    d = ImageDraw.Draw(out)
-    d.line(path, fill=(0, 0, 0, 0), width=gap)
-    glow = Image.new("RGBA", out.size, (0, 0, 0, 0))
-    ImageDraw.Draw(glow).line(path, fill=(236, 252, 255, 150), width=int(22 * k))
-    out.alpha_composite(glow.filter(ImageFilter.GaussianBlur(int(14 * k))))
-    glow = Image.new("RGBA", out.size, (0, 0, 0, 0))
-    ImageDraw.Draw(glow).line(path, fill=CYAN + (210,), width=int(7 * k))
-    out.alpha_composite(glow.filter(ImageFilter.GaussianBlur(int(5 * k))))
-    return out, reach, int(xs)
+def tracked_width(f, s, track):
+    return sum(f.getlength(c) for c in s) + track * (len(s) - 1)
+
+def tracked(d, x, y, s, f, track, fill, anchor="l", colors=None):
+    """Draw s letter by letter with `track` px between letters. anchor: l, m, r
+    for the x; y is the vertical centre of the caps. colors maps an index to a fill."""
+    w = tracked_width(f, s, track)
+    if anchor == "m": x -= w / 2
+    elif anchor == "r": x -= w
+    for i, c in enumerate(s):
+        d.text((x, y), c, font=f, fill=(colors or {}).get(i, fill), anchor="lm")
+        x += f.getlength(c) + track
+    return w
 
 def band_luminance(im, y0, y1):
-    """Mean luminance of a horizontal band, 0 to 255."""
     band = im.convert("L").crop((0, int(y0 * im.height), im.width, int(y1 * im.height))).resize((64, 8))
-    return sum(band.getdata()) / (64 * 8)
+    return sum(band.get_flattened_data() if hasattr(band, "get_flattened_data") else band.getdata()) / (64 * 8)
 
-def main(src, dst, emblem=None, break_x=None):
-    """break_x: where a fracture in the art meets the title band, as a fraction
-    of the width; the wordmark's break lands on it. None centers the word."""
+def main(src, dst):
     im = Image.open(src).convert("RGBA")
     W, H = im.size
-    k = W / 1050.0
-    top_lum = band_luminance(im, 0.02, 0.16)
-    bottom_lum = band_luminance(im, 0.93, 0.99)
-    dark_top = top_lum < 80
-    if dark_top:
-        # a dark title band: dim whatever the art carries there under the title
-        fade_h = int(H * 0.30)
-        fade = Image.new("L", (1, fade_h))
-        for y in range(fade_h):
-            t = y / fade_h
-            fade.putpixel((0, y), int(255 * (1 - t) ** 1.6 * 0.82))
-        fade = fade.resize((W, fade_h))
-        im.alpha_composite(Image.merge("RGBA", (*[Image.new("L", (W, fade_h), c) for c in INK], fade)), (0, 0))
-    # letters: ink on a pale band, bone on a dark one, bone with a heavy edge on a mixed one
-    if top_lum > 150:
-        fill, edge_col, edge_w = INK, BONE, 0.012
-    elif dark_top:
-        fill, edge_col, edge_w = BONE, INK, 0.014
-    else:
-        fill, edge_col, edge_w = BONE, INK, 0.030
-    if break_x is None:
-        wm, reach, xs = wordmark(W, 0.46, fill=fill, edge_col=edge_col, edge_w=edge_w)
-        x = (W - wm.width) // 2
-    else:
-        wm, reach, xs = wordmark(W, break_x, fill=fill, edge_col=edge_col, edge_w=edge_w)
-        x = int(break_x * W) - xs
-    im.alpha_composite(wm, (x, int(44 * k) - reach))
+    light_top = band_luminance(im, 0.02, 0.16) > 150
+    ink = INK if light_top else BONE
     d = ImageDraw.Draw(im)
-    def text(xy, s, f, anchor, fill, edge, ew):
-        d.text(xy, s, font=f, fill=fill, anchor=anchor, stroke_width=ew, stroke_fill=edge)
-    y_sub = int(44 * k) - reach + wm.height - int(wm.height * 0.30)
-    text((W // 2, y_sub), "The LitRPG RPG", font("EBGaramond-Italic.otf", int(58 * k)), "ma", fill, edge_col, max(2, int(2 * k)))
-    if emblem:
-        e = Image.open(emblem).convert("RGBA")
-        side = int(110 * k)
-        e = e.resize((side, side), Image.LANCZOS)
-        im.alpha_composite(e, ((W - side) // 2, H - int(44 * k) - side))
-    bfill, bedge = (INK, BONE) if bottom_lum > 120 else (BONE, INK)
-    text((int(44 * k), H - int(44 * k)), "F-GRADE VOLUME",
-         font("AlegreyaSans-Bold.otf", int(34 * k)), "ld", CYAN, INK, max(2, int(3 * k)))
-    text((W - int(44 * k), H - int(44 * k)), "by Gabriel Beal",
-         font("EBGaramond-Italic.otf", int(38 * k)), "rd", bfill, bedge, max(2, int(3 * k)))
+
+    # subtitle, tracked, centred near the top
+    f_sub = font(FACE_MONO, int(H * 0.016))
+    tracked(d, W / 2, H * 0.029, SUBTITLE, f_sub, track=f_sub.size * 0.42, fill=GOLD, anchor="m")
+
+    # short gold rule under it
+    rw, ry, rt = W * 0.165, H * 0.048, max(2, int(W * 0.0015))
+    d.rectangle([W / 2 - rw / 2, ry - rt / 2, W / 2 + rw / 2, ry + rt / 2], fill=GOLD)
+
+    # the wordmark: sized to a fixed width, centred, cap-centre at 8.85% of the height
+    probe = font(FACE_WORDMARK, 200)
+    x0, y0, x1, y1 = probe.getbbox(WORDMARK)
+    f_wm = font(FACE_WORDMARK, int(200 * (W * 0.775) / (x1 - x0)))
+    d.text((W / 2, H * 0.0885), WORDMARK, font=f_wm, fill=ink, anchor="mm")
+
+    # the long hairline with a gold diamond at its centre
+    ly, lx0, lx1, gap, ht = H * 0.135, W * 0.068, W * 0.932, W * 0.018, max(1, int(W * 0.0008))
+    d.rectangle([lx0, ly - ht / 2, W / 2 - gap, ly + ht / 2], fill=GOLD)
+    d.rectangle([W / 2 + gap, ly - ht / 2, lx1, ly + ht / 2], fill=GOLD)
+    r = W * 0.007
+    d.polygon([(W / 2, ly - r), (W / 2 + r, ly), (W / 2, ly + r), (W / 2 - r, ly)], fill=GOLD)
+
+    # the bottom bar
+    bx0, bx1, by0, by1 = W * 0.05, W * 0.95, H * 0.915, H * 0.975
+    bar = Image.new("RGBA", im.size, (0, 0, 0, 0))
+    ImageDraw.Draw(bar).rounded_rectangle([bx0, by0, bx1, by1], radius=int(W * 0.005), fill=INK + (218,))
+    im.alpha_composite(bar)
+    d = ImageDraw.Draw(im)
+    f_ed, f_by = font(FACE_MONO, int(H * 0.0125)), font(FACE_MONO_B, int(H * 0.0125))
+    ty, track = (by0 + by1) / 2, f_ed.size * 0.25
+    x = W * 0.082
+    for i, item in enumerate(EDITION):
+        colors = {item.index("F"): CYAN} if item == "GRADE F" else None
+        x += tracked(d, x, ty, item, f_ed, track, BONE, colors=colors)
+        if i < len(EDITION) - 1:
+            x += f_ed.size * 1.1
+            d.text((x, ty), "|", font=f_ed, fill=DIM, anchor="lm")
+            x += f_ed.getlength("|") + f_ed.size * 1.1
+    tracked(d, W * 0.918, ty, BYLINE, f_by, track, BONE, anchor="r")
+
     im.convert("RGB").save(dst)
 
 if __name__ == "__main__":
     import argparse
     ap = argparse.ArgumentParser()
     ap.add_argument("src"); ap.add_argument("dst")
-    ap.add_argument("--emblem", default=None)
-    ap.add_argument("--break-x", type=float, default=None, help="fraction of the width where the art's fracture meets the title band")
     a = ap.parse_args()
-    main(a.src, a.dst, a.emblem, a.break_x)
+    main(a.src, a.dst)

@@ -8,7 +8,7 @@ The trim is 7 by 10 inches. The text block is 5.45 by 8.25 inches. There is no b
 
 | Placement | Shape | Request from ChatGPT | Print master target | Notes |
 |---|---|---|---|---|
-| Cover | Portrait 7:10 | Largest portrait available; 1024×1536 at minimum | 2100×3000 or larger | Leave the top quarter and the bottom left quiet for the title block and tagline |
+| Cover | Portrait 7:10 | Largest portrait available; 1024×1536 at minimum | 2100×3000 or larger | Leave the top 15% quiet for the eyebrow, wordmark, and rule, and the bottom 9% for the edition bar |
 | Chapter opener (full page) | Portrait 7:10 | Largest portrait available; 1024×1536 at minimum | 2100×3000 | ChatGPT's portrait is 2:3; the build crops the top and bottom to 7:10, so keep faces and focal glyphs out of the outer 5% |
 | Half-page scene | Landscape 3:2 | 1536×1024 or larger | 1650×1100 | Sits inside the text block under a heading |
 | Spot (creature, object) | Square | 1024×1024 or larger | 1200×1200 | Quarter page, beside text; a quiet background or none |
@@ -21,7 +21,7 @@ Request the largest size the tool offers for every image and inspect the file. U
 
 | Image | Scene | Palette | System intent |
 |---|---|---|---|
-| Cover | Integration day from a rooftop or a high window: a city stopped, people in the street looking up, and one vast System diagram standing in the sky over all of it, incomplete. One person in the foreground has already turned away from it and is looking at the reader. | Bone, with time-of-day light on the city | Observation over a whole world: fine, enormous, precise |
+| Cover | Integration day from a rooftop or a high window: a city stopped, people in the street looking up, and one vast System diagram standing in the sky over all of it, incomplete. One person in the foreground has already turned away from it and is looking at the reader. | Bone, with time-of-day light on the city | Observation over a whole world: fine, enormous, precise | **Delivered 2026-09-17** as `book/assets/art/cover.png`, 2100×3000 resampled from a 1050×1498 original; a true-detail upscale is still wanted before print. |
 
 ## Chapter openers (full page, one per chapter)
 
