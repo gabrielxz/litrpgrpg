@@ -27,7 +27,7 @@ WORDMARK  = "GRADEBREAKER"
 EDITION   = ["GRADE F", "VOL. 01", "CORE BOOK"]   # the F is set in cyan
 BYLINE    = "GABRIEL BEAL"
 
-FACE_WORDMARK = "Montserrat-Black.otf"      # stand-in until the cover face lands
+FACE_WORDMARK = "ChakraPetch-Bold.ttf"       # book/assets/fonts/, OFL
 FACE_MONO     = "JetBrainsMono-Regular.otf"
 FACE_MONO_B   = "JetBrainsMono-Bold.otf"
 
