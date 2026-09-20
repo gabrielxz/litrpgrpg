@@ -2,6 +2,18 @@
 
 # System Quests
 
+::: epigraph
+"Mission said lifeless cave. There was a bear in it, asleep. I think it thinks asleep is the same as dead."
+
+the survivors' forum
+:::
+
+::: epigraph
+"Rill's notice specified when everyone must leave. The people without transport were given the same time."
+
+Bel Sar, route account
+:::
+
 ---
 
 ## Design Intent
@@ -112,10 +124,10 @@ Issued by NPCs, organizations, mentors (not by the System directly). The System 
 **Example:**
 
 > *[Q-205 · Faction] The Lost Patrol.*
-> *Issuer: Civic Fragment Initiates (alien).*
+> *Issuer: the Kith.*
 > *Grade: F · Difficulty: Hard.*
 > *Objective: Locate three missing patrol members last seen in the Wild Fragment.*
-> *Reward: Faction reputation +1, alien-script translation device, 50 VE.*
+> *Reward: Faction reputation +1, a Skill Shard, 50 VE.*
 
 ---
 

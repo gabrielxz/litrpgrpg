@@ -2,6 +2,18 @@
 
 # Bestiary
 
+::: epigraph
+"The stonefold was most of the way into its stone when I found it. I sat down because I was tired, and it finished, and the stone was warm in my hand the whole way to the river."
+
+Bel Sar, route account
+:::
+
+::: epigraph
+"The recorded maneuver survived its practitioner. The Imprint contained no part of their mind."
+
+the Gethra Accession Ledger
+:::
+
 ---
 
 ## How to Read a Stat Block
@@ -148,7 +160,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 
 ![Fragment Wraith](./assets/art/spots/fragment-wraith.png){.spot}
 
-*A spiritual remnant: the dying coherence of a fallen cultivator's mind, given temporary form by ambient energy.*
+*A broken defensive effect: a dead world's ward still running after its makers died, given temporary form by ambient energy. It holds no one's mind.*
 
 - **Grade:** F · **Tier:** Severe- **HP:** 120 · **Aether:** 65 · **Beats:** 2
 - **Off Force (POW, mind-leach):** 65
