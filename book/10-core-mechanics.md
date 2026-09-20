@@ -426,10 +426,10 @@ Multi-target capability is a property of specific abilities, spells, and effects
 **Downed at zero.** A player character or named NPC reduced to 0 HP is **Downed**: unconscious or barely conscious, prone, out of the fight, with no Beats and no defense. HP floors at 0. Creatures die at 0 outright, unless the GM wants one alive.
 
 ::: systemvoice
-*[Vital coherence: fraying. Estimated thread loss: 3 rounds.]*
+*[Vital coherence: 3. Falling. Stabilization: required.]*
 :::
 
-**The countdown.** A Downed character dies at the end of their third round Downed unless stabilized. The System announces the count, so the table always knows the clock.
+**The countdown.** A Downed character dies at the end of their third round Downed unless stabilized. The System reads out vital coherence as a number that falls by one each round, 3 at the moment of Downing, so the table always knows the clock.
 
 **Stabilizing.** Two paths:
 

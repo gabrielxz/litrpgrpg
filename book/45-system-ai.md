@@ -146,5 +146,5 @@ The System states; it never persuades, apologizes, or encourages. Short declarat
 
 *[Request denied. Insufficient authority.]*
 
-*[Vital coherence: fraying. Estimated thread loss: 3 rounds.]*
+*[Vital coherence: 3. Falling. Stabilization: required.]*
 :::
