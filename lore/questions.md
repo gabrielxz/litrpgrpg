@@ -23,8 +23,8 @@
 
 ## Delivery (Claude, from the setting file)
 
-- [ ] The tutorial edit pass: the Kith named and described, Interpretation on exit, the exit onto Earth and the Stinger default, the technique memory, the vault warning, the remnant one-liners, the Warden's overrun.
-- [ ] The Introduction's opening System message, rewritten in the settled voice.
+- [x] The tutorial edit pass: the Kith named and described, Interpretation on exit, the exit onto Earth and the Stinger default, the technique memory, the vault warning, the remnant one-liners, the Warden's overrun.
+- [x] The Introduction's opening System message, rewritten in the settled voice.
 - [ ] The System's voice section in The System AI: characterization, what it does and does not say, sample messages across registers (notification, quest, warning, recognition, refusal), the attention shift at a death.
 - [x] The Items edit: the firearms row and the Temper paragraph (rules 0.1.4).
 - [ ] The After the Gate chapter, against the approved surface.
