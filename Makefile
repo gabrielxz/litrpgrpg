@@ -97,7 +97,11 @@ $(KIT_BASE): $(KIT_SRC)
 # Kit pages rendered to PNG for the EPUB's Table Kit appendix.
 $(KIT_PNGS): $(KIT_BASE)
 	mkdir -p $(KIT_PNG_DIR)
+	rm -f $(KIT_PNG_DIR)/kit-*.png
 	pdftoppm -png -r 150 $(KIT_BASE) $(KIT_PNG_DIR)/kit
+	@# pdftoppm zero-pads page numbers (kit-01.png for a 14-page kit); the
+	@# appendix references kit-1.png, so strip the padding.
+	for f in $(KIT_PNG_DIR)/kit-0*.png; do [ -e "$$f" ] && mv "$$f" "$(KIT_PNG_DIR)/kit-$${f##*/kit-0}"; done; true
 
 kit: $(KIT_BASE)
 	cp $(KIT_BASE) $(KIT_OUT)
