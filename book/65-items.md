@@ -2,6 +2,18 @@
 
 # Items, Consumables & Volatile Artifacts
 
+::: epigraph
+"Point blank with a twelve gauge. Barely annoyed it. Then Denise took the gun off me and hit it hard enough to fold its legs. Same gun. I'd like that on the record."
+
+the survivors' forum
+:::
+
+::: epigraph
+"The third pill did nothing. The subject took a fourth to be sure."
+
+an Open Measure bulletin
+:::
+
 ---
 
 ## How to Read This Chapter
@@ -122,6 +134,7 @@ The wielder is the weapon. In an Integrated body, accuracy and killing power bot
 | Short Bow | DEX | archery and throwing | Two-handed. Ranged: target enemies in adjacent Zones. |
 | Crossbow (single-shot) | DEX | archery and throwing | Two-handed. Requires 1 Beat to reload between shots. |
 | Hand Axe (thrown) | STR | archery and throwing | Ranged: one Zone. Recoverable. |
+| Pistol / Rifle / Shotgun | DEX | firearms | Ranged: target enemies in adjacent Zones. Holds 1d10 rounds when found; empty, it is an improvised object. Nothing in this book makes ammunition. |
 <!-- /rules:table -->
 
 These are the starting and recovery tier. Higher-quality weapons (named, System-forged, Principle-attuned) are bespoke items the GM designs as treasure or quest rewards.
@@ -129,6 +142,10 @@ These are the starting and recovery tier. Higher-quality weapons (named, System-
 **Anything you let go of is archery and throwing.** A hand axe swung is axes and hammers; the same axe thrown is archery and throwing. A character can be Master with one and untrained in the other.
 
 **Wielding without a Proficiency:** a character with no relevant Proficiency may still pick up any weapon and adds nothing to the Clash. A Seasoned soldier with a greatsword adds +10; a librarian swinging the same blade adds +0, and so does an axe Master who has never trained with an edge.
+
+**Temper.** An Integrated body resists ordinary force: the energy a weapon carries on its own, whether muzzle energy, mass, an edge, or a fall. What passes through is the wielder's own Force, carried by the weapon, so a point-blank shotgun does Margin damage like everything else. Temper grows with the body, ×10 per Grade, and the Grade Gap Rule (Core Mechanics, "The Grade Gap Rule") is where a higher-Grade body's Temper appears on the table. Artillery, vehicle weapons, and explosives have no weapon shape the System recognizes: they are improvised objects, and the shell carries the user's Force and nothing else.
+
+**Firearms** are a weapon shape like any other, and cartridges are the one part of a gun that runs out: a found firearm holds 1d10 rounds, ammunition exists wherever Earth left it, and nothing in this book makes more. Arrows are made and recovered, and everything let go is archery and throwing, so that domain's Marks are always fed.
 
 ---
 

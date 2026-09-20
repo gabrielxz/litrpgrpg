@@ -2,6 +2,18 @@
 
 # Titles
 
+::: epigraph
+"No one else knew I had broken the oath. They still called me faithful. Each time I opened my sheet, Oathbroken was there."
+
+the survivors' forum
+:::
+
+::: epigraph
+"Hand of the Iron Court tells you whom a traveler serves. Read the contract before deciding whether that helps you."
+
+Bel Sar, route account
+:::
+
 Titles are the System's achievement layer, and they run on one loop: a character does something the System considers worth recording, a notification lands mid-session with a name and a bonus attached, and the bonus stays on the record forever. Kill your tenth beast and "Ten-Slayer" arrives with +1 STR. Survive something you had no business surviving and something rarer shows up. Nobody picks them from a menu and nobody sees the thresholds in advance.
 
 This chapter covers the four shapes a title comes in, what their bonuses are worth, and who can see them. The behavior the System is reading to generate them is the Hidden Vector Engine's business, and the titles the Integration Tutorial hands out are listed there.
@@ -212,8 +224,8 @@ The Integration Tutorial grants its own set, earned once in the valley. None of 
 | **Watched First** | Achievement | Spent a Beat observing the constructs before engaging | +1 PER |
 | **Read the Room** | Achievement | Said what the Civic Fragment's records and tally add up to | +1 PER |
 | **Voice of Decision** | Achievement | Broke the deadlock at the Recycling Node pile | +1 CHA |
-| **Thin Margin** | Hidden Achievement | Survived a Clash at a quarter of Max HP or less | +1 FOR |
-| **Not Recommended** | Hidden Achievement | Opened the Threshold door after the System's warning | +1 HRT |
+| **Thin Margin** | Achievement | Survived a Clash at a quarter of Max HP or less | +1 FOR |
+| **Not Recommended** | Achievement | Opened the Threshold door after the System's warning | +1 HRT |
 | **The Hand That Reached** | Bestowed | Stopped for the staged Initiate when stopping cost the prize | +1 CHA |
 | **The One Who Stood** | Hidden Achievement | The causeway sacrifice | Legacy only; the character is dead and the world remembers |
 <!-- /rules:table -->

@@ -36,6 +36,10 @@ patterns:
   - {pattern: 'one of three required observations', replaced_by: "progress toward the catalog trigger",     since: 2026-09-11}
   - {pattern: 'calibrated to fail',               replaced_by: "fails unless the die explodes",             since: 2026-09-11}
   - {pattern: 'What it tests',                    replaced_by: "Choices to notice",                         since: 2026-09-11}
+  - {pattern: 'Hidden Achievement:? \*\*(Not Recommended|Thin Margin)', replaced_by: "Achievement title (the two tutorial +1 titles are Achievement class)", since: 2026-09-19}
+  - {pattern: '\balien Initiates?\b',          replaced_by: "the Kith",                                    since: 2026-09-19}
+  - {pattern: 'not granted auto-translation',    replaced_by: "Interpretation arrives at registration past the gate", since: 2026-09-19}
+  - {pattern: 'Accept the imprint',              replaced_by: "Accept the technique memory",                since: 2026-09-19}
 
 # Chapter names as the book cites them, for the cross-reference check.
 chapters:

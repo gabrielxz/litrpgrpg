@@ -54,6 +54,7 @@ weapons:
   - {name: Short Bow,               force: DEX,        proficiency: archery and throwing,  notes: "Two-handed. Ranged: target enemies in adjacent Zones."}
   - {name: Crossbow (single-shot),  force: DEX,        proficiency: archery and throwing,  notes: "Two-handed. Requires 1 Beat to reload between shots."}
   - {name: Hand Axe (thrown),       force: STR,        proficiency: archery and throwing,  notes: "Ranged: one Zone. Recoverable."}
+  - {name: Pistol / Rifle / Shotgun, force: DEX,       proficiency: firearms,              notes: "Ranged: target enemies in adjacent Zones. Holds 1d10 rounds when found; empty, it is an improvised object. Nothing in this book makes ammunition."}
 weapon_bonus: the wielder's Proficiency tier (+5 Trained, +10 Seasoned or Master, +0 untrained)
 heavy_weapon_min_str_force: 5
 heavy_weapon_below_min_penalty: -10
