@@ -16,6 +16,8 @@
 --   * questcard     — Quest log / Mandate / Personal Opportunity entries
 --   * lore          — in-world cosmology, legends, color vignettes (gray, left-ruled)
 --   * readaloud     — boxed narration the GM says out loud (white, titled)
+--   * epigraph      — an in-world quotation under a chapter title; maps to the
+--                     bookepigraph environment, last paragraph = the source
 --
 -- Anything else passes through untouched.
 
@@ -25,16 +27,25 @@ local recognized = {
   questcard   = true,
   lore        = true,
   readaloud   = true,
+  epigraph    = "bookepigraph",
 }
 
 function Div(el)
   if FORMAT:match("latex") then
     for _, class in ipairs(el.classes) do
-      if recognized[class] then
+      local env = recognized[class]
+      if env then
+        if env == true then env = class end
+        if class == "epigraph" and #el.content >= 2 and el.content[#el.content].t == "Para" then
+          local src = table.remove(el.content)
+          el.content:insert(pandoc.RawBlock("latex", "\\begin{gbepigraphsource}"))
+          el.content:insert(src)
+          el.content:insert(pandoc.RawBlock("latex", "\\end{gbepigraphsource}"))
+        end
         return {
-          pandoc.RawBlock("latex", "\\begin{" .. class .. "}"),
+          pandoc.RawBlock("latex", "\\begin{" .. env .. "}"),
           el,
-          pandoc.RawBlock("latex", "\\end{" .. class .. "}"),
+          pandoc.RawBlock("latex", "\\end{" .. env .. "}"),
         }
       end
     end

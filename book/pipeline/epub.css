@@ -59,6 +59,11 @@ div.lore {
   color: #333333;
 }
 
+/* Epigraphs: an in-world quotation under a chapter title (PDF: bookepigraph). */
+div.epigraph { margin: 1em 0 1em 22%; font-style: italic; font-size: 0.95em; }
+div.epigraph p { margin: 0.2em 0; }
+div.epigraph p:last-child { font-style: normal; font-size: 0.8em; text-align: right; color: #525553; }
+
 /* Art placement, by image class (the PDF reads the same classes in the Lua filter). */
 img.opener, img.fullpage, img.map, img.scene { display: block; width: 100%; margin: 1em 0; }
 img.spot { float: right; width: 36%; margin: 0 0 0.8em 1em; }

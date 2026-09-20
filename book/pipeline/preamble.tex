@@ -237,3 +237,20 @@
   before skip=12pt,
   after skip=12pt
 }
+
+% Epigraph: an in-world quotation set under a chapter title. No box; a
+% right-set block, italic, with the source in upright small type beneath.
+% Markdown: ::: epigraph / quote paragraph / source paragraph / :::
+% The Lua filter maps the class to this environment and wraps the last
+% paragraph in gbepigraphsource.
+\newenvironment{bookepigraph}{%
+  \par\vspace{4pt}%
+  \begin{flushright}%
+  \begin{minipage}{0.78\linewidth}%
+  \raggedright\itshape\small\setlength{\parskip}{3pt}%
+}{%
+  \end{minipage}%
+  \end{flushright}%
+  \par\vspace{4pt}%
+}
+\newenvironment{gbepigraphsource}{\par\nopagebreak\raggedleft\upshape\footnotesize\color{gbslate}}{\par}
