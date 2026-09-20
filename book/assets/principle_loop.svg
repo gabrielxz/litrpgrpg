@@ -40,7 +40,7 @@
 
   <!-- arrow 3 -> 4 -->
   <line x1="590" y1="830" x2="590" y2="935" stroke="#1a1a1a" stroke-width="5" marker-end="url(#arrow)"/>
-  <text x="622" y="893" font-family="DejaVu Serif" font-style="italic" font-size="28" fill="#333333">at 3 / 10 / 25 / 50 / 100 IP</text>
+  <text x="622" y="893" font-family="DejaVu Serif" font-style="italic" font-size="28" fill="#333333">at 10 / 25 / 50 / 100 IP</text>
 
   <!-- Stage 4: DISTILLATION -->
   <rect x="280" y="945" width="620" height="160" rx="14" fill="#ffffff" stroke="#1a1a1a" stroke-width="6"/>

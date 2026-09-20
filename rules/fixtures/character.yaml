@@ -4,7 +4,7 @@ cases:
     source: 15-character-creation.md, "Ready-Made Characters"
     fn: pregen_derived
     args: {name: Kara}
-    expect: {points: 40, max_hp: 14, max_aether: 6, tolerance: 80, bands: [80, 160, 240], surge_cost: 3}
+    expect: {points: 40, max_hp: 14, max_aether: 6, tolerance: 80, bands: [80, 160, 240], surge_cost: 3}  # Kara; Andre (5) pays 2 under round-down
   - name: Joe, HP 14, Aether 4
     source: 15-character-creation.md, "Ready-Made Characters"
     fn: pregen_derived

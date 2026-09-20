@@ -47,10 +47,8 @@ sweep:
 structured_logging:
   intensities: {below_threshold: 0.5, remembered: 1.0, surprised_the_table: 2.0, defining: 3.0}
   half_tier_app_only: true
-  current_adds: 1.0               # of the event's intensity
-  deep_adds: 0.5
-  current_decay_per_session: 0.5  # Current halves at each session end
-  deep_decay_per_session: 0.1     # Deep loses a tenth
+  half_tier_counts_as: 0.5        # of a tally in the Current sum
+  update: the sweep               # at session end: sum intensities by side into Current, apply deep_update, wipe Current
   entry_fields: [player, event_summary, context, intent, outcome, primary_axis, intensity, secondary_axis]
   switchable_at_session_boundary: true   # copy the standing totals across
 

@@ -24,11 +24,11 @@ On the day of Integration, every human being on Earth heard the same voice at th
 *Prior exemptions: expired. Observation: begun.*
 :::
 
-**Gradebreaker** is a tabletop roleplaying game of System-driven progression fantasy, the genre of stories like *Defiance of the Fall* and *Primal Hunter*: ordinary people pulled into a multiverse that keeps score, where every level is paid for in blood and sweat, quests arrive in cold blue status screens, and the only deal on offer is grow, or die. Each player takes the role of one freshly integrated human. One player, the Game Master (GM), plays everything else: the world, its monsters and factions, and the System itself.
+**Gradebreaker** is a tabletop roleplaying game of System-driven progression fantasy, the genre of stories like *Defiance of the Fall* and *Primal Hunter*: ordinary people pulled into a multiverse that keeps score. Quests appear on blue status screens, and characters gain power by surviving, exploring, and overcoming challenges. Each player takes the role of one freshly integrated human. One player, the Game Master (GM), plays everything else: the world, its monsters and factions, and the System itself.
 
 ## The System
 
-The System is the multiverse's administrator. It integrates worlds, assigns Grades and levels, issues quests, grants titles, and watches. Neither god nor villain, it is an adaptive construct that discovers stable patterns of reality by putting conscious agents under pressure and recording what they do. Strength interests it less than *how* strength is used. Two characters can win the same fight and be offered different futures, because they won it differently.
+The System is the multiverse's administrator. It integrates worlds, assigns Grades and levels, issues quests, grants titles, and watches. It is an adaptive construct that finds the stable patterns of reality by putting people under pressure and recording what they do. Strength interests it less than *how* strength is used. Two characters can win the same fight and be offered different futures, because they won it differently.
 
 That observation is real at the table. The GM quietly tracks how each character behaves under pressure, and the System converts that record into classes, opportunities, titles, and powers. In this game, a build is a biography: the System grows your character out of what you actually did.
 
@@ -39,7 +39,7 @@ A starting character is an ordinary person: seven Attributes bought with 40 poin
 Progression runs on three tracks:
 
 - **Levels.** Kills, quests, and survival yield Volatile Energy (VE); resting to refine it (Consolidation) converts it into levels and stat growth.
-- **Principles.** Insight into reality's underlying patterns (Fire, Weight, Edge, Space) unlocks Applications, and eventually Domains. The track rewards talking through what a character has learned, and it plays at full strength without a word of it (The Principle System, "The Quiet Path").
+- **Principles.** Insight into reality's underlying patterns (Fire, Weight, Edge, Space) unlocks Applications, and eventually Domains. The track rewards talking through what a character has learned, and the Quiet Path plays it at full strength without a word of it (The Principle System, "The Quiet Path").
 - **Recognition.** Titles, a class at Level 10, and, at each Grade's cap, a Breakthrough: a ritual gamble that lifts every ceiling at once.
 
 ## What You Need
@@ -54,19 +54,19 @@ Progression runs on three tracks:
 
 This book is written for the GM. Players are welcome to read the player-facing chapters: Core Mechanics, Character Creation, Cultivation, and The Principle System. Two boundaries:
 
-- **The Hidden Vector Engine chapter is open knowledge, but the GM's game logs are not.** Players may know the System watches behavior and shapes their future around it; knowing that changes nothing, because the System is watching either way. What a player must never see is their own log. Scored behavior stays honest only while the scoring stays out of sight.
+- **The Hidden Vector Engine chapter is open knowledge, but the GM's game logs are not.** Players may read how the Hidden Vector Engine works. What a player must never see is their own log; keeping the scores private discourages players from choosing actions to move a score.
 - **Players who intend to play should skip the Tutorial chapter and the Bestiary.** The tutorial is built to be experienced blind.
 
 ## How to Use This Book
 
 For the GM, in order:
 
-1. **Core Mechanics** and **Character Creation**: read closely. This is the resolution engine and the character sheet.
+1. **Core Mechanics**, **Character Creation**, and **Progression**: read closely. This is the resolution engine, the character sheet, and how it grows.
 2. **Cultivation**: the progression engine. Read closely.
-3. **The Principle System**, **Grade Breakthroughs**, **Titles**, and **System Quests**: read once so you know what exists; return when play reaches them.
+3. **The Principle System**, **Grade Breakthroughs**, **Titles**, **System Quests**, and **What Can Be Seen**: read once so you know what exists; return when play reaches them.
 4. **The System AI**: choose how you'll run (below).
 5. **The Hidden Vector Engine**: the observation layer behind everything.
-6. **The Tutorial**: your campaign's first three sessions, ready to run. It introduces every mechanic in play, phase by phase. Do not stop play to teach rules; when a player asks how combat works, the whole answer is "roll d100, add your Force, and I'll tell you what happens."
+6. **The Tutorial**: your campaign's first two sessions, or four short ones, ready to run. It introduces the rules of pre-class play, phase by phase. Teach each rule when a player needs it to choose; when a player asks how combat works, the whole answer is "roll d100, add your Force, and I'll tell you what happens."
 
 The **Bestiary**, **Items**, and the **Quick Reference** at the back of the book are table reference.
 
@@ -76,13 +76,13 @@ The System's generative work (classes, quests, visions, titles, loot) can be per
 
 ## Drama Over Simulation
 
-These rules chase the feel of the genre's fights: impossible speed, a sword arc that splits a hillside, the weak toppling the strong on nerve and timing. They are a camera, and the camera serves the story. A Zone is a piece of story geography; a Beat is a slice of dramatic time. Neither maps to meters or seconds, and pressing them for physical precision produces nonsense faster than answers.
+These rules chase the feel of the genre's fights: impossible speed, a sword arc that splits a hillside, the weak toppling the strong on nerve and timing. They are a camera, and the camera serves the story. Zones divide a scene into useful areas, and Beats measure how much a character can do on a turn. Neither has a fixed length in meters or seconds, and pressing them for physical precision produces nonsense faster than answers.
 
 Any system this size has edge cases, and every table eventually finds a reading that is technically legal and completely ridiculous. When that happens the GM's tiebreaker is drama: rule for the version that belongs in the story the table is imagining. Exploiting a rules edge is often half the fun of progression fantasy, and the System itself rewards ingenuity, so the question is never whether players are optimizing. The question is whether the optimization makes the table lean in or check out. If everyone is grinning, let it ride and let the world react. If it is draining tension from a scene people cared about, name it, adjust it, and move on.
 
 ## An Example of Play
 
-Kara (Strength 8 and Fortitude 7, written STR 8, FOR 7 on her sheet, with the Proficiency "axes and hammers") and Andre (Perception 9, Dexterity 7, with "tracking and fieldcraft," "archery and throwing," and a scavenged hunting bow) are Level 2, three days into their Integration Tutorial, crossing the dead district at its heart.
+Kara (Strength 8 and Fortitude 7, written STR 8, FOR 7 on her sheet, with the Proficiency "axes and hammers") and Andre (Perception 9, Dexterity 7, with "tracking and fieldcraft," "archery and throwing," and a scavenged hunting bow) are Level 2 with their level-up points still unspent, three days into their Integration Tutorial, crossing the dead district at its heart.
 
 **GM:** The overpass ahead has folded in on itself. There's a gap in the rubble, a service stair, half buried. It's the only way through that isn't a mile around.
 
@@ -148,6 +148,6 @@ Kara (Strength 8 and Fortitude 7, written STR 8, FOR 7 on her sheet, with the Pr
 
 **GM:** Two Zones. Do you want to find out?
 
-*(And in the GM's memory, where nobody can see it: Kara took the ambush head-on and gave one Beat rather than be moved, then asked what a bigger kill pays. Andre counted himself among the numbered, and told her to leave it alone. Both moments will still be there at the end of the session, which is when the Engine gets them.)*
+*(The GM writes nothing down. At session end they will still remember Kara taking the ambush head-on and giving one Beat to keep her ground, then asking what a bigger kill pays, and Andre telling her to leave it alone. Those moments go to the Engine at the sweep.)*
 
-That is the whole loop: fiction first, one roll, numbers that mean something, and a System quietly observing what each of you is becoming.
+That is the whole loop: fiction first, one roll per action, and a System observing what each of you is becoming.

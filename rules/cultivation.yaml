@@ -30,7 +30,7 @@ saturation:
 consolidation:
   refine_per_hour: 20            # F-Grade; ×10 per Grade; the same for every character of the Grade
   refine_per_hour_high_density: 40
-  hp_restored_per_hour: one fifth of Max HP
+  hp_restored_per_hour: one fifth of Max HP, rounded up
   minimum_hours: 1
   aether_refills_at_full_hour: 1
   artifacts_recharge_at_full_hour: 1

@@ -1,8 +1,8 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.4"
-dated: "2026-09-19"
+version: "0.1.5"
+dated: "2026-09-20"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
   flat-value VE (Tolerance 80, level 120, 20 per hour), the Grade Gap Rule,
@@ -11,3 +11,7 @@ notes: >
   Not Recommended reclassed from Hidden Achievement to Achievement (they pay
   +1; the Hidden Achievement guide is +3 to +5). 0.1.4: the firearms row in the
   weapon table (Pistol / Rifle / Shotgun, DEX, firearms, 1d10 rounds when found).
+  0.1.5: Surge costs half Maximum Aether rounded down, minimum 1; Consolidation healing
+  rounds up; structured logging computes the sweep instead of a separate numeric vector;
+  Salvaged and Came Back Whole (+1 HRT) join tutorial_titles; the Warden turns Hostile at
+  143 HP or less; the Wraith's PER exception; faction consequences stated in words.

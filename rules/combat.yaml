@@ -79,7 +79,7 @@ aura_pressure:
   suppressed_beats: 1
 
 surge:
-  cost: half of Maximum Aether, rounded up
+  cost: half of Maximum Aether, rounded down, minimum 1
   bonus: 5
   cost_beats: 0
   declare: before rolling

@@ -37,7 +37,7 @@ Unplugged is the baseline this book is written against. The other two modes auto
 
 ### AI-Assisted
 
-The GM runs the table with nothing to track and does the HVE session-end sweep as normal, then uses any conversational AI between sessions for the generative work: paste the standing context (below), then the function prompt.
+The GM runs the table with no HVE tracking during play and does the sweep at session end as normal, then uses any conversational AI between sessions for the generative work: paste the standing context (below), then the function's prompt where one is given (Class Generation, Personal Opportunities) or its procedure below.
 
 - Keep one standing conversation per campaign; append a short summary after each session.
 - Treat every output as a draft. Reprice bonuses against the Modifier Budget, cut anything that breaks Grade math, keep what fits.
@@ -45,7 +45,7 @@ The GM runs the table with nothing to track and does the HVE session-end sweep a
 
 ### The Companion App
 
-The full-automation mode: software that listens to the session, transcribes it, drafts HVE log entries for the GM's review, and runs the generation functions live. The division of labor is unchanged: the app proposes, the GM curates. Recording the table requires every player's explicit consent, settled at session zero.
+The Companion App mode: the app listens to the session, transcribes it, drafts HVE log entries for the GM's review, and runs the generation functions live. The division of labor is unchanged: the app proposes, the GM curates. Recording the table requires every player's explicit consent, settled at session zero.
 
 ## The Functions
 
@@ -55,7 +55,7 @@ Each function below states its inputs, its outputs, and the unplugged procedure.
 
 **In:** the character's HVE profile (Deep Vector reads and defining moments), stats, favored weapons and tactics, Principles and affinities, titles held. **Out:** three class options (rarity Common to Epic), each with a name, a one-line identity, a stat profile (the 3 fixed points per level), and one Signature Skill with Beat and Aether costs.
 
-**Unplugged procedure:** build the three options as one class that *amplifies* the dominant behavioral pattern, one that *formalizes* the secondary pattern, and one hybrid of the two. Stat profiles come off the Behavioral Stat Mapping table (Progression). Signature Skills price against the Modifier Budget; Aether costs follow the origin-Grade table (a skill acquired at F-Grade: 10 to 15 Aether).
+**Unplugged procedure:** build the three options as one class that *amplifies* the dominant behavioral pattern, one that *formalizes* the secondary pattern, and one hybrid of the two. Stat profiles come off the Behavioral Stat Mapping table (Progression). Signature Skills price against the Modifier Budget; Aether costs follow the origin-Grade rule (Core Mechanics: an acquired skill costs by the Grade it was acquired at, ×10 per Grade) (a skill acquired at F-Grade: 10 to 15 Aether).
 
 **Prompt (AI-assisted):**
 
@@ -81,7 +81,7 @@ The System Quests chapter carries the full generation template. Unplugged, use i
 
 **In:** the memory's context and the player's meditation description. **Out:** a cryptic vision in the System's voice, and an IP award (1 to 3, by the memory's intensity) toward the aligned Principle.
 
-**Unplugged procedure:** compose the vision from three images: the moment itself, stripped of one load-bearing detail; the Principle in a pure or alien form; and one image that overreaches or misleads. A vision hints; it does not teach. Deliver it in System voice, award the IP, and say nothing else.
+**Unplugged procedure:** compose the vision from three images: the moment itself, with one important detail changed or missing; the Principle in a pure or alien form; and one image that overreaches or misleads. A vision hints; it does not teach. Deliver it in System voice, award the IP, and say nothing else.
 
 *Example (a cave-in survived by holding the slab, toward Weight):* "A mountain hangs from a thread. The thread does not strain. Below, something waits to be told where to fall."
 
@@ -91,7 +91,7 @@ The Titles chapter defines the four categories and their calibrated bonus magnit
 
 ### Loot
 
-**In:** enemy difficulty tier and the circumstances of the kill. **Out:** drops, drawn from the Items chapter or invented inside its price bands.
+**In:** enemy difficulty tier and the circumstances of the kill; one roll per creature, and the party divides what drops. **Out:** drops, drawn from the Items chapter or invented inside its price bands.
 
 <!-- rules:table loot -->
 | **Enemy tier** | **Default drop (F-Grade)** |
@@ -108,11 +108,11 @@ Bosses and named enemies drop one step up the table. At higher Grades, the same 
 
 ### Skill Synthesis
 
-**In:** two or more source effects (crushed Skill Crystals, fused techniques). **Out:** one merged skill, priced. **Unplugged procedure:** combine one property from each source, price the sum against the Modifier Budget, set the Aether cost from the origin-Grade table, and attach one limitation (a cooldown, a trigger condition) if the merged bonus lands above +20.
+**In:** two or more sources: Skill Shards, or techniques the character holds. **Out:** one merged skill, permanent, priced. **Unplugged procedure:** combine one property from each source, price the sum against the Modifier Budget, which caps it at +20, and set the Aether cost by the Grade the sources came from (Core Mechanics: acquired skills cost by the Grade they were acquired at, ×10 per Grade).
 
 ### Identify and Inspect
 
-Flavor text, Grade warnings, and hidden properties, narrated by the GM. What one character can see of another is governed by the Grade-differential inspection rules in the Titles chapter.
+Flavor text, Grade warnings, and hidden properties, narrated by the GM. What one character can see of another is governed by the inspection rules in What Can Be Seen.
 
 ## The Standing Context (AI-Assisted Play)
 

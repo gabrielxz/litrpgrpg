@@ -66,9 +66,9 @@ skill_shards:
     - {name: Edge Shard,      effect: "Next Clash this turn gains +20.",                                                                      backfire: "Shard cracks: user takes 5 damage."}
     - {name: Pulse Shard,     effect: "Restore 30 Aether.",                                                                                   backfire: "Aether backlash: user takes 10 damage."}
     - {name: Veil Shard,      effect: "Become invisible until end of next turn or until you act offensively.",                                backfire: "Veil flickers: you remain visible but appear blurred (+5 to defense, no concealment)."}
-    - {name: Anchor Shard,    effect: "Until end of next turn, you cannot be moved by any effect (moving yourself is fine), and your Defense Force gains +10.", backfire: "You become **Rooted** for the rest of the encounter: unable to be moved, and unable to move under your own power."}
+    - {name: Anchor Shard,    effect: "Until end of next turn, you cannot be moved by any effect (moving yourself is fine), and your Defense Force gains +10. A two-Beat Yield still cuts the Margin; the drive fails.", backfire: "You become **Rooted** for the rest of the encounter: unable to be moved, and unable to move under your own power."}
     - {name: Resonance Shard, effect: "Add 1 IP toward a Principle of your choice.",                                                          backfire: "The IP is lost."}
-    - {name: Volatile Shard,  effect: "Roll d100 again. The GM and the System AI generate an unpredictable effect based on the result.",      backfire: "The GM's discretion is the risk."}
+    - {name: Volatile Shard,  effect: "Roll d100 again. The GM and the System AI generate an unpredictable effect based on the result.",      backfire: "The effect lands on the user; the GM may substitute something worse."}
 
 artifacts:
   reactive_buckler:

@@ -12,20 +12,20 @@
 
 **Roll d100 + Force + Tactics. High wins.**
 
-- **vs. Active opponent:** Both roll d100 + Force + Tactics. Higher total wins. Margin = Winner − Loser.
-- **vs. Passive obstacle:** Beat the Resistance (from the Grade Reference Card).
+- **vs. Active opponent:** Both roll d100 + Force + Tactics. Higher total wins; a tie rerolls. Margin = Winner − Loser.
+- **vs. Passive obstacle:** Meet or beat the Resistance (from the Grade Reference Card).
 - **Auto-success:** If Force ≥ Resistance, no roll needed.
 - **Volatility:** In combat, if the **natural d100** (before any modifiers) meets the Grade threshold, roll again and add. Each cascade die also checks its own natural result. Applies to combat Clash rolls and Will Saves (either side), plus the Breakthrough Check; skill checks never explode. A cascade of 2+ extra dice on a PC's roll grants a Battle Memory Card.
 - **Advantaged:** +10 to your rolls (fiction-derived positional edge). **Exposed:** −10 to your rolls. States are not reciprocal and are not free: changing your own or stripping an enemy's costs 1 Beat.
-- **Flanking:** +10 for every hostile engaging a target that two or more hostiles are engaging at once.
+- **Flanking:** when two or more hostiles engage a target, each of them gains +10 against it.
 - **Reach:** you can attack anyone in your Zone; ranged and most spells also reach adjacent Zones.
 - **Environment:** −10 hindering / −20 crippling.
 - **Turned Aside:** defender wins by Margin 40+ → attacker Exposed until end of their next turn. Defensive win with an explosion → Momentum shifts next round.
 - **Driven Back:** attacker wins by Margin 40+ → defender takes the damage and is Exposed until end of their next turn; the attacker may drive them one Zone (no free strike).
-- **Skill check failure:** fail by 1–39 soft (success at a cost), 40+ hard (failure plus consequence), natural 01–05 catastrophic. Margin 40+ on any success is dominant.
+- **Skill check failure:** fail by 1–39 Soft (a setback with a way forward; success at a cost is a tool, never the default), 40+ Hard (failure plus consequence), natural 01–05 Catastrophic. Margin 40+ on any success is dominant.
 - **Exceptional Success:** natural roll at or above your Volatility Threshold on a skill check. Success: narrate a step beyond what was asked. Failure: Soft regardless of margin. No extra dice.
 - **Cross-Grade Auto-Success:** vs. passive obstacles, Force + Cross-Grade Adjustment ≥ Resistance = no roll (2+ Grades up never rolls).
-- **Momentum:** Opposed Momentum Roll: d100 + DEX or PER Force (whichever is higher). Winning side acts first each round.
+- **Momentum:** Opposed Momentum Roll: d100 + DEX or PER Force (whichever is higher); a tie rerolls. Winning side acts first each round.
 - **Free Step:** DEX Force 50+ grants one free Zone move per turn.
 - **Cross-Grade movement:** the higher Grade auto-wins movement contests. A combatant a full Grade above every hostile present moves between Zones without spending Beats at all.
 
@@ -59,15 +59,15 @@ One number at the top of the die. On a Clash it explodes (combat Clashes, Will S
 
 **Lagging stats:** every stat reads at its owner's Grade. Pad below-band stats with leading zeros (E-Grade STR 65 → 065 → Force 06). Cross-Grade Adjustment and damage multiplier always follow the character's Grade.
 
-**HP** = Raw FOR × 2. **Aether** = Raw POW. Aether refills only on Consolidation, after the first full hour (no in-combat or passive regen).
+**HP** = Raw FOR × 2. **Aether** = Raw POW. Aether does not regenerate; Consolidation refills it after the first full hour, and Aether Pills and Pulse Shards restore it.
 
 **VE Tolerance:** 80 at F-Grade for every character, ×10 per Grade. **Saturation:** past 80 −10, past 160 −25, past 240 the collapse clock.
 
-**Consolidation:** every hour refines 20 VE (×10 per Grade) and restores one fifth of Max HP; a level's worth clears in 6 hours; Aether refills at the first full hour. Interruption keeps completed hours.
+**Consolidation:** every hour refines 20 VE (×10 per Grade) and restores one fifth of Max HP, rounded up; a level's worth clears in 6 hours; Aether refills at the first full hour. Interruption keeps completed hours.
 
 **Breakthrough Check:** d100 + HRT Force + preparation vs. **DC 140** (Severe, flat, no Cross-Grade Adjustment). Overcharge ×1/×2/×3/×4 (80/160/240/320 VE at F) raises it to 140/150/160/180 and buys +0/+1/+2/+3 Quality Tiers.
 
-**Surge:** spend half your Maximum Aether (round up) for +5 on one Clash roll you make. Declare before rolling. No Beat. Stacks with everything; available to everyone.
+**Surge:** spend half your Maximum Aether (round down, at least 1) for +5 on one Clash roll you make. Declare before rolling. No Beat. Stacks with everything; available to everyone.
 
 **Yield:** once the Margin is known and before damage lands, give up Beats from your **next** turn. Each Beat cuts the incoming Margin by 20. Your next turn has two Beats, so two is the most you can give. One Beat: you give ground where you stand. Two Beats: your turn is gone and the attacker may drive you one Zone of their choosing, or leave you where you are; no free strike either way. Against an AoE, each target Yields on their own Margin and two Beats throws them clear. **Cornered** (nowhere to be driven): one Beat only. Creatures Yield only if their stat block says so.
 
@@ -91,7 +91,7 @@ Weapons carry no bonus of their own; the bonus is the wielder's tier. Untrained 
 
 **Principle Application Costs (by tier, never by Grade):** Seed 10 | Early Fragment 15 | Infusion free | Domain 3,000 + 500/round. A cost is fixed by the tier that granted it and never changes. Scale grows with the character's current Grade. Domains require a D-Grade body. Spells and class skills are fixed by the Grade they were acquired at, ×10 per Grade.
 
-**Aura Pressure Save:** d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance. Aura Resistance is the flat card value, no Cross-Grade Adjustment: calm presence Hard (115), flaring Severe (140). At 3+ Grades of difference the GM may skip the save.
+**Aura Pressure Save:** d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance. Aura Resistance is the flat card value, no Cross-Grade Adjustment: calm presence Hard (115), flaring Severe (140). At a gap of three or more Grades the GM may impose Suppression without a save. Suppressed: one Beat per turn for the encounter; a meaningful change in the fiction allows a new save.
 
 ---
 
@@ -118,6 +118,8 @@ Resistance is read straight off the card for same-Grade encounters. For Cross-Gr
 | D-Grade | 1,000–9,999 | 10–99 | ×100 |
 | C-Grade | 10,000–99,999 | 10–99 | ×1,000 |
 <!-- /rules:table -->
+
+Force ranges are the normal bands; a lagging stat sits below them (see Lagging stats above).
 
 <!-- rules:table quickref-ve -->
 | **VE at F-Grade** | **Amount** |
@@ -153,7 +155,7 @@ Attacker: STR 8,500 (D-Grade, Force 85). Defender: FOR 7,000 (D-Grade, Force 70)
 
 **3. Cross-Grade: F-Grade Peak vs. E-Grade Initiate:**
 
-F-Peak: STR 99 (Force 99), HP 198. E-Initiate: FOR 120 (Force 12, +100 Grade bonus = 112), HP 240.
+F-Peak: STR 99 (Force 99), HP 198. E-Initiate: STR and FOR 120 (Force 12, +100 Grade bonus = 112), HP 240.
 
 F attacks E:
 
@@ -162,5 +164,5 @@ F attacks E:
 
 E attacks F:
 
-- E-Initiate rolls average: 50 + 112 = 162. F-Peak rolls average: 50 + 99 = 149.
+- E-Initiate rolls 50: 50 + 112 = 162. F-Peak rolls 50: 50 + 99 = 149.
 - Margin = 13. E-Grade multiplier: ×10. **Damage = 130.** F-Peak drops from 198 HP to 68.

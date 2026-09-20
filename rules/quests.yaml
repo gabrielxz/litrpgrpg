@@ -44,9 +44,9 @@ item_rewards:
 refusal:
   single:
     - {type: Routine,              consequence: "Quest expires silently. No mechanical penalty."}
-    - {type: Personal Opportunity, consequence: "The System notes the refusal. Similar offers may decrease in frequency."}
+    - {type: Personal Opportunity, consequence: "The System notes the refusal; after 3 refusals of a type it appears half as often, and after 6 it stops."}
     - {type: Mandate,              consequence: "Behavioral reclassification, faction hostility, locked paths. Often a negative Bestowed title (\"Defiant,\" \"Mandate-Breaker\")."}
-    - {type: Faction,              consequence: "Reputation drop with the issuing faction."}
+    - {type: Faction,              consequence: "The issuing faction remembers the refusal; the character's standing with it falls."}
     - {type: Hidden,               consequence: "The opportunity passes silently; the character usually never learns it existed."}
   repeated_personal_opportunity:
     half_frequency_after: 3

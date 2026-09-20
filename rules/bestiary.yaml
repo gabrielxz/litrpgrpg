@@ -27,7 +27,7 @@ creatures:
     offense: [{force: 4, stat: STR, means: claws}]
     defense: [{force: 8, stat: FOR, means: dead flesh}]
     yields: false
-    tactics: "Will not flee. Ignores Free Strikes when leaving a Zone; it does not register the threat."
+    tactics: "Will not flee. Leaves a Zone without Disengaging; the free strike still comes."
   - name: Frenzy Rat
     tier_group: Trash
     grade: F
@@ -67,7 +67,7 @@ creatures:
     offense: [{force: 22, stat: DEX, means: ambush strike}]
     defense: [{force: 22, stat: DEX, means: fade}]
     yields: false
-    tactics: "Begins encounter unseen unless detected by an active Perception Clash. Surprise Beat on first turn. Withdraws to the Zone edge after striking; favors hit-and-run over sustained combat. If pinned, fights frantically, gaining +5 Off Force when below half HP."
+    tactics: "Begins encounter unseen unless detected by an active Perception Clash. Takes a Surprise Beat before Initial Momentum if its ambush succeeds. Withdraws to the Zone edge after striking; favors hit-and-run over sustained combat. If pinned, fights frantically, gaining +5 Off Force when below half HP."
   - name: Training Sentry
     tier_group: Peer
     grade: F
@@ -119,7 +119,7 @@ creatures:
     offense: [{force: 65, stat: POW, means: mind-leach}]
     defense: [{force: 60, stat: HRT, means: spectral}, {force: 70, stat: PER, means: vs. illusion-piercing}]
     yields: true
-    tactics: "Gives ground as smoke does, sliding out of a Zone rather than taking the blow. Incorporeal: STR/DEX physical attacks are at −10 unless the weapon or attack carries an active Principle infusion. Mind-Leach (1 Beat, 10 Aether): target rolls HRT defense; on a hit, deal damage as normal and drain 1 Aether from the target per damage point dealt, added to the Wraith's pool up to its Max. Vulnerability: PER-based attacks deal +10 bonus damage on the Margin."
+    tactics: "Gives ground as smoke does, sliding out of a Zone rather than taking the blow. Incorporeal: STR/DEX physical attacks are at −10; an attack aimed with the attacker's PER Force hits at full; a Principle Application or Infusion ignores the −10. Mind-Leach (1 Beat, 10 Aether): HRT defense; damage as normal and drain 1 Aether per damage point. Vulnerability: PER-based attacks deal +10 on the Margin."
   - name: Corrupted System Warden
     tier_group: Boss
     grade: F
@@ -131,7 +131,7 @@ creatures:
     defense: [{force: 95, stat: FOR, means: plating}, {force: 60, stat: DEX, means: evasive shift}]
     yields: true
     tutorial_boss: true
-    tactics: "Indifferent Mode: at full HP it ignores the party and moves toward the gate with all 3 Beats. Hostile Mode: after losing a quarter of its HP it uses 2 Beats for attacks and 1 for movement. Yields by planting itself; it is too massive to be moved far. Glitch Cascade: on a Volatility explosion (natural 96+), the next attack against it by any combatant gains +20. Not winnable in a straight fight at F-Grade."
+    tactics: "Indifferent Mode (above 143 HP): ignores the party, attacks included, and moves toward the gate with all 3 Beats. Hostile Mode (143 HP or less, or when a character attacks it and stays in its path): 2 Beats on the last thing that hurt it, 1 for movement. Yields two of three Beats for −40, keeps the third, never moves; Cornered does not limit it. Glitch Cascade: on its own natural 96+, the next attack against it gains +20."
 
 # For an F-Grade party of 4.
 encounter_sizing:

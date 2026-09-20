@@ -138,9 +138,9 @@ The survivors' forum is human-built: surviving or newly hosted pages, relayed by
 
 ### Interpretation
 
-Every Integrant receives the skill Interpretation at accession. It translates a deliberately communicated message, whether speech, sign, or the communicative gestures of an alien language, and conveys what the speaker is trying to say. Nonverbal features that carry the intended message translate with it. Unexpressed thoughts, motives, memories, and the truth of a statement are outside it: a lie translates perfectly. Involuntary emotional displays and cultural implications arrive untranslated, so a person can understand an offer and misunderstand the obligations that come with it.
+Every Integrant of an accession made since the faculty entered the package receives Interpretation at registration; Earth and Namar do. Oren's accession predates it, so Kith do not have it, on Oren or on Earth. It translates a deliberately communicated message, whether speech, sign, or the communicative gestures of an alien language, and conveys what the speaker is trying to say. Nonverbal features that carry the intended message translate with it. Unexpressed thoughts, motives, memories, and the truth of a statement are outside it: a lie translates perfectly. Involuntary emotional displays and cultural implications arrive untranslated, so a person can understand an offer and misunderstand the obligations that come with it.
 
-Interpretation translates intentional written and recorded messages. It converts no computer protocols and supplies no scientific expertise.
+Interpretation carries both directions of any conversation its holder is party to; one holder is enough. It translates intentional written and recorded messages. It converts no computer protocols and supplies no scientific expertise.
 
 Tutorial sectors built on old versions predate Interpretation. Sector 7-Alpha is one. The party receives Interpretation at registration past the gate, and their first translated conversation with the Kith happens on Earth.
 
@@ -235,12 +235,12 @@ Oren has inhabited escarpments and tidal basins. Built stone carries vibration f
 
 The group is four by default; the tutorial allows three to five, on Pre-System Brigand statistics.
 
-- **Kes**, the scout. Wants an onward route and, eventually, a share in a traveling workshop. Leaves marks for strangers because that is ordinary responsible work in a traveling household; the arrival tallies and the arrow are a household's travel account. The daily camp moves are tactics.
+- **Kes**, the scout. Wants an onward route and, eventually, a share in a traveling workshop. Leaves marks for strangers because that is ordinary responsible work in a traveling household; the arrival tallies and the arrow are a household's travel account. The daily camp moves are tactics. `[GM]` The four lived in the Civic Fragment sixteen days; the Sentinel drove them out three days before the party arrives, and Kes has gone back each day since to cut one more mark on the tally by the door.
 - **Nemi**, supplies. Carries the Greater Healing Pill and spends it only against a known danger.
 - **Tovan**, the fighter. Wants the shelter the Sentinel took back, and resents a shrinking range of choices.
 - **Sava**, the mechanic. Carries the two shards and is interested in human tools; may want to stay on Earth for a while.
 
-They judge particular humans by experience. The Kith exit the tutorial gate beside the party and arrive on Earth with them late on Day 3, with Interpretation working between them for the first time.
+They judge particular humans by experience. The Kith exit the tutorial gate beside the party and arrive on Earth with them late on Day 3, with the party's Interpretation working for the first time.
 
 **What each believes on Day 3**, in their own words, adjusted to what the party actually did. Kes: "I saw you before you found each other; I want each name beside what each person did." Nemi: "You are still finding out what your bodies can survive; I want to see the wound before anyone spends the pill." Sava: "I watched you make that tool do another job; show me what it was built to do." Tovan: "You agreed who went through first while the ground was going; who gets to refuse the order next time?"
 

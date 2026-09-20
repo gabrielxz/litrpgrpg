@@ -119,11 +119,19 @@ function Blocks(blocks)
       local txtw = narrow and "0.66" or "0.58"
       local side = {}
       local maxside = narrow and 3 or 4
+      -- The side column is a minipage and cannot break across a page, so it takes
+      -- only as much text as sits beside the art: a character budget sized to the
+      -- art's height. A list counts as one block and is taken only if it fits.
+      local budget = narrow and 560 or 760
+      local used = 0
       local j = i + 1
       while j <= #blocks and #side < maxside do
         local t = blocks[j].t
         if t == "Header" or t == "Table" or t == "CodeBlock" or t == "Div" or t == "RawBlock" or t == "HorizontalRule" then break end
-        table.insert(side, blocks[j]); j = j + 1
+        local len = #pandoc.utils.stringify(blocks[j])
+        local is_list = (t == "BulletList" or t == "OrderedList" or t == "DefinitionList")
+        if used + len > budget and (#side > 0 or is_list) then break end
+        table.insert(side, blocks[j]); used = used + len; j = j + 1
       end
       if #side == 0 then
         table.insert(out, pandoc.RawBlock("latex",

@@ -23,6 +23,20 @@ patterns:
   - {pattern: 'Highest Attribute Force',          replaced_by: "cut from the Breakthrough Check",             since: 2026-08-12}
   - {pattern: '\+0 to \+45',                      replaced_by: "+0 to +40",                                   since: 2026-08-12}
   - {pattern: 'Tracking the Engine',              replaced_by: "The Session-End Sweep",                       since: 2026-08-25}
+  - {pattern: 'Aether, rounded up',               replaced_by: "Surge: half Maximum Aether, rounded down, minimum 1", since: 2026-09-20}
+  - {pattern: 'half value to Deep',               replaced_by: "structured logging computes the sweep",       since: 2026-09-20}
+  - {pattern: 'decays by a tenth',                replaced_by: "structured logging computes the sweep",       since: 2026-09-20}
+  - {pattern: '\b48 damage\b',                    replaced_by: "the Warden turns Hostile at 143 HP or less",  since: 2026-09-20}
+  - {pattern: 'not winnable in a straight fight', replaced_by: "built to overwhelm a Level 1 to 4 party",     since: 2026-09-20}
+  - {pattern: 'Faction reputation \+1',           replaced_by: "standing, stated in words",                   since: 2026-09-20}
+  - {pattern: 'faction-tracked stat',             replaced_by: "standing, stated in words",                   since: 2026-09-20}
+  - {pattern: 'Skill Crystals',                   replaced_by: "Skill Shards",                                since: 2026-09-20}
+  - {pattern: 'Ordinary weapons pass through it', replaced_by: "physical attacks at −10; PER-aimed attacks at full", since: 2026-09-20}
+  - {pattern: 'plus \*worn\* Bestowed',           replaced_by: "worn Bestowed titles are visible to peers",   since: 2026-09-20}
+  - {pattern: 'spent into Seed',                  replaced_by: "IP is cumulative",                            since: 2026-09-20}
+  - {pattern: 'a third of a level banked',        replaced_by: "25 VE banked",                                since: 2026-09-20}
+  - {pattern: "Conqueror's Haki",                 replaced_by: "Majesty",                                    since: 2026-09-20}
+  - {pattern: 'The Void, Assimilation',           replaced_by: "Famine",                                     since: 2026-09-20}
   - {pattern: 'Vector Logging Cheatsheet',        replaced_by: "The Session-End Sweep",                       since: 2026-08-25}
   - {pattern: 'Passive Awareness',                replaced_by: "Routine Mastery",                             since: 2026-07-02}
   - {pattern: '\bBreakthrough Beats?\b',          replaced_by: "Stages",                                      since: 2026-08-06}

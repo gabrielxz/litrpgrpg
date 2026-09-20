@@ -50,16 +50,16 @@ cases:
     fn: sweep_update
     args: {current: {Hunger: 1, Restraint: 0}, deep: {Hunger: 2, Restraint: 0}}
     expect: {deep: {Hunger: 2, Restraint: 0}}
-  - name: Structured logging, a 2.0 event adds full value to Current and half to Deep
+  - name: Structured logging computes the sweep, a 1.0 and two 0.5 entries on Hunger lead by 2 and add one Deep tally
     source: 50-hidden-vector-engine.md, "Structured Event Logging"
-    fn: structured_add
-    args: {current: 0, deep: 0, intensity: 2.0}
-    expect: {current: 2.0, deep: 1.0}
-  - name: Structured logging, Current halves and Deep loses a tenth at session end
+    fn: structured_sweep
+    args: {entries: [{side: Hunger, intensity: 1.0}, {side: Hunger, intensity: 0.5}, {side: Hunger, intensity: 0.5}], poles: [Hunger, Restraint], deep: {Hunger: 2, Restraint: 0}}
+    expect: {deep: {Hunger: 3, Restraint: 0}}
+  - name: Structured logging computes the sweep, a single 1.0 entry does not lead by 2 and Deep is unchanged
     source: 50-hidden-vector-engine.md, "Structured Event Logging"
-    fn: structured_decay
-    args: {current: 4.0, deep: 10.0}
-    expect: {current: 2.0, deep: 9.0}
+    fn: structured_sweep
+    args: {entries: [{side: Force, intensity: 1.0}], poles: [Force, Method], deep: {Force: 3, Method: 0}}
+    expect: {deep: {Force: 3, Method: 0}}
   - name: A Lesser Healing Pill restores 15 to an F-Grade body
     source: 65-items.md, "Healing Pills"
     fn: pill_effect

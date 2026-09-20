@@ -29,7 +29,7 @@ modifiers:
 phenomenon_penalty_per_breach: -10     # each external threat that reaches the cultivator
 anchor:
   one_per_breakthrough: true
-  roll: Opposed Roll with HRT, POW, or FOR Force vs Moderate of the current Grade
+  roll: Resistance Roll with HRT, POW, or FOR Force vs Moderate of the current Grade
   bonus_on_success: 5
   bonus_at_margin_20: 10
   bonus_at_margin_40: 15
@@ -62,8 +62,8 @@ energy_density:
 
 item_categories:
   - {category: Foundation Pills,      function: Raise base success odds on the Breakthrough Check., examples: "Dragon Marrow Pill (+5), Nine Leaf Essence (+10), Heavenly Foundation Pill (+15)"}
-  - {category: Resonance Catalysts,   function: Amplify Principle gains during the trial. Increase IP awarded at Stable or higher., examples: "Principle Tuning Crystal, Resonance Elixir"}
-  - {category: Anchoring Artifacts,   function: Reduce backlash damage to self and party if the Breakthrough fails or external phenomena break through., examples: "Stillwater Ward Stone, Earthbound Anchor Talisman"}
+  - {category: Resonance Catalysts,   function: Amplify Principle gains during the trial. +5 IP at Stable or higher., examples: "Principle Tuning Crystal, Resonance Elixir"}
+  - {category: Anchoring Artifacts,   function: Halve backlash damage to self and party if the Breakthrough fails or external phenomena break through., examples: "Stillwater Ward Stone, Earthbound Anchor Talisman"}
   - {category: Tribulation Wards,     function: The insurance policy. If consumed, upgrades a Cracked result to Stable. Consumed whether used or not. Extremely rare., examples: "Phoenix Down Seal, Heavenly Tribulation Banner"}
   - {category: Quality Enhancers,     function: Push the final Quality Tier up by one step (never above Transcendent)., examples: "Celestial Refinement Crystal, Dao Clarification Lotus"}
   - {category: Bespoke Items,         function: Rare, themed effects that do not fit the other categories., examples: "Heart Demon Mirror, Phoenix Feather, Spatial Anchor Stone"}

@@ -26,11 +26,11 @@ The party finds the Recycling Node, and while the others argue over the good wea
 
 Two sessions later, a wounded stranger stumbles into camp with a Snarljaw pack behind him. Joe steps over the fire and charges them alone so the others can drag the stranger clear. The table is still talking about it when the session ends: two tallies under **Force**, and because it was done to protect, a note in the margin.
 
-At the next Consolidation, the System murmurs to Kara: *[Resonance accruing: CONSUMPTION. 2/3.]* She never saw a number. But it saw her.
+At the next Consolidation, the System murmurs to Kara: *[Resonance accruing: CONSUMPTION. 2/3.]* The number she sees is the resonance count. The tally behind it stays on the GM's side of the screen.
 
-That is the Hidden Vector Engine. It tracks how each character actually behaves under pressure and converts the pattern into an identity the System can act on: the classes it offers, the Principles that crystallize, the titles it grants, the opportunities it dangles, the way the world leans in. It records conduct without judging it; moral alignment plays no part. The engine answers one question: *how does this person act when it costs them something?*
+That is the Hidden Vector Engine. It tracks how each character actually behaves under pressure and converts the pattern into an identity the System can act on: the classes it offers, the Principles that crystallize, the titles it grants, the opportunities it dangles, the way NPCs and factions respond. It records conduct without judging it; moral alignment plays no part. The engine answers one question: *how does this person act when it costs them something?*
 
-Players should feel observed. They should never see the underlying numbers. Hidden state is what keeps decisions authentic: a player who can read their own dials starts performing for them.
+Players should feel observed. They should never see the underlying numbers. Keeping scores private is intended to discourage choosing actions solely for particular rewards.
 
 ## The Four Axes
 
@@ -49,7 +49,7 @@ Moments: kicking the door and leading with a blade is a Force tally. Spending a 
 
 *What is the character's relationship to gain?*
 
-- **Hunger:** Pursuit of wealth, power, or advantage; prioritizing gain over safety. *Principle Affinity:* Consumption family (Devouring, Blood, The Void, Assimilation, Corrosion).
+- **Hunger:** Pursuit of wealth, power, or advantage; prioritizing gain over safety. *Principle Affinity:* Consumption family (Devouring, Blood, Famine, Assimilation, Corrosion).
 - **Restraint:** Passing on excess reward, prioritizing mission or people over loot. *Principle Affinity:* Preservation family (Shielding, Purification, Iron, Stasis, Resilience).
 
 Moments: pushing into the red zone of Saturation to claim one more kill is a Hunger tally. Handing the party's only Greater Healing Pill to the hireling who got mauled is a Restraint tally.
@@ -58,7 +58,7 @@ Moments: pushing into the red zone of Saturation to claim one more kill is a Hun
 
 *How does the character relate to others and systems of order?*
 
-- **Will:** Coercion, intimidation, dominance, shaping outcomes through pressure. *Principle Affinity:* Imposition family (Conqueror's Haki, Mind Control, Pressure, Fear, Sovereignty).
+- **Will:** Coercion, intimidation, dominance, shaping outcomes through pressure. *Principle Affinity:* Imposition family (Majesty, Mind Control, Pressure, Fear, Sovereignty).
 - **Accord:** Negotiation, cooperation, adaptation, working within systems. *Principle Affinity:* Harmony family (Resonance, Symbiosis, Life, Empathy, The Hearth).
 
 Moments: telling the brigand he can drop the club or lose the arm is a Will tally. Talking him into joining the caravan for a share of the take is an Accord tally.
@@ -76,17 +76,17 @@ Moments: proposing the watch rotation and the loot-split rule is a Control tally
 
 ![The Session-End Sweep](./assets/art/scenes/the-session-end-sweep.png){.scene}
 
-The whole engine runs on one half-page sheet per character, filled in once per session, at the end. Everything else in this chapter (weights, decay, structured logs, the companion app) is this sheet by other means.
+The whole engine runs on one half-page sheet per character, filled in once per session, at the end. Everything else in this chapter, the weights, the structured log, and the companion app, is a different way of filling in this same sheet.
 
 **The sheet.** Four rows, one per axis: Force | Method, Hunger | Restraint, Will | Accord, Control | Freedom. Each row is split into a **Current** column, wiped at every session end, and a **Deep** column, which accumulates.
 
-**During play, nothing.** No tallies, no notes, no pauses. Run the game.
+**During play, nothing.** No tallies and no pauses. Run the game. Memory is the default filter, below; a GM who would rather jot a word or two as a cue may, so long as a cue is never a score.
 
-**At session end, five minutes.** Say the session's three biggest moments out loud, and name what they share. Then, for each character, tally the moments you remember on the matching side of Current: one tally for a moment you remember, two for a moment that surprised the table, three, circled, with a one-line margin note, for a **Defining** moment, the kind that surprised the player themselves. Then for each axis: if one side of Current leads by 2 or more, add one tally to that side of Deep, and erase Current. Recent behavior wipes every session; identity accretes slowly.
+**At session end, five minutes.** Say the session's three biggest moments out loud with the table, and name what they share; the tallies that follow are yours alone. Then, for each character, tally the moments you remember on the matching side of Current: one tally for a moment you remember, two for a moment that surprised the table, three, circled, with a one-line margin note, for a **Defining** moment, the kind that surprised the player themselves. Then for each axis: if one side of Current leads by 2 or more, add one tally to that side of Deep, and erase Current. Recent behavior wipes every session; identity accretes slowly.
 
-**Memory is the filter.** A moment that matters in this game is a moment the table carries out of the room, and what you can still recall at the sweep is the Engine's whole input. Anything you have to strain for was below its threshold. This is the reason not to take notes during play: the strain of live bookkeeping records everything and weighs nothing, and the Engine wants the weight.
+**Memory is the filter.** A moment that matters in this game is a moment the table carries out of the room, and what you can still recall at the sweep is the Engine's whole input. Anything you have to strain for was below its threshold. This is why the default is no notes: the procedure uses remembered moments to limit bookkeeping and focus the review on notable decisions.
 
-**That is the entire procedure.** Expect three to six tallies in a normal session across the party. If you are recalling more, you are counting table talk; if you are recalling none, no one was under pressure this session, which is its own information.
+**That is the entire procedure.** Expect three to six tallies in a normal session across the party. If you are recalling more, you are counting table talk; if none come to mind, leave the sheet unchanged.
 
 ### Weighing a Moment
 
@@ -112,9 +112,9 @@ Calibration guidance: tally the *decision* rather than the outcome; a failed rol
 | Will ↔ Accord | (empty) | Accord: 1 |
 | Control ↔ Freedom | Freedom: 1 | (empty) |
 
-Margin notes, circled: *"S1: took the pill." "S2: held the door alone against the pack."*
+Margin note, circled: *"S2: held the door alone against the pack. Nobody expected it, least of all her."*
 
-Reading it: Current holds what tonight's sweep recalled, that Kara hit hard and grabbed once; the sweep adds one tally to Force (leads by 2) and none elsewhere, then Current wipes. Deep says who she is becoming: an aggressive taker who cooperates when spoken to. Her resonance line is already accruing toward the Consumption family. If she reached a Breakthrough today, Deep Force leading by 3 makes her **Leaning** (+5 Coherence). The circled notes are what the System will quote back to her: in a title, in a vision, in a Personal Opportunity that arrives with her name on its logic.
+Reading it: Current holds what tonight's sweep recalled, that Kara hit hard and grabbed once; the sweep adds one tally to Force (leads by 2) and none elsewhere, then Current wipes. Deep records what she keeps doing: Force leads, Hunger is close behind, and Accord has one tally. Her resonance line is accruing toward the Impact family, with Consumption behind it. If she reached a Breakthrough today, Deep Force leading by 3 makes her **Leaning** (+5 Coherence). The circled note is what the System will quote back to her: in a title, in a vision, in a Personal Opportunity built from those recorded moments.
 
 ## What the Engine Drives
 
@@ -123,7 +123,7 @@ Deep is the character's long-term identity. It is the input to:
 - **Class generation (Level 10).** The System offers classes that fit the lived pattern; see The System AI and Progression, "Behavioral Stat Mapping."
 - **Principle crystallization.** Resonance accrues in the affinity families the behavior matches; the Engine is where *[Resonance accruing]* lines come from.
 - **Titles.** HVE-Resonant Titles read the Deep rows; one per axis pair. See Titles.
-- **Personal Opportunities.** Offers affirm the current pattern by default and occasionally test against it; see System Quests.
+- **Personal Opportunities.** Offers affirm the current pattern by default and occasionally test against it; see System Quests. The offer is drafted at the sweep, from Current before it wipes and Deep after.
 - **The Breakthrough Coherence bonus.** Read the Deep rows:
 
 <!-- rules:table coherence -->
@@ -146,10 +146,10 @@ Profiles combine across axes into a footprint. Four illustrations of how the Sys
 
 ## Running the Engine at the Table
 
-- **Nothing during play.** The sheet stays in the folder until the session ends. If you catch yourself reaching for it mid-scene, the scene is not over.
+- **Nothing during play.** The sheet stays in the folder until the session ends.
 - **The sweep is five minutes for a party of four:** say the big three out loud, tally what you remember, update Deep, erase Current.
-- **Never reveal an axis reading.** When a player asks "what's my alignment," the System's answer is silence and the GM's answer is "you've noticed the System notices you." The Engine's existence is public; its numbers never are (the spoiler policy is in the Introduction).
-- **Let the Engine talk through the world.** Quote circled moments back in titles, visions, NPC reactions, and Personal Opportunity phrasing. That is how players feel seen without seeing the machine.
+- **Never reveal an axis reading.** When a player asks "what's my alignment," the System's answer is silence and the GM explains that behavioral scores remain private. The Engine's existence is public; its numbers never are (the spoiler policy is in the Introduction).
+- **Let the Engine talk through the world.** Quote circled moments back in titles, visions, NPC reactions, and Personal Opportunity phrasing.
 - **Do not steer.** The Engine is a camera. If every tally lands on the axis you find interesting, you are writing fiction about the character instead of recording them.
 
 ## Structured Event Logging
@@ -169,17 +169,17 @@ The sheet is the game's format; structured entries are the machine's, used where
 }
 ```
 
-The intensity values map to the sweep's weights: 1.0 remembered, 2.0 surprised the table, 3.0 Defining. The 0.5 tier sits below the sweep's threshold and exists for the app, which hears everything and still weighs it the same way. In these modes the Current and Deep vectors are numbers rather than tallies: events add their full value to Current and half value to Deep, Current decays by half at each session end, Deep decays by a tenth. The Coherence bands and every output read the same either way; a table can switch between hand tracking and structured logging at any session boundary by copying the standing totals across.
+The intensity values map to the sweep's weights: 1.0 remembered, 2.0 surprised the table, 3.0 Defining. The 0.5 tier sits below the sweep's threshold and exists for the app, which hears everything and still weighs it the same way. In these modes the vectors are the sheet's tallies, computed from the entries: at session end, sum each character's intensities by side into Current, add one Deep tally to any side that leads its axis by 2 or more, and wipe Current. A 0.5 entry counts as half a tally in that sum. The Coherence bands and every output read the same either way, and a table can switch between hand tracking and structured logging at any session boundary by copying the Deep tallies across.
 
 ## The Companion App
 
-A dedicated companion app for this game is planned: a listening assistant at the table that hears play, drafts HVE log entries automatically, and hands the GM a curated review at session end instead of a blank sheet. When it exists, it will implement exactly the procedure in this chapter, and this section will document it. Nothing in this book will ever require it; the sheet is always enough. Running an AI-Assisted table today doubles as the app's rehearsal: whatever the sweep loses that you wish it had kept is what the app will exist to capture.
+The companion app is a listening assistant at the table: it hears play, drafts HVE log entries automatically, and hands the GM a curated review at session end instead of a blank sheet. It implements exactly the procedure in this chapter. Nothing in this book requires it; the sheet is always enough.
 
-## External Consequence (Macro-System Outputs)
+## World and Faction Responses
 
 While the individual vectors forge a character's Internal Power (Principles and Classes), the aggregate data feeds the System's larger response to the player.
 
-### World & Faction Response
+### By Dominant Axis
 
 - High **Hunger** attracts risky opportunities, black-market factions, and corrupting rewards.
 - High **Accord** opens diplomatic pathways, attracts followers, and lowers merchant prices.
@@ -199,7 +199,7 @@ The System generates challenges that pressure the character's dominant tendencie
 The engine follows five constraints, and new mechanics that feed it should be checked against them:
 
 - **Orthogonality:** Each axis measures one thing.
-- **Weight:** Meaningful moments outweigh routine play.
+- **Weight:** Meaningful moments outweigh routine play. Memory as the filter favors loud scenes and loud players, and the sweep accepts that cost.
 - **Recency:** Identity evolves; recent behavior matters more than distant history.
 - **Structure:** Inputs are discrete moments, named one at a time. A sweep that writes "she was greedy tonight" has recorded a judgment; "she took the pill while they argued" is an event, and events are what the Engine takes.
 - **Pressure:** The engine responds and challenges. It does not merely describe the character; it generates pressure, opportunity, and consequence.

@@ -31,7 +31,7 @@ A Breakthrough is a single dramatic ritual, resolved at the table in one scene w
 
 A Breakthrough occurs when the barrier between the cultivator's current Grade and the next becomes permeable. The System's Principles draw closer to the material plane. The boundary thins, the ambient energy density spikes, and for a brief window the cultivator's body and spirit can be reshaped by forces that normally operate far beyond mortal reach.
 
-This proximity is what makes the event possible. It is also what makes it dangerous. The same thinning of the boundary that allows ascension also allows external phenomena to manifest: tribulations, environmental backlash, spectral echoes of the energy being consumed. The cultivator is not simply meditating harder. They are standing at the threshold of a higher order of reality and daring it to remake them.
+The same conditions that permit a Breakthrough can also produce dangerous external phenomena. The cultivator undergoes the transformation while companions deal with threats around the ritual site.
 
 ---
 
@@ -41,7 +41,7 @@ Every Breakthrough, regardless of Grade, follows the same four-stage structure. 
 
 ### Stage 1: Preparation
 
-The setup phase. No dice are rolled. This is where most quality dials are set.
+The setup phase. No dice are rolled. Choose the location, items, and support that will modify the check.
 
 **Requirements:**
 
@@ -56,17 +56,17 @@ At the cap, VE has nowhere else to go: kills, quests, and absorption keep fillin
 3. **Consume Breakthrough Items.** Any prepared items (see Breakthrough Item Categories below) are consumed now, before the trial begins. Their effects lock in as modifiers to the Breakthrough Check.
 4. **Receive Party Support Setup.** If allies are present, they declare their support roles now. This is the moment for buffs, formations, wards, or simply taking up defensive positions around the cultivator.
 
-**GM Note:** Stage 1 should feel deliberate, a ritual in motion. Describe the cultivator settling into position, consuming pills, the air growing heavy with unprocessed energy. The party arranging themselves. The world going quiet. Then transition to Stage 2.
+**GM Note:** Stage 1 should feel deliberate, a ritual in motion. Describe the cultivator settling into position, consuming pills, the air growing heavy with unprocessed energy. Describe the allies taking their positions and the immediate changes at the site. Then transition to Stage 2.
 
 ### Stage 2: Ignition
 
 ![The Breakthrough Check](./assets/art/scenes/the-breakthrough-check.png){.scene}
 
-The cultivator deliberately floods their body with Volatile Energy, pushing past Tolerance into Saturation. This overcharge is not an accident; it is the fuel that powers the ascension. The body must be forced past its current limits before it can be reshaped to hold the next Grade's capacity.
+The cultivator deliberately floods their body with Volatile Energy, to Tolerance and often past it into Saturation. The cultivator commits that stored VE as fuel for the Breakthrough. The body must be forced past its current limits before it can be reshaped to hold the next Grade's capacity.
 
 **Mechanic: The Overcharge Ratio**
 
-**The charge is usually banked long before this stage.** A character sitting at their Grade cap has been storing VE with nowhere to spend it, sometimes for many sessions (Cultivation, "Leveling: The Cost of a Level"). Stage 2 is not where gathering begins; it is where the cultivator commits what they have and tops off the difference on site. Consumables add more and ambient absorption closes the gap, and the GM sets how long the top-up takes from the location's density: minutes somewhere rich, hours of dangerous exposure somewhere barren.
+**The charge is usually banked long before this stage.** A character sitting at their Grade cap has been storing VE with nowhere to spend it, sometimes for many sessions (Cultivation, "Leveling: The Cost of a Level"). Stage 2 is not where gathering begins; it is where the cultivator commits what they have and tops off the difference on site. Consumables add more and ambient absorption closes the gap, and the GM sets how long the top-up takes from the location's density: a few hours at an Extreme site, a day or more anywhere Moderate, and nothing at all where the density is Low or Barren.
 
 The cultivator needs VE equal to at least **one full Tolerance** to ignite, and may choose to carry more. The multiple of Tolerance they hold at Ignition is the **Overcharge Ratio**, the risk-reward dial the player controls:
 
@@ -83,7 +83,7 @@ At the F-Grade cap those are 80, 160, 240, and 320 VE; ×10 for each Grade above
 
 **Saturation penalties never touch the Breakthrough Check.** The ignition burns that VE as fuel, so the weight a cultivator is carrying does not blunt the roll it is paying for. Those penalties apply to everything else, including whatever the party has to do during the Trial, and to the cultivator's own actions right up until they ignite.
 
-**The body can give out first.** At ×4.0 the character is in Critical Saturation, and the collapse clock (Cultivation chapter) runs until the moment of Ignition: a d100 at the end of every full hour, escalating, automatic by the fourth. If it fires first they pass out on the spot into the collapse the Cultivation chapter defines: involuntary Consolidation, defenseless, the gathered charge draining away with nothing to show for it, and no attempt. This is why the highest ratio is gathered fast, in a dense location, with the ritual site already prepared. Once Ignition is declared, Saturation is suspended and the ritual consumes the VE.
+**The body can give out first.** At ×4.0 the character is in Critical Saturation, and the collapse clock (Cultivation chapter) runs until the moment of Ignition: a d100 at the end of every full hour, escalating, automatic by the fourth. If it fires first they pass out on the spot into the collapse the Cultivation chapter defines: involuntary Consolidation, defenseless, the gathered VE staying in the tank, Saturation and all, until the next Ignition, and no attempt. This is why the highest ratio is gathered fast, in a dense location, with the ritual site already prepared. Once Ignition is declared, Saturation is suspended and the ritual consumes the VE.
 
 **Once the cultivator declares Ignition, Stage 3 begins immediately. There is no going back.**
 
@@ -93,13 +93,13 @@ The dangerous part. A hybrid structure: an internal challenge for the cultivator
 
 #### The Breakthrough Check
 
-The cultivator makes a single roll:
+The party resolves the defense scene first (two or three rounds), and then the cultivator makes a single roll, carrying the penalties and the Anchor bonus the scene produced:
 
 > **d100 + HRT Force + preparation vs. Breakthrough DC**
 
-Heart alone. Every Breakthrough is a trial of will, and no other Attribute is consulted, because no other Attribute is being asked anything. A career of carrying more raw power than the body wanted is exactly the training this roll tests. The brawler and the diplomat make the same roll, and what separates them is how much they were willing to hold.
+Heart alone. Every Breakthrough is a trial of will, and no other Attribute contributes to the check. A career of carrying more raw power than the body wanted is exactly the training this roll tests. The brawler and the diplomat make the same roll, and what separates them is how much they were willing to hold.
 
-**Breakthrough DC** is **140** at every Grade transition: Severe difficulty, read straight off the Grade Reference Card. There is no Cross-Grade Adjustment, because the challenger is not facing something a Grade above them. They are becoming it. The Overcharge Ratio further modifies the DC.
+**Breakthrough DC** is **140** at every Grade transition: Severe difficulty, read straight off the Grade Reference Card. There is no Cross-Grade Adjustment. The Overcharge Ratio further modifies the DC.
 
 <!-- rules:table overcharge-dc -->
 | Overcharge Ratio | ×1.0 | ×2.0 | ×3.0 | ×4.0 |
@@ -128,10 +128,10 @@ Heart alone. Every Breakthrough is a trial of will, and no other Attribute is co
 
 - **Scattered:** +0. The character's identity is diffuse. The trial has no shape to latch onto.
 - **Leaning:** +5. A direction is emerging.
-- **Defined:** +10. The character knows who they are.
-- **Singular:** +20. The trial practically writes itself.
+- **Defined:** +10.
+- **Singular:** +20.
 
-The GM does not need to calculate this precisely; it is a qualitative read of the HVE profile, expressed as a modifier. Characters who have lived with conviction are rewarded. Characters who have drifted aimlessly face a harder road.
+The GM does not need to calculate this precisely; it is a qualitative read of the HVE profile, expressed as a modifier. More concentrated HVE profiles receive a larger bonus.
 
 #### The Quality Tier
 
@@ -155,7 +155,7 @@ When the cultivator ignites, the environment reacts. The thinning of the boundar
 
 **What manifests depends on the Grade:**
 
-- **F→E:** Minor disturbances. Aether fluctuations cause local temperature spikes, small tremors, or flickering light. Wildlife may be drawn to the site. Low-grade elemental manifestations (wisps, sparks, tremors) appear and must be managed but pose no serious threat to a prepared party.
+- **F→E:** Minor disturbances. Aether fluctuations cause local temperature spikes, small tremors, or flickering light. Wildlife may be drawn to the site. Low-grade elemental manifestations (wisps, sparks, tremors) appear and must be managed but pose no serious threat to a prepared party at Moderate density or below.
 - **E→D:** Significant phenomena. Spectral manifestations coalesce from the cultivator's HVE signature: echoes of their behavioral patterns given temporary form. Environmental effects are meaningful: terrain warps, energy storms, or local wildlife transforms into aggressive tribulation beasts.
 - **D→C and beyond:** Catastrophic phenomena. Left undeveloped (see Higher Grades section).
 
@@ -167,13 +167,13 @@ The party's job during Stage 3 is straightforward: **keep the cultivator alive a
 
 1. **Phenomenon Management.** The GM presents 1–3 external threats at the current Grade, typically Moderate to Hard on the Grade Reference Card. The party deals with them using standard Clash rules. If any threat reaches the cultivator, it imposes a penalty on the Breakthrough Check (−10 per threat that breaks through). These fights should be short: 2–3 rounds maximum. The point is dramatic tension, not a grinding slog.
 
-2. **Active Support.** One party member may declare an **Anchor action**, a deliberate act of support that grants the cultivator a bonus on the Breakthrough Check. The Anchor makes an Opposed Roll using their most relevant Force (HRT Force for spiritual anchoring, POW Force for energy channeling, FOR Force for physical shielding) against a Moderate difficulty of the current Grade. Success grants +5 to the Breakthrough Check. A Margin of 20+ grants +10. A Margin of 40+ grants +15. Only one Anchor action per Breakthrough; this keeps the spotlight on the cultivator.
+2. **Active Support.** One party member may declare an **Anchor action**, a deliberate act of support that grants the cultivator a bonus on the Breakthrough Check. The Anchor makes a Resistance Roll using their most relevant Force (HRT Force for spiritual anchoring, POW Force for energy channeling, FOR Force for physical shielding) against a Moderate difficulty of the current Grade. Success grants +5 to the Breakthrough Check. A Margin of 20+ grants +10. A Margin of 40+ grants +15. Only one Anchor action per Breakthrough; this keeps the spotlight on the cultivator.
 
 **Solo Breakthrough:** A cultivator attempting to Break Through alone must handle external phenomena themselves. Any phenomena that manifest impose their penalty automatically (the cultivator cannot fight and meditate simultaneously). This is why solo Breakthroughs require superior preparation: the item and location bonuses must compensate for the lack of party support and phenomenon management. A maxed-prep solo cultivator (peak location, full item loadout, high HVE coherence) should be able to reliably hit Stable without party support. Polished is possible but requires either a strong roll or exceptional preparation. Pristine solo is the stuff of legend.
 
 #### Time-Boxing
 
-The Trial is time-boxed in fiction. From the moment of Ignition to the completion of the Breakthrough Check, no more than **10 minutes of in-game time** pass. This is a single dramatic sequence, not a slog, not a multi-hour ordeal. The Breakthrough Check, the party's defense, the external phenomena: all of it happens in a compressed burst of reality-warping intensity. Describe it as such.
+The Trial is time-boxed in fiction. From the moment of Ignition to the completion of the Breakthrough Check, no more than **10 minutes of in-game time** pass. This is a single dramatic sequence. The Breakthrough Check, the party's defense, the external phenomena: all of it happens in a compressed burst of reality-warping intensity. Describe it as such.
 
 ### Stage 4: Recognition
 
@@ -189,11 +189,11 @@ The Breakthrough fails. The overcharged VE backlashes through the cultivator's s
 - **Battle Memory:** A failed Breakthrough always grants a Battle Memory Card: the trial is the kind of moment Battle Memories exist to capture. The GM narrates what the character glimpsed as it slipped away.
 - **Lockout Period:** The character cannot attempt another Breakthrough for a minimum number of sessions determined by Grade (F→E: 2 sessions, E→D: 3 sessions, D→C: 4 sessions). This is narrative: the character's channels are damaged and must heal.
 - **Stat Consequences:** Scale by Grade (see Grade-Specific sections below).
-- **Tribulation Ward Effect:** If a Tribulation Ward was consumed, the Cracked result is upgraded to Stable. The Ward absorbs the backlash. This is the insurance item: expensive, rare, but it turns catastrophe into mediocrity.
+- **Tribulation Ward Effect:** If a Tribulation Ward was consumed, the Cracked result is upgraded to Stable. The Ward absorbs the backlash. This is the insurance item: expensive, rare, but it converts a failed check into a Stable ascension. A Ward-rescued result is Stable and gains no Overcharge tier.
 
 **Stable (Standard Ascension):**
 
-The character successfully ascends. Clean, competent, unremarkable.
+The character successfully ascends.
 
 - **Grade Advancement.** The character's Grade increments. All stat caps rise to the new Grade's maximum (999 at E-Grade, 9,999 at D-Grade, etc.). Stats are *not* multiplied: an F-Grade character with STR 80 still has STR 80 after Breaking Through to E. The cap is lifted, not the floor. Growth into the new Grade's stat range comes from class evolution bonuses, E-Grade leveling (where per-level stat budgets scale with Grade magnitude), treasures, and titles.
 - **Class Evolution.** The System AI generates 1–3 class evolution options appropriate to the new Grade. These function like the Level 10 class selection. The character's HVE profile, current class, and Principle affinities shape what is offered. The player selects one. The selected evolution grants a new Signature Skill, modifies the class's stat profile for future level-ups, and provides a **one-time class evolution stat infusion**, a lump sum of stat points distributed according to the new class's stat profile. At E-Grade, this infusion is typically 50–100 points total (enough to push primary stats past 100 while leaving dump stats where they are). The infusion scales with Grade magnitude at higher Breakthroughs.
@@ -219,7 +219,7 @@ Everything from Polished, plus:
 
 Everything from Pristine, plus:
 
-- **System-Generated Unique Reward.** The System AI creates a one-of-one reward that exists nowhere else in the Multiverse. This is the Breakthrough as promotion review: the System looked at this character's entire behavioral record, their Principle mastery, their combat history, their choices under pressure, and decided to invest. Possible forms:
+- **System-Generated Unique Reward.** The System AI creates a one-of-one reward that exists nowhere else in the Multiverse. Generate it from the character's HVE profile, Principles, and significant actions. Possible forms:
   - **Bloodline Awakening:** A latent genetic or systemic pattern activates, granting a permanent passive effect and opening a new evolutionary tree.
   - **Unique Skill:** A skill synthesized from the character's specific intersection of HVE axes and Principles, something no other cultivator has ever been offered.
   - **Hidden Title:** A System-granted title with mechanical weight: stat bonuses, faction recognition, or environmental effects that trigger in specific contexts.
@@ -283,12 +283,12 @@ Finding and securing a Breakthrough location is an adventure in itself. The GM s
 
 **Theme:** Body-focused. The System burns out pre-System impurities: toxins, accumulated damage, the lingering fragility of a body that was never designed to hold systemic energy. The cultivator's physical form is fundamentally remade as a vessel capable of holding E-Grade energy density.
 
-**Tone:** The gateway Breakthrough. This is the first time the table experiences the mechanic, and it should teach the system without threatening campaign-ending consequences. The genre treats F→E as the moment a character stops being "just an enhanced human" and becomes something genuinely other. Narrate accordingly: bones crack and re-fuse denser, impurities are expelled as black sludge through the skin, the character's heartbeat slows and deepens into something that sounds more like a drumbeat than a pulse.
+**Tone:** The gateway Breakthrough. This is the first time the table experiences the mechanic, and it should teach the system without threatening campaign-ending consequences at Moderate density or below. The genre treats F→E as the moment a character stops being "just an enhanced human" and becomes something genuinely other. Narrate accordingly: bones crack and re-fuse denser, impurities are expelled as black sludge through the skin, the character's heartbeat slows and deepens into something that sounds more like a drumbeat than a pulse.
 
 **Trial Character:**
 
 - **Internal:** Physical-spiritual pressure test. The cultivator's body is the battlefield; they must endure the reconstruction of their physical vessel while maintaining spiritual coherence. Describe impurity expulsion, body-tempering visions (flashes of the character's hardest physical moments, replayed and compressed into a single searing experience), the sensation of bones breaking and reforming.
-- **External:** Mild phenomena. Local energy fluctuations cause temperature spikes, minor tremors, flickering light. Small elemental manifestations (energy wisps, ground cracks, brief spatial shimmers) appear and dissipate. At low-density locations, these may not manifest at all. At high-density locations, minor tribulation beasts (F-Grade, Moderate difficulty) may be drawn to the site.
+- **External:** Mild phenomena. Local energy fluctuations cause temperature spikes, minor tremors, flickering light. Small elemental manifestations (energy wisps, ground cracks, brief spatial shimmers) appear and dissipate. At Barren and Low density the threat is the single weak or moderate one the table lists. At high-density locations, minor tribulation beasts (F-Grade, Moderate difficulty) may be drawn to the site.
 
 **Recognition at this Grade** also unlocks the second, and final, Principle slot (see The Principle System, "Principle Slots").
 
@@ -298,17 +298,17 @@ Finding and securing a Breakthrough location is an adventure in itself. The GM s
 - **Lockout:** 2 sessions before retry.
 - **No permanent consequences.** The F→E Breakthrough is forgiving.
 
-**Key Items/Locations:** Foundation Pills matter most at this Grade; the roll bonus they provide is a larger percentage of the total needed. Anchoring Artifacts are less critical because failure consequences are mild. A character with good stats and a decent location can Break Through to E-Grade with minimal item support.
+**Key Items/Locations:** Foundation Pills matter most at this Grade because they are the preparation an F-Grade character can reach. Anchoring Artifacts are less critical because failure consequences are mild. A character with good stats and a decent location can Break Through to E-Grade with minimal item support.
 
 **Math Check (F→E):**
 
-A well-built F-cap character with HRT 60 sits 80 short of the DC before preparation, so the d100 has to cover 80 on its own: about one attempt in five. With a Moderate location (+10), a Foundation Pill (+10), Coherence of Defined (+10), and a Party Anchor (+5 to +15), preparation covers 35 to 45 of that gap and the roll needs 35 to 45: **roughly even odds, plus the explosion tail.** A character who pushed Heart into the eighties and brought maxed preparation clears the base DC on almost any roll and should be spending the margin on Overcharge instead, buying Quality with the odds they no longer need. A character who neglected Heart is not blocked, but they are buying their way through with consumables and a good night's dice.
+A well-built F-cap character with HRT 60 sits 80 short of the DC before preparation, so the d100 has to cover 80 on its own: about one attempt in five. With a Moderate location (+10), a Foundation Pill (+10), Coherence of Defined (+10), and a Party Anchor (+5 to +15), preparation covers 35 to 45 of that gap and the roll needs 35 to 45: about six in ten, and an explosion only raises the Margin.** A character who pushed Heart into the eighties and brought maxed preparation clears the base DC on almost any roll and should be spending the margin on Overcharge instead, buying Quality with the odds they no longer need. A character who neglected Heart is not blocked, but they are buying their way through with consumables and a good night's dice.
 
 ### E → D: Soul Sea Expansion
 
-**Theme:** Spiritual-focused. The cultivator's energy channels and inner architecture rebuild at higher capacity. The "Soul Sea" (the internal space where Aether is held and Principle is processed) expands and reshapes around the character's accumulated identity. Who you have been determines the shape of who you become.
+**Theme:** Spiritual-focused. The cultivator's energy channels and inner architecture rebuild at higher capacity. The "Soul Sea" (the internal space where Aether is held and Principle is processed) expands and reshapes around the character's accumulated identity.
 
-**Tone:** The first Breakthrough where HVE matters mechanically and narratively. The character's behavioral signature shapes the trial directly. This is where the Hidden Vector Engine delivers its most dramatic payoff: the character faces *themselves*, or rather, the System's interpretation of themselves. Play this up. The cultivator should emerge from the trial understanding something new about their own nature.
+**Tone:** The Breakthrough where the HVE shapes the trial's imagery as well as its bonus. The character's behavioral signature shapes the trial directly. This is where the Hidden Vector Engine delivers its most dramatic payoff: the character faces *themselves*, or rather, the System's interpretation of themselves. Play this up. The cultivator should emerge from the trial understanding something new about their own nature.
 
 **Trial Character:**
 
@@ -316,15 +316,15 @@ A well-built F-cap character with HRT 60 sits 80 short of the DC before preparat
   - A **Force-dominant** character meets manifestations of impact and violence: echoes of every enemy broken, every wall shattered, every problem solved by overwhelming pressure. The trial demands they prove they can sustain that force without being consumed by it.
   - A **Method-dominant** character navigates labyrinthine internal architecture: crystalline structures of plans-within-plans, each one a decision made, a variable controlled. The trial demands they find the path through without losing themselves in abstraction.
   - An **Accord-dominant** character mediates between aspects of self: fragments representing every alliance forged, every compromise made, every time they bent to hold the group together. The trial demands they unify these fragments into a coherent whole.
-  - A **Will-dominant** character confronts projections of everything they have dominated: the people cowed, the systems broken to their will, the resistance crushed. The trial demands they prove their will is genuine sovereignty and not mere cruelty.
+  - A **Will-dominant** character confronts projections of everything they have dominated: the people cowed, the systems broken to their will, the resistance crushed. The trial confronts them with a situation in which imposing their will creates a cost or conflict.
 - **External:** Significant phenomena. Spectral manifestations coalesce from the cultivator's HVE signature, echoes given temporary physical form outside the cultivator's body. These are E-Grade threats (Moderate to Hard difficulty on the Grade Reference Card) and they carry thematic resonance with the cultivator's behavioral patterns. A Force-dominant cultivator's external phenomena are aggressive and kinetic; a Method-dominant cultivator's are spatial and disorienting. Aether storms, terrain warping, and transformed local wildlife are all appropriate.
 
 **Recognition at this Grade** opens the Domain gate: the rebuilt Soul Sea is a vessel that can hold a Domain, and a character with a Peak Fragment articulation waiting may Distill it at their next Consolidation (see The Principle System, "The Domain gate").
 
 **Failure Consequences (Cracked at E→D):**
 
-- **Aether Ceiling Reduction:** Permanent. Max Aether is reduced by one tenth (drop fractions) until the next successful Breakthrough. The Soul Sea cracked but did not shatter; it holds, but leaks.
-- **Principle Regression:** The character loses IP equal to half their current total toward their highest Principle. Progress toward the current tier is set back, though the tier itself is not lost.
+- **Aether Ceiling Reduction:** Max Aether is reduced by one tenth (drop fractions) until the next successful Breakthrough; a second failure does not deepen it. The Soul Sea cracked but did not shatter; it holds, but leaks.
+- **Principle Regression:** The character loses IP equal to half their current total toward their highest Principle (the player's pick in a tie). Progress toward the current tier is set back, though the tier itself is not lost.
 - **Lockout:** 3 sessions before retry.
 - **Cracked Foundation Status:** The character gains the narrative status "Cracked Foundation." This is known to the System and to perceptive cultivators. Future Breakthrough attempts carry an additional −5 penalty until a successful Breakthrough clears the status. NPCs and faction leaders who can sense cultivation state may react accordingly.
 - **Stat Loss:** FOR and POW each drop by one twentieth of their current Raw value, fractions dropped (FOR 500 loses 25). This loss is permanent until recovered through leveling or treasures.
@@ -341,7 +341,7 @@ This book covers F→E and E→D in full; D→C and beyond arrive in a future su
 
 > **Roll: d100 + HRT Force + preparation, against DC 140**
 >
-> **vs. Breakthrough DC: Severe difficulty of the target Grade + Overcharge modifier**
+> **vs. Breakthrough DC: 140 + Overcharge modifier; no Cross-Grade Adjustment**
 >
 > **Bonuses: Location Energy Density + Foundation Pill + HVE Coherence + Party Anchor**
 >
@@ -350,7 +350,7 @@ This book covers F→E and E→D in full; D→C and beyond arrive in a future su
 | Component | Source | Range |
 |---|---|---|
 | Base Roll | d100 (Volatility-live; explodes at the current Grade's threshold) | 1–100+ |
-| HRT Force | Character stat | 10–99 |
+| HRT Force | Character stat | 1–99 |
 | Location | Environment tier | +0 to +25 |
 | Foundation Pill | Consumed item | +5 to +15 |
 | HVE Coherence | GM behavioral read | +0 to +20 |
@@ -361,7 +361,7 @@ This book covers F→E and E→D in full; D→C and beyond arrive in a future su
 
 ## Open Design Space
 
-The following elements are identified as future development targets. They are not forgotten; they are deliberately deferred until playtest data or campaign progression demands them.
+The following elements are identified as future development targets. They are planned for later development.
 
 - **Environment & Energy Density as a full subsystem.** The tiers above are sufficient for Breakthroughs, but energy density also affects Consolidation efficiency, Principle resonance, monster spawning, and territorial control. A full map-scale energy density system is needed when the campaign begins involving planetary leadership or faction-scale territory management.
 - **Higher-Grade Breakthrough themes.** D→C (Heart Demon confrontation), C→B (Cosmic attunement), B→A and beyond: each needs its own thematic layer within the universal blueprint.

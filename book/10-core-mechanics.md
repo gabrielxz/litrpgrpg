@@ -14,7 +14,7 @@ the survivors' forum
 Bel Sar, route account
 :::
 
-Everything in this game resolves the same way: say what your character does, roll d100, add the one Force value that governs it, and compare. Against a living opponent they roll too, and the gap between the totals is the Margin, which says how well it went. In combat, the Margin is the damage. That loop is the whole engine, and the rest of this chapter is the detail around it.
+Every roll in this game resolves the same way: say what your character does, roll d100, add the one Force value that governs it, and compare. Against a living opponent they roll too, and the gap between the totals is the Margin, which says how well it went. In combat, the Margin is the damage. That loop is the whole engine, and the rest of this chapter is the detail around it.
 
 What lives elsewhere: how characters are built is in Character Creation, how they level is in Progression, where the energy to level comes from is in Cultivation, and the Principle track that most of these numbers eventually feed is in The Principle System.
 
@@ -22,13 +22,13 @@ What lives elsewhere: how characters are built is in Character Creation, how the
 
 ## The Two Sizes of Number
 
-The game's numbers come in two sizes: the huge ones the story is about, and the small ones the table rolls with. Stats grow into the millions; every number that touches dice stays between 1 and 99.
+The game's numbers come in two sizes: the huge ones the story is about, and the small ones the table rolls with. Stats grow into the millions; Force stays at two digits at every Grade, and Grade differences are added separately.
 
 - **Force.** Every stat has a **Raw Power** value, the big number on the character sheet, and a **Force** value, the two digits read at the character's Grade. Players watch Strength climb from 4,200 to 4,500; at the table that same climb is Force 42 becoming Force 45.
 - **The Clash.** Every contested action resolves in one opposed roll. There is no separate to-hit step and damage step.
 - **Grade-anchored difficulty.** Every obstacle has a Grade and a difficulty, and the number comes off one reference card. Across a Grade gap, the higher side gains +100 per Grade of difference.
 
-**Rounding:** all fractions round down, always.
+**Rounding:** all fractions round down. The one exception is Consolidation healing, which rounds up (Cultivation).
 
 ---
 
@@ -60,7 +60,7 @@ Stats increase through leveling at Consolidation, **Attribute Treasures** absorb
 
 **Starting stats.** A freshly integrated human distributes **40 points** across seven Attributes, minimum 3 and maximum 10 per stat. Even a single point is meaningful: STR 8 is a competitive collegiate powerlifter, STR 9 a professional strongman, STR 10 among the strongest humans who ever lived. Character Creation has the full procedure.
 
-**Per-level budget (F-Grade).** **5 points per level: 3 assigned by class profile** (or by the GM before a class exists) **plus 2 the player spends freely.** At higher Grades the budget scales with Grade magnitude. Progression covers the pre-class years in detail.
+**Per-level budget (F-Grade).** **5 points per level: 3 assigned by class profile** (or by the GM before a class exists) **plus 2 the player spends freely.** At higher Grades the budget scales with Grade magnitude. Progression covers Levels 1 to 9 in detail.
 
 **Stat cap.** Stats cannot exceed the current Grade's maximum: **99 at F, 999 at E, 9,999 at D.** Excess is lost. Breakthrough lifts the cap; it does not raise the stat.
 
@@ -100,7 +100,7 @@ Against another creature or character, both sides roll:
 
 > **Each side: d100 + relevant Force + Tactical Modifiers**
 
-Higher total wins; a tie goes to the initiator. The **Margin** is the winner's total minus the loser's. In combat, the Margin drives damage. Outside combat the GM reads it narratively. **Forty is the swing number throughout these rules: win by 40 and the outcome is decisive, whatever the arena.**
+Higher total wins; a tie goes to the initiator. The **Margin** is the winner's total minus the loser's. In combat, the Margin drives damage. Outside combat the GM reads it narratively. **A Margin of 40 triggers several major outcomes, described below.**
 
 ### Resistance Rolls
 
@@ -167,17 +167,17 @@ It is not a Beat and cannot be treated as one. It cannot be given up to Yield, h
 
 #### Marks
 
-When a natural d100 meets or exceeds your Volatility Threshold (defined under "System Volatility," below) on a Clash or a skill check, the System marks the Proficiency you were using. Record it as a tally. Where a roll could belong to more than one domain, or to none the character holds, the GM names the domain.
+When a natural d100 meets or exceeds your Volatility Threshold (defined under "System Volatility," below) on a Clash or a skill check, the System marks the Proficiency you were using. Record it as a tally: one Mark per roll, however many dice it cascades into. Where a roll could belong to more than one domain, or to none the character holds, the GM names the domain.
 
 ::: systemvoice
 **[Technique noted: Axes and Hammers. 2/3.]**
 :::
 
 - **3 Marks:** Trained becomes Seasoned.
-- **10 Marks:** Seasoned becomes Master. Mastery requires an E-Grade body; an F-Grade character banks Marks past 10 and advances at the Breakthrough.
+- **10 Marks in all:** Seasoned becomes Master. Mastery requires an E-Grade body; an F-Grade character banks Marks past 10 and advances at the Breakthrough.
 - **3 Marks in a domain the character has no Proficiency in:** the System grants that Proficiency at Trained. Those three Marks are spent in the granting.
 
-Marks land where the character actually works. A fighter who never puts down the axe reaches Master with an axe and stays Trained in everything else. Carrying a weapon you have no Proficiency for adds nothing today and marks the domain every time the die runs hot, which is how scavenged junk becomes a fourth Proficiency.
+Marks land where the character actually works. A fighter who never puts down the axe reaches Master with an axe and stays Trained in everything else. Carrying a weapon you have no Proficiency for adds nothing today and marks the domain every time the die runs hot. Repeated use can therefore earn a new Proficiency.
 
 ### Failure and Exceptional Success
 
@@ -185,7 +185,7 @@ These tiers apply to **skill checks**. Combat Clashes carry their own outcomes.
 
 - **Soft Failure (fail by 1–39):** the attempt does not achieve what was asked. Usually that means visible partial progress and a new problem: the lock resists and the pick is bent, the climb stalls at the overhang, you learn half of what you came for. Give the character something to work with rather than a closed door.
 - **Hard Failure (fail by 40 or more):** failure plus consequence. The negotiation collapses and the NPC's attitude hardens. The stealth attempt fails and you are detected.
-- **Catastrophic Failure (natural 01–05):** failure plus escalation, whatever the margin. The rope parts at the worst height. The ancient script does the thing it warned about.
+- **Catastrophic Failure (natural 01–05):** failure plus escalation, whatever the margin. The rope parts at the worst height. Misreading the warning sets off the ward it describes.
 
 **On Soft Failure.** Turning a Soft Failure into success-at-a-cost is a tool, and it is worth spending when the cost is more interesting than the setback. Used every time it dissolves failure as an outcome and the dice stop mattering. Default to a real setback the character can push against, and save the bargain for the moments where paying the price is the better scene.
 
@@ -251,7 +251,7 @@ The two sides may be rolling different Attributes. Highest total holds Momentum 
 - **Decisive Tactical Reversal.** A character reshapes the fight: springing a trap, weaponizing terrain, completing a multi-round setup, exposing a hidden combatant, winning a defensive Clash with a Volatility explosion, or any other move the GM judges to qualify. Momentum shifts to that character's side. The threshold is GM judgment, and it is the GM's flexible reward for clever play.
 - **Seize Momentum.** A character spends 1 Beat and rolls an Opposed Momentum Roll against the side currently holding Momentum, using **their own** DEX or PER Force, whichever is higher. The side holding Momentum answers with its highest such value. On a win, Momentum shifts at the start of the next round. On a loss, the Beat is spent.
 
-When no Shift fires, Momentum stays where it is.
+When no Shift fires, Momentum stays where it is. If two triggers fire in the same round, the later one wins. With three or more sides, the new holder acts first and the other sides keep their order.
 
 ### Action Economy: Beats
 
@@ -269,9 +269,9 @@ Every character has **two Beats** per turn by default; creature stat blocks may 
 
 **Free actions,** costing no Beat: speaking, drawing a weapon, dropping an object, and moving around inside your current Zone (up to the Positional State line; see Movement).
 
-**A third Beat is the rarest form of power.** Certain titles, class evolutions, and Grade milestones grant one, and anything that does says so explicitly. A Mastered Proficiency's free action is not a third Beat and is not a Beat at all; it is one specific action that costs nothing, and it is the only thing in the game shaped that way.
+**A third Beat is the rarest form of power.** Certain titles, class evolutions, and Grade milestones grant one, and anything that does says so explicitly. A Mastered Proficiency's free action is not a third Beat and is not a Beat at all; it is one specific action that costs nothing.
 
-**Aura Pressure** reduces a character to one Beat or zero. See "Aura Pressure" below.
+**Aura Pressure** reduces a character to one Beat; a combatant that had only one is reduced to none. See "Aura Pressure" below.
 
 **Beats given up to Yield** come from the character's next turn. A character who yielded twice since their last turn has no Beats when their turn arrives.
 
@@ -294,7 +294,7 @@ Combat has no grid and no measured distance. Each scene is divided into **Zones*
 
 - **Advantaged**, any fiction-derived positional edge: +10 to your Clash rolls.
 - **Neutral**, the default: no modifier.
-- **Exposed**, caught in the open, flanked, or off balance: −10 to your Clash rolls.
+- **Exposed**, caught in the open, off balance, or pinned: −10 to your Clash rolls.
 
 What counts as Advantaged depends on the combatant: high ground for an archer, bare stone underfoot for an Earth cultivator, cramped quarters for a knife-fighter facing a greatsword. The GM assigns the state from the fiction, and the same terrain can be Advantaged for one combatant and meaningless for another.
 
@@ -306,7 +306,7 @@ What counts as Advantaged depends on the combatant: high ground for an archer, b
 
 **You can attack anyone in your own Zone.** Melee reaches no further. Ranged weapons, thrown weapons, and most spells reach targets in **adjacent** Zones as well; individual weapons and Applications may say otherwise.
 
-**Engagement and free strikes.** If you share a Zone with a hostile and try to leave without spending a Beat to Disengage, that enemy gets a **free strike**: one Clash roll at no Beat cost. To leave clean, spend a Beat to Disengage and a Beat to move. That is your whole turn, and you escape.
+**Engagement and free strikes.** If you share a Zone with hostiles and try to leave without spending a Beat to Disengage, each of them gets a **free strike**: one Clash roll at no Beat cost. To leave clean, spend a Beat to Disengage and a Beat to move. That is your whole turn, and you escape.
 
 **Flanking.** When a combatant is **engaged by two or more hostiles at once**, every one of those hostiles gains **+10** against them. Two allies in the target's Zone qualify; so does one in the Zone and one shooting into it from next door. Being outnumbered is the single most reliable way to raise a Clash total in this game, and it is why isolating one enemy is worth a turn of maneuvering.
 
@@ -340,7 +340,7 @@ The defender picks their posture when targeted, bounded by what the fiction perm
 
 **Player versus player.** A skill, spell, or Principle effect aimed at another player character resolves as a standard Opposed Clash. PvP coercion is logged as a high-intensity Will event in the Hidden Vector Engine.
 
-**Tactical Modifiers** all draw from one budget:
+**Tactical Modifiers** come in three sizes, and every bonus in the game is priced against this table, the Modifier Budget:
 
 <!-- rules:table modifier-budget -->
 | **Modifier** | **Size** | **Examples** |
@@ -360,7 +360,7 @@ If the **defender wins**, the attack is deflected, dodged, or absorbed. The defe
 
 **Turned Aside:** if the defender wins by **40 or more**, the attacker is **Exposed** until the end of their next turn. A defensive win that includes a Volatility explosion also counts as a Decisive Tactical Reversal, shifting Momentum next round.
 
-**Driven Back:** if the attacker wins by **40 or more**, the defender takes the damage and is **Exposed** until the end of their next turn. The attacker may also drive them one Zone, which costs the attacker the reach to follow up. Worth doing when you want them away from a wounded ally, out of a doorway, or off the thing they were reaching for.
+**Driven Back:** if the attacker wins by **40 or more**, the defender takes the damage and is **Exposed** until the end of their next turn. The attacker may also drive them one Zone, with no free strike, which costs the attacker the reach to follow up. Worth doing when you want them away from a wounded ally, out of a doorway, or off the thing they were reaching for.
 
 Turned Aside and Driven Back are the same number read from either side of the Clash.
 
@@ -389,12 +389,12 @@ Losing a Clash does not have to mean taking the whole blow. You can give way.
 
 > **Yield: once the Margin is known and before damage is applied, give up Beats from your next turn. Each Beat reduces the incoming Margin by 20.**
 
-Your next turn has two Beats, so two is all you have to give.
+You can give every Beat your next turn will have, and no more: two as a rule, one while Suppressed, three if something has granted a third. Beats already given this round are gone.
 
 - **One Beat:** you give ground where you stand, and half of your next turn is gone.
 - **Two Beats:** you break contact entirely and your next turn is gone. The attacker **may** drive you into an adjacent Zone of their choosing, and may decline to. Forced movement provokes no free strike.
 
-Damage is the remaining Margin times the attacker's Grade multiplier. A Margin reduced to zero or below deals nothing.
+Damage is the remaining Margin times the attacker's Grade multiplier, and the remaining Margin is the Margin for everything else the hit does, Driven Back included. A Margin reduced to zero or below deals nothing.
 
 **Example.** A Snarljaw beats Marta by 37. She is at 30 HP, so the bite would put her on the floor.
 
@@ -403,7 +403,7 @@ Damage is the remaining Margin times the attacker's Grade multiplier. A Margin r
 
 **Cornered.** If there is nowhere to be driven, you can give up only one Beat. A corridor, a sealed chamber, a ledge, or a closed ring of enemies makes a fight far more dangerous without changing a number on any stat block.
 
-**Yield at every Grade.** Yield subtracts from the Margin before the Grade multiplier reaches it, so one Beat is worth 20 Margin at F-Grade and 20 Margin at D-Grade. Against a higher-Grade attacker the Cross-Grade Adjustment is already inside the Margin, so giving ground rarely saves anyone from something above their Grade.
+**Yield at every Grade.** Yield subtracts from the Margin before the remaining Margin is multiplied by the attacker's Grade multiplier, so one Beat is worth 20 Margin at F-Grade and 20 Margin at D-Grade. Against a higher-Grade attacker the Cross-Grade Adjustment is already inside the Margin, so giving ground rarely saves anyone from something above their Grade.
 
 **Creatures.** A creature yields only if its stat block says it can. See the Bestiary.
 
@@ -461,11 +461,11 @@ Multi-target capability is a property of specific abilities, spells, and effects
 | 3+ Grades higher | +300 or more |
 <!-- /rules:table -->
 
-**Example: F-Peak against E-Initiate.** The F-Grade Peak has STR 99. The E-Grade Initiate has FOR 120: Force 12, plus 100 for the gap, effective 112.
+**Example: F-Peak against E-Initiate.** The F-Grade Peak has STR 99. The E-Grade Initiate has STR and FOR 120: Force 12, plus 100 for the gap, effective 112.
 
-If the F-Grade attacks, d100 + 99 against d100 + 112. Their peak Force nearly matches, and they can win on the dice. But F-Grade damage is Margin × 1: a Margin of 20 is 20 damage against 120 HP. A dent.
+If the F-Grade attacks, d100 + 99 against d100 + 112. Their peak Force nearly matches, and they can win on the dice. But F-Grade damage is Margin × 1: a Margin of 20 is 20 damage against 240 HP. A dent.
 
-If the E-Grade attacks, d100 + 112 against d100 + 99. An average exchange gives 162 against 149, Margin 13, and E-Grade damage is Margin × 10: **130 damage.** An F-Peak who matched their STR with FOR (99, so 198 HP) survives at 68 and dies to the next one. An F-Grade with FOR 40 and 80 HP is simply dead.
+If the E-Grade attacks, d100 + 112 against d100 + 99. Rolls of 50 on both sides give 162 against 149, Margin 13, and E-Grade damage is Margin × 10: **130 damage.** An F-Peak who matched their STR with FOR (99, so 198 HP) survives at 68 and is Downed by the next one. An F-Grade with FOR 40 and 80 HP is Downed by the first.
 
 **Fortitude is the survive-the-gap stat.** Across a Grade gap, HP decides whether you get a second turn at all.
 
@@ -497,7 +497,7 @@ On first entering the presence of a higher-Grade entity, a character makes one *
 
 > **d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance**
 
-Aura Resistance comes off the Grade Reference Card with no Cross-Grade Adjustment; the gap is priced into which difficulty applies. An entity carrying its presence calmly is **Hard (115)**; one flaring its aura in anger or intent is **Severe (140)**. At three or more Grades of difference the GM may skip the save: some presences are beyond a mortal's ability to stand in.
+Aura Resistance comes off the Grade Reference Card with no Cross-Grade Adjustment; the gap is priced into which difficulty applies. An entity carrying its presence calmly is **Hard (115)**; one flaring its aura in anger or intent is **Severe (140)**. At three or more Grades of difference the GM may impose Suppression without a save: some presences are beyond a mortal's ability to stand in.
 
 - **Success:** the character has steeled themselves, and is resistant for the rest of the encounter.
 - **Failure:** the character is **Suppressed**, dropping from 2 Beats to 1.
@@ -505,7 +505,7 @@ Aura Resistance comes off the Grade Reference Card with no Cross-Grade Adjustmen
 A character who fails does not retry each round. Suppression breaks only on a meaningful change in the fiction:
 
 - Spending a Beat, if they have one, on a Principle Application that pushes back
-- An ally spending a Beat to intervene by shielding, shouting, or physical contact. The intervener must not themselves be Suppressed; you have to be standing to lift someone
+- An ally spending a Beat to intervene by shielding, shouting, or physical contact. The intervener must not themselves be Suppressed
 - The higher-Grade entity taking significant damage or being distracted
 
 Each grants a fresh Will Save automatically. The action buys the retry, and the retry can fail.
@@ -520,9 +520,9 @@ A benevolent higher-Grade NPC may suppress their aura entirely, requiring no sav
 
 **Volatile Energy is the same substance, still wearing someone else's shape.** Everything alive holds its Aether in a pattern, and when the pattern comes apart the energy is released still bent to it: potent, unusable, and corrosive to anything that tries to hold it. That is what comes off a dying creature as pale motes, what a treasure core carries, and what soaks into a body standing too long in a place where the density runs high. It is not yours yet. Consolidation is the work of breaking that borrowed shape down: the structure it becomes is permanent growth, and the loose energy left over is what refills your Aether. This is why Aether returns at the first full hour of rest and levels take five, why a body can only hold so much raw charge before it starts to burn, and why nothing regenerates by simply waiting. Waiting gives you nothing to refine.
 
-Aether is what you have. Volatile Energy is what you took.
+Aether is the pool you spend on Surge and Applications. Volatile Energy is what kills and quests pay, and it becomes levels only when refined at Consolidation.
 
-At the table, the two never mix. Aether is spent and refills; VE accumulates and is refined. Cultivation owns the VE economy in full.
+At the table, the two never mix. Aether is spent and refills; VE accumulates and is refined. See Cultivation for earning, storing, and refining VE.
 
 At the table, Aether is the resource behind active Principle Applications, spells, and most active skills. Warriors and casters alike draw on it; anyone reaching for System-granted power spends Aether to do so.
 
@@ -532,22 +532,22 @@ At the table, Aether is the resource behind active Principle Applications, spell
 
 ### Regeneration
 
-**Aether does not regenerate in combat, between combats, or with passive time.** It refills only through **Consolidation**, restoring in full when the first hour of the rest completes. See Cultivation.
+**Aether does not regenerate in combat, between combats, or with passive time.** **Consolidation** refills it in full when the first hour of the rest completes, and an Aether Pill or a Pulse Shard restores it (Items). See Cultivation.
 
 ### Surge
 
 Every Integrated being can shove raw Aether into their own body: unshaped energy forced into an arm mid-swing or into the legs mid-dodge.
 
-> **Surge: spend half your Maximum Aether, rounded up, to add +5 to one Clash roll you are making. Declare it before you roll. No Beat.**
+> **Surge: spend half your Maximum Aether, rounded down and at least 1, to add +5 to one Clash roll you are making. Declare it before you roll. No Beat.**
 
 - It works on any Clash you make, attacking or defending.
 - Declare before the dice land, then pay.
 - It stacks with everything else on the roll.
-- The cost is always half your **Maximum** Aether, irrespective of what you currently have left. Two Surges empty a full pool, and nothing refills until Consolidation.
+- The cost is always half your **Maximum** Aether, irrespective of what you currently have left. A full pool is at least two Surges, and nothing refills it until Consolidation or a pill.
 
 **Example.** Kara has POW 6, so Maximum Aether 6 and a Surge costs 3. Cornered by a Snarljaw, she declares a Surge on her defensive roll, pays 3, and rolls at +5. She has one more Surge in her and nothing until she rests.
 
-A Seed Application might grant +10 for a small fixed cost while Surge pays half a pool for +5. Raw energy is wasteful and shaped technique is the reason to walk the Principle track. What Surge offers is availability: it is there from the first minute of Integration to the last Grade, asking the same question every time.
+A Seed Application might grant +10 for a small fixed cost while Surge pays half a pool for +5. Raw energy is wasteful and shaped technique is the reason to walk the Principle track. What Surge offers is availability: it is there from the first minute of Integration to the last Grade, asking the same question every time: is this roll worth half your pool?
 
 ### What Things Cost
 
@@ -566,8 +566,8 @@ A Domain requires a D-Grade body, which is why its price sits at D-Grade scale; 
 
 **Spells and class skills** work the same way with a different anchor: the cost is fixed by the Grade at which the skill was acquired, scaling ×10 per Grade, and it never changes afterward either.
 
-**The pool grows and the price does not.** An F-Peak caster with 99 Aether gets about ten uses of a Seed Application per fight. At E-Peak with 999 Aether, the same Application is ninety-nine uses. By D-Grade it is pennies. Meanwhile a skill acquired fresh at E-Grade costs 100 a use, a real fraction of the new pool: reaching the new Grade's ceiling means paying the new Grade's prices.
+**The pool grows and the price does not.** An F-Peak caster with 99 Aether gets about ten uses of a Seed Application per fight. At E-Peak with 999 Aether, the same Application is ninety-nine uses. By D-Grade, its cost is a small fraction of most Aether pools. Meanwhile a skill acquired fresh at E-Grade costs 100 a use, a real fraction of the new pool: reaching the new Grade's ceiling means paying the new Grade's prices.
 
 ### Attrition Across the Grade Gap
 
-Because old costs stay fixed while pools scale, a higher-Grade character in protracted combat still has to manage Aether. A D-Grade warrior facing an F-Grade horde can spam cheap F-tier Applications nearly forever, but those are single-target actions: two Beats a turn is two kills a turn against a field of dozens. Clearing the field at pace takes AoE, higher-tier Applications, or a sustained Domain, all drawing on the same pool. They win the encounter and cannot keep winning encounters without rest.
+Because old costs stay fixed while pools scale, a higher-Grade character in protracted combat still has to manage Aether. A D-Grade warrior facing an F-Grade horde can spam cheap F-tier Applications nearly forever, but those are single-target actions: two Beats a turn is two kills a turn against a field of dozens. Clearing the field at pace takes AoE, higher-tier Applications, or a sustained Domain, all drawing on the same pool. Using costly area effects can deplete their Aether even when individual enemies pose little threat.

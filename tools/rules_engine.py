@@ -106,7 +106,7 @@ def max_aether(raw_pow: int) -> int:
 
 
 def surge_cost(max_aether_value: int) -> int:
-    return math.ceil(max_aether_value / 2)
+    return max(1, max_aether_value // 2)
 
 
 def points_by_level(level: int) -> int:
@@ -402,14 +402,14 @@ def sweep_update(current: dict[str, int], deep: dict[str, int]) -> dict:
     return {"deep": new_deep, "current": {a: 0, b: 0}}
 
 
-def structured_add(current: float, deep: float, intensity: float) -> dict:
-    s = load("hve")["structured_logging"]
-    return {"current": current + intensity * s["current_adds"], "deep": deep + intensity * s["deep_adds"]}
-
-
-def structured_decay(current: float, deep: float) -> dict:
-    s = load("hve")["structured_logging"]
-    return {"current": current * (1 - s["current_decay_per_session"]), "deep": deep * (1 - s["deep_decay_per_session"])}
+def structured_sweep(entries: list[dict], poles: list[str], deep: dict[str, int]) -> dict:
+    """One axis. Structured logging records events; at session end the sweep is computed from them:
+    sum each entry's intensity by side into Current (a 0.5 entry counts as half a tally), then apply the
+    sweep's Deep update and wipe Current."""
+    current = {p: 0.0 for p in poles}
+    for e in entries:
+        current[e["side"]] += e["intensity"]
+    return sweep_update(current, deep)
 
 
 # ------------------------------------------------------------ principles ---

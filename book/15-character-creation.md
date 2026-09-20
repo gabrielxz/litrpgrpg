@@ -48,7 +48,7 @@ These are illustrations, not templates. Players should build what makes sense fo
 
 ### What a Score Means
 
-The anchors below calibrate every score in pre-Integration human terms. Even values sit between their neighbors. Scores of 1 and 2 exist below the creation floor: bodies and minds that are failing, and the System integrates them all the same.
+The anchors below calibrate every score in pre-Integration human terms. Even values sit between their neighbors. Scores of 1 and 2 represent limitations below the starting-character range; NPCs may have these scores.
 
 <!-- rules:table stat-anchors -->
 | **Attribute** | **3 (deficiency)** | **5 (average)** | **7 (gifted)** | **9 (elite)** | **10 (peak human)** |
@@ -66,7 +66,7 @@ The anchors below calibrate every score in pre-Integration human terms. Even val
 
 Choose **three Proficiencies**, broad domains of competence written in plain language. All three begin at **Trained**: +5 to Clashes and skill checks in the domain, Routine Mastery on Trivial and Easy tasks, and access to whatever the GM has gated behind training. They deepen to Seasoned and then Master through Marks, earned in play. See Core Mechanics, "Proficiencies and Skill Checks," for the full rules.
 
-A Proficiency covers weapons in its domain. A character with "axes and hammers" adds their tier bonus when swinging a hatchet; a character without it adds nothing. Fighting domains are drawn by weapon shape, so picking up something outside your domain costs you the bonus until you have earned the Marks for it.
+A Proficiency is a method, so it works on the alien version of its subject at the same tier: a botanist reads alien flora, a mechanic reads an alien engine. Languages are Interpretation's job. A Proficiency covers weapons in its domain. A character with "axes and hammers" adds their tier bonus when swinging a hatchet; a character without it adds nothing. Fighting domains are drawn by weapon shape, so picking up something outside your domain costs you the bonus until you have earned the Marks for it.
 
 Proficiencies should reflect the character's life before Integration: what they trained in, what they were good at, what they spent years doing. A soldier might take "blades," "field medicine," and "tactical awareness." A professor might take "ancient languages," "research methodology," and "persuasion." A mechanic might take "mechanical tinkering," "jury-rigging," and "vehicle operation."
 
@@ -152,9 +152,9 @@ Calculate and record these values:
 - **Level:** 1.
 - **Grade:** F.
 
-At Level 1, HP is in the single to low double digits and Aether is single digits. Freshly integrated characters are fragile, and early encounters should feel dangerous. Growth comes fast.
+At Level 1, HP is 6 to 20 and starting Aether is 3 to 10. Freshly integrated characters are fragile, and early encounters should feel dangerous. Growth comes fast.
 
-Aether matters to every character, caster or brawler: anyone can spend half their Maximum Aether to Surge (see Core Mechanics, "Surge"). Nearly every character will also end up walking the Principle track, whatever they built, because Insight comes from surviving hard things rather than from any choice made here.
+Aether matters to every character, caster or brawler: anyone can spend half their Maximum Aether to Surge (see Core Mechanics, "Surge"). Nearly every character will also end up walking the Principle track, regardless of their starting Attributes, because Insight comes from what they survive in play rather than from any choice made here.
 
 ## Starting Equipment
 
@@ -162,7 +162,7 @@ Starting gear is campaign-dependent. The GM determines what characters have acce
 
 ## Starting Principle Access
 
-Freshly integrated characters begin with no Principle access. Insight toward a Principle, and every tier beyond it, is earned through play by accumulating Insight Points. Nothing on this track is selected at creation. See the Principles document for the full progression.
+Freshly integrated characters begin with no Principle access. Insight toward a Principle, and every tier beyond it, is earned through play by accumulating Insight Points. Nothing on this track is selected at creation. See The Principle System for the full progression.
 
 ---
 
@@ -176,7 +176,7 @@ A finished character is Level 1, Grade F, with no class, no Principle access, an
 
 ![Kara, Joe, and Andre](./assets/art/people/pregens.png){.scene .pregens}
 
-Three finished characters, built with this chapter's rules and nothing else: 40 points, three Proficiencies at Trained, derived stats computed, Saturation bands (Cultivation, "The Pressure Gauge") already worked out. Hand one across the table and play. They are also the book's recurring cast: Kara and Andre are the pair in the Introduction's example of play, and Joe is the hunter who opens Cultivation. None of them has a Principle, a title, or anything in their pockets beyond what survived Integration.
+Three finished characters, built with this chapter's rules: 40 points, three Proficiencies at Trained, derived stats computed, Saturation bands (Cultivation, "The Pressure Gauge") already worked out. Hand one across the table and play. They are also the book's recurring cast: Kara and Andre are the pair in the Introduction's example of play, and Joe is the hunter who opens Cultivation. None of them has a Principle, a title, or anything in their pockets beyond what survived Integration.
 
 ::: statblock
 **KARA** &middot; Level 1 &middot; Grade F
@@ -189,7 +189,7 @@ Three finished characters, built with this chapter's rules and nothing else: 40 
 
 - **Max HP** 14 &middot; **Max Aether** 6 &middot; **VE Tolerance** 80 (Mild past 80, Heavy past 160, Critical past 240)
 - **Proficiencies (Trained, +5):** axes and hammers, athletics, streetwise
-- **Playing her:** Fight close and end it fast. Want things out loud: the better weapon, the bigger bounty, the pill nobody else has claimed. Her generosity is real, and it is never first.
+- **Playing her:** Fight close and end it fast. Want things out loud: the better weapon, the bigger bounty, the pill nobody else has claimed. She can be generous, but usually considers her own reward first.
 :::
 
 ::: statblock
@@ -217,5 +217,5 @@ Three finished characters, built with this chapter's rules and nothing else: 40 
 
 - **Max HP** 10 &middot; **Max Aether** 5 &middot; **VE Tolerance** 80 (Mild past 80, Heavy past 160, Critical past 240)
 - **Proficiencies (Trained, +5):** tracking and fieldcraft, archery and throwing, navigation
-- **Playing him:** Look before anyone moves, plan the way out before the way in, and take only what the plan needs. When the party gets loud, he is the one counting.
+- **Playing him:** Look before anyone moves, plan the way out before the way in, and take only what the plan needs. When the others argue, he checks supplies and escape routes.
 :::

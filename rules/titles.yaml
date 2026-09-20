@@ -82,6 +82,8 @@ tutorial_titles:
   - {title: Not Recommended,      category: Achievement,        earned_by: Opened the Threshold door after the System's warning,             effect: "+1 HRT"}
   - {title: The Hand That Reached, category: Bestowed,          earned_by: Stopped for the staged Initiate when stopping cost the prize,     effect: "+1 CHA"}
   - {title: The One Who Stood,    category: Hidden Achievement, earned_by: The causeway sacrifice,                                          effect: "Legacy only; the character is dead and the world remembers"}
+  - {title: Salvaged,             category: Bestowed (negative), earned_by: Taken by the Purge at the gate on a natural 01 to 05 and pulled back, effect: "−2 Raw HRT until released; Personal Opportunities arrive as tests; always visible"}
+  - {title: Came Back Whole,      category: Achievement,        earned_by: "Released Salvaged: last out of a collapsing, closing, or pursued situation, under their own power", effect: "+1 HRT (the −2 returns on release)"}
 
 evolution:
   Achievement: never
@@ -95,7 +97,7 @@ sample_stacks:
     - {title: Ten-Slayer,          class: Achievement,        effect: "+1 STR. Triggered by tenth confirmed kill."}
     - {title: First Blood,         class: Achievement,        effect: "+1 DEX. Triggered by drawing first blood in ten separate fights."}
     - {title: The Hungering Edge,  class: HVE-Resonant,       effect: "+3 STR, +2 DEX. Once per encounter, when you reduce a foe to 0 HP, gain 1 Beat next turn."}
-    - {title: Cornerless,          class: Hidden Achievement, effect: "At a quarter of Max HP or less, +5 STR and +5 DEX. Triggered by surviving an encounter that the System assessed as 10× over-Grade."}
+    - {title: Cornerless,          class: Hidden Achievement, effect: "At a quarter of Max HP or less, +5 STR and +5 DEX. Triggered by surviving an encounter against an enemy a full Grade above you."}
     - {title: Marked by the Wild,  class: Bestowed (Beast),   effect: "Predators recognize you as kin or rival: +5 to Clashes against beasts fleeing you, −5 on parley with hostile fauna. Granted by killing the alpha of a wild pack."}
   The System Architect:
     - {title: Pillwright,                     class: Achievement,        effect: "+1 PER. Triggered by crafting or refining ten consumables."}
@@ -114,4 +116,4 @@ sample_stacks:
     - {title: Unseen,                  class: Achievement,        effect: "+1 DEX. Triggered by crossing ten guarded thresholds unseen."}
     - {title: The Severed Tether,      class: HVE-Resonant,       effect: "+3 DEX, +2 PER. Once per encounter, when you would be detected by an enemy, the detection fails."}
     - {title: The One Who Walked Through, class: Hidden Achievement, effect: "Once per Consolidation, ignore one closed door, lock, or non-magical barrier. Triggered by entering and exiting three sealed locations without leaving evidence."}
-    - {title: The Open Hand,           class: Bestowed (Network), effect: "Granted by an underworld figure. Access to black-market contacts; +5 to negotiation Clashes with criminal NPCs; merchants of the network offer favorable prices."}
+    - {title: The Quiet Market,           class: Bestowed (Network), effect: "Granted by an underworld figure. Access to black-market contacts; +5 to negotiation Clashes with criminal NPCs; merchants of the network offer favorable prices."}
