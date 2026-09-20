@@ -2,6 +2,18 @@
 
 # Progression
 
+::: epigraph
+"So I get to level 10, right? And there's three classes to choose from. I tell the gang one is a healer. Mistake. They don't even want to hear the other 2. I was only carrying the bloody medkit because it wouldn't fit in Darren's bag."
+
+the survivors' forum
+:::
+
+::: epigraph
+"Y'all laughed when I kept the seeds. Well, my class says gardener and there's a tomato on that plant already. Nobody touch it, I'm getting my camera."
+
+the survivors' forum
+:::
+
 Characters grow on a single loop: fight, quest, and survive to accumulate Volatile Energy (VE); rest to refine it through Consolidation; level when the refined total crosses the threshold. This chapter covers what happens at each level, and at the Level 10 milestone where a class arrives. The VE economy itself (how much a kill is worth, how fast Consolidation processes, what happens when you hold too much) lives in the Cultivation chapter.
 
 ## Earning Levels

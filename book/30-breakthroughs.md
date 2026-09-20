@@ -2,6 +2,18 @@
 
 # Grade Breakthroughs
 
+::: epigraph
+"I was two valleys from the basin the day Istren broke through. The water in my cup leaned toward it."
+
+Bel Sar, route account
+:::
+
+::: epigraph
+"A richer site improves the prospects of a Breakthrough. It also gives your companions more to keep away from you."
+
+an Open Measure bulletin
+:::
+
 ---
 
 ## Design Intent

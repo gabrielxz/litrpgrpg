@@ -2,6 +2,18 @@
 
 # What Can Be Seen
 
+::: epigraph
+"Interpretation conveyed the promise without difficulty. The promised supplies did not exist."
+
+an Open Measure bulletin
+:::
+
+::: epigraph
+"Interpretation conveyed the order to surrender. It also conveyed our surrender. Whatever failed that morning, it was not the translation."
+
+Bel Sar, route account
+:::
+
 The System shows every Integrated being a great deal about themselves, rather less about each other, and nothing at all about what it has concluded. This chapter collects the whole visibility question in one place: what a character reads off their own interface, what they can learn by looking at somebody else, what a party shares, and what stays hidden from everyone including the person it describes.
 
 The systems being made visible are owned elsewhere. Titles and their categories are in the Titles chapter, the quest log is in System Quests, and the behavioral record is in The Hidden Vector Engine. What follows is only who gets to look.

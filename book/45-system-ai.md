@@ -2,6 +2,18 @@
 
 # The System AI
 
+::: epigraph
+"Proposal: received. Format: recognized. Response: pending."
+
+System notice
+:::
+
+::: epigraph
+"Asked the System why I hadn't levelled. Apparently I've got to consolidate the energy first. Fair enough. Killed the thing, limped home, just need a bit of peace. Meanwhile the bastards outside are taking the roof off. Settle down, you pricks. I'm on smoko."
+
+the survivors' forum
+:::
+
 In the fiction, the System administers reality: it watches, scores, issues, and grants. At the table, **"the System AI" names a role**: whoever performs the System's generative work in your game. Depending on how you run, that performer is the GM alone, the GM working with a general-purpose AI assistant, or a dedicated companion app. Every rule in this book that says "the System AI does X" means the holder of this role does X. Nothing in this book requires software.
 
 ## The Three Ways to Run

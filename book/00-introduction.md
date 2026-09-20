@@ -2,6 +2,18 @@
 
 # Introduction
 
+::: epigraph
+"We all heard it at the same instant. Everyone I've spoken to, wherever they were."
+
+the survivors' forum
+:::
+
+::: epigraph
+"On every world I have walked, people can tell you where they were standing when the count was taken."
+
+Bel Sar, route account
+:::
+
 On the day of Integration, every human being on Earth heard the same voice at the same moment. It did not use a language. It did not need one.
 
 ::: systemvoice

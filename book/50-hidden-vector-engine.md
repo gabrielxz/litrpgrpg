@@ -2,6 +2,18 @@
 
 # The Hidden Vector Engine
 
+::: epigraph
+"Martin's got it into his head the System's watching, so there's no end to his generosity now. He gives you something and stands there waiting for a notice. We're saying nothing. It's a decent lunch."
+
+the survivors' forum
+:::
+
+::: epigraph
+"Subjects told that their conduct was being recorded changed their conduct. The change lasted about two days."
+
+an Open Measure bulletin
+:::
+
 **The Behavioral Identity System**
 
 ---

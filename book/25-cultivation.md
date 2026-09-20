@@ -2,6 +2,18 @@
 
 # Cultivation
 
+::: epigraph
+"Does anyone else smell cut grass every time something dies? Asking for reasons."
+
+the survivors' forum
+:::
+
+::: epigraph
+"The animal's death released its energy. The energy retained the animal's pattern. Consolidation proceeded as that pattern was dismantled."
+
+an Open Measure bulletin
+:::
+
 ---
 
 ## Volatile Energy & Consolidation

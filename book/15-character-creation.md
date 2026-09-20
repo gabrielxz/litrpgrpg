@@ -2,6 +2,18 @@
 
 # Character Creation
 
+::: epigraph
+"Apparently my Strength stat is average. Tell the System to watch me carry that washing machine up the stairs again."
+
+the survivors' forum
+:::
+
+::: epigraph
+"My wife won't stop asking what my Charisma stat is."
+
+the survivors' forum
+:::
+
 ---
 
 ## Attributes (Point Buy)

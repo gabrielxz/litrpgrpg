@@ -2,6 +2,18 @@
 
 # Core Mechanics
 
+::: epigraph
+"Learned this with my face: when the big one swings, you can give ground and it hurts less."
+
+the survivors' forum
+:::
+
+::: epigraph
+"I hired a swordsman after watching him win a duel without taking a wound. When we were ambushed by Rexian whelps, he disappeared into the trees. His fighting record remains unblemished."
+
+Bel Sar, route account
+:::
+
 Everything in this game resolves the same way: say what your character does, roll d100, add the one Force value that governs it, and compare. Against a living opponent they roll too, and the gap between the totals is the Margin, which says how well it went. In combat, the Margin is the damage. That loop is the whole engine, and the rest of this chapter is the detail around it.
 
 What lives elsewhere: how characters are built is in Character Creation, how they level is in Progression, where the energy to level comes from is in Cultivation, and the Principle track that most of these numbers eventually feed is in The Principle System.

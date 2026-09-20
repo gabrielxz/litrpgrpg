@@ -2,6 +2,18 @@
 
 # The Principle System
 
+::: epigraph
+"I asked an old cultivator what Fire felt like. She said she could feel the last coal beneath the ashes from her bed upstairs. On winter mornings she lay there a little longer, attending to its warmth."
+
+Bel Sar, route account
+:::
+
+::: epigraph
+"Two of us can do the fire thing. Hers takes your eyebrows off. Mine sits in the wood until the wood gives in. The System filed them under different words."
+
+the survivors' forum
+:::
+
 ## How the Track Works
 
 During play, your character survives dangerous situations and starts noticing patterns in how reality behaves. The System remembers those moments. When the character meditates on them during rest, understanding accumulates as points. Collect enough points, say what your character has learned, and the System turns that understanding into power.
