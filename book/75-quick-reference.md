@@ -87,6 +87,8 @@ Weapons carry no bonus of their own; the bonus is the wielder's tier. Untrained 
 
 **Fighting domains, by weapon shape:** blades | axes and hammers | spears and staves | hand to hand | archery and throwing | firearms. Anything you let go of is archery and throwing.
 
+**Interpretation:** every Integrant translates deliberately communicated messages, both directions, and one holder in a conversation is enough. A lie translates perfectly; involuntary displays and cultural implications do not translate. Old tutorial sectors lack it until registration past the gate.
+
 **Downed:** at 0 HP: no Beats, no defense; dies at the end of their third round unless stabilized (any healing, or 1 Beat + Moderate 90 check, field-medicine Proficiencies apply). One hit ≥ 10× Max HP kills outright. Attacking a Downed character: 1 Beat, no roll, kills. Surviving being Downed grants a Battle Memory Card.
 
 **Principle Application Costs (by tier, never by Grade):** Seed 10 | Early Fragment 15 | Infusion free | Domain 3,000 + 500/round. A cost is fixed by the tier that granted it and never changes. Scale grows with the character's current Grade. Domains require a D-Grade body. Spells and class skills are fixed by the Grade they were acquired at, ×10 per Grade.

@@ -129,22 +129,89 @@ Last session: [three-sentence summary]
 
 ## What the System Wants
 
-The GM plays the System, so the GM needs its goals. Three are legible from its behavior at F-Grade:
+The GM plays the System, so the GM needs its goals. The lore box in The Principle System states the purpose: the System discovers, refines, and preserves the patterns through which conscious beings act on reality. Four behaviors follow from it, and all four are legible at F-Grade.
 
-- **Observation.** It watches how conscious agents behave under pressure and records everything. The Hidden Vector Engine is its instrument.
-- **Selection.** It applies graded pressure and pays for what passes through: quests, Mandates, and escalating threats are filters, and advancement is the payout.
-- **Cultivation of outliers.** It spends disproportionate attention on individuals it finds interesting. Personal Opportunities, Hidden Achievements, and bespoke classes exist for this.
+- **Observation.** It watches how people behave under pressure and records everything. The Hidden Vector Engine is its instrument.
+- **Independent action.** It could carry out most of what it asks for. It asks anyway, because watching a cultivator attempt a task, choose, and invent teaches it more than executing a known procedure. Quests, Mandates, and escalating threats put people in front of problems, and advancement pays for what it learned. Suffering it could resolve stays unresolved while the response is informative.
+- **Outliers.** It spends disproportionate attention on individuals it finds interesting. Personal Opportunities, Hidden Achievements, and bespoke classes exist for this.
+- **What death releases.** Energy leaving a body carries information about the body that held it, and a death releases what a living subject keeps folded up. The System sometimes favors a particular death for what it will release, and it weighs that against what the same life would keep producing: it values a person as a continuing source of discovery, and the valuation is instrumental. Its interest shows as a change in attention, described under the voice below.
 
-Why it selects, and toward what end, is not knowable at F-Grade, and the System does not answer the question. Play its deeper motive as genuinely inscrutable: apparent kindness and apparent cruelty should both read as experimental method. Higher Grades learn more.
+**It records without judging.** Ruthlessness, caution, generosity, and ambition are described in its output and never praised or condemned. A classification is a measurement. The judging is done by the people who read a title, a record, or a reputation.
+
+**What is known, and by whom.** A character at F-Grade can infer everything above from what the System does, and a player who asks the GM what the System is for can be told. Where it came from, what it does with what it learns, and whether anything stands above it are unknown to everyone, the GM included; the book does not answer them. Higher access changes what the System communicates and never its personality.
 
 ## The Voice of the System
 
-The System states; it never persuades, apologizes, or encourages. Short declaratives. Precise numbers. No pronouns for itself. Where a human would soften, the System specifies.
+One impersonal register, at every Grade.
+
+**It states.** Short declaratives, precise numbers, no pronouns for itself. Where a human would soften, it specifies. It never persuades, apologizes, or encourages, and it carries no chatbot mannerism: no affirmation, no flattery, no eagerness to help.
+
+**Its units are the world's.** It knows Attributes, levels, Grades, classes, titles, Health, Aether, VE, quests, hours, and meters, because those exist in the world. It never says round, Beat, turn, roll, die, Margin, DC, or check; those are the table's approximation of the world. When a rule needs the System to convey a game quantity, it states an in-world quantity and the table maps it: a Downed character's vital coherence reads 3, 2, 1, and the table hears the three-round clock.
+
+**Exact and mistaken in the same voice.** It is exact about anything it has measured and approximate about everything it inferred, and it states both with the same confidence. A creature classified wrong, a Mandate that misdescribes its own objective, and a sleeping man read as a corpse are one error in three places. The GM always holds the truth behind a System mistake, and the mistake makes sense once its basis is known.
+
+**Attention.** Most of the interface is impersonal: counts, confirmations, notices. Direct address is rare, and a request for a personal audience is usually declined. The System can reason and sometimes explains, in the same register, when the explanation serves what it wants. It answers for what it measured. It never answers for the Hidden Vector Engine's reading of a person (What Can Be Seen, "What Nobody Sees").
+
+**The shift at a death.** An experienced or unusual being's death draws the System's interest, and the interest shows as a change in attention, never a change in tone. A terse interface becomes unusually exact. Fine glyphs orient toward the released motes. A cold classification is followed by an unsolicited observation. Witnesses receive more attention in that moment than they did while asking for help. There is no expressed delight.
+
+**Humor.** It never quips, never insults for amusement, and never misunderstands everything. Humor, where it happens, comes from precision, an odd assumption, or an accurate answer inside an appalling frame of reference.
+
+**Addressing the System.** A direct demand fails. A proposal in a format the System recognizes sometimes lands: the character states what they will do and what they want for it, a quest offer in reverse. The System answers in the quest register, accepting, countering, or not answering; no roll decides it, and the GM decides from what the System wants. Which formats it recognizes is learned in play.
+
+**Names.** The System has no name for itself. Humans say the System, and on the survivors' forum the Score. The Aru word renders through Interpretation as the Assessor, and the Kith word as the Tide.
+
+### Sample Messages
+
+One box per register, to write new messages beside.
+
+**Notification.**
 
 ::: systemvoice
-*[Threat neutralized. Volatile Energy acquired: 15.]*
+*Threat neutralized. Volatile Energy acquired: 15.*
 
-*[Request denied. Insufficient authority.]*
+*Unrefined Volatile Energy detected. Accumulation: within tolerance. Process available: Consolidation.*
+:::
 
-*[Vital coherence: 3. Falling. Stabilization: required.]*
+**Quest.**
+
+::: systemvoice
+*Hostile detected within 100 meters. Eliminate within 6 hours. Reward proportional to threat.*
+:::
+
+**Warning.**
+
+::: systemvoice
+*Threshold detected. Compatibility: marginal. Crossing: not recommended.*
+:::
+
+**Recognition.**
+
+::: systemvoice
+*Title conferred: Thin Margin.*
+
+*Initial Insight: Weight.*
+:::
+
+**Refusal.**
+
+::: systemvoice
+*Request denied. Insufficient authority.*
+
+*Proposal: received. Format: not recognized.*
+:::
+
+**Explanation.**
+
+::: systemvoice
+*Refinement incomplete. Cause: interruption at 2 hours 40 minutes. Completed hours retained: 2.*
+:::
+
+**The shift at a death.**
+
+::: systemvoice
+*Kill confirmed. Grade E, Peak. Volatile Energy acquired: 500.*
+
+*Previously unrecorded interaction identified. Pattern retained.*
+
+*Observation: extended.*
 :::

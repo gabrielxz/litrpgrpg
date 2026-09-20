@@ -170,7 +170,7 @@ It is not a Beat and cannot be treated as one. It cannot be given up to Yield, h
 When a natural d100 meets or exceeds your Volatility Threshold (defined under "System Volatility," below) on a Clash or a skill check, the System marks the Proficiency you were using. Record it as a tally: one Mark per roll, however many dice it cascades into. Where a roll could belong to more than one domain, or to none the character holds, the GM names the domain.
 
 ::: systemvoice
-**[Technique noted: Axes and Hammers. 2/3.]**
+*Technique noted: Axes and Hammers. 2/3.*
 :::
 
 - **3 Marks:** Trained becomes Seasoned.
@@ -426,7 +426,7 @@ Multi-target capability is a property of specific abilities, spells, and effects
 **Downed at zero.** A player character or named NPC reduced to 0 HP is **Downed**: unconscious or barely conscious, prone, out of the fight, with no Beats and no defense. HP floors at 0. Creatures die at 0 outright, unless the GM wants one alive.
 
 ::: systemvoice
-*[Vital coherence: 3. Falling. Stabilization: required.]*
+*Vital coherence: 3. Falling. Stabilization: required.*
 :::
 
 **The countdown.** A Downed character dies at the end of their third round Downed unless stabilized. The System reads out vital coherence as a number that falls by one each round, 3 at the moment of Downing, so the table always knows the clock.

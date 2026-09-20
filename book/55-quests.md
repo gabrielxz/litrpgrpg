@@ -90,7 +90,7 @@ Refusing a Mandate brands the character, attracts faction attention, and locks s
 
 The System notices something specific about a character and offers a tailored quest. Generated from current HVE state, recent behavior, and the immediate situation.
 
-**The same situation generates different Personal Opportunities for different characters at the same table.** A Force-aligned character might receive *"Hostile detected within Zone. Eliminate within 6 hours: reward proportional to threat."* A Method-aligned character in the same situation receives *"Unstable formation detected. Stabilize before collapse: reward proportional to elegance of solution."*
+**The same situation generates different Personal Opportunities for different characters at the same table.** A Force-aligned character might receive *"Hostile detected within 100 meters. Eliminate within 6 hours. Reward proportional to threat."* A Method-aligned character in the same situation receives *"Unstable formation detected. Stabilize before collapse: reward proportional to elegance of solution."*
 
 This is where the System feels personal. Personal Opportunities are also the primary lever by which the System nudges or tests the character: the offer can affirm an existing pattern or quietly invite the character to step against it. By default it affirms, and offers flow with the character's recent behavior. It tends to test against the pattern when recent behavior and long-term identity disagree (the Current and Deep Vectors point different ways at the sweep, where the offer is drafted before Current wipes), and occasionally for no visible reason at all; the choice is the System's, and the System is unpredictable. A GM in doubt should affirm.
 
@@ -151,7 +151,7 @@ A quest's difficulty determines:
 
 ### Performance-Scaled Rewards
 
-Some quests state a reward as a proportionality clause instead of a fixed amount: *"reward proportional to threat,"* *"reward proportional to elegance of solution."* The System judges the performance at completion and sets the payout. Speed, thoroughness, collateral damage, and style all weigh in, and the criteria are never published. The GM, or the System AI in assisted modes, starts from the difficulty's number on the Reward Reference Table: exceptional performance pays up to half again, poor performance half.
+Some quests state a reward as a proportionality clause instead of a fixed amount: *"reward proportional to threat,"* *"reward proportional to elegance of solution."* The System measures the performance at completion and sets the payout. Speed, thoroughness, collateral damage, and style all weigh in, and the criteria are never published. The GM, or the System AI in assisted modes, starts from the difficulty's number on the Reward Reference Table: exceptional performance pays up to half again, poor performance half.
 
 Use these for quests where how the thing gets done matters as much as whether. They pair naturally with Personal Opportunities.
 

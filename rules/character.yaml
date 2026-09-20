@@ -182,3 +182,12 @@ pregens:
     stats: {STR: 4, DEX: 7, FOR: 5, HRT: 6, POW: 5, PER: 9, CHA: 4}
     proficiencies: [tracking and fieldcraft, archery and throwing, navigation]
     playing: "Look before anyone moves, plan the way out before the way in, and take only what the plan needs. When the party gets loud, he is the one counting."
+
+# Interpretation: the translation faculty every Integrant holds. No score, no tier, not on the sheet.
+# source: 15-character-creation.md "Interpretation"; lore/setting.md "Interpretation"
+interpretation:
+  granted: at accession, to every Integrant
+  translates: deliberately communicated messages (speech, sign, writing, recordings, the communicative gestures of an alien body), and the nonverbal features that carry the intended message
+  directions: both directions of any conversation the holder is party to; one holder suffices
+  outside_it: [unexpressed thoughts, motives, memories, the truth of a statement (a lie translates perfectly), involuntary emotional displays, cultural implications, computer protocols, expertise]
+  exception: tutorial sectors built on old versions lack it; the party receives it at registration past the gate

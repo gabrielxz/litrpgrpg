@@ -25,11 +25,11 @@
 
 - [x] The tutorial edit pass: the Kith named and described, Interpretation on exit, the exit onto Earth and the Stinger default, the technique memory, the vault warning, the remnant one-liners, the Warden's overrun.
 - [x] The Introduction's opening System message, rewritten in the settled voice.
-- [ ] The System's voice section in The System AI: characterization, what it does and does not say, sample messages across registers (notification, quest, warning, recognition, refusal), the attention shift at a death.
+- [x] The System's voice section in The System AI: characterization, what it does and does not say, sample messages across registers (notification, quest, warning, recognition, refusal), the attention shift at a death.
 - [x] The Items edit: the firearms row and the Temper paragraph (rules 0.1.4).
 - [ ] The After the Gate chapter, against the approved surface.
 - [ ] The two Kith image briefs.
-- [ ] Lore boxes wherever a chapter has a system that carries one; the color vignettes (Aether felt for the first time, Aura Pressure, the philosopher); the found logs; the two first-contact accounts.
+- [ ] Lore boxes wherever a chapter has a system that carries one; the color vignettes (Aether felt for the first time, Aura Pressure, the philosopher): candidates in `lore/briefs/lore-boxes-and-vignettes-2026-09-20.md` await Gabriel's pick; the found logs; the two first-contact accounts.
 - [ ] The Initiate's Manual's planted errors, chosen from the adopted quirks.
 - [ ] The cosmology poster and the glossary, from the public facts.
 - [ ] The app's System voice, from the voice section.

@@ -46,10 +46,22 @@ loot_table:
 
 standing_context_template: templates/standing-context.txt
 
-system_goals: [Observation, Selection, Cultivation of outliers]
+system_goals: [Observation, Independent action, Outliers, What death releases]
+records_without_judging: a classification is a measurement; the people who read a title or a record do the judging
+unknown_to_everyone: [where the System came from, what it does with what it learns, whether anything stands above it]
 voice:
-  rules: [states; never persuades, apologizes, or encourages; short declaratives; precise numbers; no pronouns for itself; where a human would soften, the System specifies]
-  examples:
-    - "[Threat neutralized. Volatile Energy acquired: 15.]"
-    - "[Request denied. Insufficient authority.]"
-    - "[Vital coherence: fraying. Estimated thread loss: 3 rounds.]"
+  register: one impersonal register at every Grade; higher access changes what it communicates, never its personality
+  rules: [states; never persuades, apologizes, or encourages; short declaratives; precise numbers; no pronouns for itself; where a human would soften, the System specifies; no chatbot mannerism]
+  units: in-world only (Attributes, levels, Grades, classes, titles, Health, Aether, VE, quests, hours, meters); never round, Beat, turn, roll, die, Margin, DC, or check
+  typography: bare italics inside a systemvoice box; no brackets, no bold
+  attention: direct address rare; a personal audience usually declined; it sometimes explains what it measured; never the Engine's reading of a person
+  addressing: a direct demand fails; a proposal in a recognized format sometimes lands (a quest offer in reverse); no roll; the GM decides
+  names: {humans: the System, forum: the Score, Aru: the Assessor, Kith: the Tide}
+  registers:
+    notification: "Threat neutralized. Volatile Energy acquired: 15."
+    quest: "Hostile detected within 100 meters. Eliminate within 6 hours. Reward proportional to threat."
+    warning: "Threshold detected. Compatibility: marginal. Crossing: not recommended."
+    recognition: "Title conferred: Thin Margin."
+    refusal: "Request denied. Insufficient authority."
+    explanation: "Refinement incomplete. Cause: interruption at 2 hours 40 minutes. Completed hours retained: 2."
+    death_shift: "Previously unrecorded interaction identified. Pattern retained."

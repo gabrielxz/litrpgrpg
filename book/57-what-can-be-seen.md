@@ -46,9 +46,9 @@ Nobody else can see your interface. It is not projected, it cannot be shown to a
 **This is what the character sheet is.** The paper in front of a player is the same object their character is looking at, which is why the two carry the same information in the same order, and why the behavioral record is on the GM's side of the screen instead. The System has never shown anyone their own vector.
 
 ::: systemvoice
-*[Interface: available. Behavioral telemetry: not available.]*
+*Interface: available. Behavioral telemetry: not available.*
 
-*[This message will not be repeated.]*
+*This message will not be repeated.*
 :::
 
 **GM guidance.** Players will ask what the interface says about something the System has not decided to tell them. The answer is always the same shape: the interface displays current statistics and unlocked information; it does not reveal hidden scoring or unearned rewards. It will show a character that they hold 40 Insight in Weight. It will not tell them what happens at 50, whether their behavior is drifting, or what the System thinks they are becoming.
@@ -74,7 +74,7 @@ No inspection at any Grade shows another person's Attributes, Health, Aether, In
 
 **Hidden Achievement titles are private from peers** until the holder chooses otherwise; an observer three Grades up reads them regardless. Revealing one is deliberate and permanent; after that it reads like a worn Bestowed title. This is the mechanism players use to brag, and they should be allowed to enjoy it.
 
-**Negative titles cannot be hidden.** The System publishes its judgments. "Oathbroken" and "Salvaged" are worn whether their holder likes it or not, and everyone of equal or higher Grade can see them. A title moves only the NPCs who can see it.
+**Negative titles cannot be hidden.** The System publishes the record. "Oathbroken" and "Salvaged" are worn whether their holder likes it or not, and everyone of equal or higher Grade can see them. A title moves only the NPCs who can see it.
 
 ---
 
@@ -92,7 +92,7 @@ That narrow window is worth more than it looks. Knowing an ally's true condition
 
 **Hidden Quests appear in the log as their mode allows** (System Quests, "Hidden Quests"): some at once with the objective veiled, some in part, some only when they resolve, and some never resolve at all. **Hidden Achievement criteria are never published in advance.** The System does not warn anyone that they are three sealed doors into something.
 
-**The System does not explain itself.** It reports, it grants, and it withholds, and none of the withholding is negotiable. A character who demands to know why gets the same non-response every time.
+**The System does not answer for its reading of a person.** It reports what it measured and grants what it grants. A question about the Engine's reading, its axes, its numbers, or why an offer came gets no answer at any Grade. It sometimes explains other things, in its own register (The System AI, "The Voice of the System").
 
 **This is a rule about the table as much as the fiction.** The machinery is public and the readings are private; the Introduction's spoiler policy says why.
 

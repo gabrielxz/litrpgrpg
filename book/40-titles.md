@@ -71,7 +71,7 @@ Mechanically grant bonuses aligned with the dominant axis combination.
 
 Granted by external entities: factions, higher-Grade beings, ancient Principles, locations, or the System itself responding to a specific action. Effects vary with the granting entity: access, obligations, favors, or penalties.
 
-**Bestowed titles can be negative.** "Oathbroken" is granted automatically by the System when a sworn agreement is violated. Negative Bestowed titles cannot be unequipped or removed without specific in-fiction action: fulfilling an oath, completing a penance, defeating a specific entity. They create real consequence for behavior the System judges.
+**Bestowed titles can be negative.** "Oathbroken" is granted automatically by the System when a sworn agreement is violated. Negative Bestowed titles cannot be unequipped or removed without specific in-fiction action: fulfilling an oath, completing a penance, defeating a specific entity. The consequence comes from the people who can see them.
 
 **Examples:** "Hand of the Iron Court" (faction-granted), "Witnessed by the Mountain" (granted by a Principle-rich location), "Oathbroken" (System-granted, negative), "Salvaged" (System-granted, negative, conferred when the System recovers an Initiate it was about to lose to its own administrative failure), "Marked by the Wild" (Bestowed by a creature or biome).
 

@@ -26,7 +26,7 @@ The party finds the Recycling Node, and while the others argue over the good wea
 
 Two sessions later, a wounded stranger stumbles into camp with a Snarljaw pack behind him. Joe steps over the fire and charges them alone so the others can drag the stranger clear. The table is still talking about it when the session ends: two tallies under **Force**, and because it was done to protect, a note in the margin.
 
-At the next Consolidation, the System murmurs to Kara: *[Resonance accruing: CONSUMPTION. 2/3.]* The number she sees is the resonance count. The tally behind it stays on the GM's side of the screen.
+At the next Consolidation, the System murmurs to Kara: *Resonance accruing: CONSUMPTION. 2/3.* The number she sees is the resonance count. The tally behind it stays on the GM's side of the screen.
 
 That is the Hidden Vector Engine. It tracks how each character actually behaves under pressure and converts the pattern into an identity the System can act on: the classes it offers, the Principles that crystallize, the titles it grants, the opportunities it dangles, the way NPCs and factions respond. It records conduct without judging it; moral alignment plays no part. The engine answers one question: *how does this person act when it costs them something?*
 
@@ -121,7 +121,7 @@ Reading it: Current holds what tonight's sweep recalled, that Kara hit hard and 
 Deep is the character's long-term identity. It is the input to:
 
 - **Class generation (Level 10).** The System offers classes that fit the lived pattern; see The System AI and Progression, "Behavioral Stat Mapping."
-- **Principle crystallization.** Resonance accrues in the affinity families the behavior matches; the Engine is where *[Resonance accruing]* lines come from.
+- **Principle crystallization.** Resonance accrues in the affinity families the behavior matches; the Engine is where *Resonance accruing* lines come from.
 - **Titles.** HVE-Resonant Titles read the Deep rows; one per axis pair. See Titles.
 - **Personal Opportunities.** Offers affirm the current pattern by default and occasionally test against it; see System Quests. The offer is drafted at the sweep, from Current before it wipes and Deep after.
 - **The Breakthrough Coherence bonus.** Read the Deep rows:

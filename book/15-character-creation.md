@@ -66,7 +66,7 @@ The anchors below calibrate every score in pre-Integration human terms. Even val
 
 Choose **three Proficiencies**, broad domains of competence written in plain language. All three begin at **Trained**: +5 to Clashes and skill checks in the domain, Routine Mastery on Trivial and Easy tasks, and access to whatever the GM has gated behind training. They deepen to Seasoned and then Master through Marks, earned in play. See Core Mechanics, "Proficiencies and Skill Checks," for the full rules.
 
-A Proficiency is a method, so it works on the alien version of its subject at the same tier: a botanist reads alien flora, a mechanic reads an alien engine. Languages are Interpretation's job. A Proficiency covers weapons in its domain. A character with "axes and hammers" adds their tier bonus when swinging a hatchet; a character without it adds nothing. Fighting domains are drawn by weapon shape, so picking up something outside your domain costs you the bonus until you have earned the Marks for it.
+A Proficiency is a method, so it works on the alien version of its subject at the same tier: a botanist reads alien flora, a mechanic reads an alien engine. Languages are Interpretation's job (below). A Proficiency covers weapons in its domain. A character with "axes and hammers" adds their tier bonus when swinging a hatchet; a character without it adds nothing. Fighting domains are drawn by weapon shape, so picking up something outside your domain costs you the bonus until you have earned the Marks for it.
 
 Proficiencies should reflect the character's life before Integration: what they trained in, what they were good at, what they spent years doing. A soldier might take "blades," "field medicine," and "tactical awareness." A professor might take "ancient languages," "research methodology," and "persuasion." A mechanic might take "mechanical tinkering," "jury-rigging," and "vehicle operation."
 
@@ -158,7 +158,18 @@ Aether matters to every character, caster or brawler: anyone can spend half thei
 
 ## Starting Equipment
 
-Starting gear is campaign-dependent. The GM determines what characters have access to based on the scenario. For the standard Integration Protocol opening, characters begin with whatever they had on their person at the moment of Integration (everyday clothing, a phone, maybe a pocket knife). The System provides nothing.
+Starting gear is campaign-dependent. The GM determines what characters have access to based on the scenario. For the standard Integration Protocol opening, characters begin with whatever they had on their person at the moment of Integration (everyday clothing, a phone, maybe a pocket knife). The System provides no equipment.
+
+## Interpretation
+
+Every Integrant holds **Interpretation** from the moment of accession. It is a faculty the System grants, with no score and no tier, and nothing on the sheet records it.
+
+- It translates a deliberately communicated message, whether speech, sign, writing, a recording, or the communicative gestures of an alien body, and conveys what the speaker is trying to say. Nonverbal features that carry the intended message translate with it.
+- It carries both directions of any conversation its holder is party to. One holder is enough for both sides to be understood.
+- Unexpressed thoughts, motives, memories, and the truth of a statement are outside it: a lie translates perfectly. Involuntary emotional displays and cultural implications arrive untranslated, so a character can understand an offer and misunderstand the obligations that come with it.
+- It converts no computer protocols and supplies no expertise. Reading an alien engine is a Proficiency's job.
+
+Tutorial sectors built on old versions predate Interpretation. A character extracted into one does not hold it until registration past the gate; the tutorial in this book is such a sector.
 
 ## Starting Principle Access
 
@@ -168,7 +179,7 @@ Freshly integrated characters begin with no Principle access. Insight toward a P
 
 ## After Creation
 
-A finished character is Level 1, Grade F, with no class, no Principle access, and whatever was in their pockets. Everything from here is earned in play: levels and stat growth are covered in the Progression chapter, the VE economy that fuels them in Cultivation, and the class milestone at Level 10 in Progression, "Class Selection."
+A finished character is Level 1, Grade F, with no class, no Principle access, Interpretation, and whatever was in their pockets. Everything from here is earned in play: levels and stat growth are covered in the Progression chapter, the VE economy that fuels them in Cultivation, and the class milestone at Level 10 in Progression, "Class Selection."
 
 ---
 

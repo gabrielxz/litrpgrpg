@@ -54,6 +54,12 @@ patterns:
   - {pattern: '\balien Initiates?\b',          replaced_by: "the Kith",                                    since: 2026-09-19}
   - {pattern: 'not granted auto-translation',    replaced_by: "Interpretation arrives at registration past the gate", since: 2026-09-19}
   - {pattern: 'Accept the imprint',              replaced_by: "Accept the technique memory",                since: 2026-09-19}
+  - {pattern: 'pays for what passes through',     replaced_by: "the System asks because independent action teaches it more", since: 2026-09-20}
+  - {pattern: 'genuinely inscrutable',            replaced_by: "the purpose is stated; origin, end, and any higher authority are unknown to everyone", since: 2026-09-20}
+  - {pattern: 'behavior the System judges',       replaced_by: "the consequence comes from the people who can see the title", since: 2026-09-20}
+  - {pattern: 'publishes its judgments',          replaced_by: "publishes the record",                        since: 2026-09-20}
+  - {pattern: 'Estimated thread loss',            replaced_by: "vital coherence 3, 2, 1",                     since: 2026-09-20}
+  - {pattern: '\*\*?\[[^\]\n]*\]\*\*?',           replaced_by: "System text in bare italics; the box is the frame", since: 2026-09-20}
 
 # Chapter names as the book cites them, for the cross-reference check.
 chapters:

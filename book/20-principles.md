@@ -65,9 +65,9 @@ The whole track, from first resonance to first power, looks like this at the tab
 ::: systemvoice
 *A mountain hangs from a thread. The thread does not strain. Below, something waits to be told where to fall.*
 
-**[Initial Insight: Weight.]**
+*Initial Insight: Weight.*
 
-**[Insight: Weight 4/10]**
+*Insight: Weight 4/10*
 :::
 
 The meditation earned 2 IP. That carried her past 3, and the Principle **crystallized**: the GM named Weight as the Principle reflected in Kara's actions and meditation, and the name filled her single F-Grade slot for life.
@@ -96,7 +96,7 @@ A vision hints and never teaches. If it taught plainly, the player's later Disti
 Progression within a Principle is measured in **Insight Points (IP)**. IP totals are visible; the System reports them the way it reports levels:
 
 ::: systemvoice
-**[Insight Gained: Weight 8/10]**
+*Insight Gained: Weight 8/10*
 *The mountain does not strike. It arrives.*
 :::
 
@@ -129,8 +129,8 @@ No character chooses a Principle from a menu. The System watches what the charac
 1. **The System watches.** From the first session, the GM logs how the character behaves under pressure (the Hidden Vector Engine chapter). Every behavior pattern points at a family of Principles. There are eight families, and this is the complete set: Impact, Architecture, Consumption, Preservation, Imposition, Harmony, Governance, and Subversion. The behavior-to-family map is in that chapter.
 **Choose the family from the character's behavior, then name the specific Principle.** Fire earned by someone who charges every line is Impact; Fire earned by someone who takes everything and leaves ash is Consumption. The two families that most often blur are **Architecture and Governance**: Architecture is how a character solves problems, and Governance is what they impose on the world. A meticulous planner is Architecture. Someone who writes rules other people must live by is Governance.
 
-2. **Resonance accrues.** When the character begins earning IP, the System reports it at the family level only: *[Resonance accruing: IMPACT. 2/3.]* The character knows a direction and nothing more.
-3. **At 3 IP, the Principle crystallizes.** The GM names one specific Principle, and the System announces it: *[Initial Insight: Weight.]* The slot fills for life, and the tier's minor passive arrives.
+2. **Resonance accrues.** When the character begins earning IP, the System reports it at the family level only: *Resonance accruing: IMPACT. 2/3.* The character knows a direction and nothing more.
+3. **At 3 IP, the Principle crystallizes.** The GM names one specific Principle, and the System announces it: *Initial Insight: Weight.* The slot fills for life, and the tier's minor passive arrives.
 4. **The player steers by playing.** What the character does is what the System reads. How the player describes their meditations shapes which Principle a memory feeds. And if the System's read drifts from the person over time, Refinement (below) steers the Principle back.
 
 **The second Principle.** The slot that opens at E-Grade fills the same way, with one difference: a veteran character can pursue a direction on purpose. The player may declare what they are seeking and spend attention and risk on aligned experiences. The System still does the naming, and it names what was actually lived, which may sit a step away from what was sought.

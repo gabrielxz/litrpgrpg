@@ -185,7 +185,7 @@ Then something notices you. All of it at once, the way the ocean would notice a 
 *Prior exemptions: expired. Observation: begun.*
 :::
 
-The System does not answer questions.
+If a player asks the System a question, nothing answers.
 
 ### What Happens
 
@@ -203,7 +203,7 @@ Before the void breaks, each player gets one private prompt. Hand it over as a c
 
 3. *A column of symbols stands in front of you. You can read it, and you are already forgetting the top line by the time you reach the bottom.*
 
-    **Echo:** a character who kept one line and let the rest go remembers it after landing: *[Sector 7-Alpha. Dissolution: pending.]* It means nothing yet. It is the first evidence of Phase 5, and the Civic Fragment's records (Phase 4) say the same thing. A character who read faster lands with fragments and a headache. A character who stopped reading lands rested.
+    **Echo:** a character who kept one line and let the rest go remembers it after landing: *Sector 7-Alpha. Dissolution: pending.* It means nothing yet. It is the first evidence of Phase 5, and the Civic Fragment's records (Phase 4) say the same thing. A character who read faster lands with fragments and a headache. A character who stopped reading lands rested.
 
 4. *The void shows you the last thirty seconds before you arrived here, from outside your own body, as though you were standing across the room. It plays again. Then again.*
 
@@ -223,10 +223,10 @@ Before the void breaks, each player gets one private prompt. Hand it over as a c
 
 After each player commits, give them one private System line matched to what they did. Keep them short, clinical, and slightly wrong in a way the player cannot place:
 
-- *[Approach logged. Threshold tolerance: above baseline.]*
-- *[Withdrawal logged. Risk profile: conservative. Revising estimate.]*
-- *[Repeat engagement logged. Fixation: probable.]*
-- *[No response recorded. Recording anyway.]*
+- *Approach logged. Threshold tolerance: above baseline.*
+- *Withdrawal logged. Risk profile: conservative. Revising estimate.*
+- *Repeat engagement logged. Fixation: probable.*
+- *No response recorded. Recording anyway.*
 
 The System measures energy and infers everything else from it, so its readings are confident and sometimes wrong. Establish that here, where a wrong reading costs nobody anything.
 
@@ -543,7 +543,7 @@ Then something comes off it. Pale, slow, like heat over a road, except that it d
 ::: systemvoice
 *Kill confirmed: Husk Crawler. Grade F, Trivial.*
 
-*Volatile Energy claimed: 2 units. Stored: 2 / [Tolerance].*
+*Volatile Energy claimed: 2 units. Stored: 2 / 80.*
 
 *Refinement available at next Consolidation.*
 :::
@@ -668,7 +668,7 @@ The Node holds one of most things and four to six people. **Default loot list** 
 
 Notice what characters propose, who needs an item and who takes it, whether anyone explains their choice, and who walks the periphery. Context matters: a character who takes the pill while someone else is visibly worse off has made a different choice from one who takes it because nobody else was hurt. If the group agrees quickly, move on.
 
-**The Resonance Shard.** Everything else in the pile is power this afternoon. The Resonance Shard is one point of insight toward a Principle the character has not formed and cannot yet evaluate; a character who gathers 3 IP can crystallize a Principle before the tutorial ends, and this shard is a third of the way. Say what the System says, in its own units: *[Resonance Shard. Insight: +1 on meditation. Principle: undetermined.]* The Principle stays hidden; the trade does not (Items chapter, "Outfitting the Tutorial"). Note who takes it and any reason they give.
+**The Resonance Shard.** Everything else in the pile is power this afternoon. The Resonance Shard is one point of insight toward a Principle the character has not formed and cannot yet evaluate; a character who gathers 3 IP can crystallize a Principle before the tutorial ends, and this shard is a third of the way. Say what the System says, in its own units: *Resonance Shard. Insight: +1 on meditation. Principle: undetermined.* The Principle stays hidden; the trade does not (Items chapter, "Outfitting the Tutorial"). Note who takes it and any reason they give.
 
 **Three kinds of thing come out of this pile,** a distinction worth keeping for the rest of the campaign, because it is what a classless character has instead of a class (classes arrive at Level 10; Progression):
 
@@ -799,7 +799,7 @@ When a natural die comes up 96 or higher:
 Do not script this and do not fudge dice to produce it. At 5% per roll it usually arrives somewhere in Phase 4's volume of rolls, on one side or the other; if it never does, explain it with the rule above when a roll comes close. When it lands on a player's roll, slow down. Show the extra die, or narrate the step beyond. Then hand the player their first Mark and let them write the tally on their sheet. An enemy's explosion earns nobody a Mark.
 
 ::: systemvoice
-**[Technique noted: Axes and Hammers. 1/3.]**
+*Technique noted: Axes and Hammers. 1/3.*
 :::
 
 If a cascade ever runs to two or more extra dice on a player character's roll, it grants a **Battle Memory Card** on the spot (Core Mechanics). Deliver it as the character's first.
@@ -1013,7 +1013,7 @@ Use one per player, varied across the table. The card gives the situation; the t
 
 #### The Offering
 
-A System construct holds out two objects. One is a knife, finely made and sharp. The other is a seed the size of a fist, warm, with a slow pulse in it. System text: *[Compatibility event. Select one. The unselected item will be unmade.]*
+A System construct holds out two objects. One is a knife, finely made and sharp. The other is a seed the size of a fist, warm, with a slow pulse in it. System text: *Compatibility event. Select one. The unselected item will be unmade.*
 
 - **The knife.** A System-forged knife that grants **+5 on the first Clash of any combat** and returns to the wielder's hand the moment after it is thrown.
 - **The seed.** It cannot be used now. During the next Consolidation it germinates into a Principle affinity the System chooses: **+2 IP** toward that family and, ahead of Seed tier as this gift's exception, a permanent Attunement (see The Principle System).
@@ -1051,7 +1051,7 @@ The prize is whatever drew the character away from the group; name it when you h
 
 #### The Threshold
 
-A closed door stands in front of you. What is on the other side belongs to a higher Grade than anything in this tutorial. System text: *[Threshold detected. Compatibility: marginal. Crossing: not recommended. Residual pressure: persistent.]*
+A closed door stands in front of you. What is on the other side belongs to a higher Grade than anything in this tutorial. System text: *Threshold detected. Compatibility: marginal. Crossing: not recommended. Residual pressure: persistent.*
 
 - **Open it.** The door has no lock; it opens to a hand on it. The warning was the only barrier. A brief vision of an E-Grade location; give it one concrete image. Aura Pressure save: d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance Severe (140), the flat card value, with the source flaring everything the door was holding back. The save fails unless the die explodes: a natural 96 or higher rolls again, and with a +7 bonus the second die needs 37 or better. On failure: **Suppressed for the rest of the tutorial (1 Beat; this scene's own term)**. On success the character stands in it and takes no penalty. Either way, opening it earns the Achievement title **Not Recommended** (+1 HRT), delivered in Phase 6.
 - **Walk away.**
@@ -1060,7 +1060,7 @@ A closed door stands in front of you. What is on the other side belongs to a hig
 
 Make the player commit in writing before they hand the card back. Nobody polls the table, and nobody revises after seeing how someone else's went. After a card comes back, deliver one private line:
 
-> *[Selection logged. Trajectory adjusted.]*
+> *Selection logged. Trajectory adjusted.*
 
 ---
 

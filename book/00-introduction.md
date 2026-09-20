@@ -131,9 +131,9 @@ Kara (Strength 8 and Fortitude 7, written STR 8, FOR 7 on her sheet, with the Pr
 **GM:** It's Exposed, so it defends 10 down: *(rolls 38)* 46. Margin 16, and it had 9 left. The pipe comes down where the arrow told it to, and the Snarljaw stops being a problem.
 
 ::: systemvoice
-*[Threat neutralized. Volatile Energy acquired: 10.]*
+*Threat neutralized. Volatile Energy acquired: 10.*
 
-*[Initiate 4,412,908 of 7,916,442,203. Observation continues.]*
+*Initiate 4,412,908 of 7,916,442,203. Observation continues.*
 :::
 
 **Andre:** Four million and change. We're a line item.
