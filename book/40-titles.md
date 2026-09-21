@@ -75,6 +75,10 @@ Granted by external entities: factions, higher-Grade beings, ancient Principles,
 
 **Examples:** "Hand of the Iron Court" (faction-granted), "Witnessed by the Mountain" (granted by a Principle-rich location), "Oathbroken" (System-granted, negative), "Salvaged" (System-granted, negative, conferred when the System recovers an Initiate it was about to lose to its own administrative failure), "Marked by the Wild" (Bestowed by a creature or biome).
 
+::: lore
+The Iron Court recognizes contracts, arbitrates disputes, issues credentials, and enforces its rulings within the jurisdictions that participate in it, and cultivators serve it. It offers formal equality beside rules its most powerful clients helped write. The System grants Hand of the Iron Court to those who serve the Court and endorses nothing about it.
+:::
+
 ---
 
 ## Mechanical Effects

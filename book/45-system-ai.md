@@ -154,7 +154,7 @@ One impersonal register, at every Grade.
 
 **The shift at a death.** An experienced or unusual being's death draws the System's interest, and the interest shows as a change in attention, never a change in tone. A terse interface becomes unusually exact. Fine glyphs orient toward the released motes. A cold classification is followed by an unsolicited observation. Witnesses receive more attention in that moment than they did while asking for help. There is no expressed delight.
 
-**Humor.** It never quips, never insults for amusement, and never misunderstands everything. Humor, where it happens, comes from precision, an odd assumption, or an accurate answer inside an appalling frame of reference.
+**Humor.** The System never performs it. It states what it measured, in the same register as everything else, and where a reader laughs the absurdity belongs to the world: a lock that asks for 40 degrees and a body offering 36.6. It never quips, never insults for amusement, and never misunderstands everything.
 
 **Addressing the System.** A direct demand fails. A proposal in a format the System recognizes sometimes lands: the character states what they will do and what they want for it, a quest offer in reverse. The System answers in the quest register, accepting, countering, or not answering; no roll decides it, and the GM decides from what the System wants. Which formats it recognizes is learned in play.
 

@@ -14,7 +14,9 @@
 --   * systemvoice   — in-fiction System messages (dark, cyan-ruled)
 --   * statblock     — monster / character stat blocks (gray, top-ruled)
 --   * questcard     — Quest log / Mandate / Personal Opportunity entries
---   * lore          — in-world cosmology, legends, color vignettes (gray, left-ruled)
+--   * lore          — in-world cosmology, legends, color vignettes (gray, left-ruled);
+--                     with the extra class `quoted`, an in-world document whose
+--                     last paragraph is its source, styled like an epigraph's
 --   * readaloud     — boxed narration the GM says out loud (white, titled)
 --   * epigraph      — an in-world quotation under a chapter title; maps to the
 --                     bookepigraph environment, last paragraph = the source
@@ -36,7 +38,8 @@ function Div(el)
       local env = recognized[class]
       if env then
         if env == true then env = class end
-        if class == "epigraph" and #el.content >= 2 and el.content[#el.content].t == "Para" then
+        local attributed = class == "epigraph" or (class == "lore" and el.classes:includes("quoted"))
+        if attributed and #el.content >= 2 and el.content[#el.content].t == "Para" then
           local src = table.remove(el.content)
           el.content:insert(pandoc.RawBlock("latex", "\\begin{gbepigraphsource}"))
           el.content:insert(src)

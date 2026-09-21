@@ -84,6 +84,10 @@ Server-wide directives, cold and impersonal, with real consequences for noncompl
 
 Refusing a Mandate brands the character, attracts faction attention, and locks specific reward paths. Use Mandates for regional objectives that affect the campaign.
 
+::: lore
+The Rill Closure is the case the wider world cites. A documented, inhabited sector was scheduled for retirement, with notice given and the evacuation window published. Some inhabitants refused to abandon what they depended on, and the retirement proceeded on schedule. A Mandate's deadline does not move for those who cannot meet it.
+:::
+
 ### Personal Opportunities
 
 ![The Offering](./assets/art/scenes/the-offering.png){.scene}

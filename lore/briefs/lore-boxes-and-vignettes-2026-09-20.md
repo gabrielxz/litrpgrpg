@@ -1,6 +1,8 @@
 # Lore boxes and vignettes: candidates for Gabriel's pick
 
-*Drafted 2026-09-20 from `lore/setting.md`. Items 2 and 3 of the lore delivery pass. Each entry gives the chapter and the exact placement, the source voice, and the draft. Pick, cut, or edit; Claude applies the picks and runs `make check`. Every fact below is in the setting file; no new setting fact is introduced.*
+*Drafted 2026-09-20 from `lore/setting.md`. Items 2 and 3 of the lore delivery pass. Each entry gives the chapter and the exact placement, the source voice, and the draft. Every fact below is in the setting file; no new setting fact is introduced.*
+
+**Applied 2026-09-20 evening, with Gabriel's rulings.** All six boxes are in. Istren is C-Grade (the setting file changed first; A-Grade read as god powers before D-Grade is designed). The Iron Court box lost the Sen Vale sentence (an NPC hook for later material, kept in the setting file) and the Hand of the Iron Court clause the Titles epigraph already carries. The Rill Closure box lost "decisive" and the transport sentence the Quests epigraph already carries; it ends "A Mandate's deadline does not move for those who cannot meet it." The Cultivation box lost the cut-grass clause the chapter's epigraph carries. Vignettes: A, A, A. The Aether vignette went to Core Mechanics, "Aether", because the Cultivation box took the slot beside VE; its breastbone line was reworded so it does not echo the prose above it. Attributed boxes use `::: {.lore .quoted}` and the last paragraph is styled as the source, like an epigraph's. The drafts below are the record of what was offered.
 
 **Pipeline note.** The `lore` environment has no source line of its own. Attributed boxes (the forum, Open Measure, Bel Sar) below carry the attribution as a closing italic paragraph. If you want it styled like an epigraph's source, the Lua filter can wrap the last paragraph of a `lore` box the same way; say so and it becomes one edit.
 

@@ -54,6 +54,7 @@ voice:
   rules: [states; never persuades, apologizes, or encourages; short declaratives; precise numbers; no pronouns for itself; where a human would soften, the System specifies; no chatbot mannerism]
   units: in-world only (Attributes, levels, Grades, classes, titles, Health, Aether, VE, quests, hours, meters); never round, Beat, turn, roll, die, Margin, DC, or check
   typography: bare italics inside a systemvoice box; no brackets, no bold
+  humor: never performed; the System states what it measured and the absurdity belongs to the world (the tutorial's 40-degree lock and a body at 36.6)
   attention: direct address rare; a personal audience usually declined; it sometimes explains what it measured; never the Engine's reading of a person
   addressing: a direct demand fails; a proposal in a recognized format sometimes lands (a quest offer in reverse); no roll; the GM decides
   names: {humans: the System, forum: the Score, Aru: the Assessor, Kith: the Tide}

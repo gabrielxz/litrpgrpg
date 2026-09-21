@@ -266,6 +266,14 @@ Some players don't enjoy trying to wax philosophical at the RPG table. They came
 
 Don't press a Quiet Path player for speeches. Offer either/or questions ("was it the stopping or the choosing?"), accept a shrug as an answer, and put the poetry in the System's mouth instead of demanding it from theirs. And don't treat the mode as a lesser way to play or a phase to coax them out of; a player who grunts "Weight stuff, I guess" and then spends every fight putting heavy things on top of enemies is feeding the track everything it needs.
 
+::: {.lore .quoted}
+"I taught philosophy of mind. On Day 5 I asked it, out loud, in an empty lecture hall, whether I am the same person who woke up on Day 1. I did not expect an answer. It gave one: 'Pattern continuity: 94 percent. Divergence attributable to accession: 4 percent. Remainder: ordinary.' Ordinary. Thirty years on personal identity, and the answer is a percentage and the word ordinary. I have not decided whether it answered the question or replaced it. I have decided that it measured something, and that it does not know what my question was."
+
+the survivors' forum
+:::
+
+An answer like that one is rare; most who address the System get nothing back (The System AI, "The Voice of the System").
+
 ## Running the Track (GM Reference)
 
 **Naming a Principle.** Use three inputs: the family, the character's circled Defining moments, and the words the player has used while meditating. If you are unsure, say the character's three biggest moments out loud and ask what they have in common; name that. Pick the plainer word: Weight beats Gravitational Inevitability, and Fire beats Combustion. A good name is one the player hears and instantly recognizes as theirs. Say it to the player before the System announces it; if it lands wrong, the player may ask once for a different reading, and the GM picks again.

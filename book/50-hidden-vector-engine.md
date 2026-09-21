@@ -32,6 +32,16 @@ That is the Hidden Vector Engine. It tracks how each character actually behaves 
 
 Players should feel observed. They should never see the underlying numbers. Keeping scores private is intended to discourage choosing actions solely for particular rewards.
 
+::: {.lore .quoted}
+"It knows I hesitated. I didn't say anything, I didn't do anything, I stood there for maybe two seconds while Martin went in first, and the next quest it gave me was about going first. Tell me that's a coincidence."
+
+"Everyone here talks like it reads your mind. It saw you stand there. So did Martin."
+
+"Day 6. I've decided I don't care that it's watching. I was going to do the thing anyway. If it wants to write that down, fine. Write it down."
+
+the survivors' forum
+:::
+
 ## The Four Axes
 
 The engine tracks four bipolar axes. Each axis is a tension, and every character sits somewhere on each one. The System watches these behaviors to forge the character's Internal Power: the Principles that crystallize for them (see The Principle System, "Your First Principle"). The eight affinity families named below are what the System reports before a Principle crystallizes.

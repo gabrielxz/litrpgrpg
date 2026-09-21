@@ -68,6 +68,14 @@ Looking at another Integrated being tells you something, and how much depends al
 
 No inspection at any Grade shows another person's Attributes, Health, Aether, Insight, or quest log; a party frame shows some of it, below. Titles are the only thing the System publishes, which is why they function as reputation: a title is the one part of a character that other people can read.
 
+::: {.lore .quoted}
+OPEN MEASURE | Inspection across one Grade | Conditions: Latchwater repair yards; F-Grade subjects, E-Grade observers; sector version current | Sample: 14 subjects, 41 inspections, 0 failures | By: Ensa | Replication: two independent, one pending
+
+Observers one Grade above the subject read every worn title in every attempt and no hidden one. No observer read an Attribute, Health, Aether, or Insight. Subjects inspecting upward read nothing, 41 of 41. Not tested: a gap of two or more Grades; a subject concealing a Bestowed title from an observer of the same Grade. These results hold under the conditions stated.
+
+an Open Measure bulletin
+:::
+
 **Being unable to inspect is information.** A character who looks at something and gets nothing back has learned that they are outclassed, and that is often the most useful sentence a GM can deliver. Say it plainly: *you look, and it does not resolve.*
 
 **Worn and hidden.** Bestowed titles can be worn or hidden at the holder's discretion, and switching costs nothing but a moment's attention. A worn title is legible to every observer of equal or higher Grade. A hidden one is concealed from peers and transparent to anyone two Grades up, so concealment works against peers and fails against anyone two or more Grades higher.

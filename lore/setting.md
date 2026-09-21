@@ -329,7 +329,7 @@ Bonds begin with specific people discovering shared practices: companionship, co
 
 ### Three people whose power matters
 
-- **Istren**, A-Grade protector of an Oren basin polity. Istren prevented its destruction and later secured the routes its people survived by. Centuries of protection became a constitutional problem: the emergency authority never lapsed. Some citizens love them; others want the right to take risks Istren forbids. Insightful, generous, and unable to let go.
+- **Istren**, C-Grade protector of an Oren basin polity. Istren prevented its destruction and later secured the routes its people survived by. Centuries of protection became a constitutional problem: the emergency authority never lapsed. Some citizens love them; others want the right to take risks Istren forbids. Insightful, generous, and unable to let go.
 - **Mael Torr**, D-Grade patron of a death archive. Torr buys access to terminal cultivators' final releases and accumulated records. Some arrangements are voluntary and enrich families; others run on debt, confinement, and calculations about when a subject is worth more dead. Torr exploits the System's information economy and speaks for no one else. Torr enters stories through brokers and contracts long before a party could face the patron. Species undesignated.
 - **Bel Sar**, missing route explorer. Their travel accounts connect inhabited places no published route reaches. Reports disagree about whether they died, found a place worth staying, or escaped the obligations their reputation carried. `[nobody]` on their fate. A surviving observation is useful whatever became of its author.
 
@@ -344,8 +344,8 @@ Relative anchors, with no dates. Different peoples keep different records, and p
 | **The Gethra Accession Ledger** | An early surviving account of an Integration, copied by later schools. The oldest account in this scholarly tradition. | Old institutions claim authority from it, and their copies disagree. |
 | **The Closed Roads War** | Powers contested transit routes, cut supply and evacuation access, and made Pellam uninhabitable. Gethra fell in the same wider conflict by a different sequence of fighting. | Refuge arrangements and contract enforcement grew partly from it. A civic ruin holds human-scale emergency decisions inside a vast war. |
 | **The Ulassa Departures** | Communities moved pieces of a dying biosphere across several evacuation periods. Some could not leave. | Descendants argue preservation against adaptation. The tutorial forest is one surviving fragment. |
-| **Istren's Ascendance** | A-Grade attainment let Istren break a basin polity's isolation and hold routes no one else could. | Sincere loyalty, and an unresolved argument about authority. |
-| **The Rill Closure** | A documented inhabited sector was retired after its evacuation window. Notice existed; some inhabitants lacked transport or refused to abandon what they depended on. The retirement proceeded. | It makes the tutorial's dissolution legible in the wider world. A deadline does not make everyone able to comply, and the System does not treat that as decisive. |
+| **Istren's Ascendance** | C-Grade attainment let Istren break a basin polity's isolation and hold routes no one else could. | Sincere loyalty, and an unresolved argument about authority. |
+| **The Rill Closure** | A documented inhabited sector was retired after its evacuation window. Notice existed; some inhabitants lacked transport or refused to abandon what they depended on. The retirement proceeded. | It makes the tutorial's dissolution legible in the wider world. A deadline does not make everyone able to comply, and the System does not move a deadline for those who cannot meet it. |
 
 Veyr's research disaster is a separate local event.
 

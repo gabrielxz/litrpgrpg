@@ -24,6 +24,12 @@ Characters do not gain traditional "Experience Points." They accumulate **Volati
 
 Joe can hold 80 VE before it starts to burn. A morning of hunting earns him 60 VE; he is fine. Then the party finds the den, and Joe decides to risk it: two more fights, one of them a Hard kill, push him to 90 VE, past his Tolerance, and now Joe feels uncomfortably full of energy: his skin prickles, his hands won't stay still, and everything is a little harder than it should be (Saturation, below: −10 to all rolls until he processes it). The party makes camp and Joe Consolidates. An hour in, his Aether is back. By the fifth hour the whole load is refined: his wounds are closed, the too-full feeling is gone, and all 90 VE is permanent progress toward his next level.
 
+::: lore
+Aether has a smell. Integrated humans describe green sweetness, fresh as leaves crushed between the palms and light enough to invite another breath. Each source adds an undertone that repeats for that source: a dry smoky finish, a warmer floral note, a musk, a low hum, a rhythm felt in the teeth. When something dies, the pale motes bring a brief wash of the sweetness and an uneven chord carrying the trace of what died, because the energy is still wearing the shape of the body that held it. Consolidation is that shape coming apart. The foreign notes fade, and the unevenness beneath the breastbone settles into a hum that follows the breath. A character who has smelled a thing's Aether once may recognize a resemblance later, before knowing its cause.
+:::
+
+A recognized trace is evidence to investigate. It grants no bonus, no range, and no sense stat; Perception separates faint details, and experience teaches recognition.
+
 ### The Pressure Gauge
 
 ![Saturation](./assets/art/scenes/saturation.png){.scene}

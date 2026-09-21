@@ -29,7 +29,8 @@
 - [x] The Items edit: the firearms row and the Temper paragraph (rules 0.1.4).
 - [ ] The After the Gate chapter, against the approved surface.
 - [ ] The two Kith image briefs.
-- [ ] Lore boxes wherever a chapter has a system that carries one; the color vignettes (Aether felt for the first time, Aura Pressure, the philosopher): candidates in `lore/briefs/lore-boxes-and-vignettes-2026-09-20.md` await Gabriel's pick; the found logs; the two first-contact accounts.
+- [x] Lore boxes wherever a chapter has a system that carries one; the color vignettes (Aether felt for the first time, Aura Pressure, the philosopher). Landed 2026-09-20.
+- [ ] The found logs; the two first-contact accounts (After the Gate).
 - [ ] The Initiate's Manual's planted errors, chosen from the adopted quirks.
 - [ ] The cosmology poster and the glossary, from the public facts.
 - [ ] The app's System voice, from the voice section.

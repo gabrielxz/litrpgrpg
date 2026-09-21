@@ -512,11 +512,23 @@ Each grants a fresh Will Save automatically. The action buys the retry, and the 
 
 A benevolent higher-Grade NPC may suppress their aura entirely, requiring no save. A hostile entity that flares its aura mid-combat, as a Beat on its turn, forces a fresh save from everyone.
 
+::: {.lore .quoted}
+"Two days north of Latchwater, a traveler came the other way. I did not see them arrive. I was counting way-stones, and then I was on my knees on the road with my pack still on and no memory of deciding to kneel. It was certainty rather than fear, the way you are certain of the ground: this person could end me, and my body had the knowledge before my thoughts did. They passed at a walk. They did not look at me. When I could stand, the road was the same road and I could not have told you what they wore. The forty-first stone. I set it down so the next traveler knows the stretch."
+
+Bel Sar, route accounts, undated
+:::
+
 ---
 
 ## Aether
 
 **Aether is the lifeblood of the Multiverse**, the ambient energy the System runs on and the medium every Integrated body learns to move. It is in the air, in the ground, in the things that live there, and in you from the moment Integration finishes. Newly integrated humans describe the first weeks as an intoxication: colors sharper, exhaustion further away, a pressure behind the sternum that answers when reached for.
+
+::: {.lore .quoted}
+"Day 4. Nobody warned me it would be nice. I came out of the gate and the first thing was the smell, cut grass, like someone had mowed the whole city, and I stood in a car park breathing it while people were screaming two streets over. It's in me too. Something under my breastbone answers when I reach for it, and I keep reaching for it the way you tongue a loose tooth. My hands don't shake anymore. I ran three kilometers to my sister's flat and I wasn't tired. I don't know what I am now. I know I slept nine hours and woke up wanting more of it."
+
+the survivors' forum
+:::
 
 **Volatile Energy is the same substance, still wearing someone else's shape.** Everything alive holds its Aether in a pattern, and when the pattern comes apart the energy is released still bent to it: potent, unusable, and corrosive to anything that tries to hold it. That is what comes off a dying creature as pale motes, what a treasure core carries, and what soaks into a body standing too long in a place where the density runs high. It is not yours yet. Consolidation is the work of breaking that borrowed shape down: the structure it becomes is permanent growth, and the loose energy left over is what refills your Aether. This is why Aether returns at the first full hour of rest and levels take five, why a body can only hold so much raw charge before it starts to burn, and why nothing regenerates by simply waiting. Waiting gives you nothing to refine.
 

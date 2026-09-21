@@ -33,6 +33,10 @@ A Breakthrough occurs when the barrier between the cultivator's current Grade an
 
 The same conditions that permit a Breakthrough can also produce dangerous external phenomena. The cultivator undergoes the transformation while companions deal with threats around the ritual site.
 
+::: lore
+On Oren, a basin polity survives because one cultivator broke through to C-Grade. Istren's Ascendance broke the basin's isolation and opened routes no one else could hold, and the people who live behind those routes owe their lives to it. Centuries on, the emergency authority Istren took has never lapsed. Some citizens love them. Others want the right to take risks Istren forbids. Istren is insightful, generous, and unable to let go, and the argument about who decides has outlived everyone who was there when the routes opened.
+:::
+
 ---
 
 ## The Universal Blueprint
