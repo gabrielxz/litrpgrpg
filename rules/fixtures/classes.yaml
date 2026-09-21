@@ -1,0 +1,117 @@
+# Worked examples from Classes (18-classes.md).
+cases:
+  - name: Selection adds 10 to the lead Attribute
+    source: 18-classes.md, "The Level 10 Scene"
+    fn: class_selection_bonus
+    expect: 10
+  - name: A class technique costs 5 Aether at F-Grade
+    source: 18-classes.md, "One technique"
+    fn: class_technique_cost
+    args: {acquired_grade: F}
+    expect: 5
+  - name: A class technique acquired at E-Grade costs 50
+    source: 18-classes.md, "One technique"
+    fn: class_technique_cost
+    args: {acquired_grade: E}
+    expect: 50
+  - name: The Guided shape returns 1 point to the player
+    source: 18-classes.md, "A three-point growth profile"
+    fn: class_profile_shape
+    args: {shape: Guided}
+    expect: {system: 2, returned: 1}
+
+  # Nia, Battle Medic
+  - name: Nia at Level 10 after the selection bonus (POW 22 becomes 32)
+    source: 18-classes.md, "Battle Medic"
+    fn: class_select
+    args: {stats: {STR: 4, DEX: 8, FOR: 15, HRT: 17, POW: 22, PER: 8, CHA: 11}, lead: POW}
+    expect: {STR: 4, DEX: 8, FOR: 15, HRT: 17, POW: 32, PER: 8, CHA: 11}
+  - name: Nia at Level 10 has 30 Health
+    source: 18-classes.md, "Battle Medic"
+    fn: max_hp
+    args: {raw_for: 15}
+    expect: 30
+  - name: Nia at Level 10 has 32 Aether
+    source: 18-classes.md, "Battle Medic"
+    fn: max_aether
+    args: {raw_pow: 32}
+    expect: 32
+  - name: Six Triages a fight at 32 Aether
+    source: 18-classes.md, "Battle Medic"
+    fn: class_technique_uses
+    args: {max_aether_value: 32}
+    expect: 6
+  - name: Nia at Level 25, every free point in POW
+    source: 18-classes.md, "Battle Medic"
+    fn: class_growth
+    args:
+      stats: {STR: 4, DEX: 8, FOR: 15, HRT: 17, POW: 32, PER: 8, CHA: 11}
+      profile: {POW: 1, DEX: 1, HRT: 1}
+      free_total: {POW: 30}
+      levels: 15
+    expect: {STR: 4, DEX: 23, FOR: 15, HRT: 32, POW: 77, PER: 8, CHA: 11}
+  - name: Nia at Level 25 has 77 Aether, fifteen Triages
+    source: 18-classes.md, "Battle Medic"
+    fn: class_technique_uses
+    args: {max_aether_value: 77}
+    expect: 15
+
+  # Kara, Breaching Vanguard
+  - name: Kara at Level 10 after the selection bonus (STR 25 becomes 35)
+    source: 18-classes.md, "Breaching Vanguard"
+    fn: class_select
+    args: {stats: {STR: 25, DEX: 5, FOR: 17, HRT: 10, POW: 18, PER: 5, CHA: 5}, lead: STR}
+    expect: {STR: 35, DEX: 5, FOR: 17, HRT: 10, POW: 18, PER: 5, CHA: 5}
+  - name: Kara at Level 10 has 34 Health
+    source: 18-classes.md, "Breaching Vanguard"
+    fn: max_hp
+    args: {raw_for: 17}
+    expect: 34
+  - name: Kara's Surge costs 9 of her 18 Aether
+    source: 18-classes.md, "Breaching Vanguard"
+    fn: surge_cost
+    args: {max_aether_value: 18}
+    expect: 9
+  - name: Kara at Level 25, every free point in STR
+    source: 18-classes.md, "Breaching Vanguard"
+    fn: class_growth
+    args:
+      stats: {STR: 35, DEX: 5, FOR: 17, HRT: 10, POW: 18, PER: 5, CHA: 5}
+      profile: {STR: 2, FOR: 1}
+      free_total: {STR: 30}
+      levels: 15
+    expect: {STR: 95, DEX: 5, FOR: 32, HRT: 10, POW: 18, PER: 5, CHA: 5}
+  - name: Kara at Level 25, free points split three ways
+    source: 18-classes.md, "Breaching Vanguard"
+    fn: class_growth
+    args:
+      stats: {STR: 35, DEX: 5, FOR: 17, HRT: 10, POW: 18, PER: 5, CHA: 5}
+      profile: {STR: 2, FOR: 1}
+      free_total: {STR: 10, HRT: 10, POW: 10}
+      levels: 15
+    expect: {STR: 75, DEX: 5, FOR: 32, HRT: 20, POW: 28, PER: 5, CHA: 5}
+  - name: Kara at Level 25 has 64 Health
+    source: 18-classes.md, "Breaching Vanguard"
+    fn: max_hp
+    args: {raw_for: 32}
+    expect: 64
+
+  # The Open shape returns two points a level
+  - name: Registrar's Open profile over fifteen levels (1 PER a level, 4 free)
+    source: 18-classes.md, "Registrar"
+    fn: class_growth
+    args:
+      stats: {STR: 5, DEX: 6, FOR: 8, HRT: 9, POW: 7, PER: 30, CHA: 10}
+      profile: {PER: 1}
+      free_total: {PER: 30, CHA: 30}
+      levels: 15
+    expect: {STR: 5, DEX: 6, FOR: 8, HRT: 9, POW: 7, PER: 75, CHA: 40}
+  - name: Free points that do not add up are refused
+    source: 18-classes.md, "A three-point growth profile"
+    fn: class_growth
+    args:
+      stats: {STR: 5, DEX: 6, FOR: 8, HRT: 9, POW: 7, PER: 30, CHA: 10}
+      profile: {PER: 1}
+      free_total: {PER: 30}
+      levels: 15
+    expect_error: ValueError

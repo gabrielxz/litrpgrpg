@@ -299,6 +299,34 @@ def _proficiency_group(group):
     return lambda: table(["Proficiency", "Covers"], [[p["name"], p["covers"]] for p in E.load("character")["sample_proficiencies"][group]])
 
 
+
+def g_class_profile_shapes():
+    rows = [[s["shape"], s["system"], s["returned"]] for s in E.load("classes")["profile"]["shapes"]]
+    return table(["Shape", "System points", "Returned to the player"], rows)
+
+
+def g_class_technique_costs():
+    rows = [[c["shape"], c["cost"], c["for"]] for c in E.load("classes")["technique"]["cost_shapes"]]
+    return table(["Cost shape", "Cost", "For"], rows)
+
+
+def g_class_guarded_list():
+    rows = [[g["power"], g["changes"]] for g in E.load("classes")["guarded"]["list"]]
+    return table(["Guarded power", "What it changes"], rows)
+
+
+def g_class_list():
+    rows = []
+    for c in E.load("classes")["classes"]:
+        pts = ", ".join(f"{n} {a}" for a, n in c["profile"]["points"].items())
+        ret = 3 - sum(c["profile"]["points"].values())
+        if ret:
+            pts += f", {ret} returned"
+        name = c["name"] + (" (guarded)" if c.get("guarded") else "")
+        rows.append([name, c["built_for"], ", ".join(c["poles"]), pts, c["technique"]["cost"]])
+    return table(["Class", "Built for", "Poles", "Profile", "Technique cost"], rows)
+
+
 REGISTRY = {
     # id: (file, header line, preceding bold label or None, generator)
     "grade-table":              ("10-core-mechanics.md", "| **Grade** | **Raw Stat Range** | **Divisor** | **Force Range** | **Damage Multiplier** |", None, g_grade_table),
@@ -318,6 +346,10 @@ REGISTRY = {
     "proficiencies-making":     ("15-character-creation.md", "| **Proficiency** | **Covers** |", "**Making and Breaking**", _proficiency_group("Making and Breaking")),
     "behavioral-mapping":       ("17-progression.md", "| Behavior Pattern | Primary Stat | Secondary Stat |", None, g_behavioral_mapping),
     "nine-levels":              ("17-progression.md", "| Source | Points |", None, g_nine_levels),
+    "class-profile-shapes":     ("18-classes.md", "| **Shape** | **System points** | **Returned to the player** |", None, g_class_profile_shapes),
+    "class-technique-costs":    ("18-classes.md", "| **Cost shape** | **Cost** | **For** |", None, g_class_technique_costs),
+    "class-guarded-list":       ("18-classes.md", "| **Guarded power** | **What it changes** |", None, g_class_guarded_list),
+    "class-list":               ("18-classes.md", "| **Class** | **Built for** | **Poles** | **Profile** | **Technique cost** |", None, g_class_list),
     "principle-ladder":         ("20-principles.md", "| **Tier** | **Cumulative IP** | **Grants** |", None, g_principle_ladder),
     "ip-sources":               ("20-principles.md", "| **Source** | **IP Awarded** |", None, g_ip_sources),
     "application-costs":        ("20-principles.md", "| **Granted at** | **Aether Cost** |", None, g_application_costs_principles),

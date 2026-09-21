@@ -1,0 +1,169 @@
+# Classes (18-classes.md). Sketched 2026-09-21 from the design record in
+# 99-to-do.md; the chapter's tables render from here and the worked runs are
+# fixtures. The numbers are the truth; the chapter's prose owns procedure.
+
+selection:
+  level: 10
+  offers: 3
+  refusable: false               # the same three stand until one is chosen; System points wait
+  published: false               # inspection at any Grade does not show a class
+  lead_attribute_bonus: 10       # added to the class's lead Attribute at selection, before Level 10's points land
+  new_offers_at: the F→E Breakthrough
+
+profile:
+  system_points_per_level: 3     # Progression: 3 System + 2 free per level from Level 10
+  shapes:
+    - {shape: Fixed,  system: 3, returned: 0}
+    - {shape: Guided, system: 2, returned: 1}
+    - {shape: Open,   system: 1, returned: 2}
+  # A profile lists its Attributes in order; the first named is the lead.
+
+technique:
+  beats: 1
+  aether_cost_at_f: 5            # ×10 per Grade of acquisition, like any acquired skill
+  bonus_default: 10
+  bonus_cap: 20                  # the Modifier Budget's peak
+  cost_shapes:
+    - {shape: Aether,    cost: "5 Aether, usable while Aether lasts",                    for: "Role tools: healing, casting, sensing"}
+    - {shape: Frequency, cost: "No Aether, once per encounter",                          for: "Martial moves and reactions"}
+    - {shape: Drawback,  cost: "No Aether; 10 Health, or Exposed until your next turn",  for: "Moves that cost the body"}
+  drawback_health: 10
+  reference:
+    seed_application_heal: 20    # scales with the body
+    class_heal: 10               # fixed
+    seed_application_cost: 10
+  constraint_clash: "HRT Force against HRT Force, one roll; none if the constraint rides an attack already won"
+
+permission:
+  cost: none
+  action_economy_effects_max: 1  # across the technique and the permission together
+  reactions_per_encounter: 1     # a reaction paid in Beats (a shared Yield) is limited by the Beats instead
+  death_clock_hold_rounds: 1     # the one thing a class may do to the countdown, for a Beat
+
+guarded:
+  per_campaign: 1
+  app_generates: false
+  list:
+    - {power: "An execution restores 5 Aether, at most once per fight",                        changes: "Aether in combat", class: Devourer}
+    - {power: "An attack on a higher-Grade target ignores 20 of its Cross-Grade Adjustment",   changes: "The Grade gap",    class: Underdog}
+    - {power: "Against a higher-Grade target, Surge costs 5",                                   changes: "The Grade gap",    class: Underdog}
+
+# The voice mapping: what the System's notice says, and what the table runs.
+notice_vocabulary:
+  - {system: "counts 10 higher",                     table: "+10 to the Clash (5 for +5)"}
+  - {system: "one act",                              table: "1 Beat"}
+  - {system: "takes no time",                        table: "costs no Beat"}
+  - {system: "exchange",                             table: "turn"}
+  - {system: "once per fight",                       table: "once per encounter"}
+  - {system: "once a day",                           table: "once per session"}
+  - {system: "within reach",                         table: "in your Zone"}
+  - {system: "within 30 meters",                     table: "in your Zone or an adjacent one"}
+  - {system: "ground",                               table: "a Zone"}
+  - {system: "left open until it has acted again",   table: "Exposed until the end of its next turn"}
+  - {system: "unless its Heart withstands yours",    table: "one Clash, its HRT Force against yours"}
+  - {system: "holds the press",                      table: "has Momentum"}
+
+classes:
+  - name: Battle Medic
+    built_for: Nia
+    poles: [Restraint, Accord]
+    profile: {shape: Fixed, points: {POW: 1, DEX: 1, HRT: 1}}
+    technique: {name: Triage, cost: Aether, effect: "Restores 10 Health to an ally in your Zone or an adjacent one"}
+    permission: {name: Reach the Fallen, effect: "Moving into a Zone holding a Downed ally costs no Beat", action_economy: true}
+  - name: Breaching Vanguard
+    built_for: Kara
+    poles: [Force, Hunger]
+    profile: {shape: Fixed, points: {STR: 2, FOR: 1}}
+    technique: {name: Breach, cost: Frequency, effect: "+10 to a Clash against a target in a Zone you entered this turn; a win Drives it Back whatever the Margin"}
+    permission: {name: Rush, effect: "Moving into an adjacent Zone and attacking there costs 1 Beat in total", action_economy: true}
+  - name: Burner
+    built_for: Coleman
+    poles: [Force, Hunger]
+    profile: {shape: Guided, points: {STR: 1, FOR: 1}}
+    technique: {name: Pay in Blood, cost: Drawback, effect: "Take 10 damage for +10 on one Clash roll this turn, declared before rolling"}
+    permission: {name: Blood for Aether, effect: "You may pay a Surge with 10 Health instead of Aether", action_economy: false}
+  - name: Counterpuncher
+    built_for: Ines
+    poles: [Method, Restraint]
+    profile: {shape: Guided, points: {DEX: 1, PER: 1}}
+    technique: {name: Riposte, cost: Frequency, effect: "Win a defensive Clash by 20 or more and Clash back at once for no Beat", reaction: true}
+    permission: {name: Second Hand, effect: "While your side lacks Momentum, your first Clash each turn is +5", action_economy: false}
+  - name: Lightfingers
+    built_for: Dani
+    poles: [Method, Hunger]
+    profile: {shape: Guided, points: {DEX: 1, PER: 1}}
+    technique: {name: Lift, cost: Frequency, effect: "Take one carried item from an Exposed enemy in your Zone"}
+    permission: {name: Finder's Share, effect: "Once per session, a kill you name rolls its loot one step up the table", action_economy: false}
+  - name: Standing Surety
+    built_for: Wendell
+    poles: [Restraint, Accord]
+    profile: {shape: Fixed, points: {FOR: 2, HRT: 1}}
+    technique: {name: Hold Fast, cost: Aether, effect: "You and every ally in your Zone count as not Cornered until your next turn"}
+    permission: {name: Take It, effect: "Once per round, Yield one Beat of your next turn to cut an attack on an ally in your Zone by 20", action_economy: false, reaction: true, paid_in_beats: true}
+  - name: Vowbound
+    built_for: Yusuf
+    poles: [Will, Restraint]
+    profile: {shape: Fixed, points: {HRT: 2, STR: 1}}
+    technique: {name: Sworn Blow, cost: Aether, effect: "+10 to a Clash against the object of your vow"}
+    permission: {name: The Vow, effect: "Swear one thing aloud at the start of a fight: +5 to Clashes that serve it; act against it and you are Exposed for the rest of the fight", action_economy: false}
+  - name: Adjudicator
+    built_for: Ruth
+    poles: [Will, Control]
+    profile: {shape: Fixed, points: {HRT: 1, CHA: 1, PER: 1}}
+    technique: {name: Sanction, cost: Aether, effect: "Name an action; the next creature in sight that takes it is Exposed until the end of its next turn unless it wins a Clash, HRT Force against yours"}
+    permission: {name: Contempt, effect: "Once per encounter, an execution attempted in your Zone provokes a free Clash from you before it lands", action_economy: true, reaction: true}
+  - name: Peacemaker
+    built_for: Hal
+    poles: [Accord, Freedom]
+    profile: {shape: Guided, points: {CHA: 1, HRT: 1}}
+    technique: {name: Open Hand, cost: Aether, effect: "One enemy in your Zone at half Health or less leaves the fight or has no Beats on its next turn, unless it wins a Clash, HRT Force against yours; mindless creatures ignore it"}
+    permission: {name: Terms, effect: "A creature whose stat block Yields can be parleyed with mid-fight", action_economy: false}
+  - name: Registrar
+    built_for: Maren
+    poles: [Control, Accord]
+    profile: {shape: Open, points: {PER: 1}}
+    technique: {name: Reclassify, cost: Aether, effect: "The System re-reads one creature or object in sight and states its Grade and tier as the record holds them, possibly wrong"}
+    permission: {name: Standing, effect: "Once per session, a proposal you put to the System receives an answer", action_economy: false}
+  - name: Still One
+    built_for: Priya
+    poles: [Freedom, Restraint]
+    profile: {shape: Open, points: {DEX: 1}}
+    technique: {name: Go Cold, cost: Aether, effect: "Until your next turn, nothing that finds prey by the System's reading can target you"}
+    permission: {name: No Life Here, effect: "On a turn you spend no Beats, the System reads you as dead until you act", action_economy: false}
+  - name: Witness
+    built_for: Sabine
+    poles: [Method, Restraint]
+    profile: {shape: Guided, points: {PER: 1, HRT: 1}}
+    technique: {name: Note the Pattern, cost: Frequency, effect: "After one round watching a creature, the GM says what it does on its next turn"}
+    permission: {name: The Observation, effect: "At an unusual death in your sight, the System's observation comes to you: Grade, tier, one Tactics line", action_economy: false}
+  - name: Devourer
+    built_for: Aron
+    guarded: true
+    poles: [Hunger, Will]
+    profile: {shape: Fixed, points: {POW: 1, STR: 1, HRT: 1}}
+    technique: {name: Consume, cost: Frequency, effect: "An execution by your hand restores 5 Aether, at most once per fight"}
+    permission: {name: What Is Left, effect: "You read the current Health of every creature in your Zone", action_economy: false}
+  - name: Underdog
+    built_for: Tess
+    guarded: true
+    poles: [Force, Will]
+    profile: {shape: Fixed, points: {STR: 2, HRT: 1}}
+    technique: {name: Find the Seam, cost: Frequency, effect: "An attack on a higher-Grade target ignores 20 of its Cross-Grade Adjustment"}
+    permission: {name: Above You, effect: "Against a higher-Grade target, Surge costs 5", action_economy: false}
+
+# NPC classes print as a Tactics line: the class name and its one technique.
+npc_tactics_example: "Class: Vowbound. Sworn Blow (5 Aether): +10 against the object of its vow, sworn aloud when the fight starts."
+
+worked_runs:
+  Nia:
+    level_1:      {STR: 4, DEX: 5, FOR: 6, HRT: 7, POW: 7, PER: 6, CHA: 5}
+    level_6:      {STR: 4, DEX: 7, FOR: 12, HRT: 13, POW: 15, PER: 6, CHA: 8}
+    level_10_pre: {STR: 4, DEX: 8, FOR: 15, HRT: 17, POW: 22, PER: 8, CHA: 11}   # Levels 7 to 10 landed, before the selection bonus
+    level_10:     {STR: 4, DEX: 8, FOR: 15, HRT: 17, POW: 32, PER: 8, CHA: 11}   # after +10 to the lead (POW)
+    level_25:     {STR: 4, DEX: 23, FOR: 15, HRT: 32, POW: 77, PER: 8, CHA: 11}  # every free point in POW
+  Kara:
+    level_6:      {STR: 17, DEX: 5, FOR: 11, HRT: 4, POW: 18, PER: 5, CHA: 5}
+    level_10_pre: {STR: 25, DEX: 5, FOR: 17, HRT: 10, POW: 18, PER: 5, CHA: 5}
+    level_10:     {STR: 35, DEX: 5, FOR: 17, HRT: 10, POW: 18, PER: 5, CHA: 5}
+    level_25:     {STR: 95, DEX: 5, FOR: 32, HRT: 10, POW: 18, PER: 5, CHA: 5}   # every free point in STR
+    level_25_split: {STR: 75, DEX: 5, FOR: 32, HRT: 20, POW: 28, PER: 5, CHA: 5} # free points 10 STR, 10 HRT, 10 POW

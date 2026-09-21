@@ -433,6 +433,60 @@ def principle_tier(ip: int) -> str | None:
     return reached
 
 
+# --------------------------------------------------------------- classes ---
+
+ATTRIBUTES = ["STR", "DEX", "FOR", "HRT", "POW", "PER", "CHA"]
+
+
+def class_selection_bonus() -> int:
+    """Added to the class's lead Attribute at Level 10, before the level's own points land."""
+    return load("classes")["selection"]["lead_attribute_bonus"]
+
+
+def class_select(stats: dict, lead: str) -> dict:
+    out = dict(stats)
+    out[lead] = out[lead] + class_selection_bonus()
+    return out
+
+
+def class_profile_shape(shape: str) -> dict:
+    for s in load("classes")["profile"]["shapes"]:
+        if s["shape"].lower() == shape.lower():
+            return {"system": s["system"], "returned": s["returned"]}
+    raise KeyError(shape)
+
+
+def class_technique_cost(acquired_grade: str = "F") -> int:
+    """5 Aether at F, ×10 per Grade of acquisition, like any acquired skill."""
+    return load("classes")["technique"]["aether_cost_at_f"] * scale(acquired_grade)
+
+
+def class_technique_uses(max_aether_value: int, acquired_grade: str = "F") -> int:
+    return max_aether_value // class_technique_cost(acquired_grade)
+
+
+def class_growth(stats: dict, profile: dict, free_total: dict, levels: int) -> dict:
+    """Apply `levels` class levels: the profile's System points every level, and the
+    player's free points (2 a level plus whatever the profile returns) as one total."""
+    c = load("classes")
+    per_level = c["profile"]["system_points_per_level"]
+    system = sum(profile.values())
+    if system < 1 or system > per_level:
+        raise ValueError(f"a profile places 1 to {per_level} System points, not {system}")
+    returned = per_level - system
+    free_per_level = load("character")["leveling"]["free"] + returned
+    if sum(free_total.values()) != free_per_level * levels:
+        raise ValueError(f"free points must total {free_per_level * levels} over {levels} levels, not {sum(free_total.values())}")
+    out = dict(stats)
+    for attr, pts in profile.items():
+        out[attr] = out[attr] + pts * levels
+    for attr, pts in free_total.items():
+        out[attr] = out[attr] + pts
+    return out
+
+
+# ------------------------------------------------------------ principles ---
+
 def application_cost(granted_at: str) -> int:
     for row in load("principles")["application_costs"]:
         if row["granted_at"].lower().startswith(granted_at.lower()):
