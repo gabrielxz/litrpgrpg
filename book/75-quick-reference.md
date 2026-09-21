@@ -65,7 +65,7 @@ One number at the top of the die. On a Clash it explodes (combat Clashes, Will S
 
 **Consolidation:** every hour refines 20 VE (×10 per Grade) and restores one fifth of Max HP, rounded up; a level's worth clears in 6 hours; Aether refills at the first full hour. Interruption keeps completed hours.
 
-**Breakthrough Check:** d100 + HRT Force + preparation vs. **DC 140** (Severe, flat, no Cross-Grade Adjustment). Overcharge ×1/×2/×3/×4 (80/160/240/320 VE at F) raises it to 140/150/160/180 and buys +0/+1/+2/+3 Quality Tiers.
+**Breakthrough Check:** d100 + HRT Force + preparation vs. **DC 140** (Severe, flat, no Cross-Grade Adjustment). Overcharge ×1/×2/×3/×4 (80/160/240/320 VE at F) raises it to 140/150/160/180 and buys +0/+1/+2/+3 Quality Tiers. Stable or better: the Grade rises, the caps lift, and every Attribute gains 10 (×10 per Grade).
 
 **Surge:** spend half your Maximum Aether (round down, at least 1) for +5 on one Clash roll you make. Declare before rolling. No Beat. Stacks with everything; available to everyone.
 

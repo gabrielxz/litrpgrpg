@@ -62,6 +62,9 @@ patterns:
   - {pattern: 'DEX (or|and|Force and) PER( Force)?',  replaced_by: "Momentum: HRT or PER Force",                  since: 2026-09-21}
   - {pattern: 'higher printed Force',             replaced_by: "every stat block prints HRT and PER Force",     since: 2026-09-21}
   - {pattern: 'no HRT layer',                     replaced_by: "HRT Force is printed; immunity is a Tactics line", since: 2026-09-21}
+  - {pattern: 'without raising stats',            replaced_by: "Breakthrough adds 10 to every Attribute",           since: 2026-09-21}
+  - {pattern: 'still has STR 80',                 replaced_by: "STR 80 becomes STR 90 at E",                      since: 2026-09-21}
+  - {pattern: 'lifted, not the floor',            replaced_by: "the caps lift and no floor is imposed",            since: 2026-09-21}
   - {pattern: 'treat HRT Force as',               replaced_by: "HRT Force is printed",                        since: 2026-09-21}
   - {pattern: '\*\*?\[[^\]\n]*\]\*\*?',           replaced_by: "System text in bare italics; the box is the frame", since: 2026-09-20}
   - {pattern: '["“]\[[A-Z][a-z]+ [a-z][^\]\n]*\]',      replaced_by: "System text in bare italics, never quoted brackets", since: 2026-09-20}

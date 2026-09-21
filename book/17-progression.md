@@ -83,4 +83,4 @@ The pre-class observation period is over. The Hidden Vector Engine continues tra
 
 ## Beyond Level 25
 
-Level 25 is the F-Grade cap. VE keeps accumulating, stats keep growing from treasures and titles up to the Grade's stat cap, but no further levels arrive. The way forward is a **Grade Breakthrough**: a deliberate, dangerous ritual with its own chapter. When it succeeds, the character is Level 26 with nothing stored, leveling resumes at the E-Grade cost per level, and the stat cap rises to the new Grade's maximum; the F→E Breakthrough also unlocks the second Principle slot (see The Principle System).
+Level 25 is the F-Grade cap. VE keeps accumulating, stats keep growing from treasures and titles up to the Grade's stat cap, but no further levels arrive. The way forward is a **Grade Breakthrough**: a deliberate, dangerous ritual with its own chapter. When it succeeds, the character is Level 26 with nothing stored, leveling resumes at the E-Grade cost per level, the stat cap rises to the new Grade's maximum, and every Attribute gains 10; the F→E Breakthrough also unlocks the second Principle slot (see The Principle System).

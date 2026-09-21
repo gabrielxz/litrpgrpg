@@ -100,3 +100,23 @@ cases:
     fn: coherence
     args: {deep_leads: [8, 1, 0, 0]}
     expect: {profile: Singular, bonus: 20}
+  - name: Stable F→E adds 10 to every Attribute (STR 80 becomes 90)
+    source: 30-breakthroughs.md, "Outputs by Quality Tier"
+    fn: post_breakthrough_raw
+    args: {raw: 80, from_code: F}
+    expect: 90
+  - name: STR 5 becomes 15, no floor imposed
+    source: 30-breakthroughs.md, "Outputs by Quality Tier"
+    fn: post_breakthrough_raw
+    args: {raw: 5, from_code: F}
+    expect: 15
+  - name: The dump-stat note, STR 65 at the F cap reads 075, Force 07 at E
+    source: 30-breakthroughs.md, "A Note on Dump Stats"
+    fn: force
+    args: {raw: 75, code: E}
+    expect: 7
+  - name: E→D adds 100 to every Attribute
+    source: 30-breakthroughs.md, "Outputs by Quality Tier"
+    fn: breakthrough_attribute_gain
+    args: {from_code: E}
+    expect: 100

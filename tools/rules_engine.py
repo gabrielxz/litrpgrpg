@@ -342,6 +342,16 @@ def overcharge_ve(overcharge_ratio: int, code: str = "F") -> int:
     return tolerance(code) * overcharge_ratio
 
 
+def breakthrough_attribute_gain(from_code: str = "F") -> int:
+    """What every Attribute gains on a Stable or better Breakthrough out of `from_code` (10 at F→E, ×10 per Grade)."""
+    return load("breakthrough")["outputs"]["Stable"]["every_attribute_adds"] * scale(from_code)
+
+
+def post_breakthrough_raw(raw: int, from_code: str = "F") -> int:
+    """A Raw Attribute after Breaking Through out of `from_code`: the caps lift, no floor is imposed."""
+    return raw + breakthrough_attribute_gain(from_code)
+
+
 def quality_tier(total: int, overcharge_ratio: int = 1, quality_enhancer: bool = False) -> dict:
     b = load("breakthrough")
     dc = breakthrough_dc(overcharge_ratio)
