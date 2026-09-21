@@ -21,8 +21,8 @@ free_actions:
 surprise_beat: 1                # each surprising character takes one free Beat before Initial Momentum
 
 momentum:
-  roll: d100 + max(DEX Force, PER Force) of the side's best such combatant
-  seize_cost_beats: 1           # roller uses their own DEX or PER Force; the holding side answers with its highest
+  roll: d100 + max(HRT Force, PER Force) of the side's best such combatant; a creature printing neither uses its higher printed Force
+  seize_cost_beats: 1           # roller uses their own HRT or PER Force; the holding side answers with its highest
   shift_triggers: [Reinforcement Arrival, Decisive Tactical Reversal, Seize Momentum]
 
 movement:

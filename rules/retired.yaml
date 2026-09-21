@@ -59,6 +59,7 @@ patterns:
   - {pattern: 'behavior the System judges',       replaced_by: "the consequence comes from the people who can see the title", since: 2026-09-20}
   - {pattern: 'publishes its judgments',          replaced_by: "publishes the record",                        since: 2026-09-20}
   - {pattern: 'Estimated thread loss',            replaced_by: "vital coherence 3, 2, 1",                     since: 2026-09-20}
+  - {pattern: 'DEX (or|and|Force and) PER( Force)?',  replaced_by: "Momentum: HRT or PER Force",                  since: 2026-09-21}
   - {pattern: '\*\*?\[[^\]\n]*\]\*\*?',           replaced_by: "System text in bare italics; the box is the frame", since: 2026-09-20}
   - {pattern: '["“]\[[A-Z][a-z]+ [a-z][^\]\n]*\]',      replaced_by: "System text in bare italics, never quoted brackets", since: 2026-09-20}
 

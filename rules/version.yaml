@@ -1,8 +1,8 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.5"
-dated: "2026-09-20"
+version: "0.1.6"
+dated: "2026-09-21"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
   flat-value VE (Tolerance 80, level 120, 20 per hour), the Grade Gap Rule,
@@ -15,3 +15,5 @@ notes: >
   rounds up; structured logging computes the sweep instead of a separate numeric vector;
   Salvaged and Came Back Whole (+1 HRT) join tutorial_titles; the Warden turns Hostile at
   143 HP or less; the Wraith's PER exception; faction consequences stated in words.
+  0.1.6: Momentum is rolled on the higher of HRT and PER Force (Initial and Seize); a creature
+  printing neither uses its higher printed Force. Heart's every-fight job.

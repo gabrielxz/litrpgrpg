@@ -73,7 +73,7 @@ Seven Attributes, tracked as Raw Power and read as Force.
 - **Strength (STR):** Physical power and carry capacity. Governs heavy melee.
 - **Dexterity (DEX):** Precision, speed, manual agility. Governs evasion, finesse melee, and ranged attacks.
 - **Fortitude (FOR):** Endurance and structural integrity. Governs Health and standing your ground.
-- **Heart (HRT):** Resolve, mental fortitude, spiritual anchor. Governs defense against mental, spiritual, and coercive attacks, Aura Pressure, and the Breakthrough.
+- **Heart (HRT):** Resolve, mental fortitude, spiritual anchor. Governs Momentum, defense against mental, spiritual, and coercive attacks, Aura Pressure, and the Breakthrough.
 - **Power (POW):** Magnitude of energy-based output. Governs spells, Applications, and the Aether pool.
 - **Perception (PER):** Awareness and sensory sharpness. Governs detection, Principle insight, and defense against illusion.
 - **Charisma (CHA):** Force of personality and social leverage.
@@ -228,11 +228,13 @@ Combat does not use a fixed turn order. Each round the side with **Momentum** ta
 
 **Initial Momentum.** Each side sends one roller:
 
-1. For each combatant on the side, take the higher of their DEX Force and PER Force.
+1. For each combatant on the side, take the higher of their HRT Force and PER Force.
 2. The side's roller is whoever has the highest such value.
 3. The roller makes the side's **Momentum Roll**: d100 plus that value.
 
-The two sides may be rolling different Attributes. Highest total holds Momentum for the first round. **On a tie, both sides roll again.**
+The two sides may be rolling different Attributes. Highest total holds Momentum for the first round. **On a tie, both sides roll again.** A creature whose stat block prints no HRT or PER rolls with the higher of its printed Forces.
+
+Momentum is nerve and awareness rather than speed: the combatant who keeps their head at first contact sets the tempo, and the one who reads the field can take it back.
 
 **Surprise.** A side that achieves true surprise acts before combat properly begins: each surprising character immediately takes one free Beat, the **Surprise Beat**. Then Initial Momentum is rolled normally. A sharp defender can absorb an ambush and still take the first full round.
 
@@ -249,7 +251,7 @@ The two sides may be rolling different Attributes. Highest total holds Momentum 
 
 - **Reinforcement Arrival.** A previously absent combatant enters the fight. Momentum shifts to that side at the start of the next round, if it does not already hold it.
 - **Decisive Tactical Reversal.** A character reshapes the fight: springing a trap, weaponizing terrain, completing a multi-round setup, exposing a hidden combatant, winning a defensive Clash with a Volatility explosion, or any other move the GM judges to qualify. Momentum shifts to that character's side. The threshold is GM judgment, and it is the GM's flexible reward for clever play.
-- **Seize Momentum.** A character spends 1 Beat and rolls an Opposed Momentum Roll against the side currently holding Momentum, using **their own** DEX or PER Force, whichever is higher. The side holding Momentum answers with its highest such value. On a win, Momentum shifts at the start of the next round. On a loss, the Beat is spent.
+- **Seize Momentum.** A character spends 1 Beat and rolls an Opposed Momentum Roll against the side currently holding Momentum, using **their own** HRT or PER Force, whichever is higher. The side holding Momentum answers with its highest such value. On a win, Momentum shifts at the start of the next round. On a loss, the Beat is spent.
 
 When no Shift fires, Momentum stays where it is. If two triggers fire in the same round, the later one wins. With three or more sides, the new holder acts first and the other sides keep their order.
 

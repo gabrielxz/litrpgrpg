@@ -191,8 +191,13 @@ cases:
     fn: skill_cost_at_grade
     args: {cost_at_f: 10, acquired_grade: E}
     expect: 100
-  - name: Momentum roller uses the higher of DEX and PER Force
+  - name: Momentum roller uses the higher of HRT and PER Force (Andre, HRT 6, PER 9)
     source: "10-core-mechanics.md, 'Initiative: The Momentum System'"
     fn: momentum_value
-    args: {dex_force: 7, per_force: 9}
+    args: {hrt_force: 6, per_force: 9}
     expect: 9
+  - name: Momentum roller uses the higher of HRT and PER Force (a steady character, HRT 8, PER 5)
+    source: "10-core-mechanics.md, 'Initiative: The Momentum System'"
+    fn: momentum_value
+    args: {hrt_force: 8, per_force: 5}
+    expect: 8

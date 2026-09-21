@@ -25,7 +25,7 @@
 - **Skill check failure:** fail by 1–39 Soft (a setback with a way forward; success at a cost is a tool, never the default), 40+ Hard (failure plus consequence), natural 01–05 Catastrophic. Margin 40+ on any success is dominant.
 - **Exceptional Success:** natural roll at or above your Volatility Threshold on a skill check. Success: narrate a step beyond what was asked. Failure: Soft regardless of margin. No extra dice.
 - **Cross-Grade Auto-Success:** vs. passive obstacles, Force + Cross-Grade Adjustment ≥ Resistance = no roll (2+ Grades up never rolls).
-- **Momentum:** Opposed Momentum Roll: d100 + DEX or PER Force (whichever is higher); a tie rerolls. Winning side acts first each round.
+- **Momentum:** Opposed Momentum Roll: d100 + HRT or PER Force (whichever is higher); a creature with neither printed uses its higher printed Force; a tie rerolls. Winning side acts first each round.
 - **Free Step:** DEX Force 50+ grants one free Zone move per turn.
 - **Cross-Grade movement:** the higher Grade auto-wins movement contests. A combatant a full Grade above every hostile present moves between Zones without spending Beats at all.
 

@@ -158,8 +158,9 @@ def pregen_derived(name: str) -> dict:
     }
 
 
-def momentum_value(dex_force: int, per_force: int) -> int:
-    return max(dex_force, per_force)
+def momentum_value(hrt_force: int, per_force: int) -> int:
+    """The Momentum roller's bonus: nerve or awareness, whichever is higher (rules 0.1.6; DEX before that)."""
+    return max(hrt_force, per_force)
 
 
 # ------------------------------------------------------------ resolution ---
