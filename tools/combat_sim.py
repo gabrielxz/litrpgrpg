@@ -8,7 +8,7 @@ player character Downed. Player characters attack the lowest-HP creature with ev
 they have; creatures attack a random standing player character. Yield is used only to
 avoid being Downed, with the fewest Beats that do it; a creature Yields the same way if
 its stat block says so. Momentum is rolled once, on the higher of HRT and PER Force for a player
-character and the higher printed Force for a creature (rules 0.1.6). No stabilization, no pills,
+character and for a creature alike; every stat block prints both (rules 0.1.7). No stabilization, no pills,
 no Surge.
 
     python3 tools/combat_sim.py            # the standard scenarios
@@ -56,7 +56,7 @@ def creature(name):
     return {"name": name, "hp": c["hp"], "beats": c["beats"],
             "off": max(x["force"] for x in c["offense"]),
             "de": max(x["force"] for x in c["defense"]),
-            "yields": bool(c.get("yields")), "pc": False, "mom": max(x["force"] for x in c["offense"] + c["defense"])}
+            "yields": bool(c.get("yields")), "pc": False, "mom": max(c["hrt"], c["per"])}
 
 def pregens(level=1):
     # Kara STR 8 / DEX 5 / FOR 7 / HRT 4 / PER 5; Joe 8 / 5 / 7 / 5 / 6; Andre 4 / 7 / 5 / 6 / 9 (Character Creation);

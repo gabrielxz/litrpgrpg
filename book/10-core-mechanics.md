@@ -232,7 +232,7 @@ Combat does not use a fixed turn order. Each round the side with **Momentum** ta
 2. The side's roller is whoever has the highest such value.
 3. The roller makes the side's **Momentum Roll**: d100 plus that value.
 
-The two sides may be rolling different Attributes. Highest total holds Momentum for the first round. **On a tie, both sides roll again.** A creature whose stat block prints no HRT or PER rolls with the higher of its printed Forces.
+The two sides may be rolling different Attributes. Highest total holds Momentum for the first round. **On a tie, both sides roll again.**
 
 Momentum is nerve and awareness rather than speed: the combatant who keeps their head at first contact sets the tempo, and the one who reads the field can take it back.
 

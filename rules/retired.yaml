@@ -60,6 +60,9 @@ patterns:
   - {pattern: 'publishes its judgments',          replaced_by: "publishes the record",                        since: 2026-09-20}
   - {pattern: 'Estimated thread loss',            replaced_by: "vital coherence 3, 2, 1",                     since: 2026-09-20}
   - {pattern: 'DEX (or|and|Force and) PER( Force)?',  replaced_by: "Momentum: HRT or PER Force",                  since: 2026-09-21}
+  - {pattern: 'higher printed Force',             replaced_by: "every stat block prints HRT and PER Force",     since: 2026-09-21}
+  - {pattern: 'no HRT layer',                     replaced_by: "HRT Force is printed; immunity is a Tactics line", since: 2026-09-21}
+  - {pattern: 'treat HRT Force as',               replaced_by: "HRT Force is printed",                        since: 2026-09-21}
   - {pattern: '\*\*?\[[^\]\n]*\]\*\*?',           replaced_by: "System text in bare italics; the box is the frame", since: 2026-09-20}
   - {pattern: '["“]\[[A-Z][a-z]+ [a-z][^\]\n]*\]',      replaced_by: "System text in bare italics, never quoted brackets", since: 2026-09-20}
 

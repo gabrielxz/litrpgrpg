@@ -6,6 +6,9 @@ conventions:
   force_printed_as: two digits at the creature's Grade; leading zero below the band
   yields_only_if_stated: true
   tier_maps_to: Grade Reference Card difficulty and the VE kill tier
+  prints_hrt_and_per: true        # Momentum takes the higher; PER when the creature searches; HRT against mental attacks
+  hrt_default: the Off Force for anything that presses the attack; 5 for a creature with no mind to keep; a named boss may run higher
+  per_default: the Def Force for anything that hunts or watches; half of it for anything else
 
 creatures:
   - name: Glow-Mote Swarm
@@ -14,6 +17,8 @@ creatures:
     tier: Trivial
     hp: 10
     beats: 1
+    hrt: 5
+    per: 4
     offense: [{force: 5, stat: DEX, means: sting}]
     defense: [{force: 8, stat: DEX, means: evasion}]
     yields: false
@@ -24,6 +29,8 @@ creatures:
     tier: Trivial
     hp: 16
     beats: 1
+    hrt: 5
+    per: 4
     offense: [{force: 4, stat: STR, means: claws}]
     defense: [{force: 8, stat: FOR, means: dead flesh}]
     yields: false
@@ -34,6 +41,8 @@ creatures:
     tier: Easy
     hp: 12
     beats: 2
+    hrt: 8
+    per: 12
     offense: [{force: 12, stat: DEX, means: bite}]
     defense: [{force: 12, stat: DEX, means: scampering}]
     yields: false
@@ -44,6 +53,8 @@ creatures:
     tier: Easy
     hp: 14
     beats: 2
+    hrt: 6
+    per: 7
     offense: [{force: 8, stat: STR, means: club}, {force: 7, stat: DEX, means: knife}]
     defense: [{force: 7, stat: FOR}, {force: 7, stat: DEX}]
     yields: false
@@ -54,6 +65,8 @@ creatures:
     tier: Moderate
     hp: 24
     beats: 2
+    hrt: 14
+    per: 18
     offense: [{force: 14, stat: STR, means: fang and claw}]
     defense: [{force: 18, stat: DEX}]
     yields: false
@@ -64,20 +77,24 @@ creatures:
     tier: Moderate
     hp: 20
     beats: 2
+    hrt: 12
+    per: 22
     offense: [{force: 22, stat: DEX, means: ambush strike}]
     defense: [{force: 22, stat: DEX, means: fade}]
     yields: false
-    tactics: "Begins encounter unseen unless detected by an active Perception Clash. Takes a Surprise Beat before Initial Momentum if its ambush succeeds. Withdraws to the Zone edge after striking; favors hit-and-run over sustained combat. If pinned, fights frantically, gaining +5 Off Force when below half HP."
+    tactics: "Begins the encounter unseen unless a searcher wins a PER Clash against its Def Force (fade). Takes a Surprise Beat before Initial Momentum if its ambush succeeds. Withdraws to the Zone edge after striking; favors hit-and-run over sustained combat. If pinned, fights frantically, gaining +5 Off Force when below half HP."
   - name: Training Sentry
     tier_group: Peer
     grade: F
     tier: Moderate
     hp: 50
     beats: 2
+    hrt: 5
+    per: 25
     offense: [{force: 18, stat: STR, means: hammerblow}]
     defense: [{force: 25, stat: FOR, means: plating}]
     yields: false
-    tactics: "Immune to mental and coercive attacks (no HRT layer). A character may spend 1 Beat observing instead of attacking; their next Clash against the Sentry gains +5 (study). Escalation: after 3 rounds of combat, the Sentry shifts to combat-mode protocols and its Force values increase by +5."
+    tactics: "Immune to mental and coercive attacks. A character may spend 1 Beat observing instead of attacking; their next Clash against the Sentry gains +5 (study). Escalation: after 3 rounds of combat, the Sentry shifts to combat-mode protocols and its Force values increase by +5."
   - name: Rival Initiate
     tier_group: Elite
     grade: F
@@ -85,6 +102,8 @@ creatures:
     hp: 56
     aether: 22
     beats: 2
+    hrt: 30
+    per: 24
     offense: [{force: 30, stat: DEX, means: bladework}]
     defense: [{force: 30, stat: DEX}, {force: 28, stat: FOR}]
     yields: true
@@ -95,16 +114,20 @@ creatures:
     tier: Hard
     hp: 80
     beats: 2
+    hrt: 25
+    per: 20
     offense: [{force: 35, stat: STR, means: glaive sweep}]
     defense: [{force: 40, stat: FOR, means: plating}]
     yields: true
-    tactics: "When the Sentinel wins a defensive Clash, it gains a free Counterstrike: one Clash at no Beat cost against the failed attacker. Resistant to mental attacks (treat HRT Force as 25 for defensive purposes)."
+    tactics: "When the Sentinel wins a defensive Clash, it gains a free Counterstrike: one Clash at no Beat cost against the failed attacker."
   - name: Alpha Snarljaw
     tier_group: Elite
     grade: F
     tier: Hard
     hp: 64
     beats: 2
+    hrt: 30
+    per: 28
     offense: [{force: 30, stat: STR, means: sundering bite}]
     defense: [{force: 28, stat: DEX}]
     yields: false
@@ -116,6 +139,8 @@ creatures:
     hp: 120
     aether: 65
     beats: 2
+    hrt: 60
+    per: 70
     offense: [{force: 65, stat: POW, means: mind-leach}]
     defense: [{force: 60, stat: HRT, means: spectral}, {force: 70, stat: PER, means: vs. illusion-piercing}]
     yields: true
@@ -127,6 +152,8 @@ creatures:
     hp: 190
     aether: 75
     beats: 3
+    hrt: 80
+    per: 70
     offense: [{force: 80, stat: STR, means: gauntlet smash}, {force: 75, stat: POW, means: energy lash}]
     defense: [{force: 95, stat: FOR, means: plating}, {force: 60, stat: DEX, means: evasive shift}]
     yields: true

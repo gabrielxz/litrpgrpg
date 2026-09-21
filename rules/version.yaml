@@ -1,7 +1,7 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.6"
+version: "0.1.7"
 dated: "2026-09-21"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
@@ -16,4 +16,5 @@ notes: >
   Salvaged and Came Back Whole (+1 HRT) join tutorial_titles; the Warden turns Hostile at
   143 HP or less; the Wraith's PER exception; faction consequences stated in words.
   0.1.6: Momentum is rolled on the higher of HRT and PER Force (Initial and Seize); a creature
-  printing neither uses its higher printed Force. Heart's every-fight job.
+  printing neither uses its higher printed Force. Heart's every-fight job. 0.1.7: every stat block
+  prints HRT and PER Force (Momentum, searching, mental defense); the printed-Force fallback is gone.

@@ -201,3 +201,8 @@ cases:
     fn: momentum_value
     args: {hrt_force: 8, per_force: 5}
     expect: 8
+  - name: The Snarljaw rolls Momentum on its PER 18 (HRT 14)
+    source: "60-bestiary.md, 'How to Read a Stat Block'"
+    fn: momentum_value
+    args: {hrt_force: 14, per_force: 18}
+    expect: 18
