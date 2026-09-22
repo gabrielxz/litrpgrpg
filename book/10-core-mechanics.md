@@ -578,7 +578,7 @@ A Seed Application might grant +10 for a small fixed cost while Surge pays half 
 
 A Domain requires a D-Grade body, which is why its price sits at D-Grade scale; the rest are priced for the Grades a character usually holds when they earn them. Nothing here reads off the character's Grade, so a prodigy who reaches Early Fragment while still F-Grade pays 15 for it like everyone else.
 
-**Spells and class skills** work the same way with a different anchor: the cost is fixed by the Grade at which the skill was acquired, scaling ×10 per Grade, and it never changes afterward either.
+**Spells and class techniques** work the same way with a different anchor: the cost is fixed by the Grade at which the skill was acquired, scaling ×10 per Grade, and it never changes afterward either. A class technique acquired at F-Grade costs 5 Aether, or no Aether under a frequency gate or a drawback (Classes, "One technique"); a spell or shard skill acquired at F-Grade costs 10 to 15.
 
 **The pool grows and the price does not.** An F-Peak caster with 99 Aether gets about ten uses of a Seed Application per fight. At E-Peak with 999 Aether, the same Application is ninety-nine uses. By D-Grade, its cost is a small fraction of most Aether pools. Meanwhile a skill acquired fresh at E-Grade costs 100 a use, a real fraction of the new pool: reaching the new Grade's ceiling means paying the new Grade's prices.
 

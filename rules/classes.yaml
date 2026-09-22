@@ -41,12 +41,12 @@ permission:
   death_clock_hold_rounds: 1     # the one thing a class may do to the countdown, for a Beat
 
 guarded:
-  per_campaign: 1
+  per_campaign: 1                # one guarded class per campaign, whichever of the powers it carries
   app_generates: false
   list:
-    - {power: "An execution restores 5 Aether, at most once per fight",                        changes: "Aether in combat", class: Devourer}
+    - {power: "A killing blow restores 5 Aether, at most once per fight",                       changes: "Aether in combat", class: Devourer}
     - {power: "An attack on a higher-Grade target ignores 20 of its Cross-Grade Adjustment",   changes: "The Grade gap",    class: Underdog}
-    - {power: "Against a higher-Grade target, Surge costs 5",                                   changes: "The Grade gap",    class: Underdog}
+    - {power: "Against a higher-Grade target, Surge costs 5 (or the ordinary cost if lower)",  changes: "The Grade gap",    class: Underdog}
 
 # The voice mapping: what the System's notice says, and what the table runs.
 notice_vocabulary:
@@ -55,9 +55,8 @@ notice_vocabulary:
   - {system: "takes no time",                        table: "costs no Beat"}
   - {system: "exchange",                             table: "turn"}
   - {system: "once per fight",                       table: "once per encounter"}
-  - {system: "once a day",                           table: "once per session"}
   - {system: "within reach",                         table: "in your Zone"}
-  - {system: "within 30 meters",                     table: "in your Zone or an adjacent one"}
+  - {system: "on your ground or the ground beside it", table: "in your Zone or an adjacent one"}
   - {system: "ground",                               table: "a Zone"}
   - {system: "left open until it has acted again",   table: "Exposed until the end of its next turn"}
   - {system: "unless its Heart withstands yours",    table: "one Clash, its HRT Force against yours"}
@@ -80,81 +79,101 @@ classes:
     built_for: Coleman
     poles: [Force, Hunger]
     profile: {shape: Guided, points: {STR: 1, FOR: 1}}
-    technique: {name: Pay in Blood, cost: Drawback, effect: "Take 10 damage for +10 on one Clash roll this turn, declared before rolling"}
+    technique: {name: Pay in Blood, cost: Drawback, effect: "Part of one Clash you roll this turn, attack or defense, declared before rolling; take 10 damage for +10", no_own_beat: true}
     permission: {name: Blood for Aether, effect: "You may pay a Surge with 10 Health instead of Aether", action_economy: false}
   - name: Counterpuncher
     built_for: Ines
     poles: [Method, Restraint]
     profile: {shape: Guided, points: {DEX: 1, PER: 1}}
     technique: {name: Riposte, cost: Frequency, effect: "Win a defensive Clash by 20 or more and Clash back at once for no Beat", reaction: true}
-    permission: {name: Second Hand, effect: "While your side lacks Momentum, your first Clash each turn is +5", action_economy: false}
+    permission: {name: Second Hand, effect: "While your side lacks Momentum, the first Clash roll you make on your own turn is +5", action_economy: false}
   - name: Lightfingers
     built_for: Dani
     poles: [Method, Hunger]
     profile: {shape: Guided, points: {DEX: 1, PER: 1}}
-    technique: {name: Lift, cost: Frequency, effect: "Take one carried item from an Exposed enemy in your Zone"}
-    permission: {name: Finder's Share, effect: "Once per session, a kill you name rolls its loot one step up the table", action_economy: false}
+    technique: {name: Lift, cost: Frequency, effect: "Take one item an Exposed enemy in your Zone holds or carries; a held weapon counts, worn gear does not"}
+    permission: {name: Finder's Share, effect: "Once a day, a kill you name rolls its loot one step up the table", action_economy: false}
   - name: Standing Surety
     built_for: Wendell
     poles: [Restraint, Accord]
     profile: {shape: Fixed, points: {FOR: 2, HRT: 1}}
-    technique: {name: Hold Fast, cost: Aether, effect: "You and every ally in your Zone count as not Cornered until your next turn"}
-    permission: {name: Take It, effect: "Once per round, Yield one Beat of your next turn to cut an attack on an ally in your Zone by 20", action_economy: false, reaction: true, paid_in_beats: true}
+    technique: {name: Hold Fast, cost: Aether, effect: "Until your next turn, you and every ally in your Zone may Yield two Beats even with nowhere to be driven; the second Beat gives ground in place"}
+    permission: {name: Take It, effect: "Once per round, after an ally in your Zone loses a Clash and before damage lands, give up one available Beat from your next turn to cut that Margin by 20; combines with the ally's Yield", action_economy: false, reaction: true, paid_in_beats: true}
   - name: Vowbound
     built_for: Yusuf
     poles: [Will, Restraint]
     profile: {shape: Fixed, points: {HRT: 2, STR: 1}}
     technique: {name: Sworn Blow, cost: Aether, effect: "+10 to a Clash against the object of your vow"}
-    permission: {name: The Vow, effect: "Swear one thing aloud at the start of a fight: +5 to Clashes that serve it; act against it and you are Exposed for the rest of the fight", action_economy: false}
+    permission: {name: The Vow, effect: "Swear one thing aloud at the start of a fight, naming an act or an object: +5 to Clashes that serve it; act against it and you are Exposed for the rest of the fight", action_economy: false}
   - name: Adjudicator
     built_for: Ruth
     poles: [Will, Control]
     profile: {shape: Fixed, points: {HRT: 1, CHA: 1, PER: 1}}
-    technique: {name: Sanction, cost: Aether, effect: "Name an action; the next creature in sight that takes it is Exposed until the end of its next turn unless it wins a Clash, HRT Force against yours"}
+    technique: {name: Sanction, cost: Aether, effect: "Name an action; the next creature in sight that takes it is Exposed until the end of its next turn unless it wins a Clash, HRT Force against yours; one Sanction at a time, expiring with the scene"}
     permission: {name: Contempt, effect: "Once per encounter, an execution attempted in your Zone provokes a free Clash from you before it lands", action_economy: true, reaction: true}
   - name: Peacemaker
     built_for: Hal
     poles: [Accord, Freedom]
     profile: {shape: Guided, points: {CHA: 1, HRT: 1}}
-    technique: {name: Open Hand, cost: Aether, effect: "One enemy in your Zone at half Health or less leaves the fight or has no Beats on its next turn, unless it wins a Clash, HRT Force against yours; mindless creatures ignore it"}
+    technique: {name: Open Hand, cost: Aether, effect: "One enemy in your Zone at half Health or less, its choice, leaves the fight or has no Beats on its next turn, unless it wins a Clash, HRT Force against yours; mindless creatures ignore it"}
     permission: {name: Terms, effect: "A creature whose stat block Yields can be parleyed with mid-fight", action_economy: false}
   - name: Registrar
     built_for: Maren
     poles: [Control, Accord]
     profile: {shape: Open, points: {PER: 1}}
-    technique: {name: Reclassify, cost: Aether, effect: "The System re-reads one creature or object in sight and states its Grade and tier as the record holds them, possibly wrong"}
-    permission: {name: Standing, effect: "Once per session, a proposal you put to the System receives an answer", action_economy: false}
+    technique: {name: Reclassify, cost: Aether, effect: "The System re-reads one creature or object in sight and returns the record's entry: Grade, tier, one Tactics line; exact for anything priced, wrong only where the record is"}
+    permission: {name: Standing, effect: "Once a day, a proposal you put to the System receives an answer; Standing guarantees the audience, the answer is the System's", action_economy: false}
   - name: Still One
     built_for: Priya
     poles: [Freedom, Restraint]
     profile: {shape: Open, points: {DEX: 1}}
-    technique: {name: Go Cold, cost: Aether, effect: "Until your next turn, nothing that finds prey by the System's reading can target you"}
-    permission: {name: No Life Here, effect: "On a turn you spend no Beats, the System reads you as dead until you act", action_economy: false}
+    technique: {name: Go Cold, cost: Aether, effect: "Until your next turn, a creature trying to find or target you must first win an Opposed Clash, PER Force against your DEX Force +10; a creature that hunts by the System's reading does not find you at all"}
+    permission: {name: No Life Here, effect: "On a turn you spend no Beats, the System reads you as dead until you act: inspection returns nothing, titles included; the party frame is unaffected", action_economy: false}
   - name: Witness
     built_for: Sabine
     poles: [Method, Restraint]
     profile: {shape: Guided, points: {PER: 1, HRT: 1}}
     technique: {name: Note the Pattern, cost: Frequency, effect: "After one round watching a creature, the GM says what it does on its next turn"}
     permission: {name: The Observation, effect: "At an unusual death in your sight, the System's observation comes to you: Grade, tier, one Tactics line", action_economy: false}
+  - name: Kindler
+    built_for: Oona
+    poles: [Force, Method]
+    profile: {shape: Fixed, points: {POW: 2, PER: 1}}
+    technique: {name: Cast Fire, cost: Aether, effect: "A ranged attack on one target in your Zone or an adjacent one, rolled on POW Force in place of STR or DEX; damage as Margin; what burns catches"}
+    permission: {name: Tinder, effect: "What you set alight stays alight through the scene; a burning Zone is a Hindering environment (−10) for everyone in it except you", action_economy: false}
+  - name: Maker
+    built_for: Bram
+    poles: [Method, Control]
+    profile: {shape: Guided, points: {PER: 1, DEX: 1}}
+    technique: {name: Make Do, cost: Aether, effect: "One hour and 5 Aether, out of combat: turn the materials on hand into one consumable from the F-Grade catalog that those materials could yield; the GM says which"}
+    permission: {name: Salvage Eye, effect: "Looking at wreckage or parts, you know what it could become: the GM lists the consumables the materials on hand could yield", action_economy: false}
   - name: Devourer
     built_for: Aron
     guarded: true
     poles: [Hunger, Will]
     profile: {shape: Fixed, points: {POW: 1, STR: 1, HRT: 1}}
-    technique: {name: Consume, cost: Frequency, effect: "An execution by your hand restores 5 Aether, at most once per fight"}
-    permission: {name: What Is Left, effect: "You read the current Health of every creature in your Zone", action_economy: false}
+    technique: {name: Consume, cost: Frequency, effect: "Your killing blow on a creature or a person, an execution included, restores 5 Aether, at most once per fight"}
+    permission: {name: What Is Left, effect: "You read the current Health of every creature in your Zone (an exception to What Can Be Seen)", action_economy: false}
   - name: Underdog
     built_for: Tess
     guarded: true
     poles: [Force, Will]
     profile: {shape: Fixed, points: {STR: 2, HRT: 1}}
     technique: {name: Find the Seam, cost: Frequency, effect: "An attack on a higher-Grade target ignores 20 of its Cross-Grade Adjustment"}
-    permission: {name: Above You, effect: "Against a higher-Grade target, Surge costs 5", action_economy: false}
+    permission: {name: Above You, effect: "Against a higher-Grade target, Surge costs 5, or your ordinary Surge cost if lower", action_economy: false}
 
 # NPC classes print as a Tactics line: the class name and its one technique.
 npc_tactics_example: "Class: Vowbound. Sworn Blow (5 Aether): +10 against the object of its vow, sworn aloud when the fight starts."
 
 worked_runs:
+  Oona:
+    level_1:      {STR: 3, DEX: 5, FOR: 5, HRT: 6, POW: 9, PER: 7, CHA: 5}
+    level_10_pre: {STR: 3, DEX: 8, FOR: 12, HRT: 12, POW: 28, PER: 17, CHA: 5}
+    level_10:     {STR: 3, DEX: 8, FOR: 12, HRT: 12, POW: 38, PER: 17, CHA: 5}
+  Bram:
+    level_1:      {STR: 4, DEX: 7, FOR: 5, HRT: 5, POW: 5, PER: 8, CHA: 6}
+    level_10_pre: {STR: 4, DEX: 16, FOR: 10, HRT: 8, POW: 11, PER: 25, CHA: 11}
+    level_10:     {STR: 4, DEX: 16, FOR: 10, HRT: 8, POW: 11, PER: 35, CHA: 11}
   Nia:
     level_1:      {STR: 4, DEX: 5, FOR: 6, HRT: 7, POW: 7, PER: 6, CHA: 5}
     level_6:      {STR: 4, DEX: 7, FOR: 12, HRT: 13, POW: 15, PER: 6, CHA: 8}

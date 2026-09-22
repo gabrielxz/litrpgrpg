@@ -65,8 +65,7 @@ leveling:
   capped_stat_takes_no_allocation: true   # free points redirect; System points go to the next-best behavioral match
   class_level: 10
   class_options_default: 3
-  class_bonus_points_min: 5
-  class_bonus_points_max: 10
+  class_lead_attribute_bonus: 10   # at selection; the class package lives in classes.yaml
   points_by_level_9:
     point_buy: 40
     system_assigned: 24         # 3 × 8 levels

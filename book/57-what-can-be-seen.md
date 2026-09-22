@@ -66,7 +66,7 @@ Looking at another Integrated being tells you something, and how much depends al
 | Two Grades higher | The above, plus *hidden* Bestowed titles. |
 | Three or more Grades higher | Everything, including Hidden Achievement titles. |
 
-No inspection at any Grade shows another person's Attributes, Health, Aether, Insight, or quest log; a party frame shows some of it, below. Titles are the only thing the System publishes, which is why they function as reputation: a title is the one part of a character that other people can read.
+No inspection at any Grade shows another person's Attributes, Health, Aether, Insight, class, or quest log; a party frame shows some of it, below. Titles are the only thing the System publishes, which is why they function as reputation: a title is the one part of a character that other people can read. A class technique or permission may open a narrow exception (a Devourer reads Health in its Zone; a Still One holding still reads as dead), and the class states it (Classes).
 
 ::: {.lore .quoted}
 OPEN MEASURE | Inspection across one Grade | Conditions: Latchwater repair yards; F-Grade subjects, E-Grade observers; sector version current | Sample: 14 subjects, 41 inspections, 0 failures | By: Ensa | Replication: two independent, one pending

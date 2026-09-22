@@ -233,7 +233,9 @@ That is the whole price list. It does not read off the character's Grade, so a p
 
 Scale is fictional permission. When a use collides with the world (can it burn this? can that survive it?), the GM reads the character's Grade against the obstacle's Grade the same way any Cross-Grade question resolves.
 
-**Principles and Spells:** A character's Principle passives always apply to matching spells automatically. Using an active Application alongside a spell requires Infusion tier. Below that, choose one per Beat: cast the spell or use the Application.
+**World quantities scale too.** Where an Application states an amount of the world (Health restored, a flat amount of damage, a distance), the amount is ×10 per Grade of the body carrying it, the way a Margin's damage is; only the Clash modifier stays fixed. A Mending Seed Application that heals 20 in an F-Grade body heals 200 in an E-Grade one.
+
+**Principles, Spells, and Class Techniques:** A character's Principle passives always apply to matching spells and compatible class techniques automatically. Using an active Application alongside a spell or a class technique requires Infusion tier. Below that, choose one per Beat: the spell or the technique, or the Application. The Classes chapter walks Kara through both sides of the line.
 
 ## Attunements
 

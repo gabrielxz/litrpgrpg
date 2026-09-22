@@ -91,7 +91,7 @@ Weapons carry no bonus of their own; the bonus is the wielder's tier. Untrained 
 
 **Downed:** at 0 HP: no Beats, no defense; dies at the end of their third round unless stabilized (any healing, or 1 Beat + Moderate 90 check, field-medicine Proficiencies apply). One hit ≥ 10× Max HP kills outright. Attacking a Downed character: 1 Beat, no roll, kills. Surviving being Downed grants a Battle Memory Card.
 
-**Principle Application Costs (by tier, never by Grade):** Seed 10 | Early Fragment 15 | Infusion free | Domain 3,000 + 500/round. A cost is fixed by the tier that granted it and never changes. Scale grows with the character's current Grade. Domains require a D-Grade body. Spells and class skills are fixed by the Grade they were acquired at, ×10 per Grade.
+**Principle Application Costs (by tier, never by Grade):** Seed 10 | Early Fragment 15 | Infusion free | Domain 3,000 + 500/round. A cost is fixed by the tier that granted it and never changes. Scale grows with the character's current Grade. Domains require a D-Grade body. Spells and class techniques are fixed by the Grade they were acquired at, ×10 per Grade; a class technique is 5 Aether at F, or no Aether once per encounter or with a drawback.
 
 **Aura Pressure Save:** d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance. Aura Resistance is the flat card value, no Cross-Grade Adjustment: calm presence Hard (115), flaring Severe (140). At a gap of three or more Grades the GM may impose Suppression without a save. Suppressed: one Beat per turn for the encounter; a meaningful change in the fiction allows a new save.
 

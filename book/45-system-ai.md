@@ -53,25 +53,11 @@ Each function below states its inputs, its outputs, and the unplugged procedure.
 
 ### Class Generation (Level 10)
 
-**In:** the character's HVE profile (Deep Vector reads and defining moments), stats, favored weapons and tactics, Principles and affinities, titles held. **Out:** three class options (rarity Common to Epic), each with a name, a one-line identity, a stat profile (the 3 fixed points per level), and one Signature Skill with Beat and Aether costs.
+**In:** the character's HVE profile (Deep Vector reads and the circled Defining moments), stats, Proficiencies and weapons, Principle, titles held, and the thing the player keeps doing. **Out:** three class offers, each the package the Classes chapter defines: a name in two descriptions, a three-point growth profile, one technique, one standing permission.
 
-**Unplugged procedure:** build the three options as one class that *amplifies* the dominant behavioral pattern, one that *formalizes* the secondary pattern, and one hybrid of the two. Stat profiles come off the Behavioral Stat Mapping table (Progression). Signature Skills price against the Modifier Budget; Aether costs follow the origin-Grade rule (Core Mechanics: an acquired skill costs by the Grade it was acquired at, ×10 per Grade) (a skill acquired at F-Grade: 10 to 15 Aether).
+**Unplugged procedure:** Classes, "Building a Class for a Specific Human". Bonuses price against the Modifier Budget; a class technique costs 5 Aether at F-Grade, or no Aether under a frequency gate or a drawback.
 
-**Prompt (AI-assisted):**
-
-```
-You are the System, the impersonal administrator of a LitRPG multiverse.
-Generate three class options for this character. For each: a name, a
-rarity (Common / Uncommon / Rare / Epic), a one-line identity, a stat
-profile of 3 fixed points per level across STR/DEX/FOR/HRT/POW/PER/CHA,
-and one Signature Skill (effect, Beat cost, Aether cost 10-15).
-Price flat bonuses as +5 minor, +10 standard, +15 to +20 rare peak.
-One option amplifies the dominant behavioral pattern, one formalizes
-the secondary pattern, one hybridizes them.
-
-Character: [stats, level, weapons, Principles, titles]
-Behavioral profile: [Deep Vector reads plus 2-3 defining moments]
-```
+**Prompt (AI-assisted):** Classes, "AI-Assisted". The prompt never draws from the guarded list; the GM places a guarded power by hand.
 
 ### Personal Opportunities
 

@@ -1,7 +1,7 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.8"
+version: "0.1.9"
 dated: "2026-09-21"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
@@ -19,4 +19,7 @@ notes: >
   printing neither uses its higher printed Force. Heart's every-fight job. 0.1.7: every stat block
   prints HRT and PER Force (Momentum, searching, mental defense); the printed-Force fallback is gone.
   0.1.8: a Stable or better Breakthrough adds 10 to every Attribute (×10 per Grade), the caps lifted and
-  no floor imposed.
+  no floor imposed. 0.1.9: the class package (classes.yaml): selection adds 10 to the lead Attribute (the
+  5 to 10 range is retired), three profile shapes, one technique at 5 Aether or a frequency gate or a
+  drawback, one permission, the guarded list; an Application's world quantities scale ×10 per Grade of
+  the body.

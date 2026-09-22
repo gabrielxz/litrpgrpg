@@ -62,6 +62,11 @@ patterns:
   - {pattern: 'DEX (or|and|Force and) PER( Force)?',  replaced_by: "Momentum: HRT or PER Force",                  since: 2026-09-21}
   - {pattern: 'higher printed Force',             replaced_by: "every stat block prints HRT and PER Force",     since: 2026-09-21}
   - {pattern: 'no HRT layer',                     replaced_by: "HRT Force is printed; immunity is a Tactics line", since: 2026-09-21}
+  - {pattern: 'Signature Skill',                 replaced_by: "a class technique (Classes)",                       since: 2026-09-21}
+  - {pattern: 'rarity \(Common',                 replaced_by: "no rarity system; the guarded list",                since: 2026-09-21}
+  - {pattern: 'Aether cost 10-15',               replaced_by: "a class technique costs 5 Aether at F",              since: 2026-09-21}
+  - {pattern: '5–10 stat points',                replaced_by: "10 to the class's lead Attribute",                   since: 2026-09-21}
+  - {pattern: 'the Will Save shape',             replaced_by: "an Opposed Clash, HRT Force against HRT Force",      since: 2026-09-21}
   - {pattern: 'without raising stats',            replaced_by: "Breakthrough adds 10 to every Attribute",           since: 2026-09-21}
   - {pattern: 'still has STR 80',                 replaced_by: "STR 80 becomes STR 90 at E",                      since: 2026-09-21}
   - {pattern: 'lifted, not the floor',            replaced_by: "the caps lift and no floor is imposed",            since: 2026-09-21}

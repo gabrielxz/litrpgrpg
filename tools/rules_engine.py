@@ -456,6 +456,10 @@ def class_profile_shape(shape: str) -> dict:
     raise KeyError(shape)
 
 
+def class_technique_bonus_cap() -> int:
+    return load("classes")["technique"]["bonus_cap"]
+
+
 def class_technique_cost(acquired_grade: str = "F") -> int:
     """5 Aether at F, ×10 per Grade of acquisition, like any acquired skill."""
     return load("classes")["technique"]["aether_cost_at_f"] * scale(acquired_grade)

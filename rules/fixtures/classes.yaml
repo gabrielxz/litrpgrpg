@@ -115,3 +115,29 @@ cases:
       free_total: {PER: 30}
       levels: 15
     expect_error: ValueError
+
+  # Kindler and Maker
+  - name: Oona at Level 10 after the selection bonus (POW 28 becomes 38)
+    source: 18-classes.md, "Kindler"
+    fn: class_select
+    args: {stats: {STR: 3, DEX: 8, FOR: 12, HRT: 12, POW: 28, PER: 17, CHA: 5}, lead: POW}
+    expect: {STR: 3, DEX: 8, FOR: 12, HRT: 12, POW: 38, PER: 17, CHA: 5}
+  - name: Seven casts from a full pool of 38
+    source: 18-classes.md, "Kindler"
+    fn: class_technique_uses
+    args: {max_aether_value: 38}
+    expect: 7
+  - name: Bram at Level 10 after the selection bonus (PER 25 becomes 35)
+    source: 18-classes.md, "Maker"
+    fn: class_select
+    args: {stats: {STR: 4, DEX: 16, FOR: 10, HRT: 8, POW: 11, PER: 25, CHA: 11}, lead: PER}
+    expect: {STR: 4, DEX: 16, FOR: 10, HRT: 8, POW: 11, PER: 35, CHA: 11}
+  - name: Two Make Dos from a full pool of 11
+    source: 18-classes.md, "Maker"
+    fn: class_technique_uses
+    args: {max_aether_value: 11}
+    expect: 2
+  - name: Kara at Infusion, Breach with Sudden Weight is +20, the Budget's cap
+    source: 18-classes.md, "What a Class Is"
+    fn: class_technique_bonus_cap
+    expect: 20

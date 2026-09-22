@@ -73,13 +73,13 @@ A character who acted consistently toward one behavioral archetype will have a c
 
 ## Class Selection (Level 10)
 
-At Level 10, the System AI generates class options based on the character's Hidden Vector Engine profile, the cumulative record of their behavior across Levels 1–9. Three options is the default; some characters draw more. The procedure for building the options is in The System AI, "Class Generation"; the full class framework is still in development. The mechanical effect at this milestone is:
+At Level 10 the System offers three classes built from the character's Hidden Vector Engine record across Levels 1–9. The Classes chapter owns the offers, the package, and the procedure for building them (Classes, "The Level 10 Scene"). The mechanical effect at this milestone:
 
-1. The player selects one of the offered classes; Level 10's own three System points wait for the choice and follow the class's profile.
-2. The character receives a **one-time bonus allocation of 5–10 stat points**, distributed according to the class's stat profile. These are not player-assigned; they represent the System attuning the character's body and spirit to their new role.
-3. From Level 10 onward, per-level stat allocation shifts to the class model: **3 points allocated by class profile** (fixed, determined by the class's stat priorities) **+ 2 points free** for the player. The class's stat profile assigns the three fixed points.
+1. The player accepts one of the three offers. They cannot be refused, and Level 10's own three System points wait for the choice.
+2. The class adds **10 to its lead Attribute** at once, before the level's points land.
+3. From Level 10 onward, the level's **3 System points follow the class's profile**, which fixes all three, or fixes two and returns one to the player, or fixes one and returns two. The player's **2 points stay free**, plus whatever the profile returns.
 
-The pre-class observation period is over. The Hidden Vector Engine continues tracking behavior for future class evolutions, Principle forging, and world response.
+The pre-class observation period is over. The Hidden Vector Engine continues tracking behavior for class evolution, Principle forging, and world response.
 
 ## Beyond Level 25
 
