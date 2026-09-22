@@ -164,11 +164,17 @@ creatures:
 encounter_sizing:
   - {party_level: "L1–3",   easy: "2 Trivial",  standard: "1 Easy + 1 Trivial",     hard: "1 Moderate or 2 Easy"}
   - {party_level: "L4–7",   easy: "2 Easy",     standard: "1 Moderate + 1 Easy",    hard: "1 Hard or 2 Moderate"}
-  - {party_level: "L8–12",  easy: "2 Moderate", standard: "1 Hard + 1 Moderate",    hard: "1 Severe or 2 Hard + 1 Easy"}
-  - {party_level: "L13–20", easy: "2 Hard",     standard: "1 Severe + 1 Hard",      hard: "1 Peak or 2 Severe"}
-  - {party_level: "L21–25", easy: "2 Severe",   standard: "1 Peak + 1 Hard",        hard: "Boss + adds"}
+  - {party_level: "L8–12",  easy: "One creature at Force 30",             standard: "One at Force 40, or two at 20", hard: "One at Force 50, or two at 30"}
+  - {party_level: "L13–17", easy: "One at Force 40, or two at 20",        standard: "One at Force 50, or two at 30", hard: "One at Force 60, or two at 40"}
+  - {party_level: "L18–22", easy: "One at Force 50, or two at 30",        standard: "One at Force 60, or two at 40", hard: "One at Force 70, or two at 50"}
+  - {party_level: "L23–25", easy: "One at Force 60, or two at 40",        standard: "One at Force 70, or two at 50", hard: "One at Force 80, or two at 60"}
+# From Level 8 the rows are in creature Force: Offense and Defense alike (the higher where they differ), Health twice it, two Beats.
+# Calibrated 2026-09-22 with tools/class_sim.py, the tank Taking It only to stop a fall (a standard fight:
+# whole-party loss about 1 in 100, a character on the floor in about 1 fight in 5; hard doubles both).
+# A Surety who Takes It on every hit of 20 or more plays each row about one step easier.
 encounter_guidance:
   peer_fight: equal Force
   tougher: +10 enemy Force
+  second_creature_worth_force: 20   # two creatures at Force 30 fight like one at Force 50
   drags_past_round: 5
   yield_lengthens_by: about a third

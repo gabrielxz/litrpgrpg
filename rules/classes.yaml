@@ -97,8 +97,8 @@ classes:
     built_for: Wendell
     poles: [Restraint, Accord]
     profile: {shape: Fixed, points: {FOR: 2, HRT: 1}}
-    technique: {name: Hold Fast, cost: Aether, effect: "Until your next turn, you and every ally in your Zone may Yield two Beats even with nowhere to be driven; the second Beat gives ground in place"}
-    permission: {name: Take It, effect: "Once per round, after an ally in your Zone loses a Clash and before damage lands, give up one available Beat from your next turn to cut that Margin by 20; combines with the ally's Yield", action_economy: false, reaction: true, paid_in_beats: true}
+    technique: {name: Hold Fast, cost: Frequency, effect: "Until your next turn, you and every ally in your Zone may Yield two Beats even with nowhere to be driven; the second Beat gives ground in place"}
+    permission: {name: Take It, effect: "Once per round, after an ally in your Zone loses a Clash and before damage lands, give up one available Beat from your next turn to cut that Margin by 40; declared before the ally decides whether to Yield, and combines with it", action_economy: false, reaction: true, paid_in_beats: true, margin_cut: 40}
   - name: Vowbound
     built_for: Yusuf
     poles: [Will, Restraint]
@@ -145,8 +145,8 @@ classes:
     built_for: Bram
     poles: [Method, Control]
     profile: {shape: Guided, points: {PER: 1, DEX: 1}}
-    technique: {name: Make Do, cost: Aether, effect: "One hour and 5 Aether, out of combat: turn the materials on hand into one consumable from the F-Grade catalog that those materials could yield; the GM says which"}
-    permission: {name: Salvage Eye, effect: "Looking at wreckage or parts, you know what it could become: the GM lists the consumables the materials on hand could yield", action_economy: false}
+    technique: {name: Make Do, cost: Aether, effect: "One hour and 5 Aether, out of combat: turn the materials on hand into one Healing Pill up to the Healing Pill (30) or one piece of Scavenged Field Gear that those materials could yield; the GM says which; never an Aether Pill, a Foundation Pill, an Attribute Treasure, or a Volatile Artifact"}
+    permission: {name: Salvage Eye, effect: "Looking at wreckage or parts, you know what it could become: the GM lists the pills and gear the materials on hand could yield", action_economy: false}
   - name: Devourer
     built_for: Aron
     guarded: true

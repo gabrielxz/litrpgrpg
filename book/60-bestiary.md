@@ -212,10 +212,13 @@ When in doubt, use the Grade Reference Card. A character with Force 30 fighting 
 |---|---|---|---|
 | L1–3 | 2 Trivial | 1 Easy + 1 Trivial | 1 Moderate or 2 Easy |
 | L4–7 | 2 Easy | 1 Moderate + 1 Easy | 1 Hard or 2 Moderate |
-| L8–12 | 2 Moderate | 1 Hard + 1 Moderate | 1 Severe or 2 Hard + 1 Easy |
-| L13–20 | 2 Hard | 1 Severe + 1 Hard | 1 Peak or 2 Severe |
-| L21–25 | 2 Severe | 1 Peak + 1 Hard | Boss + adds |
+| L8–12 | One creature at Force 30 | One at Force 40, or two at 20 | One at Force 50, or two at 30 |
+| L13–17 | One at Force 40, or two at 20 | One at Force 50, or two at 30 | One at Force 60, or two at 40 |
+| L18–22 | One at Force 50, or two at 30 | One at Force 60, or two at 40 | One at Force 70, or two at 50 |
+| L23–25 | One at Force 60, or two at 40 | One at Force 70, or two at 50 | One at Force 80, or two at 60 |
 <!-- /rules:table -->
+
+From Level 8 the rows are written in creature Force: a creature at Force 50 attacks and defends at 50, has Health 100, and takes two Beats, which is how every stat block in this chapter is built. A creature whose Offense and Defense differ counts at the higher of the two. A second creature counts as 20 Force, so two creatures at Force 30 fight like one at Force 50. A standard fight puts a character on the floor in about one fight in five and loses the whole party in about one in a hundred; a hard fight doubles both. A party whose Standing Surety Takes It on every large hit (Classes) plays each row about one step easier. The Fragment Wraith, at Force 65, is a hard fight for a party at Level 18 or above and never a standard one. The Corrupted System Warden, at Force 95 with three Beats, sits above the table's hard row even at Level 25: in simulation it loses a Level 25 party of four in a quarter to a half of straight fights, and the tutorial's procedure for it, reaching the gate rather than killing it, is the way to run it at any level.
 
 These ratios assume a balanced party with reasonable equipment. Adjust upward for well-prepared parties; adjust downward when the party is wounded, low on Aether, or out of consumables.
 

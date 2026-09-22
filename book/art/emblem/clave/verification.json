@@ -1,0 +1,27 @@
+{
+  "canvas_pixels": [
+    2048,
+    2048
+  ],
+  "visible_alpha_bounds": [
+    409,
+    289,
+    1639,
+    1759
+  ],
+  "visible_width_fraction": 0.6005859375,
+  "opaque_foreground_colors": [
+    [
+      66,
+      233,
+      245
+    ]
+  ],
+  "central_bar": "continuous; no segmentation cuts cross it",
+  "size_proof_widths_mm": [
+    90,
+    25,
+    8
+  ],
+  "method": "Built-in image-generation draft, followed by an explicitly constructed straight-edged vector master. PNGs are vector renders, not enlarged raster drafts."
+}

@@ -209,7 +209,7 @@ Each entry carries the person the class was built for, the System's notice, and 
 | Burner | Coleman | Force, Hunger | 1 STR, 1 FOR, 1 returned | Drawback |
 | Counterpuncher | Ines | Method, Restraint | 1 DEX, 1 PER, 1 returned | Frequency |
 | Lightfingers | Dani | Method, Hunger | 1 DEX, 1 PER, 1 returned | Frequency |
-| Standing Surety | Wendell | Restraint, Accord | 2 FOR, 1 HRT | Aether |
+| Standing Surety | Wendell | Restraint, Accord | 2 FOR, 1 HRT | Frequency |
 | Vowbound | Yusuf | Will, Restraint | 2 HRT, 1 STR | Aether |
 | Adjudicator | Ruth | Will, Control | 1 HRT, 1 CHA, 1 PER | Aether |
 | Peacemaker | Hal | Accord, Freedom | 1 CHA, 1 HRT, 1 returned | Aether |
@@ -237,7 +237,7 @@ Each entry carries the person the class was built for, the System's notice, and 
 - **Permission:** Reach the Fallen. Moving into a Zone holding a Downed ally costs no Beat. The class's one action-economy effect.
 - **Poles:** Restraint, Accord.
 
-**Nia's run.** Level 1: STR 4, DEX 5, FOR 6, HRT 7, POW 7, PER 6, CHA 5 (Health 12, Aether 7). Level 6: 4 / 7 / 12 / 13 / 15 / 6 / 8 (Health 24, Aether 15), with Mending at Seed and its Application Close Wound (10 Aether, touch, heals 20). Level 10, after the selection bonus and the level's points: 4 / 8 / 15 / 17 / 32 / 8 / 11 (Health 30, Aether 32): six Triages from a full pool, and the pool refills only at Consolidation. Level 25 with every free point in POW: 4 / 23 / 15 / 32 / 77 / 8 / 11 (Health 30, Aether 77): fifteen from a full pool. Before Level 10 the healer existed out of stabilizing, the medkit, pills, and one Close Wound per rest. At Level 10 the class is the first thing besides her own free points that funds her Aether, and it adds 10 at once. Both heals stay worth having at F-Grade: 2 Health per Aether each, Close Wound for the burst and Triage for the range.
+**Nia's run.** Level 1: STR 4, DEX 5, FOR 6, HRT 7, POW 7, PER 6, CHA 5 (Health 12, Aether 7). Level 6: 4 / 7 / 12 / 13 / 15 / 6 / 8 (Health 24, Aether 15), with Mending at Seed and its Application Close Wound (10 Aether, touch, heals 20). Level 10, after the selection bonus and the level's points: 4 / 8 / 15 / 17 / 32 / 8 / 11 (Health 30, Aether 32): six Triages from a full pool, and the pool refills only at Consolidation. Level 25 with every free point in POW: 4 / 23 / 15 / 32 / 77 / 8 / 11 (Health 30, Aether 77): fifteen from a full pool, in a body with the Health of Level 6. The same thirty free points in FOR give Health 90 and eleven Triages. Before Level 10 the healer existed out of stabilizing, the medkit, pills, and one Close Wound per rest. At Level 10 the class is the first thing besides her own free points that funds her Aether, and it adds 10 at once. Both heals stay worth having at F-Grade: 2 Health per Aether each, Close Wound for the burst and Triage for the range.
 
 ### Breaching Vanguard
 
@@ -303,17 +303,17 @@ Each entry carries the person the class was built for, the System's notice, and 
 
 ### Standing Surety
 
-*Built for Wendell.* A school bus driver who put himself between the children and everything for three days. He has been Downed twice and both times someone else was standing behind him. Restraint and Accord.
+*Built for Wendell.* A school bus driver who put himself between the children and everything for three days. He has been Downed twice and both times someone else was standing behind him. Restraint and Accord, and nine levels of it put nothing in POW: his technique is gated by frequency because his Aether would not pay for it.
 
 ::: systemvoice
 *Class offered: Standing Surety.*
 
-*Hold Fast: 5 Aether, and until your next act no one standing with you is cornered. A blow aimed at an ally beside you may be blunted by you, at the cost of your own next acts. Selection: Fortitude +10. Growth: Fortitude, Fortitude, Heart.*
+*Hold Fast: once a fight, and until your next act no one standing with you is cornered. A blow aimed at an ally beside you may be blunted by you, at the cost of your own next acts. Selection: Fortitude +10. Growth: Fortitude, Fortitude, Heart.*
 :::
 
 - **Profile:** Fixed. 2 FOR, 1 HRT. Lead FOR.
-- **Technique:** Hold Fast. 1 Beat, 5 Aether. Until your next turn, you and every ally in your Zone may Yield two Beats even with nowhere to be driven (Core Mechanics, "Yield"); with no destination, the second Beat gives ground in place as the first does.
-- **Permission:** Take It. Once per round, after an ally in your Zone loses a Clash and the Margin is known but before damage lands, give up one available Beat from your next turn to cut that Margin by 20, before the Grade multiplier. It draws on the same next-turn Beats as your own Yield, and it combines with the ally's Yield. Paid in Beats, so it is limited by your Beats and is not a once-per-encounter reaction.
+- **Technique:** Hold Fast. 1 Beat, once per encounter, no Aether. Until your next turn, you and every ally in your Zone may Yield two Beats even with nowhere to be driven (Core Mechanics, "Yield"); with no destination, the second Beat gives ground in place as the first does.
+- **Permission:** Take It. Once per round, after an ally in your Zone loses a Clash and the Margin is known but before damage lands, give up one available Beat from your next turn to cut that Margin by 40, before the Grade multiplier. You declare it before the ally decides whether to Yield, and the ally Yields against what remains, so the order at the table is: the Margin is read, Wendell speaks, then the ally. It draws on the same next-turn Beats as your own Yield. Paid in Beats, so it is limited by your Beats and is not a once-per-encounter reaction. In simulation, a Surety who Takes It on every hit of 20 or more, rather than only when an ally is about to fall, halves the characters on the floor in a standard fight and cuts a hard fight's whole-party loss from six in a hundred to one.
 - **Poles:** Restraint, Accord.
 
 ### Vowbound
@@ -418,7 +418,7 @@ Each entry carries the person the class was built for, the System's notice, and 
 
 - **Profile:** Fixed. 2 POW, 1 PER. Lead POW.
 - **Technique:** Cast Fire. 1 Beat, 5 Aether. A ranged attack on one target in your Zone or an adjacent one, rolled on POW Force in place of STR or DEX; damage as Margin; anything that burns catches.
-- **Permission:** Tinder. What you set alight stays alight through the scene, and a burning Zone is a Hindering environment (−10; Core Mechanics, "The Clash") for everyone in it except you.
+- **Permission:** Tinder. What you set alight stays alight through the scene, and a burning Zone is a Hindering environment (−10; Core Mechanics, "The Clash") for everyone in it except you. Allies standing in the burning Zone take the −10 too: cast into the enemy's Zone from your own and keep your melee companions out of it, or accept that both sides fight hindered.
 - **Poles:** Force, Method.
 
 **Oona at Level 10:** STR 3, DEX 8, FOR 12, HRT 12, POW 38, PER 17, CHA 5 after the bonus (Health 24, Aether 38): seven casts from a full pool, each an attack on her best Attribute, which before Level 10 she had no way to attack with.
@@ -430,15 +430,15 @@ Each entry carries the person the class was built for, the System's notice, and 
 ::: systemvoice
 *Class offered: Maker.*
 
-*Make Do: 5 Aether and one hour turn what is at hand into one working thing the record lists. What lies in wreckage shows you what it could become. Selection: Perception +10. Growth: Perception, Dexterity, one point yours.*
+*Make Do: 5 Aether and one hour turn what is at hand into one remedy or one piece of gear the record lists. What lies in wreckage shows you what it could become. Selection: Perception +10. Growth: Perception, Dexterity, one point yours.*
 :::
 
 - **Profile:** Guided. 1 PER, 1 DEX, 1 returned. Lead PER.
-- **Technique:** Make Do. One hour and 5 Aether, out of combat: turn the materials on hand into one consumable from the F-Grade catalog (Items) that those materials could yield; the GM says which. Its recurring scene is the camp.
-- **Permission:** Salvage Eye. Looking at wreckage or a pile of parts, you know what it could become: the GM lists the consumables the materials on hand could yield.
+- **Technique:** Make Do. One hour and 5 Aether, out of combat: turn the materials on hand into one Healing Pill up to the Healing Pill (30) or one piece of Scavenged Field Gear (Items) that those materials could yield; the GM says which. Never an Aether Pill, a Foundation Pill, an Attribute Treasure, or a Volatile Artifact: an Aether Pill made for 5 Aether would be a refill, and Aether refills only at Consolidation. Its recurring scene is the camp.
+- **Permission:** Salvage Eye. Looking at wreckage or a pile of parts, you know what it could become: the GM lists the pills and gear the materials on hand could yield.
 - **Poles:** Method, Control.
 
-**Bram at Level 10:** STR 4, DEX 16, FOR 10, HRT 8, POW 11, PER 35, CHA 11 after the bonus (Aether 11): two Make Dos from a full pool, one an hour, and the third when Consolidation refills him.
+**Bram at Level 10:** STR 4, DEX 16, FOR 10, HRT 8, POW 11, PER 35, CHA 11 after the bonus (Aether 11): two Make Dos from a full pool, one an hour, and the third when Consolidation refills him. Two Healing Pills a day is 60 Health of healing for 10 Aether, three times what Triage buys, paid in camp hours and a Beat in the fight.
 
 ### Devourer
 

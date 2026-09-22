@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2048" height="2048" viewBox="0 0 2048 2048">
+<title>Clave: clave cyan blueblack</title>
+<defs><mask id="pieces" maskUnits="userSpaceOnUse" x="390" y="140" width="680" height="800"><rect x="390" y="140" width="680" height="800" fill="white"/><path d="M972 153L909 216" stroke="black" stroke-width="5" stroke-linecap="butt"/><path d="M973 304L1043 374" stroke="black" stroke-width="5" stroke-linecap="butt"/><path d="M850 380L850 540" stroke="black" stroke-width="5" stroke-linecap="butt"/><path d="M600 580L600 730" stroke="black" stroke-width="5" stroke-linecap="butt"/><path d="M451 703L505 757" stroke="black" stroke-width="5" stroke-linecap="butt"/><path d="M451 891L519 823" stroke="black" stroke-width="5" stroke-linecap="butt"/></mask></defs>
+<rect width="2048" height="2048" fill="#101B22"/>
+<g transform="translate(-408.94253611556974 -28.27094703049761) scale(1.9723916532905297)" fill="#42E9F5"><path d="M737 304 L737 255 L833 161 H970 L1038 226 V326 L475 754 V817 L509 851 H612 L710 778 V820 L613 906 H475 L415 851 V747 L977 317 V257 L935 215 H840 Z" mask="url(#pieces)"/><path d="M705 375 L724 356 L743 375 V705 L724 724 L705 705 Z"/></g>
+</svg>

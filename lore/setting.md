@@ -36,6 +36,7 @@ Every coined name is checked against the rules vocabulary (Grade, Beat, Zone, Se
 | Titles | GMs create titles that fit play, in the catalog's shapes. |
 | Gradebreakers | Rare, admired, and no institution. One legend: the Uncrowned. |
 | Calendar | Traders count years in **Toll Reckoning**. Lore only; no book text carries a date. `[GM]` |
+| The clave | A small mark sat in the corner of the Day 1 message and sits on every System notice since. The System has never named or explained it. Humans call it **the clave**. Its meaning is `[nobody]`. |
 
 ## Author direction `[author]`
 
@@ -101,6 +102,8 @@ One impersonal register across every Grade. Higher access changes what the Syste
 Humor comes from precision, odd assumptions, and accurate answers inside an appalling frame of reference. The System never quips, never insults for amusement, never misunderstands everything, and carries no chatbot mannerism: no over-affirmation, no flattery, no eagerness to help.
 
 Direct individual conversation is rare. Negotiation happens under exceptional circumstances: a direct demand fails, and a proposal in a format the System recognizes sometimes lands.
+
+Every System notice carries a small mark in its corner, the same one that sat in the corner of the Day 1 message. The System has never named it or explained it; humans call it the clave, and the word is theirs. What it means is `[nobody]`.
 
 The System has no universal name for itself. Each society names it locally. Humans say *the System*, and on the survivors' forum *the Score*. The Aru word renders through Interpretation as *the Assessor*. The Kith word renders as *the Tide*: it comes in, takes, and leaves marks in stone.  Its creator, its age, any higher authority, and whether apparent variation reflects several Systems are `[nobody]`.
 

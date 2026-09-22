@@ -31,6 +31,8 @@ Each level grants **5 stat points** at F-Grade:
 
 **Points can wait.** The two free points arrive **unallocated** and sit there until the character spends them; the three System points are placed when the level lands. A player who wants to see what the next fight demands before committing may hold them for as long as they like; the System does not press. Unallocated points do nothing while they wait; holding them delays their benefits but lets the player allocate them after seeing what the character needs.
 
+**Free points and the body.** A character whose free points all follow one Attribute reaches Level 25 with the Health of Level 6 (Classes, "Battle Medic": Nia at the cap with 30 Health). From Level 13 the standard fight lands hits of 40 and more, and FOR is what turns them into a wound instead of a floor. Two free points a level into FOR from Level 10 add 60 Health by the cap.
+
 **Capped stats.** A stat at the Grade maximum (99 at F-Grade) takes no further allocation: the player sends free points elsewhere, and the System assigns its points to the next-best behavioral match, never into a full stat. A dedicated build reaches its favorite stat's cap around Level 20, and the redirection over the last stretch of the Grade is expected; once a favored stat reaches its cap, further level-up points improve other Attributes. Bonuses that arrive on their own, from titles or treasures, still overflow against a capped stat and are lost.
 
 At higher Grades, the budget scales with Grade magnitude (×10 at E, ×100 at D, and so on), with the same 3-to-2 split.
