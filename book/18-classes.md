@@ -1,3 +1,5 @@
+![Classes](./assets/art/openers/classes.png){.opener}
+
 # Classes
 
 ::: epigraph
@@ -7,7 +9,7 @@ Bel Sar, route account
 :::
 
 ::: epigraph
-"Level 10 last night. Three offers. Two of them were me with a title on it. The third was the thing I do when I panic. I picked the panic one."
+"Nine levels of hauling these idiots out of trouble and the System gives me a class for it. Thank you, cyan Jesus. They're much easier to carry now."
 
 the survivors' forum
 :::
