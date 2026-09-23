@@ -12,3 +12,6 @@ __pycache__/
 
 # Working images dropped in the repo root by the image tools
 /*.png
+
+# The annotated read-through copy
+reading/

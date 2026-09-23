@@ -75,7 +75,7 @@ ART_MASTERS := $(shell find $(ART_SRC) -name '*.png')
 TITLE_FONT   := $(shell kpsewhich Alegreya-Black.otf)
 BYLINE_FONT  := $(shell kpsewhich EBGaramond-Italic.otf)
 
-.PHONY: all pdf epub kit art tutorial tables test check notes clean
+.PHONY: all pdf epub kit art tutorial tables test check notes reading-copy clean
 
 all: pdf epub
 
@@ -206,12 +206,31 @@ check:
 	python3 tools/test_rules.py
 	python3 tools/lint_prose.py
 
-# Collect the Okular annotations from the newest full build into a notes file.
-# Read in Okular, annotate as you go, then `make notes`.
+# --- Read-through ----------------------------------------------------------
+# reading/ holds the copy annotated during a read. No build writes there and
+# `make clean` does not reach it, so notes survive a rebuild.
+READING := reading/gradebreaker-read.pdf
+
+# Replace the reading copy with the current build. Refuses if the existing
+# copy carries annotations, so a read in progress is never overwritten.
+reading-copy:
+	@mkdir -p reading
+	@test -f $(BUILD_DIR)/$(PROJECT).pdf || { echo "No build yet; run 'make pdf' first."; exit 1; }
+	@if [ -f $(READING) ] && python3 tools/read_notes.py --raw $(READING) 2>/dev/null | grep -q .; then \
+	  echo "$(READING) carries annotations."; \
+	  echo "Collect them with 'make notes', move the file aside, then run this again."; \
+	  exit 1; \
+	fi
+	cp $(BUILD_DIR)/$(PROJECT).pdf $(READING)
+	@echo "Reading copy: $(READING)"
+
+# Collect the annotations from the reading copy into a notes file.
+# Annotate in Okular and save (Ctrl+S) so the notes go into the file.
 notes:
-	python3 tools/read_notes.py > $(BUILD_DIR)/read-notes-$(TIMESTAMP).md
-	@echo "Notes: $(BUILD_DIR)/read-notes-$(TIMESTAMP).md"
-	@head -3 $(BUILD_DIR)/read-notes-$(TIMESTAMP).md
+	@mkdir -p reading
+	python3 tools/read_notes.py > reading/read-notes-$(TIMESTAMP).md
+	@echo "Notes: reading/read-notes-$(TIMESTAMP).md"
+	@sed -n '3p' reading/read-notes-$(TIMESTAMP).md
 
 # --- Tutorial-only PDF -----------------------------------------------------
 # Pages from the Tutorial chapter (its art page) to the end of the book, cut
