@@ -14,7 +14,7 @@ the survivors' forum
 Bel Sar, route account
 :::
 
-On the day of Integration, every human being on Earth heard the same voice at the same moment, and every one of them understood it. The System speaks a language of its own. What it says arrives already understood, and nobody has ever learned to read it.
+On the day of Integration, every human being on Earth heard the same voice at the same moment, and every one of them understood it. The System uses a script of its own, and an Integrant looks at it and knows what it says without ever having learned a character of it.
 
 ::: systemvoice
 *Native world: Earth. Status: Integrated.*

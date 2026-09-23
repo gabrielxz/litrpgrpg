@@ -103,7 +103,9 @@ Humor comes from precision, odd assumptions, and accurate answers inside an appa
 
 Direct individual conversation is rare. Negotiation happens under exceptional circumstances: a direct demand fails, and a proposal in a format the System recognizes sometimes lands.
 
-Every System notice carries a small mark in its corner, the same one that sat in the corner of the Day 1 message. The System has never named it or explained it; humans call it the clave, and the word is theirs. What it means is `[nobody]`.
+The System uses a script of its own, and it is the script an Integrant actually sees: notices are not rendered into the reader's own language. Understanding arrives with the sight. An Integrant looks at a notice and knows what it says, and could not write one character of it, teach it to anyone, or get anything at all out of the same marks where the interface declines to render them. Gethra's vault door, carrying a Grade warning the interface does not render, is the case a party can stand in front of. Whether the script is the System's native writing or something it composes for the purpose is `[nobody]`.
+
+Every System notice carries a small mark in its corner, the same one that sat in the corner of the Day 1 message. It is the one part of a notice the interface never renders: it arrives as a shape and nothing else, on every notice, on every world. The System has never named it or explained it; humans call it the clave, and the word is theirs. What it means is `[nobody]`.
 
 The System has no universal name for itself. Each society names it locally. Humans say *the System*, and on the survivors' forum *the Score*. The Aru word renders through Interpretation as *the Assessor*. The Kith word renders as *the Tide*: it comes in, takes, and leaves marks in stone.  Its creator, its age, any higher authority, and whether apparent variation reflects several Systems are `[nobody]`.
 

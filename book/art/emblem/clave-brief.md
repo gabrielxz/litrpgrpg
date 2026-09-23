@@ -4,7 +4,7 @@ The brief for regenerating the System's symbol. ChatGPT generates from it under 
 
 ## What the mark is
 
-The clave is the small mark that sat in the corner of the message every human heard on Day 1 and sits in the corner of every System notice since. The System has never named it or explained it. Humans call it the clave. In the book it appears on the System's own surfaces: the System message box, the quest card, the kit's System Interface masthead, and the companion app's icon. It is the System's mark. The compass ring stays the game's emblem, and the two never appear merged.
+The clave is the small mark that sat in the corner of the message every human heard on Day 1 and sits in the corner of every System notice since. The System has never named it or explained it. Humans call it the clave. It is the System's mark and the game's emblem at once (ruled 2026-09-23; the compass ring is retired). It appears on the chapter rules, the System message box, the quest card, the kit's masthead, the companion app's icon, and the cover.
 
 ## The shape, which does not change
 
