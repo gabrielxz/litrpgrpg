@@ -166,7 +166,7 @@ Three first contacts, as local reactions: a port authority treats its gate as a 
 
 ### Selan ar Nerava
 
-Halden's counterpart, and the shape of any region's. Selan is second form, a freight dispatcher for the port on the far side of Halden's gate, whose authority treats the gate as a customs problem. Selan knows routes, supplies, schedules, and the people who make things move.
+Halden's counterpart, and the pattern for any region's. Selan is second form, a freight dispatcher for the port on the far side of Halden's gate, whose authority treats the gate as a customs problem. Selan knows routes, supplies, schedules, and the people who make things move.
 
 - **Needs:** four dispatch workers, stranded since Day 2 in the Rift on the freight yard across the gate (the Far Side, below).
 - **Can offer:** warehouse access on the Namar side, and a schedule for the barges once the quay is usable.

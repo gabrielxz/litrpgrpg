@@ -14,7 +14,7 @@ the survivors' forum
 Bel Sar, route account
 :::
 
-On the day of Integration, every human being on Earth heard the same voice at the same moment. It did not use a language. It did not need one.
+On the day of Integration, every human being on Earth heard the same voice at the same moment, and every one of them understood it. The System speaks a language of its own. What it says arrives already understood, and nobody has ever learned to read it.
 
 ::: systemvoice
 *Native world: Earth. Status: Integrated.*
@@ -24,17 +24,17 @@ On the day of Integration, every human being on Earth heard the same voice at th
 *Prior exemptions: expired. Observation: begun.*
 :::
 
-**Gradebreaker** is a tabletop roleplaying game of System-driven progression fantasy, the genre of stories like *Defiance of the Fall* and *Primal Hunter*: ordinary people pulled into a multiverse that keeps score. Quests appear on blue status screens, and characters gain power by surviving, exploring, and overcoming challenges. Each player takes the role of one freshly integrated human. One player, the Game Master (GM), plays everything else: the world, its monsters and factions, and the System itself.
+**Gradebreaker** is a tabletop roleplaying game of System-driven progression fantasy, the genre of stories like *Defiance of the Fall*, *Primal Hunter*, and *Dungeon Crawler Carl*: ordinary people pulled into a multiverse that keeps score. Quests appear on blue status screens, and characters gain power by surviving, exploring, and overcoming challenges. Each player takes the role of one freshly integrated human. One player, the Game Master (GM), plays everything else: the world, its monsters and factions, and the System itself.
 
 ## The System
 
 The System is the multiverse's administrator. It integrates worlds, assigns Grades and levels, issues quests, grants titles, and watches. It is an adaptive construct that finds the stable patterns of reality by putting people under pressure and recording what they do. Strength interests it less than *how* strength is used. Two characters can win the same fight and be offered different futures, because they won it differently.
 
-That observation is real at the table. The GM quietly tracks how each character behaves under pressure, and the System converts that record into classes, opportunities, titles, and powers. In this game, a build is a biography: the System grows your character out of what you actually did.
+That observation is real at the table. The GM quietly tracks how each character behaves under pressure, and the System converts that record into classes, opportunities, titles, and powers. In this game, a build is a biography. You decide what your character does; the System reads the record and offers what it finds there.
 
-## The Shape of a Character
+## How Characters Grow
 
-A starting character is an ordinary person: seven Attributes bought with 40 points, most landing between 4 and 8, where 10 is the peak of pre-System humanity. From there the numbers genuinely climb: stats in the hundreds at E-Grade, the thousands at D-Grade, the tens of thousands beyond. The table math never grows with them. Resolution uses only a stat's first two digits (its Force), so a d100 plus a number from 1 to 99 resolves everything from a bar fight to a duel between demigods.
+A starting character is an ordinary person, and the numbers on the sheet start out ordinary. They do not stay that way: stats reach the hundreds at E-Grade, the thousands at D-Grade, the tens of thousands beyond. The table math never grows with them. Resolution reads only a stat's first two digits, its Force, so a d100 plus a number from 1 to 99 settles a bar fight and a duel between demigods alike.
 
 Progression runs on three tracks:
 
@@ -45,7 +45,7 @@ Progression runs on three tracks:
 ## What You Need
 
 - This book. The GM's copy is the only required one.
-- Percentile dice for everyone: roll two ten-sided dice together and read one as the tens digit, the other as the ones. A 4 and a 7 is 47; a 0 and a 3 is 3; two zeroes read as 100.
+- Percentile dice for everyone: roll two ten-sided dice together and read one as the tens digit, the other as the ones digit. A 4 and a 7 is 47; a 0 and a 3 is 3; two zeroes read as 100.
 - Character sheets, scratch paper, and a pencil per player.
 - A way to pass private notes (folded paper or phones): the game isolates players at key moments on purpose.
 - Optionally, an AI assistant or the companion app (see The System AI chapter).
@@ -54,21 +54,21 @@ Progression runs on three tracks:
 
 This book is written for the GM. Players are welcome to read the player-facing chapters: Core Mechanics, Character Creation, Cultivation, and The Principle System. Two boundaries:
 
-- **The Hidden Vector Engine chapter is open knowledge, but the GM's game logs are not.** Players may read how the Hidden Vector Engine works. What a player must never see is their own log; keeping the scores private discourages players from choosing actions to move a score.
+- **The Hidden Vector Engine chapter is open knowledge; the GM's game logs are the GM's.** Players may read how the Engine works. We discourage showing a player their own log, because a player who can see the numbers tends to play toward them, and the Engine is only worth having while it reads what people actually do. A table that would rather play with the logs open is welcome to.
 - **Players who intend to play should skip the Tutorial chapter and the Bestiary.** The tutorial is built to be experienced blind.
 
-## How to Use This Book
+## Where to Start
 
-For the GM, in order:
+The chapters stand on their own and can be read in any order. This is the route that gets a GM to a first session fastest.
 
-1. **Core Mechanics**, **Character Creation**, and **Progression**: read closely. This is the resolution engine, the character sheet, and how it grows.
-2. **Cultivation**: the progression engine. Read closely.
-3. **The Principle System**, **Grade Breakthroughs**, **Titles**, **System Quests**, and **What Can Be Seen**: read once so you know what exists; return when play reaches them.
-4. **The System AI**: choose how you'll run (below).
-5. **The Hidden Vector Engine**: the observation layer behind everything.
-6. **The Tutorial**: your campaign's first two sessions, or four short ones, ready to run. It introduces the rules of pre-class play, phase by phase. Teach each rule when a player needs it to choose; when a player asks how combat works, the whole answer is "roll d100, add your Force, and I'll tell you what happens."
+1. **Core Mechanics**, **Character Creation**, and **Progression**. The resolution engine, the sheet, and how the sheet grows. Everything else assumes these.
+2. **Cultivation**. Where levels come from, and the rest that turns a night's kills into them.
+3. **The Tutorial**. Your first two sessions, or four short ones, ready to run. It teaches the rules of pre-class play in the order a table meets them, so reading it also shows what the rest of the book is for. Teach each rule when a player needs it to choose; when a player asks how combat works, the whole answer is "roll d100, add your Force, and I'll tell you what happens."
+4. **The System AI**. How you will run the System's generative work, and the prompts if you want them.
+5. **The Hidden Vector Engine**. The observation layer under everything, and the five minutes of bookkeeping it asks for at the end of a session.
+6. **The Principle System**, **Grade Breakthroughs**, **Titles**, **System Quests**, and **What Can Be Seen**. What the System offers a character across a campaign. A campaign reaches these in its own time, and each chapter is written to be picked up when it does.
 
-The **Bestiary**, **Items**, and the **Quick Reference** at the back of the book are table reference.
+**After the Gate** opens the sandbox once the tutorial ends. The **Bestiary**, **Items**, and the **Quick Reference** are table reference, for use rather than reading.
 
 ## The Three Ways to Run
 
@@ -136,7 +136,7 @@ Kara (Strength 8 and Fortitude 7, written STR 8, FOR 7 on her sheet, with the Pr
 *Initiate 4,412,908 of 7,916,442,203. Observation continues.*
 :::
 
-**Andre:** Four million and change. We're a line item.
+**Andre:** Four million and change.
 
 **Kara:** It gave me ten VE. What does a big one give?
 
