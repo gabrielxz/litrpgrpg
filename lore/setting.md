@@ -279,7 +279,7 @@ The System chose Earth and Namar for each other. `[GM]` It assessed environmenta
 
 ### Aru bodies
 
-Aru have three weight-bearing legs, two manipulating arms, and movable hearing fans along the head. Deliberate fan movements are part of language and translate; involuntary ones a human learns to read. Anatomy shapes furniture, gait, and comfort.
+Aru have three weight-bearing legs, two manipulating arms, and movable hearing fans along the head. An adult stands about 1.6 meters at the head, the torso carried low and broad over a wide tripod; an Aru and a human meet at eye level. Deliberate fan movements are part of language and translate; involuntary ones a human learns to read. Anatomy shapes furniture, gait, and comfort.
 
 Aru live through four discrete bodily forms. Each transition brings a period of shelter, reduced mobility, and tissue remodeling. They remember their earlier lives and remain the same people.
 

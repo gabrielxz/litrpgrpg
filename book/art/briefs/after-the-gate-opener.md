@@ -26,6 +26,9 @@ be regenerated.
 - Aru have three weight-bearing legs, two manipulating arms, and movable hearing
   fans along either side of the head. They are people with a different body plan,
   not humans in costume and not insects.
+- An adult Aru stands about 1.6 meters at the head (Gabriel, 2026-09-23), the
+  torso low and broad over a wide tripod, so an Aru and a standing human meet at
+  eye level. The Kith own the tall narrow silhouette; the Aru must not share it.
 - The diagram over the square is unfinished. It completes at Level 20, and the
   chapter is about the years before that.
 - No readable text, numbers, or logos anywhere in the image, the manifest and the
@@ -49,7 +52,7 @@ Use large quiet areas and meaningful background features. Let texture support sh
 
 **Format.** Portrait 2:3, 1024 by 1536 or the largest portrait available. Keep faces and focal glyphs clear of the outer 5% at top and bottom; the page crops there.
 
-**Palette.** Bone ivory, gray, and blue-black foundation. Low warm dusk light on the near side of the arch. The light coming through the arch is a different hour and a cooler cast, so the boundary reads as a boundary without any edge effect drawn on it. Restrained scene color otherwise.
+**Palette.** A cool blue cast over the whole square: blue-gray shadow across the paving and the figures, bone ivory and gray in the stone. Warm peach dusk in the sky behind the courthouse, confined to the sky. Through the arch, bright cool daylight of a different hour, the strongest light in the frame. The boundary reads through the change of light, with no edge effect drawn on it.
 
 **System.** One vast cyan diagram standing in the sky over the square, occupying the upper portion of the frame. Recognition and advancement held short of completion: separate fragments that have resolved into alignment in places, with whole sections still unaligned or absent. Concentrated illumination on the parts that have resolved; low contrast and partial inscription where they have not. It is far away and enormous, and nobody in the square is looking at it. Fine cyan structure only, no halo, no central diamond, no ring.
 
@@ -60,3 +63,21 @@ Use large quiet areas and meaningful background features. Let texture support sh
 **Do not show.** Anyone climbing the courthouse's front steps. Weapons drawn, combat, or a creature. Readable text, numbers, or logos of any kind.
 
 **Reference roles.** The office image is the style anchor only. Do not copy its characters, its composition, or its glyph arrangement.
+
+## Revision prompt
+
+For a second pass on a generation that has the scene right. Supply the previous
+image as the edit target and `book/art/references/01-office-bone.png` as the style
+reference.
+
+Keep this scene, composition, and camera. Keep the cool blue cast, the warm dusk sky behind the courthouse, and the bright daylight through the arch. Keep the three-legged person's anatomy: three weight-bearing legs, two arms, two hearing fans.
+
+Change four things.
+
+1. Proportions. The three-legged person is too tall and too horselike. Shorten the legs and broaden the torso so the body is low and wide over its tripod, and raise the head so it sits level with a standing human's eyes. Adult height about 1.6 meters. The result should read as a stocky working person, not as a centaur and not as a small cute creature.
+
+2. Rendering. Rebuild in angular cut-paper construction with flat matte gouache planes and hard shape edges. Remove the soft airbrushed shading, the glow, and the atmospheric haze. Light and shadow are flat masses with clean boundaries, not gradients.
+
+3. The sky diagram. Replace the scattered sparkles with one enormous structure: fine cyan line work in which separate fragments have locked into alignment in some places, while whole sections are missing or sit unaligned and unlit. It is a single incomplete object far away, not decoration spread across the sky. No halo, no rings, no central diamond.
+
+4. The hanging banner. Leave it blank. No symbol, no emblem, no text.
