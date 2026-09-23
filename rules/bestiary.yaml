@@ -159,6 +159,60 @@ creatures:
     yields: true
     tutorial_boss: true
     tactics: "Indifferent Mode (above 143 HP): ignores the party, attacks included, and moves toward the gate with all 3 Beats. Hostile Mode (143 HP or less, or when a character attacks it and stays in its path): 2 Beats on the last thing that hurt it, 1 for movement. Yields two of three Beats for −40, keeps the third, never moves; Cornered does not limit it. Glitch Cascade: on its own natural 96+, the next attack against it gains +20."
+  # Imprints (After the Gate): nonconscious constructs running recorded patterns inside Accession Rifts.
+  # Each block's four behavioral lines (detects / triggers / does / stops) are the Rift's, printed there.
+  - name: Interceptor
+    tier_group: Elite
+    grade: F
+    tier: Hard
+    imprint: true
+    hp: 50
+    beats: 2
+    hrt: 5
+    per: 25
+    offense: [{force: 25, stat: STR, means: the committed strike}]
+    defense: [{force: 25, stat: FOR, means: construct body}]
+    yields: false
+    tactics: "Mindless: immune to mental and coercive attacks. Strikes nothing outside its committed movement; its four lines are the Rift's. The first wave."
+  - name: Bearer
+    tier_group: Elite
+    grade: F
+    tier: Hard
+    imprint: true
+    hp: 90
+    beats: 2
+    hrt: 5
+    per: 45
+    offense: [{force: 45, stat: STR, means: the passing strike}]
+    defense: [{force: 45, stat: FOR, means: construct body}]
+    yields: false
+    tactics: "Mindless. Walks a route carrying a thing and strikes what stands on the route without stopping; a Bearer down drops what it carried. The second wave."
+  - name: Cordon
+    tier_group: Boss
+    grade: F
+    tier: Severe
+    imprint: true
+    hp: 120
+    beats: 2
+    hrt: 5
+    per: 60
+    offense: [{force: 60, stat: STR, means: the perimeter strike}]
+    defense: [{force: 60, stat: FOR, means: construct body}]
+    yields: true
+    tactics: "Mindless. Holds a perimeter and Yields two Beats to stay on it rather than be driven off. The third wave; one falls from each section of the diagram as it completes."
+  - name: Completion
+    tier_group: Boss
+    grade: F
+    tier: Peak
+    imprint: true
+    hp: 150
+    beats: 3
+    hrt: 5
+    per: 75
+    offense: [{force: 75, stat: STR, means: the region's strike}]
+    defense: [{force: 75, stat: FOR, means: construct body}]
+    yields: true
+    tactics: "Mindless. Yields two of three Beats. Runs the region's recorded conduct: its four lines are written by the procedure in After the Gate, with a ready default there. Momentum on its PER. The completed diagram, taken a body."
 
 # For an F-Grade party of 4.
 encounter_sizing:

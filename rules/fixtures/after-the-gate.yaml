@@ -1,0 +1,61 @@
+# Worked examples from After the Gate (72-after-the-gate.md).
+cases:
+  - name: Level 4 to Level 25 is 21 levels at 120 VE, 2,520 VE
+    source: 72-after-the-gate.md, "Pacing to the Cap"
+    fn: levels_from_ve
+    args: {unrefined_ve: 2520}
+    expect: 21
+  - name: A level costs 120 VE at F
+    source: 72-after-the-gate.md, "Pacing to the Cap"
+    fn: level_cost
+    expect: 120
+  - name: A Peak Rift pays the Faction column, 150
+    source: 72-after-the-gate.md, "Writing a Rift"
+    fn: quest_ve
+    args: {category: Faction, difficulty: Peak}
+    expect: 150
+  - name: A Moderate Rift pays 25
+    source: 72-after-the-gate.md, "Writing a Rift"
+    fn: quest_ve
+    args: {category: Faction, difficulty: Moderate}
+    expect: 25
+  - name: The Completion's kill pays Peak, 50
+    source: 72-after-the-gate.md, "Pacing to the Cap"
+    fn: kill_ve
+    args: {tier: Peak}
+    expect: 50
+  - name: A first-wave session's 100 VE refines in five hours
+    source: 72-after-the-gate.md, "Pacing to the Cap"
+    fn: refine_hours
+    args: {stored_ve: 100}
+    expect: 5
+  - name: A second-wave session's 135 VE refines in seven hours
+    source: 72-after-the-gate.md, "Pacing to the Cap"
+    fn: refine_hours
+    args: {stored_ve: 135}
+    expect: 7
+  - name: A third-wave session's 195 VE refines in ten hours
+    source: 72-after-the-gate.md, "Pacing to the Cap"
+    fn: refine_hours
+    args: {stored_ve: 195}
+    expect: 10
+  - name: 195 VE taken in one day is past Heavy
+    source: 72-after-the-gate.md, "Pacing to the Cap"
+    fn: saturation
+    args: {stored_ve: 195}
+    expect: {band: Heavy}
+  - name: 100 VE in a session crosses Tolerance (Mild)
+    source: 72-after-the-gate.md, "Pacing to the Cap"
+    fn: saturation
+    args: {stored_ve: 100}
+    expect: {band: Mild}
+  - name: The site is High density, +20 on the check
+    source: 72-after-the-gate.md, "The Completion's Rifts (Levels 21 to 25)"
+    fn: energy_density_bonus
+    args: {tier: High}
+    expect: 20
+  - name: The liaison's Aura is the calm value, Hard 115
+    source: 72-after-the-gate.md, "The Liaison"
+    fn: aura_resistance
+    args: {flaring: false}
+    expect: 115

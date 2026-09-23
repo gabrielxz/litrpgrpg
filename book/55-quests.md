@@ -98,6 +98,8 @@ The System notices something specific about a character and offers a tailored qu
 
 This is where the System feels personal. Personal Opportunities are also the primary lever by which the System nudges or tests the character: the offer can affirm an existing pattern or quietly invite the character to step against it. By default it affirms, and offers flow with the character's recent behavior. It tends to test against the pattern when recent behavior and long-term identity disagree (the Current and Deep Vectors point different ways at the sweep, where the offer is drafted before Current wipes), and occasionally for no visible reason at all; the choice is the System's, and the System is unpredictable. A GM in doubt should affirm.
 
+**Paired Opportunities.** When the System has recorded a human and an Aru acting together, it may address one Personal Opportunity to both at once: the same offer in two logs in two languages, completing only if both act. It affirms or tests the cooperation the way an ordinary Opportunity affirms or tests a pattern, and it pays each holder the Personal Opportunity value at its difficulty. The precedent and the campaign use are in After the Gate, "Paired Opportunities".
+
 ### Routine Quests
 
 The "kill ten boars" tier. Reliable, repeatable in kind, video-gamey. The System issues quests for clearing local threats, gathering resources, scouting territory, completing exploration objectives, and defeating specific enemies.

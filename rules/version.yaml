@@ -1,7 +1,7 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.11"
+version: "0.1.12"
 dated: "2026-09-22"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
@@ -26,3 +26,5 @@ notes: >
   70 at L8–12 / 13–17 / 18–22 / 23–25, easy 10 less, hard 10 more; a second creature counts as 20 Force), calibrated
   by tools/class_sim.py; Hold Fast takes the Frequency shape; Make Do yields Healing Pills up to the Healing Pill and
   Scavenged Field Gear only. 0.1.11: Take It cuts the Margin by 40 (from 20), declared before the ally's Yield.
+  0.1.12: After the Gate lands: the four Imprint blocks in the Bestiary (Interceptor 25 / Bearer 45 / Cordon 60 /
+  Completion 75), and an Accession Rift pays the Faction column at its difficulty.

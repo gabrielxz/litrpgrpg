@@ -201,6 +201,52 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 
 ---
 
+## Imprints
+
+An Imprint is a nonconscious construct that physically executes a recorded pattern of behavior inside an Accession Rift (After the Gate, "Accession Rifts"). Its body need not resemble the people who originated the pattern, and it contains no copied person. Every Imprint is specified in four lines, what it detects, what triggers it, what it does, and what stops it, and those lines belong to the Rift, so the Rift prints them and the block below prints the numbers. An Imprint is mindless: immune to mental and coercive attacks, HRT 05, Momentum on its PER. A defeated Imprint stays defeated; a later appearance is a new manifestation. Four blocks, one per wave.
+
+### Interceptor
+
+*The first wave: a boundary, a committed movement, a reset.*
+
+- **Grade:** F · **Tier:** Hard · **HP:** 50 · **Beats:** 2
+- **Off Force (STR, the committed strike):** 25
+- **Def Force (FOR, construct body):** 25
+- **HRT Force:** 05 · **PER Force:** 25
+- **Tactics:** Mindless. Strikes nothing outside its committed movement; its four lines are the Rift's.
+
+### Bearer
+
+*The second wave: a route, and a thing carried along it.*
+
+- **Grade:** F · **Tier:** Hard · **HP:** 90 · **Beats:** 2
+- **Off Force (STR, the passing strike):** 45
+- **Def Force (FOR, construct body):** 45
+- **HRT Force:** 05 · **PER Force:** 45
+- **Tactics:** Mindless. Walks a route carrying a thing and strikes what stands on the route without stopping; a Bearer down drops what it carried.
+
+### Cordon
+
+*The third wave: a perimeter held.*
+
+- **Grade:** F · **Tier:** Severe · **HP:** 120 · **Beats:** 2
+- **Off Force (STR, the perimeter strike):** 60
+- **Def Force (FOR, construct body):** 60
+- **HRT Force:** 05 · **PER Force:** 60
+- **Tactics:** **Yields.** Mindless. Holds a perimeter and Yields two Beats to stay on it rather than be driven off. One falls from each section of the diagram as it completes.
+
+### Completion
+
+*The completed diagram, taken a body: the region's own recorded conduct.*
+
+- **Grade:** F · **Tier:** Peak · **HP:** 150 · **Beats:** 3
+- **Off Force (STR, the region's strike):** 75
+- **Def Force (FOR, construct body):** 75
+- **HRT Force:** 05 · **PER Force:** 75
+- **Tactics:** **Yields** two of three Beats. Mindless. Its four lines are written from the region's record by the procedure in After the Gate, "Writing the Completion", which also holds a ready default. Above the sizing table's hard row at Level 21 (in simulation, one party in seven lost) and a hard fight at Level 25 (one in twenty).
+
+---
+
 ## GM Reference: Encounter Building
 
 When in doubt, use the Grade Reference Card. A character with Force 30 fighting an enemy with Force 30 is a peer fight (Moderate). Add +10 to enemy Force for a tougher engagement, subtract for an easier one.

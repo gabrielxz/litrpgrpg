@@ -327,6 +327,14 @@ def quest_ve(category: str, difficulty: str) -> int | None:
 
 # ---------------------------------------------------------- breakthrough ---
 
+def energy_density_bonus(tier: str) -> int:
+    """The Breakthrough Check bonus for a location's Energy Density tier."""
+    for row in load("breakthrough")["energy_density"]:
+        if row["tier"].lower() == tier.lower():
+            return row["bonus"]
+    raise KeyError(tier)
+
+
 def overcharge_row(ratio: int) -> dict:
     for row in load("breakthrough")["overcharge"]:
         if row["ratio"] == ratio:

@@ -1397,7 +1397,7 @@ The session ends on an open hook. The first is the default; layer a second onto 
 - **A sky-object wakes.** Something enormous, distant, and clearly alive becomes visible for the first time. Keep it distinct from the recovery cradle over the valley, which is machinery.
 - **The diagram moves.** For the length of a breath, the drawing over the city changes: one section completes, and past the rooftops something heavy comes down out of it. The party does not see what. End there.
 
-End the session before the consequences resolve.
+End the session before the consequences resolve. The campaign from here to the Level 25 cap is After the Gate.
 
 ---
 

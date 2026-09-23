@@ -35,6 +35,7 @@ SOURCES := \
   60-bestiary.md \
   65-items.md \
   70-tutorial.md \
+  72-after-the-gate.md \
   75-quick-reference.md \
   80-table-kit.md
 

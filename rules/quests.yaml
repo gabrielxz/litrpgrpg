@@ -12,6 +12,7 @@ party:
   invite: line of sight; accepting is a thought
   frame_shows: [current HP, Maximum HP, Aether, Downed]
   sharable: [Routine, Faction, Bestowed]
+  accession_rift_pays: faction     # a Rift's stated reward is the Faction column at its difficulty (After the Gate)
   not_sharable: [Mandate, Personal Opportunity]     # Mandates already bind everyone in scope
   shared_count_multiplies_by_holders: true          # "Eliminate ten" held by three becomes thirty; unscalable objectives stay as written
   rewards_per_holder: full award to every holder who meaningfully participated, at their own level
