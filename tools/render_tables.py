@@ -127,13 +127,22 @@ def g_quickref_grades():
     return table(["Grade", "Raw Stat Range", "Force Range", "Damage Multiplier"], rows)
 
 
+# The difficulties an Accession Rift is written at (After the Gate, "Writing a Rift").
+RIFT_DIFFICULTIES = ["Moderate", "Hard", "Severe", "Peak"]
+
+
 def g_quickref_ve():
     c = E.load("cultivation")
     tiers = " / ".join(r["difficulty"] for r in c["awards"]["kill_tiers"])
     vals = " / ".join(str(r["ve"]) for r in c["awards"]["kill_tiers"])
+    q = E.load("quests")
+    pays = q["party"]["accession_rift_pays"]
+    by_difficulty = {r["difficulty"]: r[pays] for r in q["ve_rewards"]}
+    rift = " / ".join(str(by_difficulty[d]) for d in RIFT_DIFFICULTIES)
     rows = [["A level", c["level_cost"]["base"]],
             [f"Kill, by tier: {tiers}", vals],
             ["Session survival", c["awards"]["session_survival"]],
+            [f"Accession Rift, by difficulty: {' / '.join(RIFT_DIFFICULTIES)}", f"{rift}, per character, on completion, and the kills as well"],
             ["Cross-Grade kill", "the victim's tier read at its own Grade, ×10 per Grade above the killer; a victim below your Grade pays nothing"]]
     return table(["VE at F-Grade", "Amount"], rows)
 

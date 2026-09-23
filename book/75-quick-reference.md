@@ -129,10 +129,13 @@ Force ranges are the normal bands; a lagging stat sits below them (see Lagging s
 | A level | 120 |
 | Kill, by tier: Trivial / Easy / Moderate / Hard / Severe / Peak | 2 / 5 / 10 / 20 / 30 / 50 |
 | Session survival | 5 |
+| Accession Rift, by difficulty: Moderate / Hard / Severe / Peak | 25 / 50 / 90 / 150, per character, on completion, and the kills as well |
 | Cross-Grade kill | the victim's tier read at its own Grade, ×10 per Grade above the killer; a victim below your Grade pays nothing |
 <!-- /rules:table -->
 
 All VE values scale ×10 per Grade.
+
+**When a Rift clears:** the moment the completion condition is met, every Imprint in it stops where it stands and comes apart within the hour, fought or not. A Rift solved without a kill pays its reward and none of the kill VE. A cleared Rift never reopens.
 
 ---
 

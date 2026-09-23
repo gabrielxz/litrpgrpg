@@ -1,8 +1,8 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.12"
-dated: "2026-09-22"
+version: "0.1.13"
+dated: "2026-09-23"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
   flat-value VE (Tolerance 80, level 120, 20 per hour), the Grade Gap Rule,
@@ -27,4 +27,6 @@ notes: >
   by tools/class_sim.py; Hold Fast takes the Frequency shape; Make Do yields Healing Pills up to the Healing Pill and
   Scavenged Field Gear only. 0.1.11: Take It cuts the Margin by 40 (from 20), declared before the ally's Yield.
   0.1.12: After the Gate lands: the four Imprint blocks in the Bestiary (Interceptor 25 / Bearer 45 / Cordon 60 /
-  Completion 75), and an Accession Rift pays the Faction column at its difficulty.
+  Completion 75), and an Accession Rift pays the Faction column at its difficulty. 0.1.13: the Rift award reaches the
+  Quick Reference and the kit's VE block (25 / 50 / 90 / 150 at Moderate / Hard / Severe / Peak, per character, plus the
+  kills), with the clearance rule beside it. No number moved; the Quick Reference VE table gained a row.
