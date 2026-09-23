@@ -75,7 +75,7 @@ ART_MASTERS := $(shell find $(ART_SRC) -name '*.png')
 TITLE_FONT   := $(shell kpsewhich Alegreya-Black.otf)
 BYLINE_FONT  := $(shell kpsewhich EBGaramond-Italic.otf)
 
-.PHONY: all pdf epub kit art tutorial tables test check clean
+.PHONY: all pdf epub kit art tutorial tables test check notes clean
 
 all: pdf epub
 
@@ -205,6 +205,13 @@ check:
 	python3 tools/render_tables.py --check
 	python3 tools/test_rules.py
 	python3 tools/lint_prose.py
+
+# Collect the Okular annotations from the newest full build into a notes file.
+# Read in Okular, annotate as you go, then `make notes`.
+notes:
+	python3 tools/read_notes.py > $(BUILD_DIR)/read-notes-$(TIMESTAMP).md
+	@echo "Notes: $(BUILD_DIR)/read-notes-$(TIMESTAMP).md"
+	@head -3 $(BUILD_DIR)/read-notes-$(TIMESTAMP).md
 
 # --- Tutorial-only PDF -----------------------------------------------------
 # Pages from the Tutorial chapter (its art page) to the end of the book, cut
