@@ -37,11 +37,13 @@ def newest_build() -> str:
     pattern = os.path.join(ROOT, "build", "litrpg-rpg-[0-9]" * 1 + "*.pdf")
     builds = [p for p in glob.glob(pattern)
               if re.match(r"litrpg-rpg-\d{8}-\d{6}\.pdf$", os.path.basename(p))]
-    if builds:
-        return max(builds, key=os.path.getmtime)
     stable = os.path.join(ROOT, "build", "litrpg-rpg.pdf")
+    # The stable path is the one Okular is usually pointed at, and the
+    # timestamped file beside it is a copy of the same build.
     if os.path.exists(stable):
         return stable
+    if builds:
+        return max(builds, key=os.path.getmtime)
     sys.exit("no build found in build/; run `make pdf` first")
 
 
