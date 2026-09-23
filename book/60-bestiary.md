@@ -233,7 +233,7 @@ An Imprint is a nonconscious construct that physically executes a recorded patte
 - **Off Force (STR, the perimeter strike):** 60
 - **Def Force (FOR, construct body):** 60
 - **HRT Force:** 05 · **PER Force:** 60
-- **Tactics:** **Yields.** Mindless. Holds a perimeter and Yields two Beats to stay on it rather than be driven off. One falls from each section of the diagram as it completes.
+- **Tactics:** **Yields.** Mindless. Holds a perimeter, sliding one Zone a round along it and striking what it meets. It Yields under the ordinary rule, and a two-Beat Yield lets the attacker drive it off its perimeter; a Cordon driven off spends its next turn returning to the line and strikes nothing on the way. One falls from each section of the diagram as it completes.
 
 ### Completion
 
@@ -243,7 +243,7 @@ An Imprint is a nonconscious construct that physically executes a recorded patte
 - **Off Force (STR, the region's strike):** 75
 - **Def Force (FOR, construct body):** 75
 - **HRT Force:** 05 · **PER Force:** 75
-- **Tactics:** **Yields** two of three Beats. Mindless. Its four lines are written from the region's record by the procedure in After the Gate, "Writing the Completion", which also holds a ready default. Above the sizing table's hard row at Level 21 (in simulation, one party in seven lost) and a hard fight at Level 25 (one in twenty).
+- **Tactics:** **Yields** two of three Beats, keeping the third to strike. Mindless. Its four lines are the ready default in After the Gate, "Writing the Completion", or the region's substitutions, and meeting its stop condition clears it without a kill. Above the sizing table's hard row at Level 21 (in simulation, one party in seven lost) and a hard fight at Level 25 (one in twenty).
 
 ---
 

@@ -199,7 +199,7 @@ creatures:
     offense: [{force: 60, stat: STR, means: the perimeter strike}]
     defense: [{force: 60, stat: FOR, means: construct body}]
     yields: true
-    tactics: "Mindless. Holds a perimeter and Yields two Beats to stay on it rather than be driven off. The third wave; one falls from each section of the diagram as it completes."
+    tactics: "Mindless. Holds a perimeter, sliding one Zone a round along it and striking what it meets. Yields under the ordinary rule; driven off its perimeter by a two-Beat Yield, it spends its next turn returning to the line and strikes nothing on the way. The third wave; one falls from each section of the diagram as it completes."
   - name: Completion
     tier_group: Boss
     grade: F
@@ -212,7 +212,7 @@ creatures:
     offense: [{force: 75, stat: STR, means: the region's strike}]
     defense: [{force: 75, stat: FOR, means: construct body}]
     yields: true
-    tactics: "Mindless. Yields two of three Beats. Runs the region's recorded conduct: its four lines are written by the procedure in After the Gate, with a ready default there. Momentum on its PER. The completed diagram, taken a body."
+    tactics: "Mindless. Yields two of three Beats, keeping the third to strike. Runs the region's recorded conduct: its four lines are the ready default in After the Gate or the region's substitutions; meeting its stop condition clears it without a kill. Momentum on its PER. The completed diagram, taken a body."
 
 # For an F-Grade party of 4.
 encounter_sizing:

@@ -1,5 +1,7 @@
 # After the Gate: the outline for Gabriel's cut
 
+*Superseded 2026-09-22 by the drafted chapter, `book/72-after-the-gate.md`, and ChatGPT's usability review applied to it. Kept as the design record of the seeds and the decisions.*
+
 *Working document for `book/72-after-the-gate.md` (2026-09-22, revised the same day against ChatGPT's review, adopted by Gabriel in lieu of his own answers). The chapter sits between the tutorial and the Quick Reference. Every setting fact comes from `lore/setting.md`; anything marked **[proposal]** is new lore that goes into the setting file before the chapter states it; anything marked **[open]** still needs a ruling.*
 
 The chapter's seven jobs (Gabriel): what happened on Earth during the tutorial; the sandbox; the responses, the toll, and the opportunities; the Aru and the integration buddy; pure lore documents; the cover explained; enough setting and mission ideas to reach Level 25 without a single full mission. The review's larger point, adopted: the setting's central subject is how civilizations reshape themselves, and the sandbox has to support more kinds of life than moving from one imposed emergency to the next.
