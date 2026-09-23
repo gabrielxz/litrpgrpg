@@ -27,13 +27,18 @@ be regenerated.
   fans along either side of the head. They are people with a different body plan,
   not humans in costume and not insects.
 - An adult Aru stands about 2.1 meters at the head (Gabriel, 2026-09-23), taller
-  than the humans around them. The barrel of the body rides level between the
-  three legs and the shoulders and head rise from the front of it.
+  than the humans around them.
+- **The torso is upright.** It stands over the three legs the way a human's
+  stands over two. A body that extends forward with the head on the front end
+  produces a centaur or a pack animal, which is what two generations produced.
+  Never use quadruped anatomy words: no barrel, no withers, no haunches, no
+  level body, no shoulders "at the front".
 - Aru and Kith are both tall, and the silhouette that separates them is width.
-  An Aru is broad: a horizontal barrel, wide shoulders, and fans spreading to
-  either side of the head. A Kith is narrow and vertical, with two long arms, a
-  smaller pair held close under the ribs, and folds down the neck. Never give an
-  Aru a narrow upright body or a Kith a wide one.
+  An Aru is broad: wide chest and shoulders on an upright torso, a wide tripod
+  stance, and fans spreading to either side of the head. Width lives in the
+  footprint and the shoulders, never in body length. A Kith is narrow and
+  vertical, with two long arms, a smaller pair held close under the ribs, and
+  folds down the neck. Never give an Aru a narrow body or a Kith a wide one.
 - The diagram over the square is unfinished. It completes at Level 20, and the
   chapter is about the years before that.
 - No readable text, numbers, or logos anywhere in the image, the manifest and the
@@ -71,23 +76,20 @@ Use large quiet areas and meaningful background features. Let texture support sh
 
 ## Revision prompt
 
-Preferred route. The latest generation has the sky diagram, the blank banner, and
-the flatter rendering right, and only its Aru is wrong. Supply that image as the
-edit target and `book/art/references/01-office-bone.png` as the style reference,
-and change the figure alone.
+Do not edit a generation whose Aru has gone horizontal; the shape does not come
+back. Start from the generation whose sky diagram, blank banner and flatter
+rendering are right, and replace the figure.
 
 Keep everything in this image exactly as it is: the composition, the camera, the cool blue cast, the warm dusk sky, the bright daylight through the arch, the cyan structure in the sky, the blank banner, the crates, and the people at the table. Change only the three-legged person.
 
-They are currently short, stout and soft-faced. Rebuild them as follows.
+They are currently built like a pack animal, with a long body held horizontal and the head out at the front. That is wrong. Rebuild them standing upright.
 
-Height: tall, a clear head above the standing humans, on three long legs. Build: broad and heavy with it. The barrel of the body is long and rides level between the legs, the shoulders are wide where they rise from the front of it, and the two hearing fans spread wide to either side of the head. They should be as striking for their width as for their height.
+Posture: the torso is vertical and stands over the legs the way a human's torso stands over two legs. The head sits directly on top of the shoulders on a short neck. Nothing about the body extends forward.
 
-Head: long, angular and severe, on a short neck. Small dark eyes set wide, no glossy highlight. No smile; the mouth is a plain closed line. The fans are stiff, flat, blade-like plates, not soft raised ears. The expression is attentive and slightly impatient, someone waiting to be dealt with.
+Height: tall, a clear head above the standing humans, on three long legs.
+
+Width: the chest and shoulders are much broader than a human's, and the three legs are planted in a wide stance so the figure takes up a lot of floor. The two hearing fans spread wide to either side of the head. They should be as striking for their width as for their height. All of this width is in the shoulders and the stance; the body is not made longer.
+
+Head: long, angular and severe. Small dark eyes set wide, no glossy highlight. No smile; the mouth is a plain closed line. The fans are stiff, flat, blade-like plates, not soft raised ears. The expression is attentive and slightly impatient, someone waiting to be dealt with.
 
 Keep: three weight-bearing legs, two arms, the clipboard, the work vest and pouches.
-
-### Fallback
-
-If the edit above will not take, generate afresh from the Prompt section with the
-build and face paragraphs folded in, rather than stacking more edits on a soft
-image.
