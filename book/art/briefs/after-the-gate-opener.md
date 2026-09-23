@@ -71,18 +71,23 @@ Use large quiet areas and meaningful background features. Let texture support sh
 
 ## Revision prompt
 
-For a second pass on the tall-Aru generation (`11_48_01`), whose proportions and
-palette are the approved ones. Supply that image as the edit target and
-`book/art/references/01-office-bone.png` as the style reference.
+Preferred route. The latest generation has the sky diagram, the blank banner, and
+the flatter rendering right, and only its Aru is wrong. Supply that image as the
+edit target and `book/art/references/01-office-bone.png` as the style reference,
+and change the figure alone.
 
-Keep this scene, composition, and camera. Keep the tall three-legged person exactly at their current height and leg length. Keep the cool blue cast, the warm dusk sky behind the courthouse, and the bright daylight through the arch.
+Keep everything in this image exactly as it is: the composition, the camera, the cool blue cast, the warm dusk sky, the bright daylight through the arch, the cyan structure in the sky, the blank banner, the crates, and the people at the table. Change only the three-legged person.
 
-Change four things.
+They are currently short, stout and soft-faced. Rebuild them as follows.
 
-1. Build. The tall three-legged person is too slender and reads as a horse. Widen them. The barrel of the body is long and heavy and rides level between the three legs; the shoulders are broad where they rise from the front of it; the two hearing fans spread wide to either side of the head. They should be as striking for their width as for their height. Do not shorten the legs and do not lower the head.
+Height: tall, a clear head above the standing humans, on three long legs. Build: broad and heavy with it. The barrel of the body is long and rides level between the legs, the shoulders are wide where they rise from the front of it, and the two hearing fans spread wide to either side of the head. They should be as striking for their width as for their height.
 
-2. Face. Keep it long, angular and severe, as it already is. No large round eyes, no smile, no soft muzzle. The expression is attentive and slightly impatient, someone waiting to be dealt with.
+Head: long, angular and severe, on a short neck. Small dark eyes set wide, no glossy highlight. No smile; the mouth is a plain closed line. The fans are stiff, flat, blade-like plates, not soft raised ears. The expression is attentive and slightly impatient, someone waiting to be dealt with.
 
-3. Rendering. Rebuild in angular cut-paper construction with flat matte gouache planes and hard shape edges. Remove the soft airbrushed shading, the glow, and the atmospheric haze. Light and shadow are flat masses with clean boundaries, not gradients.
+Keep: three weight-bearing legs, two arms, the clipboard, the work vest and pouches.
 
-4. The sky diagram. Replace the scattered sparkles with one enormous structure: fine cyan line work in which separate fragments have locked into alignment in some places, while whole sections are missing or sit unaligned and unlit. It is a single incomplete object far away, not decoration spread across the sky. No halo, no rings, no central diamond. Leave the hanging banner blank, with no symbol or text.
+### Fallback
+
+If the edit above will not take, generate afresh from the Prompt section with the
+build and face paragraphs folded in, rather than stacking more edits on a soft
+image.
