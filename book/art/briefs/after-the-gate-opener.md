@@ -74,6 +74,33 @@ Use large quiet areas and meaningful background features. Let texture support sh
 
 **Reference roles.** The office image is the style anchor only. Do not copy its characters, its composition, or its glyph arrangement.
 
+## Delivered
+
+`book/assets/art/openers/after-the-gate.png`, approved 2026-09-23 (source
+`ChatGPT Image Sep 23, 2026, 03_51_23 PM.png`, 1024x1536, upscaled 4x with
+Upscayl high-fidelity, centre-cropped to 7:10, downsampled to 2100x3000).
+
+This image is the reference for every later Aru. What it settled, now canon in
+`lore/setting.md` under "Aru bodies":
+
+- Upright torso over three legs splayed wide. Lean and bony: long limbs, visible
+  joints, smooth hairless skin the color of pale bone.
+- Arms longer in proportion than a human's, folding at **two elbows apiece** in a
+  shallow Z. **Five-fingered hands.** Blunt three-toed feet.
+- Long tapering head on a short neck low between the shoulders, small dark eyes
+  set wide, mouth a plain closed line.
+- Fans as two broad flat blades spreading to either side and slightly back,
+  together wider than the shoulders, ribbed into panels, a hearing opening at the
+  base of each.
+- Dress hanging from the shoulders in wide panels to mid-leg, over a harness of
+  pouches. Legs bare, head uncovered, no human garments.
+
+Selan's own wrap in this image is striped in bone, blue-black and tan. That is
+Selan's, not the species'.
+
+Known and accepted: the hands read as human hands. The five-finger ruling
+(Gabriel, 2026-09-23) makes that correct rather than a defect.
+
 ## Revision prompt
 
 Do not edit a generation whose Aru has gone horizontal; the shape does not come

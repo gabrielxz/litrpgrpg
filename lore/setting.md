@@ -279,7 +279,13 @@ The System chose Earth and Namar for each other. `[GM]` It assessed environmenta
 
 ### Aru bodies
 
-Aru have three weight-bearing legs, two manipulating arms, and movable hearing fans along the head. An adult stands about 2.1 meters at the head, taller than most humans. The barrel of the body rides level between the three legs, the shoulders and head rise from the front of it, and the fans spread wide to either side. Deliberate fan movements are part of language and translate; involuntary ones a human learns to read. Anatomy shapes furniture, gait, and comfort.
+Aru have three weight-bearing legs, two manipulating arms, and movable hearing fans along the head. An adult stands about 2.1 meters at the head, taller than most humans. The torso is upright and stands over the legs, and the three legs splay wide, so an Aru takes up a great deal of floor. The build is lean and bony: long limbs, visible joints, and smooth hairless skin the color of pale bone.
+
+Each leg ends in a blunt three-toed foot. The arms are longer in proportion than a human's and fold at two elbows apiece, in a shallow Z, and the hands have five fingers. The head is long and tapering, carried on a short neck low between the shoulders, with small dark eyes set wide and a mouth that closes in a plain line.
+
+The fans are two broad flat blades spreading to either side of the head and slightly back, together wider than the shoulders, ribbed into panels, with a hearing opening at the base of each. Deliberate fan movements are part of language and translate; involuntary ones a human learns to read.
+
+Anatomy shapes furniture, gait, and comfort, and it shapes dress. Aru garments hang or wrap from the shoulders in wide panels to mid-leg, over harnesses and belts that carry tools and pouches. A three-legged body takes no trousers, and the legs go bare. Nothing covers the head, where the fans are. Aru wear Aru clothing; a human garment fits nothing on them.
 
 Aru live through four discrete bodily forms. Each transition brings a period of shelter, reduced mobility, and tissue remodeling. They remember their earlier lives and remain the same people.
 

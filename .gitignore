@@ -9,3 +9,6 @@ build/
 .idea/
 __pycache__/
 *.pyc
+
+# Working images dropped in the repo root by the image tools
+/*.png
