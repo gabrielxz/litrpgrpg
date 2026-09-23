@@ -38,6 +38,7 @@ patterns:
   - {pattern: "Conqueror's Haki",                 replaced_by: "Majesty",                                    since: 2026-09-20}
   - {pattern: 'The Void, Assimilation',           replaced_by: "Famine",                                     since: 2026-09-20}
   - {pattern: 'Vector Logging Cheatsheet',        replaced_by: "The Session-End Sweep",                       since: 2026-08-25}
+  - {pattern: '1\.6 meters',                     replaced_by: "an adult Aru stands about 2.1 meters at the head", since: 2026-09-23}
   - {pattern: 'Passive Awareness',                replaced_by: "Routine Mastery",                             since: 2026-07-02}
   - {pattern: '\bBreakthrough Beats?\b',          replaced_by: "Stages",                                      since: 2026-08-06}
   - {pattern: '\bMateria\b',                      replaced_by: "cut",                                         since: 2026-08-12}

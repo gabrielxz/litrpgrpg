@@ -26,9 +26,14 @@ be regenerated.
 - Aru have three weight-bearing legs, two manipulating arms, and movable hearing
   fans along either side of the head. They are people with a different body plan,
   not humans in costume and not insects.
-- An adult Aru stands about 1.6 meters at the head (Gabriel, 2026-09-23), the
-  torso low and broad over a wide tripod, so an Aru and a standing human meet at
-  eye level. The Kith own the tall narrow silhouette; the Aru must not share it.
+- An adult Aru stands about 2.1 meters at the head (Gabriel, 2026-09-23), taller
+  than the humans around them. The barrel of the body rides level between the
+  three legs and the shoulders and head rise from the front of it.
+- Aru and Kith are both tall, and the silhouette that separates them is width.
+  An Aru is broad: a horizontal barrel, wide shoulders, and fans spreading to
+  either side of the head. A Kith is narrow and vertical, with two long arms, a
+  smaller pair held close under the ribs, and folds down the neck. Never give an
+  Aru a narrow upright body or a Kith a wide one.
 - The diagram over the square is unfinished. It completes at Level 20, and the
   chapter is about the years before that.
 - No readable text, numbers, or logos anywhere in the image, the manifest and the
@@ -66,18 +71,18 @@ Use large quiet areas and meaningful background features. Let texture support sh
 
 ## Revision prompt
 
-For a second pass on a generation that has the scene right. Supply the previous
-image as the edit target and `book/art/references/01-office-bone.png` as the style
-reference.
+For a second pass on the tall-Aru generation (`11_48_01`), whose proportions and
+palette are the approved ones. Supply that image as the edit target and
+`book/art/references/01-office-bone.png` as the style reference.
 
-Keep this scene, composition, and camera. Keep the cool blue cast, the warm dusk sky behind the courthouse, and the bright daylight through the arch. Keep the three-legged person's anatomy: three weight-bearing legs, two arms, two hearing fans.
+Keep this scene, composition, and camera. Keep the tall three-legged person exactly at their current height and leg length. Keep the cool blue cast, the warm dusk sky behind the courthouse, and the bright daylight through the arch.
 
 Change four things.
 
-1. Proportions. The three-legged person is too tall and too horselike. Shorten the legs and broaden the torso so the body is low and wide over its tripod, and raise the head so it sits level with a standing human's eyes. Adult height about 1.6 meters. The result should read as a stocky working person, not as a centaur and not as a small cute creature.
+1. Build. The tall three-legged person is too slender and reads as a horse. Widen them. The barrel of the body is long and heavy and rides level between the three legs; the shoulders are broad where they rise from the front of it; the two hearing fans spread wide to either side of the head. They should be as striking for their width as for their height. Do not shorten the legs and do not lower the head.
 
-2. Rendering. Rebuild in angular cut-paper construction with flat matte gouache planes and hard shape edges. Remove the soft airbrushed shading, the glow, and the atmospheric haze. Light and shadow are flat masses with clean boundaries, not gradients.
+2. Face. Keep it long, angular and severe, as it already is. No large round eyes, no smile, no soft muzzle. The expression is attentive and slightly impatient, someone waiting to be dealt with.
 
-3. The sky diagram. Replace the scattered sparkles with one enormous structure: fine cyan line work in which separate fragments have locked into alignment in some places, while whole sections are missing or sit unaligned and unlit. It is a single incomplete object far away, not decoration spread across the sky. No halo, no rings, no central diamond.
+3. Rendering. Rebuild in angular cut-paper construction with flat matte gouache planes and hard shape edges. Remove the soft airbrushed shading, the glow, and the atmospheric haze. Light and shadow are flat masses with clean boundaries, not gradients.
 
-4. The hanging banner. Leave it blank. No symbol, no emblem, no text.
+4. The sky diagram. Replace the scattered sparkles with one enormous structure: fine cyan line work in which separate fragments have locked into alignment in some places, while whole sections are missing or sit unaligned and unlit. It is a single incomplete object far away, not decoration spread across the sky. No halo, no rings, no central diamond. Leave the hanging banner blank, with no symbol or text.
