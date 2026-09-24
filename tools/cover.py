@@ -3,8 +3,8 @@
 
 Layout (fractions of the page, so any master size works):
   a tracked small-caps subtitle at the top, a short gold rule under it,
-  the GRADEBREAKER wordmark, a hairline rule with a gold diamond at its
-  centre, and a dark bar along the bottom carrying the edition line on the
+  the GRADEBREAKER wordmark, a hairline rule broken at its centre by the
+  clave, and a dark bar along the bottom carrying the edition line on the
   left and the byline on the right. Every string is a constant below.
 
 The art carries no text of its own; the bake renders the type at the
@@ -31,6 +31,9 @@ FACE_WORDMARK = "ChakraPetch-Bold.ttf"       # book/assets/fonts/, OFL
 FACE_MONO     = "JetBrainsMono-Regular.otf"
 FACE_MONO_B   = "JetBrainsMono-Bold.otf"
 
+CLAVE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                     "book", "art", "emblem", "clave-mark.png")
+
 FONT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "book", "assets", "fonts")
 
 def font(name, size):
@@ -55,6 +58,14 @@ def tracked(d, x, y, s, f, track, fill, anchor="l", colors=None):
         d.text((x, y), c, font=f, fill=(colors or {}).get(i, fill), anchor="lm")
         x += f.getlength(c) + track
     return w
+
+def tinted(path, rgb):
+    """The clave in one flat colour, alpha preserved."""
+    src = Image.open(path).convert("RGBA")
+    out = Image.new("RGBA", src.size, tuple(rgb) + (0,))
+    out.putalpha(src.getchannel("A"))
+    return out
+
 
 def band_luminance(im, y0, y1):
     band = im.convert("L").crop((0, int(y0 * im.height), im.width, int(y1 * im.height))).resize((64, 8))
@@ -81,12 +92,19 @@ def main(src, dst):
     f_wm = font(FACE_WORDMARK, int(200 * (W * 0.775) / (x1 - x0)))
     d.text((W / 2, H * 0.0885), WORDMARK, font=f_wm, fill=ink, anchor="mm")
 
-    # the long hairline with a gold diamond at its centre
-    ly, lx0, lx1, gap, ht = H * 0.135, W * 0.068, W * 0.932, W * 0.018, max(1, int(W * 0.0008))
+    # the long hairline, broken at its centre by the clave. The mark takes the
+    # same ink/bone choice as the wordmark: cyan measures 1.04 against this
+    # art's pale sky and disappears, where ink measures 12.67.
+    ly, lx0, lx1, ht = H * 0.135, W * 0.068, W * 0.932, max(1, int(W * 0.0008))
+    mark = tinted(CLAVE, ink)
+    mh = int(H * 0.042)
+    mw = round(mark.width * mh / mark.height)
+    mark = mark.resize((mw, mh), Image.LANCZOS)
+    gap = mw / 2 + W * 0.010
     d.rectangle([lx0, ly - ht / 2, W / 2 - gap, ly + ht / 2], fill=GOLD)
     d.rectangle([W / 2 + gap, ly - ht / 2, lx1, ly + ht / 2], fill=GOLD)
-    r = W * 0.007
-    d.polygon([(W / 2, ly - r), (W / 2 + r, ly), (W / 2, ly + r), (W / 2 - r, ly)], fill=GOLD)
+    im.alpha_composite(mark, (int(W / 2 - mw / 2), int(ly - mh / 2)))
+    d = ImageDraw.Draw(im)
 
     # the bottom bar
     bx0, bx1, by0, by1 = W * 0.05, W * 0.95, H * 0.915, H * 0.975
