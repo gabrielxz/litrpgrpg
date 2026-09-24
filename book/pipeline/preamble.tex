@@ -134,7 +134,8 @@
   underlay={
     \draw[gbcyanlight, line width=1.1pt] ([yshift=-18pt]frame.north west) -- (frame.south west) -- ([xshift=36pt]frame.south west);
     \draw[gbcyanlight, line width=1.1pt] ([xshift=-72pt]frame.south east) -- (frame.south east) -- ([yshift=48pt]frame.south east);
-    \draw[gbcyanlight, line width=1.1pt] ([xshift=-40pt]frame.north east) -- (frame.north east);
+    \node[anchor=north east, inner sep=0pt] at ([xshift=-12pt, yshift=-11pt]frame.north east)
+      {\includegraphics[height=12pt]{./book/art/emblem/clave-mark.png}};
   }
 }
 
@@ -166,11 +167,16 @@
   arc=0pt,
   fontupper=\ttfamily\small,
   left=10pt,
-  right=10pt,
+  right=22pt,
   top=8pt,
   bottom=8pt,
   before skip=10pt,
-  after skip=10pt
+  after skip=10pt,
+  underlay={
+    \node[anchor=north east, inner sep=0pt, opacity=0.55]
+      at ([xshift=-7pt, yshift=-7pt]frame.north east)
+      {\includegraphics[height=11pt]{./book/art/emblem/clave-mark-ink.png}};
+  }
 }
 
 % Read Aloud — boxed narration the GM says out loud, titled so it can be
