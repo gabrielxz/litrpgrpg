@@ -82,6 +82,8 @@ Any system this size has edge cases, and every table eventually finds a reading 
 
 ## An Example of Play
 
+:::: example
+
 Kara (Strength 8 and Fortitude 7, written STR 8, FOR 7 on her sheet, with the Proficiency "axes and hammers") and Andre (Perception 9, Dexterity 7, with "tracking and fieldcraft," "archery and throwing," and a scavenged hunting bow) are Level 2 with their level-up points still unspent, three days into their Integration Tutorial, crossing the dead district at its heart.
 
 **GM:** The overpass ahead has folded in on itself. There's a gap in the rubble, a service stair, half buried. It's the only way through that isn't a mile around.
@@ -149,5 +151,7 @@ Kara (Strength 8 and Fortitude 7, written STR 8, FOR 7 on her sheet, with the Pr
 **GM:** Two Zones. Do you want to find out?
 
 *(The GM writes nothing down. At session end they will still remember Kara taking the ambush head-on and giving one Beat to keep her ground, then asking what a bigger kill pays, and Andre telling her to leave it alone. Those moments go to the Engine at the sweep.)*
+
+::::
 
 That is the whole loop: fiction first, one roll per action, and a System observing what each of you is becoming.

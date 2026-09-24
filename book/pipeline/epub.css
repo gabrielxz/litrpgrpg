@@ -86,3 +86,20 @@ img.opener, img.fullpage, img.map, img.scene { display: block; width: 100%; marg
 img.spot { float: right; width: 36%; margin: 0 0 0.8em 1em; }
 img.spot.narrow { width: 26%; }
 img.pregens { display: block; width: 100%; }
+
+div.example {
+  border-top: 2px solid #2EB4C6;
+  border-bottom: 2px solid #2EB4C6;
+  padding: 0.5em 0 0.2em 0;
+  margin: 1.2em 0;
+}
+div.example::before {
+  content: "EXAMPLE OF PLAY";
+  display: block;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 0.72em;
+  letter-spacing: 0.08em;
+  color: #2EB4C6;
+  margin-bottom: 0.4em;
+}

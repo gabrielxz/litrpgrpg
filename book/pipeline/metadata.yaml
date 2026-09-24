@@ -74,13 +74,16 @@ linkcolor: black
 urlcolor: "5B7C99"
 toccolor: black
 
-# Running header / footer overrides
-# Defaults from Eisvogel: title (left), date (right), author (footer-left), page (footer-right).
-# We strip date and author from running pages — they appear only on the title page.
-header-left: "\\leftmark"   # current chapter name (set by \chaptermark)
+# Running header / footer.
+# Eisvogel's defaults are title (header-left), date (header-right), author
+# (footer-left) and page (footer-right). Its template tests each slot with
+# $if(...)$, and pandoc reads an empty string as false, so "" does not clear a
+# slot: it falls through to the default. Blank a slot with \hspace{0pt},
+# which is truthy to the template and prints nothing.
+header-left: "\\leftmark"        # current chapter name (set by \chaptermark)
 header-center: ""
-header-right: "\\thepage"   # page number top-right
-footer-left: ""
+header-right: "\\hspace{0pt}"    # blank; the page number lives in the footer
+footer-left: "\\hspace{0pt}"     # blank; the author belongs on the title page
 footer-center: ""
-footer-right: ""
+footer-right: "\\thepage"        # page number, outer corner
 ---

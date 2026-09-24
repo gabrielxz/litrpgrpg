@@ -50,6 +50,8 @@ The whole track, from first resonance to first power, looks like this at the tab
 
 **The meditation.** At the party's next Consolidation, the GM turns to her:
 
+:::: example
+
 **GM:** You're cycling, and the slab comes back. The full weight of it, on you again. What do you notice this time that you didn't in the moment?
 
 **Kara:** I don't know. I keep thinking about how I couldn't have held it. It was way too heavy.
@@ -69,6 +71,8 @@ The whole track, from first resonance to first power, looks like this at the tab
 
 *Insight: Weight 4/10*
 :::
+
+::::
 
 The meditation earned 2 IP. That carried her past 3, and the Principle **crystallized**: the GM named Weight as the Principle reflected in Kara's actions and meditation, and the name filled her single F-Grade slot for life.
 

@@ -139,6 +139,26 @@
   }
 }
 
+% Example of Play — a transcript of table talk, banded rather than boxed.
+% Rules top and bottom with a label, not a tcolorbox: an example runs over a
+% page, and a breakable box that also has to contain a systemvoice box is
+% fragile. This breaks naturally and nests anything.
+% The rules are cyan and match the label: the page already carries a black
+% headsepline and footsepline, so a gray rule here reads as page furniture.
+% The closing rule is pinned to the last line with penalties, or a page break
+% strands it at the top of the next page and the example looks unclosed.
+\newenvironment{playexample}{%
+  \par\addvspace{12pt}%
+  \noindent{\sffamily\bfseries\footnotesize\color{gbcyan}EXAMPLE OF PLAY}%
+  \par\nobreak\vskip 2pt%
+  \noindent\textcolor{gbcyan}{\rule{\linewidth}{1.1pt}}%
+  \par\nobreak\vskip 7pt%
+}{%
+  \par\penalty10000\vskip 6pt\penalty10000%
+  \noindent\textcolor{gbcyan}{\rule{\linewidth}{1.1pt}}%
+  \par\addvspace{12pt}%
+}
+
 % Stat Block — distressed gray box with heavy top rule
 % For monster/character stat blocks
 \newtcolorbox{statblock}{
