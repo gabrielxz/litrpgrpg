@@ -139,24 +139,24 @@
   }
 }
 
-% Example of Play — a transcript of table talk, banded rather than boxed.
-% Rules top and bottom with a label, not a tcolorbox: an example runs over a
-% page, and a breakable box that also has to contain a systemvoice box is
-% fragile. This breaks naturally and nests anything.
-% The rules are cyan and match the label: the page already carries a black
-% headsepline and footsepline, so a gray rule here reads as page furniture.
-% The closing rule is pinned to the last line with penalties, or a page break
-% strands it at the top of the next page and the example looks unclosed.
-\newenvironment{playexample}{%
-  \par\addvspace{12pt}%
-  \noindent{\sffamily\bfseries\footnotesize\color{gbcyan}EXAMPLE OF PLAY}%
-  \par\nobreak\vskip 2pt%
-  \noindent\textcolor{gbcyan}{\rule{\linewidth}{1.1pt}}%
-  \par\nobreak\vskip 7pt%
-}{%
-  \par\penalty10000\vskip 6pt\penalty10000%
-  \noindent\textcolor{gbcyan}{\rule{\linewidth}{1.1pt}}%
-  \par\addvspace{12pt}%
+% Example of Play — a transcript of table talk.
+% A breakable tcolorbox: the inner systemvoice box is not breakable, so it
+% moves as a unit and nesting is safe. parbox=false is load-bearing: the
+% tcolorbox default reflows the contents and collapses the blank lines
+% between speakers, which is exactly what a transcript needs to keep.
+\newtcolorbox{playexample}{
+  enhanced, breakable, parbox=false,
+  colback=gbcyan!7!gbbone,
+  colframe=gbcyan,
+  boxrule=1.1pt, arc=0pt, outer arc=0pt,
+  left=12pt, right=12pt, top=11pt, bottom=13pt,
+  before skip=13pt, after skip=13pt,
+  title={EXAMPLE OF PLAY},
+  fonttitle=\sffamily\bfseries\footnotesize,
+  coltitle=gbcyan,
+  attach boxed title to top left={xshift=12pt, yshift=-\tcboxedtitleheight/2},
+  boxed title style={colback=gbcyan!7!gbbone, colframe=gbcyan, boxrule=0.6pt, arc=0pt,
+                     left=6pt, right=6pt, top=2pt, bottom=2pt}
 }
 
 % Stat Block — distressed gray box with heavy top rule

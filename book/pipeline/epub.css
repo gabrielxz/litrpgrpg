@@ -88,9 +88,9 @@ img.spot.narrow { width: 26%; }
 img.pregens { display: block; width: 100%; }
 
 div.example {
-  border-top: 2px solid #2EB4C6;
-  border-bottom: 2px solid #2EB4C6;
-  padding: 0.5em 0 0.2em 0;
+  border: 2px solid #2EB4C6;
+  background-color: #EEF6F3;
+  padding: 0.7em 0.9em;
   margin: 1.2em 0;
 }
 div.example::before {
