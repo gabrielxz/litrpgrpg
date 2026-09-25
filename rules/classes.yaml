@@ -41,8 +41,8 @@ permission:
   death_clock_hold_rounds: 1     # the one thing a class may do to the countdown, for a Beat
 
 guarded:
-  per_campaign_max: 1            # at most one class in a campaign carries a guarded power; only the GM places it
-  app_generates: false
+  per_campaign: advice          # offer with great care; one in a campaign is plenty (no rule caps it)
+  app_generates: only when the GM asks
   list:
     - {power: "A killing blow restores 5 Aether, at most once per fight",                       changes: "Aether in combat", class: Devourer}
     - {power: "An attack on a higher-Grade target ignores 20 of its Cross-Grade Adjustment",   changes: "The Grade gap",    class: Underdog}

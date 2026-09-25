@@ -1,7 +1,7 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.16"
+version: "0.1.17"
 dated: "2026-09-24"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
@@ -48,3 +48,5 @@ notes: >
   0.1.16: at most one class per campaign carries a guarded power; the Kindler's poles are Force and Freedom; a boss
   already at Peak drops one meaningful item plus two bespoke drops; the app's 0.5 HVE entries are sweep reminders and
   add nothing unless the GM raises one to a full tally.
+  0.1.17: no rule caps guarded powers; the book advises great care (one in a campaign is plenty), and the app and the
+  AI-Assisted prompt offer one only when the GM asks.

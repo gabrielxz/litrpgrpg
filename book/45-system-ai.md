@@ -57,7 +57,7 @@ Each function below states its inputs, its outputs, and the unplugged procedure.
 
 **Unplugged procedure:** Classes, "Building a Class for a Specific Human". Bonuses price against the Modifier Budget; a class technique costs 5 Aether at F-Grade, or no Aether under the Frequency or Drawback cost shape.
 
-**Prompt (AI-assisted):** Classes, "AI-Assisted". The prompt never draws from the guarded list; the GM places a guarded power by hand.
+**Prompt (AI-assisted):** Classes, "AI-Assisted". The prompt draws from the guarded list only when the GM asks it to.
 
 ### Personal Opportunities
 

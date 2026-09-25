@@ -14,7 +14,7 @@ functions:
     inputs: [HVE profile (Deep reads and the circled Defining moments), stats, Background, Proficiencies and weapons, Principle, titles held, what the player keeps doing]
     outputs: three class offers, each the package in classes.yaml (a name in two descriptions, a three-point growth profile, one technique, one standing permission)
     technique_aether_at_f: 5
-    unplugged: Classes, "Building a Class for a Specific Human"; bonuses priced against the Modifier Budget; never the guarded list
+    unplugged: Classes, "Building a Class for a Specific Human"; bonuses priced against the Modifier Budget; the guarded list only when the GM asks
     template: templates/class-generation.txt
   - name: Personal Opportunities
     template: templates/personal-opportunity.txt

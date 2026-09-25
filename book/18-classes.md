@@ -137,7 +137,7 @@ A class never touches these, whatever its notice says:
 
 ### The guarded list
 
-There is no rarity system. Common, Uncommon, Rare, and Epic stay available as words in a System notice, and no rule attaches to them; a GM may offer a class that is better than the others without a label. The one mechanical tier is the **guarded list**: powers that change the game's math. Each changes something the other rules hold fixed: Aether in combat, or the Cross-Grade Adjustment. Saving a Beat of movement changes neither. At most one class in a campaign carries a guarded power, and only the GM puts it there. In this chapter the Devourer and the Underdog carry them, so a campaign uses one of the two at most; the GM knows which class is the guarded one, whatever its notice calls it.
+There is no rarity system. Common, Uncommon, Rare, and Epic stay available as words in a System notice, and no rule attaches to them; a GM may offer a class that is better than the others without a label. The one mechanical tier is the **guarded list**: powers that change the game's math. Each changes something the other rules hold fixed: Aether in combat, or the Cross-Grade Adjustment. Saving a Beat of movement changes neither. Offer a guarded power with great care: one in a campaign is plenty, and each one at the table changes every fight it touches. In this chapter the Devourer and the Underdog carry them. The GM knows which classes carry one, whatever their notices call them.
 
 <!-- rules:table class-guarded-list -->
 | **Guarded power** | **What it changes** |
@@ -147,7 +147,7 @@ There is no rarity system. Common, Uncommon, Rare, and Epic stay available as wo
 | Against a higher-Grade target, Surge costs 5 (or the ordinary cost if lower) | The Grade gap |
 <!-- /rules:table -->
 
-The app never generates from the guarded list. Only the GM adds a guarded power.
+The companion app offers a guarded power only when the GM asks for one.
 
 ## Building a Class for a Specific Human
 
@@ -195,7 +195,7 @@ Record: [Deep Vector reads, the circled Defining moments, what the
 player keeps doing]
 ```
 
-The prompt fills the package and never draws from the guarded list; the GM adds a guarded power by hand when one of these offers is to be the campaign's one guarded class. The Companion App builds the offers from its own log under the same rules.
+The prompt fills the package and draws from the guarded list only when the GM asks it to. The Companion App builds the offers from its own log under the same rules.
 
 ## The Classes
 
