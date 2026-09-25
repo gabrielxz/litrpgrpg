@@ -41,7 +41,7 @@ permission:
   death_clock_hold_rounds: 1     # the one thing a class may do to the countdown, for a Beat
 
 guarded:
-  per_campaign: 1                # one guarded class per campaign, whichever of the powers it carries
+  per_campaign_max: 1            # at most one class in a campaign carries a guarded power; only the GM places it
   app_generates: false
   list:
     - {power: "A killing blow restores 5 Aether, at most once per fight",                       changes: "Aether in combat", class: Devourer}
@@ -137,7 +137,7 @@ classes:
     permission: {name: The Observation, effect: "At an unusual death in your sight, the System's observation comes to you: Grade, tier, one Tactics line", action_economy: false}
   - name: Kindler
     built_for: Oona
-    poles: [Force, Method]
+    poles: [Force, Freedom]
     profile: {shape: Fixed, points: {POW: 2, PER: 1}}
     technique: {name: Cast Fire, cost: Aether, effect: "A ranged attack on one target in your Zone or an adjacent one, rolled on POW Force in place of STR or DEX; damage as Margin; what burns catches"}
     permission: {name: Tinder, effect: "What you set alight stays alight through the scene; a burning Zone is a Hindering environment (−10) for everyone in it except you", action_economy: false}

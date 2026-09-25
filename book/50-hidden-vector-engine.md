@@ -177,7 +177,7 @@ Structured entries are for tables where an AI maintains the vectors. The compani
 }
 ```
 
-The intensity values map to the sweep's weights: 1.0 remembered, 2.0 surprised the table, 3.0 Defining. The 0.5 tier is for moments below the sweep's threshold, and only the app logs it. In these modes the vectors are the sheet's tallies, computed from the entries: at session end, sum each character's intensities by side into Current, add one Deep tally to any side that leads its axis by 2 or more, and erase Current. A 0.5 entry counts as half a tally in that sum. The Coherence bands read the same either way, and a table can switch between hand tracking and structured logging at any session boundary by copying the Deep tallies across.
+The intensity values map to the sweep's weights: 1.0 remembered, 2.0 surprised the table, 3.0 Defining. The 0.5 tier is for moments below the sweep's threshold, and only the app logs it; the app shows them to the GM at the sweep as reminders. In these modes the vectors are the sheet's tallies, computed from the entries: at session end, sum each character's intensities by side into Current, add one Deep tally to any side that leads its axis by 2 or more, and erase Current. A 0.5 entry adds nothing to that sum unless the GM, reminded of it at the sweep, raises it to a full tally. The Coherence bands and every output read the same either way, and a table can switch between hand tracking and structured logging at any session boundary by copying the Deep tallies across.
 
 ## The Companion App
 

@@ -781,7 +781,7 @@ The tutorial teaches threat assessment by making some fights losing propositions
 
 One number governs the high end of a natural d100 (Core Mechanics, "One number at the top of the die"), and Phase 4 is where the table meets it. At F-Grade, that number is **96**.
 
-When a natural die comes up 96 or higher, on any roll:
+When a natural die comes up 96 or higher on a Clash or a check:
 
 - It **explodes**. Roll again and add. If the new die is also 96+, it explodes again.
 - On a **check**, if the total succeeds, it is an **Exceptional Success**: the character succeeds a visible step beyond what was asked.

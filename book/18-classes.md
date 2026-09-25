@@ -137,7 +137,7 @@ A class never touches these, whatever its notice says:
 
 ### The guarded list
 
-There is no rarity system. Common, Uncommon, Rare, and Epic stay available as words in a System notice, and no rule attaches to them; a GM may offer a class that is better than the others without a label. The one mechanical tier is the **guarded list**: powers that change the game's math. Each changes something the other rules hold fixed: Aether in combat, or the Cross-Grade Adjustment. Saving a Beat of movement changes neither. A campaign holds one guarded class, whichever of the powers it carries, and the GM knows which class it is, whatever its notice calls it.
+There is no rarity system. Common, Uncommon, Rare, and Epic stay available as words in a System notice, and no rule attaches to them; a GM may offer a class that is better than the others without a label. The one mechanical tier is the **guarded list**: powers that change the game's math. Each changes something the other rules hold fixed: Aether in combat, or the Cross-Grade Adjustment. Saving a Beat of movement changes neither. At most one class in a campaign carries a guarded power, and only the GM puts it there. In this chapter the Devourer and the Underdog carry them, so a campaign uses one of the two at most; the GM knows which class is the guarded one, whatever its notice calls it.
 
 <!-- rules:table class-guarded-list -->
 | **Guarded power** | **What it changes** |
@@ -147,7 +147,7 @@ There is no rarity system. Common, Uncommon, Rare, and Epic stay available as wo
 | Against a higher-Grade target, Surge costs 5 (or the ordinary cost if lower) | The Grade gap |
 <!-- /rules:table -->
 
-The app never generates from the guarded list. Only the GM adds a guarded power, and only to the campaign's guarded class.
+The app never generates from the guarded list. Only the GM adds a guarded power.
 
 ## Building a Class for a Specific Human
 
@@ -195,7 +195,7 @@ Record: [Deep Vector reads, the circled Defining moments, what the
 player keeps doing]
 ```
 
-The prompt fills the package and never draws from the guarded list; the GM adds a guarded power by hand when one of these offers is to be the campaign's guarded class. The Companion App builds the offers from its own log under the same rules.
+The prompt fills the package and never draws from the guarded list; the GM adds a guarded power by hand when one of these offers is to be the campaign's one guarded class. The Companion App builds the offers from its own log under the same rules.
 
 ## The Classes
 
@@ -216,7 +216,7 @@ Each entry carries the person the class was built for, the System's notice, and 
 | Registrar | Maren | Control, Accord | 1 PER, 2 returned | Aether |
 | Still One | Priya | Freedom, Restraint | 1 DEX, 2 returned | Aether |
 | Witness | Sabine | Method, Restraint | 1 PER, 1 HRT, 1 returned | Frequency |
-| Kindler | Oona | Force, Method | 2 POW, 1 PER | Aether |
+| Kindler | Oona | Force, Freedom | 2 POW, 1 PER | Aether |
 | Maker | Bram | Method, Control | 1 PER, 1 DEX, 1 returned | Aether |
 | Devourer (guarded) | Aron | Hunger, Will | 1 POW, 1 STR, 1 HRT | Frequency |
 | Underdog (guarded) | Tess | Force, Will | 2 STR, 1 HRT | Frequency |
@@ -408,7 +408,7 @@ Each entry carries the person the class was built for, the System's notice, and 
 
 ### Kindler
 
-*Built for Oona.* A chemistry teacher. She set the Warden's route alight with what she found in a maintenance shed, and has thrown fire at every fight since; Impact resonance is accruing and no Principle has crystallized. Force and Method: she plans the burn and then commits to it.
+*Built for Oona.* A chemistry teacher. She set the Warden's route alight with what she found in a maintenance shed, and has thrown fire at every fight since; Impact resonance is accruing and no Principle has crystallized. Force and Freedom: she lights what she finds and lets it run.
 
 ::: systemvoice
 *Class offered: Kindler.*
@@ -419,7 +419,7 @@ Each entry carries the person the class was built for, the System's notice, and 
 - **Profile:** Fixed. 2 POW, 1 PER. Lead POW.
 - **Technique:** Cast Fire. 1 Beat, 5 Aether. A ranged attack on one target in your Zone or an adjacent one, rolled on POW Force in place of STR or DEX; damage as Margin; anything that burns catches.
 - **Permission:** Tinder. What you set alight stays alight through the scene, and a burning Zone is a Hindering environment (−10; Core Mechanics, "The Clash") for everyone in it except you. Casting into the enemy's Zone from your own keeps melee allies out of the penalty.
-- **Poles:** Force, Method.
+- **Poles:** Force, Freedom.
 
 **Oona at Level 10:** STR 3, DEX 8, FOR 12, HRT 12, POW 38, PER 17, CHA 5 after the bonus (Health 24, Aether 38): seven casts from a full pool, each an attack on her best Attribute, which before Level 10 she had no way to attack with.
 

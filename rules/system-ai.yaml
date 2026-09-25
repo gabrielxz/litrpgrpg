@@ -42,6 +42,7 @@ loot_table:
   - {tier: Hard,     drop: "One consumable, plus a 25% chance of a skill shard or equipment"}
   - {tier: Severe,   drop: "One meaningful item, guaranteed"}
   - {tier: Peak,     drop: "One meaningful item plus one bespoke drop"}
+loot_bosses: one row higher; a boss already at Peak drops one meaningful item plus two bespoke drops
 
 standing_context_template: templates/standing-context.txt
 
@@ -49,7 +50,7 @@ system_goals: [Observation, Independent action, Outliers, What death releases]
 records_without_judging: a classification is a measurement; the people who read a title or a record do the judging
 unknown_to_everyone: [where the System came from, what it does with what it learns, whether anything stands above it]
 voice:
-  register: one impersonal register at every Grade; higher access changes what it communicates, never its personality
+  register: one impersonal register at every Grade; a higher Grade changes what it tells a character, never how it speaks
   rules: [states; never persuades, apologizes, or encourages; short declaratives; precise numbers; no pronouns for itself; where a human would soften, the System specifies; no chatbot mannerism]
   units: in-world only (Attributes, levels, Grades, classes, titles, Health, Aether, VE, quests, hours, meters); never round, Beat, turn, roll, die, Margin, Resistance, or check
   typography: bare italics inside a systemvoice box; no brackets, no bold

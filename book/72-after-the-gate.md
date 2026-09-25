@@ -94,7 +94,7 @@ When the party does something a community can see, say what the community saw an
 
 ## Build Your Region
 
-The default region is the GM's own town, and the book's worked region is a fictional one built to be replaced. A region sheet holds: one gate, one diagram, three communities with a stance each, three first-wave Rifts, one Aru counterpart, the party's homes, one institution that works, and one that is failing. The worksheet at the end of this section fits on one page.
+The default region is the GM's own town, and the book's worked region is a fictional one built to be replaced. A region sheet holds: one gate, one diagram, three communities with a stance each, at least three first-wave Rifts, one Aru counterpart, the party's homes, one institution that works, and one that is failing. The worksheet at the end of this section fits on one page.
 
 ### Halden When the Party Returns
 
@@ -104,7 +104,7 @@ A river city of about two hundred thousand on both banks of the Halden, joined b
 - **Northgate**, north bank around Court Square: the hospital, the concert hall, the radio mast on the hill. Prevailing stance: worship, centered on the hall's shelter.
 - **The Bend**, upriver on the north bank: a residential grid where the street councils formed on Day 1. Prevailing stance: refuse.
 
-The hospital works, short-staffed and open. The water utility is failing: its plant is in the Flats and half its engineers were taken. Both bridges are open. Three first-wave Rifts stand unresolved: the Pumping Station, the Overpass, and the Pharmacy. A fourth, an Interceptor on the courthouse steps since the first hour, has been left alone on purpose (the Courthouse, below); the gate in the arch is reached by the side of the building. Court Square has an improvised customs table the Flats did not set up, a vigil on the way to it, and the diagram overhead.
+The hospital works, short-staffed and open. The water utility is failing: its plant is in the Flats and half its engineers were taken. Both bridges are open. Five first-wave Rifts stand unresolved: the Pumping Station, the Overpass, and the Pharmacy, which the city needs cleared; the Gym in the Bend, where two hundred people shelter; and the Far Side, across the gate in Selan's freight yard. The Mast arrives in the second week. An Interceptor has held the courthouse steps since the first hour and has been left alone on purpose (the Courthouse, a later Rift); the gate in the arch is reached by the side of the building. Court Square has an improvised customs table the Flats did not set up, a vigil on the way to it, and the diagram overhead.
 
 | Place | Connects to | State on Day 3 |
 |---|---|---|
@@ -128,7 +128,7 @@ Halden's Aru counterpart is Selan ar Nerava; the party's homes are wherever the 
 
 ### Your Own Town
 
-Keep: a gate at a site of local significance, a diagram over it, three communities with the three stances, three first-wave Rifts on things people need, one Aru who has a reason to talk. Halden's own: the river, the hall, the depot, the two bridges. A town with no river has a highway; a town with no concert hall has a high school gym that held a thousand people; a town with no port on the far side has a farm cooperative with a different reason to want the gate open. Use the players' knowledge of the place: they know which road floods and which store would still be open.
+Keep: a gate at a site of local significance, a diagram over it, three communities with the three stances, at least three first-wave Rifts on things people need, one Aru who has a reason to talk. Halden's own: the river, the hall, the depot, the two bridges. A town with no river has a highway; a town with no concert hall has a high school gym that held a thousand people; a town with no port on the far side has a farm cooperative with a different reason to want the gate open. Use the players' knowledge of the place: they know which road floods and which store would still be open.
 
 ### The Region Worksheet
 
@@ -137,7 +137,7 @@ Copy this onto one page and fill it in.
 - **The gate:** where it opened, and what the building or site was before.
 - **The diagram:** over what, and how many sections the party can count (the third wave drops one Cordon per section that completes).
 - **Three communities:** name, place, prevailing stance, spokesperson, dissenting voice, the dispute.
-- **Three first-wave Rifts:** shape, site, what it costs the region while it stands.
+- **At least three first-wave Rifts:** shape, site, what it costs the region while it stands.
 - **The Aru counterpart:** name, job, what they need, what they can offer, what they will refuse.
 - **The party's homes:** which community each is in.
 - **One institution that works, and one that is failing.**
@@ -228,7 +228,7 @@ The bulletin is reader-facing. The accession bar keeps the paper out of Earth, a
 
 ### The First Wave (Levels 4 to 9)
 
-Archived patterns of dead worlds, dropped in the first hour. All six run the **Interceptor** block (Bestiary, "Imprints"): Force 25, a Moderate-to-Hard creature for a party at Level 4 to 9, and the Pumping Station, the Overpass, and the Pharmacy are Halden's three.
+Archived patterns of dead worlds, dropped in the first hour. All six run the **Interceptor** block (Bestiary, "Imprints"): Force 25, a Moderate-to-Hard creature for a party at Level 4 to 9, and Halden has five of them on Day 3, the Mast arriving in the second week.
 
 **The Interceptor's sequence**, which a first-wave seed runs unless its *Does* line gives its own: round one, it moves to the crossing point and strikes the first thing there (a Beat to move, a Beat to attack); round two, it moves to the far barrier and back to its post (two Beats of movement, no strike). It resets when its boundary has been quiet for a minute, standing at its post until then.
 

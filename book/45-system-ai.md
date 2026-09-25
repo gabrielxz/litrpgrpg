@@ -94,7 +94,7 @@ The Titles chapter defines the four categories and their bonus magnitudes, and g
 | Peak | One meaningful item plus one bespoke drop |
 <!-- /rules:table -->
 
-Bosses and named enemies drop one step up the table. At higher Grades, the same table applies to that Grade's catalog.
+Bosses and named enemies drop one row higher on the table; one already at Peak drops one meaningful item plus two bespoke drops. At higher Grades, the same table applies to that Grade's catalog.
 
 ### Skill Synthesis
 
