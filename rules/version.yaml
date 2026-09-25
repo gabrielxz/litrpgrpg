@@ -1,8 +1,8 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.17"
-dated: "2026-09-24"
+version: "0.1.18"
+dated: "2026-09-25"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
   flat-value VE (Tolerance 80, level 120, 20 per hour), the Grade Gap Rule,
@@ -50,3 +50,7 @@ notes: >
   add nothing unless the GM raises one to a full tally.
   0.1.17: no rule caps guarded powers; the book advises great care (one in a campaign is plenty), and the app and the
   AI-Assisted prompt offer one only when the GM asks.
+  0.1.18: party size. The encounter sizing table is written for four characters; each character fewer or more
+  shifts a fight one column easier or harder, which from Level 8 is 10 Force per character and at Levels 1 to 7 in a
+  group is one creature of the lowest tier fewer or more (tested by simulation for three to five). The tutorial
+  names four and scales the Node's loot and the causeway queue.

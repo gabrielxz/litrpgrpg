@@ -20,7 +20,7 @@ the survivors' forum
 
 ## The Tutorial at a Glance
 
-The tutorial has six phases and usually takes two sessions. All of it happens in one valley.
+The tutorial has six phases and usually takes two sessions. All of it happens in one valley. It is written for four player characters and runs for three to five: with three, take one creature of the lowest tier out of each group fight after Phase 2; with five, add one (Bestiary, "GM Reference: Encounter Building"). Phase 2's arrivals are one-on-one and stay as written, and the Node's loot and the causeway queue say how they scale.
 
 | **Phase** | **Where** | **What the party wants** | **What ends it** |
 |---|---|---|---|
@@ -64,7 +64,21 @@ Players track two counters on their sheets from the first session. You keep a th
 
 ![The tutorial valley](./assets/art/map/valley-map.png){.map}
 
-The whole tutorial happens in one place: a valley about a mile across, assembled out of salvage. The characters land on the slopes of the rim. The Recycling Node sits at the bottom, where everything rolls. The broken transit nexus stands beside it at the valley's true center, ringed by the bright ground. The four sectors of Phase 4 sit at the compass points: the Martial Remnant north past the rain line, the Wild Fragment east, the Arcane Debris west, the Civic Fragment south. The wall of light stands past the far rim, visible from everywhere, and it does not move until Phase 5.
+The whole tutorial happens in one place: a valley about a mile across, assembled out of salvage. The characters land on the slopes of the rim. The Recycling Node sits at the bottom, where everything rolls. The broken transit nexus stands beside it at the valley's true center, ringed by the bright ground. The four sectors of Phase 4 sit at the compass points: the Martial Remnant north past the rain line, the Wild Fragment east, the Arcane Debris west, the Civic Fragment south. The wall of light stands past the northeast rim, behind the landing slopes, visible from everywhere, and it does not move until Phase 5.
+
+### The Ground
+
+![The valley, for the GM](./assets/art/map/valley-schematic.png){.scene}
+
+The schematic is for you; the illustration above is what the characters see. Distances and routes:
+
+- **Scale.** The valley is about 1,600 meters across, and the rim stands about 800 meters from the gate at its center. From the rim to the Node is twenty minutes on foot over the debris; from the Node to any sector is ten.
+- **The landing slopes** are the northeast rim, above the forest. The characters wake about three hundred yards apart along it.
+- **The rain line** is a free-standing curtain of rain across the valley floor, from the northwest slope to the northeast slope, about 200 meters north of the Node. It does not move. The Martial Remnant lies beyond it.
+- **The four sectors** each sit about halfway between the Node and the rim: the Martial Remnant north, the Wild Fragment east, the Arcane Debris west, the Civic Fragment south.
+- **The Node and the gate.** The Recycling Node is the debris hill at the lowest point of the valley. The transit nexus stands just east of it on a platform of old roadway with sheer sides, ringed by the bright ground, a band of fused glassy shards; the whole ring is about fifty meters across. The only way onto the platform is **the causeway**: the last span of an elevated road, about forty feet long, running east from the Node's east shoulder across the bright ground to the gate mouth.
+- **The Purge's path.** When the Mandate sounds, the wall comes over the northeast rim and follows the spiral the tower's deck shows (Sector C), clockwise and inward, at a walking pace. It takes the Wild Fragment by minute 5, the Civic Fragment by minute 12, the Arcane Debris by minute 19, and the Martial Remnant by minute 25, then turns in across the Node's north slope by minute 28 and reaches the gate mouth at minute 30, the twelfth round of the crossing (Phase 5, "The Crossing, by Rounds"). At the causeway it closes from the northwest: behind and to the left of anyone crossing.
+- **The Warden's route.** The Warden lies folded in the wreckage at the foot of the south slope, below the Civic Fragment, and passes for more of the heap; the Kith lived within sight of it for sixteen days. When the Mandate sounds it stands up, walks north past the Civic Fragment's front steps, follows the wreck path down to the Node, and climbs the Node's east shoulder to the causeway. It walks at a walking pace and stops to take apart every structure on its route, and by default it reaches the causeway three rounds after the party. Its route has two bottlenecks a party can hold: the lane past the Civic Fragment's front steps, and the narrows where the wreck path meets the Node's south flank. If the party camped on its route, it stands up somewhere else they can see, at least as far from the causeway as they are.
 
 ### What Has Taken Place
 
@@ -278,7 +292,7 @@ Around the rim, far off, other things are still hitting the ground in little bur
 Nothing here grew together. Somebody put it here.
 :::
 
-If the player looks around before their encounter finds them, give them the layout in one sentence: a line of rain to the north standing still as a wall, a tower to the west hanging in the pieces it broke into, windows to the south, and past the far rim a wall of moving light where the horizon should be. Every character can see the hill at the bottom, and every path of wreckage runs down to it.
+If the player looks around before their encounter finds them, give them the layout in one sentence: a line of rain to the north standing still as a wall, a tower to the west hanging in the pieces it broke into, windows to the south, and behind them, past the rim they landed on, a wall of moving light where the horizon should be. Every character can see the hill at the bottom, and every path of wreckage runs down to it.
 
 ### What Happens
 
@@ -643,7 +657,7 @@ Accepting opens the party frame: each member's HP, Aether, and Downed status, vi
 
 #### The Scarcity Test
 
-The Node holds one of most things and four to six people. **Default loot list** (calibrate to party size):
+The Node holds one of most things and four to six people. **Default loot list**, written for four; for three, take out one Edge Shard, and for five, leave it as written:
 
 | **Item** | **What it is** |
 |---|---|
@@ -1120,13 +1134,13 @@ Read this aloud. Show the timer. From this moment the timer is fixed: thirty min
 
 ### What Happens
 
-The wall of light is a **Reality Purge**, and it sweeps the valley from the far edge inward, taking the sectors in sequence. The **transit gate** is the broken nexus at the center.
+The wall of light is a **Reality Purge**. It comes over the northeast rim and follows the spiral inward, clockwise, taking the sectors in order: the Wild Fragment, the Civic Fragment, the Arcane Debris, the Martial Remnant, and then the Node (The Valley, "The Ground", has the minutes). The **transit gate** is the broken nexus at the center, reached by the causeway from the Node's east shoulder.
 
 ### The Complication
 
 ![The Corrupted System Warden](./assets/art/scenes/the-corrupted-system-warden.png){.fullpage}
 
-Between them and the gate is a **Corrupted System Warden** (Bestiary, Peak). The Warden was built to manage the tutorial's dissolution and has malfunctioned. It is **not hunting the players**. It is trying to reach the gate itself, to escape through it, and it destroys anything in its path on the way. It is built to overwhelm this party in a straight fight; play it as something to route around, slow, and outlast.
+Between them and the gate is a **Corrupted System Warden** (Bestiary, Peak). The Warden was built to manage the tutorial's dissolution and has malfunctioned. It is **not hunting the players**. It is trying to reach the gate itself, to escape through it, and it destroys anything in its path on the way. It is built to overwhelm this party in a straight fight; play it as something to route around, slow, and outlast. It stands up out of the wreckage below the Civic Fragment and walks the route in The Valley, "The Ground".
 
 See the Bestiary for the full stat block. Key behaviors:
 
@@ -1141,7 +1155,7 @@ The approaches below can each help the party reach the gate. A party that played
 
 | **Competence** | **Contribution** | **Earned in** |
 |---|---|---|
-| **Martial** | Slow the Warden in terrain bottlenecks. Its movement logic is the Sentries' logic, and anyone who fought them recognizes the pattern: a bottleneck the party holds costs the Warden one Beat of movement that round. | Sector A |
+| **Martial** | Slow the Warden at the two bottlenecks on its route (The Valley, "The Ground"). Its movement logic is the Sentries' logic, and anyone who fought them recognizes the pattern: a bottleneck the party holds costs the Warden one Beat of movement that round. | Sector A |
 | **Survival** | Route the party through collapsing terrain ahead of the Purge: the party reaches the causeway a round before the Warden does. | Sector B |
 | **Arcane** | Predict the Purge's path from the spiral: name which ground goes next, and the Purge is never at the party's back until the causeway. Skill shards work on the Warden, and an Edge Shard's +20 stacks with a Glitch Cascade's +20. | Sector C |
 | **Civic** | The command terminal reaches the gate's activation sequence: the gate is already open when the first character arrives, and the queue starts a round early. | Sector D |
@@ -1162,7 +1176,7 @@ Count rounds from the party's first round on the span. The defaults below are th
 | The Purge reaches the gate mouth | Round 12 | Arcane (Sector C): the Purge is never at the party's back before the span; no change to the round |
 | Still on the span at round 12 | A player character is Salvaged (below); an NPC is gone | nothing |
 
-A full queue (four player characters, Ray, Marisol, up to three Node strangers, four Kith) is thirteen, one more than the deadline, so a party that kept everyone alive gets them all through with a sector benefit or the Sacrifice.
+A full queue is the party plus up to nine NPCs (Ray, Marisol, three Node strangers, four Kith). For a party of four that is thirteen, one more than the deadline, so a party that kept everyone alive gets them all through with a sector benefit or the Sacrifice. For three it is twelve, which fits; for five it is fourteen, which takes both.
 
 ### Cornered
 
@@ -1238,7 +1252,7 @@ Explain the penalty and the release condition to the player, and give the charac
 
 ### Watch For
 
-Track the Purge. On the approach, say at the start of each scene which routes remain; on the causeway, announce each round number against the Purge's arrival at the gate mouth in round 12. Describe it by what it does: the wall is 800 meters off and closing at a walking pace, and buildings that go into it leave flat white behind them. Keep the Warden's route and remaining movement visible, so players can plan how to delay or avoid it.
+Track the Purge. On the approach, say at the start of each scene which routes remain; on the causeway, announce each round number against the Purge's arrival at the gate mouth in round 12. Describe it by what it does: the wall is 800 meters off and closing at a walking pace, and buildings that go into it leave flat white behind them. Keep the Warden's route (The Valley, "The Ground") and its remaining movement visible, so players can plan how to delay or avoid it.
 
 If the party is doing badly, intervene through the fiction: a piece of architecture collapses on the Warden and slows it; a Kith steps into the gap; a shard the players forgot about is still in someone's pocket. Do not change a die.
 

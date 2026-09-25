@@ -14,7 +14,18 @@ the survivors' forum
 Bel Sar, route account
 :::
 
-The party comes out of the tutorial gate at Level 4 or higher, onto Earth, three days after they vanished, and plays from there to the Level 25 cap. This chapter covers what happened while they were gone, the region they come home to, the Aru on the far side of the gate, the Accession Rifts that pace the game from the gate to the cap, and the diagram in the sky that completes at the end of it. It gives the GM a worked region and fifteen seeds, and no scripted mission. The VE numbers live in Cultivation, the quest shapes in System Quests, the four Imprint stat blocks in the Bestiary, Level 10 in Classes, and the cap in Grade Breakthroughs.
+The party comes out of the tutorial gate at Level 4 or higher, onto Earth, three days after they vanished, and plays from there to the Level 25 cap. This chapter covers what happened while they were gone, the region they come home to, the Aru on the far side of the gate, the Accession Rifts that pace the game from the gate to the cap, and the diagram in the sky that completes at the end of it. It is a campaign framework, and the GM builds most sessions from it: a worked region with its people and its first two weeks, a default first session, fifteen Rift seeds, and a procedure for turning a seed into a session. The VE numbers live in Cultivation, the quest shapes in System Quests, the four Imprint stat blocks in the Bestiary, Level 10 in Classes, and the cap in Grade Breakthroughs.
+
+## The Campaign at a Glance
+
+The campaign runs in four bands, each keyed to the party's level and each with its own wave of Imprints. The Rifts named are Halden's; a GM's own region puts its own in their places. The session counts are one possible pace (Pacing to the Cap, below).
+
+| **Band** | **Halden's Rifts** | **What the region lacks** | **What ends the band** | **Sessions** |
+|------------|--------------|---------------|-----------|------|
+| **First wave**, Levels 4 to 9: Interceptors | The Pumping Station, the Overpass, the Pharmacy, the Gym, the Far Side; the Mast from the second week | Water in the Flats, the Bend's road to the hospital, medicine, the gym's two hundred, Selan's workers, the forum relay | Level 10: the class offer, and the second wave falls | 7 |
+| **Second wave**, Levels 10 to 15: Bearers | The Bridge, the Workshop, the Depot | The road between the banks and the quay, machine repair, the buses | Level 16: the third wave begins to fall | 4 or 5 |
+| **Third wave**, Levels 16 to 20: Cordons, one per completed section of the diagram | The Hall, the Square, the Courthouse | Music, trade across the gate, the gate's building | The diagram completes and takes a body (default Level 20) | 3 |
+| **The Completion**, Levels 21 to 25 | The Completion, the Descent, the Site | The square at the city's center, and the ground for the Breakthrough | The cap, and the Breakthrough | 3 |
 
 ## Three Days
 
@@ -108,15 +119,15 @@ The hospital works, short-staffed and open. The water utility is failing: its pl
 
 | Place | Connects to | State on Day 3 |
 |---|---|---|
-| Court Square (Northgate) | The gate to Namar; the hospital two streets north; the road bridge south to the Flats; the Bend by the river road | The customs table; an Interceptor on the courthouse steps |
+| Court Square (Northgate) | The gate to Namar; the hospital two streets north; the road bridge south to the Flats; the Bend by the river road, on foot | The customs table; an Interceptor on the courthouse steps |
 | The road bridge | Court Square to the Flats | Open; a Bearer walks it from the second wave |
 | The rail bridge | The Bend to the Flats, on foot along the track | Open; the Overpass Rift sits under its north end |
 | The Flats | The depot, the co-op, the pumping station, the quay | The Pumping Station Rift; the depot vigil at the fence |
-| The Bend | The gym shelter; the river road to Court Square | The Gym Rift; the street councils |
+| The Bend | The gym shelter; the river road to Court Square | The Gym Rift; the street councils; the river road under water at the bend since the weir's keepers were taken on Day 1, knee-deep on foot and closed to a vehicle or a stretcher |
 | Northgate hill | The radio mast | The Mast Rift, from the second week |
 | The far side of the gate | Selan's port and its freight yard | The Far Side Rift in the yard |
 
-**What comes later.** The second wave (the Bridge, the Workshop, the Depot) falls as the party's band rises; the Bearer on the road bridge closes the direct road between the banks when it arrives, and the rail bridge becomes the crossing on foot. The third wave falls from the diagram as it completes. Label these on the sheet with the band they arrive in.
+**What comes later.** The second wave (the Bridge, the Workshop, the Depot) falls as the party's band rises; the Bearer on the road bridge closes the direct road between the banks for twenty minutes in every hour when it arrives, and most people cross on foot by the rail bridge instead. The third wave falls from the diagram as it completes. Label these on the sheet with the band they arrive in.
 
 | Community | Spokesperson | Dissenting voice | The dispute |
 |---|---|---|---|
@@ -125,6 +136,18 @@ The hospital works, short-staffed and open. The water utility is failing: its pl
 | The Flats (use) | **Marguerite Deschamps**, who runs the co-op and pays in food for cleared sites | **Teodor Ilić**, a depot dispatcher who will not send drivers into a Rift for anyone's price | Whether to deal with the Aru port directly or through Court Square's customs table, which the Flats did not set up and does not trust. |
 
 Halden's Aru counterpart is Selan ar Nerava; the party's homes are wherever the players say, and a home in the Bend is a different campaign from a home in the Flats.
+
+### Halden's People
+
+What the GM needs to play each of them on Day 3. Their stances and disputes are in the table above; the Kith are in The Kith at the Return, and Selan's needs, offer, and refusal in The Aru Across the Gate.
+
+- **Ana Kowalczyk**, the Bend's spokesperson. Late fifties, a roofer's tan, a clipboard of crew rosters; speaks in lists and does not raise her voice. **Wants now:** the two hundred out of the Gym without the council owing a cultivator for it. **Can give:** a street to sleep on, the roof crews, the council's vote. **Knows:** who in the Bend is sick, and which neighbors have quietly taken a level. **Found:** at the Gym's windows at the noon feeding; in the courthouse basement at night, from Day 4.
+- **Mike Tran**, the Bend's dissenting voice. Late twenties, a bike courier, Level 3, his forearm taped where the Gym's first Imprint caught it; talks fast and answers a question with what he saw. **Wants now:** the council to say his clearing helped, and a partner for the Gym. **Can give:** his bike, and the Bend's back routes. **Knows:** the Gym's Imprint has never touched anyone going in; he has carried bread in twice. **Found:** asleep on Ana's street, or at the Gym's windows at feedings.
+- **Pastor Lin Okonkwo**, Northgate's spokesperson. Sixties, a hospital fleece over her collar; she addresses a room even when she is speaking to one person. **Wants now:** the vigil kept at the depot fence, and her congregation told what the System wants of it. **Can give:** two hundred volunteers who follow instructions, the hall's floor, the congregation's pooled food. **Knows:** the name of everyone she led out of the Flats on Day 2. **Found:** the concert hall by day; the depot fence at the evening vigil.
+- **Dr. Sefa Aydin**, Northgate's dissenting voice. Forties, in scrubs four days old, running the hospital since Day 1; talks in counts and dates. **Wants now:** the Pharmacy cleared, the Bend's patients through the Overpass, and the hall's people working shifts. **Can give:** surgery, beds, and the hospital's generator fuel. **Knows:** what runs out when; insulin and antibiotics go on ration on Day 6. **Found:** the hospital.
+- **Marguerite Deschamps**, the Flats' spokesperson. Sixties, twenty years managing the co-op, reading glasses on a cord and a list in her apron pocket; she states a price once. **Wants now:** water in the Flats before Day 5, then trade with the port without the customs table. **Can give:** a week's food for a team of four per cleared site, and the co-op's boats. **Knows:** every supply route into the Flats, and who is hoarding. **Found:** the co-op market.
+- **Teodor Ilić**, the Flats' dissenting voice. Fifties, the depot's dispatcher, a radio headset around his neck; speaks the way he talks on a channel, short and in turn. **Wants now:** none of his drivers killed, and the buses running. **Can give:** the depot's radio net, which works without the Mast; drivers once a route is proved safe; which roads are open. **Knows:** where every one of his drivers was when the day started, and who has not come back. **Found:** the depot office, outside the gates.
+- **Selan ar Nerava**, the port across the gate. Second form, hearing fans held forward when listening; gives every time to the minute. **Found:** at the customs table from Day 4, or at the freight office by the yard across the gate.
 
 ### Your Own Town
 
@@ -139,6 +162,8 @@ Copy this onto one page and fill it in.
 - **Three communities:** name, place, prevailing stance, spokesperson, dissenting voice, the dispute.
 - **At least three first-wave Rifts:** shape, site, what it costs the region while it stands.
 - **The Aru counterpart:** name, job, what they need, what they can offer, what they will refuse.
+- **The people:** for each spokesperson, dissenting voice, and the Aru counterpart, a look and a voice, what they want now, what they can give, and where to find them.
+- **The clock:** what each first-wave Rift costs the region, and on which day if nobody acts.
 - **The party's homes:** which community each is in.
 - **One institution that works, and one that is failing.**
 - **Later, labeled by band:** the second wave, the third wave, the Completion.
@@ -146,6 +171,39 @@ Copy this onto one page and fill it in.
 ### Things That Pay Nothing
 
 The System issues no notice and pays no VE for these scenes. The Kith camp scene. A meal on the far side of the gate, with food that may or may not be edible. The forum's first photograph of Namar, taken by whoever carries a phone through. A night of music (the Hall, below). The players will supply others.
+
+## The First Session Back
+
+The default for the first session after the tutorial, in Halden; in the GM's own town the same steps use its people and its Rifts. It runs from the arch at dusk on Day 3 to the party's first Rift on Day 4. Allow about an hour for steps 1 to 5 and the rest of the session for the Rift.
+
+Read this as the party comes through the arch:
+
+::: readaloud
+You come out under a stone arch into evening air that smells of smoke and wet concrete. People stand along the edges of the square holding up phones with photographs on the screens. Above them a drawing in fine cyan lines, wider than the square and wider than the city, hangs over all of it, and the lines at its edges are still moving. Behind you, on the courthouse steps, something stands on two legs with one limb raised and does not move. In the middle of the square a man sits at a folding table with a pen and a list.
+:::
+
+1. **The square.** Let the square come to the party. A volunteer at the customs table asks each character's name and whether they are one of the ones who went, and writes both down. The vigil's candles are on the way to the table. The Interceptor stands on the courthouse steps behind them and does not move while nobody climbs.
+2. **The reunion.** Before the session, ask each player who their character looks for first. Give one reunion in this session, to the character whose person lives nearest, and the rest by the end of Day 4. The person has had three days (Three Days): choose what they did from what the stayers did, and say what they have decided. A person who was taken too is on the customs table's list, marked taken and not returned.
+3. **The Kith.** The table has no column for the Kith, and they camp within sight of the arch the first night. The decision is who answers for them at the table and where they go on Day 4: a character's home, the hall's shelter, or the co-op's warehouse. Nemi inspects the choice's escape route, and Tovan refuses any choice that forbids leaving. Each community reads what it sees: the Bend, whether cultivators bring strangers home; Northgate, whether the System's other Initiates are honored; the Flats, what the Kith can do.
+4. **The reports.** By morning three people bring the party a problem, each in person. Marguerite sends a runner about the Pumping Station, with the price she will pay. Dr. Aydin, at the hospital, has the Pharmacy and her count of what runs out when. Mike Tran, at the Gym's windows, asks about the Gym without the council's leave. All three mention the Overpass. Selan comes to the customs table at noon with the Far Side.
+5. **The worsening.** At noon on Day 4 Northgate loses water pressure: the plant is failing, and the streets uphill from the river go dry first. The hospital's taps run at a trickle. Say it wherever the party is standing.
+6. **The choice.** The party picks its first Rift. Every other line of the clock below keeps running.
+
+**Choices to notice:** which report the party takes first, who they tell, and whether they take payment.
+
+### If Nobody Acts
+
+Halden's first-wave clock, from the party's return. A cleared Rift stops its line. The GM may move any day; keep the order. The later waves keep to the party's level (The Campaign at a Glance).
+
+| **Day** | **What happens** | **Rift** |
+|---|---|---|
+| 4 | Northgate loses water pressure at noon. Selan comes to the customs table. | The Pumping Station, the Far Side |
+| 5 | The Flats drink from the river, and the co-op boils water for anyone who brings a pot. | The Pumping Station |
+| 6 | The hospital rations insulin and antibiotics, and the forum names who ran out. | The Pharmacy |
+| 7 | Selan turns to the port's other gate, two days' haul upriver, for its first partner. | The Far Side |
+| 8 | The Bend's council votes on asking a cultivator to empty the Gym. The vote fails by default, and Mike Tran stops sleeping on the street. | The Gym |
+| 10 | The Mast's Rift arrives, and Halden goes dark on the forum. Teodor's depot radio net carries the city's news. | The Mast |
+| 12 | The Flats stop using the customs table and send their own runner through the gate. | none |
 
 ## The Aru Across the Gate
 
@@ -212,7 +270,7 @@ A prepared Rift states: the objective; the boundary; the activation cue; the Imp
 
 Every Imprint is specified in four lines: what it **detects**, what **triggers** it, what it **does**, what **stops** it. Its behavior is discoverable and reproducible. A method that worked once works again under the same conditions, and the GM changes an Imprint's four lines only when an event in play gives cause.
 
-At the table: *Detects* is the sense the Imprint has, stated as what it perceives (contact with a surface, a sound, a gait, a running engine), and nothing else; a Mast Imprint that detects the transmitter's hum is blind to a person standing still beside it. *Triggers* is the condition; anything that does not meet it is ignored, and a decoy that meets it draws the full sequence. *Does* is a committed sequence written in rounds and Beats, and the Imprint strikes nothing outside it; while it waits to reset it stands where its sequence ended. *Stops* is the reset, and where it stands afterward. After the party has watched one full cycle, tell them what they can reliably infer: the trigger they saw, the sequence, and the reset. Detection limits and second triggers are confirmed when the party tests them. A solution the GM did not foresee is tested against the four lines and nothing else: if the lines allow it, it works.
+At the table: **Detects** is the sense the Imprint has, stated as what it perceives (contact with a surface, a sound, a gait, a running engine), and nothing else; a Mast Imprint that detects the transmitter's hum is blind to a person standing still beside it. **Triggers** is the condition; anything that does not meet it is ignored, and a decoy that meets it draws the full sequence. **Does** is a committed sequence written in rounds and Beats, and the Imprint strikes nothing outside it; while it waits to reset it stands where its sequence ended. **Stops** is the reset, and where it stands afterward. After the party has watched one full cycle, tell them what they can reliably infer: the trigger they saw, the sequence, and the reset. Detection limits and second triggers are confirmed when the party tests them. A solution the GM did not foresee is tested against the four lines and nothing else: if the lines allow it, it works.
 
 **What they look like.** An Interceptor is a runner: a body built around two legs and a striking limb, light on its feet, that stands dead still at its post and moves all at once. A Bearer is a walker: heavier, four-legged, with a frame on its back that holds whatever it carries, and a gait that never changes pace. A Cordon is broad and low, wider than it is tall, with a long reach, and it slides sideways along its perimeter rather than turning. The Completion has no fixed shape; it is drawn from the region's record and looks like whatever the region's conduct was made of, and the GM describes it when the diagram takes a body. All four are silent except for the sound of their movement, and all four carry the fine cyan lines of the diagram they fell from.
 
@@ -226,53 +284,322 @@ an Open Measure bulletin
 
 The bulletin is reader-facing. The accession bar keeps the paper out of Earth, and a GM who wants the knowledge in a character's hands has a Kith carry it.
 
+### From Seed to Session
+
+A seed is a Rift. A session around it adds five things, and Halden's people and clock supply most of them:
+
+1. **Who brings it.** A person with a stake, who asks, pays, or forbids. Halden's People names who wants each first-wave Rift cleared or kept.
+2. **What the party learns before the boundary.** The notice (objective, boundary, cue, reward), one or two facts the asker knows, and what watching one cycle shows (The Four Lines).
+3. **One obstacle that is not the Imprint.** A community that wants the Rift left standing, a crew that got there first, a tool nobody has, or the clock.
+4. **The attempt.** The Rift's lines and Ground, run as written.
+5. **What changes.** The completion or the Leaving it line; one community's stance, updated on the region sheet for what it saw (The Fault Line); the clock's line stopped; and the next asker, who has heard.
+
+A seed built out this way fills a session of three to four hours. Two small seeds can share one.
+
 ### The First Wave (Levels 4 to 9)
 
 Archived patterns of dead worlds, dropped in the first hour. All six run the **Interceptor** block (Bestiary, "Imprints"): Force 25, a Moderate-to-Hard creature for a party at Level 4 to 9, and Halden has five of them on Day 3, the Mast arriving in the second week.
 
-**The Interceptor's sequence**, which a first-wave seed runs unless its *Does* line gives its own: round one, it moves to the crossing point and strikes the first thing there (a Beat to move, a Beat to attack); round two, it moves to the far barrier and back to its post (two Beats of movement, no strike). It resets when its boundary has been quiet for a minute, standing at its post until then.
+**The Interceptor's sequence**, which a first-wave seed runs unless its **Does** line gives its own: round one, it moves to the crossing point and strikes the first thing there (a Beat to move, a Beat to attack); round two, it moves to the far barrier and back to its post (two Beats of movement, no strike). It resets when its boundary has been quiet for a minute, standing at its post until then.
 
-**The Pumping Station (Hold).** The water plant in the Flats. Objective: keep the pumps running for six hours; the panel needs a hand on it once an hour. Boundary: the yellow line around the plant floor. Cue: the first person to cross it. *Detects* contact with the painted line. *Triggers* on anything crossing the line. *Does* the Interceptor's sequence. *Stops* when nothing has crossed for a minute; it stands at its post by the far wall. Completion: six hours of pressure. Reward: Moderate. Leaving it: the Flats drink from the river within two days.
+#### The Pumping Station (Hold)
 
-**The Overpass (Passage).** The one dry road under the rail bridge between the Bend and Northgate's hospital. Objective: forty people across. Boundary: the median line, and a second Interceptor at the far ramp with a line of its own. Cue: the first crossing. Each Interceptor *detects* contact with its own line, *triggers* on anything across it, *does* the sequence, and *stops* when its line has been quiet for a minute. Two lines and two two-round cycles: a crossing runs during both return legs, and a decoy at each line can start both cycles together. Fought head-on, two Interceptors are a hard fight for a Level 4 party (in simulation, one fight in five lost). Completion: forty across, or both Interceptors down. Reward: Moderate. Leaving it: the Bend is cut off from the hospital.
+The water plant in the Flats.
 
-**The Pharmacy (Claim).** The hospital's pharmacy corridor. Objective: take the corridor and hold it for one day. Boundary: the double doors. Cue: the doors opening. *Detects* footfalls on the corridor floor. *Triggers* on anything walking the corridor while the doors stand open. *Does:* advances to the far end over two rounds, striking whatever it reaches, then holds the far end. *Stops* when the corridor has been empty for a minute; it walks back to the near end and stands. Completion: the corridor held from dawn to dawn while the pharmacy is emptied. Reward: Hard. Leaving it: the hospital rations, and the forum names who ran out.
+- **Objective:** keep the pumps running for six hours; the panel needs a hand on it once an hour.
+- **Boundary:** the yellow line around the plant floor. **Cue:** the first person to cross it.
+- **Ground:** three Zones inside the line, each one Zone from the others: the crossing point at the door, the pump bay with the panel, and the Interceptor's post at the far wall. Its far barrier is the pump bay's rail.
+- **Completion:** six hours of pressure. **Reward:** Moderate, 25 VE.
+- **Leaving it:** the Flats drink from the river within two days.
 
-**The Mast (Hold).** The radio mast on Northgate hill, the region's forum relay; it goes quiet in the second week when its Rift arrives. Objective: keep the transmitter on through a night. Boundary: the fence. Cue: the carrier hum. *Detects* the hum, and nothing else. *Triggers* while the transmitter is on. *Does:* walks to the transmitter and strikes it, or whatever stands between, one strike a round. *Stops* when the hum stops; it stands still where it is until the hum returns. The objective is the trigger. Completion: six hours on air. Reward: Moderate. Leaving it: Halden goes dark on the forum.
+::: statblock
+**Interceptor**
 
-**The Gym (Passage).** A school gym in the Bend with two hundred people sheltering in it. Objective: everyone out. Boundary: the doorway. Cue: the first person to leave. *Detects* the doorway's threshold. *Triggers* on anything crossing it outward; never on anything entering. *Does:* strikes the leaver and follows three steps, one round, then returns to the door. *Stops* when no one has left for a minute; it stands in the doorway. Completion: the gym empty. Reward: Hard. Leaving it: two hundred people fed through the windows.
+- **Detects** contact with the painted line.
+- **Triggers** on anything crossing the line.
+- **Does** the Interceptor's sequence.
+- **Stops** when nothing has crossed for a minute; it stands at its post by the far wall.
+:::
 
-**The Far Side (Passage, on the Aru side).** Selan's four dispatch workers, stranded since Day 2 in the freight yard across the gate, in the dispatch office at its far end. Objective: four workers out. Boundary: the yard gate. Cue: a crossing. *Detects* footfalls on the yard's paving. *Triggers* on an Aru crossing the yard on foot. *Does* the Interceptor's sequence. *Stops* when the yard is quiet for a minute. A human walking in, on two feet, does not trigger it; an Aru carried, or wheeled on one of the yard's freight trolleys, makes no footfall at all. The party can walk in, and the four can come out on trolleys pushed by human hands, one trolley per Interceptor cycle, which is a thing the port had not thought of because nobody there walks on two legs. Completion: four workers across the gate. Reward: Hard, and standing with the port. Leaving it: Selan turns to the port's other gate, two days' haul upriver, for its first partner, and Halden waits its turn.
+#### The Overpass (Passage)
 
-*Option: The Gate (Passage, two-sided),* for a region whose stayers never cleared their gate. One Interceptor on each side of the plane, each visible only from its own side, each with the two-round cycle; a crossing timed to both return legs, counted aloud across the plane, the first-contact deed at the party's own gate. Reward: Hard. Leaving it: the gate stays a wall.
+The one dry road under the rail bridge between the Bend and Northgate's hospital.
+
+- **Objective:** forty people across.
+- **Boundary:** the median line, and a second Interceptor at the far ramp with a line of its own. **Cue:** the first crossing.
+- **Ground:** five Zones along the road: the Bend's ramp, where the forty wait; the median line; the underpass; the far ramp's line; and the hospital side, where they must end. Each Interceptor posts at the bridge pier beside its own line, and its far barrier is the pier across the road. A group of ten moves one Zone a round.
+- **Completion:** forty across, or both Interceptors down. **Reward:** Moderate, 25 VE.
+- **Leaving it:** the Bend is cut off from the hospital.
+
+::: statblock
+**Two Interceptors, each with its own line**
+
+- **Detects** contact with its own line.
+- **Triggers** on anything across it.
+- **Does** the Interceptor's sequence.
+- **Stops** when its line has been quiet for a minute.
+:::
+
+Two lines and two two-round cycles: a crossing runs during both return legs, and a decoy at each line can start both cycles together. Fought head-on, two Interceptors are a hard fight for a Level 4 party (in simulation, one fight in five lost).
+
+#### The Pharmacy (Claim)
+
+The hospital's pharmacy corridor.
+
+- **Objective:** take the corridor and hold it for one day.
+- **Boundary:** the double doors. **Cue:** the doors opening.
+- **Ground:** three Zones: the near end inside the double doors, where the Interceptor stands; the dispensary halfway; and the stockroom at the far end.
+- **Completion:** the corridor held from dawn to dawn while the pharmacy is emptied. **Reward:** Hard, 50 VE.
+- **Leaving it:** the hospital rations, and the forum names who ran out.
+
+::: statblock
+**Interceptor**
+
+- **Detects** footfalls on the corridor floor.
+- **Triggers** on anything walking the corridor while the doors stand open.
+- **Does:** advances to the far end over two rounds, striking whatever it reaches, then holds the far end.
+- **Stops** when the corridor has been empty for a minute; it walks back to the near end and stands.
+:::
+
+#### The Mast (Hold)
+
+The radio mast on Northgate hill, the region's forum relay; it goes quiet in the second week when its Rift arrives. The objective is the trigger.
+
+- **Objective:** keep the transmitter on through a night.
+- **Boundary:** the fence. **Cue:** the carrier hum.
+- **Ground:** two Zones inside the fence: the mast's foot, where the Imprint stands while the air is quiet, and the transmitter hut.
+- **Completion:** six hours on air. **Reward:** Moderate, 25 VE.
+- **Leaving it:** Halden goes dark on the forum.
+
+::: statblock
+**Interceptor**
+
+- **Detects** the hum, and nothing else.
+- **Triggers** while the transmitter is on.
+- **Does:** walks to the transmitter and strikes it, or whatever stands between, one strike a round.
+- **Stops** when the hum stops; it stands still where it is until the hum returns.
+:::
+
+#### The Gym (Passage)
+
+A school gym in the Bend with two hundred people sheltering in it.
+
+- **Objective:** everyone out.
+- **Boundary:** the doorway. **Cue:** the first person to leave.
+- **Ground:** three Zones: the gym floor, the doorway, and the street. The windows are two meters up and barred; food goes in through the bars.
+- **Completion:** the gym empty. **Reward:** Hard, 50 VE.
+- **Leaving it:** two hundred people fed through the windows.
+
+::: statblock
+**Interceptor**
+
+- **Detects** the doorway's threshold.
+- **Triggers** on anything crossing it outward; never on anything entering.
+- **Does:** strikes the leaver and follows three steps, one round, then returns to the door.
+- **Stops** when no one has left for a minute; it stands in the doorway.
+:::
+
+#### The Far Side (Passage, on the Aru side)
+
+Selan's four dispatch workers, stranded since Day 2 in the freight yard across the gate, in the dispatch office at its far end.
+
+- **Objective:** four workers out.
+- **Boundary:** the yard gate. **Cue:** a crossing.
+- **Ground:** four Zones: the yard gate, the open paving, the loading bays where the freight trolleys stand, and the dispatch office at the far end. The Interceptor posts at the loading bays; its far barrier is the yard gate.
+- **Completion:** four workers across the gate. **Reward:** Hard, 50 VE, and standing with the port.
+- **Leaving it:** Selan turns to the port's other gate, two days' haul upriver, for its first partner, and Halden waits its turn.
+
+::: statblock
+**Interceptor**
+
+- **Detects** footfalls on the yard's paving.
+- **Triggers** on an Aru crossing the yard on foot.
+- **Does** the Interceptor's sequence.
+- **Stops** when the yard is quiet for a minute.
+:::
+
+A human walking in, on two feet, does not trigger it; an Aru carried, or wheeled on one of the yard's freight trolleys, makes no footfall at all. The party can walk in, and the four can come out on trolleys pushed by human hands, which is a thing the port had not thought of because nobody there walks on two legs.
+
+#### Option: The Gate (Passage, two-sided)
+
+For a region whose stayers never cleared their gate. One Interceptor on each side of the plane, each visible only from its own side, each with the two-round cycle; a crossing timed to both return legs, counted aloud across the plane, the first-contact deed at the party's own gate.
+
+- **Reward:** Hard, 50 VE.
+- **Leaving it:** the gate stays a wall.
 
 ### The Second Wave (Levels 10 to 15)
 
 Later waves fall as the party's level band rises. The second runs the **Bearer** block: Force 45, a creature that walks a route carrying a thing and strikes what stands on the route. Its sequence: it moves one Zone a round along its route and strikes anything in the Zone it enters (a Beat to move, a Beat to attack), and it never stops for a target; a target that is not in its path is not struck. It resets at the end of its route, where it turns and walks back.
 
-**The Bridge (Passage).** The road bridge, and a Bearer walking a loop on the hour: across the deck, down the quay stairs, along the mooring quay, and back up. Objective: a convoy across, or the quay usable for the barges, whichever the region needs first. Boundary: the deck and the quay. Cue: the Bearer's hour. *Detects* weight on the deck and the quay stones. *Triggers* on anything in the Zone it enters. *Does* the Bearer's sequence. *Stops* at the end of the loop, where it turns. Completion: the convoy across, or the Bearer down and the cache it carries opened. Reward: Hard; the cache holds a Standard Attribute Treasure (Items). Leaving it: the direct road between the banks is closed for an hour in every hour, and nothing moors at the quay.
+#### The Bridge (Passage)
 
-**The Workshop (Claim).** The machine shop behind the depot that Sava and a human repairer both want, and a Maker's recurring scene (Classes, "Maker"). Objective: take it and keep it a day. Boundary: the shop floor. Cue: a machine running. *Detects* the vibration of a running machine through the floor. *Triggers* on a machine switched on. *Does:* walks to it, one Zone a round, and strikes the machine until it stops, then holds beside it. *Stops* when the floor is silent for a minute; it returns to the door and stands. Completion: the shop held and one machine run through a shift. Reward: Hard, and every tool on the floor as materials on hand. Leaving it: the region repairs nothing it cannot repair by hand.
+The road bridge, and a Bearer walking a route that takes the hour: across the deck, down the quay stairs, along the mooring quay, and back.
 
-**The Depot (Claim).** The transit depot, forty buses, and the vigil at its fence. Objective: take it and keep it a day. Boundary: the depot gates. Cue: an engine starting. *Detects* running engines. *Triggers* on a running engine inside the gates. *Does:* walks to it, one Zone a round, and strikes the vehicle until it stops. *Stops* when the yard is silent for a minute; it stands where the last engine died. Completion: the depot held and a bus driven out. Reward: Hard. Leaving it: Halden walks. Northgate's congregation wants the depot as it is, because the title was granted at that fence and the Bearer's evening circuit has become part of the vigil; the Flats want the buses; Teodor will not send a driver in. Pastor Lin will ask, in front of the vigil, for the Bearer to be left one more night, and the answer is the party's; a party that clears the yard while the vigil stands at the fence has the congregation's attention and the co-op's food, and what each does with that depends on what was said.
+- **Objective:** a convoy across, or the quay usable for the barges, whichever the region needs first.
+- **Boundary:** the deck and the quay. **Cue:** the Bearer's hour.
+- **Ground:** the route runs from the deck's north end across the bridge, down the quay stairs at the south end, and along the mooring quay to its far end: half an hour each way, ten minutes of it on the deck. The Bearer turns at each end, so it is on the deck for the ten minutes either side of each hour.
+- **Completion:** the convoy across, or the Bearer down and the cache it carries opened. **Reward:** Hard, 50 VE; the cache holds a Standard Attribute Treasure (Items).
+- **Leaving it:** the direct road between the banks is closed for twenty minutes in every hour, and nothing moors at the quay.
+
+::: statblock
+**Bearer**
+
+- **Detects** weight on the deck and the quay stones.
+- **Triggers** on anything in the Zone it enters.
+- **Does** the Bearer's sequence.
+- **Stops** at each end of its route, where it turns and walks back.
+:::
+
+#### The Workshop (Claim)
+
+The machine shop behind the depot that Sava and a human repairer both want, and a Maker's recurring scene (Classes, "Maker").
+
+- **Objective:** take it and keep it a day.
+- **Boundary:** the shop floor. **Cue:** a machine running.
+- **Ground:** three Zones: the door, the bench aisle, and the machine bay at the back, where the lathe and the press stand.
+- **Completion:** the shop held and one machine run through a shift. **Reward:** Hard, 50 VE, and every tool on the floor as materials on hand.
+- **Leaving it:** the region repairs nothing it cannot repair by hand.
+
+::: statblock
+**Bearer**
+
+- **Detects** the vibration of a running machine through the floor.
+- **Triggers** on a machine switched on.
+- **Does:** walks to it, one Zone a round, and strikes the machine until it stops, then holds beside it.
+- **Stops** when the floor is silent for a minute; it returns to the door and stands.
+:::
+
+#### The Depot (Claim)
+
+The transit depot, forty buses, and the vigil at its fence.
+
+- **Objective:** take it and keep it a day.
+- **Boundary:** the depot gates. **Cue:** an engine starting.
+- **Ground:** four Zones: the gates, the fuel island, the bus rows, and the maintenance shed. The Bearer starts in the bus rows.
+- **Completion:** the depot held and a bus driven out. **Reward:** Hard, 50 VE.
+- **Leaving it:** Halden walks.
+
+::: statblock
+**Bearer**
+
+- **Detects** running engines.
+- **Triggers** on a running engine inside the gates.
+- **Does:** walks to it, one Zone a round, and strikes the vehicle until it stops.
+- **Stops** when the yard is silent for a minute; it stands where the last engine died.
+:::
+
+Northgate's congregation wants the depot as it is, because the title was granted at that fence and the Bearer's evening circuit has become part of the vigil; the Flats want the buses; Teodor will not send a driver in. Pastor Lin will ask, in front of the vigil, for the Bearer to be left one more night, and the answer is the party's; a party that clears the yard while the vigil stands at the fence has the congregation's attention and the co-op's food, and what each does with that depends on what was said.
 
 ### The Third Wave (Levels 16 to 20)
 
 The third wave runs the **Cordon** block: Force 60, Yields, a creature that holds a perimeter. Its sequence: it slides one Zone a round along its perimeter and strikes what it meets (a Beat to move, a Beat to attack), and it Yields under the ordinary rule (Core Mechanics, "Yield"). A two-Beat Yield lets the attacker drive it off its perimeter, and a Cordon driven off spends its next turn returning to the line and strikes nothing on the way. It resets when its perimeter has been empty for a minute, standing where it stopped. A Cordon falls from the diagram each time one of its sections completes (The Completion, below).
 
-**The Hall (Hold).** The concert hall, Northgate's shelter for three weeks and empty now, and a Cordon on the concourse ring. Objective: a night of music, the first since Day 1, with the hall full and Aru in the seats. Boundary: the concourse. Cue: the house lights. *Detects* footfalls on the concourse floor. *Triggers* on anything walking the ring while the house lights are up. *Does* the Cordon's sequence around the ring. *Stops* when the ring has been empty for a minute. Completion: the performance finished. Reward: Severe. Leaving it: the hall stays a shelter with nobody in it.
+#### The Hall (Hold)
 
-**The Square (Passage).** Court Square, the market Halden and the port both want, and the customs table the Flats do not trust. Objective: a market day, with goods crossing the gate both ways. Boundary: the square. Cue: the first stall. *Detects* weight resting on the square's paving. *Triggers* on anything standing still on it for longer than a round. *Does* the Cordon's sequence to the standing target; a target that keeps moving is never struck. *Stops* when nothing has stood still for a minute. A market is people standing still. Completion: a day's trade. Reward: Severe, and standing with the port and the Flats both. Leaving it: trade goes through the warehouse yard on Selan's terms.
+The concert hall, Northgate's shelter for three weeks and empty now, and a Cordon on the concourse ring.
 
-**The Courthouse (Claim).** The gate's own building. An Interceptor has held its front steps since the first hour, and the Bend's council has met in its basement since Day 4, by the alley door on the north side, which the Interceptor does not detect. In the third wave a Cordon takes the steps when a section completes above the square. The Bend wants the steps held: as long as they are, the courthouse is a Rift and nobody's office, and the day it is cleared the customs table moves inside and the port authority has a building in Halden. Objective: take the building and keep it a day. Boundary: the steps. Cue: the doors. *Detects* footfalls on the steps. *Triggers* on anything climbing them. *Does* the Cordon's sequence on the top step. *Stops* when the steps have been empty for a minute. Completion: the building held. Reward: Severe. Leaving it: the Bend keeps its wall, and says so; Ana will say it to the party's faces, and the Flats will say the opposite. Clearing this Rift costs standing with the Bend.
+- **Objective:** a night of music, the first since Day 1, with the hall full and Aru in the seats.
+- **Boundary:** the concourse. **Cue:** the house lights.
+- **Ground:** the concourse ring is six Zones around the auditorium. The main entrance opens onto one of them, and three doors lead from the ring into the seats. The Cordon starts at the main entrance.
+- **Completion:** the performance finished. **Reward:** Severe, 90 VE.
+- **Leaving it:** the hall stays a shelter with nobody in it.
+
+::: statblock
+**Cordon**
+
+- **Detects** footfalls on the concourse floor.
+- **Triggers** on anything walking the ring while the house lights are up.
+- **Does** the Cordon's sequence around the ring.
+- **Stops** when the ring has been empty for a minute.
+:::
+
+#### The Square (Passage)
+
+Court Square, the market Halden and the port both want, and the customs table the Flats do not trust. A market is people standing still.
+
+- **Objective:** a market day, with goods crossing the gate both ways.
+- **Boundary:** the square. **Cue:** the first stall.
+- **Ground:** four Zones: the courthouse front, the customs table, the middle of the square, and the side toward the road bridge.
+- **Completion:** a day's trade. **Reward:** Severe, 90 VE, and standing with the port and the Flats both.
+- **Leaving it:** trade goes through the warehouse yard on Selan's terms.
+
+::: statblock
+**Cordon**
+
+- **Detects** weight resting on the square's paving.
+- **Triggers** on anything standing still on it for longer than a round.
+- **Does** the Cordon's sequence to the standing target; a target that keeps moving is never struck.
+- **Stops** when nothing has stood still for a minute.
+:::
+
+#### The Courthouse (Claim)
+
+The gate's own building. An Interceptor has held its front steps since the first hour, and the Bend's council has met in its basement since Day 4, by the alley door on the north side, which the Interceptor does not detect. In the third wave a Cordon takes the steps when a section completes above the square.
+
+- **Objective:** take the building and keep it a day.
+- **Boundary:** the steps. **Cue:** the doors.
+- **Ground:** two Zones on the steps, the foot and the top, below the doors. The alley door on the north side opens into the basement and is not on the steps.
+- **Completion:** the building held. **Reward:** Severe, 90 VE.
+- **Leaving it:** the Bend keeps its wall, and says so; Ana will say it to the party's faces, and the Flats will say the opposite.
+
+::: statblock
+**Cordon**
+
+- **Detects** footfalls on the steps.
+- **Triggers** on anything climbing them.
+- **Does** the Cordon's sequence on the top step.
+- **Stops** when the steps have been empty for a minute.
+:::
+
+The Bend wants the steps held: as long as they are, the courthouse is a Rift and nobody's office, and the day it is cleared the customs table moves inside and the port authority has a building in Halden. Clearing this Rift costs standing with the Bend.
 
 ### The Completion's Rifts (Levels 21 to 25)
 
-**The Completion (Claim).** The diagram takes a body on Court Square (the sequence is below). The **Completion** block: Force 75, three Beats, Yields two of three, its four lines written from the region's record. Objective: take the square and keep it. Boundary: the diagram's footprint, the largest Rift in Halden. Completion: the Completion's stop condition met, or the Completion down; a Completion whose lines can be satisfied is cleared without a kill, and pays the Rift and none of the kill. Reward: Peak, and the passage below the square exposed. Leaving it: the largest Rift in the region stays open at its center.
+#### The Completion (Claim)
 
-**The Descent (Passage).** When the Completion comes apart, the square's paving goes with it: the fall opens a shaft under Court Square into the cut the gate's makers drove for it, a passage that was never on any map of Halden. Objective: the party through to the bottom. Two Cordons at a time hold the switchback ramps, and the ramps are their perimeters. *Detects* footfalls on the ramp. *Triggers* on anything descending it. *Does* the Cordon's sequence along the ramp. *Stops* when the ramp has been empty for a minute. Reward: Severe. Leaving it: the site stays out of reach.
+The diagram takes a body on Court Square (the sequence is below). It runs the **Completion** block (Bestiary, "Imprints"): Force 75, three Beats, Yields two of three, its four lines written from the region's record (Writing the Completion, below).
 
-**The Site (Claim).** The floor of the cut, where what the Completion held went into the ground: the densest place in the region, and the ground the region's Breakthroughs will be attempted on for as long as the density lasts. Objective: hold it long enough to ignite. One Cordon holds the floor's edge. *Detects* footfalls on the floor. *Triggers* on anything crossing the edge onto it. *Does* the Cordon's sequence around the edge. *Stops* when the floor has been empty for a minute. The site is High density, +20 on the Breakthrough Check (Grade Breakthroughs, "Energy Density Tiers"); the GM may run it as Extreme density instead. Reward: the check itself. Leaving it: the cap, with the Breakthrough attempted somewhere with less in the ground.
+- **Objective:** take the square and keep it.
+- **Boundary:** the diagram's footprint, the largest Rift in Halden.
+- **Ground:** the footprint covers Court Square's four Zones (the Square, above).
+- **Completion:** the Completion's stop condition met, or the Completion down; a Completion whose lines can be satisfied is cleared without a kill, and pays the Rift and none of the kill. **Reward:** Peak, 150 VE, and the passage below the square exposed.
+- **Leaving it:** the largest Rift in the region stays open at its center.
+
+#### The Descent (Passage)
+
+When the Completion comes apart, the square's paving goes with it: the fall opens a shaft under Court Square into the cut the gate's makers drove for it, a passage that was never on any map of Halden. Two Cordons hold the switchback ramps, one to each, and the ramps are their perimeters.
+
+- **Objective:** the party through to the bottom.
+- **Ground:** the shaft's mouth, two switchback ramps of two Zones each, and the floor at the bottom.
+- **Reward:** Severe, 90 VE.
+- **Leaving it:** the site stays out of reach.
+
+::: statblock
+**Cordon**, one to each ramp
+
+- **Detects** footfalls on the ramp.
+- **Triggers** on anything descending it.
+- **Does** the Cordon's sequence along the ramp.
+- **Stops** when the ramp has been empty for a minute.
+:::
+
+#### The Site (Claim)
+
+The floor of the cut, where what the Completion held went into the ground: the densest place in the region, and the ground the region's Breakthroughs will be attempted on for as long as the density lasts. One Cordon holds the floor's edge. The site is High density, +20 on the Breakthrough Check (Grade Breakthroughs, "Energy Density Tiers"); the GM may run it as Extreme density instead.
+
+- **Objective:** hold it long enough to ignite.
+- **Ground:** three Zones: the foot of the last ramp, the edge, and the densest ground at the center, where the Breakthrough is attempted.
+- **Reward:** the check itself.
+- **Leaving it:** the cap, with the Breakthrough attempted somewhere with less in the ground.
+
+::: statblock
+**Cordon**
+
+- **Detects** footfalls on the floor.
+- **Triggers** on anything crossing the edge onto it.
+- **Does** the Cordon's sequence around the edge.
+- **Stops** when the floor has been empty for a minute.
+:::
 
 ## Pacing to the Cap
 
@@ -285,7 +612,7 @@ Level 4 to Level 25 is 21 levels at 120 VE each: **2,520 VE** per character (Cul
 | Third wave | 15 to 20 | 600 | about 195 | about 3 | 10 hours |
 | The Completion | 20 to 25 | 600 | about 200 | about 3 | 10 hours |
 
-**The assumptions.** A first-wave session is two fights of two Moderate-to-Hard creatures (about 60 VE a character), one Moderate or Hard Rift (25 to 50), and survival (5). A second-wave session fights Force 40 to 50 creatures, which pay Hard (20 each, about 80), and clears a Hard Rift (50). A third-wave session takes Severe kills (30 each, about 100) and a Severe Rift (90). The Completion's band assumes the Completion itself (a Peak kill at 50 and a Peak Rift at 150: 200 in one scene, nearly two levels), the Descent (two Cordons at 30 each and a Severe Rift at 90), the Site (one Cordon and the check), and about 200 more from the Cordons that keep falling from the diagram, Faction quests from the three communities, and Rifts of the GM's own; the catalog's three seeds are the band's spine and never its whole income. A Rift solved without a kill pays its reward and none of the kill's VE, so a table that reasons its way through the seeds levels more slowly than one that fights through them, and clears more of the region.
+**The assumptions.** A first-wave session is two fights of two Moderate-to-Hard creatures (about 60 VE a character), one Moderate or Hard Rift (25 to 50), and survival (5). A second-wave session fights Force 40 to 50 creatures, which pay Hard (20 each, about 80), and clears a Hard Rift (50). A third-wave session takes Severe kills (30 each, about 100) and a Severe Rift (90). The Completion's band assumes the Completion itself (a Peak kill at 50 and a Peak Rift at 150: 200 in one scene, nearly two levels), the Descent (two Cordons at 30 each and a Severe Rift at 90), the Site (one Cordon and the check), and about 200 more from the third wave's Cordons still standing (one fell for each section of the diagram, and the seeds use three), Faction quests from the three communities, and Rifts of the GM's own; the catalog's three seeds are the band's spine and never its whole income. A Rift solved without a kill pays its reward and none of the kill's VE, so a table that reasons its way through the seeds levels more slowly than one that fights through them, and clears more of the region.
 
 **Saturation.** Tolerance is 80, Mild runs past 80, Heavy past 160, Critical past 240 (Cultivation, "The Pressure Gauge"). A first-wave session's 100 crosses Tolerance, so the session holds one rest, or the party plays its second half Mild. A third-wave session's 195 taken in one day passes Heavy; a rest between the fights keeps it Mild. The Completion's 200 in one scene puts a fresh party past Heavy at once and any party already Mild onto the Critical clock. Let the rest after the Completion run a full night: ten hours refines the 200, five on the site's density.
 
@@ -334,19 +661,19 @@ the survivors' forum
 
 The Completion is nonconscious, as every Imprint is: it reproduces the region's conduct and holds no one's mind.
 
-**The ready default**, complete, for a GM who has kept no record or wants a base to build on. *Detects* footfalls within the diagram's footprint. *Triggers* on the first character to attack it. *Does:* on its turn, one Beat to move into the attacker's Zone, one Beat to strike the attacker, one Beat to strike the nearest other character in that Zone; a strike that wins Drives Back whatever the Margin; it Yields two of three Beats, keeping the third to strike. *Stops* when no one in its Rift has moved or attacked for a full round: everyone standing still, which is the Square's lesson turned around, and a party that works that out can clear it without a kill.
+**The ready default**, complete, for a GM who has kept no record or wants a base to build on. **Detects** footfalls within the diagram's footprint. **Triggers** on the first character to attack it. *Does:* on its turn, one Beat to move into the attacker's Zone, one Beat to strike the attacker, one Beat to strike the nearest other character in that Zone; a strike that wins Drives Back whatever the Margin; it Yields two of three Beats, keeping the third to strike. **Stops** when no one in its Rift has moved or attacked for a full round: everyone standing still, which is the Square's lesson turned around, and a party that works that out can clear it without a kill.
 
-**Substituting the record.** To make the Completion the region's, replace one line at a time with an observed act, keeping the Beat count at three. The procedure: take three recurring patterns of behavior, one from the characters' Deep tallies (The Hidden Vector Engine, "The Session-End Sweep") and two from the communities, and translate each abstract pattern into one concrete act the table saw. A Deep lean toward Force is not an attack sequence; "Kara opens every fight by Rushing the biggest thing in the room" is, and it becomes the *does* line. A community's evacuation of the hall is not a stop condition; "the hall emptied when Lin walked the last row out herself" becomes *stops when the last person leaves its Rift walking*. Write the act, then fit it into the default's three Beats.
+**Substituting the record.** To make the Completion the region's, replace one line at a time with an observed act, keeping the Beat count at three. The procedure: take three recurring patterns of behavior, one from the characters' Deep tallies (The Hidden Vector Engine, "The Session-End Sweep") and two from the communities, and translate each abstract pattern into one concrete act the table saw. A Deep lean toward Force is not an attack sequence; "Kara opens every fight by Rushing the biggest thing in the room" is, and it becomes the **does** line. A community's evacuation of the hall is not a stop condition; "the hall emptied when Lin walked the last row out herself" becomes *stops when the last person leaves its Rift walking*. Write the act, then fit it into the default's three Beats.
 
 ::: worked
-**Two worked examples.** A party that opens every fight with Breach and Rush meets a Completion whose *does* line is: one Beat to move into the Zone of the first thing to enter its footprint, one Beat to strike it, and on a winning Clash it Drives Back whatever the Margin; the third Beat strikes whatever is left in reach; it *stops* when nothing has entered its footprint for a round. A region whose defining conduct was the hall's orderly evacuation meets a Completion whose *does* line moves people: one Beat to move into the fullest Zone in its footprint, two Beats to drive everyone there one Zone toward the footprint's edge, striking only what refuses to move (a Clash, its Force against theirs, and a loss is a strike); it *stops* when its footprint is empty. The first is a fight. The second is a fight only for a party that will not be moved, and the party clears it without a kill by walking out of its footprint.
+**Two worked examples.** A party that opens every fight with Breach and Rush meets a Completion whose **does** line is: one Beat to move into the Zone of the first thing to enter its footprint, one Beat to strike it, and on a winning Clash it Drives Back whatever the Margin; the third Beat strikes whatever is left in reach; it **stops** when nothing has entered its footprint for a round. A region whose defining conduct was the hall's orderly evacuation meets a Completion whose **does** line moves people: one Beat to move into the fullest Zone in its footprint, two Beats to drive everyone there one Zone toward the footprint's edge, striking only what refuses to move (a Clash, its Force against theirs, and a loss is a strike); it **stops** when its footprint is empty. The first is a fight. The second is a fight only for a party that will not be moved, and the party clears it without a kill by walking out of its footprint.
 :::
 
 ### Early and Otherwise
 
 A party that reaches the square before the diagram completes finds the region's largest Rift not yet open and the Cordons still falling; there is no Completion to fight yet, and the GM may move the manifestation up rather than make them wait. A party that reaches the cap without clearing the Completion can attempt the Breakthrough anywhere at Barren density, or inside the Completion's open Rift with the Completion active, which is the hard road.
 
-The Completion at its default is above the sizing table's hard row: in simulation it loses a party of four at Level 21 in about one fight in seven and at Level 25 in about one in twenty. A party that lets the Rift stand, levels on the Cordons that keep falling, and comes back at 23 or 24 is playing it as the book expects.
+The Completion at its default is above the sizing table's hard row: in simulation it loses a party of four at Level 21 in about one fight in seven and at Level 25 in about one in twenty. A party that lets the Rift stand, levels on the third wave's Cordons still standing, and comes back at 23 or 24 is playing it as the book expects.
 
 ## The Liaison
 
@@ -372,7 +699,7 @@ In Halden the Bend wants separate accounts, the Flats wants joint on its own ter
 
 ## Design Intent
 
-The chapter gives the GM a region and fifteen seeds and no mission, because the campaign after the gate belongs to the table and its town. The seeds are written so that a party can reason from evidence: the four lines are the whole of an Imprint, and a solution the book did not foresee works if the lines allow it. A GM who wants a scripted mission can build one from any seed by adding the people, and the tutorial is the model.
+The chapter gives the GM a region and fifteen seeds and no mission, because the campaign after the gate belongs to the table and its town. The seeds are written so that a party can reason from evidence: the four lines are the whole of an Imprint, and a solution the book did not foresee works if the lines allow it. A GM builds a session from any seed with From Seed to Session, and the tutorial is the model for a longer scripted adventure.
 
 Community stances are words on a sheet, because the question the chapter wants answered in play is what each community saw the party do. A settlement track is a later book's, if play demands one.
 

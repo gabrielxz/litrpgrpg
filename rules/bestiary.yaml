@@ -230,5 +230,9 @@ encounter_guidance:
   peer_fight: equal Force
   tougher: +10 enemy Force
   second_creature_worth_force: 20   # two creatures at Force 30 fight like one at Force 50
+  party_size_written_for: 4
+  force_per_character: 10           # from Level 8: 10 Force less per character under four, 10 more per character over
+  columns_per_character: 1          # every level: one column easier or harder per character; at Levels 1-7 in a group,
+                                    # one creature of the lowest tier fewer or more (sims 2026-09-25, parties of 3 to 5)
   drags_past_round: 5
   yield_lengthens_by: about a third

@@ -1,0 +1,17 @@
+# Worked examples from the Bestiary (60-bestiary.md).
+cases:
+  - name: A party of three at Level 10 meets a standard fight at Force 30
+    source: '60-bestiary.md, "GM Reference: Encounter Building"'
+    fn: sized_force
+    args: {row_force: 40, party_size: 3}
+    expect: 30
+  - name: A party of five at Level 10 meets a standard fight at Force 50
+    source: '60-bestiary.md, "GM Reference: Encounter Building"'
+    fn: sized_force
+    args: {row_force: 40, party_size: 5}
+    expect: 50
+  - name: A party of four meets the row as printed
+    source: '60-bestiary.md, "GM Reference: Encounter Building"'
+    fn: sized_force
+    args: {row_force: 40, party_size: 4}
+    expect: 40

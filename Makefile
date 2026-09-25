@@ -117,7 +117,6 @@ kit: $(KIT_BASE)
 # consume the result so the cover treatment is identical across formats.
 TITLE_TEXT    := GRADEBREAKER
 SUBTITLE_TEXT := The LitRPG RPG
-TAGLINE_TEXT  := Power is not granted.
 BYLINE_TEXT   := by Gabriel Beal
 
 $(COVER_TITLED): $(COVER_BASE) tools/cover.py | $(BUILD_DIR)

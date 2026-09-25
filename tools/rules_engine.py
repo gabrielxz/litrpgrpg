@@ -338,6 +338,12 @@ def quest_ve(category: str, difficulty: str) -> int | None:
     raise KeyError(difficulty)
 
 
+def sized_force(row_force: int, party_size: int) -> int:
+    """A sizing row's creature Force (Level 8 and up) adjusted for a party other than four."""
+    g = load("bestiary")["encounter_guidance"]
+    return row_force + g["force_per_character"] * (party_size - g["party_size_written_for"])
+
+
 # ---------------------------------------------------------- breakthrough ---
 
 def energy_density_bonus(tier: str) -> int:
