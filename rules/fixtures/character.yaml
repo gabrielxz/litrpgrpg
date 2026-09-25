@@ -16,7 +16,7 @@ cases:
     args: {name: Andre}
     expect: {points: 40, max_hp: 10, max_aether: 5, tolerance: 80}
   - name: By Level 9 a character has 80 points from creation and levels
-    source: 17-progression.md, "What Nine Levels Produce"
+    source: 17-progression.md, "Your Stats at Level 9"
     fn: points_by_level
     args: {level: 9}
     expect: 80

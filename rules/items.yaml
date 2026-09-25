@@ -54,7 +54,7 @@ weapons:
   - {name: Short Bow,               force: DEX,        proficiency: archery and throwing,  notes: "Two-handed. Ranged: target enemies in adjacent Zones."}
   - {name: Crossbow (single-shot),  force: DEX,        proficiency: archery and throwing,  notes: "Two-handed. Requires 1 Beat to reload between shots."}
   - {name: Hand Axe (thrown),       force: STR,        proficiency: archery and throwing,  notes: "Ranged: one Zone. Recoverable."}
-  - {name: Pistol / Rifle / Shotgun, force: DEX,       proficiency: firearms,              notes: "Ranged: target enemies in adjacent Zones. Holds 1d10 rounds when found; empty, it is an improvised object. Nothing in this book makes ammunition."}
+  - {name: Pistol / Rifle / Shotgun, force: DEX,       proficiency: firearms,              notes: "Ranged: target enemies in adjacent Zones. Holds 1d10 cartridges when found; empty, it is an improvised object. Nothing in this book makes ammunition."}
 weapon_bonus: the wielder's Proficiency tier (+5 Trained, +10 Seasoned or Master, +0 untrained)
 heavy_weapon_min_str_force: 5
 heavy_weapon_below_min_penalty: -10
@@ -66,13 +66,13 @@ skill_shards:
     - {name: Edge Shard,      effect: "Next Clash this turn gains +20.",                                                                      backfire: "Shard cracks: user takes 5 damage."}
     - {name: Pulse Shard,     effect: "Restore 30 Aether.",                                                                                   backfire: "Aether backlash: user takes 10 damage."}
     - {name: Veil Shard,      effect: "Become invisible until end of next turn or until you act offensively.",                                backfire: "Veil flickers: you remain visible but appear blurred (+5 to defense, no concealment)."}
-    - {name: Anchor Shard,    effect: "Until end of next turn, you cannot be moved by any effect (moving yourself is fine), and your Defense Force gains +10. A two-Beat Yield still cuts the Margin; the drive fails.", backfire: "You become **Rooted** for the rest of the encounter: unable to be moved, and unable to move under your own power."}
-    - {name: Resonance Shard, effect: "Add 1 IP toward a Principle of your choice.",                                                          backfire: "The IP is lost."}
-    - {name: Volatile Shard,  effect: "Roll d100 again. The GM and the System AI generate an unpredictable effect based on the result.",      backfire: "The effect lands on the user; the GM may substitute something worse."}
+    - {name: Anchor Shard,    effect: "Until end of next turn, you cannot be moved by any effect (moving yourself is fine), and your Defense Force gains +10. A two-Beat Yield still cuts the Margin, and the attacker cannot drive you into another Zone.", backfire: "You become **Rooted** for the rest of the encounter: unable to be moved, and unable to move under your own power."}
+    - {name: Resonance Shard, effect: "Add 1 IP toward a Principle family of your choice.",                                                          backfire: "The IP is lost."}
+    - {name: Volatile Shard,  effect: "Roll d100 again. The GM, or the System AI in assisted modes, invents an effect scaled to that roll: 01–40 a nuisance to everyone in the Zone, 41–95 an effect the size of another shard's, 96–100 an effect worth +20.",      backfire: "The effect lands on the user; the GM may substitute something worse."}
 
 artifacts:
   reactive_buckler:
-    effect: once per encounter, reduce the damage of one physical Clash to 0 without giving up any Beats; resets at the next Consolidation
+    effect: once between Consolidations, reduce the damage of one physical Clash to 0 without giving up any Beats
     limits: [not mental, spiritual, or illusion attacks, not attacks the wielder did not see coming, does not prevent Driven Back]
   single_use_ranged_relic:
     effect: ranged Clash with DEX or POW Force at +20; on hit, damage as if the user's Grade were one higher; burns out after use
@@ -84,6 +84,6 @@ field_gear:
   - {name: Battered Medkit,        effect: "Heals 10 HP as a 1-Beat action on yourself or an ally in the same Zone. Does not count toward the pill limit. Three uses."}
   - {name: Low-Grade Armor Scraps, effect: "+5 Defense Force when defending with FOR; −5 to DEX-based Clashes. One set per character."}
   - {name: Shield,                 effect: "+5 to your Clash when defending. Occupies a hand. No shield Proficiency; applies whatever the wielder is trained in."}
-  - {name: Battered Communicator,  effect: "Short-range communication between paired devices. Frequently malfunctions."}
+  - {name: Battered Communicator,  effect: "Short-range communication between paired devices. On a natural 01–05 when used, it fails for the scene."}
 armor_scraps: {defense_bonus_with_for: 5, dex_penalty: -5}
 shield_bonus: 5

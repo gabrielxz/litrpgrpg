@@ -36,7 +36,7 @@ cases:
     fn: max_aether
     args: {raw_pow: 32}
     expect: 32
-  - name: Six Triages a fight at 32 Aether
+  - name: Six Triages from a full pool at 32 Aether
     source: 18-classes.md, "Battle Medic"
     fn: class_technique_uses
     args: {max_aether_value: 32}

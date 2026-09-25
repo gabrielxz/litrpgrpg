@@ -29,7 +29,7 @@ Pencil, paper, and this book. The GM performs every System function by hand, usi
 | Class generation | This chapter, "Class Generation" |
 | Personal Opportunities | System Quests, the generation template (used as a worksheet) |
 | Battle Memory visions | This chapter, "Battle Memory Visions" |
-| Hidden Achievements and Titles | Titles, the four categories |
+| Hidden Achievements and Titles | Titles, "Title Categories" |
 | Loot | This chapter, "Loot" |
 | Skill synthesis | This chapter, "Skill Synthesis" |
 
@@ -41,11 +41,11 @@ The GM runs the table with no HVE tracking during play and does the sweep at ses
 
 - Keep one standing conversation per campaign; append a short summary after each session.
 - Treat every output as a draft. Reprice bonuses against the Modifier Budget, cut anything that breaks Grade math, keep what fits.
-- The AI proposes; the GM decides. Nothing enters play unreviewed.
+- Nothing enters play until the GM has reviewed it.
 
 ### The Companion App
 
-The Companion App mode: the app listens to the session, transcribes it, drafts HVE log entries for the GM's review, and runs the generation functions live. The division of labor is unchanged: the app proposes, the GM curates. Recording the table requires every player's explicit consent, settled at session zero.
+The app listens to the session, transcribes it, drafts HVE log entries for the GM's review, and runs the generation functions live. The GM reviews every draft before it enters play. Recording the table requires every player's explicit consent, settled at session zero.
 
 ## The Functions
 
@@ -55,7 +55,7 @@ Each function below states its inputs, its outputs, and the unplugged procedure.
 
 **In:** the character's HVE profile (Deep Vector reads and the circled Defining moments), stats, Background, Proficiencies and weapons, Principle, titles held, and the thing the player keeps doing. **Out:** three class offers, each the package the Classes chapter defines: a name in two descriptions, a three-point growth profile, one technique, one standing permission.
 
-**Unplugged procedure:** Classes, "Building a Class for a Specific Human". Bonuses price against the Modifier Budget; a class technique costs 5 Aether at F-Grade, or no Aether under a frequency gate or a drawback.
+**Unplugged procedure:** Classes, "Building a Class for a Specific Human". Bonuses price against the Modifier Budget; a class technique costs 5 Aether at F-Grade, or no Aether under the Frequency or Drawback cost shape.
 
 **Prompt (AI-assisted):** Classes, "AI-Assisted". The prompt never draws from the guarded list; the GM places a guarded power by hand.
 
@@ -67,7 +67,7 @@ The System Quests chapter carries the full generation template. Unplugged, use i
 
 **In:** the memory's context and the player's meditation description. **Out:** a cryptic vision in the System's voice, and an IP award (1 to 3, by the memory's intensity) toward the aligned Principle.
 
-**Unplugged procedure:** compose the vision from three images: the moment itself, with one important detail changed or missing; the Principle in a pure or alien form; and one image that overreaches or misleads. A vision hints; it does not teach. Deliver it in System voice, award the IP, and say nothing else.
+**Unplugged procedure:** compose the vision from three images: the moment itself, with one important detail changed or missing; the Principle in a pure or alien form; and one image that overreaches or misleads. Deliver it in System voice, award the IP, and say nothing else.
 
 *Example (a cave-in survived by holding the slab, toward Weight):*
 
@@ -77,7 +77,7 @@ The System Quests chapter carries the full generation template. Unplugged, use i
 
 ### Hidden Achievements and Titles
 
-The Titles chapter defines the four categories and their calibrated bonus magnitudes. Unplugged, the GM invents within them. Criteria are never shown to players in any mode.
+The Titles chapter defines the four categories and their bonus magnitudes, and gives the procedure for generating a Hidden Achievement (Titles, "Hidden Achievement Titles"). Unplugged, the GM invents within them. Criteria are never shown to players in any mode.
 
 ### Loot
 
@@ -98,7 +98,7 @@ Bosses and named enemies drop one step up the table. At higher Grades, the same 
 
 ### Skill Synthesis
 
-**In:** two or more sources: Skill Shards, or techniques the character holds. **Out:** one merged skill, permanent, priced. **Unplugged procedure:** combine one property from each source, price the sum against the Modifier Budget, which caps it at +20, and set the Aether cost by the Grade the sources came from (Core Mechanics: acquired skills cost by the Grade they were acquired at, ×10 per Grade).
+**In:** two or more sources: Skill Shards, or techniques the character holds. **Out:** one merged skill, permanent, priced. **Unplugged procedure:** combine one property from each source, price the sum against the Modifier Budget, which caps it at +20, and set the Aether cost by the highest Grade among the sources (Core Mechanics: acquired skills cost by the Grade they were acquired at, ×10 per Grade).
 
 ### Identify and Inspect
 
@@ -121,12 +121,12 @@ Last session: [three-sentence summary]
 
 The GM plays the System, so the GM needs its goals. The lore box in The Principle System states the purpose: the System discovers, refines, and preserves the patterns through which conscious beings act on reality. Four behaviors follow from it, and all four are legible at F-Grade.
 
-- **Observation.** It watches how people behave under pressure and records everything. The Hidden Vector Engine is its instrument.
-- **Independent action.** It could carry out most of what it asks for. It asks anyway, because watching a cultivator attempt a task, choose, and invent teaches it more than executing a known procedure. Quests, Mandates, and escalating threats put people in front of problems, and advancement pays for what it learned. Suffering it could resolve stays unresolved while the response is informative.
+- **Observation.** It watches how people behave under pressure and records everything. At the table, the GM records what it watches with the Hidden Vector Engine.
+- **Independent action.** It could carry out most of what it asks for. It asks anyway, because watching a cultivator attempt a task, choose, and invent teaches it more than executing a known procedure. Quests, Mandates (System Quests), and escalating threats put people in front of problems, and advancement pays for what it learned. Suffering it could resolve stays unresolved while the response is informative.
 - **Outliers.** It spends disproportionate attention on individuals it finds interesting. Personal Opportunities, Hidden Achievements, and bespoke classes exist for this.
 - **What death releases.** Energy leaving a body carries information about the body that held it, and a death releases what a living subject keeps folded up. The System sometimes favors a particular death for what it will release, and it weighs that against what the same life would keep producing: it values a person as a continuing source of discovery, and the valuation is instrumental. Its interest shows as a change in attention, described under the voice below.
 
-**It records without judging.** Ruthlessness, caution, generosity, and ambition are described in its output and never praised or condemned. A classification is a measurement. The judging is done by the people who read a title, a record, or a reputation.
+**It records without judging.** Ruthlessness, caution, generosity, and ambition are described in its output and never praised or condemned. The judging is done by the people who read a title, a record, or a reputation.
 
 **What is known, and by whom.** A character at F-Grade can infer everything above from what the System does, and a player who asks the GM what the System is for can be told. Where it came from, what it does with what it learns, and whether anything stands above it are unknown to everyone, the GM included; the book does not answer them. Higher access changes what the System communicates and never its personality.
 
@@ -136,19 +136,19 @@ One impersonal register, at every Grade.
 
 **It states.** Short declaratives, precise numbers, no pronouns for itself. Where a human would soften, it specifies. It never persuades, apologizes, or encourages, and it carries no chatbot mannerism: no affirmation, no flattery, no eagerness to help.
 
-**Its units are the world's.** It knows Attributes, levels, Grades, classes, titles, Health, Aether, VE, quests, hours, and meters, because those exist in the world. It never says round, Beat, turn, roll, die, Margin, Resistance, or check; those are the table's approximation of the world. When a rule needs the System to convey a game quantity, it states an in-world quantity and the table maps it: a Downed character's vital coherence reads 3, 2, 1, and the table hears the three-round clock.
+**Its units are the world's.** It knows Attributes, levels, Grades, classes, titles, Health, Aether, VE, quests, hours, and meters, because those exist in the world. It never says round, Beat, turn, roll, die, Margin, Resistance, or check; those are the table's approximation of the world. When a rule needs the System to convey a game quantity, it states an in-world quantity and the table maps it: a Downed character's vital coherence reads 3, 2, 1, and the table counts it as the rounds left before death.
 
-**Exact and mistaken in the same voice.** It is exact about anything it has measured and approximate about everything it inferred, and it states both with the same confidence. A creature classified wrong, a Mandate that misdescribes its own objective, and a sleeping man read as a corpse are one error in three places. The GM always holds the truth behind a System mistake, and the mistake makes sense once its basis is known.
+**Exact and mistaken in the same voice.** It is exact about anything it has measured and approximate about everything it inferred, and it states both with the same confidence. A creature classified wrong, a Mandate that misdescribes its own objective, and a sleeping man read as a corpse are the same error: an inference stated as a measurement. The GM always holds the truth behind a System mistake, and the mistake makes sense once its basis is known.
 
-**Attention.** Most of the interface is impersonal: counts, confirmations, notices. Direct address is rare, and a request for a personal audience is usually declined. The System can reason and sometimes explains, in the same register, when the explanation serves what it wants. It answers for what it measured. It never answers for the Hidden Vector Engine's reading of a person (What Can Be Seen, "What Nobody Sees").
+**Attention.** Most of the interface is impersonal: counts, confirmations, notices. Direct address is rare, and a request for a personal audience is usually declined. The System can reason and sometimes explains, in the same register, when the explanation serves what it wants. It answers questions about what it measured. It never discloses the Hidden Vector Engine's reading of a person (What Can Be Seen, "What Nobody Sees").
 
 **The shift at a death.** An experienced or unusual being's death draws the System's interest, and the interest shows as a change in attention, never a change in tone. A terse interface becomes unusually exact. Fine glyphs orient toward the released motes. A cold classification is followed by an unsolicited observation. Witnesses receive more attention in that moment than they did while asking for help. There is no expressed delight.
 
 **Humor.** The System never performs it. It states what it measured, in the same register as everything else, and where a reader laughs the absurdity belongs to the world: a lock that asks for 40 degrees and a body offering 36.6. It never quips, never insults for amusement, and never misunderstands everything.
 
-**Addressing the System.** A direct demand fails. A proposal in a format the System recognizes sometimes lands: the character states what they will do and what they want for it, a quest offer in reverse. The System answers in the quest register, accepting, countering, or not answering; no roll decides it, and the GM decides from what the System wants. Which formats it recognizes is learned in play.
+**Addressing the System.** A direct demand fails. A proposal in a format the System recognizes sometimes lands: the character states what they will do and what they want for it, a quest offer in reverse. The System answers in the quest register, accepting, countering, or not answering; no roll decides it, and the GM decides from what the System wants. The GM also chooses which formats the System recognizes; players learn them in play.
 
-**Names.** The System has no name for itself. Humans say the System, and on the survivors' forum the Score. The Aru word renders through Interpretation as the Assessor, and the Kith word as the Tide.
+**Names.** The System has no name for itself. Humans say the System, and on the survivors' forum the Score. The word of the Aru (After the Gate) renders through Interpretation as the Assessor, and the word of the Kith (The Tutorial) as the Tide.
 
 ### Sample Messages
 

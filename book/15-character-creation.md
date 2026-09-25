@@ -44,7 +44,7 @@ These numbers represent a freshly integrated human: someone pulled into the Syst
 | Generalist | 6 | 6 | 6 | 6 | 6 | 5 | 5 | 40 |
 <!-- /rules:table -->
 
-These are illustrations, not templates. Players should build what makes sense for the person they are playing. Three finished characters built from these rules, the same three the book's examples follow, are at the end of this chapter.
+These are illustrations. Players build what makes sense for the person they are playing. Three finished characters built from these rules, the same three the book's examples follow, are at the end of this chapter.
 
 ### What a Score Means
 
@@ -107,7 +107,7 @@ Choose **one Proficiency**: a weapon shape the character has used, or is about t
 | firearms | Pistols, rifles, shotguns, and the System-forged weapons built on the same principle. |
 <!-- /rules:table -->
 
-A character with "axes and hammers" adds their tier bonus when swinging a hatchet; a character without it adds nothing. Picking up a weapon outside your Proficiencies costs you the bonus, and each explosion with it earns a Mark toward that Proficiency.
+A character with "axes and hammers" adds their tier bonus when swinging a hatchet, and a character without it adds nothing. Each explosion with a weapon outside the character's Proficiencies earns a Mark toward that weapon's Proficiency.
 
 ## Derived Stats
 
@@ -120,24 +120,24 @@ Calculate and record these values:
 - **Level:** 1.
 - **Grade:** F.
 
-At Level 1, HP is 6 to 20 and starting Aether is 3 to 10. Freshly integrated characters are fragile, and early encounters should feel dangerous. Growth comes fast.
+At Level 1, HP is 6 to 20 and starting Aether is 3 to 10. Freshly integrated characters are fragile, and early encounters should feel dangerous.
 
-Aether matters to every character, caster or brawler: anyone can spend half their Maximum Aether to Surge (see Core Mechanics, "Surge"). Nearly every character will also end up walking the Principle track, regardless of their starting Attributes, because Insight comes from what they survive in play rather than from any choice made here.
+Aether matters to every character, caster or brawler: anyone can spend half their Maximum Aether to Surge (see Core Mechanics, "Surge"). Nearly every character also ends up on the Principle track, whatever their starting Attributes.
 
 ## Starting Equipment
 
-Starting gear is campaign-dependent. The GM determines what characters have access to based on the scenario. For the standard Integration Protocol opening, characters begin with whatever they had on their person at the moment of Integration (everyday clothing, a phone, maybe a pocket knife). The System provides no equipment.
+Starting gear is campaign-dependent. The GM determines what characters have access to based on the scenario. For this book's tutorial (The Tutorial: Integration Protocol), characters begin with whatever they had on their person at the moment of Integration (everyday clothing, a phone, maybe a pocket knife). The System provides no equipment.
 
 ## Interpretation
 
-Every Integrant holds **Interpretation** from the moment of accession. It is a faculty the System grants, with no score and no tier, and nothing on the sheet records it.
+Every Integrant holds **Interpretation** from the moment of Integration. It is a faculty the System grants, with no score and no tier, and nothing on the sheet records it.
 
 - It translates a deliberately communicated message, whether speech, sign, writing, a recording, or the communicative gestures of an alien body, and conveys what the speaker is trying to say. Nonverbal features that carry the intended message translate with it.
 - It carries both directions of any conversation its holder is party to. One holder is enough for both sides to be understood.
 - Unexpressed thoughts, motives, memories, and the truth of a statement are outside it: a lie translates perfectly. Involuntary emotional displays and cultural implications arrive untranslated, so a character can understand an offer and misunderstand the obligations that come with it.
 - It converts no computer protocols and supplies no expertise. Reading an alien engine is a Background's job.
 
-Tutorial sectors built on old versions predate Interpretation. A character extracted into one does not hold it until registration past the gate; the tutorial in this book is such a sector.
+Some tutorial sectors run a version of the System older than Interpretation, and a character taken into one does not hold it until they pass through the sector's gate. The tutorial in this book is such a sector (The Tutorial: Integration Protocol, "Phase 6: First Recognition").
 
 ## Starting Principle Access
 
@@ -147,7 +147,7 @@ Freshly integrated characters begin with no Principle access. Insight toward a P
 
 ## After Creation
 
-A finished character is Level 1, Grade F, with no class, no Principle access, Interpretation, and whatever was in their pockets. Everything from here is earned in play: levels and stat growth are covered in the Progression chapter, the VE economy that fuels them in Cultivation, and the class milestone at Level 10 in Progression, "Class Selection."
+A finished character is Level 1, Grade F, with no class, no Principle access, Interpretation, and whatever was in their pockets. Everything from here is earned in play: levels and stat growth are covered in the Progression chapter, the VE economy that pays for them in Cultivation, and the class that arrives at Level 10 in Classes.
 
 ---
 

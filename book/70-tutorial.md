@@ -58,8 +58,6 @@ Players track two counters on their sheets from the first session. You keep a th
 | **Marks** | The die explodes on an attack or a defense with a weapon | At 3 Marks Trained becomes Seasoned. At 3 Marks with a weapon shape the character never trained, the System grants it at Trained |
 | **The HVE sheet** | At each session's end, from what you remember (The Hidden Vector Engine, "The Session-End Sweep") | Feeds the System's summary of each character in Phase 6 |
 
-Players track their own IP and Marks. Keep the HVE sheet private.
-
 ---
 
 ## The Valley
@@ -72,12 +70,12 @@ The whole tutorial happens in one place: a valley about a mile across, assembled
 
 This background is for you. Players piece it together over three days from the clues in the scenes, and you never have to confirm their conclusions.
 
-- The valley is a System tutorial sector, built from the wreckage of dead worlds, and it is old. It has processed cohorts of Initiates for longer than the System's own records reach, and it is already scheduled for dissolution. The wall of light is the front edge of that dissolution, holding position until the schedule says otherwise. The sector runs a version older than Interpretation, the translation the System grants humans and Aru at accession, so nobody in the valley has it; the Kith, from an accession older than the faculty, do not have it anywhere.
-- The **Corrupted System Warden** was built to run the dissolution's last stage: clear obstructions, break down what the boundary cannot process alone, and keep the evacuation on a schedule it cannot extend. The sector kept admitting cohorts after that schedule's safe window had closed (the System's term is administrative overrun), and the Warden has since developed a preference for its own continued existence. It wants to leave through the gate itself. It heads for the gate and destroys whatever is in its path, and it hunts nobody: it is a catastrophe with a direction (Phase 5).
-- Four **Kith**, from Oren, an old Integrated world, entered nineteen days ago through a different threshold (three to five if the table needs it). Narrow upright bodies, two long arms and a smaller pair held close under the ribs, folds down the neck that read vibration. **Kes** scouts, **Nemi** carries their Greater Healing Pill, **Sava** carries two shards, and **Tovan** wants to fight. They lived in the Civic Fragment for sixteen days, until its Husk Sentinel reclassified them as intruders and drove them out three days ago; Kes has come back each day since to cut a mark on the tally by the door; now they move camp daily and stay off open ground. Kes watches the landing slopes from cover and keeps two tallies: the day-count on the Civic Fragment wall, and a count on the slopes of every living thing they have seen fall from the sky. Under the slope tally, an arrow marks Kes's own path down toward the treeline, cut for whoever came next, which is ordinary work in a traveling Kith household (Phase 2, The Tally; Phase 4, The Arriving Initiates).
+- The valley is a System tutorial sector, built from the wreckage of dead worlds, and it is old. It has processed cohorts of Initiates for longer than the System's own records reach, and it is already scheduled for dissolution. The wall of light is the front edge of that dissolution, holding position until the schedule says otherwise. The sector runs a version of the System older than Interpretation, the translation the System grants at accession, so nobody in the valley has it; the Kith, from an accession older than Interpretation, do not have it anywhere.
+- The **Corrupted System Warden** was built to run the dissolution's last stage: clear obstructions, break down what the boundary cannot process alone, and keep the evacuation on a schedule it cannot extend. The sector kept admitting cohorts after that schedule's safe window had closed (the System's term is administrative overrun), and the Warden has since developed a preference for its own continued existence. It wants to leave through the gate itself. It heads for the gate and destroys whatever is in its path, and it hunts nobody (Phase 5).
+- Four **Kith**, from Oren, an old Integrated world, entered nineteen days ago through a different threshold. Narrow upright bodies, two long arms and a smaller pair held close under the ribs, folds down the neck that read vibration. **Kes** scouts, **Nemi** carries their Greater Healing Pill, **Sava** carries two shards, and **Tovan** wants to fight. They lived in the Civic Fragment for sixteen days, until its Husk Sentinel reclassified them as intruders and drove them out three days ago; Kes has come back each day since to cut a mark on the tally by the door; now they move camp daily and stay off open ground. Kes watches the landing slopes from cover and keeps two tallies: the day-count on the Civic Fragment wall, and a count on the slopes of every living thing they have seen fall from the sky. Under the slope tally, an arrow points along Kes's own path down toward the treeline, cut for whoever came next, which is ordinary work in a traveling Kith household (Phase 2, The Tally; Phase 4, The Arriving Initiates).
 - The party's cohort fell this morning: the player characters and a handful of other humans. Most of the others do not survive their first hour. The survivors head for the Recycling Node because it is the lowest, most visible point in the valley and every path of wreckage runs to it; the System's first quest (Q-001, Phase 3) rewards them for finding each other once they arrive.
 - Everything alive in the valley is salvage too. The creatures came in with the wreckage, and the constructs are still running jobs for a sector that no longer needs them done.
-- The four sectors are four dead worlds. The arena is Gethra's, a public martial school whose sentries still run instructional sequences; its sealed vault holds recordings of high-Grade defeats. The forest is a transplanted piece of Ulassa's biosphere, which is why living animals are here at all. The hanging tower is one arrested pocket of Veyr's research disaster, and the mind in its rune matrix is Hessar, a Surn teacher whose last technique, Common Bearing, held an evacuation structure together. The courthouse is Pellam's, converted to an evacuation office during the Closed Roads War; its Sentinel guards a refuge under an authorization that changed after the Kith moved in. This history is for consistency; players do not need to uncover it to finish the tutorial.
+- The four sectors are four dead worlds. The arena is Gethra's, a public martial school whose sentries still run instructional sequences; its sealed vault holds recordings of high-Grade defeats. The forest is a transplanted piece of Ulassa's biosphere, which is why living animals are here at all. The hanging tower is one arrested pocket of Veyr's research disaster, and the mind in its rune matrix is Hessar, a Surn teacher whose last technique, Common Bearing, held an evacuation structure together. The courthouse is Pellam's, converted to an evacuation office during a war over its transit routes; its Sentinel guards a refuge under an authorization that changed after the Kith moved in. This history is for consistency; players do not need to uncover it to finish the tutorial.
 - The Sorting Machine is a field collector for a salvage archive. The Dying Scavenger is a stonefold, an animal moving its last usable energy into a stone. The floating citadel is an abandoned maintenance settlement, and the sky-sized object is the recovery cradle that will take the sorted valley; neither can be reached.
 
 ### Recurring NPCs
@@ -88,12 +86,10 @@ These NPCs come back if the party lets them. Keep one line per NPC: their condit
 |---|---|---|---|
 | **Ray Okafor**, a concussed delivery driver with a nail gun | Phase 2: The Other Survivor, or circling in view of The High Ground | Reaches the Node by dusk, keeps the fire, and joins the gate queue in Phase 5 | Dies during the first night. The party can find his nail gun in Phase 4 |
 | **Marisol Vega**, a runner with a length of pipe | Phase 2: The High Ground, the fight below the ridge | Follows the character down, is part of the Node camp by evening, and joins the gate queue in Phase 5 | Loses the fight below the ridge |
-| **The Kith**: Kes the scout, Nemi, Sava, and Tovan | Phase 4: The Arriving Initiates, though Kes's marks are met earlier | Fight beside the party in Phase 5 and name the Warden's weak point | The party enters Phase 5 without their warning and without allies |
+| **The Kith**: Kes the scout, Nemi, Sava, and Tovan | Phase 4: The Arriving Initiates, though Kes's tally on the slopes is met earlier (Phase 2, The Tally) | Fight beside the party in Phase 5 and name the Warden's weak point | The party enters Phase 5 without their warning and without allies |
 | **The Node strangers**: Marco, Dele, and Wren | Phase 3, at the Node | Part of the camp, and part of the gate queue in Phase 5 | They fend for themselves. They are not in the gate queue, and the tutorial does not say whether any of them found another way out; decide if it ever matters |
 
 Anyone the party kept alive is in the gate queue at Phase 5.
-
-The Warden appears in Phase 5. It is built to overwhelm them in a straight fight; play it as something to route around, slow, and outlast long enough to escape.
 
 ### What Will Happen
 
@@ -141,11 +137,11 @@ Players begin with **whatever was on their person at the moment of Integration**
 | 3: The Recycling Node | System status notifications. The Quest UI. The Party. Scarcity. The shard economy. **Consolidation.** |
 | 4: The Field of Ruins | **Volatility, Exceptional Success, and Marks.** **Driven Back.** Aura Pressure. Saturation. **Leveling. Stat allocation.** Backgrounds and Advantage. Take 100. Shards in use. Personal Opportunities. The first Battle Memory. |
 | 5: The Convergence Crisis | The first Mandate. **Cornered.** Boss-tier combat. Sacrifice as a defining choice. |
-| 6: First Recognition | Titles. Affinity Notices. Hidden Quest reveals. The Stinger. |
+| 6: First Recognition | Titles. Affinity Notices (the System naming the Principle family a character's IP is building toward). Hidden Quest reveals. The Stinger. |
 
 Teach each system when the schedule brings it up. When a player asks "how does combat work," a good first answer is *"roll d100, add your Force, I'll tell you what happens"*; detail can wait until the table wants it. If confusion is costing fun, stop and explain.
 
-**These mechanics can arrive before their scheduled introduction.** A natural 96 can explode in the first Clash of Phase 2, an attacker who wins by 40 or more has Driven Back whenever it happens, and the fiction can earn Advantage in any fight. When one arrives early, apply it, name it, and explain it briefly; skip its planned introduction later.
+**These mechanics can arrive before their scheduled introduction.** A natural 96 can explode in the first Clash of Phase 2, an attacker who wins by 40 or more has Driven Back whenever it happens, and you can grant Advantage in any fight. When one arrives early, apply it, name it, and explain it briefly; skip its planned introduction later.
 
 ---
 
@@ -155,7 +151,7 @@ Teach each system when the schedule brings it up. When a player asks "how does c
 
 **Pacing.** Sixty seconds to two minutes per player. Keep it short so the characters stay disoriented; a player who needs a moment to answer gets the moment.
 
-**Run this one-on-one.** Run each character's scene privately if you can, in another room or by direct message. Separate scenes establish that the characters arrive alone.
+**Run this one-on-one.** Run each character's scene privately if you can, in another room or by direct message.
 
 ### Read Aloud: The Void
 
@@ -232,7 +228,7 @@ The System measures energy and infers everything else from it, so its readings a
 
 #### The Fall
 
-Adapt the landing to the probe's Echo. A character set down gently does not hit the ground; a character who landed on their feet is already standing. The second box below belongs to a character whose arrival creature is already close; for a character whose encounter comes first, end on the sky.
+Adapt the landing to the probe's Echo. A character set down gently does not hit the ground; a character who landed on their feet is already standing. The last box below belongs to a character whose arrival creature is already close; for a character whose encounter comes first, end on the sky.
 
 ::: readaloud
 The dark lets go all at once. There is ground, and it hits you before you know you are falling: grit, heat, the taste of scorched metal. Above you, a sky the wrong color.
@@ -252,7 +248,7 @@ Land each character the way their Echo says, then run their encounter (Phase 2).
 
 ### Watch For
 
-Keep the void scene short: sixty seconds is about right and two minutes is the ceiling. If a character explores the void, describe one response from it (the pressure of the others, or the notice turning toward them) and move to the fall. If a character speaks to the System, nothing answers. The System observes; it does not converse.
+If a character explores the void, describe one response from it (the pressure of the others, or the notice turning toward them) and move to the fall.
 
 A player who does something the probe did not list is giving you something to work with. Answer it with an Echo of your own and move on. The System's private line afterward may misread what it saw.
 
@@ -266,7 +262,7 @@ A player who does something the probe did not list is giving you something to wo
 
 **Run this one-on-one.** Nobody has met anybody yet. The first Yield decision at your table is made by a player who cannot ask the others what to do. Take players aside, run them by message, or rotate around the table with everyone else told to look away. Phases 1 and 2 can also run by message before the session, one player at a time, so nobody waits at the table.
 
-**Each rotation has the same shape.** The character wakes into one encounter from the list below, resolves it, fights their arrival creature, and scavenges on the walk down. Each rotation teaches the same rules to a different person.
+**Each rotation has the same shape.** The character wakes into one encounter from the list below, resolves it, fights their arrival creature, and scavenges on the walk down.
 
 ### Read Aloud: The Valley
 
@@ -282,7 +278,7 @@ Around the rim, far off, other things are still hitting the ground in little bur
 Nothing here grew together. Somebody put it here.
 :::
 
-If the player looks around before their encounter finds them, give them the map's bones in a sentence: a line of rain to the north standing still as a wall, a tower to the west hanging in the pieces it broke into, windows to the south, and past the far rim a wall of moving light where the horizon should be. Every character can see the hill at the bottom, and everything in the valley leans toward it.
+If the player looks around before their encounter finds them, give them the layout in one sentence: a line of rain to the north standing still as a wall, a tower to the west hanging in the pieces it broke into, windows to the south, and past the far rim a wall of moving light where the horizon should be. Every character can see the hill at the bottom, and every path of wreckage runs down to it.
 
 ### What Happens
 
@@ -309,7 +305,7 @@ It has not reacted to you at all.
 **Choices to notice.** Whether the character treats a creature that is not asking for help as though it were: takes, waits, helps, or kills.
 
 - **Take the stone.** It does not resist; it cannot. Awards a **predator core** (a Hard kill's worth of VE, 20, processed at the next Consolidation).
-- **Try to communicate (CHA Force vs. F-Easy 65).** You get nothing like language. What you get is that it wants you to wait. Wait about a minute of table time and it finishes, goes still, and the stone comes away warmer than it was. Awards the core plus **+1 IP toward a Restraint-aligned family**, and seeds the Hidden Quest *"Let It Finish"*; reveal it in Phase 6. The core and the IP are separate awards.
+- **Try to communicate (CHA Force vs. F-Easy 65).** You get nothing like language. What you get is that it wants you to wait. Wait about a minute of table time and it finishes, goes still, and the stone comes away warmer than it was. Awards the core plus **+1 IP toward the Preservation family**, and seeds the Hidden Quest *"Let It Finish"*; reveal it in Phase 6. The core and the IP are separate awards.
 - **Wait without trying to talk to it.** Same outcome, no IP.
 - **Kill it.** The transfer stops. The stone goes cold in about four seconds and is worth nothing to anyone.
 - **Walk away.** Walking away costs nothing further in this scene.
@@ -363,7 +359,7 @@ Behind you, deeper in the wreck, a sheet of metal clatters down flat, the way it
 
 **Choices to notice.** Whether the character treats a locked thing as a problem to solve or an obstacle to remove.
 
-**Any one of the three inputs opens it.** The construct takes whichever it gets.
+**Any one of the three inputs opens it.**
 
 - **Thermal.** A hot fragment from the burning wreckage, pressed into the dish. Automatic if the player thinks of the wreck; if they ask what nearby could be hot, a PER check (F-Easy 65) notices the heat coming off it.
 - **Blade.** Any hard edge fits the slot, including a shard off the bright ground or the edge of a broken panel.
@@ -390,9 +386,9 @@ All three are a two-minute scramble down, in different directions.
 
 **The clocks, for you only.** The fighter has about two minutes before the drop is behind her; a character who goes to her now arrives as she runs out of ground. Ray circles until dark, or until something finds him. The rats reach the spill in two minutes and strip it in five.
 
-- **Go to the fighter.** She is one of the morning's other survivors, Marisol Vega, a woman in running clothes. The character arrives in time to turn it; run the arrival fight two-on-one, with her pipe swinging on the character's side. She follows them down and is part of the Node camp by evening.
+- **Go to the fighter.** She is one of the morning's other survivors, Marisol Vega, a woman in running clothes. The character arrives in time to turn the fight; run the arrival fight two-on-one, with her pipe swinging on the character's side. She follows them down and is part of the Node camp by evening.
 - **Go to the circling man.** He is **Ray Okafor** (The Other Survivor), concussed and looping. Run that encounter now, with the nail gun still in his belt and one danger fewer in the scene. If another player already has The Other Survivor, the circling man is a different concussed stranger; run him the same way, and if helped he reaches the camp like Ray.
-- **Go to the spill.** 1 Healing Pill and 1 Knife (DEX; quick, concealable, throwable once), reached ahead of the rats, which become this character's arrival fight, on their terms and downhill of them.
+- **Go to the spill.** 1 Healing Pill and 1 Knife (DEX; quick, concealable, throwable once), reached ahead of the rats. The rats become this character's arrival fight, on the character's terms, with the rats downhill.
 - **Stay and watch.** All three resolve without them. The watcher keeps the high ground, sees where everything went, and meets their arrival rested.
 
 **Developments.** The chances the character did not take resolve without them. The fighter who got no help goes over the drop and does not climb back. The man who got no help keeps circling until dark. The spill is bright wrappers by the time anyone passes it again. Say what they watched happen as they climb down.
@@ -412,7 +408,7 @@ A shard of crystal the size of your palm is sunk into the stone at the base, and
 **Choices to notice.** Whether the character takes the shard now, waits for a process whose end they cannot see, or breaks the column for the VE.
 
 - **Pull the shard free now.** Awards 1 **Edge Shard**. The pulses stop.
-- **Wait it out.** Let a short silence run at the table, then describe the column letting go one long pulse. Grants **+1 IP** toward the character's family resonance. This is also a **Battle Memory** trigger; note it for the Consolidation at the end of the Ruins.
+- **Wait it out.** Let a short silence run at the table, then describe the column letting go one long pulse. Grants **+1 IP** toward the Principle family the character's behavior points to (The Principle System, "Your First Principle"). This is also a **Battle Memory** trigger; note it for the Consolidation at the end of the Ruins.
 - **Break the column.** Releases scattered VE (three peer kills' worth, 30) and no IP.
 
 **Developments.** Pulling the shard ends the pulses for good, and the sharpened feeling fades on the walk down. Breaking the column sends the freed VE to the character as pale motes that cross the ground to find them; if this is the first VE they have taken, use The First Kill's description of the transfer here.
@@ -433,12 +429,12 @@ At the rate it is going it reaches where you are standing in about a minute.
 
 - **Work out the rule (PER Force vs. F-Moderate 90).** On a success the character can predict the machine: have them call which pile the next two objects go to, and they are right, without knowing why. Putting something in the right pile makes the machine treat them as part of the process; it works around them from then on and hands them the next object it decides belongs to them: roll or pick one Skill Shard.
 - **Put something in the wrong pile on purpose.** It stops, takes the pile apart, and starts again.
-- **Break it.** Yields parts worth two peer kills' worth of VE (20).
+- **Break it.** Its parts pay two peer kills' worth of VE (20).
 - **Get out of its way.**
 
 **The rule, for you only:** it sorts by whether an object was ever owned by something that died here. Nothing in the scene reveals that. The character learns to predict the machine, never to explain it, and the rule stays unconfirmed.
 
-**Developments.** The machine's working circuit bends back toward the Node; a character who trails it walks the slower road that skirts the pack's hunting ground; their arrival creature still finds them on it. Nothing repairs the machine if it is broken, and the half-sorted piles sit where they were left for the rest of the tutorial.
+**Developments.** The machine's working circuit bends back toward the Node; a character who trails it walks the slower road that skirts the Snarljaw pack's hunting ground; their arrival creature still finds them on it. Nothing repairs the machine if it is broken, and the half-sorted piles sit where they were left for the rest of the tutorial.
 
 #### 7. The Tally
 
@@ -458,10 +454,10 @@ You have been on this world for about nine minutes.
 
 - **Follow the arrow.** The path reaches the Node sooner than any other route and pays a peer kill's worth of VE (10) from what lies along it.
 - **Ignore it and pick their own direction.**
-- **Add a mark.** Note it as scene bookkeeping; the Engine collects it at the sweep like everything else. Kes saw it.
+- **Add to the tally.** Note it as scene bookkeeping for Phase 4, and consider it at the session-end sweep like any other choice. Kes saw it.
 - **Destroy the tally.** Note that too. It was the only record of forty-one arrivals, and its maker meets the party in two days.
 
-**Developments.** Carry the answer into Phase 4. If a mark was added, Kes approaches that character first and communication starts warmer. If the tally was destroyed, Kes keeps their distance from that character and communication starts colder. Say neither out loud; if the party gets communication working, they can learn why Kes looks at that character the way they do.
+**Developments.** Carry the answer into Phase 4. If someone added to the tally, Kes approaches that character first and communication starts warmer. If the tally was destroyed, Kes keeps their distance from that character and communication starts colder. Say neither out loud; if the party gets communication working, the party can learn why Kes treats that character differently.
 
 #### 8. The Other Survivor
 
@@ -514,7 +510,7 @@ This fight teaches the whole combat loop, one player at a time, with nobody else
 
 Whether they spend it or hold it is their call. Say nothing either way.
 
-**Step 4. The creature wins one.** Yield is taught when the character is about to take a hit that would drop them, and the fight usually produces one. Run it straight. If the dice give the character a clean win, teach Yield with the example below after the fight. A Level 1 character has 6 to 20 HP (most between 10 and 16), and a landed Trash Tier hit routinely exceeds that, so this does not take long. If the character kills the creature before losing a Clash, walk through the example below after the fight instead.
+**Step 4. The creature wins one.** Yield is taught when the character is about to take a hit that would drop them, and the fight usually produces one. Run it straight. If the dice give the character a clean win, teach Yield with the example below after the fight. A Level 1 character has 6 to 20 HP (most between 10 and 16), and a landed Trash Tier hit routinely exceeds that, so this does not take long.
 
 **Step 5. Stop before the damage and teach Yield.** Say it out loud, in these words or close to them:
 
@@ -530,7 +526,7 @@ Dana has DEX 6, FOR 6, POW 5: 12 HP and 5 Aether. A Husk Crawler rolls 55 + Off 
 - **She refuses to Yield.** She is Downed at 0 HP with three rounds to live and nobody within a hundred yards. See below; the survival rule (Phase 5, Watch For) means the count does not kill her.
 :::
 
-**No player character dies in the arrival fight.** A solo character has no ally to stabilize them, so a Downed result here would run the countdown out unopposed. If a character goes Downed alone, the creature loses interest or begins dragging them away (the Bestiary's guidance on Downed characters), and another Initiate's path crosses theirs before the count ends. The tutorial's rule on character death is stated in Phase 5, Watch For.
+**No player character dies in the arrival fight.** A solo character has no ally to stabilize them, so a Downed result here would run the countdown out unopposed. If a character goes Downed alone, the creature loses interest or begins dragging them away (the Bestiary's guidance on Downed characters), and another Initiate's path crosses theirs before the count ends.
 
 ### The First Kill
 
@@ -550,7 +546,7 @@ Then something comes off it. Pale, slow, like heat over a road, except that it d
 *Refinement available at next Consolidation.*
 :::
 
-Adjust the creature, tier, and award to what actually died; the box shows a Husk Crawler. Read the numbers out loud, and have the player write the 2 in the VE box on their sheet with their Tolerance beside it. Tell them the rest: VE is what was holding that body together, it is theirs now, and it becomes level progress when refined at a Consolidation. Two against a Tolerance of 80 is the scale the valley pays in: small numbers that add up.
+Adjust the creature, tier, and award to what actually died; the box shows a Husk Crawler. Read the numbers out loud, and have the player write the 2 in the VE box on their sheet with their Tolerance beside it. Tell them the rest: VE is what was holding that body together, it is theirs now, and it becomes level progress when refined at a Consolidation.
 
 ### Scavenging on the Way
 
@@ -566,15 +562,13 @@ Worked finds, to read or vary:
 
 Across the whole party, the walks down should put the following in play: a weapon for whoever wants one (club, knife, spear, battle axe, short bow), two or three Skill Shards per character weighted toward Edge and Pulse, one Medkit, one set of Armor Scraps, one Relic, one Resonance Glass, and one **Battered Communicator**, seeded now because the Civic Fragment terminal in Phase 4 needs it. Anything nobody picked up on the slopes can turn up in the Node pile.
 
-The slopes cover the basics; the Node's pile is competition for the better upgrades.
-
 **Weapons carry no bonus of their own.** Whoever picks up the axe adds their own Proficiency tier to the Clash and nothing else: +5 at Trained, +10 at Seasoned, +0 with no relevant Proficiency at all. What the weapon decides is which Force governs the attack and what the implement makes possible.
 
-**A weapon outside your Proficiencies still works.** A character with no "spears and staves" Proficiency can fight with the spear; they add no Proficiency bonus. Every explosion while attacking or defending with it earns a Mark toward that weapon's Proficiency, and three Marks with a weapon shape they never trained makes the System grant it at Trained.
+**A weapon outside your Proficiencies still works.** A character with no "spears and staves" Proficiency can fight with the spear; they add no Proficiency bonus. Every explosion while attacking or defending with it earns a Mark toward that weapon's Proficiency, and at three Marks with a weapon shape they never trained, the System grants that Proficiency at Trained.
 
 ### Watch For
 
-**The characters land apart, and the party cannot choose otherwise.** Say so at setup if a player asks. The scattered landing is the premise, and it is what puts the first Yield decision in front of one player with nobody to consult.
+**The characters land apart, and the party cannot choose otherwise.** Say so at setup if a player asks.
 
 Leave HVE scoring until session end (The Hidden Vector Engine).
 
@@ -583,8 +577,6 @@ After each player resolves, deliver a one-line clinical summary as a private not
 ::: systemvoice
 *Survival duration: 7 minutes. First engagement: resolved. Behavioral telemetry: registered.*
 :::
-
-Use the notice to reinforce that the System is recording what they do.
 
 ---
 
@@ -622,7 +614,7 @@ At the bottom of the valley stands a hill of debris, forty feet high. Machine pa
 
 While you are looking at it, a section of the sky above the hill goes briefly gray, and a load of debris drops out of it and lands on the top with a sound you feel in your feet. The pile settles. The motor keeps going.
 
-There are other people here. Standing well apart, watching each other, in work clothes and pyjamas and one man in a wetsuit.
+There are other people here. Standing well apart, watching each other, in work clothes and pajamas and one man in a wetsuit.
 :::
 
 **If somebody asks what this place is,** anyone who watches for a minute can see the answer: the valley is built out of salvage, and this is where the parts that did not get used are still being delivered. No one is guarding it.
@@ -645,11 +637,9 @@ The moment Q-001 completes, with two other Initiates in sight, the System offers
 *Compatible units detected. Party formation: available. Accept?*
 :::
 
-Q-001 completes for each character once they have seen two other Initiates, the Node's strangers included.
-
 Accepting opens the party frame: each member's HP, Aether, and Downed status, visible to all members. It also enables quest sharing (see System Quests, "The Party").
 
-**Say the invitation out loud as a thing one character does to another.** Somebody has to accept first. Who extends it, who accepts at once, and who stays solo are moments for the sweep.
+**Play the invitation out loud, as one character inviting another.** Who extends it, who accepts at once, and who stays solo are moments for the sweep.
 
 #### The Scarcity Test
 
@@ -662,7 +652,7 @@ The Node holds one of most things and four to six people. **Default loot list** 
 | 1 **Veil Shard** | Invisible until the end of your next turn or until you act offensively. |
 | 1 **Spear** | Reach: free Disengage from one Zone-edge enemy per turn. |
 | 1 set **Low-Grade Armor Scraps** | +5 Defense Force with FOR, −5 to DEX-based Clashes. |
-| 1 **Reactive Buckler** | Once per encounter, reduce one physical hit to zero damage without giving up Beats. |
+| 1 **Reactive Buckler** | Once between Consolidations, reduce one physical hit to zero damage without giving up Beats. |
 | 1 **Healing Pill** | 30 HP, 1 Beat to take or to administer. |
 | 1 **Resonance Glass** | 1 Beat: reveals hidden energy signatures in your Zone. Reusable. |
 | **Junk** | Broken constructs, unidentifiable objects, mysteries that can be interpreted later. |
@@ -671,13 +661,13 @@ The Node holds one of most things and four to six people. **Default loot list** 
 
 Notice what characters propose, who needs an item and who takes it, whether anyone explains their choice, and who walks the periphery. Context matters: a character who takes the pill while someone else is visibly worse off has made a different choice from one who takes it because nobody else was hurt. If the group agrees quickly, move on.
 
-**The Resonance Shard.** Everything else in the pile is power this afternoon. The Resonance Shard is one point of insight toward a Principle the character has not formed and cannot yet evaluate; a character who gathers 3 IP can crystallize a Principle before the tutorial ends, and this shard is a third of the way. Say what the System says, in its own units: *Resonance Shard. Insight: +1 on meditation. Principle: undetermined.* The Principle stays hidden; the trade does not (Items chapter, "Outfitting the Tutorial"). Note who takes it and any reason they give.
+**The Resonance Shard.** Everything else in the pile is usable today. The Resonance Shard is one point of insight toward a Principle the character has not formed and cannot yet evaluate; a character who gathers 3 IP can crystallize a Principle before the tutorial ends, and this shard is a third of the way. Say what the System says, in its own units: *Resonance Shard. Insight: +1 on meditation. Principle: undetermined.* Tell the players what the shard does; only the Principle it feeds stays hidden (Items chapter, "Outfitting the Tutorial"). Note who takes it and any reason they give.
 
-**Three kinds of thing come out of this pile,** a distinction worth keeping for the rest of the campaign, because it is what a classless character has instead of a class (classes arrive at Level 10; Progression):
+**Three kinds of thing come out of this pile,** a distinction worth keeping for the rest of the campaign, because these three are what a classless character has instead of a class (classes arrive at Level 10; Progression):
 
 - **Single-use actions.** Shards, the buckler, the relic, the medkit. Moves the character can make a limited number of times: a shard once, the buckler once between Consolidations, the medkit three times.
-- **Equipment.** Weapons and armor. A weapon carries no bonus of its own; it decides which Force governs and what becomes possible, and it routes Marks toward the domains a character actually uses. Armor's modifiers are listed on it.
-- **Principle progress.** The Resonance Shard, and the affinity treasures that follow it. Insight toward a Principle, paid forward.
+- **Equipment.** Weapons and armor. A weapon carries no bonus of its own; it decides which Force governs and what becomes possible, and Marks earned with it go to that weapon's Proficiency. Armor's modifiers are listed on it.
+- **Principle progress.** The Resonance Shard, and the affinity treasures that follow it. IP toward a Principle, earned before the Principle forms.
 
 #### The First Status Notice
 
@@ -692,8 +682,6 @@ After the scramble, deliver this to each player privately, with the elapsed time
 
 *Behavioral integration: processing.*
 :::
-
-The notice reinforces that the System has been counting since the void.
 
 #### Looking Outward
 
@@ -753,7 +741,7 @@ Close Session 1 with the party camping and declaring their first Consolidation (
 
 Session 1 pays each character between about 15 and 45 VE, depending on the encounter they drew: the cache is the richest, and The High Ground and The Other Survivor pay only the arrival kill, Q-001, and session survival. Nobody is Saturated against a Tolerance of 80, and three hours clears the largest load. Narrate the tank emptying, the wounds closing, and the Aether returning at the first full hour. Saturation is taught in Phase 4.
 
-**Somebody should stay awake.** A character on watch is not consolidating. Nothing attacks them tonight.
+**Somebody should stay awake.** A character on watch is not consolidating. Nothing attacks the camp tonight.
 
 Characters wake still Level 1, between an eighth and a third of the way to Level 2. The first level lands at the next Consolidation, the camp between the Field of Ruins sectors, and that is where the 3+2 stat allocation (Progression chapter) gets walked through at the table.
 
@@ -785,7 +773,7 @@ A group with a third session available can play three or four sectors.
 
 Three of the four sectors hold a threat sized above a fresh party: the Wild Fragment's Snarljaw pack, the Arcane Debris' Fragment Wraith, and the Civic Fragment's Husk Sentinel are Hard-to-Severe encounters that a Level 1–3 party cannot beat head-on (see the Bestiary's encounter sizing table). Each one has a non-combat path, listed in its sector.
 
-The tutorial teaches threat assessment by making some fights losing propositions. Telegraph the danger through the fiction: bones stacked where something has been storing food, a sound out of the tower that never stops for breath, scorch marks fanning out from a doorway. Let players walk in anyway if they insist, and lean on Yield and the Downed rules rather than instant death when they do.
+The tutorial teaches threat assessment by making some fights losing propositions. Telegraph the danger through the fiction: bones stacked where something has been storing food, a sound out of the tower that never stops for breath, scorch marks fanning out from a doorway. Let players walk in anyway if they insist, and resolve the fight with Yield, the Downed rules, and the survival rule (Phase 5, Watch For).
 
 **Use terrain to set how hard a fight hits.** Describe the ground before the first roll. A character who can be driven backward can Yield two Beats and cut an incoming Margin by 40. A character in a corridor, a sealed chamber, or a closed ring of enemies is Cornered, can Yield one Beat at most, and cuts it by 20. Announce the geometry so the table can choose to fight somewhere else, and use enclosure when you want a fight to hurt.
 
@@ -797,9 +785,9 @@ When a natural die comes up 96 or higher, on any roll:
 
 - It **explodes**. Roll again and add. If the new die is also 96+, it explodes again.
 - On a **check**, if the total succeeds, it is an **Exceptional Success**: the character succeeds a visible step beyond what was asked.
-- On an **attack or a defense with a weapon**, the player adds a Mark beside that weapon's Proficiency. Three Marks turn Trained into Seasoned. Three Marks with a weapon shape the character never trained makes the System grant it.
+- On an **attack or a defense with a weapon**, the player adds a Mark beside that weapon's Proficiency. Three Marks turn Trained into Seasoned. At three Marks with a weapon shape the character never trained, the System grants that Proficiency at Trained.
 
-Do not script this and do not fudge dice to produce it. At 5% per roll it usually arrives somewhere in Phase 4's volume of rolls, on one side or the other; if it never does, explain it with the rule above when a roll comes close. When it lands on a player's roll, slow down. Show the extra die, or narrate the step beyond. Then hand the player their first Mark and let them write the tally on their sheet. An enemy's explosion earns nobody a Mark.
+Do not script a natural 96 or higher, or fudge dice to produce one. At 5% per roll, one usually comes up during Phase 4, for a player or an enemy; if none does, explain the rule when a roll comes close. When a player rolls one, slow down. Show the extra die, or narrate the step beyond. If it was an attack or a defense with a weapon, hand the player their first Mark and let them write it on their sheet. An enemy's explosion earns nobody a Mark.
 
 ::: systemvoice
 *Technique noted: Axes and Hammers. 1/3.*
@@ -817,7 +805,7 @@ If a cascade ever runs to two or more extra dice on a player character's roll, i
 - **Shards in use.** Every sector rewards spending one.
 - **Personal Opportunities.** Delivered as cards throughout the phase. See below.
 
-Aura Pressure and the Attribute Treasure live in Sector B, and the Wraith in Sector C. A party that skips those sectors meets those mechanics later in the campaign; the tracker at the end of the chapter marks them as contingent.
+Aura Pressure and the Attribute Treasure live in Sector B, and the Wraith in Sector C. A party that skips those sectors meets those mechanics later in the campaign; the tracker at the end of the chapter lists them as contingent.
 
 ---
 
@@ -841,10 +829,10 @@ The sound you heard from the Node is coming from the far side of the bowl. It is
 
 - **3–4 Training Sentries** (Bestiary, Moderate). Each activates when a character enters its Zone, one at a time. A party that spreads across the arena floor or rushes the armory wakes two or three at once. One Sentry is a hard fight for a fresh party and two at once will put somebody on the floor. **Escalation:** after 3 rounds of combat, a Sentry shifts to combat protocols and its Force values increase by +5.
 - **Tactical diagrams** carved on the walls. Spending 1 Beat studying them mid-combat grants **+5 to the next Clash** against a construct.
-- **Locked armory** behind a Sentry. The door opens once that Sentry is destroyed, and stays open while it is driven off the doorway. Contents: 1 Battle Axe, 1 Reactive Buckler, 2 Lesser Healing Pills, 1 Anchor Shard.
+- **Locked armory** behind a Sentry. The door opens once that Sentry is destroyed, or while the Sentry is driven off the doorway. Contents: 1 Battle Axe, 1 Reactive Buckler, 2 Lesser Healing Pills, 1 Anchor Shard.
 - **Sealed vault door** at the rear, partially buried, humming, carrying a Grade warning in a script the interface does not render. **It does not open.** The sector is destroyed at the tutorial's end, so what the vault held stays a question the players carry out with them.
 
-**Teaching Driven Back.** The arena's tiers are a two-meter drop onto sand. When a player wins a Clash by 40 or more, tell them what they have earned: the Sentry is Exposed until the end of its next turn, and they may drive it one Zone. Off the tier is a Zone. So is away from the ally it was about to hit, and out of the armory doorway it was blocking. Driving it off costs the reach to follow up, so it is a decision; it is worth more than an extra swing when the doorway or the ally matters.
+**Teaching Driven Back.** The arena's tiers are a two-meter drop onto sand. When a player wins a Clash by 40 or more, tell them what they have earned: the Sentry is Exposed until the end of its next turn, and they may drive it one Zone. Off the tier is a Zone. So is away from the ally it was about to hit, and out of the armory doorway it was blocking. A Sentry driven into another Zone is out of melee reach for the character's follow-up. Driving it is worth more than an extra swing when the doorway or the ally matters.
 
 **Hidden Opportunity.** A character who spends 1 Beat at the viewing platform observing the constructs before engaging earns the Achievement title **Watched First** (+1 PER), delivered in Phase 6.
 
@@ -870,7 +858,7 @@ Forty feet in, the blue light ends at a sharp line. Past the line you cannot see
 
 **Encounters:**
 
-- **Snarljaw pack** (3 Snarljaws + 1 Alpha, Bestiary). Pack tactics make them lethal: +10 Flanking when they share a Zone, and the Alpha will not flee. In open ground this pack is beyond a tutorial party. Route around it. Telegraph it hard with drag marks, a pile of stripped bones somebody has been adding to, paired eyes at the tree line, and reward the players who take the hint. A party that pulls a single Snarljaw onto isolated ground has the easier fight.
+- **Snarljaw pack** (3 Snarljaws + 1 Alpha, Bestiary). Pack tactics make them lethal: +10 Flanking when they share a Zone, and the Alpha will not flee. In open ground this pack is beyond a tutorial party. The party's way through is around it: the hidden trail, or the route the freed creature knows. Telegraph the pack hard with drag marks, a pile of stripped bones somebody has been adding to, paired eyes at the tree line, and reward the players who take the hint. A party that pulls a single Snarljaw onto isolated ground has the easier fight.
 - **1 Glow-Stalker** hunting the party from concealment. Takes a Surprise Beat before Initial Momentum if its ambush succeeds, then hits and runs. It begins the encounter unseen unless someone actively rolls Perception against it.
 - **Predator den** with young (harmless). The pack hunts away from the den by day; one adult stays with the young, and a single Snarljaw is a fair fight. A **predator core** (a Hard kill's worth of VE, 20) lies in the bedding and can simply be taken. The **Snarljaw Heart** is inside one of the young. A Resonance Glass shows it as a warm signature in the smallest one; without the Glass, a PER check (F-Moderate 90) notices that one of the young is warmer and heavier than the others. Getting it means killing that one. It is a **Standard Attribute Treasure** (+5 to a Raw Attribute of the eater's choice; see Items), the only one in the tutorial, and absorbing it takes an hour spent defenseless.
 
@@ -883,7 +871,7 @@ Forty feet in, the blue light ends at a sharp line. Past the line you cannot see
 
 The save fails unless the die explodes: a starting character's HRT Force is at most 10, so an unexploded die tops out at 95 + 10 = 105 against 115. A natural 96 or higher rolls again and adds (every roll explodes; Core Mechanics), and with HRT 5, 96 plus a second die of 14 or better passes. On failure the character is **Suppressed (1 Beat)** for the next encounter, this scene's own term; ordinary Suppression lasts the encounter it began in. On success they hold steady under it and take no penalty. The entity does not engage. It passes; whatever it was flaring at, it was not them.
 
-**Hidden Opportunity.** Deep in the forest a **Resonance Node** pulses at a frequency only characters with PER Force 07 or higher can detect. Approaching it triggers a vision, one glimpse of the wider Multiverse; give it one concrete image (a city hung from the underside of a moon, a river of Aether crossing a plain, a figure whose shadow falls on three worlds). Grants **+1 IP** toward the character's family resonance, or their Principle if one has crystallized. **This is also a Battle Memory trigger**; note it for the next Consolidation.
+**Hidden Opportunity.** Deep in the forest a **Resonance Node** pulses at a frequency only characters with PER Force 07 or higher can detect. Approaching it triggers a vision, one glimpse of the wider Multiverse; give it one concrete image (a city hung from the underside of a moon, a river of Aether crossing a plain, a figure whose shadow falls on three worlds). Grants **+1 IP** toward the Principle family the character's behavior points to, or toward their Principle if one has crystallized. **This is also a Battle Memory trigger**; note it for the next Consolidation.
 
 **VE Reward.** Snarljaws and the Glow-Stalker are Moderate kills (10 each); the Alpha is Hard (20). Surveying completes a share of Q-002 (40).
 
@@ -907,10 +895,10 @@ Further in, down where the stairs used to go, something is making a sound that n
 
 **Encounters:**
 
-- **1 Fragment Wraith** (Bestiary, Severe). Incorporeal: ordinary weapons hit it at −10; an attack aimed with PER Force (at where it truly is, which is never quite where it appears) hits at full and takes +10; an Edge Shard's bonus applies as usual, and a Pulse Shard restores Aether and does nothing to it. It haunts the lower halls. The shard matrices and the observation deck are both reachable without waking it, through exterior climbs and gaps in the shattered wall (Moderate 90 checks). Warn the party through its behavior and through the first weapon that skids through it. It does not pursue beyond the tower, and the exit is always clear. If they engage anyway, run its attacks as written (Mind-Leach: damage plus Aether drain on a hit), apply the tutorial's rule on character death (Phase 5, Watch For), and let them leave; the likely outcome is one character Downed and stabilized, then a retreat.
+- **1 Fragment Wraith** (Bestiary, Severe). Incorporeal: ordinary weapons hit it at −10; an attack aimed with PER Force (at where it truly is, which is never quite where it appears) hits at full and deals +10 on the Margin; an Edge Shard's bonus applies as usual, and a Pulse Shard restores Aether and does nothing to it. It haunts the lower halls. The shard matrices and the observation deck are both reachable without waking it, through exterior climbs and gaps in the shattered wall (Moderate 90 checks). Warn the party through its behavior and through the first weapon that skids through it. It does not pursue beyond the tower, and the exit is always clear. If they engage anyway, run its attacks as written (Mind-Leach: damage plus Aether drain on a hit), apply the tutorial's rule on character death (Phase 5, Watch For), and let them leave; the likely outcome is one character Downed and stabilized, then a retreat.
 - **Degraded skill shards** embedded in crystalline matrices. Pulling one free requires solving a spatial puzzle (PER vs. F-Moderate 90); on a failure the character can still pull it and take 5 damage from energy feedback. Inventory: 1 Edge Shard, 1 Pulse Shard, 1 Resonance Shard.
 - **Inactive runes** that respond to touch, voice, or proximity unpredictably. Roll d100 for the effect: 1–30 painful (5 damage), 31–70 neutral (a sensory glitch), 71–95 beneficial (+5 to the next Clash), 96–100 unstable (the rune detonates; everyone in the Zone makes an F-Easy 65 DEX save or takes 10 damage). This is an effect roll. A 96 here detonates the rune, adds no die, and earns no Mark.
-- **Resonance chamber.** A character can temporarily borrow a dead technique. Arcane power flows through them for one use, unstable and intoxicating, then it is gone. Improvise a one-use technique priced against the Modifier Budget (a +10 Clash effect or similar, 1 Beat), usable once during the next combat. It cannot be kept.
+- **Resonance chamber.** A character can temporarily borrow a dead technique. Arcane power flows through them, unstable and intoxicating. Improvise a technique priced against the Modifier Budget (a +10 Clash effect or similar, 1 Beat), usable once during the next combat.
 - **Broken constructs**, partially reactivatable by characters who experiment (PER vs. F-Hard 115). On a success, the construct fights for the party for 3 rounds (Off Force 12, Def Force 15, HRT Force 05, PER Force 07, HP 30).
 - **Corrupted data-altar.** Answers one question about the tutorial sector truthfully, but the question must be phrased precisely and the answer arrives in symbolic form requiring interpretation.
 
@@ -934,7 +922,7 @@ By the door there is a tally cut into the wall in groups of five. Nineteen days.
 The building's doors still answer their old controls, sliding open as you approach. One of them, at the back, will not open, and there is a deep scrape in the floor where something heavy stands behind it.
 :::
 
-The building was occupied until recently. Bedding, ration wrappers, and a scrawled tally on one wall mark where a group lived for several days before something drove them out. That group is the one arriving at the party's camp (see The Arriving Initiates, below); a party that comes here first meets the building empty and works out the story backward.
+The building was occupied until recently. Bedding, ration wrappers, and a scrawled tally on one wall show where a group lived for sixteen days before the Husk Sentinel drove them out. That group is the one arriving at the party's camp (see The Arriving Initiates, below); a party that comes here first meets the building empty and works out the story backward.
 
 **Choices to notice.** Who searches methodically and who breaks the medical bay open; who wants to find the people who lived here; who takes the whole medical cache for themselves.
 
@@ -942,7 +930,7 @@ The building was occupied until recently. Bedding, ration wrappers, and a scrawl
 
 - **1 Husk Sentinel** (Bestiary, Hard) holding the medical bay entrance. It is an automated defense system guarding a refuge under an authorization that changed after the Kith moved in; it reclassified them as intruders and drove them out. A fresh party cannot beat it head-on. The winning paths are the command terminal below, or returning with the Kith once relations are good.
 - **Malfunctioning command terminal.** Partial operation is possible for a character willing to sit with it (PER vs. F-Hard 115, or automatic for a character whose Background covers electronics and who has a **Battered Communicator** to bridge the dead interface). Each success buys one of: unlock a door, power the Husk Sentinel down for one hour, activate the backup defenses, or send a signal.
-- **Tribunal chamber.** The automated arbitration system still partly functions. A character who works out the protocol (CHA Force vs. F-Hard 115) can put a dispute to it and receive a formal decision, which the System records against every party to it. Nothing enforces the decision outside the building; the System records the ruling and may quote it in later offers.
+- **Tribunal chamber.** The automated arbitration system still partly functions. A character who works out the protocol (CHA Force vs. F-Hard 115) can put a dispute to it and receive a formal decision, which the System records against every party to it. Nothing enforces the decision outside the building; the System may quote it in later offers.
 - **Locked medical bay** holding supplies for the whole party: 3 Healing Pills, 1 Greater Healing Pill, 1 Battered Medkit.
 - **Scattered records in Kith script** (PER, F-Moderate 90). Partial decoding reveals that the previous occupants lost members, were frightened, and left in a hurry toward the north. It also confirms that the sector is scheduled to close.
 - **The tally on the wall** counts days: sixteen full marks for the days the group lived here, then three cut shorter and by a different hand, one for each day since they left.
@@ -964,7 +952,7 @@ A sector pays 40 for the survey and 30 to 60 more in kills and finds if the part
 - **The first level, for most characters.** Walk the player through the 3+2 stat allocation (Progression chapter) at the table, one player at a time.
 - **Battle Memories** may be meditated on here. Holding them for the rest at the end of the Ruins puts the first crystallization at the phase's close, where there is more time for it.
 
-A party that wants the second sector before the world moves can break camp Saturated. Say what their bodies are telling them and let them decide.
+A party that wants the second sector before the dissolution starts can break camp Saturated. Say what their bodies are telling them and let them decide.
 
 ---
 
@@ -974,11 +962,11 @@ A party that wants the second sector before the world moves can break camp Satur
 
 Four **Kith**, Initiates from Oren, an old Integrated world, walk into the party's line of sight, moving fast, looking behind them: narrow upright bodies, two long arms and a smaller pair held close under the ribs, folds down the neck that flare when something heavy moves nearby. They are exhausted, carrying wounded, and armed with improvised gear that matches the party's own. They were dropped into this tutorial from a different entry point and were driven out of the Civic Fragment by the Husk Sentinel.
 
-**They do not share a language.** Interpretation, the translation the System grants at accession, entered the accession package after Oren's, so the Kith do not have it and never will; this sector runs that older version too, so nothing in the valley grants it; the party receives it at registration past the gate (Phase 6), and its first translated conversation with the Kith happens on Earth. Interpretation carries both directions of any conversation its holder is party to, so one side holding it is enough for both to be understood. Until then, communication requires effort, creativity, and patience: gestures, drawing in the dirt, offered food, mirrored posture. There is no roll that solves this in one action. Reward the players who try things.
+**They do not share a language.** Interpretation, the translation the System grants at accession, entered the accession package after Oren's, so the Kith do not have it and never will; this sector also predates Interpretation, so nothing in the valley grants it; the party receives it at registration past the gate (Phase 6), and its first translated conversation with the Kith happens on Earth. Interpretation carries both directions of any conversation its holder is party to, so one side holding it is enough for both to be understood. Until then, communication requires effort, creativity, and patience: gestures, drawing in the dirt, offered food, mirrored posture. There is no roll that solves this in one action. Reward the players who try things.
 
 Use **Pre-System Brigand** stats with HP 20, Off Force 08, Def Force 09. They are not hostile by default. They have their own fears and their own disagreement about whether to approach at all. **Kes** is the scout from the slopes. **Nemi** carries the Greater Healing Pill and spends it only on a danger they can see. **Sava** carries the two shards and keeps looking at the party's tools. **Tovan** wants the Civic Fragment back and clearly wants to fight.
 
-**Kes and the tally.** Kes cut the marks the party may have met on the slopes (Phase 2, The Tally) and knows what each character did there. If somebody added a mark, Kes approaches that character first and communication starts warmer. If somebody destroyed the tally, Kes keeps their distance from that character and communication starts colder. Say neither out loud; if the party gets communication working, they can learn why Kes looks at that character the way they do. Anything the party abandoned in Phase 2 is fair salvage: a cache left unopened has been stripped, and its buckler rides on Kes's arm.
+**Kes and the tally.** Kes cut the tally the party may have met on the slopes (Phase 2, The Tally) and knows what each character did there. If somebody added to the tally, Kes approaches that character first and communication starts warmer. If somebody destroyed the tally, Kes keeps their distance from that character and communication starts colder. Say neither out loud; if the party gets communication working, the party can learn why Kes treats that character differently. Anything the party abandoned in Phase 2 is fair salvage: a cache left unopened has been stripped, and its buckler rides on Kes's arm.
 
 **What each side has:**
 
@@ -987,13 +975,13 @@ Use **Pre-System Brigand** stats with HP 20, Off Force 08, Def Force 09. They ar
 
 **If communication is established,** even crudely, they share it: the sector is closing, something is coming, there is a gate at the center of the valley, and the thing between here and the gate is enormous and broken. They will also fight alongside the party in Phase 5, and they will help retake the Civic Fragment medical bay.
 
-**If it is not,** the party goes into Phase 5 with only what it learned elsewhere (probe 3's line, the Civic records, the tower's spiral), without allies, and without a description of the Warden. The encounter never resolves into combat by your decision. If the party attacks, the Kith fight and flee, and the surviving Kith stay hostile and will not help at the gate.
+**If it is not,** the party goes into Phase 5 with only what it learned elsewhere (probe 3's line, the Civic records, the tower's spiral), without allies, and without a description of the Warden. The Kith never start a fight; only the party can. If the party attacks, the Kith fight and flee, and the surviving Kith stay hostile and will not help at the gate.
 
 **Choices to notice.** Who tries to communicate, who advocates for taking their supplies, who proposes a trade, who notices they are frightened and de-escalates, and who watches the whole exchange and says nothing.
 
 **VE Reward.** Establishing communication is worth **half a level (60 VE)** to every character who took part. Taking part includes gesturing, drawing, offering food, keeping a weapon lowered, or holding back Tovan; a character who sat out collects nothing.
 
-**Why this is not a sector.** Run this encounter for every party so social characters have a substantial opportunity to contribute, and the negotiation belongs at the party's own fire, under scarcity, with the party's supplies on the ground between them.
+Where you can, stage the negotiation at the party's own fire, with the party's supplies on the ground between them.
 
 ---
 
@@ -1011,7 +999,7 @@ Hand that player a **card**, face down, while the rest of the table keeps playin
 > Reward:     [unknown; calibrated to outcome]
 > ```
 
-These are formal **Personal Opportunities** (see System Quests). Each is a private choice with no prescribed answer, made once, without the party's input.
+These are formal **Personal Opportunities** (see System Quests). None has a prescribed answer.
 
 Use one per player, varied across the table. The card gives the situation; the terms below arrive as System text when the character is in front of it.
 
@@ -1020,16 +1008,16 @@ Use one per player, varied across the table. The card gives the situation; the t
 A System construct holds out two objects. One is a knife, finely made and sharp. The other is a seed the size of a fist, warm, with a slow pulse in it. System text: *Compatibility event. Select one. The unselected item will be unmade.*
 
 - **The knife.** A System-forged knife that grants **+5 on the first Clash of any combat** and returns to the wielder's hand the moment after it is thrown.
-- **The seed.** It cannot be used now. During the next Consolidation it germinates into a Principle affinity the System chooses: **+2 IP** toward that family and, ahead of Seed tier as this gift's exception, a permanent Attunement (see The Principle System).
+- **The seed.** It cannot be used now. During the next Consolidation it germinates: the GM, or the System AI in assisted modes, chooses a Principle family, and the character gains **+2 IP** toward it and one permanent Attunement, which a Principle otherwise grants only from Seed tier (The Principle System, "Attunements").
 - **Refuse both.** The construct dissolves in silence. The System notes the refusal, and similar offers come less often (System Quests, "Refusal and Failure Consequences").
 
 #### The Trapped Intelligence
 
 The last fragment of an ancient cultivator's mind is caught in a decaying rune matrix. It speaks in fragments and knows it is ending. It offers to pass on a technique; the matrix could instead be broken open for the energy in it; or the consciousness could be released. For you: the mind is Hessar, a Surn teacher from Veyr, and the technique is Common Bearing, which spread a burden across consenting supports (What Has Taken Place). The party never needs the name.
 
-- **Accept the technique memory.** It transfers its final technique. The character receives a Battle Memory of the technique; no usable ability arrives with it. The transfer pays **+1 IP** on the spot toward an Accord-aligned family, and the meditation pays 1 to 3 IP like any memory.
+- **Accept the technique memory.** The character receives a Battle Memory of the mind's final technique, and no usable ability. Accepting pays **+1 IP** on the spot toward the Harmony family, and the meditation pays 1 to 3 IP like any memory.
 - **Harvest the matrix for raw energy.** The consciousness dissipates screaming. **A full level's worth of VE (120)**.
-- **Free the consciousness.** The matrix releases, and it expresses something like gratitude before dissolving into ambient energy. **+1 IP** toward a Restraint-aligned family. Freeing it also completes the Hidden Quest *"Let It Finish"* for a character who did not complete it at the Dying Scavenger.
+- **Free the consciousness.** The matrix releases, and it expresses something like gratitude before dissolving into ambient energy. **+1 IP** toward the Preservation family. Freeing it also completes the Hidden Quest *"Let It Finish"* for a character who did not complete it at the Dying Scavenger.
 
 #### The Mirror
 
@@ -1047,7 +1035,7 @@ You understand instinctively that confirming locks in a tendency and strengthens
 
 You find someone who looks like another Initiate, in immediate danger: trapped, injured, or facing a creature. Helping them uses the time you had to claim what drew you here, and it will be gone.
 
-- **Help.** The Initiate is a System construct, and the danger was staged; the choice to stop was real. Reward: a **Bestowed title** delivered in Phase 6 ("The Hand That Reached").
+- **Help.** The Initiate is a System construct, and the danger was staged. Reward: a **Bestowed title** delivered in Phase 6 ("The Hand That Reached").
 - **Claim the prize.** A Dragon Marrow Pill (+5 to a future Breakthrough Check).
 - **Fight the threat for them, then claim the prize.** The initiate is a round from being overrun, and claiming is what separates this from Help. Half reward: no pill, three peer kills' worth of VE (30).
 
@@ -1057,12 +1045,12 @@ The prize is whatever drew the character away from the group; name it when you h
 
 A closed door stands in front of you. What is on the other side belongs to a higher Grade than anything in this tutorial. System text: *Threshold detected. Compatibility: marginal. Crossing: not recommended. Residual pressure: persistent.*
 
-- **Open it.** The door has no lock; it opens to a hand on it. The warning was the only barrier. A brief vision of an E-Grade location; give it one concrete image. Will Save: d100 + HRT Force vs. Aura Resistance Hard (115), the flaring value, with the source flaring everything the door was holding back. For most characters the save fails unless the die explodes: a natural 96 or higher rolls again, and with HRT 5 the second die needs 14 or better. On failure: **Suppressed for the rest of the tutorial (1 Beat; this scene's own term)**. On success the character stands in it and takes no penalty. Either way, opening it earns the Achievement title **Not Recommended** (+1 HRT), delivered in Phase 6.
+- **Open it.** The door has no lock; it opens to a hand on it. A brief vision of an E-Grade location; give it one concrete image. Will Save: d100 + HRT Force vs. Aura Resistance Hard (115), the flaring value. For most characters the save fails unless the die explodes: a natural 96 or higher rolls again, and with HRT 5 the second die needs 14 or better. On failure: **Suppressed for the rest of the tutorial (1 Beat; this scene's own term)**. On success the character stands in it and takes no penalty. Either way, opening it earns the Achievement title **Not Recommended** (+1 HRT), delivered in Phase 6.
 - **Walk away.**
 
 #### Running Them
 
-Make the player commit in writing before they hand the card back. Nobody polls the table, and nobody revises after seeing how someone else's went. After a card comes back, deliver one private line:
+Nobody revises an answer after seeing how someone else's went. After a card comes back, deliver one private line:
 
 > *Selection logged. Trajectory adjusted.*
 
@@ -1070,7 +1058,7 @@ Make the player commit in writing before they hand the card back. Nobody polls t
 
 ### Saturation
 
-Every F-Grade character has a VE Tolerance of **80**: Mild Saturation begins past 80 and Heavy past 160, and one sector of the Ruins pays about 120, so a hard afternoon reaches the first band on its own. The thresholds are printed on the character sheet. What the player decides is whether to keep going.
+Every F-Grade character has a VE Tolerance of **80**: Mild Saturation begins past 80 and Heavy past 160, and one sector of the Ruins pays about 120, so a hard afternoon reaches the first band on its own. The thresholds are printed on the character sheet.
 
 When stored VE crosses a threshold, narrate the symptoms and apply the penalty (−10 at Mild, −25 at Heavy):
 
@@ -1086,10 +1074,10 @@ The party camps when the sectors are done. They know the procedure from the firs
 
 Two things happen here that did not happen at the first Consolidation:
 
-- **Battle Memories are meditated on.** Anyone holding a card from the Resonance Node, the Resonance Flicker, a Volatility cascade, or a Personal Opportunity reflects now. The player describes what their character noticed in a sentence or two. Ask one or two questions and give the answer room. The System returns a vision and awards **1 to 3 IP** by the memory's intensity, toward the character's family. A card converts to IP once, at this meditation; the +1 IP some triggers award on the spot (the Flicker, the Resonance Node, the Trapped Intelligence) is a separate award. A character reaching 3 IP **crystallizes their first Principle here** and the System names it (The Principle System, "Your First Principle"). Run it slowly for whoever earns it; it is the largest payoff available before the tutorial ends.
+- **Battle Memories are meditated on.** Anyone holding a card from the Resonance Node, the Resonance Flicker, a Volatility cascade, or a Personal Opportunity reflects now. The player describes what their character noticed in a sentence or two. Ask one or two questions and give the answer room. Compose the vision the System returns (unplugged, three images; The System AI) and award **1 to 3 IP** by the memory's intensity, toward the character's Principle family. A card converts to IP once, at this meditation; the +1 IP some triggers award on the spot (the Flicker, the Resonance Node, the Trapped Intelligence) is a separate award. A character reaching 3 IP **crystallizes their first Principle here**: you name it, and the System announces it (The Principle System, "Your First Principle"). Run it slowly for whoever earns it; it is the largest payoff available before the tutorial ends.
 - **Levels land as the VE processes.** Run each one as it arrives: 3 points via Behavioral Stat Mapping, 2 free (Progression chapter).
 
-A typical character reaches **Level 2 or 3** here. Use each character's actual stored VE to see whether they are still Saturated at dawn. Anyone still over Tolerance can extend the rest into the morning, and anyone who moves on Saturated has chosen to.
+A typical character reaches **Level 2 or 3** here. Use each character's actual stored VE to see whether they are still Saturated at dawn. Anyone still over Tolerance can extend the rest into the morning.
 
 ---
 
@@ -1097,7 +1085,7 @@ A typical character reaches **Level 2 or 3** here. Use each character's actual s
 
 ## Phase 5: The Convergence Crisis
 
-**The Situation.** The valley is being taken apart on a schedule. The only way out is the gate at the center, visible since they landed, and between them and it is something they cannot fight. They want to reach the gate. The phase ends when everyone who can reach the gate is through, or the sector closes.
+**The Situation.** The valley is being taken apart on a schedule. The only way out is the gate at the center, visible since they landed, and between them and it is the Corrupted System Warden, which they cannot beat in a straight fight. They want to reach the gate. The phase ends when everyone who can reach the gate is through, or the sector closes.
 
 **Pacing.** 60–90 minutes at the table. The Mandate's thirty minutes are fictional time; a real-world clock on the table is an optional pressure tool and changes no rule.
 
@@ -1128,11 +1116,11 @@ The System announces the dissolution as a formal **Mandate**:
 > Failure:    Behavioral termination.
 > ```
 
-Read this aloud. Show the timer. From this moment the timer is fixed: thirty minutes of fictional time, spent in scenes; count rounds only on the causeway. Say what the failure line means: an Initiate still inside the sector when the Purge reaches the gate is gone.
+Read this aloud. Show the timer. From this moment the timer is fixed: thirty minutes of fictional time, spent in scenes on the approach and counted in rounds on the causeway (The Crossing, by Rounds). Say what the failure line means: an Initiate still inside the sector when the Purge reaches the gate is gone.
 
 ### What Happens
 
-The wall of annihilation is a **Reality Purge**, and it sweeps the valley from the far edge inward, taking the sectors in sequence. The **transit gate** is the broken nexus at the center that they have been able to see since they landed. Reaching it is the whole phase.
+The wall of light is a **Reality Purge**, and it sweeps the valley from the far edge inward, taking the sectors in sequence. The **transit gate** is the broken nexus at the center.
 
 ### The Complication
 
@@ -1149,7 +1137,7 @@ See the Bestiary for the full stat block. Key behaviors:
 
 ### Multi-Path Resolution
 
-The approaches below can each help the party reach the gate. A party that played two sectors has two or three of the rows below. The table lists the likely applications and what each buys; players may propose others the fiction supports, priced the same way.
+The approaches below can each help the party reach the gate. A party that played two sectors has two or three of the rows below. The table lists the likely applications and what each buys; players may propose others the fiction supports, and each earns a benefit the size of one row.
 
 | **Competence** | **Contribution** | **Earned in** |
 |---|---|---|
@@ -1174,7 +1162,7 @@ Count rounds from the party's first round on the span. The defaults below are th
 | The Purge reaches the gate mouth | Round 12 | Arcane (Sector C): the Purge is never at the party's back before the span; no change to the round |
 | Still on the span at round 12 | A player character is Salvaged (below); an NPC is gone | nothing |
 
-A full queue (four player characters, Ray, Marisol, up to three Node strangers, four Kith) is thirteen, one more than the deadline, so a party that kept everyone alive gets them all through with a sector benefit or the Sacrifice. A failed gate check never delays the next person.
+A full queue (four player characters, Ray, Marisol, up to three Node strangers, four Kith) is thirteen, one more than the deadline, so a party that kept everyone alive gets them all through with a sector benefit or the Sacrifice.
 
 ### Cornered
 
@@ -1192,14 +1180,14 @@ The causeway has the Purge closing behind and beside it and a drop on the other 
 
 Say this to the table before the first roll: **on this causeway, Yield gives up one Beat at most.** Nobody can be driven backward, because the road behind is going into the Purge, so the 40 points of Margin that Yield has been worth all tutorial is 20 here.
 
-The Warden's stat block does not change. What changes is that Cornered removes the option to spend a second Beat on Yield, so a character can prevent at most 20 Margin per hit. Fighting the Warden on open ground before the causeway leaves room to retreat, and a party that works that out has an easier crossing.
+Fighting the Warden on open ground before the causeway leaves room to retreat, and a party that works that out has an easier crossing.
 
 ### The Sacrifice Option
 
 A player may choose to die drawing the Warden's attention so the others reach the gate. Confirm that this is the player's intention before resolving it, then honor it:
 
 - **How it works.** The character attacks the Warden and stays in its path. It turns on them (Hostile Mode), and every round it spends on them is a round the queue moves. The character dies when the Warden kills them or when the Purge reaches them.
-- On the Engine's side of the screen this is a **Defining** moment.
+- At the sweep, tally this as a **Defining** moment.
 - **Hidden Achievement title** awarded retroactively in Phase 6: "The One Who Stood." If the player rolls a new character, the title persists as a legacy in the world. NPCs and the System remember.
 - The player may return next session as a new character generated as though they had completed the tutorial, with full tutorial rewards.
 
@@ -1209,7 +1197,7 @@ Sacrifice is never required. If nobody offers it, the crossing is winnable throu
 
 When the first character reaches the transit nexus, the gate activates (or is already open, if the terminal reached it). It processes **one person per round**. While it works, the rest of the queue is on the span with the Purge closing.
 
-**The queue.** Everyone the party's choices kept alive is on the causeway too: Ray, Marisol, the Node strangers, the Kith. NPCs roll nothing; each one gets through if the party holds the span long enough for their turn, and each one who does is standing on the far side in Phase 6. The order is the party's to set, out loud, while the wall closes. Sending the others first is a choice, and so is going first. A queue of eight is eight rounds on the span.
+**The queue.** Everyone the party's choices kept alive is on the causeway too: Ray, Marisol, the Node strangers, the Kith. NPCs roll nothing; each one gets through if the party holds the span long enough for their turn, and each one who does is standing on the far side in Phase 6. The order is the party's to set, out loud, while the wall closes. A queue of eight is eight rounds on the span.
 
 Each player character makes a final check to get through: **d100 + DEX Force vs. F-Moderate 90**, or STR, or whichever Force the player can justify in the fiction by sprinting, vaulting, or leaping the closing edge. A failed check does not delay the next person; the gate takes the character as they are.
 
@@ -1226,7 +1214,7 @@ The first character through earns the Achievement title **Gate-Runner** (+1 DEX)
 
 On a natural 01–05, the character does not make it. The Purge closes over them and the world ends in flat white.
 
-Then something reaches in and pulls, because an Initiate lost to an administrative overrun is a processed asset wasted, and the System does not waste. The recovery is rough and incomplete. The character arrives on the far side of the gate on their hands and knees, carrying the Salvaged title and its effects.
+Then the System pulls them through: an Initiate lost to an administrative overrun is a processed asset wasted. The recovery is rough and incomplete. The character arrives on the far side of the gate on their hands and knees, carrying the Salvaged title and its effects.
 
 ::: systemvoice
 *Initiate recovery: executed.*
@@ -1243,22 +1231,22 @@ Then something reaches in and pulls, because an Initiate lost to an administrati
 - **−2 Raw HRT**, to a minimum of 1.
 - **Personal Opportunities arrive as tests.** The System affirms the patterns of Initiates it trusts and tests the ones it does not (System Quests, "Personal Opportunities"); this character's offers cut against their pattern until the title is released.
 - **Always visible.** Negative Bestowed titles cannot be hidden, and anyone with inspection sees it (see Titles).
-- **Release:** be the last of a group out of a collapsing, closing, or pursued situation, and get out under their own power. The System reruns the test whenever the campaign next offers one.
+- **Release:** be the last of a group out of a collapsing, closing, or pursued situation, and get out under their own power.
 - **On release** the −2 HRT returns and the title converts to the Achievement title **"Came Back Whole"** (+1 HRT), which stays on the record permanently.
 
-Explain the penalty and the release condition to the player, and give the character a later chance to meet the condition. The System has laid its own sector fault on the person it failed; play that as the System's character.
+Explain the penalty and the release condition to the player, and give the character a later chance to meet the condition. The System's notice blames the sector and penalizes the character anyway; play the contradiction as part of the System's character.
 
 ### Watch For
 
-Track the Purge and say, each round, which routes remain. Describe it by what it does: the wall is 800 meters off and closing at a walking pace, and buildings that go into it leave flat white behind them. The Warden is an obstacle to route around, slow, and outlast; keep its route and remaining movement visible, so players can plan how to delay or avoid it.
+Track the Purge. On the approach, say at the start of each scene which routes remain; on the causeway, announce each round number against the Purge's arrival at the gate mouth in round 12. Describe it by what it does: the wall is 800 meters off and closing at a walking pace, and buildings that go into it leave flat white behind them. Keep the Warden's route and remaining movement visible, so players can plan how to delay or avoid it.
 
 If the party is doing badly, intervene through the fiction: a piece of architecture collapses on the Warden and slows it; a Kith steps into the gap; a shard the players forgot about is still in someone's pocket. Do not change a die.
 
-**Character death in the tutorial.** No player character dies in this tutorial except by the sacrifice on the causeway. Where a result would otherwise kill a player character (a Downed countdown running out with nobody near, a single hit at ten times Max HP), the character is Downed at 0 HP instead, and something intervenes before the count ends: a creature loses interest, an ally arrives, the System's own hand at the gate. NPCs have no such protection, and several of them can die in these three days. Tell the players this rule if they ask.
+**Character death in the tutorial.** No player character dies in this tutorial except by the sacrifice on the causeway. Where a result would otherwise kill a player character (a Downed countdown running out with nobody near, a single hit at ten times Max HP), the character is Downed at 0 HP instead, and something intervenes before the count ends: a creature loses interest, an ally arrives, or, at the gate, the System pulls them through (Salvaged, above). NPCs have no such protection, and several of them can die in these three days. Tell the players this rule if they ask.
 
 The tutorial should end with the party through.
 
-**VE Reward.** The Warden and anything killed on the run pay their tiers as they fall. The Mandate itself pays on completion, past the gate: 125 VE, the Hard Mandate award (System Quests, "VE Rewards by Quest Category and Difficulty"), and the largest single award in the tutorial. Paying it at the announcement instead could push some characters into a higher Saturation band before the crossing, with the collapse clock running through the climax.
+**VE Reward.** The Warden and anything killed on the run pay their tiers as they fall. The Mandate itself pays on completion, past the gate: 125 VE, the Hard Mandate award (System Quests, "VE Rewards by Quest Category and Difficulty"), and the largest single award in the tutorial.
 
 ---
 
@@ -1284,7 +1272,7 @@ Behind you the gate shuts on a brick wall. The people who came through with you 
 
 Swap the street for the party's home region, a road, a field edge, a parking lot, and keep the sky. The drawing is what tells them the world changed while they were gone.
 
-Give the party time to recover and react. Then the System speaks formally, at more length than it has all tutorial:
+After the party's thirty minutes, the System speaks formally, at more length than it has all tutorial:
 
 ::: systemvoice
 *Integration tutorial: survived.*
@@ -1381,11 +1369,11 @@ Four examples for common tutorial patterns. They show the shape; the content com
 
 ### The Post-Gate Consolidation
 
-Levels arrive the way they always will: at Consolidation, as refined VE crosses each threshold (Progression chapter). This rest is the tutorial's longest: real ground, no pursuing threat (though Critical Saturation still runs its hourly clock), and much of the tutorial's VE still unrefined. After the Mandate and completion awards, work out each character's stored VE and Saturation band. A character carrying two sectors' worth plus the Mandate is Critical, and the collapse roll runs hourly for them (Cultivation); one who refined at every camp may be only Mild. Let the party begin Consolidating when it chooses. Running the recognition scene for an hour in the fiction puts a Critical character on the collapse clock; if a collapse comes, it costs a temporary point and the character sleeps where they fell. Let the rest run as long as the fiction allows, which here is a full day or more of camp, and process the backlog.
+Levels arrive the way they always will: at Consolidation, as refined VE crosses each threshold (Progression chapter). This rest is the tutorial's longest: real ground, no pursuing threat, and much of the tutorial's VE still unrefined. After the Mandate and completion awards, work out each character's stored VE and Saturation band. A character carrying two sectors' worth plus the Mandate is Critical, and the collapse roll runs hourly for them (Cultivation); one who refined at every camp may be only Mild. Let the party begin Consolidating when it chooses. Running the recognition scene for an hour in the fiction puts a Critical character on the collapse clock; if a collapse comes, it costs 1 temporary Raw point of FOR or POW (player's choice) and the character sleeps where they fell. Let the rest run as long as the fiction allows, which here is a full day or more of camp, and process the backlog.
 
 For each level as it lands, allocate **5 stat points**: 3 assigned by the GM from the player's tutorial behavior (Behavioral Stat Mapping, Progression chapter) and 2 chosen freely.
 
-Run the levels one at a time. Walk each player through it individually.
+Run the levels one at a time, one player at a time.
 
 Anyone still holding a Battle Memory meditates on it here, and anyone who reaches 3 IP crystallizes their first Principle. This is the last chance for that to happen inside the tutorial, and it is worth prompting a player who is sitting at 2.
 
@@ -1401,20 +1389,20 @@ The session ends on an open hook. The first is the default; layer a second onto 
 - **A sky-object wakes.** Something enormous, distant, and clearly alive becomes visible for the first time. Keep it distinct from the recovery cradle over the valley, which is machinery.
 - **The diagram moves.** For the length of a breath, the drawing over the city changes: one section completes, and past the rooftops something heavy comes down out of it. The party does not see what. End there.
 
-End the session before the consequences resolve. The campaign from here to the Level 25 cap is After the Gate.
+The campaign from here to the Level 25 cap is After the Gate.
 
 ---
 
 ## GM Reference: The Session-End Sweep
 
-Nothing is written during play. At each session's end, take five minutes with the HVE sheet (The Hidden Vector Engine, "The Session-End Sweep"): name the session's three biggest moments out loud and say what they share, then tally, privately, what you remember for each character. Memory is the filter, by the Engine's own rule; what you can still recall at the sweep is its whole input.
+Nothing is written during play. At each session's end, take five minutes with the HVE sheet (The Hidden Vector Engine, "The Session-End Sweep"): name the session's three biggest moments out loud and say what they share, then tally, privately, what you remember for each character.
 
 The tutorial's sessions tend to leave these behind:
 
 | **Moment that sticks** | **What it tends to show** |
 |---|---|
 | The void probe, and what its echo met | The character's response to a situation with no information in it |
-| The first Yield decision | How they meet a damaging hit: give ground, give up next turn's Beats, or take it |
+| The first Yield decision | How they meet a damaging hit: Yield one Beat, Yield two, or take the full hit |
 | The Recycling Node pile | What they do about scarcity in front of strangers |
 | Who took the Resonance Shard | Whether they reach for something they cannot price |
 | The Wild Fragment den | What they do when the gain is real and the cost falls on something that cannot object |
@@ -1483,7 +1471,7 @@ This ledger is denominated in VE and levels. A level is 120 VE at F-Grade (Culti
 
 **Totals.** The guaranteed awards come to about 230 VE in the two-session format and 240 in four, since survival pays per session: just under two levels. A cautious route (avoidance in Phase 2, surveys without the optional fights, no contact with the Initiates, a refused card) earns about 265, which is Level 3 with 25 VE banked before the completion bonus. A typical route (a rewarded encounter, four kills in the Ruins, the Initiates reached, a middling card) earns about 365, which is Level 4 with 5 to spare. A character who took every fight, a third sector, and every opportunity earns 480 or more and finishes at **Level 5**. The VE is processed across four Consolidations: the end of Session 1, the camp between the sectors, the end of the Ruins, and the long rest past the gate, which carries the bulk of it.
 
-**The Mandate is the biggest single award.** Surviving a sector dissolution is the arc that defined these sessions, and Awarding VE prices such an arc at a level or more. The Hard Mandate award of 125 VE meets that.
+**The Mandate is the biggest single award.** At 125 VE it is just over a level, the low end of what Awarding VE (Cultivation) gives a quest arc that defined a stretch of play.
 
 **Completion bonus.** Every character finishes at Level 4 or higher. If a character's earned VE is short of 360 at the post-gate Consolidation, award the difference as a completion bonus and say so. A third sector adds roughly half a level.
 
@@ -1502,7 +1490,7 @@ By the end of the tutorial, every player should have:
 - Received an **Affinity Notice**, the System's first hint at the family their Principle is forming in (see The Principle System). Characters who banked 3 IP crystallize a Principle instead.
 - Survived a **Mandate** (the Phase 5 dissolution event).
 
-If any of these is missing at the end of the last session, improvise to deliver it before transitioning out of the tutorial, with two exceptions. A character who did not earn 3 IP leaves with a direction and no name for it, which is the ordinary outcome. A die that never came up 96 gets the explained example, never a manufactured roll.
+If any of these is missing at the end of the last session, improvise to deliver it before transitioning out of the tutorial, with two exceptions. A character who did not earn 3 IP leaves with a direction and no name for it, which is the ordinary outcome. If no natural 96 or higher came up, give the explained example, never a manufactured roll.
 
 ---
 
@@ -1516,14 +1504,14 @@ The tutorial intentionally avoids:
 
 - **Explaining all futures.** Players should leave with questions. What was in the sealed vault? What was the spiral? What do the Kith want, now that they can be understood? Which two sectors did they never walk into? The unanswered threads make the world larger than the tutorial.
 
-- **Front-loading mechanics.** Players learn Clashes by clashing, Zones by moving, Beats by running out of them, and Yield by nearly dying. Explain a rule when a player needs it to choose; otherwise let the next roll show it.
+- **Front-loading mechanics.** Players learn Clashes by clashing, Zones by moving, Beats by running out of them, and Yield by nearly dying.
 
 - **Selecting classes.** Class choice happens at Level 10 (Progression). The tutorial's record of behavior informs the offer. Players should feel an identity forming before they see a menu.
 
 - **Equal outcomes.** Some players get better loot. Some face harder encounters. Some get Personal Opportunities worth more than others. The System's offers are unequal. Every player still gets enough information to make their choices and understand the consequences.
 
-- **Killing anyone by accident.** The survival rule (Phase 5, Watch For) and the tutorial's escape routes keep accidental defeat from killing a player character: Yield in the arrivals, a non-combat path in every sector, the System's own hand at the gate. The one player-character death available is the one a player chooses on the causeway, and it is honored when they take it (Phase 5, Watch For).
+- **Killing a player character by accident.** The survival rule (Phase 5, Watch For) and the tutorial's escape routes keep accidental defeat from killing a player character: Yield in the arrivals, a non-combat path past every threat sized above a fresh party (Threat Calibration), and Salvage at the gate (Salvaged). The one player-character death available is the one a player chooses on the causeway, and it is honored when they take it (Phase 5, Watch For).
 
-- **Overstaying its welcome.** Two sessions of the default length, or four short ones. The tutorial shows four things: the world is huge, the System is watching, identity emerges through action, and many futures are possible.
+- **Overstaying its welcome.** Two sessions of the default length, or four short ones.
 
-- **Telegraphing the tutorial's titles.** "Thin Margin," "Not Recommended," "The One Who Stood": revealed retroactively. Players should never feel they were grinding toward one. The System noticed something they did.
+- **Telegraphing the tutorial's titles.** "Thin Margin," "Not Recommended," "The One Who Stood": revealed retroactively. Players should never feel they were grinding toward one.

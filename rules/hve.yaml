@@ -38,9 +38,9 @@ sweep:
   expected_tallies_per_session_party: [3, 6]
   calibration:
     - tally the decision rather than the outcome
-    - when torn between two axes, tally only the one that drove the choice
+    - when unsure which of two axes a moment belongs to, tally only the one that drove the choice
     - when torn between two weights, take the lower
-    - a moment on two axes: primary at full weight, secondary one weight lower
+    - a moment that clearly reads on two axes: primary at full weight, secondary one weight lower
   pvp_coercion_min_will_tallies: 2
 
 # The machine format, where an AI maintains the vectors.
@@ -69,14 +69,23 @@ archetypes:
 drives: [class generation at Level 10, Principle crystallization, HVE-Resonant Titles, Personal Opportunities, the Breakthrough Coherence bonus]
 
 world_response:
+  Force: combat contracts, rivals looking for a test of strength, factions that hire muscle
+  Method: intricate opportunities (heists, sieges, engineering problems), invitations from strategists and builders, payment in information
   Hunger: risky opportunities, black-market factions, corrupting rewards
+  Restraint: the trust of the vulnerable, guardianship and escort requests, factions that prize discipline
+  Will: people looking for someone to obey, challengers looking to topple a leader, invitations from martial factions
   Accord: diplomatic pathways, followers, lower merchant prices
   Control: structured opportunities, stable alliances, invitations from bureaucratic Sects
   Freedom: volatile opportunities, emergent events, bounties from authoritarian factions
 adversarial_design:
   Force: enemies that punish physical contact or use kinetic reflection
-  Control: incursions of pure chaos, swarm enemies, morphing environments
   Method: ticking-clock scenarios where planning time is reduced to zero
+  Hunger: bait, guarded rewards, loot that costs the party, prizes whose price arrives later
+  Restraint: scarcity, where passing on a reward leaves the character or the people they protect short
+  Will: opponents pressure does not move, the fearless, the mindless, those with nothing left to lose
+  Accord: bad-faith partners, enemies that cannot be negotiated with, allies whose interests conflict
+  Control: incursions of pure chaos, swarm enemies, morphing environments
+  Freedom: confinement, sealed sites, binding oaths, authorities strong enough to enforce their rules
 
 design_constraints: [Orthogonality, Weight, Recency, Structure, Pressure]
 players_see_numbers: false

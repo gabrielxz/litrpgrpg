@@ -19,7 +19,7 @@ ladder:
   - {tier: Seed,            cumulative_ip: 10,  grants: "First Application; Attunements"}
   - {tier: Early Fragment,  cumulative_ip: 25,  grants: "Second Application; passive doubles"}
   - {tier: Mid Fragment,    cumulative_ip: 50,  grants: "Infusion: the Principle rides your ordinary actions at no Beat or Aether cost"}
-  - {tier: Peak Fragment,   cumulative_ip: 100, grants: "Domain: a zone where your Principle is briefly law"}
+  - {tier: Peak Fragment,   cumulative_ip: 100, grants: "Domain: an area where your Principle is briefly law"}
 domain_requires_grade: D             # IP banks past 100 until then
 initial_insight_passive_example: +5 to defensive Clashes against the Principle's element
 crystallizes_at_ip: 3

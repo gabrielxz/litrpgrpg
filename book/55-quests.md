@@ -18,7 +18,7 @@ Bel Sar, route account
 
 ## Design Intent
 
-System Quests are the System steering the player and recognizing their actions. They are explicit and structured: notifications, objectives, rewards, time limits, and a persistent log.
+System Quests are how the System steers a character and recognizes what the character does. They are explicit and structured: notifications, objectives, rewards, time limits, and a persistent log.
 
 **Filler and meaningful quests share the log.** Routine "kill ten boars" entries sit alongside Mandates that reshape the campaign. Filler quests provide steady progression hooks and the System-notification rhythm; Mandates carry stakes and drive story. Players choose what to engage with based on capability and interest.
 
@@ -28,11 +28,9 @@ System Quests are the System steering the player and recognizing their actions. 
 
 ## The Quest UI
 
-The System provides a quest log UI for the player.
+Every character's System interface holds a quest log.
 
-**Recommended table presentation:** a **shared digital quest log** (Discord pinned message, Google Doc, dedicated app, or VTT module) visible to all players, updated by the GM. Each player keeps their personal and hidden quests on their own sheet or card, visible only to them.
-
-Make the log visible and persistent, using paper handouts or a shared digital record.
+**Recommended table presentation:** a **shared quest log** (paper handouts, a Discord pinned message, a Google Doc, a dedicated app, or a VTT module) visible to all players, updated by the GM. Each player keeps their personal and hidden quests on their own sheet or card, visible only to them.
 
 **Standard quest entry shape:**
 
@@ -49,7 +47,7 @@ Status:     Active
 The log displays:
 
 - Active quests (title, issuer, Grade and difficulty, objectives, known rewards, time limits if any).
-- Completed quests (for narrative reference and HVE attribution).
+- Completed quests (for narrative reference and the Session-End Sweep).
 - Failed or refused quests (so consequences remain legible).
 
 For Hidden Quests, the entry appears differently; see Hidden Quest Conventions below.
@@ -62,9 +60,9 @@ The System supports formal parties. Any Integrated being can extend a party invi
 
 A party grants three things:
 
-- **Status sharing.** Every member's UI shows a party frame: each member's current HP, Maximum HP, Aether, and whether they are Downed, and nothing else. In the genre, this is why strangers party up before they trust each other; seeing an ally's true condition changes every triage decision. See What Can Be Seen.
-- **Quest sharing.** A member may share a Routine, Faction, or Bestowed quest with the party. The entry appears in every member's log, and any holder's progress advances the shared objective. **The System re-prices a counted objective at the moment of sharing: the count multiplies by the number of holders, is set at that moment, and does not change; a holder who leaves keeps nothing, and a joiner takes the quest at its current count.** "Eliminate ten" held by three hunters becomes thirty between them, announced in every holder's log. Objectives that cannot scale (reach a place, protect a person, recover a thing) stay as written. Mandates need no sharing (they already bind everyone in scope), and Personal Opportunities cannot be shared; they are addressed to one behavioral signature.
-- **Rewards are per holder.** On completion, every holder who meaningfully participated collects the quest's award at their own level, the same rule combat kills use (see Cultivation, "Awarding VE"). Nothing is divided; the scaled count is what a share costs.
+- **Status sharing.** Every member's interface shows a party frame: each member's current HP, Maximum HP, Aether, and whether they are Downed, and nothing else. See What Can Be Seen.
+- **Quest sharing.** A member may share a Routine, Faction, or Bestowed quest with the party. The entry appears in every member's log, and any holder's progress advances the shared objective. **When a quest with a counted objective is shared, the count multiplies by the number of holders at that moment and does not change afterward; a holder who leaves keeps nothing, and a joiner takes the quest at its current count.** "Eliminate ten" held by three hunters becomes thirty between them, announced in every holder's log. Objectives that cannot scale (reach a place, protect a person, recover a thing) stay as written. Mandates need no sharing (they already bind everyone in scope), and Personal Opportunities cannot be shared; they are addressed to one behavioral signature.
+- **Rewards are per holder.** On completion, every holder who meaningfully participated collects the quest's award at their own level, the same rule combat kills use (see Cultivation, "Awarding VE").
 
 ---
 
@@ -74,7 +72,7 @@ A party grants three things:
 
 ![A Mandate](./assets/art/scenes/a-mandate.png){.scene}
 
-Server-wide directives, cold and impersonal, with real consequences for noncompliance.
+Directives from the System, cold and impersonal, with stated consequences for noncompliance.
 
 **Shape:** A System-issued objective binding on every Initiate within a region or population. Story-driving, multi-session, often party-converging.
 
@@ -82,7 +80,7 @@ Server-wide directives, cold and impersonal, with real consequences for noncompl
 
 > *[MANDATE M-04] All F-Grade Initiates within Sector 7 will report to coordinates [4.7, -12.1] within 72 hours. Reward upon arrival: System recognition, sector access, additional VE allocation. Failure to comply: behavioral reclassification.*
 
-Refusing a Mandate brands the character, attracts faction attention, and locks specific reward paths. Use Mandates for regional objectives that affect the campaign.
+Refusing a Mandate can earn a negative Bestowed title, draws faction hostility, and closes specific reward paths (Refusal of a Mandate, below). Use Mandates for regional objectives that affect the campaign.
 
 ::: lore
 The Rill Closure is the case the wider world cites. A documented, inhabited sector was scheduled for retirement, with notice given and the evacuation window published. Some inhabitants refused to abandon what they depended on, and the retirement proceeded on schedule. A Mandate's deadline does not move for those who cannot meet it.
@@ -96,9 +94,9 @@ The System notices something specific about a character and offers a tailored qu
 
 **The same situation generates different Personal Opportunities for different characters at the same table.** A Force-aligned character might receive *"Hostile detected within 100 meters. Eliminate within 6 hours. Reward proportional to threat."* A Method-aligned character in the same situation receives *"Unstable formation detected. Stabilize before collapse: reward proportional to elegance of solution."*
 
-This is where the System feels personal. Personal Opportunities are also the primary lever by which the System nudges or tests the character: the offer can affirm an existing pattern or quietly invite the character to step against it. By default it affirms, and offers flow with the character's recent behavior. It tends to test against the pattern when recent behavior and long-term identity disagree (the Current and Deep Vectors point different ways at the sweep, where the offer is drafted before Current wipes), and occasionally for no visible reason at all; the choice is the System's, and the System is unpredictable. A GM in doubt should affirm.
+Personal Opportunities are also the primary lever by which the System nudges or tests the character: the offer can affirm an existing pattern or quietly invite the character to step against it. By default the offer affirms, following the character's recent behavior. An offer typically tests against the pattern when recent behavior and long-term identity disagree (the Current and Deep columns of the HVE sheet lean different ways at the sweep, where the offer is drafted before Current wipes), and occasionally for no visible reason. The GM, or the System AI in assisted modes, makes the choice, and a GM in doubt affirms.
 
-**Paired Opportunities.** When the System has recorded a human and an Aru acting together, it may address one Personal Opportunity to both at once: the same offer in two logs in two languages, completing only if both act. It affirms or tests the cooperation the way an ordinary Opportunity affirms or tests a pattern, and it pays each holder the Personal Opportunity value at its difficulty. The precedent and the campaign use are in After the Gate, "Paired Opportunities".
+**Paired Opportunities.** When the System has recorded a human and an Aru acting together twice, it may address one Personal Opportunity to both at once: the same offer in two logs in two languages, completing only if both act. The offer affirms or tests the cooperation the way an ordinary Opportunity affirms or tests a pattern, and it pays each holder the Personal Opportunity value at its difficulty. The precedent and the campaign use are in After the Gate, "Paired Opportunities".
 
 ### Routine Quests
 
@@ -106,7 +104,7 @@ The "kill ten boars" tier. Reliable, repeatable in kind, video-gamey. The System
 
 They provide steady progression hooks, satisfy the genre's notification-loop feel, and give players agency in choosing what to pursue when bigger plots aren't immediately pressing.
 
-Routine quests vary in scale: an "F-Grade, Trivial" hunt sits in the log alongside an "E-Grade, Severe" Mandate. Players choose what to engage based on capability and interest.
+Routine quests vary in scale: an "F-Grade, Trivial" hunt sits in the log alongside an "E-Grade, Severe" one.
 
 **Example:**
 
@@ -119,19 +117,19 @@ Routine quests vary in scale: an "F-Grade, Trivial" hunt sits in the log alongsi
 
 No notification at the time of action, or notification with deliberately unclear objectives. The character is doing something the System recognizes as significant but isn't telling them about (or is telling them in cryptic terms).
 
-These pair with Hidden Achievement titles and reward attentive, exploratory play. See Hidden Quest Conventions below for UI presentation details.
+These pair with Hidden Achievement titles and reward attentive, exploratory play. See Hidden Quest Conventions below for how they appear in the log.
 
 ### Faction and Bestowed Quests
 
-Issued by NPCs, organizations, mentors (not by the System directly). The System tracks them in the quest UI but does not generate them. These are normal RPG quests, but System tracking means completion still feeds HVE and can trigger title generation.
+Issued by NPCs, organizations, and mentors, never by the System directly. The System tracks them in the quest log but does not generate them. What a character does on one counts at the Session-End Sweep and toward titles like anything else the character does.
 
 **Example:**
 
-> *[Q-205 · Faction] The Lost Patrol.*
-> *Issuer: the Kith.*
+> *[Q-205 · Faction] The Lost Crew.*
+> *Issuer: the Flats co-op.*
 > *Grade: F · Difficulty: Hard.*
-> *Objective: Locate three missing patrol members last seen in the Wild Fragment.*
-> *Reward: Standing with the patrol improves; a Skill Shard; 50 VE.*
+> *Objective: Locate three missing scavengers last seen past the depot fence.*
+> *Reward: Standing with the co-op improves; a Skill Shard; 50 VE.*
 
 ---
 
@@ -141,29 +139,29 @@ Issued by NPCs, organizations, mentors (not by the System directly). The System 
 
 **Both action VE and quest completion VE apply.** Combat kills, environmental absorption, and other VE sources accumulate normally during a quest. On completion, the quest's stated VE reward is awarded *additionally*.
 
-**Reasoning:** The genre treats it this way (the System awards both kill XP and quest completion XP), it preserves the value of action-by-action play, and it rewards seeking out quests as a multiplier on existing activity. A character who does ten Glow-Mote kills outside a quest gets 20 VE; the same character doing it as a quest gets 20 VE + 3 quest completion = 23 VE. The quest is worth pursuing without trivializing non-quest play.
+**Reasoning:** The genre treats it this way (the System awards both kill XP and quest completion XP), it preserves the value of action-by-action play, and it pays a bonus for seeking out quests on top of existing activity. A character who does ten Glow-Mote kills outside a quest gets 20 VE; the same character doing it as a quest gets 20 VE + 3 quest completion = 23 VE.
 
-**Limit:** quest completion VE is awarded only once per quest, at completion. Quests cannot be "farmed" for repeat VE: once cleared, the same quest does not return on the same character. New quests of the same kind do.
+**Limit:** a quest pays its completion VE once. A cleared quest does not return to the same character; new quests of the same kind do.
 
 ### Quest Difficulty
 
-Quest difficulty is read off the **Difficulty Card**, identical to combat and obstacle resolution: a quest is "E-Grade, Severe" or "F-Grade, Moderate." Players develop intuition for what they can take on at their current power level by reading the Grade tag.
+Quest difficulty is read off the **Difficulty Card**, identical to combat and obstacle resolution: a quest is "E-Grade, Severe" or "F-Grade, Moderate."
 
 A quest's difficulty determines:
 
 - The expected challenge tier of obstacles within (combat, traps, social pressure).
 - The reward magnitude (see Reward Reference Table).
-- The Mandate-tier consequences for refusal or failure (if applicable).
+- For a Mandate, the consequences of refusal or failure.
 
 ### Performance-Scaled Rewards
 
-Some quests state a reward as a proportionality clause instead of a fixed amount: *"reward proportional to threat,"* *"reward proportional to elegance of solution."* The System measures the performance at completion and sets the payout. Speed, thoroughness, collateral damage, and style all weigh in, and the criteria are never published. The GM, or the System AI in assisted modes, starts from the difficulty's number on the Reward Reference Table: exceptional performance pays up to half again, poor performance half.
+Some quests state a reward as a proportionality clause instead of a fixed amount: *"reward proportional to threat,"* *"reward proportional to elegance of solution."* At completion the GM, or the System AI in assisted modes, sets the payout from the difficulty's number on the Reward Reference Table, weighing speed, thoroughness, collateral damage, and style (the System never publishes the criteria): exceptional performance pays up to half again, poor performance half.
 
 Use these for quests where how the thing gets done matters as much as whether. They pair naturally with Personal Opportunities.
 
 ### Refusal and Failure Consequences
 
-Consequences scale by quest type. Use the following consequences by quest type.
+Consequences depend on quest type.
 
 #### Single-quest refusal
 
@@ -171,47 +169,43 @@ Consequences scale by quest type. Use the following consequences by quest type.
 | **Quest Type** | **Consequence of Refusing One** |
 |---|---|
 | Routine | Quest expires silently. No mechanical penalty. |
-| Personal Opportunity | The System notes the refusal; after 3 refusals of a type it appears half as often, and after 6 it stops. |
-| Mandate | Behavioral reclassification, faction hostility, locked paths. Often a negative Bestowed title ("Defiant," "Mandate-Breaker"). |
+| Personal Opportunity | The System notes the refusal; after 3 refusals of one flavor, that flavor appears half as often, and after 6 it stops appearing. |
+| Mandate | Faction hostility, locked paths. Often a negative Bestowed title ("Defiant," "Mandate-Breaker"). |
 | Faction | The issuing faction remembers the refusal; the character's standing with it falls. |
 | Hidden | The opportunity passes silently; the character usually never learns it existed. |
 <!-- /rules:table -->
 
-#### Repeated refusal of a quest type
+#### Repeated refusal of one flavor
 
-When a character refuses three or more Personal Opportunities of the same flavor (combat-oriented, social-oriented, exploration-oriented), the System narrows offerings:
+When a character refuses three or more Personal Opportunities of the same flavor (combat-oriented, social-oriented, exploration-oriented), the GM, or the System AI in assisted modes, narrows offerings:
 
-- After 3 refusals: that quest type appears half as often.
-- After 6 refusals: that quest type stops appearing.
-- After a behavioral shift across many sessions: HVE recalibrates and the character's profile adjusts. The System may begin offering the *opposite* quest type instead.
-
-This is a primary tool for the System to recognize that the character is not who it thought they were and quietly redirect.
+- After 3 refusals: that flavor appears half as often.
+- After 6 refusals: that flavor stops appearing.
 
 #### Refusal of a faction's quests
 
 - Reputation drops with that faction.
-- After repeated refusal, the faction may issue a "test" quest with elevated stakes: accept or be marked.
+- After repeated refusal, the faction may issue a "test" quest with elevated stakes: accept, or the faction may grant a negative Bestowed title.
 - After persistent refusal, the faction stops offering quests entirely, may grant a negative Bestowed title, and may close that faction's reward paths permanently.
 
 #### Refusal of a Mandate
 
-- Immediate System recognition. Behavioral reclassification is visible.
+Refusal takes effect at once:
+
 - Faction hostility from the Mandate's beneficiary.
-- Negative Bestowed title at the System's discretion (commonly "Defiant" or "Mandate-Breaker"; rarely something stranger).
-- Specific reward paths permanently closed: class evolution options narrow, certain Principles become inaccessible, certain location access revokes.
+- Negative Bestowed title at the GM's discretion (commonly "Defiant" or "Mandate-Breaker"; rarely something stranger).
+- Specific reward paths permanently closed: class evolution options narrow, certain Principles become inaccessible, access to certain locations is revoked.
 - Higher-Grade entities may take an interest. This can be opportunity or threat.
 
 #### Failure (attempted but not completed)
 
-Failure is distinct from refusal: the character tried and lost. Consequences are softer than refusal but harder than no engagement.
+Failure is distinct from refusal: the character tried and lost. Failing a Personal Opportunity or Faction quest costs less than refusing it, and failing a Mandate never costs more. Routine and Hidden quests cost nothing to refuse, and failing one costs the reward and little else.
 
-- **Routine:** No reward. Possibly minor reputation hit if the issuer takes notice.
+- **Routine:** No reward.
 - **Personal Opportunity:** No reward. Often no further consequence; the System notes the attempt and may offer a related opportunity later.
 - **Mandate:** Real systemic consequence per Mandate text. Usually the same as refusal, sometimes mitigated by demonstrated effort.
 - **Faction:** Reputation hit, possible follow-up quest to recover standing.
-- **Hidden:** Sometimes the character never knows; sometimes the log marks a hidden entry failed with its objective still obscured.
-
-The System recognizes effort. A character who attempts a Mandate and fails honestly is treated differently from one who refuses outright. The Engine distinguishes the two.
+- **Hidden:** Sometimes the character never knows; sometimes the log shows a hidden entry as failed, its objective still obscured.
 
 ---
 
@@ -232,13 +226,13 @@ The following tables calibrate quest rewards for the GM and the System AI. They 
 | Peak | 90 | 175 | 500 | 150 |
 <!-- /rules:table -->
 
-**Reading the table:** A Routine F-Grade Moderate quest awards 15 VE on completion (in addition to action VE earned during the quest). The same difficulty as a Personal Opportunity awards 30 VE: twice as much, reflecting the System's investment in tailored quests. Mandates pay the most because compliance is incentivized; refusal closes paths.
+**Reading the table:** A Routine F-Grade Moderate quest awards 15 VE on completion (in addition to action VE earned during the quest). The same difficulty as a Personal Opportunity awards 30 VE, twice as much. Mandates pay the most.
 
-Hidden Quest VE rewards equal Personal Opportunity rewards at the same difficulty tier, with bonus VE possible when the System AI recognizes truly elegant or improbable resolution.
+Hidden Quest VE rewards equal Personal Opportunity rewards at the same difficulty tier, and pay up to half again when the GM, or the System AI in assisted modes, judges the resolution elegant or improbable (see "Performance-Scaled Rewards").
 
 ### Item Rewards by Difficulty
 
-Quest item rewards scale with difficulty. Pull from this reference; let the System AI generate variants:
+Quest item rewards scale with difficulty. Pull from this reference; the GM, or the System AI in assisted modes, can build variants:
 
 <!-- rules:table quest-items -->
 | **Difficulty** | **Typical Item Reward** |
@@ -248,7 +242,7 @@ Quest item rewards scale with difficulty. Pull from this reference; let the Syst
 | Moderate | 1 Healing Pill + 1 Sparkstone Tablet, or a quality weapon, or a Resonance Glass. |
 | Hard | 1 Greater Healing Pill, or 2 skill shards, or a Foundation Pill (Dragon Marrow). |
 | Severe | 1 Pristine Recovery Pill, or a single-use ranged relic, or a high-tier Foundation Pill (Nine Leaf Essence). |
-| Peak | A bespoke item generated by the System AI: a named weapon, a Quality Enhancer for breakthrough use, a Bestowed-tier consumable. |
+| Peak | A bespoke item the GM designs (the System AI can draft one in assisted modes): a named weapon, a Quality Enhancer for breakthrough use, a Bestowed-tier consumable. |
 <!-- /rules:table -->
 
 Personal Opportunity rewards are weighted to the character's HVE alignment: a Force/Hunger character is more likely to receive a weapon or kill-empowering consumable; a Method/Restraint character is more likely to receive a sensory tool or a Principle-resonance item.
@@ -275,7 +269,7 @@ Beyond mechanical reward, quests deliver:
 
 ## Personal Opportunity Generation (System AI Prompt Template)
 
-The following template is a starting point for the GM querying the System AI to generate a Personal Opportunity. Inputs and output shape are structured for consistent results.
+In AI-Assisted play the GM gives this template to the System AI to draft a Personal Opportunity. Unplugged, the template is a worksheet: fill each field by hand (The System AI, "Personal Opportunities").
 
 ```
 SYSTEM PROMPT: Generate a Personal Opportunity quest tailored to the
@@ -316,7 +310,7 @@ GENERATE:
    formatted as the in-fiction System message the character receives.
 ```
 
-**Sample output for a Force/Hunger F-Grade L4 character in a market town post-combat:**
+**Sample output for a Force/Hunger F-Grade L4 character in the tutorial's Wild Fragment, after a fight:**
 
 ```
 [Q-PO-091] The Wounded Beast
@@ -325,10 +319,9 @@ Grade:      F · Difficulty: Moderate
 Objective:  A Glow-Stalker injured during your last engagement
             has retreated to a den 1.2km north. Eliminate before
             it recovers (24h window).
-Reward:     30 VE, 1 predator core (5 VE absorption value)
-Hidden:     If the Glow-Stalker is captured alive and returned
-            to the Wild Fragment uninjured beyond current state,
-            +1 IP toward a Restraint-aligned Principle.
+Reward:     30 VE, 1 minor core (5 VE absorption value)
+Hidden:     If the Glow-Stalker is spared and left in its den,
+            +1 IP toward the Preservation family.
 Refusal:    Predator-tier opportunities offered less frequently
             for the next session.
 
@@ -337,13 +330,13 @@ System Voice:
 Opportunity window: 24h. Engagement recommended."
 ```
 
-The GM decides; the System AI drafts, and the GM revises the draft to fit table dynamics. Over time the GM and the System AI build a shared language of quest shapes for each character.
+The GM revises the System AI's draft to fit the table before the player sees it.
 
 ---
 
 ## Hidden Quest Conventions
 
-How Hidden Quests appear in the UI.
+How Hidden Quests appear in the quest log.
 
 **Three presentation modes:**
 
@@ -356,7 +349,7 @@ Appears in the log immediately when the System detects significant action, but w
 Status: Active
 ```
 
-The player knows *something* is happening. They don't know what. Encourages exploratory play and pattern-noticing.
+The player knows a hidden quest is active and nothing about its objective.
 
 #### Partial Reveal
 
@@ -376,7 +369,7 @@ Appears retroactively after fulfillment, usually for one-shot moments of grace, 
 
 ```
 [Q-HID-014] "Let It Finish": Complete.
-Reward: +1 IP toward a Restraint-aligned Principle.
+Reward: +1 IP toward the Preservation family.
         New Hidden Achievement: "The One Who Stayed Their Hand."
 ```
 
@@ -388,9 +381,9 @@ Reward: +1 IP toward a Restraint-aligned Principle.
 
 #### Signaling that something hidden may be in play
 
-Players should sometimes feel the System watching even when no quest entry appears. Subtle signals:
+The GM can signal that the System is watching even when no quest entry appears:
 
-- A System voice notification: *Pattern detected. Monitoring.* It tells the player *something* is being tracked, and nothing else.
+- A System voice notification: *Pattern detected. Monitoring.* It tells the player that the System is tracking a pattern, and nothing else.
 - An NPC reaction that doesn't quite match the situation (a stranger nods at the character in passing for no apparent reason).
 - A subtle change in environmental affinity (a location feels warmer to this character than to others).
 - A Battle Memory that resonates oddly during Consolidation, hinting at a pattern the player has not yet named.
@@ -401,8 +394,8 @@ Players should sometimes feel the System watching even when no quest entry appea
 
 Deferred until playtest data or campaign progression demands them:
 
-- **Server-wide Mandate cadence.** How often should Mandates fire? What's the right campaign rhythm: one per arc, one per Grade, opportunistic? Will be tuned with playtest.
+- **Mandate cadence.** How often should the System issue Mandates? What's the right campaign rhythm: one per arc, one per Grade, opportunistic? Will be tuned with playtest.
 - **Mandate-driven faction politics.** When the System issues a Mandate that benefits one faction over another, the political implications cascade. Needs a faction-relations subsystem to formalize.
 - **Quest chains and arc tracking.** Long-running multi-quest arcs need a structural representation in the UI: parent quest with child objectives, prerequisite gating, optional branches.
 - **Reputation as a tracked stat.** Faction standing is stated in words on each quest and nothing counts it. A numeric or tiered system tied to faction quests, Mandate compliance, and Bestowed title eligibility is deferred.
-- **PvP quests.** Can the System issue a quest targeting another player character? The Hidden Vector Engine weighs PvP coercion heavily on the Will side; a Mandate that pits PCs against each other is a powerful but volatile design space.
+- **PvP quests.** Can the System issue a quest targeting another player character? Coercion aimed at another player character is always at least two tallies of Will (The Hidden Vector Engine); a Mandate that pits PCs against each other is a powerful but volatile design space.

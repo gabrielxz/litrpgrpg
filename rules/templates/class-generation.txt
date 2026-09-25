@@ -12,7 +12,7 @@ Each offer is one package:
   its cost exactly one of 5 Aether, or no Aether once per encounter,
   or a drawback of 10 Health or Exposed until the character's next
   turn;
-- one standing permission: no cost, no roll; it changes a decision
+- one standing permission: no Aether, no roll of its own; it changes a decision
   the character already makes.
 At most one of the technique and the permission may change the
 action economy. Reactions are once per encounter. Never: touch

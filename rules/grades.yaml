@@ -82,7 +82,7 @@ stat_cap_rule: raw_max_of_grade
 volatility:
   base_threshold: 96
   falls_per_grade: 1
-  applies_to: every_d100_roll   # every Clash and every check, in combat or out (rules 0.1.14)
+  applies_to: every_clash_and_check   # in combat or out (rules 0.1.14); a d100 read against an effect table does not explode
   both_sides: true
   advantage: kept_die_only      # with Advantage, only the kept die can explode
   battle_memory_cascade_dice: 2    # a cascade of this many extra dice on a PC roll grants a Battle Memory Card

@@ -2,8 +2,8 @@
 # source: 60-bestiary.md
 
 conventions:
-  hp: 2 × the creature's effective Raw FOR
-  force_printed_as: two digits at the creature's Grade; leading zero below the band
+  hp: 2 × the creature's Raw FOR
+  force_printed_as: two digits at the creature's Grade (5 prints as 05)
   yields_only_if_stated: true
   tier_maps_to: Difficulty Card difficulty and the VE kill tier
   prints_hrt_and_per: true        # Momentum takes the higher; PER when the creature searches; HRT against mental attacks
@@ -22,7 +22,7 @@ creatures:
     offense: [{force: 5, stat: DEX, means: sting}]
     defense: [{force: 8, stat: DEX, means: evasion}]
     yields: false
-    tactics: "On a successful hit, target is Exposed for one round (vision dazzle from bioluminescence)."
+    tactics: "On a successful hit, target is Exposed until the end of their next turn (vision dazzle from bioluminescence)."
   - name: Husk Crawler
     tier_group: Trash
     grade: F
@@ -41,7 +41,7 @@ creatures:
     tier: Easy
     hp: 12
     beats: 2
-    hrt: 8
+    hrt: 5
     per: 12
     offense: [{force: 12, stat: DEX, means: bite}]
     defense: [{force: 12, stat: DEX, means: scampering}]
@@ -144,7 +144,7 @@ creatures:
     offense: [{force: 65, stat: POW, means: mind-leach}]
     defense: [{force: 60, stat: HRT, means: spectral}, {force: 70, stat: PER, means: vs. illusion-piercing}]
     yields: true
-    tactics: "Gives ground as smoke does, sliding out of a Zone rather than taking the blow. Incorporeal: STR/DEX physical attacks are at −10; an attack aimed with the attacker's PER Force hits at full; a Principle Application or Infusion ignores the −10. Mind-Leach (1 Beat, 10 Aether): HRT defense; damage as normal and drain 1 Aether per damage point. Vulnerability: PER-based attacks deal +10 on the Margin."
+    tactics: "Incorporeal: STR/DEX physical attacks are at −10; an attack made with the attacker's PER Force takes no −10; a Principle Application or Infusion ignores the −10. Mind-Leach (1 Beat, 10 Aether): HRT defense; damage as normal and drain 1 Aether per damage point. Vulnerability: PER-based attacks deal +10 on the Margin."
   - name: Corrupted System Warden
     tier_group: Boss
     grade: F

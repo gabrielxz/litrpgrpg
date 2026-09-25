@@ -2,7 +2,7 @@
 # source: 40-titles.md
 
 categories:
-  - {name: Achievement,        shape: "Quantitative threshold the System tracks. Common, flat bonus only."}
+  - {name: Achievement,        shape: "A count the GM tracks (the System AI in assisted modes). Common, flat bonus only."}
   - {name: Hidden Achievement, shape: "Statistically improbable accomplishment. Rare, meaningfully buffed, may be conditional."}
   - {name: HVE-Resonant,       shape: "A settled behavioral pattern. One per axis pair; evolves at Breakthrough."}
   - {name: Bestowed,           shape: "Granted by an external entity. Variable, narratively heavy, may be negative."}
@@ -15,7 +15,7 @@ pacing_targets:
 
 stacking:
   cap: none
-  hve_resonant_per_axis_pair: 1     # a new one supersedes; the old is logged as Echoed
+  hve_resonant_per_axis_pair: 1     # a new one supersedes; the old is logged as Echoed, keeping its flat bonus and losing conditional and triggered effects
   equipping: none                   # all titles always apply
   percentages: banned               # every bonus is a flat number
 
@@ -33,7 +33,7 @@ conditional_bonuses:
   allowed_on: [Hidden Achievement, HVE-Resonant, Bestowed]
   magnitude: same range as a flat bonus of the title's class
   damage_vs_category: a flat Clash bonus against that category (+10 to Clashes against constructs)
-action_economy_bonuses: rare; Hidden Achievement or peak Bestowed
+action_economy_bonuses: rare; Hidden Achievement or Bestowed (Major)
 resistances_and_affinities_f_grade:
   - +5 to defensive Clashes against a named damage type or source
   - a one-time grant of 1 to 3 IP toward an aligned Principle

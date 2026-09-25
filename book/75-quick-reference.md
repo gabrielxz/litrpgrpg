@@ -10,12 +10,12 @@
 
 ## Rolling
 
-**Roll d100 + Force + Tactics. High wins. Every d100 explodes.**
+**Roll d100 + Force + Tactics. High wins. Every Clash and check explodes.**
 
 - **Clash (against someone who rolls back):** both roll d100 + Force + Tactics. Higher total wins; a tie goes to whoever started it (in combat, the attacker). Margin = Winner − Loser. Margin 40+ is decisive.
 - **Check (against a number):** meet or beat the Resistance from the Difficulty Card.
 - **When to roll a check:** the GM calls it. (1) Force ≥ Resistance: success, no roll. (2) **Take 100:** nothing presses and a natural 100 would succeed: success, no roll, it takes time. (3) Otherwise roll once; a failed check stands until something changes.
-- **Volatility:** if the **natural d100** (before any modifiers) meets the Grade threshold, roll again and add. Each cascade die also checks its own natural result. Every roll, both sides, in or out of combat. A cascade of 2+ extra dice on a PC's roll grants a Battle Memory Card.
+- **Volatility:** if the **natural d100** (before any modifiers) meets the Grade threshold, roll again and add; keep rolling while each new die's natural result meets it. Every Clash and check, both sides, in or out of combat (a d100 read against an effect table does not explode). A cascade of 2+ extra dice on a PC's roll grants a Battle Memory Card.
 - **Advantage:** roll two d100, keep the higher (about +20). The GM grants it from the fiction; it does not stack with itself; only the kept die explodes. **Exposed:** −10 to your Clash rolls.
 - **Flanking:** when two or more hostiles fight one target, each of them gains +10 against it.
 - **Reach:** you can attack anyone in your Zone; ranged and most spells also reach adjacent Zones.
@@ -55,9 +55,9 @@
 
 **Volatility Thresholds (natural die):** F: 96+ | E: 95+ | D: 94+ | C: 93+ | B: 92+ | A: 91+ (starts at 96, falls 1 per Grade).
 
-One number at the top of the die. When the natural die reaches it, the roll explodes. A check that explodes and succeeds is an Exceptional Success. An attack or defense with a weapon that explodes earns a **Mark** in that weapon's Proficiency. A cascade of 2+ extra dice on a PC's roll also grants a Battle Memory Card.
+One number at the top of the die. When the natural die reaches it, the roll explodes. A check that explodes and succeeds is an Exceptional Success. An attack or defense with a weapon that explodes earns a **Mark** in that weapon's Proficiency.
 
-**Cross-Grade Adjustment:** The higher-Grade side gains +100 per Grade of difference. In a Clash, the higher-Grade combatant adds +100 to their total per Grade above the opponent. In a check, add +100 per Grade of difference to whichever side is higher (the challenger's roll if challenging a lower-Grade obstacle, the obstacle's Resistance if challenging a higher-Grade obstacle). Same Grade, no adjustment.
+**Cross-Grade Adjustment:** the higher-Grade side adds +100 per Grade of difference: in a Clash, to the higher-Grade combatant's total; in a check, to the challenger's roll against a lower-Grade obstacle, or to the obstacle's Resistance against a higher-Grade challenger. Same Grade, no adjustment.
 
 **Lagging stats:** every stat reads at its owner's Grade. Pad below-band stats with leading zeros (E-Grade STR 65 → 065 → Force 06). Cross-Grade Adjustment and damage multiplier always follow the character's Grade.
 
@@ -71,7 +71,7 @@ One number at the top of the die. When the natural die reaches it, the roll expl
 
 **Surge:** spend half your Maximum Aether (round down, at least 1) for +5 on one Clash roll you make. Declare before rolling. No Beat. Stacks with everything; available to everyone.
 
-**Yield:** once the Margin is known and before damage lands, give up Beats from your **next** turn. Each Beat cuts the incoming Margin by 20. Your next turn has two Beats, so two is the most you can give. One Beat: you give ground where you stand. Two Beats: your turn is gone and the attacker may drive you one Zone of their choosing, or leave you where you are; no free strike either way. Against an AoE, each target Yields on their own Margin and two Beats throws them clear. **Cornered** (nowhere to be driven): one Beat only. Creatures Yield only if their stat block says so.
+**Yield:** once the Margin is known and before damage is applied, give up Beats from your **next** turn. Each Beat cuts the incoming Margin by 20. Your next turn has two Beats, so two is the most you can give. One Beat: you give ground where you stand. Two Beats: your turn is gone and the attacker may drive you one Zone of their choosing, or leave you where you are; no free strike either way. Against an AoE, each target Yields on their own Margin and two Beats throws them clear. **Cornered** (nowhere to be driven): one Beat only. Creatures Yield only if their stat block says so.
 
 **Background:** one or two lines of life before Integration. **Proficiency:** one weapon shape at creation, **Trained**.
 
@@ -83,17 +83,17 @@ One number at the top of the die. When the natural die reaches it, the roll expl
 | Master | +10, and once on your turn your first action with its weapon costs no Beat. **10 Marks**, and an E-Grade body. |
 <!-- /rules:table -->
 
-Weapons carry no bonus of their own; the bonus is the wielder's tier. Untrained is +0. **3 Marks with a weapon shape you have no Proficiency in:** the System grants it at Trained, spending those Marks.
+Weapons carry no bonus of their own; the bonus is the wielder's tier. Untrained is +0. **3 Marks with a weapon shape you have no Proficiency in:** the System grants it at Trained, and the three Marks are spent.
 
 **Gear:** a shield adds +5 to your Clash when defending and occupies a hand; there is no shield Proficiency. Armor Scraps add +5 Defense Force with FOR and impose −5 on DEX-based Clashes. Pills take 1 Beat; the first two of each kind per fight work in full, and further pills do nothing until ten quiet minutes out of combat.
 
 **Fighting domains, by weapon shape:** blades | axes and hammers | spears and staves | hand to hand | archery and throwing | firearms. Anything you let go of is archery and throwing.
 
-**Interpretation:** every Integrant translates deliberately communicated messages, both directions, and one holder in a conversation is enough. A lie translates perfectly; involuntary displays and cultural implications do not translate. Old tutorial sectors lack it until registration past the gate.
+**Interpretation:** every Integrant translates deliberately communicated messages, both directions, and one holder in a conversation is enough. A lie translates perfectly; involuntary displays and cultural implications do not translate. Initiates in an old tutorial sector lack it until they register past the gate.
 
 **Downed:** PCs at 0 HP (NPCs by default; creatures die unless the GM rules otherwise): no Beats, no defense; dies at the end of their third round unless stabilized (any healing, or 1 Beat + Moderate 90 check, with Advantage for a medical Background). One hit ≥ 10× Max HP kills outright. Attacking a Downed character: 1 Beat, no roll, kills. Surviving being Downed in a fight grants a Battle Memory Card, at the GM's discretion when it taught nothing.
 
-**Principle Application Costs (by tier, never by Grade):** Seed 10 | Early Fragment 15 | Infusion free | Domain 3,000 + 500/round. A cost is fixed by the tier that granted it and never changes. Scale grows with the character's current Grade. Domains require a D-Grade body. Spells and class techniques are fixed by the Grade they were acquired at, ×10 per Grade; a class technique is 5 Aether at F, or no Aether once per encounter or with a drawback.
+**Principle Application Costs (by tier, never by Grade):** Seed 10 | Early Fragment 15 | Infusion free | Domain 3,000 + 500/round. Scale grows with the character's current Grade. Domains require a D-Grade body. Spell and class-technique costs follow the Grade at which they were acquired, ×10 per Grade; a class technique acquired at F costs 5 Aether, or no Aether if it is once per encounter or carries a drawback.
 
 **Will Save (Aura Pressure):** d100 + HRT Force vs. Aura Resistance. Aura Resistance is the flat card value, no Cross-Grade Adjustment: calm presence Moderate (90), flaring Hard (115). At a gap of three or more Grades the GM may impose Suppression without a save. Suppressed: one Beat per turn for the encounter; a meaningful change in the fiction allows a new save.
 

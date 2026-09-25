@@ -35,7 +35,7 @@ technique:
   constraint_clash: "HRT Force against HRT Force, one roll; none if the constraint rides an attack already won"
 
 permission:
-  cost: none
+  cost: no Aether and no roll of its own; one that is a reaction or is paid in Beats follows those rules
   action_economy_effects_max: 1  # across the technique and the permission together
   reactions_per_encounter: 1     # a reaction paid in Beats (a shared Yield) is limited by the Beats instead
   death_clock_hold_rounds: 1     # the one thing a class may do to the countdown, for a Beat

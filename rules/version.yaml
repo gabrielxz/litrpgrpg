@@ -1,7 +1,7 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.14"
+version: "0.1.15"
 dated: "2026-09-24"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
@@ -38,3 +38,10 @@ notes: >
   Hard 115 flaring; the Grade table shows the stat cap, Force, and damage for all six Grades; Consolidation healing is a
   fifth an hour with the fifth hour restoring the rest (no rounding exception); a collapse at the Level cap lasts 5
   hours; pills are Grade-locked both ways; the Grade Reference Card is the Difficulty Card.
+  0.1.15 (the forward-chapter sweep, applied before Gabriel's read reaches those chapters): a d100 read against
+  an effect table does not explode; the Reactive Buckler is once between Consolidations in the data; Anchoring
+  Artifacts halve a Cracked result's stat loss and make a threat that reaches the cultivator −5; the density table
+  lists Easy / Moderate / Hard threats; class evolution offers three options; High and Extreme density refine 40 VE
+  an hour; a collapsed character wakes at Tolerance or below; quest failure against refusal stated by type;
+  Frenzy Rat HRT 05; the Volatile Shard and Battered Communicator have stated procedures; skill synthesis caps at +20
+  and costs Aether at the highest source Grade; the HVE's world-response and adversarial lists cover all eight poles.

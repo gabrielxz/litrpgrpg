@@ -18,17 +18,17 @@ the Gethra Accession Ledger
 
 ## How to Read a Stat Block
 
-Every stat block lists only the values relevant for the Clash. Force values are pre-extracted at the creature's Grade and printed as two digits, and a listed Tactics bonus adds to them; a leading zero marks a value below the Grade band, exactly as on a character sheet. HP equals 2 × the creature's effective Raw FOR; Aether is listed only for creatures that use Principle Applications or active skills. Beats per turn, governing offensive Force, governing defensive Force, HRT and PER Force, and tactical notes complete the entry. HRT and PER are printed because three rules read them: Momentum takes the higher of the two, a creature searching for a hidden character rolls its PER, and a mental or coercive attack on the creature meets its HRT. Defaults for a new creature: PER equals the Def Force for anything that hunts or watches and half of it for anything else; HRT equals the Off Force for anything that presses the attack and 05 for a creature with no mind to keep; a named boss may run higher. An NPC with a class prints it as one Tactics line, the class name and its technique (Classes, "NPC Classes").
+Every stat block lists only the values relevant for the Clash. Force values are pre-extracted at the creature's Grade and printed as two digits (a Force of 5 prints as 05), exactly as on a character sheet, and a listed Tactics bonus adds to them. HP equals 2 × the creature's Raw FOR, which at F-Grade is the same number as its FOR Force, whether or not the block prints one; Aether is listed only for creatures that use Principle Applications or active skills. Beats per turn, governing offensive Force, governing defensive Force, HRT and PER Force, and tactical notes complete the entry. HRT and PER are printed because three rules use them: Momentum takes the higher of the two, a creature searching for a hidden character rolls its PER, and a mental or coercive attack on the creature meets its HRT. Defaults for a new creature: PER equals the Def Force for anything that hunts or watches and half of it for anything else; HRT equals the Off Force for anything that presses the attack and 05 for a mindless creature; a named boss may run higher. An NPC with a class prints it as one Tactics line, the class name and its technique (Classes, "NPC Classes").
 
-Most F-Grade enemies have Force values in the 04–40 range and HP in the 8–80 range. A mid-tier F-Grade enemy can threaten a starting character; by Level 10, the same enemy is trivial.
+Most F-Grade enemies have Force values in the 04–40 range and HP in the 8–80 range. A mid-tier F-Grade enemy can threaten a starting character; by Level 10, the same enemy poses little threat.
 
-**Difficulty tier maps to the Difficulty Card and to VE reward**: a kill pays each participant the tier's multiple of the Peer Kill value (see Cultivation, "Awarding VE"). A "Moderate" enemy is balanced for a peer character (similar Force values); an "Easy" enemy is a clear underdog; a "Hard" enemy is a dangerous fight; a "Severe" or "Peak" enemy is boss-tier.
+**Difficulty tier matches the Difficulty Card and sets the VE reward**: a kill pays each participant the tier's multiple of the Peer Kill value (see Cultivation, "Awarding VE"). A "Moderate" enemy is balanced for a peer character (similar Force values); an "Easy" enemy is a clear underdog; a "Hard" enemy is a dangerous fight; a "Severe" or "Peak" enemy is boss-tier.
 
-**Yield.** A creature does not Yield unless its entry says **Yields**. One that does uses the rule characters use: it gives up Beats from its next turn to cut an incoming Margin by 20 each. This is the cleanest dial for making a single enemy last, because the creature buys its survival out of its own offense. A solo elite that Yields runs about a third longer, and the danger grows with it a little less than in step: in simulation the Husk Sentinel against a Level 3 party of four goes from 2.4 rounds to 3.3, drops someone in three fights out of five without Yield and two out of three with it, and takes the whole party in one fight in seven without Yield and one in five with it. Giving Yield to a whole group is usually a mistake: several enemies all yielding turns a fight into a grind while multiplying the attacks coming back at the party. Use it on one enemy, and reserve group Yield for encounters intended to emphasize a coordinated defense, as with a disciplined shield line that is meant to feel immovable.
+**Yield.** A creature does not Yield unless its entry says **Yields**. One that does uses the rule characters use: it gives up Beats from its next turn to cut an incoming Margin by 20 each. Yield makes a single enemy last longer, and every Beat it gives up is a Beat it cannot attack with. A solo elite that Yields runs about a third longer, and its danger rises a little less than its length does: in simulation the Husk Sentinel against a Level 3 party of four goes from 2.4 rounds to 3.3, drops someone in three fights out of five without Yield and two out of three with it, and takes the whole party in one fight in seven without Yield and one in five with it. Giving Yield to a whole group is usually a mistake: several enemies all yielding turns a fight into a grind while multiplying the attacks coming back at the party. Use it on one enemy, and reserve group Yield for encounters intended to emphasize a coordinated defense, as with a disciplined shield line that is meant to feel immovable.
 
-**Grade and tier are different axes.** Every entry states its Grade; every entry in this chapter is F-Grade. Tier names size an enemy against opposition of its own Grade only, and a kill pays that tier whatever the killer's level. Across Grades, the Cross-Grade rules take over: the higher-Grade side adds +100 per Grade of difference to its Clash rolls and keeps its own damage multiplier, so an enemy the E-Grade card calls Trivial is still a Severe encounter or worse for a full F-Grade party.
+**Grade and tier are different axes.** Every entry states its Grade; every entry in this chapter is F-Grade. Tier names size an enemy against opposition of its own Grade only, and a kill pays that tier whatever the killer's level. Across Grades, the Cross-Grade Adjustment applies: the higher-Grade side adds +100 per Grade of difference to its Clash rolls and keeps its own damage multiplier, so an enemy the E-Grade card calls Trivial is still a Severe encounter or worse for a full F-Grade party.
 
-Use these as references, not rigid templates. Adjust HP, Force values, and abilities to match the moment. A "Hard" encounter for an L3 party may be one Pre-System Brigand holding ground that gives it Advantage; a "Hard" encounter for an L8 party may be three Snarljaws plus their Alpha.
+Adjust HP, Force values, and abilities to match the moment. A "Hard" encounter for an L3 party may be one Pre-System Brigand holding ground that gives it Advantage; a "Hard" encounter for an L8 party may be three Snarljaws plus their Alpha.
 
 ---
 
@@ -67,7 +67,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **Grade:** F · **Tier:** Easy · **HP:** 12 · **Beats:** 2
 - **Off Force (DEX, bite):** 12
 - **Def Force (DEX, scampering):** 12
-- **HRT Force:** 08 · **PER Force:** 12
+- **HRT Force:** 05 · **PER Force:** 12
 - **Tactics:** Always attempts to flank. When two or more Frenzy Rats share a Zone with their target, all of them gain +10 (Flanking).
 
 ### Pre-System Brigand
@@ -177,8 +177,8 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 - **Def Force (HRT, spectral):** 60 · (PER, vs. illusion-piercing): 70
 - **HRT Force:** 60 · **PER Force:** 70
 - **Tactics:**
-  - **Yields.** The Wraith gives ground as smoke does, sliding out of a Zone rather than taking the blow.
-  - **Incorporeal:** STR/DEX physical attacks are at −10; an attack aimed with the attacker's PER Force, at where it truly is, hits at full; a Principle Application or Infusion ignores the −10.
+  - **Yields.**
+  - **Incorporeal:** STR/DEX physical attacks are at −10; an attack made with the attacker's PER Force takes no −10; a Principle Application or Infusion ignores the −10.
   - **Mind-Leach (1 Beat, 10 Aether):** target rolls HRT defense. On a hit, deal damage as normal AND drain 1 Aether from the target per damage point dealt. The Wraith adds drained Aether to its own pool, up to its Max.
   - **Vulnerability:** PER-based attacks (Sensory Pulse, Light or Truth Principles, scanning skills) deal +10 bonus damage on the Margin.
 
@@ -203,7 +203,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 
 ## Imprints
 
-An Imprint is a nonconscious construct that physically executes a recorded pattern of behavior inside an Accession Rift (After the Gate, "Accession Rifts"). Its body need not resemble the people who originated the pattern, and it contains no copied person. Every Imprint is specified in four lines, what it detects, what triggers it, what it does, and what stops it, and those lines belong to the Rift, so the Rift prints them and the block below prints the numbers. An Imprint is mindless: immune to mental and coercive attacks, HRT 05, Momentum on its PER. A defeated Imprint stays defeated; a later appearance is a new manifestation. Four blocks, one per wave.
+An Imprint is a nonconscious construct that physically executes a recorded pattern of behavior inside an Accession Rift (After the Gate, "Accession Rifts"). Its body need not resemble the people who originated the pattern, and it contains no copied person. Every Imprint is specified in four lines: what it detects, what triggers it, what it does, and what stops it. Each Rift's entry in After the Gate gives its Imprint's four lines, and the blocks below give the numbers. An Imprint is mindless: immune to mental and coercive attacks, HRT 05, Momentum on its PER. A defeated Imprint stays defeated; a later appearance is a new manifestation. Four blocks, one per wave.
 
 ### Interceptor
 
@@ -213,7 +213,7 @@ An Imprint is a nonconscious construct that physically executes a recorded patte
 - **Off Force (STR, the committed strike):** 25
 - **Def Force (FOR, construct body):** 25
 - **HRT Force:** 05 · **PER Force:** 25
-- **Tactics:** Mindless. Strikes nothing outside its committed movement; its four lines are the Rift's.
+- **Tactics:** Mindless. Strikes nothing outside its committed movement; its four lines are in its Rift's entry.
 
 ### Bearer
 
@@ -233,7 +233,7 @@ An Imprint is a nonconscious construct that physically executes a recorded patte
 - **Off Force (STR, the perimeter strike):** 60
 - **Def Force (FOR, construct body):** 60
 - **HRT Force:** 05 · **PER Force:** 60
-- **Tactics:** **Yields.** Mindless. Holds a perimeter, sliding one Zone a round along it and striking what it meets. It Yields under the ordinary rule, and a two-Beat Yield lets the attacker drive it off its perimeter; a Cordon driven off spends its next turn returning to the line and strikes nothing on the way. One falls from each section of the diagram as it completes.
+- **Tactics:** **Yields.** Mindless. Holds a perimeter, sliding one Zone a round along it and striking what it meets. It Yields under the ordinary rule, and a two-Beat Yield lets the attacker drive it off its perimeter; a Cordon driven off spends its next turn returning to the line and strikes nothing on the way. One Cordon falls from the diagram each time one of its sections completes.
 
 ### Completion
 
@@ -264,20 +264,20 @@ When in doubt, use the Difficulty Card. A character with Force 30 fighting an en
 | L23–25 | One at Force 60, or two at 40 | One at Force 70, or two at 50 | One at Force 80, or two at 60 |
 <!-- /rules:table -->
 
-From Level 8 the rows are written in creature Force: a creature at Force 50 attacks and defends at 50, has Health 100, and takes two Beats, which is how every stat block in this chapter is built. A creature whose Offense and Defense differ counts at the higher of the two. A second creature counts as 20 Force, so two creatures at Force 30 fight like one at Force 50. A standard fight puts a character on the floor in about one fight in five and loses the whole party in about one in a hundred; a hard fight doubles both. A party whose Standing Surety Takes It on every large hit (Classes) plays each row about one step easier. The Fragment Wraith, at Force 65, is a hard fight for a party at Level 18 or above and never a standard one. The Corrupted System Warden, at Force 95 with three Beats, sits above the table's hard row even at Level 25: in simulation it loses a Level 25 party of four in a quarter to a half of straight fights, and the tutorial's procedure for it, reaching the gate rather than killing it, is the way to run it at any level.
+From Level 8 the rows are written in creature Force: a creature at Force 50 attacks and defends at 50, has Health 100, and takes two Beats. A creature whose Offense and Defense differ counts at the higher of the two. A second creature counts as 20 Force, so two creatures at Force 30 fight like one at Force 50. A standard fight leaves a character Downed in about one fight in five and loses the whole party in about one in a hundred; a hard fight doubles both. A party whose Standing Surety Takes It on every large hit (Classes) plays each row about one step easier. The Fragment Wraith, at Force 65, is a hard fight for a party at Level 18 or above and never a standard one. The Corrupted System Warden, at Force 95 with three Beats, sits above the table's hard row even at Level 25: in simulation it loses a Level 25 party of four in a quarter to a half of straight fights, and the tutorial's procedure for it, reaching the gate rather than killing it, is the way to run it at any level.
 
 These ratios assume a balanced party with reasonable equipment. Adjust upward for well-prepared parties; adjust downward when the party is wounded, low on Aether, or out of consumables.
 
-The Hard column assumes the top of the level band. At the bottom of a band, a Hard fight can put the whole party on the floor; run one with a telegraphed escape route or an enemy that has reasons not to finish the job. At Levels 1–3, a landed hit can exceed Max HP outright, and a character at that level pays both Beats to survive one. Expect low-level fights to be spent giving ground. Early fights put characters on the floor; the Downed rules are the safety net.
+The Hard column assumes the top of the level band. At the bottom of a band, a Hard fight can leave the whole party Downed; run one with a telegraphed escape route or an enemy with a reason not to execute Downed characters. At Levels 1–3, a landed hit can exceed Max HP outright, and a character at that level gives up both Beats to survive one. Expect low-level fights to be spent giving ground, and expect characters to go Downed in early fights.
 
-Against small enemy groups, a party of four resolves most fights in one or two rounds; only peer-Force elites (a Husk Sentinel, a boss) run longer.
+Against small enemy groups, a party of four finishes most fights in one or two rounds; only peer-Force elites (a Husk Sentinel, a boss) run longer.
 
-**To make a fight last, give one enemy Yield.** It buys length out of that creature's own action economy, and the danger grows with the length rather than ahead of it.
+**To make a fight last, give one enemy Yield** (Yield, above).
 
-**Adding bodies multiplies danger.** Every additional creature is two more attacks per round arriving at a party that can only give up so many Beats. In simulation, going from two peer creatures to four against a party of four quadruples the characters on the floor (0.4 to 1.5 per fight) and takes the whole-party loss from about one fight in a hundred to one in four at Level 1, and to nearly one in two at Level 3. Use extra bodies when you intend that, and never as a way to pad a fight's length.
+**Adding bodies multiplies danger.** Every additional creature is two more attacks per round arriving at a party that can only give up so many Beats. In simulation, going from two peer creatures to four against a party of four quadruples the number of characters Downed (0.4 to 1.5 per fight) and takes the whole-party loss from about one fight in a hundred to one in four at Level 1, and to nearly one in two at Level 3. Use extra bodies when you intend that, and never as a way to pad a fight's length.
 
-**Terrain is a lethality dial.** A corridor, a sealed room, a ledge, or a closed ring of enemies leaves nowhere to be driven, which caps Yield at one Beat; in simulation that puts half again as many characters on the floor and raises the whole-party loss two to four times for the same stat blocks. Announce the geometry before the first roll so the table can choose to fight elsewhere.
+**Terrain is a lethality dial.** A corridor, a sealed room, a ledge, or a closed ring of enemies leaves nowhere to be driven, which limits Yield to one Beat; in simulation that leaves half again as many characters Downed and raises the whole-party loss two to four times for the same stat blocks. Announce the geometry before the first roll so the table can choose to fight elsewhere.
 
 If a fight drags past round 5, raise the stakes: introduce a complication, escalate the enemy's tactics, or end it decisively.
 
-**When a player character goes Downed:** mindless creatures (Husk Crawlers, Glow-Motes, Frenzy Rats) do not execute; they turn to the nearest live threat, or begin dragging prey away, which is its own kind of clock. Pack hunters guard a kill rather than finish it. Intelligent enemies (Brigands, Rival Initiates, the Warden) may execute, and the threat should be telegraphed a Beat early so the table can react. See Core Mechanics, "Downed and Death."
+**When a player character goes Downed:** mindless creatures (Husk Crawlers, Glow-Motes, Frenzy Rats) do not execute; they turn to the nearest live threat or begin dragging the Downed character away; a creature dragging a Downed character moves them one Zone for each Beat it spends moving, the countdown continues, and an ally must reach that Zone to stabilize them. Pack hunters stand guard over a Downed character and do not execute it. Intelligent enemies (Brigands, Rival Initiates, the Warden) may execute, and the threat should be telegraphed a Beat early so the table can react. See Core Mechanics, "Downed and Death."

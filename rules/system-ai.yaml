@@ -31,7 +31,7 @@ functions:
   - name: Skill Synthesis
     inputs: [two or more source effects]
     outputs: one merged skill, priced
-    unplugged: combine one property from each source, price against the Modifier Budget, Aether from the origin-Grade table, attach one limitation if the merged bonus lands above +20
+    unplugged: combine one property from each source, price against the Modifier Budget, Aether from the origin-Grade table, the merged bonus caps at +20; Aether from the higher of the sources' Grades
   - name: Identify and Inspect
     unplugged: GM narrates; visibility per What Can Be Seen
 

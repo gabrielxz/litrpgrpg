@@ -54,17 +54,17 @@ tier_adjustment:
   failure_stays_cracked: true
 
 energy_density:
-  - {tier: Barren,   bonus: 0,  phenomena: "Minimal (1 weak threat)",                      examples: "Urban ruins, depleted zones, mundane terrain"}
-  - {tier: Low,      bonus: 5,  phenomena: "Light (1 moderate threat)",                    examples: "Wilderness with scattered energy, minor ley lines"}
-  - {tier: Moderate, bonus: 10, phenomena: "Standard (2 moderate threats)",                examples: "Established energy nexus, active ley-line intersection"}
-  - {tier: High,     bonus: 20, phenomena: "Heavy (2–3 strong threats)",                   examples: "Deep dungeon core, natural treasure ground, ancient formation"}
-  - {tier: Extreme,  bonus: 25, phenomena: "Severe (3 strong threats, possible Grade+ entity)", examples: "Mystic realm convergence point, heart of an Incursion zone"}
+  - {tier: Barren,   bonus: 0,  phenomena: "Minimal (1 Easy threat)",                      examples: "Urban ruins, depleted zones, mundane terrain"}
+  - {tier: Low,      bonus: 5,  phenomena: "Light (1 Moderate threat)",                    examples: "Wilderness with scattered energy, minor ley lines"}
+  - {tier: Moderate, bonus: 10, phenomena: "Standard (2 Moderate threats)",                examples: "Established energy nexus, active ley-line intersection"}
+  - {tier: High,     bonus: 20, phenomena: "Heavy (2–3 Hard threats)",                   examples: "Deep dungeon core, natural treasure ground, ancient formation"}
+  - {tier: Extreme,  bonus: 25, phenomena: "Severe (3 Hard threats, possible higher-Grade entity)", examples: "Mystic realm convergence point, heart of an Incursion zone"}
 
 item_categories:
   - {category: Foundation Pills,      function: Raise base success odds on the Breakthrough Check., examples: "Dragon Marrow Pill (+5), Nine Leaf Essence (+10), Heavenly Foundation Pill (+15)"}
   - {category: Resonance Catalysts,   function: Amplify Principle gains during the trial. +5 IP at Stable or higher., examples: "Principle Tuning Crystal, Resonance Elixir"}
-  - {category: Anchoring Artifacts,   function: Halve backlash damage to self and party if the Breakthrough fails or external phenomena break through., examples: "Stillwater Ward Stone, Earthbound Anchor Talisman"}
-  - {category: Tribulation Wards,     function: The insurance policy. If consumed, upgrades a Cracked result to Stable. Consumed whether used or not. Extremely rare., examples: "Phoenix Down Seal, Heavenly Tribulation Banner"}
+  - {category: Anchoring Artifacts,   function: "Halve the stat loss of a Cracked result (fractions dropped); each threat that reaches the cultivator imposes −5 in place of −10.", examples: "Stillwater Ward Stone, Earthbound Anchor Talisman"}
+  - {category: Tribulation Wards,     function: If consumed, upgrades a Cracked result to Stable. Spent even when the check succeeds. Extremely rare., examples: "Phoenix Down Seal, Heavenly Tribulation Banner"}
   - {category: Quality Enhancers,     function: Push the final Quality Tier up by one step (never above Transcendent)., examples: "Celestial Refinement Crystal, Dao Clarification Lotus"}
   - {category: Bespoke Items,         function: Rare, themed effects that do not fit the other categories., examples: "Heart Demon Mirror, Phoenix Feather, Spatial Anchor Stone"}
 item_stacking: one item per category; Bespoke Items adjudicated case by case
@@ -75,7 +75,7 @@ outputs:
     stat_caps_rise: true
     stats_multiplied: false
     every_attribute_adds: 10        # ×10 per Grade (100 at E→D); the caps lift and no floor is imposed
-    class_evolution_options: [1, 3]
+    class_evolution_options: 3       # like the Level 10 selection
     class_infusion_points_at_e: [50, 100]
     f_to_e_unlocks_second_principle_slot: true
     e_to_d_opens_domain_gate: true
@@ -101,7 +101,7 @@ failure:
       principle_regression: lose IP equal to half the current total toward the highest Principle; tier kept
       lockout_sessions: 3
       cracked_foundation_penalty: -5
-      stat_loss: FOR and POW each lose one twentieth of current Raw (fractions dropped), permanent until recovered
+      stat_loss: FOR and POW each lose one twentieth of current Raw (fractions dropped), does not return; later growth replaces it
     D->C:
       lockout_sessions: 4
       note: future supplement

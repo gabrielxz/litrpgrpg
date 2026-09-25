@@ -18,19 +18,19 @@ A character reaches Level 10 with nine levels of play on the record, and the Sys
 
 ## What a Class Is
 
-**The job.** A class makes a chosen role reliably playable. Attributes supply strengths, Backgrounds and Proficiencies supply expertise, Principles supply personal power, and titles supply recognition. None of them promises that the healer can heal every fight, or that the vanguard reaches the enemy line before it reaches the archers. A class does. Before Level 10 a character's verbs are Surge, items, and whatever one Application a Principle has granted; the class adds the technique the role was missing and the permission that lets the role work.
+**The job.** A class makes a chosen role reliably playable. Attributes supply strengths, Backgrounds and Proficiencies supply expertise, Principles supply personal power, and titles supply recognition. None of them promises that the healer can heal every fight, or that the vanguard reaches the enemy line before the enemy reaches the archers. A class does. Before Level 10 a character's active options are Surge, items, and any Application their Principle has granted; the class adds the technique the role was missing and the permission that lets the role work.
 
-**A technique is known; a Principle is understood.** A class technique is something the character knows how to do: learned, reliable, the same every time. A Principle is an understanding the character brings to everything, and occasionally expresses directly through its Applications. The two can do the same thing. A Battle Medic's Triage and a Mending Principle's Close Wound both heal. They differ in how they are acquired (offered at Level 10 against earned through Insight), how broadly they equip (a class covers a role, a Principle covers a truth), and how they grow (a class technique is fixed at its origin Grade, and an Application's scale follows the body).
+**Class techniques and Principles.** A class technique is something the character knows how to do: learned, reliable, the same every time. A Principle is an understanding the character brings to everything, and occasionally expresses directly through its Applications. The two can do the same thing. A Battle Medic's Triage and a Mending Principle's Close Wound both heal. They differ in how they are acquired (offered at Level 10 against earned through Insight), how broadly they equip (a class covers a role, a Principle covers a truth), and how they grow (a class technique is fixed at its origin Grade, and an Application's effect grows with the character's Grade; The Principle System, "Applications: Cost and Scale").
 
 **Three commitments.**
 
 - Class techniques work alone. A character with no Principle uses the technique in full.
 - Applications work alone. A Principle never needs a class to express itself.
-- A Principle treats a class technique as it treats a spell (The Principle System, "Applications: Cost and Scale"). A Principle's passives apply to a compatible technique automatically. Using an active Application and a class technique in the same Beat needs Infusion (Mid Fragment, 50 IP; The Principle System, "The Progression Ladder"); below it, choose one per Beat. Compatibility is about what the technique does and what the Principle means. Weight infuses Breach and has nothing to say to Triage. No pairing is required.
+- A Principle treats a class technique as it treats a spell (The Principle System, "Applications: Cost and Scale"). A Principle's passives apply to a compatible technique automatically. Using an active Application and a class technique in the same Beat needs Infusion (Mid Fragment, 50 IP; The Principle System, "The Progression Ladder"); below it, choose one per Beat. Compatibility is about what the technique does and what the Principle means. Weight is compatible with Breach and not with Triage.
 
 **Kara, before and after Infusion.** At Seed she holds Sudden Weight (1 Beat, 10 Aether, +10) and Breach (part of an attack, once per encounter, +10, Drives Back). Her Weight passive (+5 to defensive Clashes against crushing force) applies whatever she does. Below Infusion, a Beat is one or the other: a Breach into the enemy's Zone, or a Sudden Weight where she stands. At Infusion she may declare Sudden Weight with a Breach: one Beat, 10 Aether for the Application, +20 to the Clash (the Modifier Budget's cap), and the Drive Back on a win.
 
-**Every class is built for a specific human.** The System offers a class to one person with one history, and the offer is made of that history: the nurse who kept the bleeding one alive, the shift lead who was always first through the door. The worked classes at the end of this chapter each come with the person they were built for, so a GM, or the app, can see what a class is made of. Elements repeat across classes (a Rush, an Interpose, a stock caster). The list exists to teach. Nobody is stopped from picking a class from it as written.
+**Every class is built for a specific human.** The System offers a class to one person with one history, and the offer is made of that history: the nurse who kept the bleeding one alive, the shift lead who was always first through the door. The worked classes at the end of this chapter each come with the person they were built for, so a GM, or the app, can see what a class is made of. Elements repeat across classes (a move-and-strike like Rush, a guard like Take It, a stock caster like Kindler). The list is there to teach, and a GM may offer any class from it as written.
 
 ## The Level 10 Scene
 
@@ -40,17 +40,17 @@ At Level 10 the System offers three classes. Each offer arrives in the System's 
 *Level 10. Classification available. Three offers follow. One will be accepted; the others close.*
 :::
 
-**The offers differ.** They may differ in role, in technique, and in which part of the character's record they weigh. One may name what the character does most. Another may name what they did once, under pressure, and never explained. A third may be a stock class the record plainly fits. There is no fixed scheme. A GM who wants a starting point can build one offer that amplifies the dominant pattern, one that formalizes the secondary pattern, and one that combines them; that is a template, and any three offers the record supports are correct.
+**The offers differ.** They may differ in role, in technique, and in which part of the character's record they weigh. One may name what the character does most. Another may name what they did once, under pressure, and never explained. A third may be a stock class the record plainly fits. A GM who wants a starting point can build one offer that amplifies the dominant pattern, one that formalizes the secondary pattern, and one that combines them; that is a template, and any three offers the record supports are correct.
 
-**Offers cannot be refused.** The same three stand until one is chosen. Level 10's three System points wait for the choice (Progression, "Class Selection (Level 10)"), and so does every System point after it. New offers arrive at the F→E Breakthrough (Grade Breakthroughs, "Outputs by Quality Tier").
+**Offers cannot be refused.** The same three stand until one is chosen. Level 10's three System points, and every System point after them, are held until the player chooses (Progression, "Class Selection (Level 10)"). New offers arrive at the F→E Breakthrough (Grade Breakthroughs, "Outputs by Quality Tier").
 
-**Disclosure is accepted.** Three offers show the character something of how the System reads them, exactly as a Personal Opportunity does (System Quests, "Personal Opportunities"). The offers are private. The character may tell the party or keep them.
+**The offers reveal the System's reading.** The three offers show something of how the System reads the character, exactly as a Personal Opportunity does (System Quests, "Personal Opportunities"). The offers are private. The character may tell the party about them or keep them to themselves.
 
 **A class is not published.** Inspection at any Grade does not show it (What Can Be Seen). Titles do the reputation work. The holder may state their class, and anyone can watch them fight.
 
-**The selection bonus.** Choosing a class adds **10 to the class's lead Attribute** at once, before Level 10's own points land. Every profile names its Attributes in order and the first named is the lead. Health and Aether follow their Attributes as always: a lead of FOR is 20 Health, a lead of POW is 10 Aether.
+**The selection bonus.** Choosing a class adds **10 to the class's lead Attribute** at once, before Level 10's points are placed. Every profile names its Attributes in order and the first named is the lead. Health and Aether follow their Attributes as always: a FOR lead adds 20 Health, and a POW lead adds 10 Aether.
 
-**From Level 10 on**, each level's three System points follow the class's profile and the player's two are free, as Progression says. Nothing else arrives from the class between Level 10 and Level 25: no second technique, no Marks, no title, no Proficiency. Principles, titles, and items grow on their own tracks as they did before. A GM may add more; the book's classes stop here.
+**From Level 10 on**, each level's three System points follow the class's profile and the player's two are free, as Progression says. Principles, titles, and items grow on their own tracks as they did before.
 
 ## The Package
 
@@ -88,7 +88,7 @@ From Level 10 on, the class directs the System's three points each level. Three 
 | Open | 1 | 2 |
 <!-- /rules:table -->
 
-Returned points are free points: the player spends them like the two they already get each level. Freedom-leaning classes tend to return points and Control-leaning ones tend to fix them; Registrar, a Control class with an Open profile, is the exception on the list. Returning points is the class shaping less of the character, on purpose: a Fixed profile buys a body built for its role, an Open one buys the player's choice, and neither is a discount on the other. A profile lists its Attributes with the points each takes (2 STR, 1 FOR; 1 POW, 1 DEX, 1 HRT; 1 PER and 2 returned), and the first named is the lead.
+Returned points are free points: the player spends them like the two they already get each level. Classes on the Freedom pole tend to return points and classes on the Control pole tend to fix them (The Hidden Vector Engine, "The Four Axes"); Registrar (Open) and Maker (Guided) return points anyway. Every shape delivers the same 5 points a level at F-Grade: a Fixed profile builds the body for the role, and an Open one leaves more of the build to the player. A profile lists its Attributes with the points each takes (2 STR, 1 FOR; 1 POW, 1 DEX, 1 HRT; 1 PER and 2 returned), and the first named is the lead.
 
 ### One technique
 
@@ -107,21 +107,21 @@ Each class carries one technique.
 | Drawback | No Aether; 10 Health, or Exposed until your next turn | Moves that cost the body |
 <!-- /rules:table -->
 
-5 Aether is the class price at F-Grade. A technique acquired at a higher Grade costs ten times more per Grade, like any acquired skill (Core Mechanics, "What Things Cost"). The three shapes do not combine: a technique costs Aether, or is gated, or hurts.
+5 Aether is the class price at F-Grade. A technique acquired at a higher Grade costs ten times more per Grade, like any acquired skill (Core Mechanics, "What Things Cost"). The three shapes do not combine: a technique costs Aether, or is limited to once per encounter, or costs Health or leaves its user Exposed.
 
-**Reference sizes.** A Seed Application heals 20 and scales with the body; a class heal is 10 and does not. A Seed Application costs 10 Aether; a class technique costs 5. The class is the cheaper and smaller tool, and the Principle is the bigger thing.
+**Reference sizes.** A Seed Application heals 20 and grows with the character's Grade; a class heal is 10 and does not. A Seed Application costs 10 Aether; a class technique costs 5.
 
 ### One standing permission
 
-A permission costs nothing and rolls nothing. It changes a decision the character already makes: where they stand, whom they reach, when they commit, what they can see. *Moving into a Zone holding a Downed ally costs no Beat. A creature whose stat block Yields can be parleyed with. Once per session, a kill you name rolls its loot one step up.*
+A permission costs no Aether and has no roll of its own; a permission that is a reaction or is paid in Beats follows those rules. It changes a decision the character already makes: where they stand, whom they reach, when they commit, what they can see. *Moving into a Zone holding a Downed ally costs no Beat. A creature whose stat block says Yields can be parleyed with. Once a day, a kill you name rolls its loot one step up.*
 
-- **At most one action-economy effect per class**, counting the technique and the permission together: a Rush, a free Disengage, a free move, or a reaction. A class never has two.
-- **A reaction is once per encounter.** A reaction is a permission or technique that fires on someone else's turn; the Iron Verdict title (Titles) is the model. A reaction paid in Beats, such as a Yield taken on an ally's behalf, is limited by the Beats instead.
+- **At most one action-economy effect per class**, counting the technique and the permission together: a Rush, a free Disengage, a free move, or a reaction.
+- **A reaction is once per encounter.** A reaction is a permission or technique used on someone else's turn; the Iron Verdict title (Titles) is the model. A reaction paid in Beats, such as a Yield taken on an ally's behalf, is limited by the Beats instead.
 - **The same act is never free twice.** A class's free or combined act and a Master's free action (Core Mechanics, "Proficiencies") apply to different acts: a Master of axes who Rushes pays Rush's 1 Beat for the move and the strike together, and her free swing is her next attack. A title's third Beat is an ordinary Beat and may pay for a Rush. A class never grants a Beat (Core Mechanics, "Action Economy: Beats").
 
 ### Nothing else
 
-No Marks, no title, no Proficiency, no second technique, and nothing new between Level 10 and Level 25. Class evolution at the F→E Breakthrough is where a class grows (Grade Breakthroughs, "Outputs by Quality Tier"), and this chapter stops there.
+No Marks, no title, no Proficiency, no second technique, and nothing new between Level 10 and Level 25. A GM may add more; the book's classes stop here. A class grows next at the F→E Breakthrough (Grade Breakthroughs, "Outputs by Quality Tier").
 
 ## Guardrails
 
@@ -129,15 +129,15 @@ A class never touches these, whatever its notice says:
 
 - **The VE tank.** No class stores, refines, or spends Volatile Energy differently.
 - **The Volatility Threshold.** It never moves.
-- **The death clock.** A technique may hold a Downed ally's vital coherence for one round at the cost of a Beat (Core Mechanics, "Downed and Death"). Nothing else touches the countdown.
-- **Aether in combat.** Aether never regenerates during a fight, except by the one guarded power below.
-- **The Cross-Grade Adjustment.** It is never dented, except by the guarded powers below.
+- **The Downed countdown.** A technique may pause a Downed ally's countdown for one round at the cost of a Beat (Core Mechanics, "Downed and Death"). Nothing else touches the countdown.
+- **Aether in combat.** No class restores Aether during a fight, except by the one guarded power below.
+- **The Cross-Grade Adjustment.** No class reduces it, except by the guarded powers below.
 
 **A technique that constrains an enemy's choices** (holds it, forbids an act, turns it away) offers the enemy one Clash, its HRT Force against yours (Core Mechanics, "Clashes"), whatever the class's lead Attribute. A constraint that rides an attack the character already won needs no second roll.
 
 ### The guarded list
 
-There is no rarity system. Common, Uncommon, Rare, and Epic stay available as words in a System notice, and no rule attaches to them; a GM may offer a class that is better than the others without a label. The one mechanical tier is the **guarded list**: powers that change the game's math. Each moves a constant every other rule leans on, Aether that comes back inside a fight or the Cross-Grade Adjustment; a saved Beat of movement moves no constant. A campaign holds one guarded class, whichever of the powers it carries, and the GM knows which class is the campaign's killer class whatever its notice calls it.
+There is no rarity system. Common, Uncommon, Rare, and Epic stay available as words in a System notice, and no rule attaches to them; a GM may offer a class that is better than the others without a label. The one mechanical tier is the **guarded list**: powers that change the game's math. Each changes something the other rules hold fixed: Aether in combat, or the Cross-Grade Adjustment. Saving a Beat of movement changes neither. A campaign holds one guarded class, whichever of the powers it carries, and the GM knows which class it is, whatever its notice calls it.
 
 <!-- rules:table class-guarded-list -->
 | **Guarded power** | **What it changes** |
@@ -147,7 +147,7 @@ There is no rarity system. Common, Uncommon, Rare, and Epic stay available as wo
 | Against a higher-Grade target, Surge costs 5 (or the ordinary cost if lower) | The Grade gap |
 <!-- /rules:table -->
 
-The app never generates from the guarded list. The GM does, on purpose, once.
+The app never generates from the guarded list. Only the GM adds a guarded power, and only to the campaign's guarded class.
 
 ## Building a Class for a Specific Human
 
@@ -156,11 +156,11 @@ The GM, or the System AI in assisted modes, builds three offers from the charact
 1. **Read the record.** The Deep Vector and the circled Defining moments from the Session-End Sweeps (The Hidden Vector Engine, "The Session-End Sweep"), the Principle if one has crystallized, the Background and Proficiencies, and the thing the player keeps doing that no rule asked for.
 2. **Name the role each offer makes reliable.** One role per offer. Three roles the record supports, as different from each other as the record allows.
 3. **Choose the profile.** The Attributes the role runs on, in order. Fixed for a role that needs the body built one way; Guided or Open for a role that leaves room.
-4. **Write the technique.** What the role needs in its recurring scenes, which for a maker or a negotiator are seldom fights. Pick the cost shape: Aether for a tool used freely, Frequency for a move that would be abused, Drawback for a move that should hurt. Price the bonus against the Budget.
-5. **Write the permission.** The decision the role makes differently. Check it against the one-effect limit and the non-stacking clause.
+4. **Write the technique.** What the role needs in its recurring scenes, which for a maker or a negotiator are seldom fights. Pick the cost shape: Aether for a tool used freely, Frequency for a move that would be abused, Drawback for a move that should hurt. Set the bonus at +10, or +20 when the technique is the class's whole reason to exist (the Modifier Budget).
+5. **Write the permission.** The decision the role makes differently. Check it against the limit of one action-economy effect per class and the rule that the same act is never free twice.
 6. **Name it, and write the notice.** The System's text in its units, then the mechanics beside it. Read the notice aloud; if it names a Beat, a roll, or a Margin, rewrite it.
 
-Powers that make the player declare something (a vow, a sanction, a kill named for its loot, a proposal to the System) are the best powers for the Engine, because the declaration is signal. Powers that only add a number are the weakest.
+Powers that make the player declare something (a vow, a sanction, a kill named for its loot, a proposal to the System) are the best powers for the Engine, because the declaration is signal. Powers that only add a number give the Engine the least signal.
 
 ### AI-Assisted
 
@@ -181,7 +181,7 @@ Each offer is one package:
   its cost exactly one of 5 Aether, or no Aether once per encounter,
   or a drawback of 10 Health or Exposed until the character's next
   turn;
-- one standing permission: no cost, no roll; it changes a decision
+- one standing permission: no Aether, no roll of its own; it changes a decision
   the character already makes.
 At most one of the technique and the permission may change the
 action economy. Reactions are once per encounter. Never: touch
@@ -195,7 +195,7 @@ Record: [Deep Vector reads, the circled Defining moments, what the
 player keeps doing]
 ```
 
-The prompt fills the package and never draws from the guarded list; the GM adds a guarded power by hand when the campaign's killer class is this one. The Companion App builds the offers from its own log under the same rules.
+The prompt fills the package and never draws from the guarded list; the GM adds a guarded power by hand when one of these offers is to be the campaign's guarded class. The Companion App builds the offers from its own log under the same rules.
 
 ## The Classes
 
@@ -224,7 +224,7 @@ Each entry carries the person the class was built for, the System's notice, and 
 
 ### Battle Medic
 
-*Built for Nia.* A trauma nurse. In the tutorial she stabilized two people who should have died and talked a third out of a fight she could not win. Her Background reads "trauma nurse, nine years." Nine levels of play read Restraint and Accord. No supportive behavior in the pre-class table maps to POW, so every point of POW she gained before Level 10 was one of her own free points.
+*Built for Nia.* A trauma nurse. In the tutorial she stabilized two people who should have died and talked a third out of a fight they could not win. Her Background reads "trauma nurse, nine years." Nine levels of play read Restraint and Accord. No supportive behavior in the pre-class table maps to POW, so every point of POW she gained before Level 10 was one of her own free points.
 
 ::: systemvoice
 *Class offered: Battle Medic.*
@@ -237,7 +237,7 @@ Each entry carries the person the class was built for, the System's notice, and 
 - **Permission:** Reach the Fallen. Moving into a Zone holding a Downed ally costs no Beat. The class's one action-economy effect.
 - **Poles:** Restraint, Accord.
 
-**Nia's run.** Level 1: STR 4, DEX 5, FOR 6, HRT 7, POW 7, PER 6, CHA 5 (Health 12, Aether 7). Level 6: 4 / 7 / 12 / 13 / 15 / 6 / 8 (Health 24, Aether 15), with Mending at Seed and its Application Close Wound (10 Aether, touch, heals 20). Level 10, after the selection bonus and the level's points: 4 / 8 / 15 / 17 / 32 / 8 / 11 (Health 30, Aether 32): six Triages from a full pool, and the pool refills only at Consolidation. Level 25 with every free point in POW: 4 / 23 / 15 / 32 / 77 / 8 / 11 (Health 30, Aether 77): fifteen from a full pool, in a body with the Health of Level 6. The same thirty free points in FOR give Health 90 and eleven Triages. Before Level 10 the healer existed out of stabilizing, the medkit, pills, and one Close Wound per rest. At Level 10 the class is the first thing besides her own free points that funds her Aether, and it adds 10 at once. Both heals stay worth having at F-Grade: 2 Health per Aether each, Close Wound for the burst and Triage for the range.
+**Nia's run.** Level 1: STR 4, DEX 5, FOR 6, HRT 7, POW 7, PER 6, CHA 5 (Health 12, Aether 7). Level 6: 4 / 7 / 12 / 13 / 15 / 6 / 8 (Health 24, Aether 15), with Mending at Seed and its Application Close Wound (10 Aether, touch, heals 20). Level 10, after the selection bonus and the level's points: 4 / 8 / 15 / 17 / 32 / 8 / 11 (Health 30, Aether 32): six Triages from a full pool, and the pool refills at Consolidation. Level 25 with every free point in POW: 4 / 23 / 15 / 32 / 77 / 8 / 11 (Health 30, Aether 77): fifteen from a full pool, in a body with the Health she had at Level 10. The same thirty free points in FOR give Health 90 and nine Triages. Before Level 10 Nia healed with stabilizing, the medkit, pills, and one Close Wound per rest. At Level 10 the class is the first source besides her own free points that raises her POW, and so her Aether, and it adds 10 at once. Both heals stay worth having at F-Grade: 2 Health per Aether each, Close Wound for the burst and Triage for the range.
 
 ### Breaching Vanguard
 
@@ -254,11 +254,11 @@ Each entry carries the person the class was built for, the System's notice, and 
 - **Permission:** Rush. Moving into an adjacent Zone and attacking there costs 1 Beat in total. The class's one action-economy effect.
 - **Poles:** Force, Hunger.
 
-**Kara's run.** Level 6: STR 17, DEX 5, FOR 11, HRT 4, POW 18, PER 5, CHA 5 (Health 22, Aether 18). Level 10, after the bonus: 35 / 5 / 17 / 10 / 18 / 5 / 5 (Health 34, Aether 18). Level 25 with every free point in STR: 95 / 5 / 32 / 10 / 18 / 5 / 5 (Health 64, Aether 18); with the free points split ten each into STR, HRT, and POW: 75 / 5 / 32 / 20 / 28 / 5 / 5. The permission is what broadens her: Rush turns two Beats of approach into one Beat of arrival. A fighter who ignores POW reaches the cap with 18 Aether and a Surge that costs 9 of it, which is why her technique costs no Aether. Neither run counts titles or treasures, which bring a stat to the cap sooner.
+**Kara's run.** Level 6: STR 17, DEX 5, FOR 11, HRT 4, POW 18, PER 5, CHA 5 (Health 22, Aether 18). Level 10, after the bonus: 35 / 5 / 17 / 10 / 18 / 5 / 5 (Health 34, Aether 18). Level 25 with every free point in STR: 95 / 5 / 32 / 10 / 18 / 5 / 5 (Health 64, Aether 18); with the free points split ten each into STR, HRT, and POW: 75 / 5 / 32 / 20 / 28 / 5 / 5. Her permission, Rush, lets her move into an adjacent Zone and attack there for 1 Beat instead of 2. A fighter who ignores POW reaches the cap with 18 Aether and a Surge that costs 9 of it, which is why her technique costs no Aether. Neither run counts titles or treasures, which bring a stat to the cap sooner.
 
 ### Burner
 
-*Built for Coleman.* A demolition laborer who fought hurt from the first day and never backed off. He took the hit to land the hit, in four fights running, and the Session-End Sweeps kept circling it. Force and Hunger.
+*Built for Coleman.* A demolition laborer who fought hurt from the first day and never backed off. He took the hit to land the hit, in four fights running, and the GM circled it at the Session-End Sweeps. Force and Hunger.
 
 ::: systemvoice
 *Class offered: Burner.*
@@ -303,7 +303,7 @@ Each entry carries the person the class was built for, the System's notice, and 
 
 ### Standing Surety
 
-*Built for Wendell.* A school bus driver who put himself between the children and everything for three days. He has been Downed twice and both times someone else was standing behind him. Restraint and Accord, and nine levels of it put nothing in POW: his technique is gated by frequency because his Aether would not pay for it.
+*Built for Wendell.* A school bus driver who put himself between the children and everything for three days. He has been Downed twice and both times someone else was standing behind him. Restraint and Accord, and nine levels of it put nothing in POW, so his technique costs no Aether and is once per encounter.
 
 ::: systemvoice
 *Class offered: Standing Surety.*
@@ -313,7 +313,7 @@ Each entry carries the person the class was built for, the System's notice, and 
 
 - **Profile:** Fixed. 2 FOR, 1 HRT. Lead FOR.
 - **Technique:** Hold Fast. 1 Beat, once per encounter, no Aether. Until your next turn, you and every ally in your Zone may Yield two Beats even with nowhere to be driven (Core Mechanics, "Yield"); with no destination, the second Beat gives ground in place as the first does.
-- **Permission:** Take It. Once per round, after an ally in your Zone loses a Clash and the Margin is known but before damage lands, give up one available Beat from your next turn to cut that Margin by 40, before the Grade multiplier. You declare it before the ally decides whether to Yield, and the ally Yields against what remains, so the order at the table is: the Margin is read, Wendell speaks, then the ally. It draws on the same next-turn Beats as your own Yield. Paid in Beats, so it is limited by your Beats and is not a once-per-encounter reaction. In simulation, a Surety who Takes It on every hit of 20 or more, rather than only when an ally is about to fall, halves the characters on the floor in a standard fight and cuts a hard fight's whole-party loss from six in a hundred to one.
+- **Permission:** Take It. Once per round, after an ally in your Zone loses a Clash and the Margin is known but before damage lands, give up one available Beat from your next turn to cut that Margin by 40, before the Grade multiplier. You declare it before the ally decides whether to Yield, and the ally Yields against what remains, so the order at the table is: the Margin is known, the Surety's player declares Take It, then the ally's player decides whether to Yield. It draws on the same next-turn Beats as your own Yield. In simulation, a Surety who Takes It on every hit of 20 or more, rather than only when an ally is about to fall, halves the number of characters Downed in a standard fight and cuts a hard fight's whole-party loss from six in a hundred to one.
 - **Poles:** Restraint, Accord.
 
 ### Vowbound
@@ -328,7 +328,7 @@ Each entry carries the person the class was built for, the System's notice, and 
 
 - **Profile:** Fixed. 2 HRT, 1 STR. Lead HRT.
 - **Technique:** Sworn Blow. 1 Beat, 5 Aether. +10 to a Clash against the object of your vow.
-- **Permission:** The Vow. Swear one thing aloud at the start of a fight: a person who will not fall, a foe who will not leave, a thing you will not do. A vow names an act or an object and binds your conduct; "I will win" is not one. Clashes that serve it are +5; act against it and you are Exposed for the rest of the fight. The vow is Engine signal, whichever way it goes.
+- **Permission:** The Vow. Swear one thing aloud at the start of a fight: a person who will not fall, a foe who will not leave, a thing you will not do. A vow names an act or an object and binds your conduct; "I will win" is not one. Clashes that serve it are +5; act against it and you are Exposed for the rest of the fight. A vow kept or broken is a moment to weigh at the Session-End Sweep.
 - **Poles:** Will, Restraint.
 
 ### Adjudicator
@@ -342,7 +342,7 @@ Each entry carries the person the class was built for, the System's notice, and 
 :::
 
 - **Profile:** Fixed. 1 HRT, 1 CHA, 1 PER. Lead HRT.
-- **Technique:** Sanction. 1 Beat, 5 Aether. Name an action. The next creature in sight that takes it is Exposed until the end of its next turn, unless it wins one Clash, its HRT Force against yours. One Sanction stands at a time; a new one replaces it, and it expires when the scene ends.
+- **Technique:** Sanction. 1 Beat, 5 Aether. Name an action. The next creature in sight that takes that action is Exposed until the end of its next turn, unless the creature wins one Clash, its HRT Force against yours. One Sanction stands at a time: naming a new one ends the old one, and every Sanction expires when the scene ends.
 - **Permission:** Contempt. Once per encounter, an execution attempted in your Zone provokes a free Clash from you before it lands. A reaction, and the class's one action-economy effect.
 - **Poles:** Will, Control.
 
@@ -358,7 +358,7 @@ Each entry carries the person the class was built for, the System's notice, and 
 
 - **Profile:** Guided. 1 CHA, 1 HRT, 1 returned. Lead CHA.
 - **Technique:** Open Hand. 1 Beat, 5 Aether. One enemy in your Zone at half Health or less, its choice, leaves the fight or has no Beats on its next turn, unless it wins one Clash, its HRT Force against yours (HRT by the constraint rule, whatever the class's lead). Mindless creatures ignore it.
-- **Permission:** Terms. A creature whose stat block Yields can be parleyed with mid-fight (Bestiary, "How to Read a Stat Block"); the GM sets what it wants.
+- **Permission:** Terms. A creature whose stat block says **Yields** can be parleyed with mid-fight (Bestiary, "How to Read a Stat Block"); the GM sets what it wants.
 - **Poles:** Accord, Freedom.
 
 ### Registrar
@@ -372,8 +372,8 @@ Each entry carries the person the class was built for, the System's notice, and 
 :::
 
 - **Profile:** Open. 1 PER, 2 returned. Lead PER.
-- **Technique:** Reclassify. 1 Beat, 5 Aether. The System re-reads one creature or object in sight and returns the record's entry: its Grade, its tier, and one Tactics line. The entry is exact for anything the System has priced and wrong only where the record is (The System AI, "What the System Wants"); a creature the Bestiary misclassifies is misclassified here.
-- **Permission:** Standing. Once a day, a proposal you put to the System receives an answer. The System usually declines an audience; Standing guarantees one, and the answer is the System's.
+- **Technique:** Reclassify. 1 Beat, 5 Aether. The GM tells the player the Grade, tier, and one Tactics line of one creature or object in sight, as the System's record holds them; in the fiction, the System reads it again. The answer is exact where the record is right and wrong where the record is wrong (The System AI, "What the System Wants"); a creature the Bestiary misclassifies is misclassified here.
+- **Permission:** Standing. Once a day, the player may put a proposal to the System, and the GM (or the System AI in assisted modes) answers it in the System's voice; the answer may be no. The System usually declines an audience; Standing guarantees one.
 - **Poles:** Control, Accord.
 
 ### Still One
@@ -388,7 +388,7 @@ Each entry carries the person the class was built for, the System's notice, and 
 
 - **Profile:** Open. 1 DEX, 2 returned. Lead DEX.
 - **Technique:** Go Cold. 1 Beat, 5 Aether. Until your next turn, a creature trying to find or target you must first win a Clash, its PER Force against your DEX Force with you at +10; a creature that hunts by the System's reading does not find you at all.
-- **Permission:** No Life Here. On a turn you spend no Beats, the System reads you as dead until you act: inspection of you returns nothing, titles included (an exception to What Can Be Seen), creatures that hunt by the System's reading pass you over, and the party frame shows you as it always does. Which creatures hunt by reading rather than by sight, scent, or sound is the stat block's call; none in this book's Bestiary does, and the GM tags the ones that do.
+- **Permission:** No Life Here. On a turn you spend no Beats, the System reads you as dead until you act: inspection of you returns nothing, titles included (an exception to What Can Be Seen), creatures that hunt by the System's reading pass you over, and the party frame shows you as it always does. A creature's stat block states whether it hunts by the System's reading rather than by sight, scent, or sound. None in this book's Bestiary does; the GM decides for any creature they write.
 - **Poles:** Freedom, Restraint.
 
 ### Witness
@@ -403,12 +403,12 @@ Each entry carries the person the class was built for, the System's notice, and 
 
 - **Profile:** Guided. 1 PER, 1 HRT, 1 returned. Lead PER.
 - **Technique:** Note the Pattern. Frequency, 1 Beat, once per encounter: after one round watching a creature, the GM says what it does on its next turn.
-- **Permission:** The Observation. At an unusual death in your sight, the System's observation comes to you: the creature's Grade, its tier, and one Tactics line (The System AI, "The Voice of the System").
+- **Permission:** The Observation. When a creature dies in your sight and the GM judges the death unusual, the GM tells you the creature's Grade, its tier, and one Tactics line; in the fiction, the System's observation comes to you (The System AI, "The Voice of the System").
 - **Poles:** Method, Restraint.
 
 ### Kindler
 
-*Built for Oona.* A chemistry teacher. She set the Warden's route alight with what she found in a maintenance shed, and has thrown fire at every fight since; Fire resonance is accruing and no Principle has crystallized. Force and Method: she plans the burn and then commits to it.
+*Built for Oona.* A chemistry teacher. She set the Warden's route alight with what she found in a maintenance shed, and has thrown fire at every fight since; Impact resonance is accruing and no Principle has crystallized. Force and Method: she plans the burn and then commits to it.
 
 ::: systemvoice
 *Class offered: Kindler.*
@@ -418,7 +418,7 @@ Each entry carries the person the class was built for, the System's notice, and 
 
 - **Profile:** Fixed. 2 POW, 1 PER. Lead POW.
 - **Technique:** Cast Fire. 1 Beat, 5 Aether. A ranged attack on one target in your Zone or an adjacent one, rolled on POW Force in place of STR or DEX; damage as Margin; anything that burns catches.
-- **Permission:** Tinder. What you set alight stays alight through the scene, and a burning Zone is a Hindering environment (−10; Core Mechanics, "The Clash") for everyone in it except you. Allies standing in the burning Zone take the −10 too: cast into the enemy's Zone from your own and keep your melee companions out of it, or accept that both sides fight hindered.
+- **Permission:** Tinder. What you set alight stays alight through the scene, and a burning Zone is a Hindering environment (−10; Core Mechanics, "The Clash") for everyone in it except you. Casting into the enemy's Zone from your own keeps melee allies out of the penalty.
 - **Poles:** Force, Method.
 
 **Oona at Level 10:** STR 3, DEX 8, FOR 12, HRT 12, POW 38, PER 17, CHA 5 after the bonus (Health 24, Aether 38): seven casts from a full pool, each an attack on her best Attribute, which before Level 10 she had no way to attack with.
@@ -434,7 +434,7 @@ Each entry carries the person the class was built for, the System's notice, and 
 :::
 
 - **Profile:** Guided. 1 PER, 1 DEX, 1 returned. Lead PER.
-- **Technique:** Make Do. One hour and 5 Aether, out of combat: turn the materials on hand into one Healing Pill up to the Healing Pill (30) or one piece of Scavenged Field Gear (Items) that those materials could yield; the GM says which. Never an Aether Pill, a Foundation Pill, an Attribute Treasure, or a Volatile Artifact: an Aether Pill made for 5 Aether would refill the pool outside Consolidation. Its recurring scene is the camp.
+- **Technique:** Make Do. One hour and 5 Aether, out of combat: turn the materials on hand into one pill from the Healing Pills category, up to the Healing Pill (30 Health), or one piece of Scavenged Field Gear (Items) that those materials could yield; the GM says which. Never an Aether Pill, a Foundation Pill, an Attribute Treasure, or a Volatile Artifact: an Aether Pill made for 5 Aether would refill the pool outside Consolidation.
 - **Permission:** Salvage Eye. Looking at wreckage or a pile of parts, you know what it could become: the GM lists the pills and gear the materials on hand could yield.
 - **Poles:** Method, Control.
 
@@ -452,12 +452,12 @@ Each entry carries the person the class was built for, the System's notice, and 
 
 - **Profile:** Fixed. 1 POW, 1 STR, 1 HRT. Lead POW.
 - **Technique:** Consume. Frequency: your killing blow on a creature or a person, an execution included, restores 5 Aether, at most once per fight. Guarded.
-- **Permission:** What Is Left. You read the current Health of every creature in your Zone, an exception to What Can Be Seen, which shows Health to nobody outside a party frame.
+- **Permission:** What Is Left. You read the current Health of every creature in your Zone, an exception to What Can Be Seen, where Health shows only in a party frame.
 - **Poles:** Hunger, Will.
 
 ### Underdog
 
-*Built for Tess. Guarded.* She picked fights with things above her Grade and lived, three times, and each time the record circled the moment she chose to. Force and Will.
+*Built for Tess. Guarded.* She picked fights with things above her Grade and lived, three times, and each time the GM circled the moment she chose to fight at the Session-End Sweep. Force and Will.
 
 ::: systemvoice
 *Class offered: Underdog.*
@@ -472,8 +472,8 @@ Each entry carries the person the class was built for, the System's notice, and 
 
 ## NPC Classes
 
-An NPC with a class prints it as one Tactics line in the stat block: the class name and its technique. *Class: Vowbound. Sworn Blow (5 Aether): +10 against the object of its vow, sworn aloud when the fight starts.* The profile and the permission are the character's business and a stat block does not carry them; if the permission matters in the fight, the GM plays it from this chapter.
+An NPC's class appears as one Tactics line in its stat block: the class name and its technique. *Class: Vowbound. Sworn Blow (5 Aether): +10 against the object of its vow, sworn aloud when the fight starts.* The stat block omits the profile and the permission; if the permission matters in the fight, the GM plays it from this chapter.
 
 ## Design Intent
 
-A class is small on purpose: one technique, one permission, a growth direction. The Principle track is where a character's power deepens over a campaign, and a class that carried three techniques and a bonus ladder would crowd it out and would double the Aether the book has to price. The offers cannot be refused because an offer is the System's reading of nine levels of play, and a refusable offer would let a player re-roll the record. Classes are not published because the book already has one reputation system, titles, and a second would dilute it. There is no rarity system because rarity labels promised a scale the package did not have; a killer class is a guarded power the GM placed, and the guarded list is short so that the GM can hold the whole of it in mind. The list of worked classes is long because the book teaches by example, and a GM building an offer at the table should have sixteen finished ones to hold it against.
+A class is small on purpose: one technique, one permission, a growth direction. The Principle track is where a character's power deepens over a campaign, and a class that carried three techniques and a bonus ladder would crowd it out and would double the Aether the book has to price. The offers cannot be refused because an offer is the System's reading of nine levels of play, and a refusable offer would let a player re-roll the record. Classes are not published because the book already has one reputation system, titles, and a second would dilute it. There is no rarity system because rarity labels would promise a scale the package does not have; a guarded class carries a guarded power the GM placed, and the guarded list is short so that the GM can hold the whole of it in mind. The list of worked classes is long because the book teaches by example, and a GM building an offer at the table should have sixteen finished ones to hold it against.

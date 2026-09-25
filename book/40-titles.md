@@ -14,28 +14,24 @@ the survivors' forum
 Bel Sar, route account
 :::
 
-Titles are the System's achievement layer, and they run on one loop: a character does something the System considers worth recording, a notification lands mid-session with a name and a bonus attached, and the title becomes part of the character's record; its bonus stays active unless the title is Echoed or released. Kill your tenth beast and "Ten-Slayer" arrives with +1 STR. Survive something you had no business surviving and something rarer shows up. Nobody picks them from a menu and nobody sees the thresholds in advance.
+Titles are the System's achievement layer, and they run on one loop: a character does something the System considers worth recording, a notification lands mid-session with a name and a bonus attached, and the title becomes part of the character's record. Kill your tenth beast and "Ten-Slayer" arrives with +1 STR. Survive an encounter you should have died in, and a Hidden Achievement title may follow. Nobody picks them from a menu and nobody sees the thresholds in advance.
 
-This chapter covers the four shapes a title comes in, what their bonuses are worth, and who can see them. The behavior the System is reading to generate them is the Hidden Vector Engine's business, and the titles the Integration Tutorial hands out are listed in this chapter, under "The Tutorial's Titles".
+This chapter covers the four shapes a title comes in, what their bonuses are worth, how a Hidden Achievement is generated, and the titles the Integration Tutorial hands out ("The Tutorial's Titles"). The behavior behind HVE-Resonant titles is recorded by the Hidden Vector Engine (its own chapter), and who can read a title is in What Can Be Seen.
 
 ---
 
 ## Design Intent
 
-Collecting titles is fun, comparing them is fun, and a good stack adds up to real power.
+**Title bonuses are calibrated for stacking.** Most single titles add +1 or +2 to a stat; a stack of 12 by the F-Grade cap adds +25 to +40 across key stats (see "Bonus Magnitudes"). Players are expected to hunt titles, plan around combinations, and lean on the stack when conditions converge.
 
-**Stacking is the point.** Title bonuses are calibrated so that a single title is a satisfying nudge, but a creatively constructed stack of five to ten produces visible, decisive power. Players are expected to hunt titles, plan around combinations, and lean on the stack when conditions converge.
-
-Titles arrive in four shapes (Achievement, Hidden Achievement, HVE-Resonant, Bestowed). All four coexist on a character. Nobody picks them from a menu; the GM, or the System AI in assisted modes, generates each one for the specific character who earned it.
+Titles arrive in four shapes (Achievement, Hidden Achievement, HVE-Resonant, Bestowed). All four coexist on a character. The GM, or the System AI in assisted modes, generates each one for the character who earned it.
 
 **Pacing target (soft):**
 
-- **Achievement titles:** every 3–4 sessions across the party, rather than per character
+- **Achievement titles:** the low-count catalog rows land in the first sessions; after that, one every 3–4 sessions for the whole party
 - **HVE-Resonant titles:** every Grade or major behavioral shift
 - **Hidden Achievement titles:** 1–3 times per campaign arc
-- **Bestowed titles:** whenever the fiction earns them
-
-These are guidance, not quotas.
+- **Bestowed titles:** when the GM judges that an entity in play would grant one
 
 ---
 
@@ -43,19 +39,25 @@ These are guidance, not quotas.
 
 ### Achievement Titles
 
-Generated when a player crosses a quantitative threshold the System tracks: kills, distance traveled, items crafted, Consolidations completed, days survived, locks picked, oaths fulfilled, and so on. Common, semi-predictable in rhythm, low-to-moderate mechanical impact.
+Granted when a character crosses a count the GM tracks (the System AI in assisted modes): kills, distance traveled, items crafted, Consolidations completed, days survived, locks picked, oaths fulfilled, and so on. Common, semi-predictable in rhythm, low-to-moderate mechanical impact.
 
-Players don't see thresholds in advance, but after the second or third Achievement title they begin to feel the rhythm: *something* triggers titles, and the System is watching. Recurring awards show players that the System tracks their actions. A confirmed kill is one the character dealt the finishing blow to.
+Players don't see thresholds in advance. A confirmed kill is one the character dealt the finishing blow to.
 
 The F-Grade catalog below holds twenty ready to grant, with their triggers.
 
 ### Hidden Achievement Titles
 
-Generated when a player accomplishes something statistically improbable: surviving an encounter they should have died in, solving a puzzle in an unintended way, completing an objective with a self-imposed constraint, achieving an outcome the System did not predict.
+Generated when a character accomplishes something statistically improbable: surviving an encounter they should have died in, solving a puzzle in an unintended way, completing an objective with a self-imposed constraint, achieving an outcome the System did not predict.
 
-Rare, surprising, meaningfully buffed. Generation guidance lives in The System AI chapter. Players never see criteria in advance. These are the titles players brag about.
+Rare, with larger bonuses (+3 to +5 at F-Grade). Players never see criteria in advance.
 
 **Examples:** "Improbable," "The One Who Walked Through," "Unbroken," "The First Mercy," "Cornerless."
+
+**Generating one.** The GM, or the System AI in assisted modes, writes a Hidden Achievement in three parts:
+
+- **Trigger.** A behavior the character repeated or a moment the table remembers; a circled Defining moment on the HVE sheet is the usual source. Write it as the deed: "Triggered by surviving an encounter against an enemy a full Grade above you."
+- **Bonus.** The Hidden Achievement row under "Bonus Magnitudes": +3 to +5 to one stat at F-Grade. A conditional bonus in the same range, a Clash bonus priced by the Modifier Budget, or an action economy effect may take its place (see "Mechanical Effects").
+- **Name and notice.** A short name, announced in the System's voice (The System AI, "The Voice of the System"): *Title conferred: Cornerless.* The VE that comes with it is in Cultivation, "Quest & Survival".
 
 ### HVE-Resonant Titles
 
@@ -71,9 +73,9 @@ Mechanically grant bonuses aligned with the dominant axis combination.
 
 Granted by external entities: factions, higher-Grade beings, ancient Principles, locations, or the System itself responding to a specific action. Effects vary with the granting entity: access, obligations, favors, or penalties.
 
-**Bestowed titles can be negative.** "Oathbroken" is granted automatically by the System when a sworn agreement is violated. Negative Bestowed titles cannot be unequipped or removed without specific in-fiction action: fulfilling an oath, completing a penance, defeating a specific entity. The consequence comes from the people who can see them.
+**Bestowed titles can be negative.** "Oathbroken" is granted automatically by the System when a sworn agreement is violated. Negative Bestowed titles cannot be removed without specific in-fiction action: fulfilling an oath, completing a penance, defeating a specific entity. The social consequences come from the characters who can read the title (What Can Be Seen).
 
-**Examples:** "Hand of the Iron Court" (faction-granted), "Witnessed by the Mountain" (granted by a Principle-rich location), "Oathbroken" (System-granted, negative), "Salvaged" (System-granted, negative, conferred when the System recovers an Initiate it was about to lose to its own administrative failure), "Marked by the Wild" (Bestowed by a creature or biome).
+**Examples:** "Hand of the Iron Court" (faction-granted), "Witnessed by the Mountain" (granted by a Principle-rich location), "Oathbroken" (System-granted, negative), "Salvaged" (System-granted, negative, conferred on an Initiate the tutorial gate's Purge took and the System pulled back; see "The Tutorial's Titles"), "Marked by the Wild" (Bestowed by a creature or biome).
 
 ::: lore
 The Iron Court recognizes contracts, arbitrates disputes, issues credentials, and enforces its rulings within the jurisdictions that participate in it, and cultivators serve it. It offers formal equality beside rules its most powerful clients helped write. The System grants Hand of the Iron Court to those who serve the Court and endorses nothing about it.
@@ -85,21 +87,21 @@ The Iron Court recognizes contracts, arbitrates disputes, issues credentials, an
 
 ### Stacking Rules
 
-**Stacking is unbounded.** There is no cap on the number of simultaneous active titles. A character with thirty titles benefits from all thirty, except where the mutual-exclusion rule below applies.
+**Stacking is unbounded.** Every active title applies, except where the mutual-exclusion rule below limits HVE-Resonant titles.
 
-**Mutual exclusion (HVE-Resonant only):** A character may have only **one HVE-Resonant title per axis pair active at a time**; an axis pair is one pole from each of two axes (Force + Hunger, Method + Control). When the System grants a new HVE-Resonant title that resonates with an axis pair already represented, the new title supersedes the old one. The old title is logged as "Echoed" (visible in the character's history, no longer mechanically active).
+**Mutual exclusion (HVE-Resonant only):** A character may have only **one HVE-Resonant title per axis pair active at a time**; an axis pair is one pole from each of two axes (Force + Hunger, Method + Control). When the System grants a new HVE-Resonant title that resonates with an axis pair already represented, the new title supersedes the old one. The old title is logged as "Echoed": it stays in the character's history, its flat stat bonus stays on the sheet, and its conditional and triggered effects stop.
 
-Achievement, Hidden Achievement, and Bestowed titles never conflict with each other. They simply add to the stack.
+Achievement, Hidden Achievement, and Bestowed titles never conflict with each other.
 
-**Identity titles can coexist when the axes differ.** A character can simultaneously hold "The Hungering Edge" (Force + Hunger) and "The Open Hand" (Restraint + Accord) only if their HVE profile genuinely supports both. This is rare, but possible for a character whose behavior is genuinely bimodal. The GM decides; the System AI drafts.
+**HVE-Resonant titles can coexist when the axis pairs differ.** A character can simultaneously hold "The Hungering Edge" (Force + Hunger) and "The Open Hand" (Restraint + Accord) only if the GM judges that their HVE profile supports both. This is rare, but possible for a character whose behavior is bimodal.
 
 ### Bonus Magnitudes
 
 Titles grant a mix of effect types. Magnitudes scale by the Grade at which the title was earned. The numbers below are calibrated assuming a player will stack 8–15 titles by the end of any given Grade.
 
-Every bonus is a flat number; nothing is expressed as a percentage. Conditional bonuses, action economy effects, and resistances appear only on Hidden Achievement, HVE-Resonant, and Bestowed titles, which arrive rarely enough that the list of things a player must remember mid-fight stays short.
+Every bonus is a flat number; nothing is expressed as a percentage. Conditional bonuses, action economy effects, and resistances appear only on Hidden Achievement, HVE-Resonant, and Bestowed titles.
 
-#### Flat Stat Bonuses (the workhorse)
+#### Flat Stat Bonuses
 
 The most common bonus shape, and the only shape an Achievement title grants. Multiple flat bonuses to the same stat sum directly, and a flat bonus is applied to the sheet once, the day it lands. It stays on the sheet if the title is later Echoed; only a title's conditional and triggered effects stop with it. Points lost to a stat cap stay lost.
 
@@ -115,20 +117,20 @@ The most common bonus shape, and the only shape an Achievement title grants. Mul
 <!-- /rules:table -->
 
 ::: worked
-**F-Grade stack ceiling.** A focused player with 12 active titles by F-Cap might accumulate roughly +25 to +40 stat points distributed across their key stats, a meaningful slice of the roughly 200 points an F-cap character has gathered from every source. Strong, but not game-breaking. The same player at E-Cap, having evolved or replaced most of those titles, holds an equivalent share at the E-Grade scale.
+**F-Grade stack ceiling.** A focused player with 12 active titles by F-Cap might accumulate roughly +25 to +40 stat points distributed across their key stats, a meaningful slice of the roughly 200 points an F-cap character has gathered from every source. The same player at E-Cap, having evolved or replaced most of those titles, holds an equivalent share at the E-Grade scale.
 :::
 
 #### Conditional and Situational Bonuses
 
-Bonuses that apply under a stated circumstance: outnumbered, below half HP, against a specific enemy category, in a specific environment, after killing a foe. Only Hidden Achievement, HVE-Resonant, and Bestowed titles carry them; an Achievement title's bonus is always flat.
+Bonuses that apply under a stated circumstance: outnumbered, below half HP, against a specific enemy category, in a specific environment, after killing a foe.
 
-**Magnitude:** the same range as a flat bonus of the title's class. A conditional bonus applies only while its condition holds, and a player who orchestrates the conditions for their titles to light up is doing exactly what the System rewards. A character's conditionals belong in one place on the sheet, read once when a fight starts. A conditional bonus to FOR or POW changes Force and never Max HP or Max Aether. A conditional title grants either stat points, on the table above, or a flat Clash bonus priced by the Modifier Budget (Core Mechanics).
+**Magnitude:** the same range as a flat bonus of the title's class. A conditional bonus applies only while its condition holds. A character's conditionals belong in one place on the sheet, read once when a fight starts. A conditional bonus to FOR or POW changes Force and never Max HP or Max Aether. A conditional title grants either stat points, on the table above, or a flat Clash bonus priced by the Modifier Budget (Core Mechanics).
 
-Where a title wants to touch damage against a category of enemy, grant a flat Clash bonus against that category ("+10 to Clashes against constructs"); the Margin carries it into damage on its own.
+For a damage bonus against a category of enemy, grant a flat Clash bonus against that category ("+10 to Clashes against constructs"); the larger Margin raises damage.
 
 #### Action Economy Bonuses
 
-Free Beats or extra actions under specific conditions. Genuinely powerful; use sparingly.
+Free Beats or extra actions under specific conditions.
 
 **F-Grade examples:**
 
@@ -136,7 +138,7 @@ Free Beats or extra actions under specific conditions. Genuinely powerful; use s
 - "Gain 1 Beat on your first turn of any combat."
 - "Once per Consolidation, take a free Beat outside the action economy when you have not yet acted this turn."
 
-These should be rare, typically Hidden Achievement or peak Bestowed.
+These should be rare, typically Hidden Achievement or Bestowed (Major).
 
 #### Resistances and Affinities
 
@@ -150,25 +152,23 @@ Standing defenses against specific damage types, Principle resonance gifts, envi
 
 ### Negative Titles
 
-A negative Bestowed title cannot be unequipped or removed without specific in-fiction action. The character carries it until they earn the conditions of release.
+A character carries a negative Bestowed title until they meet its release condition.
 
 **Common shape:** a flat penalty (−2 to a stat, +10 difficulty against a specific entity) plus a concrete social consequence (NPCs of a faction turn hostile on sight, wildlife that once ignored you now hunts you).
 
-**Release conditions** are written into the title itself when granted. "Oathbroken" is released by fulfilling a new sworn oath under witness. "Marked for the Hunt" is released by defeating the entity that marked you. The System AI generates the release condition based on the violation.
+**Release conditions** are written into the title itself when granted. "Oathbroken" is released by fulfilling a new sworn oath under witness. "Marked for the Hunt" is released by defeating the entity that granted it. The System AI generates the release condition based on the violation.
 
-**A released negative title may convert rather than vanish.** Where the release condition is the same test the character originally failed, the System replaces it with an Achievement title commemorating the second attempt: "Salvaged" becomes "Came Back Whole." Use conversion when the character earned the release through the fiction; use plain removal when it was bought, bargained for, or granted by an authority.
+**A released negative title may convert into an Achievement title.** Where the release condition is the same test the character originally failed, the GM replaces the negative title with an Achievement title commemorating the second attempt: "Salvaged" becomes "Came Back Whole." Use conversion when the character earned the release through the fiction; use plain removal when it was bought, bargained for, or granted by an authority.
 
 ### Passive Recognition
 
-All earned titles are visible to the System, and to other characters within the limits in What Can Be Seen. They affect NPC reactions, faction relationships, and System-generated content **regardless of how many are mechanically "active"**. There is no concept of "equipping" titles. They are part of the character's record, always.
-
-Active titles apply automatically when their conditions are met. Echoed titles remain in the history without their former mechanical effects. Stacking is automatic.
+There is no concept of "equipping" titles. Active titles apply automatically when their conditions are met. An Echoed title keeps its flat stat bonus and loses its conditional and triggered effects.
 
 ---
 
 ## The F-Grade Achievement Catalog
 
-Twenty Achievement titles with their triggers, so the GM recognizes a threshold when the table crosses it rather than inventing one on the spot. The pacing target is an Achievement every 3 to 4 sessions across the party; when play crosses a row, grant it as written. New ones copy the shape: a countable deed, a flat bonus, a short name.
+Twenty Achievement titles with their triggers. When a character meets a trigger, grant the title as written. New ones copy the shape: a countable deed, a flat bonus, a short name.
 
 **Slaughter**
 
@@ -254,7 +254,7 @@ How HVE-Resonant titles change over time.
 
 **HVE-Resonant titles are replaced when:**
 
-- The character's behavioral signature shifts dominantly to a different axis pairing. The old title is "Echoed" (logged in history, no longer active). A new title for the new pairing is generated.
+- The character's behavioral signature shifts dominantly to a different axis pairing. The old title is Echoed: it stays in the history with its flat stat bonus, and its conditional and triggered effects stop. A new title for the new pairing is generated.
 
 **HVE-Resonant titles coexist when:**
 
@@ -264,21 +264,21 @@ How HVE-Resonant titles change over time.
 
 **Hidden Achievement titles never evolve.** They commemorate a specific moment. They keep their original bonus.
 
-**Bestowed titles evolve only by external action.** A faction promotes you, a Principle deepens its acknowledgment, a higher-Grade entity reaffirms its mark. Bestowed evolution is narrative, not automatic.
+**Bestowed titles evolve only by external action.** A faction promotes you, a Principle deepens its acknowledgment, a higher-Grade entity renews its grant.
 
 ---
 
 ## Inspection and Visibility
 
-**The System always sees all titles.** Every title affects System-generated content (encounters, opportunities, Mandates, faction reactions) regardless of who else can see it.
+**The System always sees all titles.** Every title, active or Echoed, affects System-generated content (encounters, opportunities, Mandates from System Quests, faction reactions) regardless of who else can see it.
 
-Ordinary inspection reveals titles, with visibility determined by Grade, which is what makes them function as reputation. Who can read which ones, how Bestowed titles are worn or hidden, and why negative titles cannot be concealed are all in the What Can Be Seen chapter.
+Ordinary inspection reveals titles, with visibility determined by Grade, and NPCs react to the titles they can read. Who can read which ones, how Bestowed titles are worn or hidden, and why negative titles cannot be concealed are all in the What Can Be Seen chapter.
 
 ---
 
 ## Sample F-Grade Titles by HVE Archetype
 
-The four archetypes from the Hidden Vector Engine chapter illustrate magnitude and flavor. Each archetype gets a sample stack of five titles spanning the four categories. The System AI generates titles dynamically; these are calibration references, not menus.
+The four archetypes from the Hidden Vector Engine chapter illustrate magnitude and flavor. Each archetype gets a sample stack of five titles spanning the four categories. The System AI generates titles dynamically; these are calibration references.
 
 ### The Apex Predator (Force + Hunger + Will + Freedom)
 
@@ -332,7 +332,7 @@ The four archetypes from the Hidden Vector Engine chapter illustrate magnitude a
 
 ## Open Design Space
 
-Deliberately deferred until playtest data or campaign progression demands them:
+Deferred until playtest data or campaign progression demands them:
 
 - **E-Grade and higher title evolution chains.** Sample E-Grade titles per archetype, illustrating what each F-Grade title evolves into. Will be drafted as the campaign approaches the first Breakthroughs.
 - **Title interaction with class evolution.** When a character selects a class at Level 10 (or evolves at Breakthrough), how do existing titles interact? Some may grant the class evolution itself; others may provide bonuses that the class amplifies.

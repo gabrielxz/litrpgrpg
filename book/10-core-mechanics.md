@@ -200,9 +200,9 @@ The GM may shift any tier one step when the fictional stakes demand it.
 
 ### System Volatility
 
-Every d100 roll explodes. When the natural die meets or exceeds the Volatility Threshold for the roller's Grade, roll another d100 and add it. Each new die can explode on the same threshold. In the world, this is the System's energy running through the act; at the table, the word is **exploding**.
+Every d100 roll explodes: every Clash and every check, in combat or out. When the natural die meets or exceeds the Volatility Threshold for the roller's Grade, roll another d100 and add it. Each new die can explode on the same threshold. In the world, this is the System's energy running through the act; at the table, the word is **exploding**.
 
-**The trigger** is the **natural d100 before any modifiers**. Force, Tactical Modifiers, Cross-Grade Adjustments, item and ability bonuses are all ignored for triggering.
+**The trigger** is the **natural d100 before any modifiers**. Force, Tactical Modifiers, Cross-Grade Adjustments, item and ability bonuses are all ignored for triggering. A d100 read against a table (an item's effect roll, the collapse clock) is not a Clash or a check and does not explode.
 
 <!-- rules:table volatility -->
 | **Grade** | **Explodes On (natural)** | **Probability** |

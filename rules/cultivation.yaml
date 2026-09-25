@@ -23,14 +23,14 @@ saturation:
     hourly_roll: d100
     collapse_at_or_below: [25, 50, 75]   # end of hours 1, 2, 3 at Critical
     automatic_hour: 4
-    cost: 1 temporary Raw point of FOR or POW, player's choice, returned after the next full clean Consolidation
-    wakes_when: stored VE falls below Tolerance
+    cost: 1 temporary Raw point of FOR or POW, player's choice, returned after the next Consolidation completed without interruption
+    wakes_when: stored VE falls to Tolerance or below
     at_level_cap: wakes after 5 full hours with the VE still stored   # Consolidation at the cap refines nothing
   gm_narrates_symptoms: true     # the System does not announce band thresholds
 
 consolidation:
   refine_per_hour: 20            # F-Grade; ×10 per Grade; the same for every character of the Grade
-  refine_per_hour_high_density: 40
+  refine_per_hour_high_density: 40   # at a High or Extreme density site (breakthrough.yaml energy_density)
   hp_restored_per_hour: one fifth of Max HP   # fractions drop like everything else
   hp_full_at_hour: 5            # the fifth full hour restores the rest
   minimum_hours: 1
