@@ -1,10 +1,10 @@
-# Characters: Attributes, point buy, derived stats, leveling budget, Proficiencies, the pregens.
-# source: 15-character-creation.md; 17-progression.md; 10-core-mechanics.md "Proficiencies and Skill Checks"
+# Characters: Attributes, point buy, derived stats, leveling budget, Backgrounds, Proficiencies, the pregens.
+# source: 15-character-creation.md; 17-progression.md; 10-core-mechanics.md "Backgrounds", "Proficiencies"
 
 attributes:
   - code: STR
     name: Strength
-    governs: Physical power and carry capacity. Heavy melee.
+    governs: Physical power. Heavy melee, lifting, breaking, and feats of raw strength.
   - code: DEX
     name: Dexterity
     governs: Precision, speed, manual agility. Evasion, finesse melee, ranged attacks.
@@ -13,7 +13,7 @@ attributes:
     governs: Endurance and structural integrity. Health and standing your ground.
   - code: HRT
     name: Heart
-    governs: Resolve and spiritual anchor. Momentum, defense against mental, spiritual, and coercive attacks, Aura Pressure, the Breakthrough.
+    governs: Resolve and spiritual anchor. Momentum, defense against mental, spiritual, and coercive attacks, the Will Save against Aura Pressure, the Breakthrough.
   - code: POW
     name: Power
     governs: Supernatural output. Spells, Applications, the Aether pool.
@@ -83,13 +83,40 @@ behavioral_stat_mapping:
   - {behavior: "Imposes structure, creates systems, controls variables",     primary: PER, secondary: POW}
   - {behavior: "Breaks rules, improvises, embraces chaos",                   primary: DEX, secondary: POW}
 
+# A Background is what the character did before Integration: one or two plain-language
+# lines. No number, no Marks, no tiers. It never applies to an attack or a defense.
+backgrounds:
+  at_creation: one or two lines
+  grants:
+    - attempt work that needs training (surgery, an old script, rewiring a panel)
+    - routine work in its field succeeds without a roll (Trivial and Easy checks at the character's own Grade)
+    - Advantage on a check, or a Clash outside combat, that falls in its field
+  never_applies_to: attack or defense rolls
+
+sample_backgrounds:
+  - {name: "ER nurse, twelve years", covers: "Wounds, triage, medication, and staying calm while someone is dying."}
+  - {name: Volunteer firefighter, covers: "Rescue, first aid, fire, and working through the night without sleep."}
+  - {name: Land surveyor, covers: "Maps, distances, reading terrain, and finding a boundary nobody marked."}
+  - {name: Electrician, covers: "Wiring, power, circuits, and what will kill you if you touch it."}
+  - {name: Auto mechanic, covers: "Engines, machines with moving parts, and making a thing run on the wrong part."}
+  - {name: Hunting guide, covers: "Tracking, fieldcraft, weather, and living outdoors for days."}
+  - {name: "Army infantry, four years", covers: "Small-unit tactics, weapons care, marching, and field first aid."}
+  - {name: High school chemistry teacher, covers: "Reactions, solvents, lab safety, explosives, and a room full of teenagers."}
+  - {name: Trial lawyer, covers: "Argument, reading a witness, and finding the weak point in a story."}
+  - {name: Line cook, covers: "Knives, heat, timing, and feeding forty people from what is in the walk-in."}
+  - {name: Locksmith, covers: "Locks, safes, alarms, and the habits of the people who install them."}
+  - {name: Grad student in classics, covers: "Dead languages, old scripts, archives, and research."}
+  - {name: Warehouse shift lead, covers: "Lifting and loading, forklifts, logistics, and keeping a crew working."}
+  - {name: Ran with a crew, covers: "Black markets, rumor, lying well, and who to ask."}
+  - {name: Street musician, covers: "Performance, holding a crowd, and reading who will pay."}
+
+# Proficiencies are weapon training, tracked by the System. One at creation, at Trained.
 proficiencies:
-  at_creation: 3
+  at_creation: 1
   starting_tier: Trained
   tiers:
     - name: Trained
       bonus: 5
-      grants: [Routine Mastery, Specialist Gating access]
     - name: Seasoned
       bonus: 10
       marks_required: 3
@@ -100,8 +127,7 @@ proficiencies:
       free_action: once on your turn, the first action using the Proficiency costs no Beat
   untrained_bonus: 0
   unheld_domain_grant_marks: 3    # 3 Marks in a domain you have no Proficiency in: granted at Trained, Marks spent
-  mark_trigger: natural d100 at or above the Volatility Threshold on a Clash or skill check using the domain
-  routine_mastery: auto-succeed Trivial and Easy tasks of your own Grade with any relevant tier
+  mark_trigger: the die explodes on an attack or defense made with the domain's weapon shape
   weapons_carry_bonus: false      # the bonus is the wielder's tier
 
 fighting_domains:
@@ -125,38 +151,6 @@ sample_proficiencies:
     - {name: hand to hand, covers: "Fists, grapples, throws, and every martial art."}
     - {name: archery and throwing, covers: "Bows, crossbows, slings, and anything you let go of."}
     - {name: firearms, covers: "Pistols, rifles, shotguns, and the System-forged weapons built on the same principle."}
-    - {name: military tactics, covers: "Formations, ground, supply, and reading an enemy's plan."}
-    - {name: athletics, covers: "Climbing, swimming, jumping, lifting, and long pursuit."}
-    - {name: endurance training, covers: "Outlasting cold, thirst, pain, and sleeplessness."}
-  Living Outdoors:
-    - {name: wilderness survival, covers: "Shelter, fire, water, and not dying in weather."}
-    - {name: tracking and fieldcraft, covers: "Following a trail, reading sign, moving without leaving one."}
-    - {name: foraging and herblore, covers: "What is edible, what is medicine, what kills."}
-    - {name: animal handling, covers: "Calming, driving, riding, and reading beasts."}
-    - {name: navigation, covers: "Staying found, by stars, landmarks, or instruments."}
-  People:
-    - {name: persuasion, covers: "Argument, appeal, and finding what someone actually wants."}
-    - {name: intimidation, covers: "Making a threat land without having to carry it out."}
-    - {name: deception, covers: "Lies, disguise, false papers, and keeping a story straight."}
-    - {name: performance, covers: "Music, oratory, theatre, and holding a room."}
-    - {name: leadership, covers: "Getting frightened people to act together."}
-    - {name: teaching, covers: "Making someone else able to do what you can do."}
-    - {name: streetwise, covers: "Black markets, gangs, rumor, and who to ask."}
-  Knowledge:
-    - {name: research methodology, covers: "Finding the answer in a library, an archive, or a ruin."}
-    - {name: ancient languages, covers: "Dead scripts, inscriptions, and their conventions."}
-    - {name: field medicine, covers: "Wounds, poisons, fevers, and stabilizing the dying."}
-    - {name: chemistry, covers: "Reactions, compounds, solvents, and explosives."}
-    - {name: logistics and accounting, covers: "Ledgers, supply lines, and where the money went."}
-  Making and Breaking:
-    - {name: mechanical tinkering, covers: "Machines with moving parts: repair, modification, sabotage."}
-    - {name: jury-rigging, covers: "Making a thing work with the wrong materials, briefly."}
-    - {name: electronics, covers: "Circuits, sensors, and salvaged equipment."}
-    - {name: construction, covers: "Building, shoring, demolition, and judging what will hold."}
-    - {name: vehicle operation, covers: "Driving, piloting, and controlling a vehicle under stress."}
-    - {name: lockpicking and security, covers: "Locks, alarms, safes, and the habits of the people who set them."}
-    - {name: stealth and infiltration, covers: "Moving unseen and being somewhere you should not be."}
-    - {name: sleight of hand, covers: "Palming, planting, lifting, and misdirection."}
 
 # The book's recurring cast. Any worked example touching them must reconcile with these numbers.
 pregens:
@@ -165,21 +159,24 @@ pregens:
     grade: F
     tagline: "Warehouse shift lead. First through the door, and first to ask what it pays."
     stats: {STR: 8, DEX: 5, FOR: 7, HRT: 4, POW: 6, PER: 5, CHA: 5}
-    proficiencies: [axes and hammers, athletics, streetwise]
+    proficiencies: [axes and hammers]
+    background: "Warehouse shift lead, eight years of lifting and loading; grew up on the east side and still knows who sells what."
     playing: "Fight close and end it fast. Want things out loud: the better weapon, the bigger bounty, the pill nobody else has claimed. Her generosity is real, and it is never first."
   - name: Joe
     level: 1
     grade: F
     tagline: "Volunteer firefighter. Hits hard so nobody else has to."
     stats: {STR: 8, DEX: 5, FOR: 7, HRT: 5, POW: 4, PER: 6, CHA: 5}
-    proficiencies: [axes and hammers, endurance training, field medicine]
+    proficiencies: [axes and hammers]
+    background: "Volunteer firefighter and EMT: rescue, first aid, and long nights without sleep."
     playing: "Stand between the danger and everyone else, and swing like the door needs breaking. He will take a bad trade if somebody weaker comes out ahead on it."
   - name: Andre
     level: 1
     grade: F
     tagline: "Land surveyor. Looks first, counts everything, and knows where the exits are."
     stats: {STR: 4, DEX: 7, FOR: 5, HRT: 6, POW: 5, PER: 9, CHA: 4}
-    proficiencies: [tracking and fieldcraft, archery and throwing, navigation]
+    proficiencies: [archery and throwing]
+    background: "Land surveyor, and a deer hunter every fall since he was twelve: maps, terrain, tracking."
     playing: "Look before anyone moves, plan the way out before the way in, and take only what the plan needs. When the party gets loud, he is the one counting."
 
 # Interpretation: the translation faculty every Integrant holds. No score, no tier, not on the sheet.

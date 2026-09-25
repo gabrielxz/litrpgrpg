@@ -103,3 +103,20 @@ div.example::before {
   color: #2EB4C6;
   margin-bottom: 0.4em;
 }
+
+div.worked {
+  border: 1px solid #AAA396;
+  background-color: #F1E6D6;
+  padding: 0.6em 0.9em;
+  margin: 1.1em 0;
+}
+div.worked::before {
+  content: "EXAMPLE";
+  display: block;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 0.72em;
+  letter-spacing: 0.08em;
+  color: #525553;
+  margin-bottom: 0.4em;
+}

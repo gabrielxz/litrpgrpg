@@ -46,7 +46,7 @@ Restore HP instantly. In combat, consuming a pill costs **1 Beat**, spent by who
 | Pristine Recovery Pill | F | 80 |
 <!-- /rules:table -->
 
-E-Grade pills heal ×10 the listed amount for an E-Grade body, and a lower-Grade pill in a higher-Grade body works at its own numbers. **An F-Grade body cannot process one at all:** the concentration is wrong for the frame holding it, and the pill does nothing but leave a metallic burn in the throat and a bad hour afterward. Hoarding higher-Grade medicine against a future Grade is sensible; swallowing it now is a waste of a valuable thing.
+**Pills are Grade-locked in both directions.** An E-Grade pill heals ×10 the listed amount, and only in an E-Grade body. A pill carries a concentration meant for one frame; in a body of any other Grade it does nothing but leave a metallic burn in the throat and a bad hour afterward. Hoarding higher-Grade medicine against a future Grade is sensible, and a character who Breaks Through can trade their leftover F-Grade pills to someone who still needs them.
 
 **Healing pills cap at the user's Max HP.** Excess healing is wasted.
 
@@ -143,7 +143,7 @@ These are the starting and recovery tier. Higher-quality weapons (named, System-
 
 **Wielding without a Proficiency:** a character with no relevant Proficiency may still pick up any weapon and adds nothing to the Clash. A Seasoned soldier with a greatsword adds +10; a librarian swinging the same blade adds +0, and so does an axe Master who has never trained with swords.
 
-**Temper.** An Integrated body resists ordinary force: the energy a weapon carries on its own, whether muzzle energy, mass, an edge, or a fall. What passes through is the wielder's own Force, carried by the weapon, so a point-blank shotgun does Margin damage like everything else. Temper grows with the body, ×10 per Grade, and the Grade Gap Rule (Core Mechanics, "The Grade Gap Rule") is where a higher-Grade body's Temper appears on the table. Artillery, vehicle weapons, and explosives have no weapon shape the System recognizes: they are improvised objects, and the shell carries the user's Force; a thrown one is thrown, so it uses DEX and the archery and throwing domain and nothing else.
+**Temper.** An Integrated body resists ordinary force: the energy a weapon carries on its own, whether muzzle energy, mass, an edge, or a fall. What passes through is the wielder's own Force, carried by the weapon, so a point-blank shotgun does Margin damage like everything else. Temper grows with the body, ×10 per Grade, and the Cross-Grade Adjustment (Core Mechanics, "Fighting Across a Grade") is where a higher-Grade body's Temper appears on the table. Artillery, vehicle weapons, and explosives have no weapon shape the System recognizes: they are improvised objects, and the shell carries the user's Force; a thrown one is thrown, so it uses DEX and the archery and throwing domain and nothing else.
 
 **Firearms** are a weapon shape like any other, and cartridges are the one part of a gun that runs out: a found firearm holds 1d10 rounds, ammunition exists wherever Earth left it, and nothing in this book makes more. Arrows are made and recovered, and everything let go is archery and throwing, so that domain's Marks are always fed.
 

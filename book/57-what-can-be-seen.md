@@ -111,5 +111,5 @@ That narrow window is worth more than it looks. Knowing an ally's true condition
 Deferred rather than decided:
 
 - **Inspection as a contested action.** Everything above resolves off Grade alone. Whether a character can invest in reading people better, and whether another can invest in being harder to read, is unbuilt. It is the natural home for a PER-based skill and for the first equipment that hides a title from a peer.
-- **False readings.** Nothing currently lets a character present a title they do not hold, or a Grade they have not reached. The genre is full of exactly that, and it belongs with the deception Proficiency when it is built.
+- **False readings.** Nothing currently lets a character present a title they do not hold, or a Grade they have not reached. The genre is full of exactly that, and it belongs with a deception technique when one is built.
 - **What higher-Grade beings volunteer.** The table above says what an observer can take. What a powerful being chooses to show on purpose, and what it costs them to suppress, is Aura Pressure's territory and is only half-specified.

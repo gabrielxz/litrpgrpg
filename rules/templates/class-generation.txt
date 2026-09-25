@@ -21,6 +21,6 @@ combat, reduce the Cross-Grade Adjustment, or grant a Beat. Make the
 three offers differ in role. Prefer powers that make the player
 declare something.
 
-Character: [stats, level, Proficiencies, weapons, Principle, titles]
+Character: [stats, level, Background, Proficiencies, weapons, Principle, titles]
 Record: [Deep Vector reads, the circled Defining moments, what the
 player keeps doing]

@@ -159,6 +159,24 @@
                      left=6pt, right=6pt, top=2pt, bottom=2pt}
 }
 
+% Worked Example — the arithmetic of a rule, shown once. Quieter than the
+% Example of Play (stone rule, no cyan) so the two stay distinguishable.
+% Breakable and parbox=false for the same reasons as playexample.
+\newtcolorbox{workedexample}{
+  enhanced, breakable, parbox=false,
+  colback=gbbonedeep!40!gbbone,
+  colframe=gbstone,
+  boxrule=0.6pt, arc=0pt, outer arc=0pt,
+  left=12pt, right=12pt, top=10pt, bottom=10pt,
+  before skip=12pt, after skip=12pt,
+  title={EXAMPLE},
+  fonttitle=\sffamily\bfseries\footnotesize,
+  coltitle=gbslate,
+  attach boxed title to top left={xshift=12pt, yshift=-\tcboxedtitleheight/2},
+  boxed title style={colback=gbbonedeep!40!gbbone, colframe=gbstone, boxrule=0.5pt, arc=0pt,
+                     left=6pt, right=6pt, top=2pt, bottom=2pt}
+}
+
 % Stat Block — distressed gray box with heavy top rule
 % For monster/character stat blocks
 \newtcolorbox{statblock}{

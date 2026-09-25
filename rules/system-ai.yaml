@@ -11,7 +11,7 @@ unplugged_floor: nothing in the book requires software
 
 functions:
   - name: Class Generation (Level 10)
-    inputs: [HVE profile (Deep reads and the circled Defining moments), stats, Proficiencies and weapons, Principle, titles held, what the player keeps doing]
+    inputs: [HVE profile (Deep reads and the circled Defining moments), stats, Background, Proficiencies and weapons, Principle, titles held, what the player keeps doing]
     outputs: three class offers, each the package in classes.yaml (a name in two descriptions, a three-point growth profile, one technique, one standing permission)
     technique_aether_at_f: 5
     unplugged: Classes, "Building a Class for a Specific Human"; bonuses priced against the Modifier Budget; never the guarded list
@@ -51,7 +51,7 @@ unknown_to_everyone: [where the System came from, what it does with what it lear
 voice:
   register: one impersonal register at every Grade; higher access changes what it communicates, never its personality
   rules: [states; never persuades, apologizes, or encourages; short declaratives; precise numbers; no pronouns for itself; where a human would soften, the System specifies; no chatbot mannerism]
-  units: in-world only (Attributes, levels, Grades, classes, titles, Health, Aether, VE, quests, hours, meters); never round, Beat, turn, roll, die, Margin, DC, or check
+  units: in-world only (Attributes, levels, Grades, classes, titles, Health, Aether, VE, quests, hours, meters); never round, Beat, turn, roll, die, Margin, Resistance, or check
   typography: bare italics inside a systemvoice box; no brackets, no bold
   humor: never performed; the System states what it measured and the absurdity belongs to the world (the tutorial's 40-degree lock and a body at 36.6)
   attention: direct address rare; a personal audience usually declined; it sometimes explains what it measured; never the Engine's reading of a person

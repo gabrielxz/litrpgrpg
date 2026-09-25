@@ -114,7 +114,9 @@ The most common bonus shape, and the only shape an Achievement title grants. Mul
 | Bestowed (Major) | +5 to +10 across multiple stats | +50 to +100 | ×100 |
 <!-- /rules:table -->
 
-**Example F-Grade stack ceiling:** A focused player with 12 active titles by F-Cap might accumulate roughly +25 to +40 stat points distributed across their key stats, a meaningful slice of the roughly 200 points an F-cap character has gathered from every source. Strong, but not game-breaking. The same player at E-Cap, having evolved or replaced most of those titles, holds an equivalent share at the E-Grade scale.
+::: worked
+**F-Grade stack ceiling.** A focused player with 12 active titles by F-Cap might accumulate roughly +25 to +40 stat points distributed across their key stats, a meaningful slice of the roughly 200 points an F-cap character has gathered from every source. Strong, but not game-breaking. The same player at E-Cap, having evolved or replaced most of those titles, holds an equivalent share at the E-Grade scale.
+:::
 
 #### Conditional and Situational Bonuses
 

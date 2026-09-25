@@ -18,7 +18,7 @@ A character reaches Level 10 with nine levels of play on the record, and the Sys
 
 ## What a Class Is
 
-**The job.** A class makes a chosen role reliably playable. Attributes supply strengths, Proficiencies supply expertise, Principles supply personal power, and titles supply recognition. None of them promises that the healer can heal every fight, or that the vanguard reaches the enemy line before it reaches the archers. A class does. Before Level 10 a character's verbs are Surge, items, and whatever one Application a Principle has granted; the class adds the technique the role was missing and the permission that lets the role work.
+**The job.** A class makes a chosen role reliably playable. Attributes supply strengths, Backgrounds and Proficiencies supply expertise, Principles supply personal power, and titles supply recognition. None of them promises that the healer can heal every fight, or that the vanguard reaches the enemy line before it reaches the archers. A class does. Before Level 10 a character's verbs are Surge, items, and whatever one Application a Principle has granted; the class adds the technique the role was missing and the permission that lets the role work.
 
 **A technique is known; a Principle is understood.** A class technique is something the character knows how to do: learned, reliable, the same every time. A Principle is an understanding the character brings to everything, and occasionally expresses directly through its Applications. The two can do the same thing. A Battle Medic's Triage and a Mending Principle's Close Wound both heal. They differ in how they are acquired (offered at Level 10 against earned through Insight), how broadly they equip (a class covers a role, a Principle covers a truth), and how they grow (a class technique is fixed at its origin Grade, and an Application's scale follows the body).
 
@@ -117,7 +117,7 @@ A permission costs nothing and rolls nothing. It changes a decision the characte
 
 - **At most one action-economy effect per class**, counting the technique and the permission together: a Rush, a free Disengage, a free move, or a reaction. A class never has two.
 - **A reaction is once per encounter.** A reaction is a permission or technique that fires on someone else's turn; the Iron Verdict title (Titles) is the model. A reaction paid in Beats, such as a Yield taken on an ally's behalf, is limited by the Beats instead.
-- **The same act is never free twice.** A class's free or combined act and a Master's free action (Core Mechanics, "Proficiencies and Skill Checks") apply to different acts: a Master of axes who Rushes pays Rush's 1 Beat for the move and the strike together, and her free swing is her next attack. A title's third Beat is an ordinary Beat and may pay for a Rush. A class never grants a Beat (Core Mechanics, "Action Economy: Beats").
+- **The same act is never free twice.** A class's free or combined act and a Master's free action (Core Mechanics, "Proficiencies") apply to different acts: a Master of axes who Rushes pays Rush's 1 Beat for the move and the strike together, and her free swing is her next attack. A title's third Beat is an ordinary Beat and may pay for a Rush. A class never grants a Beat (Core Mechanics, "Action Economy: Beats").
 
 ### Nothing else
 
@@ -133,7 +133,7 @@ A class never touches these, whatever its notice says:
 - **Aether in combat.** Aether never regenerates during a fight, except by the one guarded power below.
 - **The Cross-Grade Adjustment.** It is never dented, except by the guarded powers below.
 
-**A technique that constrains an enemy's choices** (holds it, forbids an act, turns it away) offers the enemy one Opposed Clash, its HRT Force against yours (Core Mechanics, "Opposed Rolls"), whatever the class's lead Attribute. A constraint that rides an attack the character already won needs no second roll.
+**A technique that constrains an enemy's choices** (holds it, forbids an act, turns it away) offers the enemy one Clash, its HRT Force against yours (Core Mechanics, "Clashes"), whatever the class's lead Attribute. A constraint that rides an attack the character already won needs no second roll.
 
 ### The guarded list
 
@@ -153,7 +153,7 @@ The app never generates from the guarded list. The GM does, on purpose, once.
 
 The GM, or the System AI in assisted modes, builds three offers from the character's record.
 
-1. **Read the record.** The Deep Vector and the circled Defining moments from the Session-End Sweeps (The Hidden Vector Engine, "The Session-End Sweep"), the Principle if one has crystallized, the Proficiencies, and the thing the player keeps doing that no rule asked for.
+1. **Read the record.** The Deep Vector and the circled Defining moments from the Session-End Sweeps (The Hidden Vector Engine, "The Session-End Sweep"), the Principle if one has crystallized, the Background and Proficiencies, and the thing the player keeps doing that no rule asked for.
 2. **Name the role each offer makes reliable.** One role per offer. Three roles the record supports, as different from each other as the record allows.
 3. **Choose the profile.** The Attributes the role runs on, in order. Fixed for a role that needs the body built one way; Guided or Open for a role that leaves room.
 4. **Write the technique.** What the role needs in its recurring scenes, which for a maker or a negotiator are seldom fights. Pick the cost shape: Aether for a tool used freely, Frequency for a move that would be abused, Drawback for a move that should hurt. Price the bonus against the Budget.
@@ -190,7 +190,7 @@ combat, reduce the Cross-Grade Adjustment, or grant a Beat. Make the
 three offers differ in role. Prefer powers that make the player
 declare something.
 
-Character: [stats, level, Proficiencies, weapons, Principle, titles]
+Character: [stats, level, Background, Proficiencies, weapons, Principle, titles]
 Record: [Deep Vector reads, the circled Defining moments, what the
 player keeps doing]
 ```
@@ -224,7 +224,7 @@ Each entry carries the person the class was built for, the System's notice, and 
 
 ### Battle Medic
 
-*Built for Nia.* A trauma nurse. In the tutorial she stabilized two people who should have died and talked a third out of a fight she could not win. Her Proficiencies are field medicine, endurance training, and persuasion. Nine levels of play read Restraint and Accord. No supportive behavior in the pre-class table maps to POW, so every point of POW she gained before Level 10 was one of her own free points.
+*Built for Nia.* A trauma nurse. In the tutorial she stabilized two people who should have died and talked a third out of a fight she could not win. Her Background reads "trauma nurse, nine years." Nine levels of play read Restraint and Accord. No supportive behavior in the pre-class table maps to POW, so every point of POW she gained before Level 10 was one of her own free points.
 
 ::: systemvoice
 *Class offered: Battle Medic.*
@@ -387,7 +387,7 @@ Each entry carries the person the class was built for, the System's notice, and 
 :::
 
 - **Profile:** Open. 1 DEX, 2 returned. Lead DEX.
-- **Technique:** Go Cold. 1 Beat, 5 Aether. Until your next turn, a creature trying to find or target you must first win an Opposed Clash, its PER Force against your DEX Force with you at +10; a creature that hunts by the System's reading does not find you at all.
+- **Technique:** Go Cold. 1 Beat, 5 Aether. Until your next turn, a creature trying to find or target you must first win a Clash, its PER Force against your DEX Force with you at +10; a creature that hunts by the System's reading does not find you at all.
 - **Permission:** No Life Here. On a turn you spend no Beats, the System reads you as dead until you act: inspection of you returns nothing, titles included (an exception to What Can Be Seen), creatures that hunt by the System's reading pass you over, and the party frame shows you as it always does. Which creatures hunt by reading rather than by sight, scent, or sound is the stat block's call; none in this book's Bestiary does, and the GM tags the ones that do.
 - **Poles:** Freedom, Restraint.
 
@@ -434,7 +434,7 @@ Each entry carries the person the class was built for, the System's notice, and 
 :::
 
 - **Profile:** Guided. 1 PER, 1 DEX, 1 returned. Lead PER.
-- **Technique:** Make Do. One hour and 5 Aether, out of combat: turn the materials on hand into one Healing Pill up to the Healing Pill (30) or one piece of Scavenged Field Gear (Items) that those materials could yield; the GM says which. Never an Aether Pill, a Foundation Pill, an Attribute Treasure, or a Volatile Artifact: an Aether Pill made for 5 Aether would be a refill, and Aether refills only at Consolidation. Its recurring scene is the camp.
+- **Technique:** Make Do. One hour and 5 Aether, out of combat: turn the materials on hand into one Healing Pill up to the Healing Pill (30) or one piece of Scavenged Field Gear (Items) that those materials could yield; the GM says which. Never an Aether Pill, a Foundation Pill, an Attribute Treasure, or a Volatile Artifact: an Aether Pill made for 5 Aether would refill the pool outside Consolidation. Its recurring scene is the camp.
 - **Permission:** Salvage Eye. Looking at wreckage or a pile of parts, you know what it could become: the GM lists the pills and gear the materials on hand could yield.
 - **Poles:** Method, Control.
 
@@ -466,7 +466,7 @@ Each entry carries the person the class was built for, the System's notice, and 
 :::
 
 - **Profile:** Fixed. 2 STR, 1 HRT. Lead STR.
-- **Technique:** Find the Seam. Frequency, part of an attack, once per encounter: an attack on a higher-Grade target ignores 20 of its Cross-Grade Adjustment (Core Mechanics, "The Grade Gap Rule"). Guarded.
+- **Technique:** Find the Seam. Frequency, part of an attack, once per encounter: an attack on a higher-Grade target ignores 20 of its Cross-Grade Adjustment (Core Mechanics, "Fighting Across a Grade"). Guarded.
 - **Permission:** Above You. Against a higher-Grade target, Surge costs 5, or your ordinary Surge cost if that is lower. Guarded.
 - **Poles:** Force, Will.
 

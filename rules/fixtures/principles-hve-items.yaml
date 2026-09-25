@@ -25,11 +25,16 @@ cases:
     fn: application_cost
     args: {granted_at: Seed}
     expect: 10
-  - name: Kara at POW 18 can cast Sudden Weight exactly once per fight with room to spare
+  - name: Kara at POW 18 can cast Sudden Weight once between rests
     source: 20-principles.md, "Kara's Story"
     fn: application_uses
     args: {max_aether_value: 18, granted_at: Seed}
     expect: 1
+  - name: Her Surge at POW 18 costs 9, one more than the 8 left after the cast
+    source: 20-principles.md, "Kara's Story"
+    fn: surge_cost
+    args: {max_aether_value: 18}
+    expect: 9
   - name: Early Fragment Applications cost 15
     source: "20-principles.md, 'Applications: Cost and Scale'"
     fn: application_cost
@@ -75,3 +80,8 @@ cases:
     fn: pill_effect
     args: {listed_amount: 15, pill_grade: E, body_grade: E}
     expect: 150
+  - name: An F-Grade pill does nothing for an E-Grade body (only on-Grade pills work)
+    source: 65-items.md, "Healing Pills"
+    fn: pill_effect
+    args: {listed_amount: 15, pill_grade: F, body_grade: E}
+    expect: 0

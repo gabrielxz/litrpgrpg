@@ -23,7 +23,7 @@ ve_policy:
   completion_awarded_once: true
   farmable: false
 
-difficulty_read_from: Grade Reference Card
+difficulty_read_from: Difficulty Card
 
 # F-Grade baseline; ×10 per Grade. Hidden Quest rewards equal Personal Opportunity rewards at the tier.
 ve_rewards:

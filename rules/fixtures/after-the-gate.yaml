@@ -54,8 +54,8 @@ cases:
     fn: energy_density_bonus
     args: {tier: High}
     expect: 20
-  - name: The liaison's Aura is the calm value, Hard 115
+  - name: The liaison's Aura is the calm value, Moderate 90
     source: 72-after-the-gate.md, "The Liaison"
     fn: aura_resistance
     args: {flaring: false}
-    expect: 115
+    expect: 90

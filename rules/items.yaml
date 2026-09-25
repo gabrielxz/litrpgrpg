@@ -8,7 +8,7 @@ pill_use:
   administered_counts_against: recipient
   foundation_pills_exempt: true
   heal_cap: Max HP
-  higher_grade_pill_in_lower_body: no effect
+  grade_locked_both_directions: true   # only a pill of the body's own Grade works; higher or lower does nothing
   e_grade_pills_heal: ×10 for an E-Grade body
 
 healing_pills:

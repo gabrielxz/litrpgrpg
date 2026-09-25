@@ -35,6 +35,20 @@ Four rules derived from the 2026-08-11 full-book read-through, where each was th
 - **Open every chapter the way Progression opens.** One paragraph stating the loop the chapter belongs to, then pointers to the chapters that own each piece. That opening was the only one to draw praise in the read-through.
 - **First substantive use defines.** The chapter that owns a term is where the term first appears, and a coined word used once is either defined or cut. Never cite a section that has not been written.
 
+Say it literally (from the 2026-09-24 Core Mechanics read-through, where these were the patterns behind about 25 notes in one chapter). Rules prose names the mechanic and the person acting:
+
+- **No living dice.** "The die runs hot," "the die could swing it," "so the table always knows the clock." Name the mechanic: "whenever the natural roll reaches your Volatility Threshold."
+- **No code register.** "HP floors at 0," "nothing here reads off the character's Grade." Use the plain verb: "HP does not go below 0."
+- **No maxims.** "The action buys the retry, and the retry can fail." "Waiting gives you nothing to refine." State the rule once, in the sentence that gives it.
+- **Name the noun.** A pronoun whose noun is not the nearest one ("nothing refills it," two nouns after the pool) gets the noun back. Five "it"s in one paragraph is the signal to rewrite it.
+- **No metaphor a later sentence leans on.** "Success at a cost is a tool, and it is worth spending when..." left the reader asking what gets spent.
+- **The table acts in procedure.** "The System marks the Proficiency" confused the world with the table. Procedure names a person at the table and a table act ("the player adds a Mark on the sheet"); the System's version goes beside it as fiction.
+- **No negation nobody needed.** "Adds no dice and no math." Keep a negation only where a reader would assume the opposite.
+- **Keep defined words for their definitions.** "Cascades leave marks" beside the game term Mark read as "it hurts." A heading or aside never uses a game term in its everyday sense.
+- **Say it once per section.** The Aether section said four times that a technique's price never changes.
+
+`tools/lint_prose.py` warns on the literal phrases from this list; the warning does not fail the build.
+
 SCENARIO VOICE (from the 2026-09-11 tutorial diagnosis; binds the tutorial, every future scenario, and the Initiate's Manual):
 
 - **Four registers, each with its own job.** GM procedure is one experienced GM telling another how to run the scene: actor, trigger, check, consequence, next step. Read-aloud is sensory, speakable, and stays inside what the character can perceive. The System is clinical, confident, and allowed to be wrong. Design notes explain a purpose once. The same ominous narrator must not leak across all four.

@@ -5,7 +5,7 @@ conventions:
   hp: 2 × the creature's effective Raw FOR
   force_printed_as: two digits at the creature's Grade; leading zero below the band
   yields_only_if_stated: true
-  tier_maps_to: Grade Reference Card difficulty and the VE kill tier
+  tier_maps_to: Difficulty Card difficulty and the VE kill tier
   prints_hrt_and_per: true        # Momentum takes the higher; PER when the creature searches; HRT against mental attacks
   hrt_default: the Off Force for anything that presses the attack; 5 for a creature with no mind to keep; a named boss may run higher
   per_default: the Def Force for anything that hunts or watches; half of it for anything else

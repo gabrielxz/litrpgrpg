@@ -43,10 +43,17 @@ def table(header: list[str], rows: list[list], bold: bool = True, align: str | N
 # ------------------------------------------------------------ generators ---
 # Each returns the table's lines. Registry entries: id -> (file, header line to find, preceding bold label or None, generator)
 
+def _force_cell(g):
+    return "the stat" if g["divisor"] == 1 else f"stat ÷ {fmt(g['divisor'])}"
+
+
+def _damage_cell(g):
+    return "the Margin" if g["damage_multiplier"] == 1 else f"Margin × {fmt(g['damage_multiplier'])}"
+
+
 def g_grade_table():
-    rows = [[g["name"], f"{fmt(g['raw_min'])}–{fmt(g['raw_max'])}", fmt(g["divisor"]), f"{g['force_min']}–{g['force_max']}", f"×{fmt(g['damage_multiplier'])}"]
-            for g in E.load("grades")["grades"][:5]]
-    return table(["Grade", "Raw Stat Range", "Divisor", "Force Range", "Damage Multiplier"], rows)
+    rows = [[g["name"], fmt(g["raw_max"]), _force_cell(g), _damage_cell(g)] for g in E.load("grades")["grades"]]
+    return table(["Grade", "Stat Cap", "Force", "Damage"], rows)
 
 
 def g_resistance_card():
@@ -61,20 +68,14 @@ def g_volatility():
 def g_modifier_budget():
     rows = []
     for m in E.load("resolution")["modifier_budget"]:
-        size = f"+{m['size_min']} to +{m['size_max']}" if "size_min" in m else (f"+{m['size']}" if m["size"] > 0 else f"−{-m['size']}")
+        if "size_text" in m:
+            size = m["size_text"]
+        elif "size_min" in m:
+            size = f"+{m['size_min']} to +{m['size_max']}"
+        else:
+            size = f"+{m['size']}" if m["size"] > 0 else f"−{-m['size']}"
         rows.append([m["name"], size, ", ".join(m["examples"])])
     return table(["Modifier", "Size", "Examples"], rows)
-
-
-def g_damage_table():
-    rows = [[g["name"], f"Margin × {fmt(g['damage_multiplier'])}"] for g in E.load("grades")["grades"][:4]]
-    return table(["Attacker's Grade", "Damage"], rows)
-
-
-def g_grade_gap():
-    per = E.load("grades")["cross_grade_adjustment_per_grade"]
-    rows = [["Same Grade", "+0"], ["1 Grade higher", f"+{per}"], ["2 Grades higher", f"+{2*per}"], ["3+ Grades higher", f"+{3*per} or more"]]
-    return table(["Grade Gap", "Higher-Grade Bonus"], rows)
 
 
 def _app_costs(labels, domain_suffix):
@@ -87,27 +88,23 @@ def _app_costs(labels, domain_suffix):
     return table(["Granted at", "Aether Cost"], rows)
 
 
-def g_application_costs_core():
-    return _app_costs(["Seed Application", "Early Fragment Application", "Infusion (Mid Fragment)", "Domain (Peak Fragment)"], "sustained")
-
-
 def g_application_costs_principles():
     return _app_costs(["Seed", "Early Fragment", "Infusion (Mid Fragment)", "Domain (Peak Fragment)"], "held")
 
 
 def g_proficiency_tiers_core():
     t = {x["name"]: x for x in E.load("character")["proficiencies"]["tiers"]}
-    rows = [["**Trained**", f"+{t['Trained']['bonus']} to Clashes and skill checks in the domain. Routine Mastery. Specialist Gating access."],
-            ["**Seasoned**", f"+{t['Seasoned']['bonus']} (in place of the +{t['Trained']['bonus']})."],
-            ["**Master**", f"+{t['Master']['bonus']}, and once on your turn your first action using the Proficiency costs no Beat. Requires an {t['Master']['requires_grade']}-Grade body."]]
+    rows = [["**Trained**", f"+{t['Trained']['bonus']} to attacks and defenses with the Proficiency's weapons."],
+            ["**Seasoned**", f"+{t['Seasoned']['bonus']} (in place of the +{t['Trained']['bonus']}). {t['Seasoned']['marks_required']} Marks."],
+            ["**Master**", f"+{t['Master']['bonus']}, and once on your turn your first action with the Proficiency's weapon costs no Beat. {t['Master']['marks_required']} Marks in all, and an {t['Master']['requires_grade']}-Grade body."]]
     return table(["Tier", "Effect"], rows)
 
 
 def g_proficiency_tiers_quickref():
     t = {x["name"]: x for x in E.load("character")["proficiencies"]["tiers"]}
-    rows = [["Trained", f"+{t['Trained']['bonus']} to Clashes and skill checks in the domain. Routine Mastery (auto-succeed Trivial and Easy). Specialist Gating access."],
+    rows = [["Trained", f"+{t['Trained']['bonus']} to attacks and defenses with the Proficiency's weapons."],
             ["Seasoned", f"+{t['Seasoned']['bonus']} in place of the +{t['Trained']['bonus']}. **{t['Seasoned']['marks_required']} Marks.**"],
-            ["Master", f"+{t['Master']['bonus']}, and once on your turn your first action using it costs no Beat. **{t['Master']['marks_required']} Marks**, and an {t['Master']['requires_grade']}-Grade body."]]
+            ["Master", f"+{t['Master']['bonus']}, and once on your turn your first action with its weapon costs no Beat. **{t['Master']['marks_required']} Marks**, and an {t['Master']['requires_grade']}-Grade body."]]
     return table(["Tier", "Effect"], rows, bold=False)
 
 
@@ -122,9 +119,8 @@ def g_kill_tiers():
 
 
 def g_quickref_grades():
-    rows = [[g["name"], f"{fmt(g['raw_min'])}–{fmt(g['raw_max'])}", f"{g['force_min']}–{g['force_max']}", f"×{fmt(g['damage_multiplier'])}"]
-            for g in E.load("grades")["grades"][:4]]
-    return table(["Grade", "Raw Stat Range", "Force Range", "Damage Multiplier"], rows)
+    rows = [[g["name"], fmt(g["raw_max"]), _force_cell(g), _damage_cell(g)] for g in E.load("grades")["grades"][:4]]
+    return table(["Grade", "Stat Cap", "Force", "Damage"], rows)
 
 
 # The difficulties an Accession Rift is written at (After the Gate, "Writing a Rift").
@@ -151,7 +147,7 @@ def g_overcharge():
     words = {1: "One Tolerance", 2: "Twice Tolerance", 3: "Three times Tolerance", 4: "Four times Tolerance"}
     rows = []
     for r in E.load("breakthrough")["overcharge"]:
-        dc = "Base difficulty" if r["dc_modifier"] == 0 else f"+{r['dc_modifier']} to Breakthrough DC"
+        dc = "Base difficulty" if r["dc_modifier"] == 0 else f"+{r['dc_modifier']} to Breakthrough Resistance"
         q = "+0" if r["quality_tiers"] == 0 else f"+{r['quality_tiers']} Tier" + ("s" if r["quality_tiers"] != 1 else "")
         rows.append([f"×{r['ratio']}.0 ({r['label']})", words[r["ratio"]], r["saturation"], dc, q])
     return table(["Overcharge Ratio", "VE Stored", "Saturation While Charging", "Trial Difficulty", "Quality Modifier"], rows, bold=False)
@@ -159,7 +155,7 @@ def g_overcharge():
 
 def g_overcharge_dc():
     ratios = [r["ratio"] for r in E.load("breakthrough")["overcharge"]]
-    return table(["Overcharge Ratio"] + [f"×{r}.0" for r in ratios], [["Effective DC"] + [E.breakthrough_dc(r) for r in ratios]], bold=False)
+    return table(["Overcharge Ratio"] + [f"×{r}.0" for r in ratios], [["Effective Resistance"] + [E.breakthrough_dc(r) for r in ratios]], bold=False)
 
 
 def g_breakthrough_modifiers():
@@ -308,6 +304,10 @@ def _proficiency_group(group):
     return lambda: table(["Proficiency", "Covers"], [[p["name"], p["covers"]] for p in E.load("character")["sample_proficiencies"][group]])
 
 
+def g_sample_backgrounds():
+    return table(["Background", "Covers"], [[b["name"], b["covers"]] for b in E.load("character")["sample_backgrounds"]])
+
+
 
 def g_class_profile_shapes():
     rows = [[s["shape"], s["system"], s["returned"]] for s in E.load("classes")["profile"]["shapes"]]
@@ -338,21 +338,15 @@ def g_class_list():
 
 REGISTRY = {
     # id: (file, header line, preceding bold label or None, generator)
-    "grade-table":              ("10-core-mechanics.md", "| **Grade** | **Raw Stat Range** | **Divisor** | **Force Range** | **Damage Multiplier** |", None, g_grade_table),
+    "grade-table":              ("10-core-mechanics.md", "| **Grade** | **Stat Cap** | **Force** | **Damage** |", None, g_grade_table),
     "resistance-card":          ("10-core-mechanics.md", "| **Difficulty** | **Resistance** |", None, g_resistance_card),
     "proficiency-tiers":        ("10-core-mechanics.md", "| **Tier** | **Effect** |", None, g_proficiency_tiers_core),
     "volatility":               ("10-core-mechanics.md", "| **Grade** | **Explodes On (natural)** | **Probability** |", None, g_volatility),
     "modifier-budget":          ("10-core-mechanics.md", "| **Modifier** | **Size** | **Examples** |", None, g_modifier_budget),
-    "damage-table":             ("10-core-mechanics.md", "| **Attacker's Grade** | **Damage** |", None, g_damage_table),
-    "grade-gap":                ("10-core-mechanics.md", "| **Grade Gap** | **Higher-Grade Bonus** |", None, g_grade_gap),
-    "application-costs-core":   ("10-core-mechanics.md", "| **Granted at** | **Aether Cost** |", None, g_application_costs_core),
     "sample-spreads":           ("15-character-creation.md", "| Archetype | STR | DEX | FOR | HRT | POW | PER | CHA | Total |", None, g_sample_spreads),
     "stat-anchors":             ("15-character-creation.md", "| **Attribute** | **3 (deficiency)** | **5 (average)** | **7 (gifted)** | **9 (elite)** | **10 (peak human)** |", None, g_stat_anchors),
     "proficiencies-fighting":   ("15-character-creation.md", "| **Proficiency** | **Covers** |", "**Fighting**", _proficiency_group("Fighting")),
-    "proficiencies-outdoors":   ("15-character-creation.md", "| **Proficiency** | **Covers** |", "**Living Outdoors**", _proficiency_group("Living Outdoors")),
-    "proficiencies-people":     ("15-character-creation.md", "| **Proficiency** | **Covers** |", "**People**", _proficiency_group("People")),
-    "proficiencies-knowledge":  ("15-character-creation.md", "| **Proficiency** | **Covers** |", "**Knowledge**", _proficiency_group("Knowledge")),
-    "proficiencies-making":     ("15-character-creation.md", "| **Proficiency** | **Covers** |", "**Making and Breaking**", _proficiency_group("Making and Breaking")),
+    "sample-backgrounds":       ("15-character-creation.md", "| **Background** | **Covers** |", None, g_sample_backgrounds),
     "behavioral-mapping":       ("17-progression.md", "| Behavior Pattern | Primary Stat | Secondary Stat |", None, g_behavioral_mapping),
     "nine-levels":              ("17-progression.md", "| Source | Points |", None, g_nine_levels),
     "class-profile-shapes":     ("18-classes.md", "| **Shape** | **System points** | **Returned to the player** |", None, g_class_profile_shapes),
@@ -393,7 +387,7 @@ REGISTRY = {
     "shards":                   ("65-items.md", "| **Shard Type** | **Effect** | **Backfire (on natural 01–05)** |", None, g_shards),
     "quickref-proficiency":     ("75-quick-reference.md", "| Tier | Effect |", None, g_proficiency_tiers_quickref),
     "quickref-resistance":      ("75-quick-reference.md", "| **Difficulty** | **Resistance** |", None, g_resistance_card),
-    "quickref-grades":          ("75-quick-reference.md", "| **Grade** | **Raw Stat Range** | **Force Range** | **Damage Multiplier** |", None, g_quickref_grades),
+    "quickref-grades":          ("75-quick-reference.md", "| **Grade** | **Stat Cap** | **Force** | **Damage** |", None, g_quickref_grades),
     "quickref-ve":              ("75-quick-reference.md", "| **VE at F-Grade** | **Amount** |", None, g_quickref_ve),
 }
 

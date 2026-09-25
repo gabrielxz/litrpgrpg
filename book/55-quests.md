@@ -147,7 +147,7 @@ Issued by NPCs, organizations, mentors (not by the System directly). The System 
 
 ### Quest Difficulty
 
-Quest difficulty is read off the **Grade Reference Card**, identical to combat and obstacle resolution: a quest is "E-Grade, Severe" or "F-Grade, Moderate." Players develop intuition for what they can take on at their current power level by reading the Grade tag.
+Quest difficulty is read off the **Difficulty Card**, identical to combat and obstacle resolution: a quest is "E-Grade, Severe" or "F-Grade, Moderate." Players develop intuition for what they can take on at their current power level by reading the Grade tag.
 
 A quest's difficulty determines:
 

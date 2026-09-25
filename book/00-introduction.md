@@ -84,15 +84,15 @@ Any system this size has edge cases, and every table eventually finds a reading 
 
 :::: example
 
-Kara (Strength 8 and Fortitude 7, written STR 8, FOR 7 on her sheet, with the Proficiency "axes and hammers") and Andre (Perception 9, Dexterity 7, with "tracking and fieldcraft," "archery and throwing," and a scavenged hunting bow) are Level 2 with their level-up points still unspent, three days into their Integration Tutorial, crossing the dead district at its heart.
+Kara (Strength 8 and Fortitude 7, written STR 8, FOR 7 on her sheet, with the Proficiency "axes and hammers") and Andre (Perception 9, Dexterity 7, a land surveyor who has hunted deer every fall since he was twelve, with the Proficiency "archery and throwing" and a scavenged hunting bow) are Level 2 with their level-up points still unspent, three days into their Integration Tutorial, crossing the dead district at its heart.
 
 **GM:** The overpass ahead has folded in on itself. There's a gap in the rubble, a service stair, half buried. It's the only way through that isn't a mile around.
 
 **Andre:** Before we climb in, I look it over. Has anything been through here?
 
-**GM:** You have tracking and fieldcraft, so the obvious reads are free: the dust is disturbed, and something four-legged and heavy came through, recently. How recently is a harder question. Roll d100 plus your Perception Force, plus 5 for the Proficiency.
+**GM:** You've tracked deer half your life, so the obvious reads are free: the dust is disturbed, and something four-legged and heavy came through, recently. How recently is a harder question. Your Background covers it, so you roll with Advantage: two d100, keep the higher, plus your Perception Force.
 
-**Andre:** *(rolls 55)* 55 plus 9, plus 5. That's 69.
+**Andre:** *(rolls 55 and 31)* I keep the 55. Plus 9, that's 64.
 
 **GM:** Against a Moderate Resistance of 90. Not enough, so it's a Soft Failure, which means partial progress instead of a dead end: the tracks lead deeper in, but you can't tell whether they're an hour old or a day. You're at the stair mouth when gravel ticks down the slab above Kara.
 

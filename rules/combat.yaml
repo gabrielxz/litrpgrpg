@@ -8,29 +8,31 @@ beat_actions:
   - Move to an adjacent Zone
   - Use an item
   - Activate a Principle Application
-  - Attempt a skill check
-  - Claim or strip a Positional State
+  - Attempt a check
   - Disengage from a hostile
   - Attempt to seize Momentum
 free_actions:
   - Speaking
   - Drawing a weapon
   - Dropping an object
-  - Moving inside your current Zone, up to the Positional State line
+  - Moving inside your current Zone
 
 surprise_beat: 1                # each surprising character takes one free Beat before Initial Momentum
 
 momentum:
   roll: d100 + max(HRT Force, PER Force) of the side's best such combatant; every stat block prints both
   seize_cost_beats: 1           # roller uses their own HRT or PER Force; the holding side answers with its highest
-  shift_triggers: [Reinforcement Arrival, Decisive Tactical Reversal, Seize Momentum]
+  shift_triggers: [Decisive Tactical Reversal, Seize Momentum]   # a new combatant arriving is one kind of Reversal
+  two_triggers_in_a_round: the later one wins
+  seize_beat_spent: either way
 
 movement:
   adjacent_zone_cost_beats: 1
   two_zones_cost_beats: 2
   free_step_dex_force: 50       # one additional Zone move per turn at no Beat; does not bypass Engagement
   cross_grade_free_movement: true   # a full Grade above every hostile present: Zone moves cost no Beats
-  disengage_cost_beats: 1       # leaving a shared Zone without Disengaging provokes a free strike
+  disengage_cost_beats: 1       # leaving a Zone without Disengaging gives each hostile fighting you there a free strike
+  engaged: a hostile in your Zone that is fighting you; one busy elsewhere (a door, another enemy) is not
 
 reach:
   melee: own_zone
@@ -40,7 +42,8 @@ offensive_force:
   heavy_melee: STR
   finesse_melee: DEX
   ranged: DEX
-  spells_and_abilities: POW
+  spells_and_ranged_applications: POW   # a bolt, a blast, a field: effects that act on their own
+  application_shaping_an_attack: the attack's Force   # Principles: an Application that shapes an attack is part of it
 defensive_force:
   dodge: DEX
   absorb: FOR
@@ -58,23 +61,24 @@ yield:
   max_beats: 2                  # your next turn's two Beats
   cornered_max_beats: 1         # nowhere to be driven
   two_beats_drive_zones: 1      # attacker's choice, may decline; no free strike
-  aoe_two_beats: throws the target clear of the blast; no attacker choice
+  aoe_two_beats: throws the target clear of the blast into an adjacent Zone of their choice
   creatures: only if the stat block says Yields
 
 downed:
   hp_floor: 0
+  npcs: Downed at 0 by default; creatures die; the GM may rule either way for any of them
   dies_at_end_of_round: 3
-  stabilize_check: {difficulty: Moderate, resistance: 90, cost_beats: 1}   # Proficiency bonus applies
+  stabilize_check: {difficulty: Moderate, resistance: 90, cost_beats: 1}   # a medical Background rolls with Advantage
   stabilize_by_healing: any HP restoration from an ally in the same Zone, 1 Beat
   annihilation_multiple_of_max_hp: 10
   execution: {cost_beats: 1, roll: false}
   death: permanent
-  survivor_gets_battle_memory: true
+  survivor_gets_battle_memory: true   # Downed in a fight; the GM may withhold it when the Downing taught nothing
 
 aura_pressure:
-  will_save: d100 + HRT Force + floor(FOR Force / 2) vs Aura Resistance
-  resistance_calm: 115          # Hard, flat, no Cross-Grade Adjustment
-  resistance_flaring: 140       # Severe
+  will_save: d100 + HRT Force vs Aura Resistance   # a Heart check
+  resistance_calm: 90           # Moderate, flat, no Cross-Grade Adjustment
+  resistance_flaring: 115       # Hard
   gm_may_skip_at_grade_gap: 3
   suppressed_beats: 1
 
@@ -86,5 +90,5 @@ surge:
   stacks: true
 
 pvp:
-  resolves_as: standard Opposed Clash
+  resolves_as: standard Clash
   hve: coercion aimed at another player character is at least two tallies of Will

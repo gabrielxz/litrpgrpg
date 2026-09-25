@@ -19,7 +19,7 @@ patterns:
   - {pattern: '1\.2\^',                           replaced_by: "flat level cost",                             since: 2026-08-20}
   - {pattern: 'exponential curve',                replaced_by: "flat level cost",                             since: 2026-08-20}
   - {pattern: '\bEnergy Pills?\b',                replaced_by: "Aether Pill",                                 since: 2026-07-08}
-  - {pattern: 'DC 240',                           replaced_by: "DC 140",                                      since: 2026-08-12}
+  - {pattern: 'DC 240',                           replaced_by: "Resistance 140",                              since: 2026-08-12}
   - {pattern: 'Highest Attribute Force',          replaced_by: "cut from the Breakthrough Check",             since: 2026-08-12}
   - {pattern: '\+0 to \+45',                      replaced_by: "+0 to +40",                                   since: 2026-08-12}
   - {pattern: 'Tracking the Engine',              replaced_by: "The Session-End Sweep",                       since: 2026-08-25}
@@ -79,6 +79,28 @@ patterns:
   - {pattern: 'one consumable from the F-Grade catalog', replaced_by: "Healing Pills up to the Healing Pill and field gear", since: 2026-09-22}
   - {pattern: '\*\*?\[[^\]\n]*\]\*\*?',           replaced_by: "System text in bare italics; the box is the frame", since: 2026-09-20}
   - {pattern: '["“]\[[A-Z][a-z]+ [a-z][^\]\n]*\]',      replaced_by: "System text in bare italics, never quoted brackets", since: 2026-09-20}
+
+  - {pattern: 'Positional States?',              replaced_by: "Advantage (roll two d100, keep the higher) and Exposed", since: 2026-09-24}
+  - {pattern: '\bAdvantaged\b',                   replaced_by: "Advantage",                                   since: 2026-09-24}
+  - {pattern: '[Ss]kill checks? never explode',   replaced_by: "every d100 roll explodes",                    since: 2026-09-24}
+  - {pattern: '[Ss]kill [Cc]heck',                replaced_by: "check (Clash against a roller, check against a Resistance)", since: 2026-09-24}
+  - {pattern: 'Routine Mastery',                  replaced_by: "a Background's routine work",                 since: 2026-09-24}
+  - {pattern: 'Specialist Gating',                replaced_by: "a Background's trained work",                 since: 2026-09-24}
+  - {pattern: 'FOR Force ?(/|&divide;|÷) ?2',      replaced_by: "Will Save: d100 + HRT Force",                 since: 2026-09-24}
+  - {pattern: 'Grade Reference Card',             replaced_by: "Difficulty Card",                             since: 2026-09-24}
+  - {pattern: 'Grade Gap Rule',                   replaced_by: "the Cross-Grade Adjustment (Fighting Across a Grade)", since: 2026-09-24}
+  - {pattern: 'Opposed (Roll|Clash)',             replaced_by: "a Clash",                                     since: 2026-09-24}
+  - {pattern: 'Resistance Roll',                  replaced_by: "a check",                                     since: 2026-09-24}
+  - {pattern: 'Reinforcement Arrival',            replaced_by: "one kind of Decisive Tactical Reversal",      since: 2026-09-24}
+  - {pattern: '\bDC\b',                           replaced_by: "Resistance",                                  since: 2026-09-24}
+  - {pattern: 'Max HP,? rounded up',              replaced_by: "one fifth an hour; the fifth hour restores the rest", since: 2026-09-24}
+  - {pattern: '[Tt]hree Proficiencies',           replaced_by: "a Background and one Proficiency",            since: 2026-09-24}
+  - {pattern: 'Aura Pressure [Ss]ave',            replaced_by: "the Will Save",                               since: 2026-09-24}
+  - {pattern: 'Natural Stat Wall',                replaced_by: "cut; the Grade table and the Cross-Grade Adjustment cover it", since: 2026-09-24}
+  - {pattern: 'room to spare',                    replaced_by: "Sudden Weight: one cast between rests at POW 18", since: 2026-09-24}
+  - {pattern: 'one roll outside combat',          replaced_by: "every roll explodes",                         since: 2026-09-24}
+  - {pattern: 'players propose',                  replaced_by: "the GM names the Zones",                      since: 2026-09-24}
+  - {pattern: 'lower-Grade pill in a higher-Grade body works', replaced_by: "pills are Grade-locked both ways", since: 2026-09-24}
 
 # Chapter names as the book cites them, for the cross-reference check.
 chapters:

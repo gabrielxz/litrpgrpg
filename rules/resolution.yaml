@@ -3,7 +3,12 @@
 
 die: d100
 
-# The Grade Reference Card. Same-Grade Resistance reads straight off it; across a
+# Two kinds of roll, named by what you roll against.
+roll_kinds:
+  clash: against someone who rolls back, in or out of combat; the gap is the Margin, and in combat the Margin is damage
+  check: against a Resistance from the Difficulty Card; meet it to succeed
+
+# The Difficulty Card. Same-Grade Resistance reads straight off it; across a
 # Grade gap the higher side adds the Cross-Grade Adjustment (grades.yaml).
 resistance_card:
   - difficulty: Trivial
@@ -19,30 +24,39 @@ resistance_card:
   - difficulty: Peak
     resistance: 165
 
-# If Force alone (plus any Cross-Grade Adjustment) meets the Resistance, no roll.
-# Two or more Grades above a passive obstacle never rolls. Living opposition always rolls.
+# When to roll a check, in order. The GM always decides whether a roll is called for;
+# the player may not know about a clock or a hidden cost of failure.
+# 1. Force alone (plus any Cross-Grade Adjustment) meets the Resistance: success, no roll.
+#    Two or more Grades above a passive obstacle never rolls. Living opposition always rolls.
+# 2. Take 100: nothing presses (no clock, no danger, nobody opposing) and a natural 100 would
+#    succeed: success, no roll; it takes the time the GM names.
+# 3. Otherwise roll once. A failed check stands until something changes.
 auto_success:
   passive_obstacles_only: true
   never_rolls_at_grade_gap: 2
+take_100:
+  requires: nothing presses (no clock, no danger, nobody opposing)
+  succeeds_if: Force + 100 + modifiers meets the Resistance
+  costs: the time the GM names
+retry: a failed check stands until something changes (a new tool, a new approach, help, a level)
 
 ties:
-  opposed_roll: initiator
-  clash: attacker
+  clash: initiator              # in combat, the attacker
   momentum_roll: reroll
 
 # Forty is the swing number throughout the rules.
 rule_of_40:
-  dominant_margin: 40          # win by this and the outcome is decisive, whatever the arena
-  turned_aside_margin: 40      # defender wins by this: attacker Exposed until end of their next turn
-  driven_back_margin: 40       # attacker wins by this: defender Exposed, may be driven one Zone
-  hard_failure_margin: 40      # skill check fails by this or more: failure plus consequence
+  dominant_margin: 40          # win by 40 or more and the outcome is decisive, whatever the arena
+  turned_aside_margin: 40      # defender wins by 40 or more: attacker Exposed until end of their next turn
+  driven_back_margin: 40       # attacker wins by 40 or more: defender Exposed, may be driven one Zone
+  hard_failure_margin: 40      # a check fails by 40 or more: failure plus consequence
 
-# Skill-check outcomes (combat Clashes carry their own).
+# Check outcomes (combat Clashes carry their own).
 failure_tiers:
   soft: {fail_by_min: 1, fail_by_max: 39}
   hard: {fail_by_min: 40}
   catastrophic_natural: [1, 5]        # natural 01–05, whatever the margin
-exceptional_success: volatility_threshold   # natural die at or above the roller's Grade threshold; no extra dice
+exceptional_success: a check whose die explodes and succeeds   # the explosion's dice count toward the total
 
 # Every Tactical Modifier draws from one budget. New skills, items, and class
 # features price against it.
@@ -52,11 +66,17 @@ modifier_budget:
     examples: [Trained Proficiency, Surge, minor blessings]
   - name: Standard bonus
     size: 10
-    examples: [Advantaged, Flanking, Seasoned and Master Proficiency, most System-granted skills]
+    examples: [Flanking, Seasoned and Master Proficiency, most System-granted skills]
   - name: Peak bonus (rare)
     size_min: 15
     size_max: 20
     examples: [Peak abilities, one-shot relics, Hidden Achievement rewards]
+  - name: Advantage
+    size_text: "roll two d100, keep the higher (about +20)"
+    examples: [A real edge from the fiction, a Background's field on a check]
+  - name: Exposed
+    size: -10
+    examples: [Turned Aside, Driven Back, caught in the open or off balance]
   - name: Hindering environment
     size: -10
     examples: [Darkness, difficult footing, driving rain]
@@ -64,10 +84,15 @@ modifier_budget:
     size: -20
     examples: [Blindness, restrained, fighting submerged]
 
-positional_states:
-  advantaged: 10
-  neutral: 0
-  exposed: -10
-  reciprocal: false             # each combatant's state affects only their own rolls
-  change_cost_beats: 1          # claiming your own or stripping an enemy's
-flanking_bonus: 10              # for every hostile engaging a target that two or more engage at once
+# Advantage: roll two d100 and keep the higher. Worth about +20 between equals (a +20 wins 68
+# Clashes in 100; Advantage wins 67). The GM grants it from the fiction; positioning is part of the
+# action that uses it. Sources do not stack; only the kept die can explode. It stacks with flat
+# modifiers, Flanking included. No disadvantage: a bad position is Exposed.
+advantage:
+  roll: two d100, keep the higher
+  worth_about: 20
+  stacks_with_itself: false
+  explodes: kept die only
+  granted_by: the GM, from the fiction
+exposed: -10                    # the one penalty condition: Turned Aside, Driven Back, class and creature effects, a bad position
+flanking_bonus: 10              # for every hostile fighting a target that two or more fight at once

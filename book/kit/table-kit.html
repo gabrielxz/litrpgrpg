@@ -236,6 +236,7 @@
   }
   .blank.penfill { display: flex; align-items: flex-end; padding-bottom: 2px;
     color: #3B4A66; font-style: italic; font-family: Georgia, "Times New Roman", serif; font-size: 15px; }
+  .blank.penfill.bgline { font-size: 13px; }
   .band .writein.penfill { text-align: center;
     color: #3B4A66; font-style: italic; font-family: Georgia, "Times New Roman", serif; }
   .tick.on { background: var(--ink); }
@@ -319,6 +320,10 @@
         </div>
       </div>
 
+      <div class="idrow">
+        <div class="field" style="flex: 1;"><label>Background</label><div class="blank"></div></div>
+      </div>
+
       <div class="zone">
         <header>[ ATTRIBUTES ]</header>
         <div class="zbody">
@@ -375,14 +380,9 @@
       <div class="zone">
         <header>[ PROFICIENCIES ]</header>
         <div class="zbody">
-          <p class="caption">Natural 96+: tick a Mark. &nbsp;3 Marks: Seasoned. &nbsp;3 in an untrained domain: Trained. &nbsp;10 and an E-Grade body: Master.</p>
+          <p class="caption">Weapon explodes: tick a Mark. &nbsp;3 Marks: Seasoned. &nbsp;3 on a new weapon: Trained. &nbsp;10 and an E-Grade body: Master.</p>
           <table>
             <tr><th style="width:34%;">Proficiency</th><th style="width:37%;">Tier</th><th>Marks</th></tr>
-            <tr class="rowline">
-              <td></td>
-              <td><span class="tiertick"><span class="tick"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
-              <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
-            </tr>
             <tr class="rowline">
               <td></td>
               <td><span class="tiertick"><span class="tick"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
@@ -657,7 +657,8 @@
             <div class="prow"><span class="plabel">HP</span> <span class="pv">14</span> &nbsp; <span class="plabel">Aether</span> <span class="pv">6</span> &nbsp; <span class="plabel">Tolerance</span> <span class="pv">80</span></div>
             <div class="prow"><span class="plabel">Bands</span> <span class="pv">80 / 160 / 240</span></div>
             <div class="prow"><span class="plabel">Level progress</span> <span class="pv">0 / 120</span></div>
-            <div class="prow"><span class="plabel">Proficiencies</span> <span class="pv">axes and hammers, athletics, streetwise</span></div>
+            <div class="prow"><span class="plabel">Background</span> <span class="pv">warehouse shift lead; grew up on the east side</span></div>
+            <div class="prow"><span class="plabel">Proficiency</span> <span class="pv">axes and hammers</span></div>
             <div class="play">Fight close and end it fast. Want things out loud: the better weapon, the bigger bounty, the pill nobody else has claimed.</div>
           </div>
         </div>
@@ -673,7 +674,8 @@
             <div class="prow"><span class="plabel">HP</span> <span class="pv">14</span> &nbsp; <span class="plabel">Aether</span> <span class="pv">4</span> &nbsp; <span class="plabel">Tolerance</span> <span class="pv">80</span></div>
             <div class="prow"><span class="plabel">Bands</span> <span class="pv">80 / 160 / 240</span></div>
             <div class="prow"><span class="plabel">Level progress</span> <span class="pv">0 / 120</span></div>
-            <div class="prow"><span class="plabel">Proficiencies</span> <span class="pv">axes and hammers, endurance training, field medicine</span></div>
+            <div class="prow"><span class="plabel">Background</span> <span class="pv">volunteer firefighter and EMT</span></div>
+            <div class="prow"><span class="plabel">Proficiency</span> <span class="pv">axes and hammers</span></div>
             <div class="play">Stand between the danger and everyone else, and swing like the door needs breaking.</div>
           </div>
         </div>
@@ -689,7 +691,8 @@
             <div class="prow"><span class="plabel">HP</span> <span class="pv">10</span> &nbsp; <span class="plabel">Aether</span> <span class="pv">5</span> &nbsp; <span class="plabel">Tolerance</span> <span class="pv">80</span></div>
             <div class="prow"><span class="plabel">Bands</span> <span class="pv">80 / 160 / 240</span></div>
             <div class="prow"><span class="plabel">Level progress</span> <span class="pv">0 / 120</span></div>
-            <div class="prow"><span class="plabel">Proficiencies</span> <span class="pv">tracking and fieldcraft, archery and throwing, navigation</span></div>
+            <div class="prow"><span class="plabel">Background</span> <span class="pv">land surveyor and deer hunter</span></div>
+            <div class="prow"><span class="plabel">Proficiency</span> <span class="pv">archery and throwing</span></div>
             <div class="play">Look before anyone moves, plan the way out before the way in, and take only what the plan needs.</div>
           </div>
         </div>
@@ -710,6 +713,10 @@
         <div class="field" style="flex: 1.2;"><label>Level Progress &middot; VE</label>
           <div class="pair"><div class="boxed penfill" style="flex:1; height:32px;">0</div><span class="slash">/</span><div class="boxed" style="flex:1; height:32px; color:var(--pencil);">120</div></div>
         </div>
+      </div>
+
+      <div class="idrow">
+        <div class="field" style="flex: 1;"><label>Background</label><div class="blank penfill bgline">Warehouse shift lead, eight years of lifting and loading; grew up on the east side and still knows who sells what.</div></div>
       </div>
 
       <div class="zone">
@@ -768,7 +775,7 @@
       <div class="zone">
         <header>[ PROFICIENCIES ]</header>
         <div class="zbody">
-          <p class="caption">Natural 96+: tick a Mark. &nbsp;3 Marks: Seasoned. &nbsp;3 in an untrained domain: Trained. &nbsp;10 and an E-Grade body: Master.</p>
+          <p class="caption">Weapon explodes: tick a Mark. &nbsp;3 Marks: Seasoned. &nbsp;3 on a new weapon: Trained. &nbsp;10 and an E-Grade body: Master.</p>
           <table>
             <tr><th style="width:34%;">Proficiency</th><th style="width:37%;">Tier</th><th>Marks</th></tr>
             <tr class="rowline">
@@ -777,13 +784,8 @@
               <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
             </tr>
             <tr class="rowline">
-              <td><span class="penv">athletics</span></td>
-              <td><span class="tiertick"><span class="tick on"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
-              <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
-            </tr>
-            <tr class="rowline">
-              <td><span class="penv">streetwise</span></td>
-              <td><span class="tiertick"><span class="tick on"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
+              <td></td>
+              <td><span class="tiertick"><span class="tick"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
               <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
             </tr>
             <tr class="rowline">
@@ -860,6 +862,10 @@
         </div>
       </div>
 
+      <div class="idrow">
+        <div class="field" style="flex: 1;"><label>Background</label><div class="blank penfill bgline">Volunteer firefighter and EMT: rescue, first aid, and long nights without sleep.</div></div>
+      </div>
+
       <div class="zone">
         <header>[ ATTRIBUTES ]</header>
         <div class="zbody">
@@ -916,7 +922,7 @@
       <div class="zone">
         <header>[ PROFICIENCIES ]</header>
         <div class="zbody">
-          <p class="caption">Natural 96+: tick a Mark. &nbsp;3 Marks: Seasoned. &nbsp;3 in an untrained domain: Trained. &nbsp;10 and an E-Grade body: Master.</p>
+          <p class="caption">Weapon explodes: tick a Mark. &nbsp;3 Marks: Seasoned. &nbsp;3 on a new weapon: Trained. &nbsp;10 and an E-Grade body: Master.</p>
           <table>
             <tr><th style="width:34%;">Proficiency</th><th style="width:37%;">Tier</th><th>Marks</th></tr>
             <tr class="rowline">
@@ -925,13 +931,8 @@
               <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
             </tr>
             <tr class="rowline">
-              <td><span class="penv">endurance training</span></td>
-              <td><span class="tiertick"><span class="tick on"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
-              <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
-            </tr>
-            <tr class="rowline">
-              <td><span class="penv">field medicine</span></td>
-              <td><span class="tiertick"><span class="tick on"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
+              <td></td>
+              <td><span class="tiertick"><span class="tick"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
               <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
             </tr>
             <tr class="rowline">
@@ -1008,6 +1009,10 @@
         </div>
       </div>
 
+      <div class="idrow">
+        <div class="field" style="flex: 1;"><label>Background</label><div class="blank penfill bgline">Land surveyor, and a deer hunter every fall since he was twelve: maps, terrain, tracking.</div></div>
+      </div>
+
       <div class="zone">
         <header>[ ATTRIBUTES ]</header>
         <div class="zbody">
@@ -1064,22 +1069,17 @@
       <div class="zone">
         <header>[ PROFICIENCIES ]</header>
         <div class="zbody">
-          <p class="caption">Natural 96+: tick a Mark. &nbsp;3 Marks: Seasoned. &nbsp;3 in an untrained domain: Trained. &nbsp;10 and an E-Grade body: Master.</p>
+          <p class="caption">Weapon explodes: tick a Mark. &nbsp;3 Marks: Seasoned. &nbsp;3 on a new weapon: Trained. &nbsp;10 and an E-Grade body: Master.</p>
           <table>
             <tr><th style="width:34%;">Proficiency</th><th style="width:37%;">Tier</th><th>Marks</th></tr>
-            <tr class="rowline">
-              <td><span class="penv">tracking and fieldcraft</span></td>
-              <td><span class="tiertick"><span class="tick on"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
-              <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
-            </tr>
             <tr class="rowline">
               <td><span class="penv">archery and throwing</span></td>
               <td><span class="tiertick"><span class="tick on"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
               <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
             </tr>
             <tr class="rowline">
-              <td><span class="penv">navigation</span></td>
-              <td><span class="tiertick"><span class="tick on"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
+              <td></td>
+              <td><span class="tiertick"><span class="tick"></span>Trained +5</span><span class="tiertick"><span class="tick"></span>Seasoned +10</span><span class="tiertick"><span class="tick"></span>Master +10</span></td>
               <td><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick gap"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span></td>
             </tr>
             <tr class="rowline">
@@ -1506,8 +1506,8 @@
       <div class="zone">
         <header>[ YOUR TURN &middot; TWO BEATS ]</header>
         <div class="zbody">
-          <p><b>One Beat buys:</b> an attack &middot; a spell &middot; a move to an adjacent Zone &middot; an item &middot; a Principle Application &middot; a skill check &middot; claiming or stripping a Positional State &middot; a Disengage &middot; a Seize Momentum attempt.</p>
-          <p><b>Free:</b> speaking, drawing a weapon, dropping something, drifting inside your Zone.</p>
+          <p><b>One Beat buys:</b> an attack &middot; a spell &middot; a move to an adjacent Zone &middot; an item &middot; a Principle Application &middot; a check &middot; a Disengage &middot; a Seize Momentum attempt.</p>
+          <p><b>Free:</b> speaking, drawing a weapon, dropping something, moving inside your Zone.</p>
         </div>
       </div>
 
@@ -1522,8 +1522,8 @@
         <div class="zone">
           <header>[ MODIFIERS ]</header>
           <div class="zbody">
-            <div class="kv"><b>ADVANTAGED</b><span>+10 to your rolls</span></div>
-            <div class="kv"><b>EXPOSED</b><span>&minus;10 to your rolls</span></div>
+            <div class="kv"><b>ADVANTAGE</b><span>roll two d100, keep the higher</span></div>
+            <div class="kv"><b>EXPOSED</b><span>&minus;10 to your Clash rolls</span></div>
             <div class="kv"><b>FLANKING</b><span>two or more hostiles on one target: each gains +10</span></div>
             <div class="kv"><b>HINDERING GROUND</b><span>&minus;10</span></div>
             <div class="kv"><b>SHIELD, DEFENDING</b><span>+5, occupies a hand</span></div>
@@ -1555,10 +1555,10 @@
         <div class="zone">
           <header>[ THE DIE TALKS ]</header>
           <div class="zbody">
-            <div class="kv"><b>CLASH, NATURAL 96+</b><span>explodes: roll again and add</span></div>
-            <div class="kv"><b>SKILL CHECK, 96+</b><span>beyond what was asked; a fail is Soft</span></div>
-            <div class="kv"><b>EITHER WAY</b><span>tick a Mark in the Proficiency you used</span></div>
-            <div class="kv"><b>SKILL CHECK, 01&ndash;05</b><span>catastrophic</span></div>
+            <div class="kv"><b>NATURAL 96+, ANY ROLL</b><span>explodes: roll again and add</span></div>
+            <div class="kv"><b>CHECK EXPLODES AND SUCCEEDS</b><span>a step beyond what was asked</span></div>
+            <div class="kv"><b>WEAPON ROLL EXPLODES</b><span>tick a Mark for that weapon</span></div>
+            <div class="kv"><b>CHECK, 01&ndash;05</b><span>catastrophic</span></div>
           </div>
         </div>
         <div class="zone">
@@ -1573,7 +1573,7 @@
         <div class="zone">
           <header>[ AT 0 HP &middot; DOWNED ]</header>
           <div class="zbody">
-            <p>No Beats, no defense. <b>Dead at the end of your third round</b> unless stabilized: any healing, or an ally&rsquo;s 1 Beat and a Moderate (90) check. Survive it and the System hands you a Battle Memory.</p>
+            <p>No Beats, no defense. <b>Dead at the end of your third round</b> unless stabilized: any healing, or an ally&rsquo;s 1 Beat and a Moderate (90) check. Survive a fight that Downed you and you gain a Battle Memory.</p>
           </div>
         </div>
         <div class="zone">
@@ -1597,21 +1597,22 @@
         <div class="zone">
           <header class="plainhead">DIFFICULTY &middot; RESISTANCE</header>
           <div class="zbody">
-            <div class="kv"><b>TRIVIAL 40 &middot; EASY 65</b><span>Proficient: no roll (Routine Mastery)</span></div>
+            <div class="kv"><b>TRIVIAL 40 &middot; EASY 65</b><span>in a Background&rsquo;s field: no roll</span></div>
             <div class="kv"><b>MODERATE</b><span>90</span></div>
             <div class="kv"><b>HARD</b><span>115</span></div>
             <div class="kv"><b>SEVERE</b><span>140</span></div>
             <div class="kv"><b>PEAK</b><span>165</span></div>
             <div class="kv"><b>CROSS-GRADE</b><span>+100 per Grade to the higher side</span></div>
+            <div class="kv"><b>TAKE 100</b><span>nothing presses and 100 would pass: no roll</span></div>
           </div>
         </div>
         <div class="zone">
-          <header class="plainhead">SKILL CHECK OUTCOMES</header>
+          <header class="plainhead">CHECK OUTCOMES</header>
           <div class="zbody">
-            <div class="kv"><b>FAIL BY 1&ndash;39</b><span>Soft: a setback with a way forward; success at a cost is a tool</span></div>
+            <div class="kv"><b>FAIL BY 1&ndash;39</b><span>Soft: a setback with a way forward; success at a cost is your option</span></div>
             <div class="kv"><b>FAIL BY 40+</b><span>Hard: failure plus consequence</span></div>
             <div class="kv"><b>NATURAL 01&ndash;05</b><span>Catastrophic</span></div>
-            <div class="kv"><b>NATURAL 96+</b><span>Exceptional: a step beyond; a failed total is Soft</span></div>
+            <div class="kv"><b>EXPLODES AND SUCCEEDS</b><span>Exceptional: a step beyond</span></div>
             <div class="kv"><b>SUCCEED BY 40+</b><span>Dominant</span></div>
           </div>
         </div>
@@ -1631,8 +1632,8 @@
           <header class="plainhead">VOLATILITY THRESHOLD</header>
           <div class="zbody">
             <div class="kv"><b>F 96+ &middot; E 95+ &middot; D 94+</b><span>C 93+ &middot; B 92+ &middot; A 91+</span></div>
-            <div class="kv"><b>EXPLODES ON</b><span>combat Clashes, Will Saves, the Breakthrough</span></div>
-            <div class="kv"><b>NEVER ON</b><span>skill checks</span></div>
+            <div class="kv"><b>EXPLODES ON</b><span>every d100 roll, both sides</span></div>
+            <div class="kv"><b>WITH ADVANTAGE</b><span>only the kept die explodes</span></div>
             <div class="kv"><b>TWO EXTRA DICE, PC ROLL</b><span>Battle Memory Card</span></div>
           </div>
         </div>
@@ -1654,7 +1655,7 @@
           <div class="zbody">
             <div class="kv"><b>PAST 80</b><span>&minus;10 &middot; past 160: &minus;25 &middot; past 240: collapse clock</span></div>
             <div class="kv"><b>COLLAPSE ROLL</b><span>hourly d100 &le; 25 / 50 / 75, automatic 4th</span></div>
-            <div class="kv"><b>EACH FULL HOUR</b><span>refines 20 VE, restores &#8533; Max HP (round up)</span></div>
+            <div class="kv"><b>EACH FULL HOUR</b><span>refines 20 VE, restores &#8533; Max HP; all by the 5th</span></div>
             <div class="kv"><b>FIRST FULL HOUR</b><span>Aether refills</span></div>
           </div>
         </div>
@@ -1664,17 +1665,17 @@
         <div class="zone">
           <header class="plainhead">BIG ROLLS</header>
           <div class="zbody">
-            <div class="kv"><b>AURA PRESSURE</b><span>d100 + HRT Force + (FOR Force&divide;2) vs 115 calm / 140 flaring; fail: one Beat per turn this encounter</span></div>
+            <div class="kv"><b>WILL SAVE (AURA)</b><span>d100 + HRT Force vs 90 calm / 115 flaring; fail: one Beat per turn this encounter</span></div>
             <div class="kv"><b>BREAKTHROUGH</b><span>d100 + HRT Force + prep vs 140</span></div>
             <div class="kv"><b>OVERCHARGE</b><span>150 / 160 / 180 buys +1 / +2 / +3 Quality on a success</span></div>
-            <div class="kv"><b>MOMENTUM</b><span>opposed d100 + HRT or PER Force, high side acts first</span></div>
+            <div class="kv"><b>MOMENTUM</b><span>a Clash, d100 + HRT or PER Force, high side acts first</span></div>
           </div>
         </div>
         <div class="zone">
           <header class="plainhead">DOWNED &middot; DEATH</header>
           <div class="zbody">
             <div class="kv"><b>AT 0 HP</b><span>dies end of third round unless stabilized</span></div>
-            <div class="kv"><b>STABILIZE</b><span>any healing, or 1 Beat + Moderate 90</span></div>
+            <div class="kv"><b>STABILIZE</b><span>any healing, or 1 Beat + Moderate 90 (Advantage for a medical Background)</span></div>
             <div class="kv"><b>EXECUTION</b><span>1 Beat, no roll, deliberate only</span></div>
             <div class="kv"><b>ONE HIT &ge; 10&times; MAX HP</b><span>annihilated outright</span></div>
           </div>

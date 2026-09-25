@@ -127,7 +127,7 @@ classes:
     built_for: Priya
     poles: [Freedom, Restraint]
     profile: {shape: Open, points: {DEX: 1}}
-    technique: {name: Go Cold, cost: Aether, effect: "Until your next turn, a creature trying to find or target you must first win an Opposed Clash, PER Force against your DEX Force +10; a creature that hunts by the System's reading does not find you at all"}
+    technique: {name: Go Cold, cost: Aether, effect: "Until your next turn, a creature trying to find or target you must first win a Clash, PER Force against your DEX Force +10; a creature that hunts by the System's reading does not find you at all"}
     permission: {name: No Life Here, effect: "On a turn you spend no Beats, the System reads you as dead until you act: inspection returns nothing, titles included; the party frame is unaffected", action_economy: false}
   - name: Witness
     built_for: Sabine

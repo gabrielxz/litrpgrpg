@@ -187,19 +187,31 @@ def auto_success(force_value: int, difficulty: str, obstacle_grade: str = "F", c
     return force_value >= effective_resistance(difficulty, obstacle_grade, challenger_grade)
 
 
-def skill_check_outcome(total: int, target: int, natural: int, code: str = "F") -> str:
-    """success / exceptional / soft / hard / catastrophic, for skill checks."""
+def check_outcome(total: int, target: int, natural: int, code: str = "F") -> str:
+    """success / exceptional / soft / hard / catastrophic, for checks.
+
+    `natural` is the first die. The total already includes any explosion (every roll explodes,
+    rules 0.1.14); a check whose die exploded and succeeds is an Exceptional Success.
+    """
     r = load("resolution")
     cat = r["failure_tiers"]["catastrophic_natural"]
     if cat[0] <= natural <= cat[1]:
         return "catastrophic"
-    exceptional = natural >= volatility_threshold(code)
+    exploded = natural >= volatility_threshold(code)
     if total >= target:
-        return "exceptional" if exceptional else "success"
-    if exceptional:
-        return "soft"                      # Exceptional on a failed total: Soft whatever the margin
+        return "exceptional" if exploded else "success"
     short = target - total
     return "hard" if short >= r["failure_tiers"]["hard"]["fail_by_min"] else "soft"
+
+
+def take_100(force_value: int, difficulty: str, modifiers: int = 0, obstacle_grade: str = "F", challenger_grade: str = "F") -> bool:
+    """Nothing presses: the check succeeds without a roll if a natural 100 would succeed."""
+    return force_value + 100 + modifiers >= effective_resistance(difficulty, obstacle_grade, challenger_grade)
+
+
+def with_advantage(die_a: int, die_b: int) -> int:
+    """Advantage: roll two d100, keep the higher. Only the kept die can explode."""
+    return max(die_a, die_b)
 
 
 # ---------------------------------------------------------------- combat ---
@@ -242,8 +254,9 @@ def annihilated(damage: int, max_hp_value: int) -> bool:
     return damage >= load("combat")["downed"]["annihilation_multiple_of_max_hp"] * max_hp_value
 
 
-def aura_save_total(die: int, hrt_force: int, for_force: int) -> int:
-    return die + hrt_force + for_force // 2
+def aura_save_total(die: int, hrt_force: int) -> int:
+    """The Will Save is a Heart check: d100 + HRT Force (rules 0.1.14; half FOR Force before that)."""
+    return die + hrt_force
 
 
 def aura_resistance(flaring: bool = False) -> int:
@@ -520,11 +533,9 @@ def skill_cost_at_grade(cost_at_f: int, acquired_grade: str) -> int:
 # ----------------------------------------------------------------- items ---
 
 def pill_effect(listed_amount: int, pill_grade: str, body_grade: str) -> int:
-    """A pill above the body's Grade does nothing; at the body's Grade it heals the listed amount ×10 per Grade."""
-    if grade_order(pill_grade) > grade_order(body_grade):
+    """Only a pill of the body's own Grade works (rules 0.1.14); it heals the listed amount ×10 per Grade."""
+    if grade_order(pill_grade) != grade_order(body_grade):
         return 0
-    if grade_order(pill_grade) < grade_order(body_grade):
-        raise RulesGap("a lower-Grade pill in a higher-Grade body is not priced in the book")
     return listed_amount * scale(pill_grade)
 
 

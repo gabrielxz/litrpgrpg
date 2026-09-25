@@ -78,16 +78,16 @@ The cultivator needs VE equal to at least **one full Tolerance** to ignite, and 
 | Overcharge Ratio | VE Stored | Saturation While Charging | Trial Difficulty | Quality Modifier |
 |---|---|---|---|---|
 | ×1.0 (Minimum) | One Tolerance | None | Base difficulty | +0 |
-| ×2.0 (Aggressive) | Twice Tolerance | Mild, −10 | +10 to Breakthrough DC | +1 Tier |
-| ×3.0 (Reckless) | Three times Tolerance | Heavy, −25 | +20 to Breakthrough DC | +2 Tiers |
-| ×4.0 (Suicidal) | Four times Tolerance | Critical, clock running | +40 to Breakthrough DC | +3 Tiers |
+| ×2.0 (Aggressive) | Twice Tolerance | Mild, −10 | +10 to Breakthrough Resistance | +1 Tier |
+| ×3.0 (Reckless) | Three times Tolerance | Heavy, −25 | +20 to Breakthrough Resistance | +2 Tiers |
+| ×4.0 (Suicidal) | Four times Tolerance | Critical, clock running | +40 to Breakthrough Resistance | +3 Tiers |
 <!-- /rules:table -->
 
 At the F-Grade cap those are 80, 160, 240, and 320 VE; ×10 for each Grade above.
 
 **Saturation penalties never touch the Breakthrough Check.** The ignition burns that VE as fuel, so the weight a cultivator is carrying does not blunt the roll it is paying for. Those penalties apply to everything else, including whatever the party has to do during the Trial, and to the cultivator's own actions right up until they ignite.
 
-**The body can give out first.** At ×4.0 the character is in Critical Saturation, and the collapse clock (Cultivation chapter) runs until the moment of Ignition: a d100 at the end of every full hour, escalating, automatic by the fourth. If it fires first they pass out on the spot into the collapse the Cultivation chapter defines: involuntary Consolidation, defenseless, the gathered VE staying in the tank, Saturation and all, until the next Ignition, and no attempt. This is why the highest ratio is gathered fast, in a dense location, with the ritual site already prepared. Once Ignition is declared, Saturation is suspended and the ritual consumes the VE.
+**The body can give out first.** At ×4.0 the character is in Critical Saturation, and the collapse clock (Cultivation chapter) runs until the moment of Ignition: a d100 at the end of every full hour, escalating, automatic by the fourth. If it fires first they pass out on the spot into the collapse the Cultivation chapter defines: 5 full hours of involuntary Consolidation, defenseless, refining nothing. They wake with the gathered VE still in the tank, Saturation and all, and the attempt waits until they can declare Ignition again. This is why the highest ratio is gathered fast, in a dense location, with the ritual site already prepared. Once Ignition is declared, Saturation is suspended and the ritual consumes the VE.
 
 **Once the cultivator declares Ignition, Stage 3 begins immediately. There is no going back.**
 
@@ -99,21 +99,21 @@ The dangerous part. A hybrid structure: an internal challenge for the cultivator
 
 The party resolves the defense scene first (two or three rounds), and then the cultivator makes a single roll, carrying the penalties and the Anchor bonus the scene produced:
 
-> **d100 + HRT Force + preparation vs. Breakthrough DC**
+> **d100 + HRT Force + preparation vs. Breakthrough Resistance**
 
 Heart alone. Every Breakthrough is a trial of will, and no other Attribute contributes to the check. A career of carrying more raw power than the body wanted is exactly the training this roll tests. The brawler and the diplomat make the same roll, and what separates them is how much they were willing to hold.
 
-**Breakthrough DC** is **140** at every Grade transition: Severe difficulty, read straight off the Grade Reference Card. There is no Cross-Grade Adjustment. The Overcharge Ratio further modifies the DC.
+**Breakthrough Resistance** is **140** at every Grade transition: Severe difficulty, read straight off the Difficulty Card. There is no Cross-Grade Adjustment. The Overcharge Ratio further modifies the Resistance.
 
 <!-- rules:table overcharge-dc -->
 | Overcharge Ratio | ×1.0 | ×2.0 | ×3.0 | ×4.0 |
 |---|---|---|---|---|
-| Effective DC | 140 | 150 | 160 | 180 |
+| Effective Resistance | 140 | 150 | 160 | 180 |
 <!-- /rules:table -->
 
-**What the DC represents:** a challenger rolls d100 + HRT Force against 140, with Heart bounded 1–99 inside their current Grade, and adds whatever preparation they brought. A character with Heart in the sixties and ordinary preparation is a little better than even. One who neglected Heart entirely needs both a fortune in preparation and a good die. The math is identical at every Breakthrough: F→E, E→D, D→C.
+**What the Resistance represents:** a challenger rolls d100 + HRT Force against 140, with Heart bounded 1–99 inside their current Grade, and adds whatever preparation they brought. A character with Heart in the sixties and ordinary preparation is a little better than even. One who neglected Heart entirely needs both a fortune in preparation and a good die. The math is identical at every Breakthrough: F→E, E→D, D→C.
 
-**The Breakthrough Check explodes.** This is the one roll outside combat where System Volatility applies. The natural d100 checks the character's **current** Grade threshold and cascades as normal (see Core Mechanics, "System Volatility"): a rare surge at every transition, natural 96+ for an F-Grade cultivator, with the threshold falling one point per Grade. A cascade can carry an outmatched cultivator past the DC, or turn a safe attempt into a Transcendent one.
+**The Breakthrough Check explodes**, like every roll. The natural d100 checks the character's **current** Grade threshold and cascades as normal (see Core Mechanics, "System Volatility"): a rare surge at every transition, natural 96+ for an F-Grade cultivator, with the threshold falling one point per Grade. A cascade can carry an outmatched cultivator past the Resistance, or turn a safe attempt into a Transcendent one.
 
 **Modifiers to the Breakthrough Check:**
 
@@ -139,7 +139,7 @@ The GM does not need to calculate this precisely; it is a qualitative read of th
 
 #### The Quality Tier
 
-The Breakthrough Check margin (roll result minus DC) determines the base Quality Tier. Overcharge and item bonuses can push the tier higher.
+The Breakthrough Check margin (roll result minus the Resistance) determines the base Quality Tier. Overcharge and item bonuses can push the tier higher.
 
 <!-- rules:table quality-tiers -->
 | Margin | Base Tier | Description |
@@ -151,7 +151,7 @@ The Breakthrough Check margin (roll result minus DC) determines the base Quality
 | 60+ | **Transcendent** | One-of-a-kind ascension. |
 <!-- /rules:table -->
 
-**Tier Adjustment:** On a successful check, apply the Overcharge Quality Modifier to the base tier from the margin table: ×2.0 raises the final tier one step, ×3.0 two steps, ×4.0 three steps. Quality Enhancer items push the final tier up one further step. Neither adjustment raises a tier above Transcendent, and neither applies on a failure: a check that misses the DC is Cracked no matter the Overcharge. This is the risk-reward loop: overcharging raises the DC, buying a better outcome on success at the price of a likelier failure.
+**Tier Adjustment:** On a successful check, apply the Overcharge Quality Modifier to the base tier from the margin table: ×2.0 raises the final tier one step, ×3.0 two steps, ×4.0 three steps. Quality Enhancer items push the final tier up one further step. Neither adjustment raises a tier above Transcendent, and neither applies on a failure: a check that misses the Resistance is Cracked no matter the Overcharge. This is the risk-reward loop: overcharging raises the Resistance, buying a better outcome on success at the price of a likelier failure.
 
 #### External Phenomena (The Party's Role)
 
@@ -169,9 +169,9 @@ The party's job during Stage 3 is straightforward: **keep the cultivator alive a
 
 **Mechanically, the party contributes in two ways:**
 
-1. **Phenomenon Management.** The GM presents 1–3 external threats at the current Grade, typically Moderate to Hard on the Grade Reference Card. The party deals with them using standard Clash rules. If any threat reaches the cultivator, it imposes a penalty on the Breakthrough Check (−10 per threat that breaks through). These fights should be short: 2–3 rounds maximum. The point is dramatic tension, not a grinding slog.
+1. **Phenomenon Management.** The GM presents 1–3 external threats at the current Grade, typically Moderate to Hard on the Difficulty Card. The party deals with them using standard Clash rules. If any threat reaches the cultivator, it imposes a penalty on the Breakthrough Check (−10 per threat that breaks through). These fights should be short: 2–3 rounds maximum. The point is dramatic tension, not a grinding slog.
 
-2. **Active Support.** One party member may declare an **Anchor action**, a deliberate act of support that grants the cultivator a bonus on the Breakthrough Check. The Anchor makes a Resistance Roll using their most relevant Force (HRT Force for spiritual anchoring, POW Force for energy channeling, FOR Force for physical shielding) against a Moderate difficulty of the current Grade. Success grants +5 to the Breakthrough Check. A Margin of 20+ grants +10. A Margin of 40+ grants +15. Only one Anchor action per Breakthrough; this keeps the spotlight on the cultivator.
+2. **Active Support.** One party member may declare an **Anchor action**, a deliberate act of support that grants the cultivator a bonus on the Breakthrough Check. The Anchor makes a check using their most relevant Force (HRT Force for spiritual anchoring, POW Force for energy channeling, FOR Force for physical shielding) against a Moderate difficulty of the current Grade. Success grants +5 to the Breakthrough Check. A Margin of 20+ grants +10. A Margin of 40+ grants +15. Only one Anchor action per Breakthrough; this keeps the spotlight on the cultivator.
 
 **Solo Breakthrough:** A cultivator attempting to Break Through alone must handle external phenomena themselves. Any phenomena that manifest impose their penalty automatically (the cultivator cannot fight and meditate simultaneously). This is why solo Breakthroughs require superior preparation: the item and location bonuses must compensate for the lack of party support and phenomenon management. A maxed-prep solo cultivator (peak location, full item loadout, high HVE coherence) should be able to reliably hit Stable without party support. Polished is possible but requires either a strong roll or exceptional preparation. Pristine solo is the stuff of legend.
 
@@ -306,7 +306,7 @@ Finding and securing a Breakthrough location is an adventure in itself. The GM s
 
 **Math Check (F→E):**
 
-A well-built F-cap character with HRT 60 sits 80 short of the DC before preparation, so the d100 has to cover 80 on its own: about one attempt in five. With a Moderate location (+10), a Foundation Pill (+10), Coherence of Defined (+10), and a Party Anchor (+5 to +15), preparation covers 35 to 45 of that gap and the roll needs 35 to 45: about six in ten, and an explosion only raises the Margin.** A character who pushed Heart into the eighties and brought maxed preparation clears the base DC on almost any roll and should be spending the margin on Overcharge instead, buying Quality with the odds they no longer need. A character who neglected Heart is not blocked, but they are buying their way through with consumables and a good night's dice.
+A well-built F-cap character with HRT 60 sits 80 short of the Resistance before preparation, so the d100 has to cover 80 on its own: about one attempt in five. With a Moderate location (+10), a Foundation Pill (+10), Coherence of Defined (+10), and a Party Anchor (+5 to +15), preparation covers 35 to 45 of that gap and the roll needs 35 to 45: about six in ten, and an explosion only raises the Margin. A character who pushed Heart into the eighties and brought maxed preparation clears the base Resistance on almost any roll and should be spending the margin on Overcharge instead, buying Quality with the odds they no longer need. A character who neglected Heart is not blocked, but they are buying their way through with consumables and a good night's dice.
 
 ### E → D: Soul Sea Expansion
 
@@ -321,7 +321,7 @@ A well-built F-cap character with HRT 60 sits 80 short of the DC before preparat
   - A **Method-dominant** character navigates labyrinthine internal architecture: crystalline structures of plans-within-plans, each one a decision made, a variable controlled. The trial demands they find the path through without losing themselves in abstraction.
   - An **Accord-dominant** character mediates between aspects of self: fragments representing every alliance forged, every compromise made, every time they bent to hold the group together. The trial demands they unify these fragments into a coherent whole.
   - A **Will-dominant** character confronts projections of everything they have dominated: the people cowed, the systems broken to their will, the resistance crushed. The trial confronts them with a situation in which imposing their will creates a cost or conflict.
-- **External:** Significant phenomena. Spectral manifestations coalesce from the cultivator's HVE signature, echoes given temporary physical form outside the cultivator's body. These are E-Grade threats (Moderate to Hard difficulty on the Grade Reference Card) and they carry thematic resonance with the cultivator's behavioral patterns. A Force-dominant cultivator's external phenomena are aggressive and kinetic; a Method-dominant cultivator's are spatial and disorienting. Aether storms, terrain warping, and transformed local wildlife are all appropriate.
+- **External:** Significant phenomena. Spectral manifestations coalesce from the cultivator's HVE signature, echoes given temporary physical form outside the cultivator's body. These are E-Grade threats (Moderate to Hard difficulty on the Difficulty Card) and they carry thematic resonance with the cultivator's behavioral patterns. A Force-dominant cultivator's external phenomena are aggressive and kinetic; a Method-dominant cultivator's are spatial and disorienting. Aether storms, terrain warping, and transformed local wildlife are all appropriate.
 
 **Recognition at this Grade** opens the Domain gate: the rebuilt Soul Sea is a vessel that can hold a Domain, and a character with a Peak Fragment articulation waiting may Distill it at their next Consolidation (see The Principle System, "The Domain gate").
 
@@ -343,9 +343,9 @@ This book covers F→E and E→D in full; D→C and beyond arrive in a future su
 
 ## The Breakthrough Check: Summary Reference
 
-> **Roll: d100 + HRT Force + preparation, against DC 140**
+> **Roll: d100 + HRT Force + preparation, against Resistance 140**
 >
-> **vs. Breakthrough DC: 140 + Overcharge modifier; no Cross-Grade Adjustment**
+> **vs. Breakthrough Resistance: 140 + Overcharge modifier; no Cross-Grade Adjustment**
 >
 > **Bonuses: Location Energy Density + Foundation Pill + HVE Coherence + Party Anchor**
 >
@@ -359,7 +359,7 @@ This book covers F→E and E→D in full; D→C and beyond arrive in a future su
 | Foundation Pill | Consumed item | +5 to +15 |
 | HVE Coherence | GM behavioral read | +0 to +20 |
 | Party Anchor | Ally support roll | +5 to +15 |
-| Overcharge | Player choice (added to DC) | +0 to +40 |
+| Overcharge | Player choice (added to the Resistance) | +0 to +40 |
 
 ---
 

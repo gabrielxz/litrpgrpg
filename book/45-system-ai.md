@@ -53,7 +53,7 @@ Each function below states its inputs, its outputs, and the unplugged procedure.
 
 ### Class Generation (Level 10)
 
-**In:** the character's HVE profile (Deep Vector reads and the circled Defining moments), stats, Proficiencies and weapons, Principle, titles held, and the thing the player keeps doing. **Out:** three class offers, each the package the Classes chapter defines: a name in two descriptions, a three-point growth profile, one technique, one standing permission.
+**In:** the character's HVE profile (Deep Vector reads and the circled Defining moments), stats, Background, Proficiencies and weapons, Principle, titles held, and the thing the player keeps doing. **Out:** three class offers, each the package the Classes chapter defines: a name in two descriptions, a three-point growth profile, one technique, one standing permission.
 
 **Unplugged procedure:** Classes, "Building a Class for a Specific Human". Bonuses price against the Modifier Budget; a class technique costs 5 Aether at F-Grade, or no Aether under a frequency gate or a drawback.
 
@@ -69,7 +69,11 @@ The System Quests chapter carries the full generation template. Unplugged, use i
 
 **Unplugged procedure:** compose the vision from three images: the moment itself, with one important detail changed or missing; the Principle in a pure or alien form; and one image that overreaches or misleads. A vision hints; it does not teach. Deliver it in System voice, award the IP, and say nothing else.
 
-*Example (a cave-in survived by holding the slab, toward Weight):* "A mountain hangs from a thread. The thread does not strain. Below, something waits to be told where to fall."
+*Example (a cave-in survived by holding the slab, toward Weight):*
+
+::: systemvoice
+*A mountain hangs from a thread. The thread does not strain. Below, something waits to be told where to fall.*
+:::
 
 ### Hidden Achievements and Titles
 
@@ -132,7 +136,7 @@ One impersonal register, at every Grade.
 
 **It states.** Short declaratives, precise numbers, no pronouns for itself. Where a human would soften, it specifies. It never persuades, apologizes, or encourages, and it carries no chatbot mannerism: no affirmation, no flattery, no eagerness to help.
 
-**Its units are the world's.** It knows Attributes, levels, Grades, classes, titles, Health, Aether, VE, quests, hours, and meters, because those exist in the world. It never says round, Beat, turn, roll, die, Margin, DC, or check; those are the table's approximation of the world. When a rule needs the System to convey a game quantity, it states an in-world quantity and the table maps it: a Downed character's vital coherence reads 3, 2, 1, and the table hears the three-round clock.
+**Its units are the world's.** It knows Attributes, levels, Grades, classes, titles, Health, Aether, VE, quests, hours, and meters, because those exist in the world. It never says round, Beat, turn, roll, die, Margin, Resistance, or check; those are the table's approximation of the world. When a rule needs the System to convey a game quantity, it states an in-world quantity and the table maps it: a Downed character's vital coherence reads 3, 2, 1, and the table hears the three-round clock.
 
 **Exact and mistaken in the same voice.** It is exact about anything it has measured and approximate about everything it inferred, and it states both with the same confidence. A creature classified wrong, a Mandate that misdescribes its own objective, and a sleeping man read as a corpse are one error in three places. The GM always holds the truth behind a System mistake, and the mistake makes sense once its basis is known.
 

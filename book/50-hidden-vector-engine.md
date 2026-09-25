@@ -130,7 +130,7 @@ Reading it: Current holds what tonight's sweep recalled, that Kara hit hard and 
 
 Deep is the character's long-term identity. It is the input to:
 
-- **Class generation (Level 10).** The System offers classes that fit the lived pattern; see The System AI and Progression, "Behavioral Stat Mapping."
+- **Class generation (Level 10).** The System offers classes that fit the lived pattern; see Classes, "Building a Class for a Specific Human."
 - **Principle crystallization.** Resonance accrues in the affinity families the behavior matches; the Engine is where *Resonance accruing* lines come from.
 - **Titles.** HVE-Resonant Titles read the Deep rows; one per axis pair. See Titles.
 - **Personal Opportunities.** Offers affirm the current pattern by default and occasionally test against it; see System Quests. The offer is drafted at the sweep, from Current before it wipes and Deep after.

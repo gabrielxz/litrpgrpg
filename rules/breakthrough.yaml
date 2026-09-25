@@ -6,7 +6,7 @@ stages: [Preparation, Ignition, Trial, Recognition]
 trial_time_box_minutes: 10
 
 check:
-  formula: d100 + HRT Force + preparation vs Breakthrough DC
+  formula: d100 + HRT Force + preparation vs Breakthrough Resistance
   dc: 140                         # Severe, flat, no Cross-Grade Adjustment, every transition
   volatility: true                # explodes at the character's current Grade threshold
   saturation_penalties_apply: false   # the ignition burns the VE as fuel
@@ -29,7 +29,7 @@ modifiers:
 phenomenon_penalty_per_breach: -10     # each external threat that reaches the cultivator
 anchor:
   one_per_breakthrough: true
-  roll: Resistance Roll with HRT, POW, or FOR Force vs Moderate of the current Grade
+  roll: a check with HRT, POW, or FOR Force vs Moderate of the current Grade
   bonus_on_success: 5
   bonus_at_margin_20: 10
   bonus_at_margin_40: 15

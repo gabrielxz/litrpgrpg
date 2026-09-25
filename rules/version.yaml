@@ -1,8 +1,8 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.13"
-dated: "2026-09-23"
+version: "0.1.14"
+dated: "2026-09-24"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
   flat-value VE (Tolerance 80, level 120, 20 per hour), the Grade Gap Rule,
@@ -30,3 +30,11 @@ notes: >
   Completion 75), and an Accession Rift pays the Faction column at its difficulty. 0.1.13: the Rift award reaches the
   Quick Reference and the kit's VE block (25 / 50 / 90 / 150 at Moderate / Hard / Severe / Peak, per character, plus the
   kills), with the clearance rule beside it. No number moved; the Quick Reference VE table gained a row.
+  0.1.14 (the Core Mechanics read-through): every d100 roll explodes; two kinds of roll, the Clash (against a
+  roller) and the check (against a Resistance; the Breakthrough's DC is Resistance 140); Take 100 and one roll per
+  check until something changes; Advantage (two d100, keep the higher, about +20) replaces the Positional States,
+  Exposed stays at −10 and Flanking at +10; Backgrounds replace non-combat Proficiencies (one weapon Proficiency at
+  creation; Marks come from an exploding weapon roll); the Will Save is d100 + HRT Force against Moderate 90 calm /
+  Hard 115 flaring; the Grade table shows the stat cap, Force, and damage for all six Grades; Consolidation healing is a
+  fifth an hour with the fifth hour restoring the rest (no rounding exception); a collapse at the Level cap lasts 5
+  hours; pills are Grade-locked both ways; the Grade Reference Card is the Difficulty Card.

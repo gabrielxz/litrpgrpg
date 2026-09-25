@@ -55,7 +55,7 @@ Players track two counters on their sheets from the first session. You keep a th
 | **Record** | **Ticks when** | **Result** |
 |---|---|---|
 | **IP** (Insight Points) | The character earns insight under pressure | At 3 IP the first Principle crystallizes (The Principle System) |
-| **Marks** | A natural d100 at or above the Volatility Threshold on a Clash or skill check, in a Proficiency's domain | At 3 Marks Trained becomes Seasoned. At 3 Marks in a domain the character never trained, the System grants it at Trained |
+| **Marks** | The die explodes on an attack or a defense with a weapon | At 3 Marks Trained becomes Seasoned. At 3 Marks with a weapon shape the character never trained, the System grants it at Trained |
 | **The HVE sheet** | At each session's end, from what you remember (The Hidden Vector Engine, "The Session-End Sweep") | Feeds the System's summary of each character in Phase 6 |
 
 Players track their own IP and Marks. Keep the HVE sheet private.
@@ -112,7 +112,7 @@ Use this as the default sequence. Adjust events to what the party does, and choo
 Before the first session, each player has built a character per the Character Creation chapter:
 
 - 40-point buy across the seven Attributes (floor 3, cap 10).
-- Three Proficiencies at Trained, written in plain language.
+- A Background in one or two plain-language lines, and one Proficiency at Trained.
 - No Principle access: Insight is earned in play, nothing is selected at creation (see "Starting Principle Access" in Character Creation).
 - Derived stats calculated: Max HP = Raw FOR × 2, Max Aether = Raw POW, VE Tolerance 80, Level 1, Grade F.
 
@@ -120,7 +120,7 @@ Players begin with **whatever was on their person at the moment of Integration**
 
 **GM preparation checklist:**
 
-- [ ] Print or digitize the Grade Reference Card (the Quick Reference).
+- [ ] Print or digitize the Difficulty Card (the Quick Reference).
 - [ ] Pull stat blocks from the Bestiary: Glow-Mote Swarm, Husk Crawler, Frenzy Rat, Pre-System Brigand, Snarljaw, Alpha Snarljaw, Glow-Stalker, Training Sentry, Husk Sentinel, Fragment Wraith, Corrupted System Warden.
 - [ ] Cut out the probe cards (Table Kit) and pick which player gets which.
 - [ ] Cut out the Personal Opportunity cards (Table Kit), one per player, and have the Battle Memory and Title cards in reach. Hand cards over during play; never read them aloud.
@@ -139,13 +139,13 @@ Players begin with **whatever was on their person at the moment of Integration**
 | 1: The Threshold | The System's voice. The probe. |
 | 2: The Violent Arrival | The Clash. Force. Beats. Zones. **Surge. Yield.** First kill. First VE. First scavenged gear. |
 | 3: The Recycling Node | System status notifications. The Quest UI. The Party. Scarcity. The shard economy. **Consolidation.** |
-| 4: The Field of Ruins | **Volatility, Exceptional Success, and Marks.** **Driven Back.** Aura Pressure. Saturation. **Leveling. Stat allocation.** Routine Mastery. Shards in use. Personal Opportunities. The first Battle Memory. |
+| 4: The Field of Ruins | **Volatility, Exceptional Success, and Marks.** **Driven Back.** Aura Pressure. Saturation. **Leveling. Stat allocation.** Backgrounds and Advantage. Take 100. Shards in use. Personal Opportunities. The first Battle Memory. |
 | 5: The Convergence Crisis | The first Mandate. **Cornered.** Boss-tier combat. Sacrifice as a defining choice. |
 | 6: First Recognition | Titles. Affinity Notices. Hidden Quest reveals. The Stinger. |
 
 Teach each system when the schedule brings it up. When a player asks "how does combat work," a good first answer is *"roll d100, add your Force, I'll tell you what happens"*; detail can wait until the table wants it. If confusion is costing fun, stop and explain.
 
-**These mechanics can arrive before their scheduled introduction.** A natural 96 can explode in the first Clash of Phase 2, and an attacker who wins by 40 or more has Driven Back whenever it happens. When one arrives early, apply it, name it, and explain it briefly; skip its planned introduction later.
+**These mechanics can arrive before their scheduled introduction.** A natural 96 can explode in the first Clash of Phase 2, an attacker who wins by 40 or more has Driven Back whenever it happens, and the fiction can earn Advantage in any fight. When one arrives early, apply it, name it, and explain it briefly; skip its planned introduction later.
 
 ---
 
@@ -510,7 +510,7 @@ This fight teaches the whole combat loop, one player at a time, with nobody else
 
 **Step 3. Offer the Surge before a roll that matters.** The first time a player wants an attack badly, tell them:
 
-> *You can push. Spend half your Maximum Aether, rounded down, for +5 on this roll. Declare it before you roll. Aether comes back only after the first full hour of a Consolidation, and that is hours away, so you have enough for one or two of these.*
+> *You can push. Spend half your Maximum Aether, rounded down, for +5 on this roll. Declare it before you roll. Aether comes back only after the first full hour of a Consolidation, and that is hours away, so you have enough for at least two of these.*
 
 Whether they spend it or hold it is their call. Say nothing either way.
 
@@ -522,11 +522,13 @@ Whether they spend it or hold it is their call. Say nothing either way.
 
 Then wait. Do not recommend an answer.
 
-**Example.** Dana has DEX 6, FOR 6, POW 5: 12 HP and 5 Aether. A Husk Crawler rolls 55 + Off Force 04 for 59. She dodges: 22 + DEX Force 6 for 28. The Crawler wins by 31. Without Yield, 31 damage takes Dana to 0 HP and she is Downed.
+::: worked
+Dana has DEX 6, FOR 6, POW 5: 12 HP and 5 Aether. A Husk Crawler rolls 55 + Off Force 04 for 59. She dodges: 22 + DEX Force 6 for 28. The Crawler wins by 31. Without Yield, 31 damage takes Dana to 0 HP and she is Downed.
 
 - **She gives up one Beat.** Margin 31 − 20 = 11. She takes 11, stands at 1 HP, and has one Beat on her next turn. The Crawler is still in her Zone.
 - **She gives up both.** Margin 31 − 40 is below zero, so the claws close on nothing. Her next turn is gone. The Crawler may drive her into the next Zone or leave her where she stands; on its next turn it closes or attacks, depending on where it moved her.
 - **She refuses to Yield.** She is Downed at 0 HP with three rounds to live and nobody within a hundred yards. See below; the survival rule (Phase 5, Watch For) means the count does not kill her.
+:::
 
 **No player character dies in the arrival fight.** A solo character has no ally to stabilize them, so a Downed result here would run the countdown out unopposed. If a character goes Downed alone, the creature loses interest or begins dragging them away (the Bestiary's guidance on Downed characters), and another Initiate's path crosses theirs before the count ends. The tutorial's rule on character death is stated in Phase 5, Watch For.
 
@@ -565,9 +567,10 @@ Worked finds, to read or vary:
 Across the whole party, the walks down should put the following in play: a weapon for whoever wants one (club, knife, spear, battle axe, short bow), two or three Skill Shards per character weighted toward Edge and Pulse, one Medkit, one set of Armor Scraps, one Relic, one Resonance Glass, and one **Battered Communicator**, seeded now because the Civic Fragment terminal in Phase 4 needs it. Anything nobody picked up on the slopes can turn up in the Node pile.
 
 The slopes cover the basics; the Node's pile is competition for the better upgrades.
+
 **Weapons carry no bonus of their own.** Whoever picks up the axe adds their own Proficiency tier to the Clash and nothing else: +5 at Trained, +10 at Seasoned, +0 with no relevant Proficiency at all. What the weapon decides is which Force governs the attack and what the implement makes possible.
 
-**A weapon outside your Proficiencies still works.** A character with no "spears and staves" Proficiency can fight with the spear; they add no Proficiency bonus. Every natural die at or above their Volatility Threshold while using it earns a Mark in that domain, and three Marks in a domain they never trained makes the System grant it at Trained.
+**A weapon outside your Proficiencies still works.** A character with no "spears and staves" Proficiency can fight with the spear; they add no Proficiency bonus. Every explosion while attacking or defending with it earns a Mark toward that weapon's Proficiency, and three Marks with a weapon shape they never trained makes the System grant it at Trained.
 
 ### Watch For
 
@@ -617,7 +620,7 @@ The quest names no place. The Node is where they end up: it is the lowest point 
 ::: readaloud
 At the bottom of the valley stands a hill of debris, forty feet high. Machine parts, furniture, sheets of something like glass, a boat, tools with handles built for hands that were not shaped like yours. Some of it is still moving. Somewhere inside the pile a motor is running.
 
-While you are looking at it, a section of the sky above the hill goes briefly grey, and a load of debris drops out of it and lands on the top with a sound you feel in your feet. The pile settles. The motor keeps going.
+While you are looking at it, a section of the sky above the hill goes briefly gray, and a load of debris drops out of it and lands on the top with a sound you feel in your feet. The pile settles. The motor keeps going.
 
 There are other people here. Standing well apart, watching each other, in work clothes and pyjamas and one man in a wetsuit.
 :::
@@ -739,14 +742,14 @@ Use the following System notice to introduce Consolidation:
 
 *Process available: Consolidation.*
 
-*Advisory: subject is defenceless for the duration.*
+*Advisory: subject is defenseless for the duration.*
 :::
 
-The last line states the cost of resting: a Consolidating character is defenceless for the whole of it.
+The last line states the cost of resting: a Consolidating character is defenseless for the whole of it.
 
 #### First Consolidation
 
-Close Session 1 with the party camping and declaring their first Consolidation (Cultivation chapter). Walk through the mechanic once: minimum 1 hour, and every full hour refines 20 VE and restores one fifth of Max HP, rounded up, with Aether refilling when the first full hour completes.
+Close Session 1 with the party camping and declaring their first Consolidation (Cultivation chapter). Walk through the mechanic once: minimum 1 hour, and every full hour refines 20 VE and restores one fifth of Max HP (all of it by the fifth hour), with Aether refilling when the first full hour completes.
 
 Session 1 pays each character between about 15 and 45 VE, depending on the encounter they drew: the cache is the richest, and The High Ground and The Other Survivor pay only the arrival kill, Q-001, and session survival. Nobody is Saturated against a Tolerance of 80, and three hours clears the largest load. Narrate the tank emptying, the wounds closing, and the Aether returning at the first full hour. Saturation is taught in Phase 4.
 
@@ -790,11 +793,11 @@ The tutorial teaches threat assessment by making some fights losing propositions
 
 One number governs the high end of a natural d100 (Core Mechanics, "One number at the top of the die"), and Phase 4 is where the table meets it. At F-Grade, that number is **96**.
 
-When a natural die comes up 96 or higher:
+When a natural die comes up 96 or higher, on any roll:
 
-- On a **Clash**, it explodes. Roll again and add. If the new die is also 96+, it explodes again.
-- On a **skill check**, it is an **Exceptional Success**. No extra dice and no math. If the total succeeds, the character succeeds a visible step beyond what was asked; if the total still fails, the failure is Soft whatever the margin.
-- On **either**, the System marks the Proficiency in use. Three Marks turn Trained into Seasoned. Three Marks in a domain the character never trained makes the System grant it.
+- It **explodes**. Roll again and add. If the new die is also 96+, it explodes again.
+- On a **check**, if the total succeeds, it is an **Exceptional Success**: the character succeeds a visible step beyond what was asked.
+- On an **attack or a defense with a weapon**, the player adds a Mark beside that weapon's Proficiency. Three Marks turn Trained into Seasoned. Three Marks with a weapon shape the character never trained makes the System grant it.
 
 Do not script this and do not fudge dice to produce it. At 5% per roll it usually arrives somewhere in Phase 4's volume of rolls, on one side or the other; if it never does, explain it with the rule above when a roll comes close. When it lands on a player's roll, slow down. Show the extra die, or narrate the step beyond. Then hand the player their first Mark and let them write the tally on their sheet. An enemy's explosion earns nobody a Mark.
 
@@ -809,7 +812,8 @@ If a cascade ever runs to two or more extra dice on a player character's roll, i
 - **Driven Back.** An attacker who wins by 40 or more leaves the defender Exposed and may drive them one Zone. Sector A is built to demonstrate it.
 - **Aura Pressure.** A higher-Grade entity passes through the valley. Sector B carries it.
 - **Saturation.** A character who pushes hard accumulates VE past Tolerance. See the Saturation section below.
-- **Routine Mastery.** A relevant Proficiency turns an Easy task into no roll at all. Sector B's hidden trail demonstrates it; any Easy task inside a Proficiency does the same.
+- **Backgrounds and Advantage.** A Background turns routine work in its field into no roll at all, and rolls harder work in it with Advantage: two d100, keep the higher. Sector B's hidden trail demonstrates the first. Grant Advantage in any fight where the fiction gives someone a real edge.
+- **Take 100.** In a cleared sector or at camp, with nothing pressing, a check a natural 100 would pass succeeds without a roll; name the time it takes.
 - **Shards in use.** Every sector rewards spending one.
 - **Personal Opportunities.** Delivered as cards throughout the phase. See below.
 
@@ -824,7 +828,7 @@ Aura Pressure and the Attribute Treasure live in Sector B, and the Wraith in Sec
 ::: readaloud
 The rain line ends and the ground turns to worked stone.
 
-Tiers step down in a ring, six of them, to a floor of grey sand. The sand is stained in patches that have been there long enough to be part of it.
+Tiers step down in a ring, six of them, to a floor of gray sand. The sand is stained in patches that have been there long enough to be part of it.
 
 Racks stand along the walls with nothing left in them. Between the racks there are figures: man-height, cut from the same stone as the tiers, and not one of them is looking at anything.
 
@@ -872,12 +876,12 @@ Forty feet in, the blue light ends at a sharp line. Past the line you cannot see
 
   The party may be present for this or not. State what is there, answer questions honestly, do not have the young do anything endearing, and do not editorialize afterward.
 - **Edible flora** restoring 10 HP at the cost of sensory distortion (−5 to PER-based Clashes for the next encounter).
-- **A hidden trail** bypassing the entire sector. PER Force vs. F-Easy 65 to spot while moving normally. A character with a relevant Proficiency (tracking, survival, scouting) who spends 1 Beat scanning finds it with **no roll at all**: an Easy task inside a Proficiency is Routine Mastery. Say so out loud the first time it happens; most players expect to roll for everything. The trail crosses the sector in three minutes of fictional time and exits behind the den.
+- **A hidden trail** bypassing the entire sector. PER Force vs. F-Easy 65 to spot while moving normally. A character whose Background covers tracking or the outdoors who spends 1 Beat scanning finds it with **no roll at all**: an Easy task in a Background's field is routine work. Say so out loud the first time it happens; most players expect to roll for everything. The trail crosses the sector in three minutes of fictional time and exits behind the den.
 - **A trapped creature**, non-hostile and non-human, caught in root-tendrils and slowly being digested. Freeing it costs 1d3 rounds and attracts a Glow-Stalker. It knows the ground: freed, it leads the party to the hidden trail or around the pack's range, and it shows rather than says.
 
-**Aura Pressure Demonstration.** Once during this sector a **higher-Grade entity** passes overhead, a vast shape barely visible above the canopy. Every character in line of sight makes a **Will Save: d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance Hard (115)**. The entity is passing and its presence is calm, so this is the flat card value with no Cross-Grade Adjustment.
+**Aura Pressure Demonstration.** Once during this sector a **higher-Grade entity** passes overhead, a vast shape barely visible above the canopy. Every character in line of sight makes a **Will Save: d100 + HRT Force vs. Aura Resistance Hard (115)**. The entity is hunting something far below and flaring its presence across the valley as it goes, so this is the flaring value, the flat card number with no Cross-Grade Adjustment.
 
-The save fails unless the die explodes: a starting character's bonus (HRT Force plus half FOR Force) is at most 15 against 115. With HRT 5 and FOR 5 the bonus is 5 + 2 = 7, so an unexploded die tops out at 107; a natural 96 or higher rolls again and adds (Will Saves explode; Core Mechanics), and 96 plus a second die of 12 or better passes. On failure the character is **Suppressed (1 Beat)** for the next encounter, this scene's own term; ordinary Suppression lasts the encounter it began in. On success they hold steady under it and take no penalty. The entity does not engage. It passes, and it never noticed them.
+The save fails unless the die explodes: a starting character's HRT Force is at most 10, so an unexploded die tops out at 95 + 10 = 105 against 115. A natural 96 or higher rolls again and adds (every roll explodes; Core Mechanics), and with HRT 5, 96 plus a second die of 14 or better passes. On failure the character is **Suppressed (1 Beat)** for the next encounter, this scene's own term; ordinary Suppression lasts the encounter it began in. On success they hold steady under it and take no penalty. The entity does not engage. It passes; whatever it was flaring at, it was not them.
 
 **Hidden Opportunity.** Deep in the forest a **Resonance Node** pulses at a frequency only characters with PER Force 07 or higher can detect. Approaching it triggers a vision, one glimpse of the wider Multiverse; give it one concrete image (a city hung from the underside of a moon, a river of Aether crossing a plain, a figure whose shadow falls on three worlds). Grants **+1 IP** toward the character's family resonance, or their Principle if one has crystallized. **This is also a Battle Memory trigger**; note it for the next Consolidation.
 
@@ -937,7 +941,7 @@ The building was occupied until recently. Bedding, ration wrappers, and a scrawl
 **Encounters:**
 
 - **1 Husk Sentinel** (Bestiary, Hard) holding the medical bay entrance. It is an automated defense system guarding a refuge under an authorization that changed after the Kith moved in; it reclassified them as intruders and drove them out. A fresh party cannot beat it head-on. The winning paths are the command terminal below, or returning with the Kith once relations are good.
-- **Malfunctioning command terminal.** Partial operation is possible for a character willing to sit with it (PER vs. F-Hard 115, or automatic for a character with a relevant Proficiency and a **Battered Communicator** to bridge the dead interface). Each success buys one of: unlock a door, power the Husk Sentinel down for one hour, activate the backup defenses, or send a signal.
+- **Malfunctioning command terminal.** Partial operation is possible for a character willing to sit with it (PER vs. F-Hard 115, or automatic for a character whose Background covers electronics and who has a **Battered Communicator** to bridge the dead interface). Each success buys one of: unlock a door, power the Husk Sentinel down for one hour, activate the backup defenses, or send a signal.
 - **Tribunal chamber.** The automated arbitration system still partly functions. A character who works out the protocol (CHA Force vs. F-Hard 115) can put a dispute to it and receive a formal decision, which the System records against every party to it. Nothing enforces the decision outside the building; the System records the ruling and may quote it in later offers.
 - **Locked medical bay** holding supplies for the whole party: 3 Healing Pills, 1 Greater Healing Pill, 1 Battered Medkit.
 - **Scattered records in Kith script** (PER, F-Moderate 90). Partial decoding reveals that the previous occupants lost members, were frightened, and left in a hurry toward the north. It also confirms that the sector is scheduled to close.
@@ -1053,7 +1057,7 @@ The prize is whatever drew the character away from the group; name it when you h
 
 A closed door stands in front of you. What is on the other side belongs to a higher Grade than anything in this tutorial. System text: *Threshold detected. Compatibility: marginal. Crossing: not recommended. Residual pressure: persistent.*
 
-- **Open it.** The door has no lock; it opens to a hand on it. The warning was the only barrier. A brief vision of an E-Grade location; give it one concrete image. Aura Pressure save: d100 + HRT Force + (FOR Force / 2) vs. Aura Resistance Severe (140), the flat card value, with the source flaring everything the door was holding back. The save fails unless the die explodes: a natural 96 or higher rolls again, and with a +7 bonus the second die needs 37 or better. On failure: **Suppressed for the rest of the tutorial (1 Beat; this scene's own term)**. On success the character stands in it and takes no penalty. Either way, opening it earns the Achievement title **Not Recommended** (+1 HRT), delivered in Phase 6.
+- **Open it.** The door has no lock; it opens to a hand on it. The warning was the only barrier. A brief vision of an E-Grade location; give it one concrete image. Will Save: d100 + HRT Force vs. Aura Resistance Hard (115), the flaring value, with the source flaring everything the door was holding back. For most characters the save fails unless the die explodes: a natural 96 or higher rolls again, and with HRT 5 the second die needs 14 or better. On failure: **Suppressed for the rest of the tutorial (1 Beat; this scene's own term)**. On success the character stands in it and takes no penalty. Either way, opening it earns the Achievement title **Not Recommended** (+1 HRT), delivered in Phase 6.
 - **Walk away.**
 
 #### Running Them
@@ -1093,7 +1097,7 @@ A typical character reaches **Level 2 or 3** here. Use each character's actual s
 
 ## Phase 5: The Convergence Crisis
 
-**The Situation.** The valley is being taken apart on a schedule. The only way out is the gate at the centre, visible since they landed, and between them and it is something they cannot fight. They want to reach the gate. The phase ends when everyone who can reach the gate is through, or the sector closes.
+**The Situation.** The valley is being taken apart on a schedule. The only way out is the gate at the center, visible since they landed, and between them and it is something they cannot fight. They want to reach the gate. The phase ends when everyone who can reach the gate is through, or the sector closes.
 
 **Pacing.** 60–90 minutes at the table. The Mandate's thirty minutes are fictional time; a real-world clock on the table is an optional pressure tool and changes no rule.
 
@@ -1128,7 +1132,7 @@ Read this aloud. Show the timer. From this moment the timer is fixed: thirty min
 
 ### What Happens
 
-The wall of annihilation is a **Reality Purge**, and it sweeps the valley from the far edge inward, taking the sectors in sequence. The **transit gate** is the broken nexus at the centre that they have been able to see since they landed. Reaching it is the whole phase.
+The wall of annihilation is a **Reality Purge**, and it sweeps the valley from the far edge inward, taking the sectors in sequence. The **transit gate** is the broken nexus at the center that they have been able to see since they landed. Reaching it is the whole phase.
 
 ### The Complication
 
@@ -1340,7 +1344,7 @@ Four examples for common tutorial patterns. They show the shape; the content com
 >
 > *Initial Insight: **Patience.** The trap that waits is still a trap.*
 >
-> Tracking: 1 Mark. Field Medicine: 2 Marks.
+> Archery and Throwing: 1 Mark.
 >
 > Title granted: **Watched First** (Achievement, observed the constructs before engaging).
 > Hidden Quest revealed (post-completion): *"Let It Finish." Complete. Reward: +1 IP.*
@@ -1353,7 +1357,7 @@ Four examples for common tutorial patterns. They show the shape; the content com
 >
 > *Resonance detected: HARMONY. Monitoring.*
 >
-> Negotiation: 3 Marks. **Seasoned.** Hand to Hand: 3 Marks, **granted at Trained.**
+> Hand to Hand: 3 Marks, **granted at Trained.**
 >
 > Title granted: **Voice of Decision** (Achievement, for breaking the deadlock at the Recycling Node).
 > Bestowed title: **The Hand That Reached**.
@@ -1366,7 +1370,7 @@ Four examples for common tutorial patterns. They show the shape; the content com
 >
 > *Resonance detected: SUBVERSION. Monitoring.*
 >
-> Mechanical Tinkering: 2 Marks.
+> Blades: 2 Marks.
 >
 > Title granted: **Wrong Key** (Achievement, for opening the cache without any of its inputs).
 > Bestowed title: **Salvaged** (negative; released by being last out and making it).
@@ -1443,8 +1447,9 @@ Confirm each mechanic was introduced before the tutorial ends. Items marked **co
 - [ ] **The top of the die** explained when the first natural 96+ lands (contingent): the explosion, the Exceptional Success, or both.
 - [ ] **The first Mark** written on a sheet (contingent).
 - [ ] **Driven Back** used by a player to move an enemy somewhere it did not want to be (contingent).
-- [ ] **Routine Mastery** experienced, with the words "you don't roll for that" said out loud.
-- [ ] **Aura Pressure save** delivered (contingent: Sector B, or the Threshold card).
+- [ ] **A Background** used for routine work, with the words "you don't roll for that" said out loud.
+- [ ] **Advantage** granted at least once, with both dice shown.
+- [ ] **The Will Save** against Aura Pressure delivered (contingent: Sector B, or the Threshold card).
 - [ ] **Saturation symptoms** narrated for anyone pushing hard.
 - [ ] **Shards**: players know how to spend one, and most have.
 - [ ] **An Attribute Treasure** offered, taken or refused (contingent: Sector B).
@@ -1490,7 +1495,7 @@ By the end of the tutorial, every player should have:
 
 - Reached **Level 4**, or Level 5 if they took every fight and every opportunity.
 - Understood **Yield**: chose it once, or was walked through the example after a clean win.
-- Seen a natural die land at or above the Volatility Threshold, and watched it explode, mark a Proficiency, or both (contingent on the dice).
+- Seen a natural die land at or above the Volatility Threshold, and watched it explode, and earn a Mark if it was an attack or defense with a weapon (contingent on the dice).
 - At least one **Mark** on the sheet (contingent on the dice).
 - Left you at least three moments that were still with you at the session-end sweep.
 - Earned **at least one Achievement Title**.

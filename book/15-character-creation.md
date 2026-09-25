@@ -27,7 +27,7 @@ These numbers represent a freshly integrated human: someone pulled into the Syst
 | Strength (STR) | Physical power. Governs heavy melee attacks. |
 | Dexterity (DEX) | Precision and agility. Governs evasion, finesse melee, ranged attacks. |
 | Fortitude (FOR) | Endurance and resilience. Determines Max HP. |
-| Heart (HRT) | Resolve and spiritual anchor. Defends against mental and spiritual attacks. |
+| Heart (HRT) | Resolve and spiritual anchor. Governs Momentum; defends against mental and spiritual attacks. |
 | Power (POW) | Supernatural output potential. Determines Max Aether. |
 | Perception (PER) | Awareness and acuity. Defends against illusions, governs detection. |
 | Charisma (CHA) | Force of personality. Governs social pressure and manipulation. |
@@ -62,17 +62,39 @@ The anchors below calibrate every score in pre-Integration human terms. Even val
 | CHA | Empties a room slowly | Pleasant company | Closes the sale | Packs a town hall | Starts a movement |
 <!-- /rules:table -->
 
-## Proficiencies
+## Background
 
-Choose **three Proficiencies**, broad domains of competence written in plain language. All three begin at **Trained**: +5 to Clashes and skill checks in the domain, Routine Mastery on Trivial and Easy tasks, and access to whatever the GM has gated behind training. They deepen to Seasoned and then Master through Marks, earned in play. See Core Mechanics, "Proficiencies and Skill Checks," for the full rules.
+Write one or two plain-language lines naming what the character did before Integration and what they were good at: a trade, a job, years of a hobby. In its field, a Background lets the character attempt work that needs training, do routine work without rolling, and roll checks with Advantage (Core Mechanics, "Backgrounds"). It never applies to an attack or a defense.
 
-A Proficiency is a method, so it works on the alien version of its subject at the same tier: a botanist reads alien flora, a mechanic reads an alien engine. Languages are Interpretation's job (below). A Proficiency covers weapons in its domain. A character with "axes and hammers" adds their tier bonus when swinging a hatchet; a character without it adds nothing. Fighting domains are drawn by weapon shape, so picking up something outside your domain costs you the bonus until you have earned the Marks for it.
+Write it specific enough that the table can tell what it covers. "ER nurse, twelve years" covers wounds, triage, and medication; "medical" could mean anything. The GM decides whether a roll falls in the field.
 
-Proficiencies should reflect the character's life before Integration: what they trained in, what they were good at, what they spent years doing. A soldier might take "blades," "field medicine," and "tactical awareness." A professor might take "ancient languages," "research methodology," and "persuasion." A mechanic might take "mechanical tinkering," "jury-rigging," and "vehicle operation."
+A Background is a method, so it works on the alien version of its subject: a nurse reads an alien wound, a mechanic reads an alien engine. Languages are Interpretation's job (below).
 
-**A sample to work from.** Pick from this list or use it as a model. It is deliberately incomplete: players and GMs should invent new Proficiencies together, named in plain language and scoped like these. They are grouped by the kind of work they cover.
+**A sample to work from.** Use one of these or write your own the same way.
 
-**Fighting**
+<!-- rules:table sample-backgrounds -->
+| **Background** | **Covers** |
+|---|---|
+| ER nurse, twelve years | Wounds, triage, medication, and staying calm while someone is dying. |
+| Volunteer firefighter | Rescue, first aid, fire, and working through the night without sleep. |
+| Land surveyor | Maps, distances, reading terrain, and finding a boundary nobody marked. |
+| Electrician | Wiring, power, circuits, and what will kill you if you touch it. |
+| Auto mechanic | Engines, machines with moving parts, and making a thing run on the wrong part. |
+| Hunting guide | Tracking, fieldcraft, weather, and living outdoors for days. |
+| Army infantry, four years | Small-unit tactics, weapons care, marching, and field first aid. |
+| High school chemistry teacher | Reactions, solvents, lab safety, explosives, and a room full of teenagers. |
+| Trial lawyer | Argument, reading a witness, and finding the weak point in a story. |
+| Line cook | Knives, heat, timing, and feeding forty people from what is in the walk-in. |
+| Locksmith | Locks, safes, alarms, and the habits of the people who install them. |
+| Grad student in classics | Dead languages, old scripts, archives, and research. |
+| Warehouse shift lead | Lifting and loading, forklifts, logistics, and keeping a crew working. |
+| Ran with a crew | Black markets, rumor, lying well, and who to ask. |
+| Street musician | Performance, holding a crowd, and reading who will pay. |
+<!-- /rules:table -->
+
+## Proficiency
+
+Choose **one Proficiency**: a weapon shape the character has used, or is about to pick up. It begins at **Trained**, +5 to attacks and defenses with its weapons, and deepens to Seasoned and then Master through Marks earned in play. New Proficiencies are earned the same way. See Core Mechanics, "Proficiencies," for the full rules.
 
 <!-- rules:table proficiencies-fighting -->
 | **Proficiency** | **Covers** |
@@ -83,63 +105,9 @@ Proficiencies should reflect the character's life before Integration: what they 
 | hand to hand | Fists, grapples, throws, and every martial art. |
 | archery and throwing | Bows, crossbows, slings, and anything you let go of. |
 | firearms | Pistols, rifles, shotguns, and the System-forged weapons built on the same principle. |
-| military tactics | Formations, ground, supply, and reading an enemy's plan. |
-| athletics | Climbing, swimming, jumping, lifting, and long pursuit. |
-| endurance training | Outlasting cold, thirst, pain, and sleeplessness. |
 <!-- /rules:table -->
 
-**Living Outdoors**
-
-<!-- rules:table proficiencies-outdoors -->
-| **Proficiency** | **Covers** |
-|---|---|
-| wilderness survival | Shelter, fire, water, and not dying in weather. |
-| tracking and fieldcraft | Following a trail, reading sign, moving without leaving one. |
-| foraging and herblore | What is edible, what is medicine, what kills. |
-| animal handling | Calming, driving, riding, and reading beasts. |
-| navigation | Staying found, by stars, landmarks, or instruments. |
-<!-- /rules:table -->
-
-**People**
-
-<!-- rules:table proficiencies-people -->
-| **Proficiency** | **Covers** |
-|---|---|
-| persuasion | Argument, appeal, and finding what someone actually wants. |
-| intimidation | Making a threat land without having to carry it out. |
-| deception | Lies, disguise, false papers, and keeping a story straight. |
-| performance | Music, oratory, theatre, and holding a room. |
-| leadership | Getting frightened people to act together. |
-| teaching | Making someone else able to do what you can do. |
-| streetwise | Black markets, gangs, rumor, and who to ask. |
-<!-- /rules:table -->
-
-**Knowledge**
-
-<!-- rules:table proficiencies-knowledge -->
-| **Proficiency** | **Covers** |
-|---|---|
-| research methodology | Finding the answer in a library, an archive, or a ruin. |
-| ancient languages | Dead scripts, inscriptions, and their conventions. |
-| field medicine | Wounds, poisons, fevers, and stabilizing the dying. |
-| chemistry | Reactions, compounds, solvents, and explosives. |
-| logistics and accounting | Ledgers, supply lines, and where the money went. |
-<!-- /rules:table -->
-
-**Making and Breaking**
-
-<!-- rules:table proficiencies-making -->
-| **Proficiency** | **Covers** |
-|---|---|
-| mechanical tinkering | Machines with moving parts: repair, modification, sabotage. |
-| jury-rigging | Making a thing work with the wrong materials, briefly. |
-| electronics | Circuits, sensors, and salvaged equipment. |
-| construction | Building, shoring, demolition, and judging what will hold. |
-| vehicle operation | Driving, piloting, and controlling a vehicle under stress. |
-| lockpicking and security | Locks, alarms, safes, and the habits of the people who set them. |
-| stealth and infiltration | Moving unseen and being somewhere you should not be. |
-| sleight of hand | Palming, planting, lifting, and misdirection. |
-<!-- /rules:table -->
+A character with "axes and hammers" adds their tier bonus when swinging a hatchet; a character without it adds nothing. Picking up a weapon outside your Proficiencies costs you the bonus, and each explosion with it earns a Mark toward that Proficiency.
 
 ## Derived Stats
 
@@ -167,7 +135,7 @@ Every Integrant holds **Interpretation** from the moment of accession. It is a f
 - It translates a deliberately communicated message, whether speech, sign, writing, a recording, or the communicative gestures of an alien body, and conveys what the speaker is trying to say. Nonverbal features that carry the intended message translate with it.
 - It carries both directions of any conversation its holder is party to. One holder is enough for both sides to be understood.
 - Unexpressed thoughts, motives, memories, and the truth of a statement are outside it: a lie translates perfectly. Involuntary emotional displays and cultural implications arrive untranslated, so a character can understand an offer and misunderstand the obligations that come with it.
-- It converts no computer protocols and supplies no expertise. Reading an alien engine is a Proficiency's job.
+- It converts no computer protocols and supplies no expertise. Reading an alien engine is a Background's job.
 
 Tutorial sectors built on old versions predate Interpretation. A character extracted into one does not hold it until registration past the gate; the tutorial in this book is such a sector.
 
@@ -187,7 +155,7 @@ A finished character is Level 1, Grade F, with no class, no Principle access, In
 
 ![Kara, Joe, and Andre](./assets/art/people/pregens.png){.scene .pregens}
 
-Three finished characters, built with this chapter's rules: 40 points, three Proficiencies at Trained, derived stats computed, Saturation bands (Cultivation, "The Pressure Gauge") already worked out. Hand one across the table and play. They are also the book's recurring cast: Kara and Andre are the pair in the Introduction's example of play, and Joe is the hunter who opens Cultivation. None of them has a Principle, a title, or anything in their pockets beyond what survived Integration.
+Three finished characters, built with this chapter's rules: 40 points, a Background, one Proficiency at Trained, derived stats computed, Saturation bands (Cultivation, "The Pressure Gauge") already worked out. Hand one across the table and play. They are also the book's recurring cast: Kara and Andre are the pair in the Introduction's example of play, and Joe is the hunter who opens Cultivation. None of them has a Principle, a title, or anything in their pockets beyond what survived Integration.
 
 ::: statblock
 **KARA** &middot; Level 1 &middot; Grade F
@@ -199,7 +167,8 @@ Three finished characters, built with this chapter's rules: 40 points, three Pro
 | 8 | 5 | 7 | 4 | 6 | 5 | 5 |
 
 - **Max HP** 14 &middot; **Max Aether** 6 &middot; **VE Tolerance** 80 (Mild past 80, Heavy past 160, Critical past 240)
-- **Proficiencies (Trained, +5):** axes and hammers, athletics, streetwise
+- **Background:** Warehouse shift lead, eight years of lifting and loading; grew up on the east side and still knows who sells what.
+- **Proficiency (Trained, +5):** axes and hammers
 - **Playing her:** Fight close and end it fast. Want things out loud: the better weapon, the bigger bounty, the pill nobody else has claimed. She can be generous, but usually considers her own reward first.
 :::
 
@@ -213,7 +182,8 @@ Three finished characters, built with this chapter's rules: 40 points, three Pro
 | 8 | 5 | 7 | 5 | 4 | 6 | 5 |
 
 - **Max HP** 14 &middot; **Max Aether** 4 &middot; **VE Tolerance** 80 (Mild past 80, Heavy past 160, Critical past 240)
-- **Proficiencies (Trained, +5):** axes and hammers, endurance training, field medicine
+- **Background:** Volunteer firefighter and EMT: rescue, first aid, and long nights without sleep.
+- **Proficiency (Trained, +5):** axes and hammers
 - **Playing him:** Stand between the danger and everyone else, and swing like the door needs breaking. He will take a bad trade if somebody weaker comes out ahead on it.
 :::
 
@@ -227,6 +197,7 @@ Three finished characters, built with this chapter's rules: 40 points, three Pro
 | 4 | 7 | 5 | 6 | 5 | 9 | 4 |
 
 - **Max HP** 10 &middot; **Max Aether** 5 &middot; **VE Tolerance** 80 (Mild past 80, Heavy past 160, Critical past 240)
-- **Proficiencies (Trained, +5):** tracking and fieldcraft, archery and throwing, navigation
+- **Background:** Land surveyor, and a deer hunter every fall since he was twelve: maps, terrain, tracking.
+- **Proficiency (Trained, +5):** archery and throwing
 - **Playing him:** Look before anyone moves, plan the way out before the way in, and take only what the plan needs. When the others argue, he checks supplies and escape routes.
 :::

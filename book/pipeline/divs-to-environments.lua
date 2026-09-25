@@ -18,8 +18,10 @@
 --                     with the extra class `quoted`, an in-world document whose
 --                     last paragraph is its source, styled like an epigraph's
 --   * readaloud     — boxed narration the GM says out loud (white, titled)
---   * example       — a transcript of table talk; maps to playexample, a banded
---                     environment rather than a box, so it breaks across pages
+--   * example       — a transcript of table talk; maps to playexample, a breakable
+--                     cyan box
+--   * worked        — the arithmetic of a rule shown once; maps to workedexample,
+--                     a quieter breakable box
 --   * epigraph      — an in-world quotation under a chapter title; maps to the
 --                     bookepigraph environment, last paragraph = the source
 --
@@ -32,6 +34,7 @@ local recognized = {
   lore        = true,
   readaloud   = true,
   example     = "playexample",
+  worked      = "workedexample",
   epigraph    = "bookepigraph",
 }
 

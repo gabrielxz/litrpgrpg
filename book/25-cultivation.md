@@ -44,7 +44,7 @@ VE accumulates automatically after combat and from other sources. As long as sto
 
 - **Mild Saturation (past 80, up to 160):** −10 to all rolls.
 - **Heavy Saturation (past 160, up to 240):** −25 to all rolls.
-- **Critical Saturation (past 240):** Heavy Saturation penalties continue, and the body starts fighting to vent. At the end of each full hour spent at Critical, roll d100: the character collapses on a result of 25 or less. The threshold rises by 25 each hour (50 the second hour, 75 the third), and in the fourth hour the collapse is automatic. A collapsed character drops into involuntary Consolidation on the spot: defenseless, processing at the normal rate, unwakeable until stored VE falls below Tolerance. The collapse also costs 1 temporary Raw point of FOR or POW (player's choice), which returns after the character's next full clean Consolidation.
+- **Critical Saturation (past 240):** Heavy Saturation penalties continue, and the body starts fighting to vent. At the end of each full hour spent at Critical, roll d100: the character collapses on a result of 25 or less. The threshold rises by 25 each hour (50 the second hour, 75 the third), and in the fourth hour the collapse is automatic. A collapsed character drops into involuntary Consolidation on the spot: defenseless, processing at the normal rate, unwakeable until stored VE falls below Tolerance. At the Level cap, where Consolidation refines nothing, the character wakes after 5 full hours with the VE still stored. The collapse also costs 1 temporary Raw point of FOR or POW (player's choice), which returns after the character's next full clean Consolidation.
 
 A level's worth of VE, 120, is Mild. Two levels, 240, sits on the Critical line, and the next kill after that starts the clock.
 
@@ -58,7 +58,7 @@ A level's worth of VE, 120, is Mild. Two levels, 240, sits on the Critical line,
 
 To process VE, a character declares a **Consolidation** rest and states what they are reaching for: process everything, process until the next level, or process a specific amount. The goal matters because the GM may interrupt for narrative reasons, and the player should know what they were reaching for.
 
-One rule covers the clock: **every hour of Consolidation refines 20 VE at F-Grade and restores one fifth of your Max HP, rounded up.** The refining rate is ×10 per Grade (200 at E-Grade) and the same for every character of the Grade, so a resting party shares one clock. A full Tolerance clears in four hours, a level's worth of VE in six, and a full set of wounds in five; a night's rest covers all three with margin. The minimum is 1 hour of in-game time, however little VE needs processing. A character with nothing stored still declares the rest, takes its first hour, and gets the Aether and the HP.
+One rule covers the clock: **every hour of Consolidation refines 20 VE at F-Grade and restores one fifth of your Max HP; the fifth hour restores the rest.** The refining rate is ×10 per Grade (200 at E-Grade) and the same for every character of the Grade, so a resting party shares one clock. A full Tolerance clears in four hours, a level's worth of VE in six, and a full set of wounds in five; a night's rest covers all three with margin. The minimum is 1 hour of in-game time, however little VE needs processing. A character with nothing stored still declares the rest, takes its first hour, and gets the Aether and the HP.
 
 A character carrying more takes proportionally longer: someone holding 160 needs eight hours, and a body at Critical can be down most of a day.
 
@@ -84,7 +84,7 @@ Every level inside a Grade costs the same. Twelve peer kills carry a character f
 
 **Grade Breakthrough:** At Level 25 the character cannot advance through ordinary Consolidation. Entering E-Grade (and Level 26) requires a **Grade Breakthrough**, a deliberate ritual with its own chapter. It is **not** an automatic level-up. A successful Breakthrough makes the character Level 26 with nothing stored, and the E-Grade span costs ×10 per level from there.
 
-At the cap, VE keeps accumulating with nowhere to go, and stored VE counts in full toward Breakthrough Ignition. Hunting at the cap is banking fuel for the ritual. Consolidation at the cap refines none of it: the stockpile waits for Ignition, and Saturation applies to it until it is spent, which is why the last stretch of the charge gets gathered fast, on site.
+At the cap, VE keeps accumulating with nowhere to go, and stored VE counts in full toward Breakthrough Ignition. Hunting at the cap is banking fuel for the ritual. Consolidation at the cap refines none of it: the stockpile waits for Ignition, and Saturation applies to it until it is spent, which is why the last stretch of the charge gets gathered fast, on site. A collapse at the cap lasts 5 full hours and leaves the stockpile where it was (see "The Pressure Gauge").
 
 **A character at the cap who is not ready to Break Through is not stalled.** Levels stop and everything else continues. Marks still accrue toward Seasoned and Master. Insight still accrues, and the Principle track has no cap at all, so the capped stretch is where cautious characters catch up on the ladder they neglected. Titles still land, treasures still raise stats toward the Grade ceiling, and the Breakthrough itself rewards preparation: a Foundation Pill, a high-density site, a party trained to Anchor, and a cleaner behavioral signature all move the odds.
 
@@ -158,7 +158,7 @@ On paper the pace is flat across Grades: rewards and costs both scale ×10, so t
 
 ## Grade Breakthroughs
 
-To advance beyond the Grade-cap level, a character must complete a **Grade Breakthrough**: a four-stage ritual involving deliberate VE overcharge, a Breakthrough Check (d100 + HRT Force + preparation against a flat DC of 140), external phenomena management, and System recognition. The full mechanic is in the Grade Breakthroughs chapter, including the Overcharge Ratio risk-reward dial, the five Quality Tiers, Breakthrough Item categories, Environment & Energy Density modifiers, Party Support, and Grade-specific trial themes.
+To advance beyond the Grade-cap level, a character must complete a **Grade Breakthrough**: a four-stage ritual involving deliberate VE overcharge, a Breakthrough Check (d100 + HRT Force + preparation against a flat Resistance of 140), external phenomena management, and System recognition. The full mechanic is in the Grade Breakthroughs chapter, including the Overcharge Ratio risk-reward dial, the five Quality Tiers, Breakthrough Item categories, Environment & Energy Density modifiers, Party Support, and Grade-specific trial themes.
 
 ---
 
@@ -168,7 +168,7 @@ For 0 HP, the Downed state, stabilization, and death, see Core Mechanics, "Downe
 
 Three paths, each with a cost:
 
-- **Rest Healing:** During Consolidation, characters recover one fifth of Max HP per hour, rounded up. It takes time and a secure site.
+- **Rest Healing:** During Consolidation, characters recover one fifth of Max HP per hour, and all of it by the fifth hour. It takes time and a secure site.
 
 - **Healing Pills and Potions:** Instant recovery of a flat HP amount based on pill grade. Consuming one in combat costs 1 Beat, and only the first two pills a character takes in a fight have any effect (see Items, "Pill Limit in Combat").
 

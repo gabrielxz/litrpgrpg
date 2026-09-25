@@ -22,13 +22,13 @@ Every stat block lists only the values relevant for the Clash. Force values are 
 
 Most F-Grade enemies have Force values in the 04–40 range and HP in the 8–80 range. A mid-tier F-Grade enemy can threaten a starting character; by Level 10, the same enemy is trivial.
 
-**Difficulty tier maps to the Grade Reference Card and to VE reward**: a kill pays each participant the tier's multiple of the Peer Kill value (see Cultivation, "Awarding VE"). A "Moderate" enemy is balanced for a peer character (similar Force values); an "Easy" enemy is a clear underdog; a "Hard" enemy is a dangerous fight; a "Severe" or "Peak" enemy is boss-tier.
+**Difficulty tier maps to the Difficulty Card and to VE reward**: a kill pays each participant the tier's multiple of the Peer Kill value (see Cultivation, "Awarding VE"). A "Moderate" enemy is balanced for a peer character (similar Force values); an "Easy" enemy is a clear underdog; a "Hard" enemy is a dangerous fight; a "Severe" or "Peak" enemy is boss-tier.
 
 **Yield.** A creature does not Yield unless its entry says **Yields**. One that does uses the rule characters use: it gives up Beats from its next turn to cut an incoming Margin by 20 each. This is the cleanest dial for making a single enemy last, because the creature buys its survival out of its own offense. A solo elite that Yields runs about a third longer, and the danger grows with it a little less than in step: in simulation the Husk Sentinel against a Level 3 party of four goes from 2.4 rounds to 3.3, drops someone in three fights out of five without Yield and two out of three with it, and takes the whole party in one fight in seven without Yield and one in five with it. Giving Yield to a whole group is usually a mistake: several enemies all yielding turns a fight into a grind while multiplying the attacks coming back at the party. Use it on one enemy, and reserve group Yield for encounters intended to emphasize a coordinated defense, as with a disciplined shield line that is meant to feel immovable.
 
 **Grade and tier are different axes.** Every entry states its Grade; every entry in this chapter is F-Grade. Tier names size an enemy against opposition of its own Grade only, and a kill pays that tier whatever the killer's level. Across Grades, the Cross-Grade rules take over: the higher-Grade side adds +100 per Grade of difference to its Clash rolls and keeps its own damage multiplier, so an enemy the E-Grade card calls Trivial is still a Severe encounter or worse for a full F-Grade party.
 
-Use these as references, not rigid templates. Adjust HP, Force values, and abilities to match the moment. A "Hard" encounter for an L3 party may be one Pre-System Brigand with terrain advantage; a "Hard" encounter for an L8 party may be three Snarljaws plus their Alpha.
+Use these as references, not rigid templates. Adjust HP, Force values, and abilities to match the moment. A "Hard" encounter for an L3 party may be one Pre-System Brigand holding ground that gives it Advantage; a "Hard" encounter for an L8 party may be three Snarljaws plus their Alpha.
 
 ---
 
@@ -40,7 +40,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 
 *A cloud of bioluminescent stinging insects, drawn to body heat.*
 
-- **Grade:** F · **Tier:** Trivial- **HP:** 10 · **Beats:** 1
+- **Grade:** F · **Tier:** Trivial · **HP:** 10 · **Beats:** 1
 - **Off Force (DEX, sting):** 05
 - **Def Force (DEX, evasion):** 08
 - **HRT Force:** 05 · **PER Force:** 04
@@ -52,7 +52,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 
 *A pre-System corpse animated by residual integration energy. Slow, persistent, dumb.*
 
-- **Grade:** F · **Tier:** Trivial- **HP:** 16 · **Beats:** 1
+- **Grade:** F · **Tier:** Trivial · **HP:** 16 · **Beats:** 1
 - **Off Force (STR, claws):** 04
 - **Def Force (FOR, dead flesh):** 08
 - **HRT Force:** 05 · **PER Force:** 04
@@ -64,7 +64,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 
 *A small, vicious creature warped by ambient energy. Scampers and bites.*
 
-- **Grade:** F · **Tier:** Easy- **HP:** 12 · **Beats:** 2
+- **Grade:** F · **Tier:** Easy · **HP:** 12 · **Beats:** 2
 - **Off Force (DEX, bite):** 12
 - **Def Force (DEX, scampering):** 12
 - **HRT Force:** 08 · **PER Force:** 12
@@ -76,7 +76,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 
 *A surviving human bandit, integrated but unambitious. Cowardly, predictable.*
 
-- **Grade:** F · **Tier:** Easy- **HP:** 14 · **Beats:** 2
+- **Grade:** F · **Tier:** Easy · **HP:** 14 · **Beats:** 2
 - **Off Force (STR, club; or DEX, knife):** 08 / 07
 - **Def Force (FOR or DEX):** 07 / 07
 - **HRT Force:** 06 · **PER Force:** 07
@@ -92,7 +92,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 
 *A pack-hunting beast, maw lined with serrated bone.*
 
-- **Grade:** F · **Tier:** Moderate- **HP:** 24 · **Beats:** 2
+- **Grade:** F · **Tier:** Moderate · **HP:** 24 · **Beats:** 2
 - **Off Force (STR, fang and claw):** 14
 - **Def Force (DEX):** 18
 - **HRT Force:** 14 · **PER Force:** 18
@@ -104,7 +104,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 
 *A camouflaged predator from the bioluminescent forests. Hunts via ambush.*
 
-- **Grade:** F · **Tier:** Moderate- **HP:** 20 · **Beats:** 2
+- **Grade:** F · **Tier:** Moderate · **HP:** 20 · **Beats:** 2
 - **Off Force (DEX, ambush strike):** 22
 - **Def Force (DEX, fade):** 22
 - **HRT Force:** 12 · **PER Force:** 22
@@ -116,7 +116,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 
 *A military construct from the Martial Remnant. Predictable patterns; escalating threat.*
 
-- **Grade:** F · **Tier:** Moderate- **HP:** 50 · **Beats:** 2
+- **Grade:** F · **Tier:** Moderate · **HP:** 50 · **Beats:** 2
 - **Off Force (STR, hammerblow):** 18
 - **Def Force (FOR, plating):** 25
 - **HRT Force:** 05 · **PER Force:** 25
@@ -132,7 +132,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 
 *Another integrated human, dropped from a parallel tutorial. Tactically competent, hostile.*
 
-- **Grade:** F · **Tier:** Hard- **HP:** 56 · **Aether:** 22 · **Beats:** 2
+- **Grade:** F · **Tier:** Hard · **HP:** 56 · **Aether:** 22 · **Beats:** 2
 - **Off Force (DEX, bladework):** 30
 - **Def Force (DEX or FOR):** 30 / 28
 - **HRT Force:** 30 · **PER Force:** 24
@@ -144,7 +144,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 
 *A heavier construct from the Civic Fragment. Durable, counter-aggressive.*
 
-- **Grade:** F · **Tier:** Hard- **HP:** 80 · **Beats:** 2
+- **Grade:** F · **Tier:** Hard · **HP:** 80 · **Beats:** 2
 - **Off Force (STR, glaive sweep):** 35
 - **Def Force (FOR, plating):** 40
 - **HRT Force:** 25 · **PER Force:** 20
@@ -156,7 +156,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 
 *Pack leader. Coordinates lesser Snarljaws, hits with sundering force.*
 
-- **Grade:** F · **Tier:** Hard- **HP:** 64 · **Beats:** 2
+- **Grade:** F · **Tier:** Hard · **HP:** 64 · **Beats:** 2
 - **Off Force (STR, sundering bite):** 30
 - **Def Force (DEX):** 28
 - **HRT Force:** 30 · **PER Force:** 28
@@ -172,7 +172,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 
 *A broken defensive effect: a dead world's ward still running after its makers died, given temporary form by ambient energy. It holds no one's mind.*
 
-- **Grade:** F · **Tier:** Severe- **HP:** 120 · **Aether:** 65 · **Beats:** 2
+- **Grade:** F · **Tier:** Severe · **HP:** 120 · **Aether:** 65 · **Beats:** 2
 - **Off Force (POW, mind-leach):** 65
 - **Def Force (HRT, spectral):** 60 · (PER, vs. illusion-piercing): 70
 - **HRT Force:** 60 · **PER Force:** 70
@@ -188,7 +188,7 @@ Use these as references, not rigid templates. Adjust HP, Force values, and abili
 
 *A massive maintenance construct that was supposed to manage the tutorial's dissolution. Now it is glitching, deranged, and trying to reach the gate before the Initiates do.*
 
-- **Grade:** F · **Tier:** Peak- **HP:** 190 · **Aether:** 75 · **Beats:** 3
+- **Grade:** F · **Tier:** Peak · **HP:** 190 · **Aether:** 75 · **Beats:** 3
 - **Off Force (STR, gauntlet smash):** 80 · **(POW, energy lash):** 75
 - **Def Force (FOR, plating):** 95 · (DEX, evasive shift): 60
 - **HRT Force:** 80 · **PER Force:** 70
@@ -249,7 +249,7 @@ An Imprint is a nonconscious construct that physically executes a recorded patte
 
 ## GM Reference: Encounter Building
 
-When in doubt, use the Grade Reference Card. A character with Force 30 fighting an enemy with Force 30 is a peer fight (Moderate). Add +10 to enemy Force for a tougher engagement, subtract for an easier one.
+When in doubt, use the Difficulty Card. A character with Force 30 fighting an enemy with Force 30 is a peer fight (Moderate). Add +10 to enemy Force for a tougher engagement, subtract for an easier one.
 
 **Encounter sizing for an F-Grade party of 4:**
 

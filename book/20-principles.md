@@ -80,7 +80,7 @@ The meditation earned 2 IP. That carried her past 3, and the Principle **crystal
 
 **The climb to 10.** A second Battle Memory (3 IP) and a Consolidation vision (1 IP) bring her to 8. Two sessions later a third Battle Memory (2 IP) carries her to 10. The number sits there; nothing happens on its own.
 
-**Distillation.** At her next Consolidation, Kara declares Distillation. The GM asks what pattern she has discovered. She answers from the fights and the slab: "Things fall the way I decide." The System grants her Seed Application, **Sudden Weight** (1 Beat, 10 Aether): her strike lands with the mass of something far larger, +10 to the Clash, and at F-Grade scale it can stagger a grown man, buckle a door, crack floorboards. She is Level 6 with POW 18; the 10-Aether cost is heavy but castable, exactly once per fight with room to spare. In play: she declares Sudden Weight with her swing, pays 10 Aether, and rolls d100 + STR Force + 10 against the target's defense. One Beat, one Clash, one Margin.
+**Distillation.** At her next Consolidation, Kara declares Distillation. The GM asks what pattern she has discovered. She answers from the fights and the slab: "Things fall the way I decide." The System grants her Seed Application, **Sudden Weight** (1 Beat, 10 Aether): her strike lands with the mass of something far larger, +10 to the Clash, and at F-Grade scale it can stagger a grown man, buckle a door, crack floorboards. She is Level 6 with POW 18, so 10 Aether is more than half her pool: one cast between rests, with 8 Aether left, one short of a Surge. In play: she declares Sudden Weight with her swing, pays 10 Aether, and rolls d100 + STR Force + 10 against the target's defense. One Beat, one Clash, one Margin.
 
 > **Kara's sheet now.** Principle: Weight. Insight: 10. Tier: Seed. Benefits: the passive, the Application Sudden Weight, and Attunements (she can feel loads and balance points at a glance; see "Attunements"). Next: a second Application at 25 IP.
 
@@ -90,9 +90,10 @@ The rest of this chapter is the rules Kara just walked through, in the order she
 
 ### Battle Memories
 
-**Battle Memories** are the primary pipeline from play to insight. In moments of extreme stress (surviving at near-zero HP, witnessing something beyond comprehension, achieving an outcome the System deems statistically improbable), the GM grants a **Battle Memory Card**. Two triggers are automatic: a Volatility cascade of two or more extra dice on a player character's roll, and surviving being Downed (see Core Mechanics, "Downed and Death").
+**Battle Memories** are the primary pipeline from play to insight. In moments of extreme stress (surviving at near-zero HP, witnessing something beyond comprehension, achieving an outcome the System deems statistically improbable), the GM grants a **Battle Memory Card**. Two triggers are automatic: a Volatility cascade of two or more extra dice on a player character's roll, and surviving being Downed in a fight, which the GM may withhold when the Downing taught nothing (see Core Mechanics, "Downed and Death").
 
 At any later Consolidation, the player describes how their character meditates on the memory: what they felt, what they noticed, what pattern they think they glimpsed. A sentence is enough. The GM should ask one or two questions, the way Kara's GM did, and let the table sit with the answer. The System returns a cryptic vision and awards IP toward the Principle the memory most closely expresses (before crystallization, toward the family), 1 to 3 by the memory's intensity. The vision procedure for every run mode is in The System AI chapter; the unplugged version is three images composed by the GM. A card converts to IP once, at that meditation; the +1 IP some triggers award on the spot is a separate award. One memory feeds one Principle, and with two slots the player says which.
+
 A vision hints and never teaches. If it taught plainly, the player's later Distillation would be dictation instead of understanding, and understanding is the thing being tested. If the player decodes a vision correctly, the payoff arrives in play, later.
 
 ### Insight Points
@@ -167,7 +168,7 @@ A slot, once filled, holds its Principle for life. The Principle can change shap
 
 **What the economy delivers in practice.** With IP gated behind pressure, a character who lives dangerously reaches Seed midway through F-Grade, works through the Fragment tiers across E-Grade and into D, and Distills a Domain at D-Grade. Nothing enforces that schedule; it bends toward the life lived. A cautious character reaches Seed late or never. A character the System keeps nearly killing runs ahead of it.
 
-**The ladder does not end at Domain.Higher tiers have effects beyond the scope of this book. They are outside the range this book covers, and a later volume will carry them.
+**The ladder does not end at Domain.** Higher tiers have effects beyond the scope of this book. They are outside the range this book covers, and a later volume will carry them.
 
 ### The Axioms
 
@@ -204,7 +205,7 @@ Distillation and Battle Memory meditation both happen during Consolidation and b
 
 Three different changes can happen to a Principle a character already holds. They answer three different questions.
 
-**Refinement changes the identity.** At any Distillation, the articulation can steer the Principle at its current tier instead of climbing. A character whose Fire has grown hungrier with every fight may Distill Fire into **Consuming Flame**: same slot, same tier, same IP, shifted identity. The System adjusts the Principle's Applications and Attunements to match the new reading.Refinement updates the Principle to reflect changed behavior without increasing its tier.
+**Refinement changes the identity.** At any Distillation, the articulation can steer the Principle at its current tier instead of climbing. A character whose Fire has grown hungrier with every fight may Distill Fire into **Consuming Flame**: same slot, same tier, same IP, shifted identity. The System adjusts the Principle's Applications and Attunements to match the new reading. Refinement updates the Principle to reflect changed behavior without increasing its tier.
 
 **Broadening changes the scope.** At a tier-up, the re-articulation sometimes outgrows the Principle's name, and the System recognizes the larger truth. Weight, articulated again at Fragment depth ("everything falls toward something, and I choose the direction"), can become **Gravity**; Gravity, lifetimes deeper, might become **Dominion**. Broadening is a possibility inside a tier-up Distillation, never a separate procedure and never owed: most tier-ups deepen the Principle under its own name. Existing Applications keep their names, costs, and scales; the new tier's grant takes the broadened identity.
 
@@ -255,7 +256,7 @@ Specific Attunements beyond the baseline are generated by the GM and System AI t
 
 A character holding **two Principles at Seed tier or higher** may attempt to fuse them during a Distillation. With two slots for life, this is the largest commitment the track offers.
 
-Fusion is a Resistance Roll:
+Fusion is a check:
 
 > **d100 + HRT Force vs. Severe (140) of the character's Grade**
 
