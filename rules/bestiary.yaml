@@ -38,13 +38,13 @@ creatures:
   - name: Frenzy Rat
     tier_group: Trash
     grade: F
-    tier: Easy
+    tier: Trivial
     hp: 12
-    beats: 2
+    beats: 1
     hrt: 5
-    per: 12
-    offense: [{force: 12, stat: DEX, means: bite}]
-    defense: [{force: 12, stat: DEX, means: scampering}]
+    per: 8
+    offense: [{force: 6, stat: DEX, means: bite}]
+    defense: [{force: 8, stat: DEX, means: scampering}]
     yields: false
     tactics: "Always attempts to flank. When two or more Frenzy Rats share a Zone with their target, all of them gain +10 (Flanking)."
   - name: Pre-System Brigand

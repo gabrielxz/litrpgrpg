@@ -64,10 +64,10 @@ Adjust HP, Force values, and abilities to match the moment. A "Hard" encounter f
 
 *A small, vicious creature warped by ambient energy. Scampers and bites.*
 
-- **Grade:** F · **Tier:** Easy · **HP:** 12 · **Beats:** 2
-- **Off Force (DEX, bite):** 12
-- **Def Force (DEX, scampering):** 12
-- **HRT Force:** 05 · **PER Force:** 12
+- **Grade:** F · **Tier:** Trivial · **HP:** 12 · **Beats:** 1
+- **Off Force (DEX, bite):** 06
+- **Def Force (DEX, scampering):** 08
+- **HRT Force:** 05 · **PER Force:** 08
 - **Tactics:** Always attempts to flank. When two or more Frenzy Rats share a Zone with their target, all of them gain +10 (Flanking).
 
 ### Pre-System Brigand

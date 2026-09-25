@@ -1,7 +1,7 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.19"
+version: "0.1.20"
 dated: "2026-09-25"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
@@ -59,3 +59,6 @@ notes: >
   weapon; the 3-Mark grant for a new shape is retired. The pregens start untrained, and the combat sim's Level 1 party
   is untrained (the Bestiary's two Level 1 figures moved). Stat anchors: FOR 10 climbs Everest without bottled oxygen,
   POW 10's lights flicker when they lose their temper. "Multiverse" is retired for "universe".
+  0.1.20: the Frenzy Rat is Trivial (one Beat, Off 06, Def 08, PER 08, HP 12), and the tutorial's treeline arrival is
+  one rat. The pair downed a lone Level 1 character in 87% of arrivals in simulation, against about 15% for the other
+  arrivals; one Trivial rat downs 17%. The arrival kill pays 2 VE for every arrival.

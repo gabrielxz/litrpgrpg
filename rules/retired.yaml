@@ -111,6 +111,8 @@ patterns:
   - {pattern: 'Each character begins with one, at Trained', replaced_by: "no Proficiency at creation",       since: 2026-09-25}
   - {pattern: '3 on a new weapon',                replaced_by: "1 Mark: Trained",                              since: 2026-09-25}
   - {pattern: '[Mm]ultiverse',                    replaced_by: "universe",                                     since: 2026-09-25}
+  - {pattern: '2 Frenzy Rats',                    replaced_by: "1 Frenzy Rat, a Trivial arrival",               since: 2026-09-25}
+  - {pattern: 'pair of Frenzy Rats',              replaced_by: "1 Frenzy Rat, a Trivial arrival",               since: 2026-09-25}
 
 # Chapter names as the book cites them, for the cross-reference check.
 chapters:

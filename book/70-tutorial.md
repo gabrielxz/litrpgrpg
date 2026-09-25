@@ -391,18 +391,18 @@ Reward: **three peer kills' worth of VE (30)** on a clean open, **half (15)** on
 ::: readaloud
 You wake on a ridge of tiered stone, higher than everything near you, with the valley laid out below.
 
-Three things are happening down there. To your left, maybe two hundred yards, a person is backing away from something low and fast, swinging a length of pipe at it, losing ground toward a drop. To your right, closer, a man in a brown uniform is walking a slow circle in the rubble, stopping, and starting the circle again. Straight below, at the foot of your ridge, a metal footlocker has burst open, its contents scattered bright across the rock, and shapes the size of rats are already moving toward the spill.
+Three things are happening down there. To your left, maybe two hundred yards, a person is backing away from something low and fast, swinging a length of pipe at it, losing ground toward a drop. To your right, closer, a man in a brown uniform is walking a slow circle in the rubble, stopping, and starting the circle again. Straight below, at the foot of your ridge, a metal footlocker has burst open, its contents scattered bright across the rock, and a shape the size of a rat is already moving toward the spill.
 
 All three are a two-minute scramble down, in different directions.
 :::
 
 **Choices to notice.** Which of the three the character goes to first, knowing the others may change while they act: the fighter, the injured man, or the supplies.
 
-**The clocks, for you only.** The fighter has about two minutes before the drop is behind her; a character who goes to her now arrives as she runs out of ground. Ray circles until dark, or until something finds him. The rats reach the spill in two minutes and strip it in five.
+**The clocks, for you only.** The fighter has about two minutes before the drop is behind her; a character who goes to her now arrives as she runs out of ground. Ray circles until dark, or until something finds him. The rat reaches the spill in two minutes and strips it in five.
 
 - **Go to the fighter.** She is one of the morning's other survivors, Marisol Vega, a woman in running clothes. The character arrives in time to turn the fight; run the arrival fight two-on-one, with her pipe swinging on the character's side. She follows them down and is part of the Node camp by evening.
 - **Go to the circling man.** He is **Ray Okafor** (The Other Survivor), concussed and looping. Run that encounter now, with the nail gun still in his belt and one danger fewer in the scene. If another player already has The Other Survivor, the circling man is a different concussed stranger; run him the same way, and if helped he reaches the camp like Ray.
-- **Go to the spill.** 1 Healing Pill and 1 Knife (DEX; quick, concealable, throwable once), reached ahead of the rats. The rats become this character's arrival fight, on the character's terms, with the rats downhill.
+- **Go to the spill.** 1 Healing Pill and 1 Knife (DEX; quick, concealable, throwable once), reached ahead of the rat. The rat becomes this character's arrival fight, on the character's terms, with the rat downhill.
 - **Stay and watch.** All three resolve without them. The watcher keeps the high ground, sees where everything went, and meets their arrival rested.
 
 **Developments.** The chances the character did not take resolve without them. The fighter who got no help goes over the drop and does not climb back. The man who got no help keeps circling until dark. The spill is bright wrappers by the time anyone passes it again. Say what they watched happen as they climb down.
@@ -507,10 +507,10 @@ However the encounter resolved, a creature comes. **You pick it.** Defaults, by 
 | **Where the character is** | **The arrival** |
 |---|---|
 | Rubble, slopes, ruins | 1 Husk Crawler |
-| Near the treeline | 2 Frenzy Rats |
+| Near the treeline | 1 Frenzy Rat |
 | Open ground, or standing still too long | 1 Glow-Mote Swarm |
 
-One creature per arrival, except the rats, which hunt as a pair and teach Flanking early. Stat blocks are in the Bestiary's Trash Tier.
+One Trivial creature per arrival, sized for one Level 1 character. Stat blocks are in the Bestiary's Trash Tier. Flanking waits for company: a character who goes to Marisol at The High Ground fights beside her two-on-one, and Sector B's Snarljaw pack turns it on the party.
 
 This fight teaches the whole combat loop, one player at a time, with nobody else watching. Run it in the five steps below.
 
@@ -1476,7 +1476,7 @@ This ledger is denominated in VE and levels. A level is 120 VE at F-Grade (Culti
 | **Phase** | **Guaranteed, per character** | **Optional, per character** |
 |---|---|---|
 | 1: The Threshold | none | none |
-| 2: The Violent Arrival | The arrival kill: a Husk Crawler or a Glow-Mote Swarm (2), or the pair of Frenzy Rats (10) | The encounter's reward, 0 to 30 by encounter and choice |
+| 2: The Violent Arrival | The arrival kill: a Husk Crawler, a Glow-Mote Swarm, or a Frenzy Rat (2) | The encounter's reward, 0 to 30 by encounter and choice |
 | 3: The Recycling Node | Q-001 (10) | none |
 | 4: The Field of Ruins | Two sector surveys (40 each) | Kills: Sector A's Sentries 10 each; Sector B's Snarljaws and Glow-Stalker 10 each and the Alpha 20; Sector C's Wraith 30; Sector D's Sentinel 20 and its records 10. A Hidden Opportunity. The Arriving Initiates (60, once). A Personal Opportunity (0 to 120) |
 | 5: The Convergence Crisis | The Mandate (125) | Anything killed on the run |
