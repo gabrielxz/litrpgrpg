@@ -14,7 +14,7 @@
 --   * systemvoice   — in-fiction System messages (dark, cyan-ruled)
 --   * statblock     — monster / character stat blocks (gray, top-ruled)
 --   * questcard     — Quest log / Mandate / Personal Opportunity entries
---   * lore          — in-world cosmology, legends, color vignettes (gray, left-ruled);
+--   * lore          — in-world cosmology, legends, color vignettes (gold hairlines and diamond);
 --                     with the extra class `quoted`, an in-world document whose
 --                     last paragraph is its source, styled like an epigraph's
 --   * readaloud     — boxed narration the GM says out loud (white, titled)

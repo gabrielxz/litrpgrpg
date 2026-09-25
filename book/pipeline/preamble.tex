@@ -36,6 +36,7 @@
 \definecolor{gbslate}{HTML}{525553}      % mid gray: rules, secondary text
 \definecolor{gbstone}{HTML}{AAA396}      % warm gray: light rules
 \definecolor{gbcyan}{HTML}{2EB4C6}       % System cyan on light ground
+\definecolor{gbgold}{HTML}{7D5F1E}       % the world's voice: lore boxes and vignettes (the cover eyebrow's gold)
 \definecolor{gbcyanlight}{HTML}{8FE6EF}  % System cyan on blue-black
 \pagecolor{gbbone}
 \color{gbink}
@@ -266,21 +267,34 @@
 
 % Lore — in-world cosmology, legends, and color vignettes.
 % Demarcates fiction and worldbuilding from rules text.
+% Lore: the world's voice (Gabriel, 2026-09-25). No fill, so it never reads
+% as a rules box beside the beige worked example: gold hairlines above and
+% below, and the cover's old gold diamond breaking the top line. Gold means
+% the world the way cyan means the System; nothing else uses it. A box that
+% breaks across a page keeps the top line on its first part and the bottom
+% line on its last.
+\newcommand{\gbloretop}{%
+  \draw[gbgold, line width=0.5pt] (frame.north west) -- (frame.north east);
+  \fill[gbbone] ([xshift=-7pt, yshift=-3.5pt]frame.north) rectangle ([xshift=7pt, yshift=3.5pt]frame.north);
+  \fill[gbgold] ([yshift=2.6pt]frame.north) -- ([xshift=2.1pt]frame.north) -- ([yshift=-2.6pt]frame.north) -- ([xshift=-2.1pt]frame.north) -- cycle;}
+\newcommand{\gblorebottom}{%
+  \draw[gbgold, line width=0.5pt] (frame.south west) -- (frame.south east);}
 \newtcolorbox{lore}{
   enhanced,
   breakable,
-  colback=gbbone,
-  colframe=gbbone,
-  boxrule=0pt,
-  borderline west={2.5pt}{0pt}{gbstone},
+  frame hidden,
+  interior hidden,
   arc=0pt,
-  left=12pt,
-  right=12pt,
-  top=10pt,
-  bottom=10pt,
+  left=6pt,
+  right=6pt,
+  top=12pt,
+  bottom=8pt,
+  overlay unbroken={\gbloretop\gblorebottom},
+  overlay first={\gbloretop},
+  overlay last={\gblorebottom},
   before upper={\setlength{\parskip}{5pt}},
-  before skip=12pt,
-  after skip=12pt
+  before skip=14pt,
+  after skip=14pt
 }
 
 % Epigraph: an in-world quotation set under a chapter title. No box; a

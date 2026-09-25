@@ -67,10 +67,18 @@ div.questcard {
 }
 
 div.lore {
-  border-left: 3px solid #AAA396;
-  padding-left: 1em;
-  font-style: italic;
-  color: #333333;
+  border-top: 1px solid #7D5F1E;
+  border-bottom: 1px solid #7D5F1E;
+  padding: 0.3em 0.3em 0.6em;
+}
+div.lore::before {
+  content: "\25C6";
+  display: block;
+  text-align: center;
+  color: #7D5F1E;
+  font-size: 0.7em;
+  margin: -0.95em 0 0.5em;
+  line-height: 1;
 }
 
 /* Epigraphs: an in-world quotation under a chapter title (PDF: bookepigraph). */
