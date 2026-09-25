@@ -57,9 +57,9 @@ Gabriel's own judgment: the System is evil in its indifference. It manufactures 
 
 Power grants the freedom to pursue desires. It enables protection or domination, and some abusers face no effective punishment. It cannot buy affection, loyalty, or clarity about existence (Homelander: immense power beside misery and a need to be liked). The highest beings still struggle with meaning.
 
-The multiverse offers extraordinary novelty: alien art, activities, spiritual traditions, places, forms of experience. The setting explores what is universal in sentient life and what is specific to humanity. Advancement answers "what do I do with my life?" in practice without answering it in full. Some things are worth experiencing without a notification.
+The universe offers extraordinary novelty: alien art, activities, spiritual traditions, places, forms of experience. The setting explores what is universal in sentient life and what is specific to humanity. Advancement answers "what do I do with my life?" in practice without answering it in full. Some things are worth experiencing without a notification.
 
-Earth survives and is retrofitted into the System's multiverse. Old sources of value and authority lose importance; homes, attachments, and inherited institutions keep theirs. People preserve their communities, invent new forms of life, or leave.
+Earth survives and is retrofitted into the System's universe. Old sources of value and authority lose importance; homes, attachments, and inherited institutions keep theirs. People preserve their communities, invent new forms of life, or leave.
 
 Reasonable disagreement is the most compelling conflict (the humans and spiders of Children of Time). Peaceful ingenuity sometimes succeeds, and incompatible needs cannot always be reconciled. The System manufactures conflicts that would otherwise never exist. Scarcity, allocation, misunderstanding, and failed communication among very different sentients all produce conflict. Communities have their own preferences and can disagree with the powerful people protecting them.
 

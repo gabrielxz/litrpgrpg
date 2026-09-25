@@ -125,10 +125,10 @@ def proficiency_bonus(tier: str) -> int:
 
 
 def tier_for_marks(marks: int, body_grade: str = "F") -> str:
-    """The tier a Proficiency has reached; Master needs an E-Grade body."""
+    """The tier a Proficiency has reached (untrained before its first Mark); Master needs an E-Grade body."""
     tiers = load("character")["proficiencies"]["tiers"]
-    reached = tiers[0]["name"]
-    for t in tiers[1:]:
+    reached = "untrained"
+    for t in tiers:
         if marks >= t["marks_required"]:
             req = t.get("requires_grade")
             if req and grade_order(body_grade) < grade_order(req):

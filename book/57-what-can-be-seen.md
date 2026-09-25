@@ -39,7 +39,7 @@ Nobody else can see your interface, and it cannot be shown or handed to anyone. 
 
 **The interface does not display:**
 
-- Anything the Hidden Vector Engine holds. Not the axes, not the values, not the fact that a particular moment was tallied.
+- Anything the Hidden Vector Engine holds: its axes, its values, or which moments were tallied.
 - The criteria for any title, quest, or achievement that has not yet been earned.
 - Anything at all about another person.
 
@@ -96,7 +96,7 @@ Knowing an ally's true condition changes triage decisions, which is why stranger
 
 ## What Nobody Sees
 
-**No character can see the Hidden Vector Engine's reading of anyone, their own included, at any Grade.** No instrument shows the Engine's axes or numbers and no title reveals them; mirrors and visions show the System's reading of a person in images, and those can be wrong. A character can infer their own pattern the way anyone infers their own character, by noticing what they keep doing, and that inference is exactly as reliable as it is in life.
+**No character can see the Hidden Vector Engine's reading of anyone, their own included, at any Grade.** Mirrors and visions show the System's reading of a person in images, and those can be wrong; no instrument or title shows the Engine's axes or numbers. A character can infer their own pattern the way anyone infers their own character, by noticing what they keep doing, and that inference is exactly as reliable as it is in life.
 
 **Hidden Quests appear in the log as their mode allows** (System Quests, "Hidden Quest Conventions"): some at once with the objective veiled, some in part, some only after completion, and some never. **Hidden Achievement criteria are never published in advance.**
 
@@ -111,5 +111,5 @@ Knowing an ally's true condition changes triage decisions, which is why stranger
 Deferred:
 
 - **Inspection as a contested action.** Everything above depends on Grade alone. Whether a character can invest in reading people better, and whether another can invest in being harder to read, is unbuilt. It is the natural home for a PER-based technique or Background and for the first equipment that hides a title from a peer.
-- **False readings.** Nothing currently lets a character present a title they do not hold, or a Grade they have not reached. The genre is full of exactly that, and it belongs with a deception technique when one is built.
+- **False readings.** A character shows only the titles they hold and the Grade they have reached; the book has no way to fake either yet. The genre is full of exactly that, and it belongs with a deception technique when one is built.
 - **What higher-Grade beings volunteer.** The table above says what an observer can take. What a powerful being chooses to show on purpose, and what it costs them to suppress, is Aura Pressure's territory and is only half-specified.

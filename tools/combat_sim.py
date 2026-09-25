@@ -7,7 +7,9 @@ tutorial's arrival example) fights a scenario to the end: every creature dead, o
 player character Downed. Player characters attack the lowest-HP creature with every Beat
 they have; creatures attack a random standing player character. Yield is used only to
 avoid being Downed, with the fewest Beats that do it; a creature Yields the same way if
-its stat block says so. Momentum is rolled once, on the higher of HRT and PER Force for a player
+its stat block says so. Characters start with no Proficiency and earn Trained with their first
+weapon Mark (rules 0.1.19), so the Level 1 party is untrained and the Level 3 and 5 parties, past the
+tutorial, are Trained in their attack weapon. Momentum is rolled once, on the higher of HRT and PER Force for a player
 character and for a creature alike; every stat block prints both (rules 0.1.7). No stabilization, no pills,
 no Surge.
 
@@ -58,7 +60,9 @@ def creature(name):
             "de": max(x["force"] for x in c["defense"]),
             "yields": bool(c.get("yields")), "pc": False, "mom": max(c["hrt"], c["per"])}
 
-def pregens(level=1):
+def pregens(level=1, trained=None):
+    if trained is None:
+        trained = level >= 3            # the first Mark usually lands during the tutorial
     # Kara STR 8 / DEX 5 / FOR 7 / HRT 4 / PER 5; Joe 8 / 5 / 7 / 5 / 6; Andre 4 / 7 / 5 / 6 / 9 (Character Creation);
     # Dana DEX 6 / FOR 6 (the tutorial's arrival example; HRT and PER unstated, taken as 5).
     base = [("Kara", 8, 5, 7, 4, 5), ("Joe", 8, 5, 7, 5, 6), ("Andre", 4, 7, 5, 6, 9), ("Dana", 5, 6, 6, 5, 5)]
@@ -67,7 +71,7 @@ def pregens(level=1):
         ups = level - 1
         off = max(s, d) + 2 * ups          # two points a level into the attack stat
         f2 = f + ups                       # one point a level into FOR
-        out.append({"name": name, "hp": 2 * f2, "beats": BEATS, "off": off + TRAINED,
+        out.append({"name": name, "hp": 2 * f2, "beats": BEATS, "off": off + (TRAINED if trained else 0),
                     "de": max(d, f2), "yields": True, "pc": True, "mom": max(h, pe)})
     return out
 

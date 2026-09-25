@@ -47,7 +47,7 @@ Say it literally (from the 2026-09-24 Core Mechanics read-through, where these w
 - **Keep defined words for their definitions.** "Cascades leave marks" beside the game term Mark read as "it hurts." A heading or aside never uses a game term in its everyday sense.
 - **Say it once per section.** The Aether section said four times that a technique's price never changes.
 
-`tools/lint_prose.py` warns on the literal phrases from this list; the warning does not fail the build.
+`tools/lint_prose.py` warns on the literal phrases from this list, and on any sentence with three or more negations. Negation is allowed; stacking it is the tic (Gabriel, 2026-09-25). A sentence that needs its negations goes in `tools/negation_ok.txt` with the reason; every other warning gets rewritten. Warnings never fail the build, and each one is read before it is acted on.
 
 SCENARIO VOICE (from the 2026-09-11 tutorial diagnosis; binds the tutorial, every future scenario, and the Initiate's Manual):
 

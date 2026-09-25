@@ -147,7 +147,7 @@ The Breakthrough Check margin (roll result minus the Resistance) determines the 
 | 60+ | **Transcendent** | One-of-a-kind ascension. |
 <!-- /rules:table -->
 
-**Tier Adjustment:** On a successful check, apply the Overcharge Quality Modifier to the base tier from the margin table: ×2.0 raises the final tier one step, ×3.0 two steps, ×4.0 three steps. Quality Enhancer items push the final tier up one further step. Neither adjustment raises a tier above Transcendent, and neither applies on a failure: a check that misses the Resistance is Cracked no matter the Overcharge.
+**Tier Adjustment:** On a successful check, apply the Overcharge Quality Modifier to the base tier from the margin table: ×2.0 raises the final tier one step, ×3.0 two steps, ×4.0 three steps. Quality Enhancer items push the final tier up one further step. Both adjustments stop at Transcendent and apply only to a success: a check that misses the Resistance is Cracked whatever the Overcharge.
 
 #### External Phenomena (The Party's Role)
 

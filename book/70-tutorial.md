@@ -55,7 +55,7 @@ Players track two counters on their sheets from the first session. You keep a th
 | **Record** | **Ticks when** | **Result** |
 |---|---|---|
 | **IP** (Insight Points) | The character earns insight under pressure | At 3 IP the first Principle crystallizes (The Principle System) |
-| **Marks** | The die explodes on an attack or a defense with a weapon | At 3 Marks Trained becomes Seasoned. At 3 Marks with a weapon shape the character never trained, the System grants it at Trained |
+| **Marks** | The die explodes on an attack or a defense with a weapon | The first Mark with a weapon shape grants its Proficiency at Trained; 3 Marks make it Seasoned |
 | **The HVE sheet** | At each session's end, from what you remember (The Hidden Vector Engine, "The Session-End Sweep") | Feeds the System's summary of each character in Phase 6 |
 
 ---
@@ -122,7 +122,7 @@ Use this as the default sequence. Adjust events to what the party does, and choo
 Before the first session, each player has built a character per the Character Creation chapter:
 
 - 40-point buy across the seven Attributes (floor 3, cap 10).
-- A Background in one or two plain-language lines, and one Proficiency at Trained.
+- A Background in one or two plain-language lines. Proficiencies come from play: the first Mark with a weapon shape grants one.
 - No Principle access: Insight is earned in play, nothing is selected at creation (see "Starting Principle Access" in Character Creation).
 - Derived stats calculated: Max HP = Raw FOR × 2, Max Aether = Raw POW, VE Tolerance 80, Level 1, Grade F.
 
@@ -514,7 +514,7 @@ One creature per arrival, except the rats, which hunt as a pair and teach Flanki
 
 This fight teaches the whole combat loop, one player at a time, with nobody else watching. Run it in the five steps below.
 
-**Step 1. Roll and see what happens.** Do not explain the Clash first. Say *"roll d100 and add your Force"*, and name which Force: STR for a swung weapon or object, DEX for a thrown or fine one, plus +5 if a Trained Proficiency applies. Take the enemy's roll yourself and narrate the result. Give the Margin as damage without naming the formula. A first exchange against Trash Tier is close to even, so be ready for the character to lose it; when they do, Step 5 applies.
+**Step 1. Roll and see what happens.** Do not explain the Clash first. Say *"roll d100 and add your Force"*, and name which Force: STR for a swung weapon or object, DEX for a thrown or fine one. Take the enemy's roll yourself and narrate the result. Give the Margin as damage without naming the formula. A first exchange against Trash Tier is close to even, so be ready for the character to lose it; when they do, Step 5 applies.
 
 **Step 2. Beats and Zones.** When the player asks whether they can do two things, tell them about Beats: two per turn, and moving one Zone costs one. When they ask how far away something is, tell them about Zones. If they do not ask, tell them at the start of their second turn. Give the player enough to choose their next action, and answer a direct rules question directly.
 
@@ -576,9 +576,9 @@ Worked finds, to read or vary:
 
 Across the whole party, the walks down should put the following in play: a weapon for whoever wants one (club, knife, spear, battle axe, short bow), two or three Skill Shards per character weighted toward Edge and Pulse, one Medkit, one set of Armor Scraps, one Relic, one Resonance Glass, and one **Battered Communicator**, seeded now because the Civic Fragment terminal in Phase 4 needs it. Anything nobody picked up on the slopes can turn up in the Node pile.
 
-**Weapons carry no bonus of their own.** Whoever picks up the axe adds their own Proficiency tier to the Clash and nothing else: +5 at Trained, +10 at Seasoned, +0 with no relevant Proficiency at all. What the weapon decides is which Force governs the attack and what the implement makes possible.
+**Weapons carry no bonus of their own.** Whoever picks up the axe adds their own Proficiency tier to the Clash: +5 at Trained, +10 at Seasoned, +0 untrained. What the weapon decides is which Force governs the attack and what the implement makes possible.
 
-**A weapon outside your Proficiencies still works.** A character with no "spears and staves" Proficiency can fight with the spear; they add no Proficiency bonus. Every explosion while attacking or defending with it earns a Mark toward that weapon's Proficiency, and at three Marks with a weapon shape they never trained, the System grants that Proficiency at Trained.
+**A weapon outside your Proficiencies still works.** A character with no "spears and staves" Proficiency can fight with the spear and adds no Proficiency bonus. The first explosion while attacking or defending with it earns a Mark, and the System grants that Proficiency at Trained.
 
 ### Watch For
 
@@ -799,12 +799,12 @@ When a natural die comes up 96 or higher on a Clash or a check:
 
 - It **explodes**. Roll again and add. If the new die is also 96+, it explodes again.
 - On a **check**, if the total succeeds, it is an **Exceptional Success**: the character succeeds a visible step beyond what was asked.
-- On an **attack or a defense with a weapon**, the player adds a Mark beside that weapon's Proficiency. Three Marks turn Trained into Seasoned. At three Marks with a weapon shape the character never trained, the System grants that Proficiency at Trained.
+- On an **attack or a defense with a weapon**, the player adds a Mark beside that weapon shape. The first Mark grants its Proficiency at Trained, and the third makes it Seasoned.
 
-Do not script a natural 96 or higher, or fudge dice to produce one. At 5% per roll, one usually comes up during Phase 4, for a player or an enemy; if none does, explain the rule when a roll comes close. When a player rolls one, slow down. Show the extra die, or narrate the step beyond. If it was an attack or a defense with a weapon, hand the player their first Mark and let them write it on their sheet. An enemy's explosion earns nobody a Mark.
+Do not script a natural 96 or higher, or fudge dice to produce one. At 5% per roll, one usually comes up during Phase 4, for a player or an enemy; if none does, explain the rule when a roll comes close. When a player rolls one, slow down. Show the extra die, or narrate the step beyond. If it was an attack or a defense with a weapon, hand the player their first Mark and the Proficiency it grants, and let them write both on their sheet. An enemy's explosion earns nobody a Mark.
 
 ::: systemvoice
-*Technique noted: Axes and Hammers. 1/3.*
+*Technique acquired: Axes and Hammers. Trained.*
 :::
 
 If a cascade ever runs to two or more extra dice on a player character's roll, it grants a **Battle Memory Card** on the spot (Core Mechanics). Deliver it as the character's first.
@@ -885,7 +885,7 @@ Forty feet in, the blue light ends at a sharp line. Past the line you cannot see
 
 The save fails unless the die explodes: a starting character's HRT Force is at most 10, so an unexploded die tops out at 95 + 10 = 105 against 115. A natural 96 or higher rolls again and adds (every roll explodes; Core Mechanics), and with HRT 5, 96 plus a second die of 14 or better passes. On failure the character is **Suppressed (1 Beat)** for the next encounter, this scene's own term; ordinary Suppression lasts the encounter it began in. On success they hold steady under it and take no penalty. The entity does not engage. It passes; whatever it was flaring at, it was not them.
 
-**Hidden Opportunity.** Deep in the forest a **Resonance Node** pulses at a frequency only characters with PER Force 07 or higher can detect. Approaching it triggers a vision, one glimpse of the wider Multiverse; give it one concrete image (a city hung from the underside of a moon, a river of Aether crossing a plain, a figure whose shadow falls on three worlds). Grants **+1 IP** toward the Principle family the character's behavior points to, or toward their Principle if one has crystallized. **This is also a Battle Memory trigger**; note it for the next Consolidation.
+**Hidden Opportunity.** Deep in the forest a **Resonance Node** pulses at a frequency only characters with PER Force 07 or higher can detect. Approaching it triggers a vision, one glimpse of the wider universe; give it one concrete image (a city hung from the underside of a moon, a river of Aether crossing a plain, a figure whose shadow falls on three worlds). Grants **+1 IP** toward the Principle family the character's behavior points to, or toward their Principle if one has crystallized. **This is also a Battle Memory trigger**; note it for the next Consolidation.
 
 **VE Reward.** Snarljaws and the Glow-Stalker are Moderate kills (10 each); the Alpha is Hard (20). Surveying completes a share of Q-002 (40).
 
@@ -976,7 +976,7 @@ A party that wants the second sector before the dissolution starts can break cam
 
 Four **Kith**, Initiates from Oren, an old Integrated world, walk into the party's line of sight, moving fast, looking behind them: narrow upright bodies, two long arms and a smaller pair held close under the ribs, folds down the neck that flare when something heavy moves nearby. They are exhausted, carrying wounded, and armed with improvised gear that matches the party's own. They were dropped into this tutorial from a different entry point and were driven out of the Civic Fragment by the Husk Sentinel.
 
-**They do not share a language.** Interpretation, the translation the System grants at accession, entered the accession package after Oren's, so the Kith do not have it and never will; this sector also predates Interpretation, so nothing in the valley grants it; the party receives it at registration past the gate (Phase 6), and its first translated conversation with the Kith happens on Earth. Interpretation carries both directions of any conversation its holder is party to, so one side holding it is enough for both to be understood. Until then, communication requires effort, creativity, and patience: gestures, drawing in the dirt, offered food, mirrored posture. There is no roll that solves this in one action. Reward the players who try things.
+**They do not share a language.** Interpretation, the translation the System grants at accession, entered the accession package after Oren's, so the Kith lack it for good; this sector predates it too, and the party receives it at registration past the gate (Phase 6), so its first translated conversation with the Kith happens on Earth. Interpretation carries both directions of any conversation its holder is party to, so one side holding it is enough for both to be understood. Until then, communication requires effort, creativity, and patience: gestures, drawing in the dirt, offered food, mirrored posture. There is no roll that solves this in one action. Reward the players who try things.
 
 Use **Pre-System Brigand** stats with HP 20, Off Force 08, Def Force 09. They are not hostile by default. They have their own fears and their own disagreement about whether to approach at all. **Kes** is the scout from the slopes. **Nemi** carries the Greater Healing Pill and spends it only on a danger they can see. **Sava** carries the two shards and keeps looking at the party's tools. **Tovan** wants the Civic Fragment back and clearly wants to fight.
 
@@ -1346,7 +1346,7 @@ Four examples for common tutorial patterns. They show the shape; the content com
 >
 > *Initial Insight: **Patience.** The trap that waits is still a trap.*
 >
-> Archery and Throwing: 1 Mark.
+> Archery and Throwing: 1 Mark. **Trained.**
 >
 > Title granted: **Watched First** (Achievement, observed the constructs before engaging).
 > Hidden Quest revealed (post-completion): *"Let It Finish." Complete. Reward: +1 IP.*
@@ -1359,7 +1359,7 @@ Four examples for common tutorial patterns. They show the shape; the content com
 >
 > *Resonance detected: HARMONY. Monitoring.*
 >
-> Hand to Hand: 3 Marks, **granted at Trained.**
+> Hand to Hand: 1 Mark, **granted at Trained.**
 >
 > Title granted: **Voice of Decision** (Achievement, for breaking the deadlock at the Recycling Node).
 > Bestowed title: **The Hand That Reached**.
@@ -1372,7 +1372,7 @@ Four examples for common tutorial patterns. They show the shape; the content com
 >
 > *Resonance detected: SUBVERSION. Monitoring.*
 >
-> Blades: 2 Marks.
+> Blades: 2 Marks. **Trained.**
 >
 > Title granted: **Wrong Key** (Achievement, for opening the cache without any of its inputs).
 > Bestowed title: **Salvaged** (negative; released by being last out and making it).
@@ -1447,7 +1447,7 @@ Confirm each mechanic was introduced before the tutorial ends. Items marked **co
 - [ ] **Quest UI** debuts in Phase 3.
 - [ ] **Consolidation** taught at the end of Session 1.
 - [ ] **The top of the die** explained when the first natural 96+ lands (contingent): the explosion, the Exceptional Success, or both.
-- [ ] **The first Mark** written on a sheet (contingent).
+- [ ] **The first Mark**, and the Proficiency it grants, written on a sheet (contingent).
 - [ ] **Driven Back** used by a player to move an enemy somewhere it did not want to be (contingent).
 - [ ] **A Background** used for routine work, with the words "you don't roll for that" said out loud.
 - [ ] **Advantage** granted at least once, with both dice shown.
@@ -1498,7 +1498,7 @@ By the end of the tutorial, every player should have:
 - Reached **Level 4**, or Level 5 if they took every fight and every opportunity.
 - Understood **Yield**: chose it once, or was walked through the example after a clean win.
 - Seen a natural die land at or above the Volatility Threshold, and watched it explode, and earn a Mark if it was an attack or defense with a weapon (contingent on the dice).
-- At least one **Mark** on the sheet (contingent on the dice).
+- At least one **Mark**, and the Proficiency it grants, on the sheet (contingent on the dice).
 - Left you at least three moments that were still with you at the session-end sweep.
 - Earned **at least one Achievement Title**.
 - Received an **Affinity Notice**, the System's first hint at the family their Principle is forming in (see The Principle System). Characters who banked 3 IP crystallize a Principle instead.
@@ -1510,7 +1510,7 @@ If any of these is missing at the end of the last session, improvise to deliver 
 
 ## Design Notes
 
-**What the tutorial is for.** Five things: make the Multiverse feel vast and lethal; put martial, arcane, social, and survival futures in front of the players before class selection at Level 10 (characters are classless until then, and the item economy is their menu); give the Engine a first record of each character; give each player decisions of their own, apart from the group, alongside the group scenes where the characters cooperate and disagree; and teach the rules through play, explaining each one when a player needs it to choose.
+**What the tutorial is for.** Five things: make the universe feel vast and lethal; put martial, arcane, social, and survival futures in front of the players before class selection at Level 10 (characters are classless until then, and the item economy is their menu); give the Engine a first record of each character; give each player decisions of their own, apart from the group, alongside the group scenes where the characters cooperate and disagree; and teach the rules through play, explaining each one when a player needs it to choose.
 
 ### What This Tutorial Does Not Do
 

@@ -24,11 +24,11 @@ On the day of Integration, every human being on Earth heard the same voice at th
 *Prior exemptions: expired. Observation: begun.*
 :::
 
-**Gradebreaker** is a tabletop roleplaying game of System-driven progression fantasy, the genre of stories like *Defiance of the Fall*, *Primal Hunter*, and *Dungeon Crawler Carl*: ordinary people pulled into a multiverse that keeps score. Quests appear on blue status screens, and characters gain power by surviving, exploring, and overcoming challenges. Each player takes the role of one freshly integrated human. One player, the Game Master (GM), plays everything else: the world, its monsters and factions, and the System itself.
+**Gradebreaker** is a tabletop roleplaying game of System-driven progression fantasy, the genre of stories like *Defiance of the Fall*, *Primal Hunter*, and *Dungeon Crawler Carl*: ordinary people pulled into a universe that keeps score. Quests appear on blue status screens, and characters gain power by surviving, exploring, and overcoming challenges. Each player takes the role of one freshly integrated human. One player, the Game Master (GM), plays everything else: the world, its monsters and factions, and the System itself.
 
 ## The System
 
-The System is the multiverse's administrator. It integrates worlds, assigns Grades and levels, issues quests, grants titles, and watches. It is an adaptive construct that finds the stable patterns of reality by putting people under pressure and recording what they do. Strength interests it less than *how* strength is used. Two characters can win the same fight and be offered different futures, because they won it differently.
+The System is the universe's administrator. It integrates worlds, assigns Grades and levels, issues quests, grants titles, and watches. It is an adaptive construct that finds the stable patterns of reality by putting people under pressure and recording what they do. Strength interests it less than *how* strength is used. Two characters can win the same fight and be offered different futures, because they won it differently.
 
 That observation is real at the table. The GM quietly tracks how each character behaves under pressure, and the System converts that record into classes, opportunities, titles, and powers. In this game, a build is a biography. You decide what your character does; the System reads the record and offers what it finds there.
 
@@ -84,7 +84,7 @@ Any system this size has edge cases, and every table eventually finds a reading 
 
 :::: example
 
-Kara (Strength 8 and Fortitude 7, written STR 8, FOR 7 on her sheet, with the Proficiency "axes and hammers") and Andre (Perception 9, Dexterity 7, a land surveyor who has hunted deer every fall since he was twelve, with the Proficiency "archery and throwing" and a scavenged hunting bow) are Level 2 with their level-up points still unspent, three days into their Integration Tutorial, crossing the dead district at its heart.
+Kara (Strength 8 and Fortitude 7, written STR 8, FOR 7 on her sheet, with the Proficiency "axes and hammers," which the System granted on her first exploding swing) and Andre (Perception 9, Dexterity 7, a land surveyor who has hunted deer every fall since he was twelve, with a scavenged hunting bow and the Proficiency "archery and throwing," earned the same way) are Level 2 with their level-up points still unspent, three days into their Integration Tutorial, crossing the dead district at its heart.
 
 **GM:** The overpass ahead has folded in on itself. There's a gap in the rubble, a service stair, half buried. It's the only way through that isn't a mile around.
 

@@ -6,7 +6,7 @@
 
 **Two Beats.** One Beat buys: an attack, a spell, a Zone move, an item, a Principle Application, a check, a Disengage, or a Seize Momentum attempt. **Free:** speaking, drawing a weapon, dropping something, moving inside your Zone.
 
-**Surprise Beat:** ambushers act once before the first round. **Master's free action:** once on your turn, the first action with a Mastered Proficiency's weapon costs no Beat; it is not a Beat and cannot be given up to Yield.
+**Surprise Beat:** ambushers act once before the first round. **Master's free action:** once on your turn, the first action with a Mastered Proficiency's weapon costs no Beat and cannot be given up to Yield.
 
 ## Rolling
 
@@ -73,17 +73,17 @@ One number at the top of the die. When the natural die reaches it, the roll expl
 
 **Yield:** once the Margin is known and before damage is applied, give up Beats from your **next** turn. Each Beat cuts the incoming Margin by 20. Your next turn has two Beats, so two is the most you can give. One Beat: you give ground where you stand. Two Beats: your turn is gone and the attacker may drive you one Zone of their choosing, or leave you where you are; no free strike either way. Against an AoE, each target Yields on their own Margin and two Beats throws them clear. **Cornered** (nowhere to be driven): one Beat only. Creatures Yield only if their stat block says so.
 
-**Background:** one or two lines of life before Integration. **Proficiency:** one weapon shape at creation, **Trained**.
+**Background:** one or two lines of life before Integration. **Proficiency:** none at creation. A **Mark** comes when the die explodes on an attack or defense with a weapon.
 
 <!-- rules:table quickref-proficiency -->
 | Tier | Effect |
 |---|---|
-| Trained | +5 to attacks and defenses with the Proficiency's weapons. |
+| Trained | +5 to attacks and defenses with the Proficiency's weapons. **The first Mark.** |
 | Seasoned | +10 in place of the +5. **3 Marks.** |
 | Master | +10, and once on your turn your first action with its weapon costs no Beat. **10 Marks**, and an E-Grade body. |
 <!-- /rules:table -->
 
-Weapons carry no bonus of their own; the bonus is the wielder's tier. Untrained is +0. **3 Marks with a weapon shape you have no Proficiency in:** the System grants it at Trained, and the three Marks are spent.
+Weapons carry no bonus of their own; the bonus is the wielder's tier. Untrained is +0.
 
 **Gear:** a shield adds +5 to your Clash when defending and occupies a hand; there is no shield Proficiency. Armor Scraps add +5 Defense Force with FOR and impose −5 on DEX-based Clashes. Pills take 1 Beat; the first two of each kind per fight work in full, and further pills do nothing until ten quiet minutes out of combat.
 

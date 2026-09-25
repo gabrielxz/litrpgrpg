@@ -90,7 +90,7 @@ The whole engine runs on one half-page sheet per character, filled in once per s
 
 **The sheet.** Four rows, one per axis: Force | Method, Hunger | Restraint, Will | Accord, Control | Freedom. Each row is split into a **Current** column, wiped at every session end, and a **Deep** column, which accumulates.
 
-**During play, nothing.** No tallies and no pauses. Run the game. Memory is the default filter, below; a GM who would rather jot a word or two as a cue may, so long as a cue is never a score.
+**During play, nothing.** Run the game. Memory is the default filter, below; a GM who would rather jot a word or two as a cue may, so long as a cue is never a score.
 
 **At session end, five minutes.** Say the session's three biggest moments out loud with the table, and name what they share; the tallies that follow are yours alone. Then, for each character, tally the moments you remember on the matching side of Current: one tally for a moment you remember, two for a moment that surprised the table, three, circled, with a one-line margin note, for a **Defining** moment, the kind that surprised the player themselves. Then for each axis: if one side of Current leads by 2 or more, add one tally to that side of Deep, and erase Current.
 

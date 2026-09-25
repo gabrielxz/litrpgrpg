@@ -55,6 +55,16 @@ cases:
     fn: tier_for_marks
     args: {marks: 10, body_grade: E}
     expect: Master
+  - name: No Marks is untrained
+    source: 10-core-mechanics.md, "Marks"
+    fn: tier_for_marks
+    args: {marks: 0}
+    expect: untrained
+  - name: The first Mark grants Trained
+    source: 10-core-mechanics.md, "Marks"
+    fn: tier_for_marks
+    args: {marks: 1}
+    expect: Trained
   - name: Two Marks is still Trained
     source: 10-core-mechanics.md, "Marks"
     fn: tier_for_marks

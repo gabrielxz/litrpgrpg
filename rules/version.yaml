@@ -1,7 +1,7 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.18"
+version: "0.1.19"
 dated: "2026-09-25"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
@@ -54,3 +54,8 @@ notes: >
   shifts a fight one column easier or harder, which from Level 8 is 10 Force per character and at Levels 1 to 7 in a
   group is one creature of the lowest tier fewer or more (tested by simulation for three to five). The tutorial
   names four and scales the Node's loot and the causeway queue.
+  0.1.19 (the Character Creation read-through): no Proficiency at creation. The first Mark with a weapon shape grants
+  its Proficiency at Trained, the third makes it Seasoned, the tenth (with an E-Grade body) Master, the same for every
+  weapon; the 3-Mark grant for a new shape is retired. The pregens start untrained, and the combat sim's Level 1 party
+  is untrained (the Bestiary's two Level 1 figures moved). Stat anchors: FOR 10 climbs Everest without bottled oxygen,
+  POW 10's lights flicker when they lose their temper. "Multiverse" is retired for "universe".

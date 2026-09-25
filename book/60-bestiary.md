@@ -276,9 +276,9 @@ Against small enemy groups, a party of four finishes most fights in one or two r
 
 **To make a fight last, give one enemy Yield** (Yield, above).
 
-**Adding bodies multiplies danger.** Every additional creature is two more attacks per round arriving at a party that can only give up so many Beats. In simulation, going from two peer creatures to four against a party of four quadruples the number of characters Downed (0.4 to 1.5 per fight) and takes the whole-party loss from about one fight in a hundred to one in four at Level 1, and to nearly one in two at Level 3. Use extra bodies when you intend that, and never as a way to pad a fight's length.
+**Adding bodies multiplies danger.** Every additional creature is two more attacks per round arriving at a party that can only give up so many Beats. In simulation, going from two peer creatures to four against a party of four quadruples the number of characters Downed (0.4 to 1.6 per fight) and takes the whole-party loss from about one fight in sixty to three in ten at Level 1, and to nearly one in two at Level 3. Use extra bodies when you intend that, and never as a way to pad a fight's length.
 
-**Terrain is a lethality dial.** A corridor, a sealed room, a ledge, or a closed ring of enemies leaves nowhere to be driven, which limits Yield to one Beat; in simulation that leaves half again as many characters Downed and raises the whole-party loss two to four times for the same stat blocks. Announce the geometry before the first roll so the table can choose to fight elsewhere.
+**Terrain is a lethality dial.** A corridor, a sealed room, a ledge, or a closed ring of enemies leaves nowhere to be driven, which limits Yield to one Beat; in simulation that leaves half again as many characters Downed and raises the whole-party loss two to five times for the same stat blocks. Announce the geometry before the first roll so the table can choose to fight elsewhere.
 
 If a fight drags past round 5, raise the stakes: introduce a complication, escalate the enemy's tactics, or end it decisively.
 

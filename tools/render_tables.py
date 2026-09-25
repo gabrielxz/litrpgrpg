@@ -94,7 +94,7 @@ def g_application_costs_principles():
 
 def g_proficiency_tiers_core():
     t = {x["name"]: x for x in E.load("character")["proficiencies"]["tiers"]}
-    rows = [["**Trained**", f"+{t['Trained']['bonus']} to attacks and defenses with the Proficiency's weapons."],
+    rows = [["**Trained**", f"+{t['Trained']['bonus']} to attacks and defenses with the Proficiency's weapons. The first Mark."],
             ["**Seasoned**", f"+{t['Seasoned']['bonus']} (in place of the +{t['Trained']['bonus']}). {t['Seasoned']['marks_required']} Marks."],
             ["**Master**", f"+{t['Master']['bonus']}, and once on your turn your first action with the Proficiency's weapon costs no Beat. {t['Master']['marks_required']} Marks in all, and an {t['Master']['requires_grade']}-Grade body."]]
     return table(["Tier", "Effect"], rows)
@@ -102,7 +102,7 @@ def g_proficiency_tiers_core():
 
 def g_proficiency_tiers_quickref():
     t = {x["name"]: x for x in E.load("character")["proficiencies"]["tiers"]}
-    rows = [["Trained", f"+{t['Trained']['bonus']} to attacks and defenses with the Proficiency's weapons."],
+    rows = [["Trained", f"+{t['Trained']['bonus']} to attacks and defenses with the Proficiency's weapons. **The first Mark.**"],
             ["Seasoned", f"+{t['Seasoned']['bonus']} in place of the +{t['Trained']['bonus']}. **{t['Seasoned']['marks_required']} Marks.**"],
             ["Master", f"+{t['Master']['bonus']}, and once on your turn your first action with its weapon costs no Beat. **{t['Master']['marks_required']} Marks**, and an {t['Master']['requires_grade']}-Grade body."]]
     return table(["Tier", "Effect"], rows, bold=False)

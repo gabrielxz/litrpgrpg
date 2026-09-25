@@ -121,10 +121,10 @@ The next ability is defined at Distillation.
 
 **Consolidation visions are rationed.** A vision arrives only at a Consolidation that follows meaningful Principle-aligned experience, and never more than once per session.
 
-**Routine, risk-free activity does not normally earn Battle Memories or life-or-death IP.** Levels come from Volatile Energy, which kills at or above the character's Grade pay whether or not they were dangerous, so a cautious hunter who never takes a real risk still levels while earning little or no IP.
+**Routine, risk-free activity does not normally earn Battle Memories or life-or-death IP.** Levels come from Volatile Energy, which kills at or above the character's Grade pay whatever the danger, so a cautious hunter who takes no real risks still levels while earning little IP.
 
 ::: lore
-Slower roads exist. The System honors comprehension however it arrives, and the Multiverse holds contemplatives who walked far up the ladder without drawing blood: monks who sat with Weight for sixty years until the mountain moved for them. Integration-era subjects rarely have sixty years. Pressure is the shortcut the System offers instead.
+Slower roads exist. The System honors comprehension however it arrives, and the universe holds contemplatives who walked far up the ladder without drawing blood: monks who sat with Weight for sixty years until the mountain moved for them. Integration-era subjects rarely have sixty years. Pressure is the shortcut the System offers instead.
 :::
 
 ## Your First Principle

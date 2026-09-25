@@ -121,7 +121,7 @@ A permission costs no Aether and has no roll of its own; a permission that is a 
 
 ### Nothing else
 
-No Marks, no title, no Proficiency, no second technique, and nothing new between Level 10 and Level 25. A GM may add more; the book's classes stop here. A class grows next at the F→E Breakthrough (Grade Breakthroughs, "Outputs by Quality Tier").
+From Level 10 to Level 25 a class is its package: the profile, the technique, and the permission. A GM may add more; the book's classes stop here. A class grows next at the F→E Breakthrough (Grade Breakthroughs, "Outputs by Quality Tier").
 
 ## Guardrails
 
@@ -167,7 +167,7 @@ Powers that make the player declare something (a vow, a sanction, a kill named f
 Paste the standing context (The System AI, "The Standing Context (AI-Assisted Play)"), then:
 
 ```
-You are the System, the impersonal administrator of a LitRPG multiverse.
+You are the System, the impersonal administrator of a LitRPG universe.
 Build three class offers for this character from the record below.
 Each offer is one package:
 - a plain name;

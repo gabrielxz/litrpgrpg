@@ -154,14 +154,14 @@ Joe's Background is "volunteer firefighter and EMT." His friend is Downed, and s
 
 ### Proficiencies
 
-A **Proficiency** is weapon training, and the System tracks it. Each character begins with one, at Trained. Proficiencies are drawn by weapon shape: blades, axes and hammers, spears and staves, hand to hand, archery and throwing, firearms. A Proficiency covers its whole shape: "axes and hammers" governs the hatchet, the maul, and a length of pipe. A character trained with an axe who picks up a sword adds nothing to the Clash until they have earned the Marks for blades.
+A **Proficiency** is weapon training, and the System tracks it. Characters begin with none and earn each one by use: the first Mark with a weapon shape grants its Proficiency at Trained (Marks, below). Proficiencies are drawn by weapon shape: blades, axes and hammers, spears and staves, hand to hand, archery and throwing, firearms. A Proficiency covers its whole shape: "axes and hammers" governs the hatchet, the maul, and a length of pipe. A character trained with an axe who picks up a sword adds nothing to the Clash until they earn a Mark with blades.
 
 #### The Three Tiers
 
 <!-- rules:table proficiency-tiers -->
 | **Tier** | **Effect** |
 |---|---|
-| **Trained** | +5 to attacks and defenses with the Proficiency's weapons. |
+| **Trained** | +5 to attacks and defenses with the Proficiency's weapons. The first Mark. |
 | **Seasoned** | +10 (in place of the +5). 3 Marks. |
 | **Master** | +10, and once on your turn your first action with the Proficiency's weapon costs no Beat. 10 Marks in all, and an E-Grade body. |
 <!-- /rules:table -->
@@ -172,17 +172,21 @@ The free action is separate from Beats. A Master cannot give it up to Yield, sav
 
 #### Marks
 
-When the die explodes (see "System Volatility," below) on an attack or a defense with a weapon, the player adds a **Mark** beside that weapon's Proficiency on the sheet. One Mark per roll, however many dice the explosion adds. In the fiction, the System notes the technique:
+When the die explodes (see "System Volatility," below) on an attack or a defense with a weapon, the player adds a **Mark** beside that weapon shape on the sheet. One Mark per roll, however many dice the explosion adds.
+
+- **The first Mark:** the System grants that weapon shape's Proficiency at Trained.
+- **3 Marks:** Trained becomes Seasoned.
+- **10 Marks in all:** Seasoned becomes Master. Mastery requires an E-Grade body; an F-Grade character banks Marks past 10 and advances at the Breakthrough.
+
+In the fiction, the System names the first Mark and counts the rest:
 
 ::: systemvoice
+*Technique acquired: Axes and Hammers. Trained.*
+
 *Technique noted: Axes and Hammers. 2/3.*
 :::
 
-- **3 Marks:** Trained becomes Seasoned.
-- **10 Marks in all:** Seasoned becomes Master. Mastery requires an E-Grade body; an F-Grade character banks Marks past 10 and advances at the Breakthrough.
-- **3 Marks with a weapon shape the character has no Proficiency in:** the System grants that Proficiency at Trained, and the three Marks are spent.
-
-Where the weapon shape is unclear, the GM names it, or rules that no Proficiency applies. A fighter who never puts down the axe reaches Master with the axe and nothing else. A weapon the character has no Proficiency in adds nothing to the Clash, and each explosion with it still earns a Mark toward that Proficiency.
+Where the weapon shape is unclear, the GM names it, or rules that no Proficiency applies. A fighter who never puts down the axe reaches Master with the axe and nothing else. A weapon the character has no Proficiency in adds nothing to the Clash until the first explosion with it earns the Mark that grants one.
 
 ### Failure and Exceptional Success
 
@@ -533,7 +537,7 @@ Bel Sar, route accounts, undated
 
 ## Aether
 
-**Aether is the lifeblood of the Multiverse**, the ambient energy the System runs on and the medium every Integrated body learns to move. It is in the air, in the ground, in the things that live there, and in you from the moment Integration finishes. Newly integrated humans describe the first weeks as an intoxication: colors sharper, exhaustion further away, a pressure behind the sternum that answers when reached for.
+**Aether is the lifeblood of the universe**, the ambient energy the System runs on and the medium every Integrated body learns to move. It is in the air, in the ground, in the things that live there, and in you from the moment Integration finishes. Newly integrated humans describe the first weeks as an intoxication: colors sharper, exhaustion further away, a pressure behind the sternum that answers when reached for.
 
 ::: {.lore .quoted}
 "Day 4. Nobody warned me it would be nice. I came out of the gate and the first thing was the smell, cut grass, like someone had mowed the whole city, and I stood in a car park breathing it while people were screaming two streets over. It's in me too. Something under my breastbone answers when I reach for it, and I keep reaching for it the way you tongue a loose tooth. My hands don't shake anymore. I ran three kilometers to my sister's flat and I wasn't tired. I don't know what I am now. I know I slept nine hours and woke up wanting more of it."

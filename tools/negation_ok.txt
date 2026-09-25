@@ -1,0 +1,25 @@
+# Sentences that keep three or more negations on purpose (tools/lint_prose.py, check 4).
+# One opening fragment per line; a sentence containing the fragment is not flagged.
+# Reviewed 2026-09-25. Add a line only after deciding the negations do work a positive
+# sentence cannot: a condition defined by absence, a voice guide's limits, a stance
+# that is a refusal, or parallel wording the reader needs.
+
+# Core Mechanics, Take 100: the condition is the absence of pressure.
+If nothing presses (no clock, no danger, nobody opposing)
+# Classes, the vow permission: three things the character swears, in the player's own words.
+Swear one thing aloud at the start of a fight
+# Principles: reassurance that one Principle for life is a full road.
+a character who never fills it is not behind
+# The System AI, the voice guide: the limits are the guidance.
+It never persuades, apologizes, or encourages
+It never quips, never insults for amusement
+# Tutorial, Phase 1: the characters' state is the absence of everything.
+The characters have never met, have no goal
+# Tutorial, the Kith: what the party loses by not meeting them.
+the party goes into Phase 5 with only what it learned elsewhere
+# After the Gate, the Refuse stance: the stance is a refusal.
+The community will not level, will not take quests
+# After the Gate, Your Own Town: "a town with no X" is substitution guidance.
+A town with no river has a highway
+# What Can Be Seen: the rule itself is an absence.
+No character can see the Hidden Vector Engine

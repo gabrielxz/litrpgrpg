@@ -28,7 +28,7 @@ Joe's VE Tolerance is 80: he can store 80 VE before Saturation penalties start. 
 Aether has a smell. Integrated humans describe green sweetness, fresh as leaves crushed between the palms and light enough to invite another breath. Each source adds an undertone that repeats for that source: a dry smoky finish, a warmer floral note, a musk, a low hum, a rhythm felt in the teeth. When something dies, the pale motes bring a brief wash of the sweetness and an uneven chord carrying the trace of what died, because the energy is still wearing the shape of the body that held it. Consolidation is that shape coming apart. The foreign notes fade, and the unevenness beneath the breastbone settles into a hum that follows the breath. A character who has smelled a thing's Aether once may recognize a resemblance later, before knowing its cause.
 :::
 
-A recognized trace is evidence to investigate. It grants no bonus, no range, and no sense stat. A PER check can pick out a faint trace; recognizing what left it requires having smelled that Aether before.
+A recognized trace is evidence to investigate. A PER check can pick out a faint trace; recognizing what left it requires having smelled that Aether before.
 
 ### The Pressure Gauge
 

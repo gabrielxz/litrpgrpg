@@ -1,6 +1,6 @@
 """Prose lint: the automated form of "sweep by noun."
 
-Two checks over the chapter sources, the kit, and the pipeline, and one warning pass:
+Two checks over the chapter sources, the kit, and the pipeline, and two warning passes:
 
 1. Retired values and names (rules/retired.yaml) must not appear anywhere.
 2. Cross-references of the form  Chapter Name, "Section Title"  must point
@@ -8,6 +8,11 @@ Two checks over the chapter sources, the kit, and the pipeline, and one warning 
    section that has not been written.
 3. Voice warnings: literal phrases from CLAUDE.md's "Say it literally" list.
    They print but never fail the build; fiction can use them on purpose.
+4. Negation stacks: a sentence with three or more negations (no, not, never,
+   nothing, none, nobody, without, cannot, neither, nor, -n't) prints a warning.
+   Negation is allowed; stacking it is the tic. A sentence that needs its
+   negations goes in tools/negation_ok.txt (one opening fragment per line), so
+   the warning stays a signal. Never fails the build.
 
     python3 tools/lint_prose.py
 """
@@ -38,6 +43,26 @@ VOICE_WARNINGS = [
     (r"\bthe System marks\b", "the table acts in procedure: the player adds a Mark"),
 ]
 EXTRA = [os.path.join(BOOK, "kit", "table-kit.html"), os.path.join(BOOK, "pipeline", "metadata.yaml")]
+NEGATION = re.compile(r"\b(no|not|never|nothing|none|nobody|without|cannot|neither|nor)\b|n't\b", re.I)
+NEGATION_OK = os.path.join(ROOT, "tools", "negation_ok.txt")
+
+
+def negation_stacks() -> list[str]:
+    """Sentences with three or more negations, minus the ones kept on purpose."""
+    keep = []
+    if os.path.exists(NEGATION_OK):
+        with open(NEGATION_OK, encoding="utf-8") as fh:
+            keep = [l.strip() for l in fh if l.strip() and not l.startswith("#")]
+    out = []
+    for path in CHAPTERS:
+        with open(path, encoding="utf-8") as fh:
+            for n, line in enumerate(fh, 1):
+                if line.startswith(("|", "#", "!", ":::", "<!--", "    ")):
+                    continue
+                for sent in re.split(r"(?<=[.!?])\s+", line.strip()):
+                    if len(NEGATION.findall(sent)) >= 3 and not any(k in sent for k in keep):
+                        out.append(f"{os.path.relpath(path, ROOT)}:{n}: {sent[:150]}")
+    return out
 
 
 def headings(path: str) -> set[str]:
@@ -103,6 +128,12 @@ def main() -> int:
     if warnings:
         print("\n".join(warnings))
         print(f"{len(warnings)} voice warning(s); not failures\n")
+
+    # 4. negation stacks (never fail)
+    stacks = negation_stacks()
+    if stacks:
+        print("\n".join(stacks))
+        print(f"{len(stacks)} negation stack(s); rewrite, or keep in tools/negation_ok.txt; not failures\n")
 
     if problems:
         print("\n".join(problems))

@@ -48,16 +48,16 @@ These are illustrations. Players build what makes sense for the person they are 
 
 ### What a Score Means
 
-The anchors below calibrate every score in pre-Integration human terms. Even values sit between their neighbors. Scores of 1 and 2 represent limitations below the starting-character range; NPCs may have these scores.
+The anchors below calibrate every score in pre-Integration human terms. Scores of 1 and 2 represent limitations below the starting-character range; NPCs may have these scores.
 
 <!-- rules:table stat-anchors -->
 | **Attribute** | **3 (deficiency)** | **5 (average)** | **7 (gifted)** | **9 (elite)** | **10 (peak human)** |
 |---|---|---|---|---|---|
 | STR | Struggles with a full bucket | Carries the groceries in one trip | Moves furniture alone | College shot-putter | World-record deadlifter |
 | DEX | Drops what they carry | Catches keys tossed across a room | Amateur gymnast | Circus knife-thrower | Olympic-final gymnast |
-| FOR | Winded by one flight of stairs | Works a full shift on their feet | Runs marathons | Channel swimmer | Summits without oxygen |
+| FOR | Winded by one flight of stairs | Works a full shift on their feet | Runs marathons | Channel swimmer | Climbs Everest without bottled oxygen |
 | HRT | Folds under a raised voice | Holds up in a crisis, shaken after | Steady hands in the ER | Hostage negotiator | Unbreakable under interrogation |
-| POW | Never notices the uncanny | Occasional gut feelings | Vivid dreams that sometimes land | The family everyone called witches | The monastery would have taken them |
+| POW | Never notices the uncanny | Occasional gut feelings | Vivid dreams that sometimes land | The family everyone called witches | Lights flicker when they lose their temper |
 | PER | Misses the obvious | Notices a moved chair | Spots the tail on the drive home | Identifies birds by wingbeat | Counts the cards and the faces at once |
 | CHA | Empties a room slowly | Pleasant company | Closes the sale | Packs a town hall | Starts a movement |
 <!-- /rules:table -->
@@ -94,7 +94,7 @@ A Background is a method, so it works on the alien version of its subject: a nur
 
 ## Proficiency
 
-Choose **one Proficiency**: a weapon shape the character has used, or is about to pick up. It begins at **Trained**, +5 to attacks and defenses with its weapons, and deepens to Seasoned and then Master through Marks earned in play. New Proficiencies are earned the same way. See Core Mechanics, "Proficiencies," for the full rules.
+A new character has no Proficiency. The first time the die explodes on an attack or a defense with a weapon, the System grants that weapon shape's Proficiency at **Trained**: +5 to attacks and defenses with its weapons. Further Marks deepen it to Seasoned and then Master (Core Mechanics, "Proficiencies"). The six weapon shapes:
 
 <!-- rules:table proficiencies-fighting -->
 | **Proficiency** | **Covers** |
@@ -107,7 +107,7 @@ Choose **one Proficiency**: a weapon shape the character has used, or is about t
 | firearms | Pistols, rifles, shotguns, and the System-forged weapons built on the same principle. |
 <!-- /rules:table -->
 
-A character with "axes and hammers" adds their tier bonus when swinging a hatchet, and a character without it adds nothing. Each explosion with a weapon outside the character's Proficiencies earns a Mark toward that weapon's Proficiency.
+A character with "axes and hammers" adds their tier bonus when swinging a hatchet, and a character without it adds nothing.
 
 ## Derived Stats
 
@@ -130,24 +130,21 @@ Starting gear is campaign-dependent. The GM determines what characters have acce
 
 ## Interpretation
 
-Every Integrant holds **Interpretation** from the moment of Integration. It is a faculty the System grants, with no score and no tier, and nothing on the sheet records it.
+Every character has **Interpretation**, a special ability the System grants to everyone it integrates: it translates language. A character has it from the moment of Integration, except in a few tutorial sectors that run a version of the System older than Interpretation; a character taken into one gains it when they pass through the sector's gate. The tutorial in this book is one of those sectors (The Tutorial: Integration Protocol, "Phase 6: First Recognition").
 
-- It translates a deliberately communicated message, whether speech, sign, writing, a recording, or the communicative gestures of an alien body, and conveys what the speaker is trying to say. Nonverbal features that carry the intended message translate with it.
-- It carries both directions of any conversation its holder is party to. One holder is enough for both sides to be understood.
-- Unexpressed thoughts, motives, memories, and the truth of a statement are outside it: a lie translates perfectly. Involuntary emotional displays and cultural implications arrive untranslated, so a character can understand an offer and misunderstand the obligations that come with it.
-- It converts no computer protocols and supplies no expertise. Reading an alien engine is a Background's job.
-
-Some tutorial sectors run a version of the System older than Interpretation, and a character taken into one does not hold it until they pass through the sector's gate. The tutorial in this book is such a sector (The Tutorial: Integration Protocol, "Phase 6: First Recognition").
+- It translates anything a person says, signs, or writes to be understood, live or recorded, including the gestures an alien body uses as speech, and gives the listener what the speaker means.
+- One character with Interpretation is enough for both sides of a conversation.
+- It translates what is said, true or false: a lie translates perfectly. A flinch, tears, and everything the speaker's culture takes for granted arrive as they are, so a character can understand an offer and misread what accepting it commits them to.
 
 ## Starting Principle Access
 
-Freshly integrated characters begin with no Principle access. Insight toward a Principle, and every tier beyond it, is earned through play by accumulating Insight Points. Nothing on this track is selected at creation. See The Principle System for the full progression.
+A character begins with no Principles and no Insight Points. Both are earned in play (The Principle System).
 
 ---
 
 ## After Creation
 
-A finished character is Level 1, Grade F, with no class, no Principle access, Interpretation, and whatever was in their pockets. Everything from here is earned in play: levels and stat growth are covered in the Progression chapter, the VE economy that pays for them in Cultivation, and the class that arrives at Level 10 in Classes.
+A new character is Level 1 and Grade F, with Interpretation and whatever was in their pockets. Progression covers gaining levels and Attribute points. Cultivation covers Volatile Energy (VE), which characters earn from fights and quests and need for each level. Classes covers the class a character chooses at Level 10.
 
 ---
 
@@ -155,7 +152,7 @@ A finished character is Level 1, Grade F, with no class, no Principle access, In
 
 ![Kara, Joe, and Andre](./assets/art/people/pregens.png){.scene .pregens}
 
-Three finished characters, built with this chapter's rules: 40 points, a Background, one Proficiency at Trained, derived stats computed, Saturation bands (Cultivation, "The Pressure Gauge") already worked out. Hand one across the table and play. They are also the book's recurring cast: Kara and Andre are the pair in the Introduction's example of play, and Joe is the hunter who opens Cultivation. None of them has a Principle, a title, or anything in their pockets beyond what survived Integration.
+Three finished characters, built with this chapter's rules: 40 points, a Background, derived stats computed, Saturation bands (Cultivation, "The Pressure Gauge") already worked out. Use one instead of building a character if you're in a hurry or just prefer it. They are also the book's recurring cast: Kara and Andre are the pair in the Introduction's example of play, and Joe is the hunter who opens Cultivation. Each carries only what survived Integration.
 
 ::: statblock
 **KARA** &middot; Level 1 &middot; Grade F
@@ -168,7 +165,6 @@ Three finished characters, built with this chapter's rules: 40 points, a Backgro
 
 - **Max HP** 14 &middot; **Max Aether** 6 &middot; **VE Tolerance** 80 (Mild past 80, Heavy past 160, Critical past 240)
 - **Background:** Warehouse shift lead, eight years of lifting and loading; grew up on the east side and still knows who sells what.
-- **Proficiency (Trained, +5):** axes and hammers
 - **Playing her:** Fight close and end it fast. Want things out loud: the better weapon, the bigger bounty, the pill nobody else has claimed. She can be generous, but usually considers her own reward first.
 :::
 
@@ -183,7 +179,6 @@ Three finished characters, built with this chapter's rules: 40 points, a Backgro
 
 - **Max HP** 14 &middot; **Max Aether** 4 &middot; **VE Tolerance** 80 (Mild past 80, Heavy past 160, Critical past 240)
 - **Background:** Volunteer firefighter and EMT: rescue, first aid, and long nights without sleep.
-- **Proficiency (Trained, +5):** axes and hammers
 - **Playing him:** Stand between the danger and everyone else, and swing like the door needs breaking. He will take a bad trade if somebody weaker comes out ahead on it.
 :::
 
@@ -198,6 +193,5 @@ Three finished characters, built with this chapter's rules: 40 points, a Backgro
 
 - **Max HP** 10 &middot; **Max Aether** 5 &middot; **VE Tolerance** 80 (Mild past 80, Heavy past 160, Critical past 240)
 - **Background:** Land surveyor, and a deer hunter every fall since he was twelve: maps, terrain, tracking.
-- **Proficiency (Trained, +5):** archery and throwing
 - **Playing him:** Look before anyone moves, plan the way out before the way in, and take only what the plan needs. When the others argue, he checks supplies and escape routes.
 :::
