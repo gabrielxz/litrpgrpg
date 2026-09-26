@@ -49,11 +49,21 @@ export interface CreateCharacter {
   background: string;
 }
 
-/** One of the book's ready-made characters, stats and Background from `rules/character.yaml`. */
+/**
+ * One of the book's ready-made characters, stats and Background from `rules/character.yaml`.
+ * The GM creates characters for anyone; a player creates only their own (`playerId` is theirs).
+ */
 export interface CreatePregen {
   type: "character.pregen";
   characterId: string;
   pregen: string;
+  playerId?: string;
+}
+
+/** Hands a character to a player, or to the GM when `playerId` is absent. GM only. */
+export interface AssignCharacter {
+  type: "character.assign";
+  characterId: string;
   playerId?: string;
 }
 
@@ -108,7 +118,10 @@ export interface Collapse {
 
 // ------------------------------------------------------------ level-ups ---
 
-/** The GM places a level's System points from behavior (Progression, "Behavioral Stat Mapping"). */
+/**
+ * The GM places a level's assigned points from behavior (Progression, "Behavioral Stat Mapping").
+ * The book's current term is "System points"; the rename to "assigned points" is queued.
+ */
 export interface PlaceSystemPoints {
   type: "points.system";
   characterId: string;
@@ -155,6 +168,7 @@ export interface VoidAction {
 export type Action =
   | CreateCharacter
   | CreatePregen
+  | AssignCharacter
   | AwardVe
   | Consolidate
   | Collapse

@@ -1,12 +1,13 @@
 /**
  * Development sign-in: named test people without Google, so a GM and a player can be driven
- * from two browser tabs on one machine. The server mints tokens with a key made at startup
- * and accepts them beside Supabase's. It exists only when DEV_SIGNIN=1 outside production;
- * main.ts refuses to start with it in production.
+ * from two browser tabs on one machine. The server mints tokens with a fixed local secret, so
+ * a dev server restarting on every edit keeps everyone signed in, and accepts them beside
+ * Supabase's. It exists only when DEV_SIGNIN=1 outside production; main.ts refuses to start
+ * with it in production, which is why a fixed secret is safe here.
  */
 import { createHash } from "node:crypto";
-import { SignJWT, createLocalJWKSet, exportJWK, generateKeyPair } from "jose";
-import { type Identity, type Verifier, jwtVerifier } from "./auth.ts";
+import { SignJWT, jwtVerify } from "jose";
+import { type Identity, type Verifier, identityOf } from "./auth.ts";
 
 const ISSUER = "gradebreaker-dev-signin";
 
@@ -22,20 +23,28 @@ function idFor(name: string): string {
   return `${h.slice(0, 8)}-${h.slice(8, 12)}-4${h.slice(13, 16)}-8${h.slice(17, 20)}-${h.slice(20, 32)}`;
 }
 
-export async function devSignIn(): Promise<DevSignIn> {
-  const { privateKey, publicKey } = await generateKeyPair("ES256");
-  const keys = createLocalJWKSet({ keys: [{ ...(await exportJWK(publicKey)), alg: "ES256" }] });
+export async function devSignIn(secretText = process.env.DEV_SIGNIN_SECRET ?? "gradebreaker-local-development"): Promise<DevSignIn> {
+  const secret = new TextEncoder().encode(secretText);
   return {
-    verifier: jwtVerifier(keys, ISSUER),
+    verifier: {
+      async verify(token) {
+        try {
+          const { payload } = await jwtVerify(token, secret, { issuer: ISSUER, audience: "authenticated" });
+          return identityOf(payload);
+        } catch {
+          return null;
+        }
+      },
+    },
     tokenFor: (name) =>
       new SignJWT({ email: `${name.toLowerCase().replace(/\W+/g, ".")}@dev.local`, user_metadata: { full_name: name } })
-        .setProtectedHeader({ alg: "ES256" })
+        .setProtectedHeader({ alg: "HS256" })
         .setSubject(idFor(name))
         .setIssuer(ISSUER)
         .setAudience("authenticated")
         .setIssuedAt()
         .setExpirationTime("30d")
-        .sign(privateKey),
+        .sign(secret),
   };
 }
 

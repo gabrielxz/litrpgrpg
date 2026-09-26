@@ -29,6 +29,7 @@ export const actionSchema = z.discriminatedUnion("type", [
     background: z.string().max(500),
   }),
   z.object({ type: z.literal("character.pregen"), characterId: id, pregen: z.string(), playerId: id.optional() }),
+  z.object({ type: z.literal("character.assign"), characterId: id, playerId: id.optional() }),
   z.object({
     type: z.literal("ve.award"),
     basis,

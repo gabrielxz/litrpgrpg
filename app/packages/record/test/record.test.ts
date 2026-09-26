@@ -186,7 +186,7 @@ describe("level-ups", () => {
     const place = (placement: Record<string, number>, level = 2) =>
       gm({ type: "points.system", characterId: "kara", level, placement });
     expect(() => place({ STR: 2 })).toThrow(/exactly 3/);
-    expect(() => place({ STR: 3 }, 3)).toThrow(/no unplaced System points for Level 3/);
+    expect(() => place({ STR: 3 }, 3)).toThrow(/no unplaced assigned points for Level 3/);
     expect(() => rec.append(draft({ type: "points.system", characterId: "kara", level: 2, placement: { STR: 3 } }, P1))).toThrow(/only the GM/);
     place({ STR: 2, FOR: 1 });
     expect(rec.sheet("kara")).toMatchObject({ pendingSystemLevels: [], maxHp: 16 });
@@ -223,6 +223,33 @@ describe("level-ups", () => {
     levelTo("kara", 10);
     expect(rec.sheet("kara")!.pendingSystemLevels).toEqual([10]);
     expect(() => gm({ type: "points.system", characterId: "kara", level: 10, placement: { STR: 3 } })).toThrow(/class profile/);
+  });
+});
+
+describe("who creates and holds a character", () => {
+  it("lets a player create their own character and no one else's", () => {
+    rec.append(draft({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" }, P1));
+    expect(rec.sheet("kara")!.playerId).toBe("player-1");
+    const mine = { STR: 10, DEX: 6, FOR: 8, HRT: 4, POW: 3, PER: 5, CHA: 4 };
+    rec.append(draft({ type: "character.create", characterId: "b", name: "Bo", stats: mine, background: "Line cook", playerId: "player-2" }, P2));
+    expect(() => rec.append(draft({ type: "character.pregen", characterId: "x", pregen: "Joe", playerId: "player-2" }, P1))).toThrow(
+      /only their own character/,
+    );
+    expect(() => rec.append(draft({ type: "character.pregen", characterId: "y", pregen: "Joe" }, P1))).toThrow(/only their own character/);
+  });
+
+  it("lets the GM hand a character to another player or take it over", () => {
+    gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" });
+    award("kara", 120);
+    rest("kara", 6);
+    const moved = gm({ type: "character.assign", characterId: "kara", playerId: "player-2" });
+    expect(moved.effects).toEqual([{ kind: "reassigned", characterId: "kara", playerId: "player-2" }]);
+    expect(() => rec.append(draft({ type: "points.free", characterId: "kara", placement: { STR: 1 } }, P1))).toThrow(/not this player's/);
+    rec.append(draft({ type: "points.free", characterId: "kara", placement: { STR: 1 } }, P2));
+    gm({ type: "character.assign", characterId: "kara" });
+    expect(rec.sheet("kara")!.playerId).toBeUndefined();
+    expect(() => gm({ type: "character.assign", characterId: "kara" })).toThrow(/already held by the GM/);
+    expect(() => rec.append(draft({ type: "character.assign", characterId: "kara", playerId: "player-2" }, P2))).toThrow(/only the GM/);
   });
 });
 

@@ -15,7 +15,8 @@ export interface CommitProps {
   /** Why the draft is not ready, shown in place of a preview. */
   problem?: string | null;
   names: Names;
-  label?: string;
+  /** The button: the action in words ("Create Kara", "Award 130 VE"). */
+  label: string;
   onRecorded?: (envelope: Envelope) => void;
 }
 
@@ -23,6 +24,7 @@ export function PreviewView({ pv, names }: { pv: Preview; names: Names }) {
   const effects = pv.effects.map((e) => effectLine(e, names)).filter((l): l is string => Boolean(l));
   return (
     <div className="preview">
+      <h4>{pv.accepted ? "If you record this:" : "This cannot be recorded:"}</h4>
       {!pv.accepted && <p className="error">{pv.reason}</p>}
       {effects.length > 0 && (
         <ul className="effects">
@@ -36,9 +38,8 @@ export function PreviewView({ pv, names }: { pv: Preview; names: Names }) {
         if (d.status === "changed" && !lines.length) return null;
         return (
           <div key={d.characterId} className="change">
+            {d.status === "added" ? "New character: " : d.status === "removed" ? "Removed from the campaign: " : ""}
             <strong>{d.name}</strong>
-            {d.status === "added" && " enters the record"}
-            {d.status === "removed" && " leaves the record"}
             {lines.length > 0 && (
               <ul>
                 {lines.map((l, i) => (
@@ -51,7 +52,7 @@ export function PreviewView({ pv, names }: { pv: Preview; names: Names }) {
       })}
       {pv.newlyRejected.length > 0 && (
         <div className="stranded">
-          <strong>Stops applying:</strong>
+          <strong>Earlier-recorded actions that would stop applying:</strong>
           <ul>
             {pv.newlyRejected.map((r) => (
               <li key={r.envelope.id}>
@@ -65,7 +66,7 @@ export function PreviewView({ pv, names }: { pv: Preview; names: Names }) {
   );
 }
 
-export function Commit({ campaignId, action, problem, names, label = "Record", onRecorded }: CommitProps) {
+export function Commit({ campaignId, action, problem, names, label, onRecorded }: CommitProps) {
   const [id, setId] = useState(newActionId);
   const [pv, setPv] = useState<Preview | null>(null);
   const [error, setError] = useState<string | null>(null);

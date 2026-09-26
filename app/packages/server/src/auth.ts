@@ -3,7 +3,7 @@
  * token Supabase issued, and the server checks its signature against the project's published
  * keys (ES256, `/auth/v1/.well-known/jwks.json`), so no Supabase secret lives on the server.
  */
-import { type JWTVerifyGetKey, createRemoteJWKSet, jwtVerify } from "jose";
+import { type JWTPayload, type JWTVerifyGetKey, createRemoteJWKSet, jwtVerify } from "jose";
 
 /** What the server takes from a verified token. */
 export interface Identity {
@@ -19,20 +19,25 @@ export interface Verifier {
   verify(token: string): Promise<Identity | null>;
 }
 
+/** The identity in a verified Supabase-shaped payload, or null without a subject. */
+export function identityOf(payload: JWTPayload): Identity | null {
+  if (typeof payload.sub !== "string" || !payload.sub) return null;
+  const meta = (payload.user_metadata ?? {}) as Record<string, unknown>;
+  const name = [meta.full_name, meta.name].find((v): v is string => typeof v === "string" && v.trim() !== "");
+  return {
+    id: payload.sub,
+    email: typeof payload.email === "string" ? payload.email : null,
+    name: name?.trim() ?? null,
+  };
+}
+
 /** Verifies tokens against a key set for one issuer; `audience` is Supabase's signed-in role. */
 export function jwtVerifier(keys: JWTVerifyGetKey, issuer: string): Verifier {
   return {
     async verify(token) {
       try {
         const { payload } = await jwtVerify(token, keys, { issuer, audience: "authenticated" });
-        if (typeof payload.sub !== "string" || !payload.sub) return null;
-        const meta = (payload.user_metadata ?? {}) as Record<string, unknown>;
-        const name = [meta.full_name, meta.name].find((v): v is string => typeof v === "string" && v.trim() !== "");
-        return {
-          id: payload.sub,
-          email: typeof payload.email === "string" ? payload.email : null,
-          name: name?.trim() ?? null,
-        };
+        return identityOf(payload);
       } catch {
         return null;
       }

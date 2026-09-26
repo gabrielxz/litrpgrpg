@@ -28,12 +28,19 @@ const placement = (p: Record<string, number>) =>
     .join(", ");
 
 /** One line for the GM's log. */
-export function describe(a: Action, name: Names, seqOf: (id: string) => number | undefined): string {
+export function describe(
+  a: Action,
+  name: Names,
+  seqOf: (id: string) => number | undefined,
+  person: (userId: string) => string = () => "a player",
+): string {
   switch (a.type) {
     case "character.create":
       return `Created ${a.name} (point buy)`;
     case "character.pregen":
       return `Created ${a.pregen} (ready-made)`;
+    case "character.assign":
+      return `${name(a.characterId)} handed to ${a.playerId ? person(a.playerId) : "the GM"}`;
     case "ve.award": {
       const who = a.awards.map((w) => `${name(w.characterId)} ${w.ve}`).join(", ");
       const b = a.basis;
@@ -58,7 +65,7 @@ export function describe(a: Action, name: Names, seqOf: (id: string) => number |
     case "saturation.collapse":
       return `Collapse: ${name(a.characterId)} (${a.attribute})`;
     case "points.system":
-      return `System points, Level ${a.level}: ${name(a.characterId)} ${placement(a.placement)}`;
+      return `Assigned points, Level ${a.level}: ${name(a.characterId)} ${placement(a.placement)}`;
     case "points.free":
       return `Free points: ${name(a.characterId)} ${placement(a.placement)}`;
     case "hp.change":
@@ -78,6 +85,8 @@ export function effectLine(e: Effect, name: Names): string | null {
   switch (e.kind) {
     case "created":
       return null; // the preview's sheet changes already show the new character
+    case "reassigned":
+      return `${name(e.characterId)} goes ${e.playerId ? "to a new player" : "to the GM"}`;
     case "ve-acquired":
       return `${name(e.characterId)} stores ${e.ve} VE`;
     case "saturation":
@@ -93,7 +102,7 @@ export function effectLine(e: Effect, name: Names): string | null {
     case "temporary-returned":
       return `${name(e.characterId)}: the lost ${e.attribute} point returns`;
     case "points-placed":
-      return `${name(e.characterId)}: ${e.by === "system" ? "System" : "free"} points ${placement(e.placement)}`;
+      return `${name(e.characterId)}: ${e.by === "system" ? "assigned" : "free"} points ${placement(e.placement)}`;
     case "voided":
       return null;
   }
@@ -136,7 +145,7 @@ const FIELD_LABELS: Record<string, string> = {
   aether: "Aether",
   maxAether: "Max Aether",
   "saturation.band": "Saturation",
-  pendingSystemLevels: "System points pending",
+  pendingSystemLevels: "Assigned points due",
   freePoints: "Free points",
   temporary: "Temporary loss",
   downed: "Downed",

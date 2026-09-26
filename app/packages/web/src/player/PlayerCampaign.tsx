@@ -4,10 +4,12 @@
  * player spends free points here; everything else arrives from the GM's record.
  */
 import type { InterfaceSheet, PlayerView } from "@gradebreaker/record";
-import { useState } from "react";
-import { newActionId, submit } from "../api.ts";
-import type { Notice, useCampaign } from "../live.ts";
+import { useEffect, useState } from "react";
+import { api, newActionId, submit } from "../api.ts";
+import { useAuth } from "../auth.ts";
+import { type Notice, useEngine } from "../live.ts";
 import { ATTRIBUTES, ATTRIBUTE_NAMES, noticeLine } from "../text.ts";
+import { type CharacterSpec, Creator } from "./Creator.tsx";
 
 function Bar({ value, max }: { value: number; max: number }) {
   const pct = max > 0 ? Math.max(0, Math.min(100, (value / max) * 100)) : 0;
@@ -68,7 +70,7 @@ function SpendPoints({ campaignId, c }: { campaignId: string; c: InterfaceSheet 
   );
 }
 
-function Interface({ campaignId, c }: { campaignId: string; c: InterfaceSheet }) {
+function Interface({ campaignId, c, readOnly }: { campaignId: string; c: InterfaceSheet; readOnly?: boolean }) {
   const toNext = c.veToNextLevel;
   return (
     <article className="interface">
@@ -135,7 +137,14 @@ function Interface({ campaignId, c }: { campaignId: string; c: InterfaceSheet })
         </div>
       </div>
 
-      {c.freePoints > 0 && <SpendPoints campaignId={campaignId} c={c} />}
+      {c.freePoints > 0 &&
+        (readOnly ? (
+          <div className="sys-section">
+            <h3>Unallocated points: {c.freePoints}</h3>
+          </div>
+        ) : (
+          <SpendPoints campaignId={campaignId} c={c} />
+        ))}
     </article>
   );
 }
@@ -162,22 +171,111 @@ function Notices({ notices }: { notices: Notice[] }) {
   );
 }
 
-export function PlayerCampaign({ view, live }: { view: PlayerView; live: ReturnType<typeof useCampaign> }) {
+const slug = (s: string) =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "") || "character";
+
+/** A player with no character here: build one in place, or bring one they built earlier. */
+function Arrival({ view }: { view: PlayerView }) {
+  const auth = useAuth();
+  const engine = useEngine(view.campaign.rulesVersion);
+  const [pool, setPool] = useState<{ id: string; name: string }[]>([]);
+  const [building, setBuilding] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    api<{ characters: { id: string; name: string }[] }>("GET", "/characters")
+      .then((r) => setPool(r.characters))
+      .catch(() => {});
+  }, []);
+
+  const create = async (spec: CharacterSpec) => {
+    const playerId = auth.user!.id;
+    const base = slug(spec.kind === "pregen" ? spec.pregen : spec.name);
+    const characterId = `${base}-${Math.random().toString(36).slice(2, 6)}`;
+    await submit(
+      view.campaign.id,
+      newActionId(),
+      spec.kind === "pregen"
+        ? { type: "character.pregen", characterId, pregen: spec.pregen, playerId }
+        : { type: "character.create", characterId, name: spec.name, background: spec.background, stats: spec.stats, playerId },
+    );
+  };
+  const bring = async (id: string) => {
+    try {
+      await api("POST", `/characters/${id}/join`, { campaignId: view.campaign.id });
+    } catch (e) {
+      setError((e as Error).message);
+    }
+  };
+
+  if (building && engine) return <Creator engine={engine} submitLabel="Register" onSubmit={create} onCancel={() => setBuilding(false)} />;
+  return (
+    <div className="arrival">
+      <p className="sys-dim">
+        <em>Interface: awaiting registration.</em>
+      </p>
+      <p className="small">You have no character in this campaign yet. Your GM may make one for you, or you can bring your own.</p>
+      <div className="row">
+        <button className="sys-confirm" onClick={() => setBuilding(true)} disabled={!engine}>
+          Build a character
+        </button>
+      </div>
+      {pool.length > 0 && (
+        <div className="sys-section">
+          <h3>Or bring one you built</h3>
+          <ul className="pool">
+            {pool.map((c) => (
+              <li key={c.id}>
+                {c.name}
+                <button className="sys-confirm" onClick={() => bring(c.id)}>
+                  Bring {c.name}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {error && <p className="error">{error}</p>}
+    </div>
+  );
+}
+
+export function PlayerCampaign({
+  view,
+  notices,
+  readOnly,
+}: {
+  view: PlayerView;
+  notices: Notice[];
+  /** The GM viewing as this player: nothing can be changed, and notices are not shown. */
+  readOnly?: boolean;
+}) {
   return (
     <main className="player">
       {view.characters.length === 0 ? (
-        <p className="sys-dim waiting">
-          <em>Interface: awaiting registration.</em>
-          <span className="small">Your GM has not given you a character yet.</span>
-        </p>
+        readOnly ? (
+          <p className="sys-dim">
+            <em>Interface: awaiting registration.</em>
+          </p>
+        ) : (
+          <Arrival view={view} />
+        )
       ) : (
         <div className="interfaces">
           {view.characters.map((c) => (
-            <Interface key={c.id} campaignId={view.campaign.id} c={c} />
+            <Interface key={c.id} campaignId={view.campaign.id} c={c} readOnly={readOnly} />
           ))}
         </div>
       )}
-      <Notices notices={live.notices} />
+      {readOnly ? (
+        <aside className="notices">
+          <p className="sys-dim small">Notices reach the player's open page as they happen and are not shown here.</p>
+        </aside>
+      ) : (
+        <Notices notices={notices} />
+      )}
     </main>
   );
 }

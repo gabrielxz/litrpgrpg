@@ -37,7 +37,7 @@ export function Log({
 
   return (
     <section className="card log">
-      <h2>Record</h2>
+      <h2>Campaign log</h2>
       {view.rejected.length > 0 && (
         <p className="warning">
           {view.rejected.length} action{view.rejected.length === 1 ? " no longer applies" : "s no longer apply"}. Each is marked
@@ -54,7 +54,7 @@ export function Log({
             <li key={e.id} className={`${isVoided ? "voided" : ""} ${reason ? "rejected" : ""}`}>
               <div className="entry">
                 <span className="seq">#{e.seq + 1}</span>
-                <span className="what">{describe(e.action, names, seqOf)}</span>
+                <span className="what">{describe(e.action, names, seqOf, who)}</span>
                 <span className="meta">
                   {who(e.actor.userId)} · {new Date(e.at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                 </span>
@@ -69,7 +69,7 @@ export function Log({
                   </span>
                 )}
               </div>
-              {isVoided && <div className="small muted">Removed from the record.</div>}
+              {isVoided && <div className="small muted">Undone: it no longer counts.</div>}
               {reason && <div className="small error">No longer applies: {reason}</div>}
               {open?.id === e.id && (
                 <div className="void-form">
@@ -85,7 +85,7 @@ export function Log({
                       ...(open.reason === "correction" && note.trim() ? { note: note.trim() } : {}),
                     }}
                     names={names}
-                    label={open.reason === "undo" ? "Undo it" : "Record the correction"}
+                    label={open.reason === "undo" ? `Undo #${e.seq + 1}` : `Correct #${e.seq + 1}`}
                     onRecorded={(env) => {
                       setOpen(null);
                       setNote("");

@@ -70,7 +70,7 @@ export function viewFor(
 }
 
 /** Effects a player is shown: those about their own characters, less the ones only the GM reads. */
-const GM_ONLY: ReadonlySet<Effect["kind"]> = new Set(["saturation", "voided"]);
+const GM_ONLY: ReadonlySet<Effect["kind"]> = new Set(["saturation", "voided", "reassigned"]);
 
 export function noticesFor(effects: Effect[], ownCharacterIds: ReadonlySet<string>): Effect[] {
   return effects.filter((e) => !GM_ONLY.has(e.kind) && "characterId" in e && ownCharacterIds.has(e.characterId));

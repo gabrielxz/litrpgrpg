@@ -299,6 +299,66 @@ describe("the action log over HTTP", () => {
   });
 });
 
+describe("characters", () => {
+  const brawler = { STR: 10, DEX: 6, FOR: 8, HRT: 4, POW: 3, PER: 5, CHA: 4 };
+
+  it("lets a player create their own character in a campaign, and the GM reassign it", async () => {
+    const { campaignId, gm, player, playerId } = await table();
+    const mine = await act(campaignId, player, { type: "character.pregen", characterId: "kara", pregen: "Kara", playerId });
+    expect(mine.status).toBe(201);
+    const theirs = await act(campaignId, player, { type: "character.pregen", characterId: "joe", pregen: "Joe" });
+    expect(theirs.json.error).toMatch(/only their own character/);
+    const nobody = await act(campaignId, gm, { type: "character.assign", characterId: "kara", playerId: "nobody" });
+    expect(nobody.json.error).toMatch(/must be a player in this campaign/);
+    expect((await act(campaignId, gm, { type: "character.assign", characterId: "kara" })).status).toBe(201);
+    expect((await call("GET", `/campaigns/${campaignId}`, { token: player })).json.characters).toEqual([]);
+  });
+
+  it("builds characters outside any campaign and moves one into a campaign", async () => {
+    const { campaignId, gm, player } = await table();
+    const bad = await call("POST", "/characters", { token: player, body: { kind: "custom", name: "Bo", background: "Line cook", stats: { ...brawler, CHA: 9 } } });
+    expect(bad).toMatchObject({ status: 422, json: { error: expect.stringMatching(/total 45/) } });
+    const bo = (await call("POST", "/characters", { token: player, body: { kind: "custom", name: "Bo", background: "Line cook", stats: brawler } })).json;
+    const andre = (await call("POST", "/characters", { token: player, body: { kind: "pregen", pregen: "andre" } })).json;
+    expect(andre.name).toBe("Andre");
+    expect((await call("GET", "/characters", { token: player })).json.characters.map((c: { name: string }) => c.name)).toEqual(["Bo", "Andre"]);
+    expect((await call("GET", "/characters", { token: gm })).json.characters).toEqual([]);
+
+    expect((await call("POST", `/characters/${bo.id}/join`, { token: gm, body: { campaignId } })).status).toBe(404);
+    const joined = await call("POST", `/characters/${bo.id}/join`, { token: player, body: { campaignId } });
+    expect(joined.status).toBe(201);
+    const pv = (await call("GET", `/campaigns/${campaignId}`, { token: player })).json;
+    expect(pv.characters.map((c: { name: string }) => c.name)).toEqual(["Bo"]);
+    expect((await call("GET", "/characters", { token: player })).json.characters.map((c: { name: string }) => c.name)).toEqual(["Andre"]);
+    expect((await call("POST", `/characters/${bo.id}/join`, { token: player, body: { campaignId } })).status).toBe(404);
+
+    const elsewhere = (await call("POST", "/campaigns", { token: await signIn("Rae"), body: { name: "Elsewhere" } })).json.campaign.id;
+    expect((await call("POST", `/characters/${andre.id}/join`, { token: player, body: { campaignId: elsewhere } })).status).toBe(404);
+    expect((await call("DELETE", `/characters/${andre.id}`, { token: player })).status).toBe(204);
+    expect((await call("GET", "/characters", { token: player })).json.characters).toEqual([]);
+  });
+
+  it("holds a GM's own character for the GM when it joins", async () => {
+    const { campaignId, gm } = await table();
+    const npc = (await call("POST", "/characters", { token: gm, body: { kind: "pregen", pregen: "Joe" } })).json;
+    await call("POST", `/characters/${npc.id}/join`, { token: gm, body: { campaignId } });
+    const joe = (await call("GET", `/campaigns/${campaignId}`, { token: gm })).json.characters[0];
+    expect(joe.name).toBe("Joe");
+    expect(joe.playerId).toBeUndefined();
+  });
+
+  it("shows the GM a player's screen exactly as the player sees it", async () => {
+    const { campaignId, gm, player, playerId } = await table();
+    await act(campaignId, gm, { type: "character.pregen", characterId: "kara", pregen: "Kara", playerId });
+    await act(campaignId, gm, { type: "character.pregen", characterId: "joe", pregen: "Joe" });
+    const asPlayer = await call("GET", `/campaigns/${campaignId}/players/${playerId}/view`, { token: gm });
+    expect(asPlayer.json).toEqual((await call("GET", `/campaigns/${campaignId}`, { token: player })).json);
+    expect((await call("GET", `/campaigns/${campaignId}/players/${playerId}/view`, { token: player })).status).toBe(403);
+    const gmId = (await call("GET", "/me", { token: gm })).json.user.id;
+    expect((await call("GET", `/campaigns/${campaignId}/players/${gmId}/view`, { token: gm })).status).toBe(404);
+  });
+});
+
 describe("the live channel", () => {
   let server: Server;
   let hub: LiveHub;

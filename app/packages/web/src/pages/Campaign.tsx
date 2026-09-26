@@ -33,7 +33,7 @@ export function Campaign({ id }: { id: string }) {
   return (
     <>
       <TopBar>{statusLine}</TopBar>
-      {view.role === "gm" ? <GmCampaign view={view} live={live} /> : <PlayerCampaign view={view} live={live} />}
+      {view.role === "gm" ? <GmCampaign view={view} live={live} /> : <PlayerCampaign view={view} notices={live.notices} />}
     </>
   );
 }

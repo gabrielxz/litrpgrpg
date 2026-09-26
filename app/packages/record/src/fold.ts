@@ -40,7 +40,7 @@ export interface CharacterState {
   storedVe: number;
   /** Refined VE toward the next level. */
   refinedVe: number;
-  /** Levels whose System points the GM has not yet placed. */
+  /** Levels whose assigned points the GM has not yet placed. */
   pendingSystemLevels: number[];
   /** Free points the player holds unallocated. */
   freePoints: number;
@@ -48,6 +48,7 @@ export interface CharacterState {
 
 export type Effect =
   | { kind: "created"; characterId: string }
+  | { kind: "reassigned"; characterId: string; playerId: string | null }
   | { kind: "ve-acquired"; characterId: string; ve: number }
   | { kind: "saturation"; characterId: string; from: string; to: string }
   | { kind: "aether-refilled"; characterId: string; hour: number }
@@ -181,6 +182,8 @@ function apply(engine: Engine, chars: Map<string, CharacterState>, env: Envelope
       return createCharacter(engine, chars, a);
     case "character.pregen":
       return createPregen(engine, chars, a);
+    case "character.assign":
+      return assign(need(chars, a.characterId), a.playerId);
     case "ve.award":
       return awardVe(engine, chars, a);
     case "consolidation.rest":
@@ -200,13 +203,21 @@ function apply(engine: Engine, chars: Map<string, CharacterState>, env: Envelope
   }
 }
 
-/** The GM records anything. A player spends their own character's free points, nothing else. */
+/**
+ * The GM records anything. A player records the choices the book gives the player, for their
+ * own character: creating it, and spending its free points (app/DESIGN.md, "The player-choice rule").
+ */
 function authorize(chars: Map<string, CharacterState>, env: Envelope) {
   if (env.actor.role === "gm") return;
   const a: Action = env.action;
+  const me = env.actor.userId;
+  if (a.type === "character.create" || a.type === "character.pregen") {
+    if (a.playerId !== me) throw new Rejected("a player creates only their own character");
+    return;
+  }
   if (a.type !== "points.free") throw new Rejected(`only the GM records ${a.type}`);
   const c = chars.get(a.characterId);
-  if (c && c.playerId !== env.actor.userId) throw new Rejected(`${c.name} is not this player's character`);
+  if (c && c.playerId !== me) throw new Rejected(`${c.name} is not this player's character`);
 }
 
 function need(chars: Map<string, CharacterState>, id: string): CharacterState {
@@ -287,6 +298,13 @@ function createPregen(engine: Engine, chars: Map<string, CharacterState>, a: Cre
   }
   chars.set(a.characterId, newCharacter(engine, a.characterId, p.name, p.stats, p.background, a.playerId, p.name));
   return [{ kind: "created", characterId: a.characterId }];
+}
+
+function assign(c: CharacterState, playerId: string | undefined): Effect[] {
+  if ((c.playerId ?? null) === (playerId ?? null)) throw new Rejected(`${c.name} is already ${playerId ? "that player's" : "held by the GM"}`);
+  if (playerId === undefined) delete c.playerId;
+  else c.playerId = playerId;
+  return [{ kind: "reassigned", characterId: c.id, playerId: playerId ?? null }];
 }
 
 // --------------------------------------------------------------- VE ---
@@ -431,12 +449,12 @@ function checkPlacement(engine: Engine, c: CharacterState, placement: Stats): nu
 function placeSystem(engine: Engine, c: CharacterState, a: PlaceSystemPoints): Effect[] {
   const lv = engine.rules.character.leveling;
   const i = c.pendingSystemLevels.indexOf(a.level);
-  if (i < 0) throw new Rejected(`${c.name} has no unplaced System points for Level ${a.level}`);
+  if (i < 0) throw new Rejected(`${c.name} has no unplaced assigned points for Level ${a.level}`);
   if (a.level >= lv.class_level)
-    throw new Rejected(`from Level ${lv.class_level} the class profile places System points; class selection is not in the app yet`);
+    throw new Rejected(`from Level ${lv.class_level} the class profile places assigned points; class selection is not in the app yet`);
   const due = lv.system_assigned * engine.scale(c.grade);
   const total = checkPlacement(engine, c, a.placement);
-  if (total !== due) throw new Rejected(`Level ${a.level} places exactly ${due} System points, not ${total}`);
+  if (total !== due) throw new Rejected(`Level ${a.level} places exactly ${due} assigned points, not ${total}`);
   for (const [attr, pts] of Object.entries(a.placement)) c.placed[attr] = (c.placed[attr] ?? 0) + pts;
   c.pendingSystemLevels.splice(i, 1);
   return [{ kind: "points-placed", characterId: c.id, placement: a.placement, by: "system" }];

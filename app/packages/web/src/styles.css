@@ -638,3 +638,151 @@ table.sys-stats td.num {
 .notices li {
   font-size: 0.95rem;
 }
+
+/* ---- sections, preview heading, view as player ---- */
+
+.sections {
+  display: flex;
+  gap: 0.2rem;
+  padding: 0 1rem;
+  border-bottom: 1px solid var(--stone);
+  background: var(--bone);
+}
+.sections button {
+  border: none;
+  background: none;
+  padding: 0.55rem 0.8rem;
+  color: var(--slate);
+  border-radius: 0;
+}
+.sections button.active {
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: inset 0 -2px 0 var(--cyan);
+}
+.preview h4 {
+  margin: 0 0 0.3rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--slate);
+}
+.commit .preview {
+  border-left: 3px solid var(--cyan);
+  background: color-mix(in srgb, var(--cyan) 6%, #fbf7f0);
+  padding: 0.5rem 0.7rem;
+}
+.pad {
+  padding: 1rem;
+}
+.view-as-bar {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: var(--bone-deep);
+  border-bottom: 1px solid var(--stone);
+}
+.page > .card:first-child,
+.page.narrow > .card:first-child {
+  margin-top: 0;
+}
+
+/* ---- the character creator (always in the System's colors) ---- */
+
+.interface {
+  color: var(--cyan-light);
+}
+.interface input,
+.interface textarea,
+.interface select {
+  background: var(--sys-ground);
+  color: var(--cyan-light);
+  border: 1px solid var(--sys-line);
+  width: 100%;
+}
+.interface input[type="radio"] {
+  width: auto;
+}
+.interface label {
+  color: color-mix(in srgb, var(--cyan-light) 70%, var(--sys-ground));
+}
+.creator {
+  margin: 0.8rem 0;
+}
+.sys-choice {
+  display: flex;
+  gap: 1.5rem;
+}
+.sys-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.point-buy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.point-row {
+  display: grid;
+  grid-template-columns: 7rem 1.8rem 2rem 1.8rem 1fr;
+  align-items: center;
+  gap: 0.3rem;
+}
+.point-row .num {
+  text-align: center;
+}
+.point-row button {
+  background: transparent;
+  color: var(--cyan-light);
+  border: 1px solid var(--cyan-light);
+  padding: 0.05rem 0.3rem;
+}
+.point-row .anchor {
+  padding-left: 0.5rem;
+}
+.pregens {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.pregen {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.1rem 0.6rem;
+  padding: 0.5rem;
+  border: 1px solid var(--sys-line);
+  cursor: pointer;
+}
+.pregen input {
+  grid-row: span 3;
+}
+.pregen.chosen {
+  border-color: var(--cyan-light);
+}
+.sys-link {
+  color: var(--cyan-light);
+}
+.arrival {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-width: 38rem;
+}
+.pool {
+  list-style: none;
+  padding: 0;
+  margin: 0.4rem 0;
+}
+.pool li {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--bone-deep);
+}
+.player .pool li {
+  border-color: var(--sys-line);
+}

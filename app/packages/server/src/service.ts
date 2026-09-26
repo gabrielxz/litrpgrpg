@@ -8,6 +8,7 @@
  */
 import { Engine, type RulesSnapshot } from "@gradebreaker/engine";
 import {
+  type Action,
   type Appended,
   CampaignRecord,
   type Draft,
@@ -16,11 +17,12 @@ import {
   type Preview,
   RecordError,
   type Submission,
+  pointBuyProblems,
 } from "@gradebreaker/record";
 import type { Identity, Verifier } from "./auth.ts";
 import type { Db } from "./db.ts";
 import { contentHash, newId, newInviteCode } from "./tokens.ts";
-import { type CampaignInfo, type Member, type Role, type View, viewFor } from "./views.ts";
+import { type CampaignInfo, type Member, type PlayerView, type Role, type View, viewFor } from "./views.ts";
 
 export class HttpError extends Error {
   readonly status: number;
@@ -42,6 +44,18 @@ export interface Invite {
   maxUses: number | null;
   uses: number;
   revokedAt: string | null;
+}
+
+/** How a character outside any campaign is built: point buy, or one of the book's ready-made characters. */
+export type CharacterSpec =
+  | { kind: "custom"; name: string; background: string; stats: Record<string, number> }
+  | { kind: "pregen"; pregen: string };
+
+export interface UnassignedCharacter {
+  id: string;
+  name: string;
+  spec: CharacterSpec;
+  createdAt: string;
 }
 
 export type ServiceEvent =
@@ -313,7 +327,8 @@ export class Service {
 
   private async draftFor(campaignId: string, user: User, role: Role, s: Submission): Promise<Draft> {
     const a = s.action;
-    if ((a.type === "character.create" || a.type === "character.pregen") && a.playerId !== undefined) {
+    const namesPlayer = a.type === "character.create" || a.type === "character.pregen" || a.type === "character.assign";
+    if (namesPlayer && a.playerId !== undefined) {
       if ((await this.roleIn(campaignId, a.playerId)) !== "player")
         throw new HttpError(422, "a character's player must be a player in this campaign");
     }
@@ -365,10 +380,94 @@ export class Service {
     return (await this.record(campaignId)).preview(draft);
   }
 
+  /** A player's screen exactly as they see it, for the GM. */
+  async viewAs(campaignId: string, gm: User | null, playerId: string): Promise<PlayerView> {
+    await this.requireGm(campaignId, gm);
+    if ((await this.roleIn(campaignId, playerId)) !== "player") throw new HttpError(404, "no such player in this campaign");
+    return (await this.view(campaignId, { userId: playerId, role: "player" })) as PlayerView;
+  }
+
+  // ------------------------------------------- characters outside campaigns ---
+
+  async unassigned(user: User | null): Promise<UnassignedCharacter[]> {
+    if (!user) throw new HttpError(401, "sign in first");
+    const rows = await this.db.query(
+      "select id, name, spec, created_at from unassigned_characters where owner_id = $1 order by created_at",
+      [user.id],
+    );
+    return rows.map((r) => ({ id: r.id, name: r.name, spec: r.spec, createdAt: iso(r.created_at)! }));
+  }
+
+  /** Builds a character outside any campaign, checked against the rules new campaigns use. */
+  async createUnassigned(user: User | null, spec: CharacterSpec): Promise<UnassignedCharacter> {
+    if (!user) throw new HttpError(401, "sign in first");
+    const engine = await this.engine(this.rulesVersion);
+    let name: string;
+    if (spec.kind === "pregen") {
+      try {
+        name = engine.pregen(spec.pregen).name;
+      } catch {
+        throw new HttpError(422, `no ready-made character named ${spec.pregen}`);
+      }
+    } else {
+      name = spec.name.trim();
+      const problems = pointBuyProblems(engine, spec.stats);
+      if (!name) problems.unshift("a character needs a name");
+      if (!spec.background.trim()) problems.push("a character needs a Background");
+      if (problems.length) throw new HttpError(422, problems.join("; "));
+    }
+    const row = { id: newId(), name, spec, createdAt: new Date().toISOString() };
+    await this.db.query("insert into unassigned_characters (id, owner_id, name, spec, created_at) values ($1, $2, $3, $4::json, $5)", [
+      row.id,
+      user.id,
+      name,
+      JSON.stringify(spec),
+      row.createdAt,
+    ]);
+    return row;
+  }
+
+  async deleteUnassigned(user: User | null, id: string): Promise<void> {
+    if (!user) throw new HttpError(401, "sign in first");
+    const rows = await this.db.query("delete from unassigned_characters where id = $1 and owner_id = $2 returning id", [id, user.id]);
+    if (!rows.length) throw new HttpError(404, "no such character");
+  }
+
+  /**
+   * Moves a character from the pool into a campaign the owner belongs to: a player's character
+   * is theirs there, a GM's is held by the GM. The append's id is derived from the character,
+   * so a retry after a failed delete records it once.
+   */
+  async joinCampaign(user: User | null, id: string, campaignId: string): Promise<{ campaignId: string; characterId: string }> {
+    if (!user) throw new HttpError(401, "sign in first");
+    const [row] = await this.db.query("select name, spec from unassigned_characters where id = $1 and owner_id = $2", [id, user.id]);
+    if (!row) throw new HttpError(404, "no such character");
+    const role = await this.requireMember(campaignId, user);
+    const spec = row.spec as CharacterSpec;
+    const characterId = `${slugify(row.name)}-${id.slice(0, 4)}`;
+    const owner = role === "player" ? { playerId: user.id } : {};
+    const action: Action =
+      spec.kind === "pregen"
+        ? { type: "character.pregen", characterId, pregen: spec.pregen, ...owner }
+        : { type: "character.create", characterId, name: spec.name.trim(), stats: spec.stats, background: spec.background, ...owner };
+    await this.submit(campaignId, user, { id: `join-${id}`, source: "manual", action });
+    await this.db.query("delete from unassigned_characters where id = $1", [id]);
+    return { campaignId, characterId };
+  }
+
   async view(campaignId: string, who: { userId: string; role: Role }): Promise<View> {
     const [record, campaign, members] = await Promise.all([this.record(campaignId), this.campaign(campaignId), this.members(campaignId)]);
     return viewFor(record, campaign, members, who);
   }
+}
+
+function slugify(s: string): string {
+  return (
+    s
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "") || "character"
+  );
 }
 
 function inviteOf(r: Record<string, any>): Invite {

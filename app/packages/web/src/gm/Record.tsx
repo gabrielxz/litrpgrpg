@@ -23,7 +23,7 @@ type Tab = "character" | "ve" | "rest" | "points" | "vitals" | "collapse";
 const TABS: [Tab, string][] = [
   ["ve", "Award VE"],
   ["rest", "Consolidation"],
-  ["points", "System points"],
+  ["points", "Assigned points"],
   ["vitals", "HP and Aether"],
   ["character", "New character"],
   ["collapse", "Collapse"],
@@ -168,7 +168,14 @@ function NewCharacterForm({ view, engine, names, onRecorded }: FormProps) {
           </p>
         </>
       )}
-      <Commit campaignId={view.campaign.id} action={action} problem={problem} names={names} onRecorded={onRecorded} />
+      <Commit
+        campaignId={view.campaign.id}
+        action={action}
+        problem={problem}
+        names={names}
+        label={`Create ${mode === "pregen" ? pregen : name.trim() || "the character"}`}
+        onRecorded={onRecorded}
+      />
     </div>
   );
 }
@@ -357,7 +364,14 @@ function AwardForm({ view, engine, names, onRecorded }: FormProps) {
         </tbody>
       </table>
       <p className="muted">Every participant collects the full award for their own tier; nothing is divided.</p>
-      <Commit campaignId={view.campaign.id} action={action} problem={problem} names={names} onRecorded={onRecorded} />
+      <Commit
+        campaignId={view.campaign.id}
+        action={action}
+        problem={problem}
+        names={names}
+        label={new Set(chosen.map((r) => r.ve)).size === 1 && chosen.length ? `Award ${chosen[0]!.ve} VE` : "Award VE"}
+        onRecorded={onRecorded}
+      />
     </div>
   );
 }
@@ -455,7 +469,7 @@ function RestForm({ view, engine, names, onRecorded }: FormProps) {
         </tbody>
       </table>
       <p className="muted">Enter the full hours each character completed. An interrupted rest keeps them.</p>
-      <Commit campaignId={view.campaign.id} action={action} problem={problem} names={names} onRecorded={onRecorded} />
+      <Commit campaignId={view.campaign.id} action={action} problem={problem} names={names} label="Record the rest" onRecorded={onRecorded} />
     </div>
   );
 }
@@ -471,7 +485,13 @@ function PointsForm({ view, engine, names, onRecorded }: FormProps) {
   const [level, setLevel] = useState<number | null>(null);
   const [placement, setPlacement] = useState<Record<string, string>>({});
 
-  if (!c) return <p className="muted">No character has System points waiting. They arrive when a level lands during Consolidation.</p>;
+  if (!c)
+    return (
+      <p className="muted">
+        No character has assigned points due. Each level brings 3, which you place by how the character has behaved since the
+        last level; they come due when the level lands during Consolidation.
+      </p>
+    );
   const lvl = level !== null && c.pendingSystemLevels.includes(level) ? level : c.pendingSystemLevels[0]!;
   const due = lv.system_assigned * engine.scale(c.grade);
   const numbers = Object.fromEntries(
@@ -480,7 +500,7 @@ function PointsForm({ view, engine, names, onRecorded }: FormProps) {
   const total = Object.values(numbers).reduce((a, b) => a + b, 0);
   const problem =
     lvl >= lv.class_level
-      ? `From Level ${lv.class_level} the class places System points; class selection is not in the app yet.`
+      ? `From Level ${lv.class_level} the class places assigned points; class selection is not in the app yet.`
       : total !== due
         ? `Place exactly ${due} points (${total} placed).`
         : null;
@@ -539,8 +559,19 @@ function PointsForm({ view, engine, names, onRecorded }: FormProps) {
           ))}
         </tbody>
       </table>
-      <p className="muted">Reward what the character actually did. Click a row to place 2 and 1, or split the points by hand.</p>
-      <Commit campaignId={view.campaign.id} action={action} problem={problem} names={names} onRecorded={onRecorded} />
+      <p className="muted">
+        Assigned points: the {due} Attribute points each level gives by how the character behaved since the last level
+        (Progression, "Behavioral Stat Mapping"). Reward what the character actually did. Click a row to place 2 and 1, or split
+        them by hand.
+      </p>
+      <Commit
+        campaignId={view.campaign.id}
+        action={action}
+        problem={problem}
+        names={names}
+        label={`Place ${c.name}'s Level ${lvl} points`}
+        onRecorded={onRecorded}
+      />
     </div>
   );
 }
@@ -581,7 +612,14 @@ function VitalsForm({ view, names, onRecorded }: FormProps) {
         </label>
       </div>
       <p className="muted">Until the combat tracker records fights, damage and spending are entered here.</p>
-      <Commit campaignId={view.campaign.id} action={action} problem={problem} names={names} onRecorded={onRecorded} />
+      <Commit
+        campaignId={view.campaign.id}
+        action={action}
+        problem={problem}
+        names={names}
+        label={`Apply ${Number.isNaN(d) ? "" : d > 0 ? `+${d}` : d} ${resource === "hp" ? "HP" : "Aether"} to ${c.name}`}
+        onRecorded={onRecorded}
+      />
     </div>
   );
 }
@@ -621,7 +659,7 @@ function CollapseForm({ view, names, onRecorded }: FormProps) {
         </label>
       </div>
       <p className="muted">Roll the collapse clock at the end of each full hour at Critical and record the collapse when it comes.</p>
-      <Commit campaignId={view.campaign.id} action={action} names={names} onRecorded={onRecorded} />
+      <Commit campaignId={view.campaign.id} action={action} names={names} label={`Record ${c.name}'s collapse`} onRecorded={onRecorded} />
     </div>
   );
 }

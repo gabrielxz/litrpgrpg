@@ -19,6 +19,16 @@ type Env = { Variables: { user: User | null } };
 const createCampaign = z.object({ name: z.string() });
 const rename = z.object({ displayName: z.string() });
 const devName = z.object({ name: z.string().trim().min(1).max(40) });
+const characterSpec = z.discriminatedUnion("kind", [
+  z.object({
+    kind: z.literal("custom"),
+    name: z.string().max(100),
+    background: z.string().max(500),
+    stats: z.record(z.string(), z.number().int()),
+  }),
+  z.object({ kind: z.literal("pregen"), pregen: z.string().max(100) }),
+]);
+const joinBody = z.object({ campaignId: z.string().min(1) });
 const createInvite = z.object({
   maxUses: z.number().int().positive().optional(),
   expiresInHours: z.number().positive().optional(),
@@ -108,6 +118,27 @@ export function createApp(service: Service, opts: AppOptions = {}) {
     const user = c.get("user");
     const role = await service.requireMember(id, user);
     return c.json(await service.view(id, { userId: user!.id, role }));
+  });
+
+  app.get("/campaigns/:id/players/:userId/view", async (c) =>
+    c.json(await service.viewAs(c.req.param("id"), c.get("user"), c.req.param("userId"))),
+  );
+
+  app.get("/characters", async (c) => c.json({ characters: await service.unassigned(c.get("user")) }));
+
+  app.post("/characters", async (c) => {
+    const spec = await body(c, characterSpec);
+    return c.json(await service.createUnassigned(c.get("user"), spec), 201);
+  });
+
+  app.delete("/characters/:id", async (c) => {
+    await service.deleteUnassigned(c.get("user"), c.req.param("id"));
+    return c.body(null, 204);
+  });
+
+  app.post("/characters/:id/join", async (c) => {
+    const b = await body(c, joinBody);
+    return c.json(await service.joinCampaign(c.get("user"), c.req.param("id"), b.campaignId), 201);
   });
 
   app.get("/campaigns/:id/log", async (c) => {

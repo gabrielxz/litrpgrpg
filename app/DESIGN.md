@@ -27,6 +27,15 @@ Ruled by Gabriel, 2026-09-26:
 - **A correction changes a player's sheet silently.** No notice explains it, and a notice the correction made untrue stays in the feed; the GM explains at the table.
 - **Notices are not stored.** They reach an open page; a player who reloads starts with an empty feed.
 
+Also ruled by Gabriel, 2026-09-26 (characters and screens):
+
+- **A character lives in one campaign.** The campaign's log is its record; it never belongs to two campaigns and never leaves one.
+- **Players build characters, and so can the GM.** A player creates a character in a campaign they play in, or builds one outside any campaign and assigns it to a campaign later; assigning moves it into the campaign's log. The GM can still create a character and assign it to a player, and can reassign any character (a player leaves, the GM takes the character over). A character built outside a campaign is checked against the campaign's rules when it joins.
+- **The player-choice rule.** A player records the choices the book gives to the player: spending free points, accepting one of the three class offers, choosing the Consolidation that meditates on a Battle Memory, wearing or hiding a Bestowed title, accepting an articulation on the Quiet Path, creating their own character. The GM records everything adjudicated: awards, outcomes, assigned points, offers, corrections. Combat declarations (Yield, Surge, a pill) are the player's too; whether players tap them on their own screens is settled with the combat tracker.
+- **"Assigned points"** is the name for the three Attribute points the System assigns each level (the book's rename is queued). Free points are the player's.
+- **Roles belong to a campaign,** never to an account: the GM screen and the player's interface differ by the role held in that campaign. The GM screen has sections, and the GM can view any player's screen as that player sees it.
+- **Every GM action shows what it will record** under "If you record this", and its button names the action.
+
 Ruled by Claude on Gabriel's delegation, 2026-09-25 (book sentences queued in the backlog):
 
 - **A collapse's own involuntary Consolidation does not return its temporary point.** The next Consolidation completed without interruption does.
