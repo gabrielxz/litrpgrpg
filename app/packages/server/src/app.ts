@@ -1,8 +1,7 @@
 /**
  * The HTTP API. Every route is JSON under /api. A caller identifies themselves with
- * `Authorization: Bearer <token>`; the token is issued once, when a person creates a campaign
- * or accepts an invite without one. The actor on every recorded action comes from the token,
- * never from the request body.
+ * `Authorization: Bearer <Supabase access token>`. The actor on every recorded action comes
+ * from the token, never from the request body.
  */
 import { submissionSchema } from "@gradebreaker/record";
 import { Hono } from "hono";
@@ -12,12 +11,12 @@ import { HttpError, type Service, type User } from "./service.ts";
 
 type Env = { Variables: { user: User | null } };
 
-const createCampaign = z.object({ name: z.string(), displayName: z.string().optional() });
+const createCampaign = z.object({ name: z.string() });
+const rename = z.object({ displayName: z.string() });
 const createInvite = z.object({
   maxUses: z.number().int().positive().optional(),
   expiresInHours: z.number().positive().optional(),
 });
-const acceptInvite = z.object({ displayName: z.string().optional() });
 
 async function body<T>(c: { req: { json: () => Promise<unknown> } }, schema: z.ZodType<T>): Promise<T> {
   let raw: unknown;
@@ -31,7 +30,8 @@ async function body<T>(c: { req: { json: () => Promise<unknown> } }, schema: z.Z
   return parsed.data;
 }
 
-export function createApp(service: Service) {
+/** `connected` reports live connections for the health check, which the deploy workflow reads. */
+export function createApp(service: Service, status: { connected: () => number } = { connected: () => 0 }) {
   const app = new Hono<Env>().basePath("/api");
 
   app.onError((err, c) => {
@@ -43,21 +43,26 @@ export function createApp(service: Service) {
   app.use(async (c, next) => {
     const auth = c.req.header("authorization");
     const token = auth?.startsWith("Bearer ") ? auth.slice(7) : undefined;
-    c.set("user", await service.userByToken(token));
+    c.set("user", await service.authenticate(token));
     await next();
   });
 
-  app.get("/health", (c) => c.json({ ok: true, rulesVersion: service.rulesVersion }));
+  app.get("/health", (c) => c.json({ ok: true, rulesVersion: service.rulesVersion, connected: status.connected() }));
 
   app.get("/me", async (c) => {
     const user = c.get("user");
-    if (!user) throw new HttpError(401, "sign-in token required");
+    if (!user) throw new HttpError(401, "sign in first");
     return c.json({ user, campaigns: await service.campaignsOf(user.id) });
+  });
+
+  app.patch("/me", async (c) => {
+    const b = await body(c, rename);
+    return c.json({ user: await service.rename(c.get("user"), b.displayName) });
   });
 
   app.post("/campaigns", async (c) => {
     const b = await body(c, createCampaign);
-    return c.json(await service.createCampaign(c.get("user"), b.name, b.displayName), 201);
+    return c.json(await service.createCampaign(c.get("user"), b.name), 201);
   });
 
   app.get("/campaigns/:id", async (c) => {
@@ -108,8 +113,7 @@ export function createApp(service: Service) {
   app.get("/invites/:code", async (c) => c.json(await service.inviteInfo(c.req.param("code"))));
 
   app.post("/invites/:code/accept", async (c) => {
-    const b = await body(c, acceptInvite);
-    const out = await service.acceptInvite(c.req.param("code"), c.get("user"), b.displayName);
+    const out = await service.acceptInvite(c.req.param("code"), c.get("user"));
     return c.json(out, out.joined ? 201 : 200);
   });
 

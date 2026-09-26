@@ -1,6 +1,6 @@
 /**
- * The server's game-facing operations over the database: people and their tokens, campaigns
- * and invites, and each campaign's action log with its record held in memory.
+ * The server's game-facing operations over the database: people (Supabase Auth identities),
+ * campaigns and invites, and each campaign's action log with its record held in memory.
  *
  * One process serves a campaign. Appends to a campaign run one at a time behind an in-process
  * lock; the (campaign, seq) primary key refuses a second writer, and a failed insert drops
@@ -17,8 +17,9 @@ import {
   RecordError,
   type Submission,
 } from "@gradebreaker/record";
-import type { Db, Queryable } from "./db.ts";
-import { contentHash, hashToken, newId, newInviteCode, newToken } from "./tokens.ts";
+import type { Identity, Verifier } from "./auth.ts";
+import type { Db } from "./db.ts";
+import { contentHash, newId, newInviteCode } from "./tokens.ts";
 import { type CampaignInfo, type Member, type Role, type View, viewFor } from "./views.ts";
 
 export class HttpError extends Error {
@@ -53,18 +54,22 @@ export class Service {
   readonly db: Db;
   /** The rules version new campaigns pin. */
   readonly rulesVersion: string;
+  private readonly verifier: Verifier;
+  /** People already recorded, by Supabase user id. */
+  private readonly people = new Map<string, User>();
   private readonly engines = new Map<string, Engine>();
   private readonly records = new Map<string, CampaignRecord>();
   private readonly locks = new Map<string, Promise<unknown>>();
   private readonly listeners = new Set<(e: ServiceEvent) => void>();
 
-  private constructor(db: Db, rulesVersion: string) {
+  private constructor(db: Db, rulesVersion: string, verifier: Verifier) {
     this.db = db;
     this.rulesVersion = rulesVersion;
+    this.verifier = verifier;
   }
 
   /** Stores the current rules snapshot under its version and returns a service that pins new campaigns to it. */
-  static async open(db: Db, rules: RulesSnapshot, log: (msg: string) => void = () => {}): Promise<Service> {
+  static async open(db: Db, rules: RulesSnapshot, verifier: Verifier, log: (msg: string) => void = () => {}): Promise<Service> {
     const version: string = rules.version.version;
     const text = JSON.stringify(rules);
     const hash = contentHash(text);
@@ -77,7 +82,7 @@ export class Service {
       await db.query("update rules_snapshots set content_hash = $2, snapshot = $3::json, stored_at = now() where version = $1", [version, hash, text]);
       log(`rules ${version}: stored snapshot replaced by the current rules/ (same version, different content)`);
     }
-    return new Service(db, version);
+    return new Service(db, version, verifier);
   }
 
   on(listener: (e: ServiceEvent) => void): () => void {
@@ -91,38 +96,53 @@ export class Service {
 
   // ----------------------------------------------------------- people ---
 
-  async userByToken(token: string | undefined): Promise<User | null> {
+  /** The person a Supabase access token belongs to, recorded on first sight; null if the token does not verify. */
+  async authenticate(token: string | undefined): Promise<User | null> {
     if (!token) return null;
-    const [row] = await this.db.query<{ id: string; display_name: string }>(
-      "select id, display_name from users where token_hash = $1",
-      [hashToken(token)],
-    );
-    return row ? { id: row.id, displayName: row.display_name } : null;
+    const identity = await this.verifier.verify(token);
+    return identity && this.person(identity);
   }
 
-  private async createUser(q: Queryable, displayName: string | undefined): Promise<{ user: User; token: string }> {
-    const name = displayName?.trim();
+  private async person(identity: Identity): Promise<User> {
+    const known = this.people.get(identity.id);
+    if (known) return known;
+    const fallback = identity.name ?? identity.email?.split("@")[0] ?? "Player";
+    await this.db.query(
+      "insert into users (id, display_name, email) values ($1, $2, $3) on conflict (id) do nothing",
+      [identity.id, fallback.slice(0, 60), identity.email],
+    );
+    const [row] = await this.db.query<{ display_name: string }>("select display_name from users where id = $1", [identity.id]);
+    const user = { id: identity.id, displayName: row!.display_name };
+    this.people.set(user.id, user);
+    return user;
+  }
+
+  /** The name the table sees; it starts as the Google profile name. */
+  async rename(user: User | null, displayName: string): Promise<User> {
+    if (!user) throw new HttpError(401, "sign in first");
+    const name = displayName.trim();
     if (!name) throw new HttpError(400, "a display name is required");
     if (name.length > 60) throw new HttpError(400, "a display name is at most 60 characters");
-    const user = { id: newId(), displayName: name };
-    const token = newToken();
-    await q.query("insert into users (id, display_name, token_hash) values ($1, $2, $3)", [user.id, name, hashToken(token)]);
-    return { user, token };
+    await this.db.query("update users set display_name = $2 where id = $1", [user.id, name]);
+    const renamed = { id: user.id, displayName: name };
+    this.people.set(user.id, renamed);
+    for (const c of await this.campaignsOf(user.id)) this.emit({ kind: "members", campaignId: c.id });
+    return renamed;
   }
 
   // -------------------------------------------------------- campaigns ---
 
-  /** Creates a campaign with `user` (or a new person named `displayName`) as its GM. */
-  async createCampaign(user: User | null, name: string, displayName?: string) {
+  /** Creates a campaign with `user` as its GM. */
+  async createCampaign(user: User | null, name: string) {
+    if (!user) throw new HttpError(401, "sign in first");
     const title = name?.trim();
     if (!title) throw new HttpError(400, "a campaign needs a name");
+    if (title.length > 100) throw new HttpError(400, "a campaign name is at most 100 characters");
     return this.db.tx(async (q) => {
-      const issued = user ? null : await this.createUser(q, displayName);
-      const gm = user ?? issued!.user;
       const campaign: CampaignInfo = { id: newId(), name: title, rulesVersion: this.rulesVersion };
       await q.query("insert into campaigns (id, name, rules_version) values ($1, $2, $3)", [campaign.id, title, this.rulesVersion]);
-      await q.query("insert into memberships (campaign_id, user_id, role) values ($1, $2, 'gm')", [campaign.id, gm.id]);
-      return { campaign, user: gm, ...(issued ? { token: issued.token } : {}) };
+      await q.query("insert into memberships (campaign_id, user_id, role) values ($1, $2, 'gm')", [campaign.id, user.id]);
+      return { campaign };
     });
   }
 
@@ -154,7 +174,7 @@ export class Service {
 
   /** The caller's role, or 404: a campaign someone does not belong to is not acknowledged. */
   async requireMember(campaignId: string, user: User | null): Promise<Role> {
-    if (!user) throw new HttpError(401, "sign-in token required");
+    if (!user) throw new HttpError(401, "sign in first");
     const role = await this.roleIn(campaignId, user.id);
     if (!role) throw new HttpError(404, "no such campaign");
     return role;
@@ -213,35 +233,22 @@ export class Service {
     return { campaignName: row.name, usable: unusableReason(row) === null };
   }
 
-  /**
-   * Joins a campaign as a player. A person with a token joins as themselves; anyone else
-   * becomes a new person named `displayName` and receives a token. Accepting a campaign
-   * one already belongs to changes nothing.
-   */
-  async acceptInvite(code: string, user: User | null, displayName?: string) {
+  /** Joins a campaign as a player. Accepting a campaign one already belongs to changes nothing. */
+  async acceptInvite(code: string, user: User | null) {
+    if (!user) throw new HttpError(401, "sign in first");
     const out = await this.db.tx(async (q) => {
       const [inv] = await q.query("select * from invites where code = $1 for update", [code]);
       if (!inv) throw new HttpError(404, "no such invite");
-      if (user) {
-        const [m] = await q.query<{ role: Role }>(
-          "select role from memberships where campaign_id = $1 and user_id = $2",
-          [inv.campaign_id, user.id],
-        );
-        if (m) return { campaignId: inv.campaign_id as string, user, role: m.role, joined: false };
-      }
+      const [m] = await q.query<{ role: Role }>(
+        "select role from memberships where campaign_id = $1 and user_id = $2",
+        [inv.campaign_id, user.id],
+      );
+      if (m) return { campaignId: inv.campaign_id as string, role: m.role, joined: false };
       const why = unusableReason(inv);
       if (why) throw new HttpError(410, why);
-      const issued = user ? null : await this.createUser(q, displayName);
-      const who = user ?? issued!.user;
-      await q.query("insert into memberships (campaign_id, user_id, role) values ($1, $2, 'player')", [inv.campaign_id, who.id]);
+      await q.query("insert into memberships (campaign_id, user_id, role) values ($1, $2, 'player')", [inv.campaign_id, user.id]);
       await q.query("update invites set uses = uses + 1 where code = $1", [code]);
-      return {
-        campaignId: inv.campaign_id as string,
-        user: who,
-        role: "player" as Role,
-        joined: true,
-        ...(issued ? { token: issued.token } : {}),
-      };
+      return { campaignId: inv.campaign_id as string, role: "player" as Role, joined: true };
     });
     if (out.joined) this.emit({ kind: "members", campaignId: out.campaignId });
     return out;

@@ -1,28 +1,56 @@
 /**
- * The server end to end on PGlite: campaigns, invites, the action log through HTTP, what a
- * player may see, persistence across a restart, and the live channel on a real socket.
+ * The server end to end on PGlite: sign-in, campaigns, invites, the action log through HTTP,
+ * what a player may see, persistence across a restart, and the live channel on a real socket.
+ * Sign-in tokens are signed with a key made for the test and checked the way Supabase's are.
  */
+import { randomUUID } from "node:crypto";
 import { PGlite } from "@electric-sql/pglite";
 import { serve } from "@hono/node-server";
 import { loadRules } from "@gradebreaker/engine/node";
 import type { AddressInfo } from "node:net";
 import type { Server } from "node:http";
+import { SignJWT, createLocalJWKSet, exportJWK, generateKeyPair } from "jose";
 import { afterAll, beforeEach, describe, expect, it } from "vitest";
 import { WebSocket } from "ws";
 import { createApp } from "../src/app.ts";
+import { jwtVerifier } from "../src/auth.ts";
 import { type Db, migrate, pgliteDb } from "../src/db.ts";
 import { LiveHub } from "../src/live.ts";
 import { Service } from "../src/service.ts";
 
 const rules = loadRules();
+const ISSUER = "https://test-project.supabase.co/auth/v1";
+const { privateKey, publicKey } = await generateKeyPair("ES256");
+const verifier = jwtVerifier(createLocalJWKSet({ keys: [{ ...(await exportJWK(publicKey)), alg: "ES256" }] }), ISSUER);
+const stranger = await generateKeyPair("ES256");
+
+/** A Supabase-shaped access token for a Google sign-in. */
+async function signIn(
+  fullName: string | null,
+  opts: { sub?: string; email?: string; expiresIn?: string; key?: CryptoKey; audience?: string } = {},
+) {
+  return new SignJWT({
+    email: opts.email ?? `${(fullName ?? "someone").toLowerCase().replace(/\W+/g, ".")}@example.com`,
+    role: "authenticated",
+    user_metadata: fullName ? { full_name: fullName } : {},
+  })
+    .setProtectedHeader({ alg: "ES256" })
+    .setSubject(opts.sub ?? randomUUID())
+    .setIssuer(ISSUER)
+    .setAudience(opts.audience ?? "authenticated")
+    .setIssuedAt()
+    .setExpirationTime(opts.expiresIn ?? "1h")
+    .sign(opts.key ?? privateKey);
+}
+
 let db: Db;
 let service: Service;
 let app: ReturnType<typeof createApp>;
 
 async function fresh() {
-  db = pgliteDb(new PGlite());
+  db = await pgliteDb(new PGlite());
   await migrate(db);
-  service = await Service.open(db, rules);
+  service = await Service.open(db, rules, verifier);
   app = createApp(service);
 }
 
@@ -39,14 +67,16 @@ async function call(method: string, path: string, opts: { token?: string; body?:
   return { status: res.status, json: text ? JSON.parse(text) : null };
 }
 
-/** A campaign with a GM and one player, each holding a token. */
+/** A campaign with a signed-in GM and one signed-in player. */
 async function table() {
-  const created = await call("POST", "/campaigns", { body: { name: "The Valley", displayName: "Gabriel" } });
+  const gm = await signIn("Gabriel");
+  const created = await call("POST", "/campaigns", { token: gm, body: { name: "The Valley" } });
   const campaignId = created.json.campaign.id as string;
-  const gm = created.json.token as string;
   const inv = await call("POST", `/campaigns/${campaignId}/invites`, { token: gm, body: {} });
-  const joined = await call("POST", `/invites/${inv.json.code}/accept`, { body: { displayName: "Ana" } });
-  return { campaignId, gm, player: joined.json.token as string, playerId: joined.json.user.id as string, invite: inv.json.code as string };
+  const player = await signIn("Ana");
+  await call("POST", `/invites/${inv.json.code}/accept`, { token: player });
+  const playerId = (await call("GET", "/me", { token: player })).json.user.id as string;
+  return { campaignId, gm, player, playerId, invite: inv.json.code as string };
 }
 
 let n = 0;
@@ -55,62 +85,95 @@ const act = (campaignId: string, token: string, action: unknown, id = `act-${++n
 
 beforeEach(fresh);
 
+describe("sign-in", () => {
+  it("records a person on first sight, named from their Google profile", async () => {
+    const token = await signIn("Gabriel Beal");
+    const me = await call("GET", "/me", { token });
+    expect(me.json).toMatchObject({ user: { displayName: "Gabriel Beal" }, campaigns: [] });
+    const unnamed = await signIn(null, { email: "rae.k@example.com" });
+    expect((await call("GET", "/me", { token: unnamed })).json.user.displayName).toBe("rae.k");
+  });
+
+  it("refuses missing, expired, forged, and wrong-audience tokens", async () => {
+    expect((await call("GET", "/me")).status).toBe(401);
+    expect((await call("GET", "/me", { token: "not-a-token" })).status).toBe(401);
+    expect((await call("GET", "/me", { token: await signIn("Late", { expiresIn: "-1m" }) })).status).toBe(401);
+    expect((await call("GET", "/me", { token: await signIn("Forger", { key: stranger.privateKey }) })).status).toBe(401);
+    expect((await call("GET", "/me", { token: await signIn("Anon", { audience: "anon" }) })).status).toBe(401);
+  });
+
+  it("keeps one person across sessions and lets them rename themselves", async () => {
+    const sub = randomUUID();
+    const first = await signIn("Gabriel", { sub });
+    await call("POST", "/campaigns", { token: first, body: { name: "The Valley" } });
+    const renamed = await call("PATCH", "/me", { token: first, body: { displayName: "GM Gabe" } });
+    expect(renamed.json.user.displayName).toBe("GM Gabe");
+    const later = await signIn("Gabriel", { sub });
+    const me = (await call("GET", "/me", { token: later })).json;
+    expect(me.user.displayName).toBe("GM Gabe");
+    expect(me.campaigns).toHaveLength(1);
+    expect((await call("PATCH", "/me", { token: later, body: { displayName: "  " } })).status).toBe(400);
+  });
+});
+
+describe("the database", () => {
+  it("keeps every table in the private schema", async () => {
+    const rows = await db.query<{ table_schema: string }>(
+      "select distinct table_schema from information_schema.tables where table_name in ('users', 'campaigns', 'actions', 'schema_migrations')",
+    );
+    expect(rows.map((r) => r.table_schema)).toEqual(["gradebreaker"]);
+  });
+});
+
 describe("campaigns and invites", () => {
   it("creates a campaign pinned to the current rules, with its creator as GM", async () => {
-    const res = await call("POST", "/campaigns", { body: { name: "The Valley", displayName: "Gabriel" } });
+    const token = await signIn("Gabriel");
+    const res = await call("POST", "/campaigns", { token, body: { name: "The Valley" } });
     expect(res.status).toBe(201);
     expect(res.json.campaign.rulesVersion).toBe(rules.version.version);
-    expect(res.json.token).toEqual(expect.any(String));
-    const me = await call("GET", "/me", { token: res.json.token });
+    const me = await call("GET", "/me", { token });
     expect(me.json.campaigns).toEqual([expect.objectContaining({ name: "The Valley", role: "gm" })]);
-    expect((await call("POST", "/campaigns", { body: { name: "No one" } })).status).toBe(400);
+    expect((await call("POST", "/campaigns", { body: { name: "No one" } })).status).toBe(401);
+    expect((await call("POST", "/campaigns", { token, body: { name: " " } })).status).toBe(400);
   });
 
-  it("lets a GM with a token start a second campaign as the same person", async () => {
-    const { gm } = await table();
-    const res = await call("POST", "/campaigns", { token: gm, body: { name: "Halden" } });
-    expect(res.json.token).toBeUndefined();
-    expect((await call("GET", "/me", { token: gm })).json.campaigns).toHaveLength(2);
-  });
-
-  it("joins players by invite link, once each", async () => {
+  it("joins players by invite link, once each, after they sign in", async () => {
     const { campaignId, gm, player, invite } = await table();
     expect((await call("GET", `/invites/${invite}`)).json).toEqual({ campaignName: "The Valley", usable: true });
-    const again = await call("POST", `/invites/${invite}/accept`, { token: player, body: {} });
+    expect((await call("POST", `/invites/${invite}/accept`)).status).toBe(401);
+    const again = await call("POST", `/invites/${invite}/accept`, { token: player });
     expect(again.status).toBe(200);
     expect(again.json.joined).toBe(false);
-    const gmJoins = await call("POST", `/invites/${invite}/accept`, { token: gm, body: {} });
+    const gmJoins = await call("POST", `/invites/${invite}/accept`, { token: gm });
     expect(gmJoins.json).toMatchObject({ joined: false, role: "gm" });
     const members = (await call("GET", `/campaigns/${campaignId}`, { token: gm })).json.members;
     expect(members.map((m: { displayName: string; role: string }) => [m.displayName, m.role])).toEqual([
       ["Gabriel", "gm"],
       ["Ana", "player"],
     ]);
-    expect((await call("POST", `/invites/${invite}/accept`, { body: {} })).status).toBe(400); // a new person needs a name
   });
 
   it("refuses revoked, used-up, and expired invites", async () => {
     const { campaignId, gm, invite } = await table();
     await call("DELETE", `/campaigns/${campaignId}/invites/${invite}`, { token: gm });
-    const revoked = await call("POST", `/invites/${invite}/accept`, { body: { displayName: "Late" } });
+    const revoked = await call("POST", `/invites/${invite}/accept`, { token: await signIn("Late") });
     expect(revoked).toMatchObject({ status: 410, json: { error: "this invite was revoked" } });
 
     const once = (await call("POST", `/campaigns/${campaignId}/invites`, { token: gm, body: { maxUses: 1 } })).json.code;
-    expect((await call("POST", `/invites/${once}/accept`, { body: { displayName: "First" } })).status).toBe(201);
-    expect((await call("POST", `/invites/${once}/accept`, { body: { displayName: "Second" } })).status).toBe(410);
+    expect((await call("POST", `/invites/${once}/accept`, { token: await signIn("First") })).status).toBe(201);
+    expect((await call("POST", `/invites/${once}/accept`, { token: await signIn("Second") })).status).toBe(410);
 
     const brief = (await call("POST", `/campaigns/${campaignId}/invites`, { token: gm, body: { expiresInHours: 1 } })).json.code;
     await db.query("update invites set expires_at = now() - interval '1 minute' where code = $1", [brief]);
     expect((await call("GET", `/invites/${brief}`)).json.usable).toBe(false);
-    expect((await call("POST", `/invites/${brief}/accept`, { body: { displayName: "Late" } })).json.error).toBe("this invite has expired");
+    expect((await call("POST", `/invites/${brief}/accept`, { token: await signIn("Late") })).json.error).toBe("this invite has expired");
   });
 
   it("keeps campaigns private to their members and GM tools to the GM", async () => {
     const { campaignId, player } = await table();
-    const outsider = (await call("POST", "/campaigns", { body: { name: "Elsewhere", displayName: "Rae" } })).json.token;
+    const outsider = await signIn("Rae");
     expect((await call("GET", `/campaigns/${campaignId}`)).status).toBe(401);
     expect((await call("GET", `/campaigns/${campaignId}`, { token: outsider })).status).toBe(404);
-    expect((await call("GET", `/campaigns/${campaignId}`, { token: "not-a-token" })).status).toBe(401);
     expect((await call("POST", `/campaigns/${campaignId}/invites`, { token: player, body: {} })).status).toBe(403);
     expect((await call("GET", `/campaigns/${campaignId}/log`, { token: player })).status).toBe(403);
   });
@@ -191,7 +254,7 @@ describe("the action log over HTTP", () => {
     await act(campaignId, gm, award, "award-1");
     const before = (await call("GET", `/campaigns/${campaignId}`, { token: gm })).json;
 
-    service = await Service.open(db, rules);
+    service = await Service.open(db, rules, verifier);
     app = createApp(service);
     const after = (await call("GET", `/campaigns/${campaignId}`, { token: gm })).json;
     expect(after).toEqual(before);
@@ -209,6 +272,7 @@ describe("the live channel", () => {
 
   async function listen() {
     hub = new LiveHub(service);
+    app = createApp(service, { connected: () => hub.connected });
     server = await new Promise<Server>((resolve) => {
       const s = serve({ fetch: app.fetch, port: 0 }, () => resolve(s as Server)) as Server;
     });
@@ -272,7 +336,7 @@ describe("the live channel", () => {
     const g = await connect(campaignId, gm);
     await g.next(1);
     const code = (await call("POST", `/campaigns/${campaignId}/invites`, { token: gm, body: {} })).json.code;
-    await call("POST", `/invites/${code}/accept`, { body: { displayName: "Bo" } });
+    await call("POST", `/invites/${code}/accept`, { token: await signIn("Bo") });
     const m = (await g.next(2))[1];
     expect(m.type).toBe("state");
     expect(m.view.members.map((x: { displayName: string }) => x.displayName)).toContain("Bo");
@@ -283,8 +347,21 @@ describe("the live channel", () => {
     await listen();
     const bad = await connect(campaignId, "not-a-token");
     expect(await bad.closed).toBe(4401);
-    const outsider = (await call("POST", "/campaigns", { body: { name: "Elsewhere", displayName: "Rae" } })).json.token;
-    const other = await connect(campaignId, outsider);
+    const other = await connect(campaignId, await signIn("Rae"));
     expect(await other.closed).toBe(4404);
+  });
+
+  it("reports on the health check how many people are connected", async () => {
+    const { campaignId, gm } = await table();
+    await listen();
+    const health = () => fetch(`http://127.0.0.1:${port}/api/health`).then((r) => r.json());
+    expect((await health()).connected).toBe(0);
+    const g = await connect(campaignId, gm);
+    await g.next(1);
+    expect((await health()).connected).toBe(1);
+    g.ws.close();
+    await g.closed;
+    await new Promise((r) => setTimeout(r, 50));
+    expect((await health()).connected).toBe(0);
   });
 });

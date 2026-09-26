@@ -1,9 +1,10 @@
 /**
  * Live updates over WebSocket at /api/campaigns/:id/live. The browser opens the socket and
- * sends `{"type":"auth","token":"..."}` as its first message (a token in the URL would land
- * in logs). The server answers with the caller's view, then pushes after every append: the
- * GM receives each envelope, its effects, and the new view; a player receives their notices
- * and their new view, and only when something of theirs changed.
+ * sends `{"type":"auth","token":"<Supabase access token>"}` as its first message (a token in
+ * the URL would land in logs). The token is checked once, at connect; a client reconnecting
+ * after a drop sends its current one. The server answers with the caller's view, then pushes
+ * after every append: the GM receives each envelope, its effects, and the new view; a player
+ * receives their notices and their new view, and only when something of theirs changed.
  */
 import type { IncomingMessage, Server } from "node:http";
 import type { Duplex } from "node:stream";
@@ -48,6 +49,11 @@ export class LiveHub {
     });
   }
 
+  /** People connected right now, across campaigns: the deploy waits for zero. */
+  get connected(): number {
+    return this.subs.size;
+  }
+
   close() {
     this.unsubscribe();
     for (const s of this.subs) s.socket.close(1001, "server closing");
@@ -60,7 +66,7 @@ export class LiveHub {
       clearTimeout(timer);
       try {
         const msg = JSON.parse(String(data));
-        const user = msg?.type === "auth" ? await this.service.userByToken(String(msg.token ?? "")) : null;
+        const user = msg?.type === "auth" ? await this.service.authenticate(String(msg.token ?? "")) : null;
         if (!user) return ws.close(4401, "auth required");
         const role = await this.service.roleIn(campaignId, user.id);
         if (!role) return ws.close(4404, "no such campaign");

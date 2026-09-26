@@ -102,10 +102,11 @@ Spoken System delivery; campaign artifacts (survivors' forum retellings, charact
 
 ## Architecture
 
-- **One TypeScript workspace in `app/`**, managed with pnpm: `packages/engine` now, `packages/server` and `packages/web` when M1 reaches them. The web client is React with Vite; the server is Node with HTTP and WebSockets; Postgres holds the record (Docker for development).
+- **One TypeScript workspace in `app/`**, managed with pnpm: `packages/engine`, `packages/record`, `packages/server`, and `packages/web` when M1 reaches it. The web client is React with Vite; the server is Node with HTTP and WebSockets and serves the built client too; Postgres holds the record.
+- **Hosting (Gabriel, 2026-09-25):** one always-on Fly.io machine in the personal organization, beside a Supabase project (Postgres and Auth) in us-east-2. A single long-running process keeps the live channel, the per-campaign lock, and later the listening streams in one place; a second machine would need its updates passed between machines first. Deploys come from GitHub Actions and wait for an empty table.
 - **The engine is pure.** It takes a rules snapshot and computes; it holds no state and does no I/O. The server stores one snapshot per rules version and builds each campaign's engine from the version it pins. The Python engine stays the reference for the book's tables and sims; the fixtures are the contract both engines meet.
 - **The record is an append-only action log.** Every change is an action with an idempotency key, an actor (GM, player, accepted suggestion), a source (manual, voice, counter), and what caused it. Sheets are computed from the log. Undo is a compensating action. A correction's preview recomputes the log without the corrected action and shows the difference ("without this award Kara is Level 3, and her Level 4 points return unallocated"); the GM chooses what to apply. Suggestions live apart from the log until accepted.
-- **Sign-in is a bearer token.** Creating a campaign, or accepting an invite without one, issues a token shown once; the browser keeps it and the server stores only its hash. The actor on every action comes from the token. An invite link makes its holder a player; one GM per campaign.
+- **Sign-in is a Supabase account, through Google** (Gabriel, 2026-09-25). The browser sends Supabase's access token and the server checks it against the project's published keys. The actor on every action comes from the token. An invite link makes a signed-in person a player; one GM per campaign.
 - **What a player receives is filtered on the server.** A player's view holds their own characters' interfaces (What Can Be Seen, "Your Own Interface") and notices about them, never the log, its length, the Saturation band, or pending System points. The GM receives the whole record.
 - **AI sits behind adapters** so providers can change without touching the game model: a language model (Claude by default) and a speech-to-text service. Deterministic rules never go through a model.
 
@@ -134,7 +135,5 @@ Visibility is applied before assembly: a player-facing request never receives GM
 
 ## Open
 
-- **Hosting** for sessions with remote players: needed from the first multi-user test.
-- **Sign-in:** invite links and tokens serve a private beta; accounts come later. A person who loses their token (a cleared browser, a new laptop) loses their seat, and their characters stay tied to the old identity. Before the first real session the GM needs a way to reissue a member's token, or players need a link to copy their token to a second device.
 - **The speech-to-text vendor**, chosen at M3 against recorded test material.
 - **The rehearsal scene** before the tutorial: content that spoils nothing in the tutorial.

@@ -1,12 +1,17 @@
--- People, campaigns, invites, the rules snapshots campaigns pin, and the action log.
+-- People, campaigns, invites, the rules snapshots campaigns pin, and the action log, all in
+-- the private schema `gradebreaker` (db.ts sets the search path). Supabase's Data API is off
+-- and exposes no part of this schema; row-level security is on with no policies as a second
+-- lock, and the server connects as the tables' owner, which it does not bind.
 -- Snapshots and actions are stored as json (not jsonb) so their text, key order included,
 -- comes back exactly as it went in.
 
+revoke all on schema gradebreaker from public;
+
+-- A person, keyed by their Supabase Auth user id (the token's `sub`).
 create table users (
   id text primary key,
   display_name text not null,
-  -- sha256 of the bearer token; the token itself is shown once, at issue
-  token_hash text not null unique,
+  email text,
   created_at timestamptz not null default now()
 );
 
@@ -57,3 +62,10 @@ create table actions (
   primary key (campaign_id, seq),
   unique (campaign_id, id)
 );
+
+alter table users enable row level security;
+alter table rules_snapshots enable row level security;
+alter table campaigns enable row level security;
+alter table memberships enable row level security;
+alter table invites enable row level security;
+alter table actions enable row level security;
