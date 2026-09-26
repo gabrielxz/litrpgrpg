@@ -106,6 +106,30 @@ export function describe(
       const dice = (a.natural ?? []).join(" + ");
       return `${a.private ? "Private roll" : "Roll"}: ${who}${a.label ? `, ${a.label}` : ""} (${dice}${a.entered ? ", by hand" : ""})`;
     }
+    case "combat.start":
+      return `Fight begins: ${a.name} (${a.combatants.length} combatants)`;
+    case "combat.add":
+      return `Joins the fight: ${a.combatant.name ?? name(a.combatant.characterId ?? a.combatant.combatantId)}`;
+    case "combat.remove":
+      return `Out of the fight: ${name(a.combatantId)}`;
+    case "combat.momentum":
+      return "Initial Momentum rolled";
+    case "combat.seize":
+      return `${name(a.combatantId)} tries to seize Momentum`;
+    case "combat.reversal":
+      return "Decisive Tactical Reversal called";
+    case "combat.act":
+      return `${name(a.combatantId)} acts`;
+    case "combat.beat":
+      return `${name(a.combatantId)}: ${a.what}`;
+    case "combat.done":
+      return `${name(a.combatantId)} is done`;
+    case "combat.round":
+      return "Next round";
+    case "combat.hp":
+      return `${name(a.combatantId)}: HP ${signed(a.delta)}`;
+    case "combat.end":
+      return "Fight ends";
     case "void": {
       const seq = seqOf(a.targetId);
       const target = seq === undefined ? "an action" : `#${seq + 1}`;
@@ -153,6 +177,19 @@ export function effectLine(e: Effect, name: Names): string | null {
       return `${name(e.characterId)} receives the message`;
     case "message-held":
       return `Held for ${e.to.map(name).join(", ")}; nobody sees it until you send it`;
+    case "combat-started":
+    case "combat-ended":
+      return null;
+    case "momentum":
+      return `Momentum: ${e.totals.map((t) => t.total).join(" against ")}`;
+    case "seized":
+      return `${name(e.combatantId)} ${e.won ? "seizes" : "fails to seize"} Momentum, ${e.total} against ${e.against}`;
+    case "momentum-shifted":
+      return `Momentum shifts (${e.by === "seize" ? "Seize" : "Reversal"})`;
+    case "combat-hp":
+      return `${name(e.combatantId)}: HP ${e.from} → ${e.to}`;
+    case "combat-downed":
+      return `${name(e.combatantId)} is Downed`;
     case "rolled":
       return `Total ${e.total}${e.exploded ? `, exploded (${e.extraDice} extra)` : ""}${e.outcome ? `: ${e.outcome}` : ""}${
         e.battleMemory ? `; ${e.characterId ? name(e.characterId) : "the roller"} earns a Battle Memory Card` : ""

@@ -5,7 +5,7 @@
 import { Engine } from "@gradebreaker/engine";
 import { loadRules } from "@gradebreaker/engine/node";
 import { beforeEach, describe, expect, it } from "vitest";
-import { type Action, CampaignRecord, type Draft, RecordError, hoursForGoal, killAwards, rollD100s } from "../src/index.ts";
+import { type Action, CampaignRecord, type Draft, RecordError, hoursForGoal, killAwards, rollD100s, rollFor } from "../src/index.ts";
 
 const engine = new Engine(loadRules());
 const GM = { role: "gm", userId: "gm-1" } as const;
@@ -424,6 +424,157 @@ describe("dice", () => {
     expect(() => roll({ natural: [30], private: true }, P1)).toThrow(/only the GM rolls privately/);
     expect(() => rec.append(draft({ type: "void", targetId: mine.envelope.id, reason: "undo" }, P1))).toThrow(/a roll stands/);
     gm({ type: "void", targetId: mine.envelope.id, reason: "undo" });
+  });
+});
+
+describe("the combat tracker", () => {
+  const rat = { combatantId: "rat", sideId: "hostiles", name: "Frenzy Rat", creature: "Frenzy Rat", grade: "F", maxHp: 12, momentumForce: 8, beats: 1 };
+  const enc = () => rec.state.encounter!;
+  const who = (id: string) => enc().combatants.find((c) => c.id === id)!;
+  /** Appends through rollFor, with the dice given in order. */
+  const rolled = (action: Action, ...dice: number[]) => rec.append(rollFor(rec, draft(action), () => dice.shift()!));
+  beforeEach(() => {
+    gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" });
+    gm({ type: "character.pregen", characterId: "joe", pregen: "Joe", playerId: "player-2" });
+    gm({
+      type: "combat.start",
+      encounterId: "e1",
+      name: "The treeline",
+      sides: [
+        { id: "party", name: "The party" },
+        { id: "hostiles", name: "Hostiles" },
+      ],
+      combatants: [
+        { combatantId: "kara", sideId: "party", characterId: "kara" },
+        { combatantId: "joe", sideId: "party", characterId: "joe" },
+        rat,
+      ],
+    });
+  });
+
+  it("sends each side's highest HRT or PER Force to roll Momentum, and rolls a tie again", () => {
+    // Joe's PER 6 beats Kara's 5; the rat rolls on PER 8.
+    const out = rolled({ type: "combat.momentum" }, 50, 48, 60, 30);
+    const a = out.envelope.action as Extract<Action, { type: "combat.momentum" }>;
+    expect(a.attempts).toEqual([
+      [
+        { sideId: "party", combatantId: "joe", natural: [50] },
+        { sideId: "hostiles", combatantId: "rat", natural: [48] },
+      ],
+      [
+        { sideId: "party", combatantId: "joe", natural: [60] },
+        { sideId: "hostiles", combatantId: "rat", natural: [30] },
+      ],
+    ]);
+    expect(out.effects[0]).toMatchObject({ kind: "momentum", holder: "party", totals: [{ total: 66 }, { total: 38 }] });
+    expect(enc()).toMatchObject({ round: 1, order: ["party", "hostiles"], turn: 0 });
+    expect(who("kara").beats).toBe(2);
+    expect(who("rat").beats).toBe(1);
+  });
+
+  it("refuses a roller who is not the side's best, and a last attempt that ties", () => {
+    const bad = [
+      [
+        { sideId: "party", combatantId: "kara", natural: [60] },
+        { sideId: "hostiles", combatantId: "rat", natural: [30] },
+      ],
+    ];
+    expect(() => gm({ type: "combat.momentum", attempts: bad })).toThrow(/Joe rolls for the side/);
+    const tie = [
+      [
+        { sideId: "party", combatantId: "joe", natural: [50] },
+        { sideId: "hostiles", combatantId: "rat", natural: [48] },
+      ],
+    ];
+    expect(() => gm({ type: "combat.momentum", attempts: tie })).toThrow(/ties: roll again/);
+  });
+
+  it("runs a round: one combatant's Beats at a time, side by side, then the next round", () => {
+    rolled({ type: "combat.momentum" }, 60, 30);
+    expect(() => gm({ type: "combat.act", combatantId: "rat" })).toThrow(/The party is taking its turn/);
+    gm({ type: "combat.act", combatantId: "kara" });
+    gm({ type: "combat.beat", combatantId: "kara", what: "Attack" });
+    gm({ type: "combat.beat", combatantId: "kara", what: "Move" });
+    expect(() => gm({ type: "combat.beat", combatantId: "kara", what: "Attack" })).toThrow(/no Beats left/);
+    gm({ type: "combat.done", combatantId: "kara" });
+    // Joe acts and leaves a Beat unspent; it is gone.
+    gm({ type: "combat.act", combatantId: "joe" });
+    gm({ type: "combat.beat", combatantId: "joe", what: "Attack" });
+    gm({ type: "combat.done", combatantId: "joe" });
+    expect(enc().turn).toBe(1);
+    gm({ type: "combat.act", combatantId: "rat" });
+    gm({ type: "combat.done", combatantId: "rat" });
+    expect(enc().turn).toBe(2);
+    expect(() => gm({ type: "combat.act", combatantId: "kara" })).toThrow(/start the next round/);
+    gm({ type: "combat.round" });
+    expect(enc()).toMatchObject({ round: 2, turn: 0, order: ["party", "hostiles"] });
+    expect(who("joe")).toMatchObject({ beats: 2, acted: false, spent: [] });
+  });
+
+  it("shifts Momentum at the next round on a won Seize, and the later of two shifts wins", () => {
+    rolled({ type: "combat.momentum" }, 30, 60);
+    expect(enc().order).toEqual(["hostiles", "party"]);
+    gm({ type: "combat.act", combatantId: "rat" });
+    gm({ type: "combat.done", combatantId: "rat" });
+    gm({ type: "combat.act", combatantId: "joe" });
+    // Joe (PER 6) rolls 70 against the rat's answer (PER 8) of 40: 76 to 48.
+    const s = rolled({ type: "combat.seize", combatantId: "joe" }, 70, 40);
+    expect(s.effects[0]).toMatchObject({ kind: "seized", won: true, total: 76, against: 48 });
+    expect(who("joe").beats).toBe(1);
+    expect(enc().order).toEqual(["hostiles", "party"]);
+    gm({ type: "combat.reversal", sideId: "hostiles" });
+    gm({ type: "combat.round" });
+    expect(enc().order).toEqual(["hostiles", "party"]);
+    gm({ type: "combat.reversal", sideId: "party" });
+    const r = gm({ type: "combat.round" });
+    expect(r.effects).toEqual([{ kind: "momentum-shifted", encounterId: "e1", holder: "party", by: "reversal" }]);
+    expect(enc().order).toEqual(["party", "hostiles"]);
+  });
+
+  it("spends the Seize's Beat when it fails, and refuses a Seize by the side holding Momentum", () => {
+    rolled({ type: "combat.momentum" }, 60, 30);
+    gm({ type: "combat.act", combatantId: "kara" });
+    expect(() => rolled({ type: "combat.seize", combatantId: "kara" }, 50, 50)).toThrow(/holds Momentum/);
+    gm({ type: "combat.done", combatantId: "kara" });
+    gm({ type: "combat.act", combatantId: "joe" });
+    gm({ type: "combat.done", combatantId: "joe" });
+    gm({ type: "combat.act", combatantId: "rat" });
+    const s = rolled({ type: "combat.seize", combatantId: "rat" }, 10, 90);
+    expect(s.effects[0]).toMatchObject({ won: false });
+    expect(who("rat").beats).toBe(0);
+    gm({ type: "combat.round" });
+    expect(enc().order).toEqual(["party", "hostiles"]);
+  });
+
+  it("damages a character's own HP and a creature's, down to 0 and Downed", () => {
+    rolled({ type: "combat.momentum" }, 60, 30);
+    gm({ type: "combat.hp", combatantId: "kara", delta: -5 });
+    expect(rec.sheet("kara")!.hp).toBe(9);
+    const out = gm({ type: "combat.hp", combatantId: "rat", delta: -20 });
+    expect(out.effects).toEqual([
+      { kind: "combat-hp", encounterId: "e1", combatantId: "rat", from: 12, to: 0 },
+      { kind: "combat-downed", encounterId: "e1", combatantId: "rat" },
+    ]);
+  });
+
+  it("brings in a combatant mid-fight and skips a side with nobody left", () => {
+    rolled({ type: "combat.momentum" }, 60, 30);
+    gm({ type: "combat.add", combatant: { ...rat, combatantId: "rat2" } });
+    expect(who("rat2").beats).toBe(1);
+    gm({ type: "combat.remove", combatantId: "rat" });
+    gm({ type: "combat.remove", combatantId: "rat2" });
+    gm({ type: "combat.act", combatantId: "kara" });
+    gm({ type: "combat.done", combatantId: "kara" });
+    gm({ type: "combat.act", combatantId: "joe" });
+    gm({ type: "combat.done", combatantId: "joe" });
+    expect(enc().turn).toBe(2);
+    gm({ type: "combat.end" });
+    expect(enc().ended).toBe(true);
+    expect(() => gm({ type: "combat.round" })).toThrow(/no fight is running/);
+  });
+
+  it("keeps the fight the GM's to record", () => {
+    expect(() => rec.append(draft({ type: "combat.round" }, P1))).toThrow(/only the GM/);
   });
 });
 

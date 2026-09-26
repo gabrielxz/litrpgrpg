@@ -9,6 +9,7 @@ import { api } from "../api.ts";
 import type { useCampaign } from "../live.ts";
 import { useEngine } from "../live.ts";
 import { PlayerCampaign } from "../player/PlayerCampaign.tsx";
+import { CombatSection } from "./Combat.tsx";
 import { Commit } from "./Commit.tsx";
 import { ATTRIBUTES } from "../text.ts";
 import { Table } from "./Invites.tsx";
@@ -175,9 +176,10 @@ function ViewAs({ view }: { view: GmView }) {
   );
 }
 
-type Section = "party" | "log" | "table" | "player";
+type Section = "party" | "combat" | "log" | "table" | "player";
 const SECTIONS: [Section, string][] = [
   ["party", "Party"],
+  ["combat", "Combat"],
   ["log", "Campaign log"],
   ["table", "Table"],
   ["player", "Player view"],
@@ -200,7 +202,13 @@ function useSection(): [Section, (s: Section) => void] {
 export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<typeof useCampaign> }) {
   const engine = useEngine(view.campaign.rulesVersion);
   const [section, setSection] = useSection();
+  // Characters by id, and every creature or NPC a fight has named, for the log's lines.
   const byId = new Map(view.characters.map((c) => [c.id, c.name]));
+  for (const env of live.log) {
+    const a = env.action;
+    const specs = a.type === "combat.start" ? a.combatants : a.type === "combat.add" ? [a.combatant] : [];
+    for (const s of specs) if (s.name && !byId.has(s.combatantId)) byId.set(s.combatantId, s.name);
+  }
   const names = (id: string) => byId.get(id) ?? id;
   /** The other members of a character's party, by name. */
   const partyWith = (id: string) => {
@@ -217,6 +225,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
           <button key={s} className={s === section ? "active" : ""} onClick={() => setSection(s)}>
             {label}
             {s === "log" && view.rejected.length > 0 && <span className="tag attention">{view.rejected.length}</span>}
+            {s === "combat" && view.encounter && <span className="tag attention">{view.encounter.round ? `Round ${view.encounter.round}` : "Set"}</span>}
           </button>
         ))}
       </nav>
@@ -234,6 +243,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
           </aside>
         </main>
       )}
+      {section === "combat" && <CombatSection view={view} engine={engine} log={live.log} onRecorded={live.addToLog} />}
       {section === "log" && (
         <main className="page">
           <Log view={view} log={live.log} names={names} onRecorded={live.addToLog} />

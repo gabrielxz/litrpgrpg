@@ -3,6 +3,7 @@
  * messages. The server builds them (server/src/views.ts); the web client reads them.
  */
 import type { Effect, HeldMessage, Party, PartyInvite } from "./fold.ts";
+import type { Combatant, Encounter } from "./combat.ts";
 import type { Envelope } from "./actions.ts";
 import type { Sheet } from "./sheet.ts";
 
@@ -65,6 +66,45 @@ export interface RollView {
   outcome?: string;
 }
 
+/** A combatant as the GM's tracker shows them: HP and Momentum Force read where they live. */
+export interface CombatantView extends Omit<Combatant, "hp" | "maxHp" | "momentumForce"> {
+  hp: number;
+  maxHp: number;
+  momentumForce: number;
+  downed: boolean;
+}
+
+export interface EncounterView extends Omit<Encounter, "combatants"> {
+  combatants: CombatantView[];
+}
+
+/**
+ * The fight as a player sees it: the table's shape (round, turn order, who holds Momentum,
+ * who is acting, a shift called for next round) and each character's Beats. No creature's
+ * Health or Beats, and no character's Health beyond what the party frame shows.
+ */
+export interface PlayerCombat {
+  name: string;
+  round: number;
+  /** Sides in turn order; the first holds Momentum. */
+  order: { id: string; name: string }[];
+  /** The side taking its turn; null between rounds. */
+  turnSide: string | null;
+  pendingShift: string | null;
+  combatants: {
+    id: string;
+    name: string;
+    sideId: string;
+    acting: boolean;
+    acted: boolean;
+    out: boolean;
+    /** Characters only. */
+    beats?: number;
+    beatsPerTurn?: number;
+    characterId?: string;
+  }[];
+}
+
 /** One System notice about one of the player's characters, rebuilt from the log on every view. */
 export interface FeedItem {
   key: string;
@@ -114,6 +154,8 @@ export interface GmView {
   held: HeldMessage[];
   /** The newest rolls first, private ones included. */
   rolls: RollView[];
+  /** The fight running now. */
+  encounter: EncounterView | null;
 }
 
 export interface PlayerView {
@@ -127,6 +169,7 @@ export interface PlayerView {
   feed: FeedItem[];
   /** The table's open rolls, newest first. */
   rolls: RollView[];
+  combat: PlayerCombat | null;
 }
 
 export type View = GmView | PlayerView;

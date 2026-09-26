@@ -8,9 +8,15 @@
  * The notice feed is rebuilt from the log on every view (app/DESIGN.md, "Decisions"): the
  * effects of every action that stands, in order. A voided action's notices leave the feed.
  */
+import {
+  type CampaignInfo,
+  type CampaignRecord,
+  type EncounterView,
+  type PlayerCombat,
+  momentumForceOf,
+  worldOf,
+} from "@gradebreaker/record";
 import type {
-  CampaignInfo,
-  CampaignRecord,
   Effect,
   FeedItem,
   GmView,
@@ -40,7 +46,36 @@ export function rollsFor(record: CampaignRecord, members: Member[], role: Role):
   for (let i = record.log.length - 1; i >= 0 && out.length < ROLLS_LENGTH; i--) {
     const env = record.log[i]!;
     const a = env.action;
-    if (a.type !== "dice.roll" || skip.has(env.id)) continue;
+    if (skip.has(env.id)) continue;
+    if (a.type === "combat.momentum" || a.type === "combat.seize") {
+      // Momentum dice, newest first; a combatant's name as it stood in the fight.
+      const m = effects.get(env.id)?.find((x) => x.kind === "momentum" || x.kind === "seized");
+      if (!m || (m.kind !== "momentum" && m.kind !== "seized")) continue;
+      const names = new Map((record.state.encounter?.combatants ?? []).map((c) => [c.id, c]));
+      for (const [j, r] of [...m.rolls.entries()].reverse()) {
+        const c = names.get(r.combatantId);
+        const v: RollView = {
+          id: `${env.id}:${j}`,
+          at: env.at,
+          by: person(env.actor.userId),
+          roller: c?.name ?? r.combatantId,
+          label: r.label,
+          rollKind: "clash",
+          natural: r.natural,
+          surge: false,
+          force: r.force,
+          modifier: 0,
+          total: r.total,
+          exploded: r.natural.length > 1,
+          entered: false,
+          private: false,
+        };
+        if (c?.characterId) v.characterId = c.characterId;
+        out.push(v);
+      }
+      continue;
+    }
+    if (a.type !== "dice.roll") continue;
     if (a.private && role !== "gm") continue;
     const e = effects.get(env.id)?.find((x) => x.kind === "rolled");
     if (!e || e.kind !== "rolled") continue;
@@ -155,6 +190,44 @@ export function feedFor(record: CampaignRecord, own: ReadonlySet<string>): FeedI
   return out;
 }
 
+/** The running fight with each combatant's HP and Momentum Force read where they live. */
+export function encounterView(record: CampaignRecord): EncounterView | null {
+  const e = record.state.encounter;
+  if (!e || e.ended) return null;
+  const world = worldOf(record.state);
+  return {
+    ...e,
+    combatants: e.combatants.map((c) => {
+      const sheet = c.characterId ? record.sheet(c.characterId) : undefined;
+      const hp = sheet ? sheet.hp : (c.hp ?? 0);
+      const maxHp = sheet ? sheet.maxHp : (c.maxHp ?? 0);
+      return { ...c, hp, maxHp, momentumForce: momentumForceOf(record.engine, world, c), downed: hp === 0 };
+    }),
+  };
+}
+
+export function playerCombat(record: CampaignRecord): PlayerCombat | null {
+  const e = record.state.encounter;
+  if (!e || e.ended) return null;
+  const side = (id: string) => ({ id, name: e.sides.find((s) => s.id === id)?.name ?? id });
+  return {
+    name: e.name,
+    round: e.round,
+    order: (e.round ? e.order : e.sides.map((s) => s.id)).map(side),
+    turnSide: e.round ? (e.order[e.turn] ?? null) : null,
+    pendingShift: e.pending?.sideId ?? null,
+    combatants: e.combatants.map((c) => ({
+      id: c.id,
+      name: c.name,
+      sideId: c.sideId,
+      acting: e.acting === c.id,
+      acted: c.acted,
+      out: c.out,
+      ...(c.characterId ? { characterId: c.characterId, beats: c.beats, beatsPerTurn: c.beatsPerTurn } : {}),
+    })),
+  };
+}
+
 export function viewFor(
   record: CampaignRecord,
   campaign: CampaignInfo,
@@ -176,6 +249,7 @@ export function viewFor(
       invites: st.invites,
       held: st.held,
       rolls: rollsFor(record, members, "gm"),
+      encounter: encounterView(record),
     };
   }
   const own = sheets.filter((s) => s.playerId === who.userId);
@@ -188,5 +262,6 @@ export function viewFor(
     roster: sheets.filter((s) => s.playerId !== undefined && !ownIds.has(s.id)).map((s) => ({ id: s.id, name: s.name })),
     feed: feedFor(record, ownIds),
     rolls: rollsFor(record, members, "player"),
+    combat: playerCombat(record),
   };
 }

@@ -7,8 +7,10 @@ export {
   type Party,
   type PartyInvite,
   type Rejection,
+  type World,
   fold,
   pointBuyProblems,
+  worldOf,
 } from "./fold.ts";
 export { type Change, type Sheet, type SheetDiff, diffSheets, sheetOf } from "./sheet.ts";
 export { type Appended, CampaignRecord, IdConflict, type Preview, RecordError } from "./record.ts";
@@ -20,6 +22,9 @@ export type {
   PartyFrame,
   PartyFrameMember,
   RollView,
+  CombatantView,
+  EncounterView,
+  PlayerCombat,
   GmView,
   InterfaceSheet,
   LiveMessage,
@@ -29,3 +34,5 @@ export type {
   View,
 } from "./protocol.ts";
 export { type D100, type Dice, rollD100s } from "./dice.ts";
+export { rollFor } from "./rolling.ts";
+export { type Combatant, type Encounter, momentumForceOf, momentumRoller } from "./combat.ts";

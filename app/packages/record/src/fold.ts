@@ -26,6 +26,7 @@ import type {
   SendMessage,
   SpendFreePoints,
 } from "./actions.ts";
+import { type Encounter, type MomentumRollRecord, applyCombat, cloneEncounter } from "./combat.ts";
 
 export interface CharacterState {
   id: string;
@@ -109,6 +110,21 @@ export type Effect =
       /** A check against an entered Resistance: success, exceptional, soft, hard, or catastrophic. */
       outcome?: string;
     }
+  | { kind: "combat-started"; encounterId: string }
+  | { kind: "momentum"; encounterId: string; holder: string; totals: { sideId: string; total: number }[]; rolls: MomentumRollRecord[] }
+  | {
+      kind: "seized";
+      encounterId: string;
+      combatantId: string;
+      won: boolean;
+      total: number;
+      against: number;
+      rolls: MomentumRollRecord[];
+    }
+  | { kind: "momentum-shifted"; encounterId: string; holder: string; by: "seize" | "reversal" }
+  | { kind: "combat-hp"; encounterId: string; combatantId: string; from: number; to: number }
+  | { kind: "combat-downed"; encounterId: string; combatantId: string }
+  | { kind: "combat-ended"; encounterId: string }
   | { kind: "voided"; targetId: string; reason: string };
 
 export interface Rejection {
@@ -123,6 +139,8 @@ export interface FoldResult {
   invites: PartyInvite[];
   /** Messages recorded and held, oldest first. */
   held: HeldMessage[];
+  /** The fight running now, or the last one (ended). */
+  encounter: Encounter | null;
   /** Effects keyed by the id of the action that produced them. */
   effects: Map<string, Effect[]>;
   rejected: Rejection[];
@@ -170,11 +188,12 @@ export function capLevel(engine: Engine, c: CharacterState): number {
 // --------------------------------------------------------------- fold ---
 
 /** Everything an action can change. Each action works on a copy (see `fold`). */
-interface World {
+export interface World {
   characters: Map<string, CharacterState>;
   parties: Map<string, Party>;
   invites: PartyInvite[];
   held: Map<string, HeldMessage>;
+  encounter: Encounter | null;
 }
 
 function cloneWorld(w: World): World {
@@ -183,12 +202,22 @@ function cloneWorld(w: World): World {
     parties: new Map([...w.parties].map(([k, v]) => [k, { id: v.id, members: [...v.members] }])),
     invites: [...w.invites],
     held: new Map(w.held),
+    encounter: w.encounter && cloneEncounter(w.encounter),
   };
+}
+
+export function emptyWorld(): World {
+  return { characters: new Map(), parties: new Map(), invites: [], held: new Map(), encounter: null };
+}
+
+/** The world as the fold leaves it: what `rollFor` rolls against. */
+export function worldOf(r: FoldResult): World {
+  return { characters: r.characters, parties: r.parties, invites: r.invites, held: new Map(r.held.map((m) => [m.id, m])), encounter: r.encounter };
 }
 
 export function fold(engine: Engine, log: readonly Envelope[]): FoldResult {
   const voided = collectVoids(log);
-  let world: World = { characters: new Map(), parties: new Map(), invites: [], held: new Map() };
+  let world: World = emptyWorld();
   const effects = new Map<string, Effect[]>();
   const rejected: Rejection[] = [...voided.rejected];
   const rejectedIds = new Set(rejected.map((r) => r.envelope.id));
@@ -216,6 +245,7 @@ export function fold(engine: Engine, log: readonly Envelope[]): FoldResult {
     parties: world.parties,
     invites: world.invites,
     held: [...world.held.values()],
+    encounter: world.encounter,
     effects,
     rejected,
     voided: voided.ids,
@@ -296,6 +326,19 @@ function apply(engine: Engine, world: World, env: Envelope): Effect[] {
       return releaseMessage(world, a);
     case "dice.roll":
       return rollDice(engine, world, a);
+    case "combat.start":
+    case "combat.add":
+    case "combat.remove":
+    case "combat.momentum":
+    case "combat.seize":
+    case "combat.reversal":
+    case "combat.act":
+    case "combat.beat":
+    case "combat.done":
+    case "combat.round":
+    case "combat.hp":
+    case "combat.end":
+      return applyCombat(engine, world, a, env);
     case "void":
       throw new Error("voids are handled before apply");
   }

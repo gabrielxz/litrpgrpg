@@ -454,6 +454,48 @@ describe("dice", () => {
   });
 });
 
+describe("the combat tracker", () => {
+  it("rolls Momentum on the server and shows players the fight's shape without a creature's numbers", async () => {
+    const { campaignId, gm, player, playerId } = await table();
+    await act(campaignId, gm, { type: "character.pregen", characterId: "kara", pregen: "Kara", playerId });
+    await act(campaignId, gm, {
+      type: "combat.start",
+      encounterId: "e1",
+      name: "The treeline",
+      sides: [
+        { id: "party", name: "The party" },
+        { id: "hostiles", name: "Hostiles" },
+      ],
+      combatants: [
+        { combatantId: "kara", sideId: "party", characterId: "kara" },
+        { combatantId: "rat", sideId: "hostiles", name: "Frenzy Rat", grade: "F", maxHp: 12, momentumForce: 8, beats: 1 },
+      ],
+    });
+    expect((await act(campaignId, player, { type: "combat.momentum" })).status).toBe(422);
+    const m = await act(campaignId, gm, { type: "combat.momentum" });
+    expect(m.status).toBe(201);
+    expect(m.json.envelope.action.attempts.length).toBeGreaterThanOrEqual(1);
+
+    const gv = (await call("GET", `/campaigns/${campaignId}`, { token: gm })).json;
+    expect(gv.encounter.round).toBe(1);
+    expect(gv.encounter.combatants.find((c: { id: string }) => c.id === "rat")).toMatchObject({ hp: 12, maxHp: 12, momentumForce: 8 });
+    expect(gv.encounter.combatants.find((c: { id: string }) => c.id === "kara")).toMatchObject({ hp: 14, momentumForce: 5 });
+
+    const pv = (await call("GET", `/campaigns/${campaignId}`, { token: player })).json;
+    expect(pv.combat.round).toBe(1);
+    expect(pv.combat.order.map((s: { name: string }) => s.name).sort()).toEqual(["Hostiles", "The party"]);
+    const rat = pv.combat.combatants.find((c: { id: string }) => c.id === "rat");
+    expect(Object.keys(rat).sort()).toEqual(["acted", "acting", "id", "name", "out", "sideId"]);
+    expect(pv.combat.combatants.find((c: { id: string }) => c.id === "kara")).toMatchObject({ beats: 2, beatsPerTurn: 2 });
+    // The Momentum dice are the table's, and players see them.
+    const labels = pv.rolls.map((r: { label: string }) => r.label);
+    expect(labels.filter((l: string) => l === "Momentum").length).toBeGreaterThanOrEqual(2);
+
+    await act(campaignId, gm, { type: "combat.end" });
+    expect((await call("GET", `/campaigns/${campaignId}`, { token: player })).json.combat).toBeNull();
+  });
+});
+
 describe("the live channel", () => {
   let server: Server;
   let hub: LiveHub;

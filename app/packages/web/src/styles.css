@@ -972,3 +972,133 @@ details.typed summary {
   cursor: pointer;
   font-size: 0.85rem;
 }
+
+/* ---- the combat tracker ---- */
+
+.grow {
+  flex: 1;
+}
+.row.tight {
+  gap: 0.35rem;
+  align-items: center;
+}
+.tracker-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.tracker-head h2 {
+  margin: 0;
+}
+.reversals {
+  margin-bottom: 0.6rem;
+}
+.sides {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.side {
+  border: 1px solid var(--stone);
+  background: #fbf7f0;
+  padding: 0.6rem 0.8rem;
+}
+.side.taking {
+  border-color: var(--cyan);
+  box-shadow: inset 3px 0 0 var(--cyan);
+}
+.side h3 {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  margin: 0 0 0.5rem;
+}
+.combatants {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.combatant {
+  border-top: 1px solid var(--stone);
+  padding-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.combatant-head {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.combatant.acting {
+  background: color-mix(in srgb, var(--cyan) 7%, transparent);
+  margin: 0 -0.4rem;
+  padding: 0.5rem 0.4rem 0.4rem;
+}
+.combatant.acted,
+.combatant.out {
+  opacity: 0.6;
+}
+.combatant.downed .meter > div {
+  background: var(--danger, #b3261e);
+}
+.beats button {
+  font-size: 0.85rem;
+  padding: 0.15rem 0.5rem;
+}
+.pips {
+  display: inline-flex;
+  gap: 0.2rem;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+}
+.pip {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  display: inline-block;
+}
+.pip.on {
+  background: currentColor;
+}
+.fight-side {
+  padding: 0.3rem 0;
+  border-top: 1px solid var(--sys-line);
+}
+.fight-side.taking .fight-side-name {
+  color: var(--cyan-light);
+}
+.fight-side-name {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  font-size: 0.9rem;
+}
+.fight-badge {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: 1px solid currentColor;
+  padding: 0 0.3rem;
+}
+.fight ul {
+  list-style: none;
+  padding: 0 0 0 0.6rem;
+  margin: 0.2rem 0 0;
+  font-size: 0.9rem;
+}
+.fight li.acting {
+  color: var(--cyan-light);
+  font-weight: 600;
+}
+.fight li.acted {
+  opacity: 0.55;
+}

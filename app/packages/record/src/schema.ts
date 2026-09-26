@@ -10,6 +10,19 @@ const id = z.string().min(1).max(100);
 const whole = z.number().int();
 const stats = z.record(z.string(), whole);
 
+const dice = z.array(whole).max(50);
+const combatant = z.object({
+  combatantId: id,
+  sideId: id,
+  characterId: id.optional(),
+  name: z.string().max(100).optional(),
+  creature: z.string().max(100).optional(),
+  grade: z.string().max(4).optional(),
+  maxHp: whole.optional(),
+  momentumForce: whole.optional(),
+  beats: whole.optional(),
+});
+
 const basis = z.discriminatedUnion("kind", [
   z.object({ kind: z.literal("kill"), creature: z.string().optional(), tier: z.string(), victimGrade: z.string() }),
   z.object({ kind: z.literal("quest"), questId: z.string().optional() }),
@@ -78,6 +91,31 @@ export const actionSchema = z.discriminatedUnion("type", [
     dropped: whole.optional(),
     entered: z.boolean().optional(),
   }),
+  z.object({
+    type: z.literal("combat.start"),
+    encounterId: id,
+    name: z.string().max(100),
+    sides: z.array(z.object({ id, name: z.string().max(60) })).max(8),
+    combatants: z.array(combatant).max(60),
+  }),
+  z.object({ type: z.literal("combat.add"), combatant }),
+  z.object({ type: z.literal("combat.remove"), combatantId: id, note: z.string().max(200).optional() }),
+  z.object({
+    type: z.literal("combat.momentum"),
+    attempts: z.array(z.array(z.object({ sideId: id, combatantId: id, natural: dice }))).max(50).optional(),
+  }),
+  z.object({
+    type: z.literal("combat.seize"),
+    combatantId: id,
+    attempts: z.array(z.object({ seizer: dice, holder: dice, holderCombatantId: id })).max(50).optional(),
+  }),
+  z.object({ type: z.literal("combat.reversal"), sideId: id, note: z.string().max(200).optional() }),
+  z.object({ type: z.literal("combat.act"), combatantId: id }),
+  z.object({ type: z.literal("combat.beat"), combatantId: id, what: z.string().max(60) }),
+  z.object({ type: z.literal("combat.done"), combatantId: id }),
+  z.object({ type: z.literal("combat.round") }),
+  z.object({ type: z.literal("combat.hp"), combatantId: id, delta: whole }),
+  z.object({ type: z.literal("combat.end") }),
   z.object({
     type: z.literal("void"),
     targetId: id,

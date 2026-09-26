@@ -19,7 +19,7 @@ import {
   RecordError,
   type Submission,
   pointBuyProblems,
-  rollD100s,
+  rollFor,
 } from "@gradebreaker/record";
 import type { Identity, Verifier } from "./auth.ts";
 import type { Db } from "./db.ts";
@@ -350,10 +350,9 @@ export class Service {
     const draft = await this.draftFor(campaignId, user!, role, s);
     const appended = await this.locked(campaignId, async () => {
       const record = await this.record(campaignId);
-      rollIfAsked(record, draft);
       let out: Appended;
       try {
-        out = record.append(draft);
+        out = record.append(rollFor(record, draft, () => randomInt(1, 101)));
       } catch (e) {
         if (e instanceof IdConflict) throw new HttpError(409, e.message);
         if (e instanceof RecordError) throw new HttpError(422, e.message);
@@ -462,35 +461,6 @@ export class Service {
     const [record, campaign, members] = await Promise.all([this.record(campaignId), this.campaign(campaignId), this.members(campaignId)]);
     return viewFor(record, campaign, members, who);
   }
-}
-
-/**
- * Rolls the dice for a `dice.roll` that arrives without them, at the roller's Grade, from a
- * cryptographic source; the recorded action carries the dice. A retry of a roll already
- * recorded takes the recorded dice, so it matches and records once. Dice the client sends
- * were rolled at the table and are marked as entered.
- */
-function rollIfAsked(record: CampaignRecord, draft: Draft) {
-  const a = draft.action;
-  if (a.type !== "dice.roll") return;
-  if (a.natural !== undefined) {
-    draft.action = { ...a, entered: true };
-    return;
-  }
-  const prior = record.find(draft.id)?.action;
-  if (prior?.type === "dice.roll" && prior.natural) {
-    draft.action = { ...a, natural: prior.natural, ...(prior.dropped === undefined ? {} : { dropped: prior.dropped }) };
-    return;
-  }
-  const grade = a.roller.kind === "character" ? (record.character(a.roller.characterId)?.grade ?? "F") : a.roller.grade;
-  let threshold = 101;
-  try {
-    threshold = record.engine.volatilityThreshold(grade);
-  } catch {
-    // An unknown Grade: the record refuses the action with the reason.
-  }
-  const dice = rollD100s(threshold, { advantage: Boolean(a.advantage), explodes: a.rollKind !== "table" }, () => randomInt(1, 101));
-  draft.action = { ...a, ...dice };
 }
 
 function slugify(s: string): string {

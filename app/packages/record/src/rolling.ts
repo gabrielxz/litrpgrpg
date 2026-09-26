@@ -1,0 +1,38 @@
+/**
+ * Fills in the dice for an action that asks the server to roll: a `dice.roll` without its
+ * dice, a Momentum Roll, or a Seize. The record stays pure; the caller passes the random
+ * source. A retry of an action already recorded takes the recorded dice, so it matches and
+ * records once. Dice the client sends for a `dice.roll` were rolled at the table and are
+ * marked as entered.
+ */
+import type { Action, Draft } from "./actions.ts";
+import { rollCombatDice } from "./combat.ts";
+import { type D100, rollD100s } from "./dice.ts";
+import { worldOf } from "./fold.ts";
+import type { CampaignRecord } from "./record.ts";
+
+export function rollFor(record: CampaignRecord, draft: Draft, d100: D100): Draft {
+  const a = draft.action;
+  const prior = record.find(draft.id)?.action;
+  if (a.type === "dice.roll") {
+    if (a.natural !== undefined) return { ...draft, action: { ...a, entered: true } };
+    if (prior?.type === "dice.roll" && prior.natural) {
+      return { ...draft, action: { ...a, natural: prior.natural, ...(prior.dropped === undefined ? {} : { dropped: prior.dropped }) } };
+    }
+    const grade = a.roller.kind === "character" ? (record.character(a.roller.characterId)?.grade ?? "F") : a.roller.grade;
+    let threshold: number;
+    try {
+      threshold = record.engine.volatilityThreshold(grade);
+    } catch {
+      return draft; // an unknown Grade: the record refuses it with the reason
+    }
+    const dice = rollD100s(threshold, { advantage: Boolean(a.advantage), explodes: a.rollKind !== "table" }, d100);
+    return { ...draft, action: { ...a, ...dice } };
+  }
+  if (a.type === "combat.momentum" || a.type === "combat.seize") {
+    if (a.attempts) return draft;
+    if (prior?.type === a.type && prior.attempts) return { ...draft, action: { ...a, attempts: prior.attempts } as Action };
+    return { ...draft, action: rollCombatDice(record.engine, worldOf(record.state), a, d100) };
+  }
+  return draft;
+}

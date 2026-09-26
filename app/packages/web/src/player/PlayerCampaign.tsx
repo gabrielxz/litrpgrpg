@@ -297,6 +297,46 @@ function Interface({
   );
 }
 
+/** The fight's shape as the table sees it: turn order, Momentum, who is acting, Beats left. */
+function Fight({ combat }: { combat: NonNullable<PlayerView["combat"]> }) {
+  return (
+    <section className="table-dice fight">
+      <h3>
+        {combat.name} · {combat.round ? `Round ${combat.round}` : "Starting"}
+      </h3>
+      {combat.pendingShift && combat.pendingShift !== combat.order[0]?.id && (
+        <p className="small">Momentum shifts to {combat.order.find((s) => s.id === combat.pendingShift)?.name} next round.</p>
+      )}
+      {combat.order.map((s, i) => (
+        <div key={s.id} className={`fight-side ${s.id === combat.turnSide ? "taking" : ""}`}>
+          <div className="fight-side-name">
+            {s.name}
+            {combat.round > 0 && i === 0 && <span className="fight-badge">Momentum</span>}
+            {s.id === combat.turnSide && <span className="fight-badge">Turn</span>}
+          </div>
+          <ul>
+            {combat.combatants
+              .filter((c) => c.sideId === s.id && !c.out)
+              .map((c) => (
+                <li key={c.id} className={c.acting ? "acting" : c.acted ? "acted" : ""}>
+                  {c.acting ? "▸ " : ""}
+                  {c.name}
+                  {c.beats !== undefined && (
+                    <span className="pips">
+                      {Array.from({ length: Math.max(c.beatsPerTurn ?? 0, c.beats) }, (_, j) => (
+                        <span key={j} className={j < c.beats! ? "pip on" : "pip"} />
+                      ))}
+                    </span>
+                  )}
+                </li>
+              ))}
+          </ul>
+        </div>
+      ))}
+    </section>
+  );
+}
+
 function Notices({ feed, names }: { feed: FeedItem[]; names: Map<string, string> | null }) {
   const lines = feed.map((n) => ({ ...n, text: noticeLine(n.effect) })).filter((n) => n.text);
   return (
@@ -420,6 +460,7 @@ export function PlayerCampaign({
       )}
       <div className="side-column">
         <Notices feed={view.feed} names={names} />
+        {view.combat && <Fight combat={view.combat} />}
         <section className="table-dice">
           <h3>Dice</h3>
           {!readOnly && view.characters.length > 0 && (
