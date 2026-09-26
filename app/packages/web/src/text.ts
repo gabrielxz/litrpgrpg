@@ -351,6 +351,8 @@ export function noticeLine(e: Effect): string | null {
       return e.pillKind === "healing" ? `Health restored: ${e.restored}.` : `Aether restored: ${e.restored}.`;
     case "kill-confirmed":
       return `Kill confirmed. Grade ${e.victimGrade}, ${e.tier}.`;
+    case "item-received":
+      return `Item registered: ${stack(e)}.`;
     case "mark": {
       const shape = titleCase(e.shape);
       if (e.marks === 1) return `Technique acquired: ${shape}. ${e.tier}.`;

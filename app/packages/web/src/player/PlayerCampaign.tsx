@@ -210,9 +210,9 @@ function PartySection({
 }
 
 /**
- * What the character carries: hand an item to someone in the campaign or the spoils, or mark
- * one used. The table's record, beside the interface: What Can Be Seen does not list items
- * among what the System shows.
+ * What the character carries, on their own interface after Proficiencies (Gabriel, 2026-09-26:
+ * the System shows the owner their items; nobody else sees them; book edit 14). Hand an item to
+ * someone in the campaign or the spoils, or mark one used.
  */
 function Carried({ campaignId, c, roster, readOnly }: { campaignId: string; c: InterfaceSheet; roster: PlayerView["roster"]; readOnly?: boolean }) {
   const [busy, setBusy] = useState(false);
@@ -231,8 +231,8 @@ function Carried({ campaignId, c, roster, readOnly }: { campaignId: string; c: I
     }
   };
   return (
-    <section className="table-dice">
-      <h3>{c.name} carries</h3>
+    <div className="sys-section">
+      <h3>Carried</h3>
       <ul className="items">
         {c.items.map((s) => (
           <li key={s.name}>
@@ -259,7 +259,7 @@ function Carried({ campaignId, c, roster, readOnly }: { campaignId: string; c: I
         ))}
       </ul>
       {error && <p className="error">{error}</p>}
-    </section>
+    </div>
   );
 }
 
@@ -418,6 +418,8 @@ function Interface({
         </div>
       )}
 
+      <Carried campaignId={campaignId} c={c} roster={roster} readOnly={readOnly} />
+
       {c.freePoints > 0 &&
         (readOnly ? (
           <div className="sys-section">
@@ -555,9 +557,6 @@ export function PlayerCampaign({
       <div className="side-column">
         <Notices feed={view.feed} names={names} />
         {view.combat && <Fight view={view} engine={engine} combat={view.combat} readOnly={readOnly} />}
-        {view.characters.map((c) => (
-          <Carried key={c.id} campaignId={view.campaign.id} c={c} roster={view.roster} readOnly={readOnly} />
-        ))}
         <Spoils view={view} readOnly={readOnly} />
         <section className="table-dice">
           <h3>Dice</h3>

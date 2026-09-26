@@ -197,8 +197,7 @@ export function interfaceSheet(s: Sheet, record: CampaignRecord): InterfaceSheet
 
 /**
  * The effects the System announces to a character. Anything else (Saturation, which the GM
- * narrates; creation; reassignment; a held message; a void; items changing hands, which What
- * Can Be Seen does not list among what the System shows) reaches the GM only.
+ * narrates; creation; reassignment; a held message; a void) reaches the GM only.
  */
 const ANNOUNCED: ReadonlySet<Effect["kind"]> = new Set([
   "ve-acquired",
@@ -223,6 +222,7 @@ const ANNOUNCED: ReadonlySet<Effect["kind"]> = new Set([
   "pill",
   "kill-confirmed",
   "mark",
+  "item-received",
 ]);
 
 /** Effects a player is shown: the announced ones about their own characters. */
