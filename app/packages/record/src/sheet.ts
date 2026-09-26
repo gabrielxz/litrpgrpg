@@ -45,6 +45,8 @@ export interface Sheet {
   titlesDue: string[];
   /** Personal Opportunities refused, by flavor: at 3 a flavor comes half as often, at 6 it stops. */
   refusals: Record<string, number>;
+  /** Pills taken since the last Consolidation, by kind. */
+  pillsTaken: { healing: number; aether: number };
 }
 
 export function sheetOf(engine: Engine, c: CharacterState): Sheet {
@@ -83,6 +85,7 @@ export function sheetOf(engine: Engine, c: CharacterState): Sheet {
     counters: { ...(c.counters ?? {}) },
     titlesDue: titlesDue(c),
     refusals: { ...(c.refusals ?? {}) },
+    pillsTaken: { healing: 0, aether: 0, ...(c.pillsTaken ?? {}) },
   };
   if (c.playerId !== undefined) sheet.playerId = c.playerId;
   if (c.pregen !== undefined) sheet.pregen = c.pregen;

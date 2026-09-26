@@ -217,6 +217,8 @@ export function describe(
       return `[${a.questId}] failed`;
     case "quest.withdraw":
       return `[${a.questId}] expires`;
+    case "pill.take":
+      return a.characterId === a.targetId ? `${name(a.characterId)} takes a ${a.pill}` : `${name(a.characterId)} gives ${name(a.targetId)} a ${a.pill}`;
     case "void": {
       const seq = seqOf(a.targetId);
       const target = seq === undefined ? "an action" : `#${seq + 1}`;
@@ -339,7 +341,7 @@ export function effectLine(e: Effect, name: Names): string | null {
       }`;
     case "pill":
       return `${name(e.targetId)}: ${e.pill}${
-        e.noEffect === "grade" ? ", no effect (another Grade)" : e.noEffect === "limit" ? ", no effect (third of its kind this fight)" : `, ${e.restored} ${e.pillKind === "healing" ? "HP" : "Aether"}`
+        e.noEffect === "grade" ? ", no effect (another Grade)" : e.noEffect === "limit" ? ", no effect (past the limit since the last Consolidation)" : `, ${e.restored} ${e.pillKind === "healing" ? "HP" : "Aether"}`
       }`;
     case "clash":
       return `Clash: ${e.attackTotal} against ${e.defenseTotal}, Margin ${e.margin}${

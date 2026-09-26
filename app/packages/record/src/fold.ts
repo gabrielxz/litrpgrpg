@@ -31,6 +31,7 @@ import { type DeathCause, type Encounter, type MomentumRollRecord, applyCombat, 
 import { type Stack, applyItems, authorizeItemsPlayer } from "./inventory.ts";
 import { addMark, checkShape, proficiencyOf } from "./proficiency.ts";
 import { type Title, applyTitles, count, titleStats } from "./titles.ts";
+import { authorizePillPlayer, takePillOutside } from "./pills.ts";
 import { type Quest, type QuestNoticeKind, applyQuests, authorizeQuestPlayer, cloneQuest, questsOnJoin, questsOnLeave } from "./quests.ts";
 
 export interface CharacterState {
@@ -69,6 +70,8 @@ export interface CharacterState {
   dismissedTitles?: string[];
   /** Personal Opportunities refused, by flavor. */
   refusals?: Record<string, number>;
+  /** Pills taken since the last Consolidation's first full hour, by kind. */
+  pillsTaken?: { healing: number; aether: number };
 }
 
 /** A formal party: its members' character ids in the order they joined. */
@@ -184,7 +187,8 @@ export type Effect =
     }
   | {
       kind: "pill";
-      encounterId: string;
+      /** Absent for a pill taken outside a fight. */
+      encounterId?: string;
       /** Who gave it; the recipient is `targetId`. */
       combatantId: string;
       targetId: string;
@@ -366,6 +370,7 @@ function cloneState(c: CharacterState): CharacterState {
     ...(c.counters ? { counters: { ...c.counters } } : {}),
     ...(c.dismissedTitles ? { dismissedTitles: [...c.dismissedTitles] } : {}),
     ...(c.refusals ? { refusals: { ...c.refusals } } : {}),
+    ...(c.pillsTaken ? { pillsTaken: { ...c.pillsTaken } } : {}),
   };
 }
 
@@ -486,6 +491,8 @@ function apply(engine: Engine, world: World, env: Envelope): Effect[] {
     case "quest.fail":
     case "quest.withdraw":
       return applyQuests(engine, world, a);
+    case "pill.take":
+      return takePillOutside(engine, world, a);
     case "void":
       throw new Error("voids are handled before apply");
   }
@@ -542,6 +549,8 @@ function authorize(world: World, env: Envelope) {
     case "quest.answer":
     case "quest.share":
       return authorizeQuestPlayer(world, a, me);
+    case "pill.take":
+      return authorizePillPlayer(world, a, me);
     case "dice.roll":
       if (a.roller.kind !== "character") throw new Rejected("a player rolls for their own character");
       if (a.private) throw new Rejected("only the GM rolls privately");
@@ -705,6 +714,8 @@ function runHours(engine: Engine, c: CharacterState, hours: number, highDensity:
     }
     if (h === cons.aether_refills_at_full_hour) {
       c.aether = maxAetherOf(engine, c);
+      // The pill count starts over when Aether refills (Items; backlog edit 7).
+      delete c.pillsTaken;
       out.push({ kind: "aether-refilled", characterId: c.id, hour: h });
     }
   }

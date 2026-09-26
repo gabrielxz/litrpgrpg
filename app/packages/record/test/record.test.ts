@@ -753,6 +753,14 @@ describe("Downed, pills, Aura Pressure, and the Surprise Beat", () => {
     });
     if (momentum.length) rolled({ type: "combat.momentum" }, ...momentum);
   }
+  /** Finishes every remaining turn of the round without starting the next. */
+  function nextRoundTo(_: string) {
+    while (enc().turn < enc().order.length) {
+      const c = enc().combatants.find((x) => x.sideId === enc().order[enc().turn] && !x.out && !x.downed && !x.acted)!;
+      gm({ type: "combat.act", combatantId: c.id });
+      gm({ type: "combat.done", combatantId: c.id });
+    }
+  }
   /** Ends every remaining turn of the round and starts the next. */
   function nextRound() {
     while (enc().turn < enc().order.length) {
@@ -824,31 +832,41 @@ describe("Downed, pills, Aura Pressure, and the Surprise Beat", () => {
     expect(rec.sheet("kara")!.counters).toEqual({ "survived-downed": 1 });
   });
 
-  it("wakes a Downed character on a pill; two of each kind work per encounter, counted against the recipient", () => {
+  it("wakes a Downed character on a pill, and counts every pill against the recipient until a Consolidation's first full hour", () => {
     fight([npc]);
     gm({ type: "combat.hp", combatantId: "kara", delta: -14 });
     as(P2, { type: "combat.act", combatantId: "joe" });
     // A character gives only what they carry.
     expect(() => as(P2, { type: "combat.pill", combatantId: "joe", targetId: "kara", pill: "Stuttering Tincture" })).toThrow(/Joe holds 0/);
     gm({ type: "item.give", to: "joe", items: [{ name: "Stuttering Tincture", count: 2 }] });
-    gm({ type: "item.give", to: "kara", items: [{ name: "stuttering tincture", count: 1 }, { name: "Sparkstone Tablet", count: 2 }] });
+    gm({ type: "item.give", to: "kara", items: [{ name: "stuttering tincture", count: 5 }, { name: "Sparkstone Tablet", count: 2 }] });
     const first = as(P2, { type: "combat.pill", combatantId: "joe", targetId: "kara", pill: "Stuttering Tincture" });
     expect(first.effects).toContainEqual({ kind: "revived", encounterId: "e1", combatantId: "kara", characterId: "kara", hp: 5 });
-    expect(who("kara")).toMatchObject({ downed: null, beats: 2, pills: { healing: 1, aether: 0 } });
+    expect(who("kara")).toMatchObject({ downed: null, beats: 2 });
     as(P2, { type: "combat.pill", combatantId: "joe", targetId: "kara", pill: "Stuttering Tincture" });
-    expect(rec.sheet("kara")!.hp).toBe(10);
+    expect(rec.sheet("kara")!.pillsTaken).toEqual({ healing: 2, aether: 0 });
     as(P2, { type: "combat.done", combatantId: "joe" });
+    // Out of the fight a pill costs no Beat, and the tracker refuses it while she is in one.
+    expect(() => as(P1, { type: "pill.take", characterId: "kara", targetId: "kara", pill: "Stuttering Tincture" })).toThrow(/costs a Beat/);
     as(P1, { type: "combat.act", combatantId: "kara" });
-    const third = as(P1, { type: "combat.pill", combatantId: "kara", targetId: "kara", pill: "Stuttering Tincture" });
-    expect(third.effects).toEqual([expect.objectContaining({ kind: "pill", restored: 0, noEffect: "limit" })]);
-    expect(rec.sheet("kara")!.hp).toBe(10);
+    as(P1, { type: "combat.pill", combatantId: "kara", targetId: "kara", pill: "Stuttering Tincture" });
+    as(P1, { type: "combat.done", combatantId: "kara" });
+    nextRoundTo("hostiles");
+    gm({ type: "combat.end" });
+    // Two more after the fight, the fourth and fifth, both work; the sixth does not.
+    gm({ type: "hp.change", characterId: "kara", delta: -10 });
+    as(P1, { type: "pill.take", characterId: "kara", targetId: "kara", pill: "Stuttering Tincture" });
+    expect(as(P1, { type: "pill.take", characterId: "kara", targetId: "kara", pill: "Stuttering Tincture" }).effects[0]).toMatchObject({ pillKind: "healing", restored: 5 });
+    gm({ type: "item.give", to: "kara", items: [{ name: "Stuttering Tincture", count: 1 }] });
+    gm({ type: "hp.change", characterId: "kara", delta: -10 });
+    expect(as(P1, { type: "pill.take", characterId: "kara", targetId: "kara", pill: "Stuttering Tincture" }).effects[0]).toMatchObject({ restored: 0, noEffect: "limit" });
     // Aether Pills count separately.
     gm({ type: "aether.change", characterId: "kara", delta: -6 });
-    const ae = as(P1, { type: "combat.pill", combatantId: "kara", targetId: "kara", pill: "Sparkstone Tablet" });
-    expect(ae.effects[0]).toMatchObject({ pillKind: "aether", restored: 6 });
-    expect(() => as(P1, { type: "combat.pill", combatantId: "kara", targetId: "thug", pill: "Sparkstone Tablet" })).toThrow(/no Aether for Thug/);
-    expect(rec.state.inventory.get("joe")).toEqual([]);
-    expect(rec.state.inventory.get("kara")).toEqual([{ name: "Sparkstone Tablet", count: 1 }]);
+    expect(as(P1, { type: "pill.take", characterId: "kara", targetId: "kara", pill: "Sparkstone Tablet" }).effects[0]).toMatchObject({ pillKind: "aether", restored: 6 });
+    expect(rec.sheet("kara")!.pillsTaken).toEqual({ healing: 6, aether: 1 });
+    // The first full hour of Consolidation starts the count over.
+    gm({ type: "consolidation.rest", highDensity: false, rests: [{ characterId: "kara", hours: 1, interrupted: true }] });
+    expect(rec.sheet("kara")!.pillsTaken).toEqual({ healing: 0, aether: 0 });
   });
 
   it("executes a Downed combatant for a Beat with no roll, and lets the GM rule a fate either way", () => {

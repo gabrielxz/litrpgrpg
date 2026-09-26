@@ -146,7 +146,7 @@ export function CareActions({
           <button className="primary" disabled={noBeat || !picked || !pill} onClick={() => done({ type: "combat.pill", combatantId: me.id, targetId: picked, pill })}>
             {picked === me.id ? "Take it (1 Beat)" : "Give it (1 Beat)"}
           </button>
-          {takenOfKind >= pillLimit && <span className="small warn">{pickedMate?.name} has taken {takenOfKind} of this kind this fight: it will have no effect.</span>}
+          {takenOfKind >= pillLimit && <span className="small warn">{pickedMate?.name} has taken {takenOfKind} of this kind since the last Consolidation: it will have no effect.</span>}
         </div>
       )}
       {open === "stabilize" && (

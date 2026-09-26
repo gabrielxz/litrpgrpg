@@ -182,6 +182,8 @@ export interface InterfaceSheet {
   /** What the character carries. */
   items: Stack[];
   proficiencies: Sheet["proficiencies"];
+  /** Pills taken since the last Consolidation, by kind. */
+  pillsTaken: Sheet["pillsTaken"];
   /** Every title the character holds, hidden ones included; Echoed and released ones in the history. */
   titles: Sheet["titles"];
   /** The quest log: offered, active, and closed quests as this character's log shows them. */

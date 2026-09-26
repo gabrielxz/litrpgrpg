@@ -11,6 +11,7 @@ import { useAuth } from "../auth.ts";
 import { RollForm, RollList } from "../Dice.tsx";
 import { useEngine } from "../live.ts";
 import { Fight } from "./Fight.tsx";
+import { pillsOf } from "../Care.tsx";
 import { stackLine } from "../items.ts";
 import { ATTRIBUTES, ATTRIBUTE_NAMES, noticeLine } from "../text.ts";
 import { type CharacterSpec, Creator } from "./Creator.tsx";
@@ -214,11 +215,11 @@ function PartySection({
  * the System shows the owner their items; nobody else sees them; book edit 14). Hand an item to
  * someone in the campaign or the spoils, or mark one used.
  */
-function Carried({ campaignId, c, roster, readOnly }: { campaignId: string; c: InterfaceSheet; roster: PlayerView["roster"]; readOnly?: boolean }) {
+function Carried({ campaignId, c, roster, readOnly, pills }: { campaignId: string; c: InterfaceSheet; roster: PlayerView["roster"]; readOnly?: boolean; pills: string[] }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [to, setTo] = useState<Record<string, string>>({});
-  if (!c.items.length) return null;
+  if (!c.items.length && !c.pillsTaken.healing && !c.pillsTaken.aether) return null;
   const run = async (action: Action) => {
     setBusy(true);
     setError(null);
@@ -233,6 +234,11 @@ function Carried({ campaignId, c, roster, readOnly }: { campaignId: string; c: I
   return (
     <div className="sys-section">
       <h3>Carried</h3>
+      {(c.pillsTaken.healing > 0 || c.pillsTaken.aether > 0) && (
+        <p className="small sys-dim">
+          Pills since Consolidation: healing {c.pillsTaken.healing}, Aether {c.pillsTaken.aether}
+        </p>
+      )}
       <ul className="items">
         {c.items.map((s) => (
           <li key={s.name}>
@@ -250,9 +256,15 @@ function Carried({ campaignId, c, roster, readOnly }: { campaignId: string; c: I
                 <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "item.move", from: c.id, to: to[s.name] ?? "spoils", name: s.name, count: 1 })}>
                   Hand over one
                 </button>
-                <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "item.remove", from: c.id, name: s.name, count: 1, note: "used" })}>
-                  Used one
-                </button>
+                {pills.includes(s.name.toLowerCase()) ? (
+                  <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "pill.take", characterId: c.id, targetId: c.id, pill: s.name })}>
+                    Take one
+                  </button>
+                ) : (
+                  <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "item.remove", from: c.id, name: s.name, count: 1, note: "used" })}>
+                    Used one
+                  </button>
+                )}
               </span>
             )}
           </li>
@@ -496,11 +508,14 @@ function Interface({
   c,
   roster,
   readOnly,
+  pills,
 }: {
   campaignId: string;
   c: InterfaceSheet;
   roster: PlayerView["roster"];
   readOnly?: boolean;
+  /** Pill names from the Items tables, lower-cased: these are taken, not just used. */
+  pills: string[];
 }) {
   const toNext = c.veToNextLevel;
   return (
@@ -597,7 +612,7 @@ function Interface({
         </div>
       )}
 
-      <Carried campaignId={campaignId} c={c} roster={roster} readOnly={readOnly} />
+      <Carried campaignId={campaignId} c={c} roster={roster} readOnly={readOnly} pills={pills} />
 
       <Titles campaignId={campaignId} c={c} readOnly={readOnly} />
 
@@ -733,7 +748,14 @@ export function PlayerCampaign({
       ) : (
         <div className="interfaces">
           {view.characters.map((c) => (
-            <Interface key={c.id} campaignId={view.campaign.id} c={c} roster={view.roster} readOnly={readOnly} />
+            <Interface
+              key={c.id}
+              campaignId={view.campaign.id}
+              c={c}
+              roster={view.roster}
+              readOnly={readOnly}
+              pills={pillsOf(engine).map((p) => p.name.toLowerCase())}
+            />
           ))}
         </div>
       )}

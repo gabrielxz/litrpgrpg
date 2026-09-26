@@ -13,6 +13,7 @@ import type { ItemAction } from "./inventory.ts";
 import type { MarkByHand } from "./proficiency.ts";
 import type { TitleAction } from "./titles.ts";
 import type { QuestAction } from "./quests.ts";
+import type { TakePillOutside } from "./pills.ts";
 
 export type { CombatAction, CombatantSpec } from "./combat.ts";
 
@@ -291,6 +292,7 @@ export type Action =
   | MarkByHand
   | TitleAction
   | QuestAction
+  | TakePillOutside
   | VoidAction;
 
 export type ActionType = Action["type"];

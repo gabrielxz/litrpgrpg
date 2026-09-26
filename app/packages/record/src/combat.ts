@@ -19,8 +19,8 @@
  * dies, and the GM may rule either way. Vital coherence starts at 3 and falls by one at the
  * end of each round, the round of Downing included; at 0 the character dies (Gabriel,
  * 2026-09-26). Stabilizing by bare hands needs the same Zone, like HP restoration (Gabriel,
- * 2026-09-26) and rolls DEX (Gabriel, 2026-09-26; backlog edit 11). Pills count per encounter (99-to-do.md, queued edit 7: the book's "ten quiet
- * minutes" gave no moment to reset). Aura Pressure's Will Save, Suppression, and the Surprise
+ * 2026-09-26) and rolls DEX (Gabriel, 2026-09-26; backlog edit 11). A character's pills count
+ * per Consolidation, in a fight or out of one (pills.ts). Aura Pressure's Will Save, Suppression, and the Surprise
  * Beat follow Core Mechanics; a defender may Yield against a Surprise Beat (Gabriel, 2026-09-26).
  */
 import type { Engine } from "@gradebreaker/engine";
@@ -29,6 +29,7 @@ import { type D100, type Dice, rollD100s } from "./dice.ts";
 import type { KillEntry, LootResult } from "./aftermath.ts";
 import { type CharacterState, type Effect, Rejected, type World, maxAetherOf, maxHpOf, rawStats } from "./fold.ts";
 import { take } from "./inventory.ts";
+import { countPill, findPill, pillLimit } from "./pills.ts";
 import { addMark, checkShape, proficiencyOf } from "./proficiency.ts";
 import { count } from "./titles.ts";
 import { questsOnLeave } from "./quests.ts";
@@ -373,7 +374,7 @@ export interface Combatant {
   killedBy?: string;
   /** Aura Pressure: steeled for the encounter, or Suppressed to 1 Beat. */
   aura: "steeled" | "suppressed" | null;
-  /** Pills taken in this encounter, by kind; from the third, a kind has no effect. */
+  /** A creature's or NPC's pills this fight, by kind; a character's count lives on the character, per Consolidation. */
   pills: { healing: number; aether: number };
 }
 
@@ -1074,34 +1075,31 @@ function pill(engine: Engine, world: World, a: TakePill): Effect[] {
   const target = combatant(e, a.targetId);
   if (target.dead || target.out) throw new Rejected(`${target.name} is out of the fight`);
   if (giver.id !== target.id && !sameZone(giver, target)) throw new Rejected(`${giver.name} must be in ${target.name}'s Zone`);
-  const items = engine.rules.items;
-  const find = (list: { name: string; grade: string }[]) => list.find((p) => p.name.toLowerCase() === a.pill.trim().toLowerCase());
-  const healing = find(items.healing_pills) as { name: string; grade: string; hp: number } | undefined;
-  const aetherPill = find(items.aether_pills) as { name: string; grade: string; aether: number } | undefined;
-  const p = healing ?? aetherPill;
-  if (!p) throw new Rejected(`no pill called ${a.pill}`);
-  const kind = healing ? "healing" : "aether";
+  const p = findPill(engine, a.pill);
+  const kind = p.kind;
   if (kind === "aether" && !target.characterId) throw new Rejected(`the tracker keeps no Aether for ${target.name}`);
   // A character gives from what they carry; a creature's or NPC's pill is the GM's to say.
   if (giver.characterId) take(world, giver.characterId, p.name, 1);
   spend(e, giver, `${p.name}${giver.id === target.id ? "" : ` to ${target.name}`}`);
   // The recipient's count, never the giver's; the pill is taken whether or not it works.
-  const taken = target.pills[kind];
-  target.pills[kind] += 1;
   let noEffect: "grade" | "limit" | undefined;
-  if (p.grade !== target.grade) noEffect = "grade";
-  else if (taken >= items.pill_use.per_fight_limit_per_kind) noEffect = "limit";
+  if (target.characterId) noEffect = countPill(engine, world.characters.get(target.characterId)!, kind, p.grade);
+  else {
+    const taken = target.pills[kind];
+    target.pills[kind] += 1;
+    noEffect = p.grade !== target.grade ? "grade" : taken >= pillLimit(engine) ? "limit" : undefined;
+  }
   const out: Effect[] = [];
   let restored = 0;
-  if (!noEffect && healing) {
-    const hp = changeHp(engine, world, e, target, healing.hp);
+  if (!noEffect && kind === "healing") {
+    const hp = changeHp(engine, world, e, target, p.amount);
     const change = hp[0] as { from: number; to: number };
     restored = change.to - change.from;
     out.push(...hp);
-  } else if (!noEffect && aetherPill) {
+  } else if (!noEffect) {
     const ch = world.characters.get(target.characterId!)!;
     const before = ch.aether;
-    ch.aether = Math.min(maxAetherOf(engine, ch), ch.aether + aetherPill.aether);
+    ch.aether = Math.min(maxAetherOf(engine, ch), ch.aether + p.amount);
     restored = ch.aether - before;
   }
   return [

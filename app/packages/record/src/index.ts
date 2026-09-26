@@ -51,6 +51,7 @@ export {
   questForHolder,
   questTableVe,
 } from "./quests.ts";
+export { type TakePillOutside, pillLimit } from "./pills.ts";
 export { COUNTED, DERIVED_COUNTERS, TICKED_COUNTERS, type Title, type TitleAction, type TitleCategory, type TitleSpec, catalogSpec } from "./titles.ts";
 export {
   type ClashResult,

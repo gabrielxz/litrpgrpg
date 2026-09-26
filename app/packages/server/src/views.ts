@@ -215,6 +215,7 @@ export function interfaceSheet(s: Sheet, record: CampaignRecord): InterfaceSheet
     invited: st.invites.filter((i) => i.fromId === s.id).map((i) => ({ id: i.id, toId: i.toId, toName: name(i.toId) })),
     items: (st.inventory.get(s.id) ?? []).map((x) => ({ ...x })),
     proficiencies: s.proficiencies,
+    pillsTaken: s.pillsTaken,
     titles: s.titles,
     quests: questLog(record, s.id),
   };
@@ -305,7 +306,8 @@ export function encounterView(record: CampaignRecord, which: "running" | "afterm
       const sheet = c.characterId ? record.sheet(c.characterId) : undefined;
       const hp = sheet ? sheet.hp : (c.hp ?? 0);
       const maxHp = sheet ? sheet.maxHp : (c.maxHp ?? 0);
-      return { ...c, hp, maxHp, momentumForce: momentumForceOf(record.engine, world, c) };
+      // A character's pills count per Consolidation, on the character.
+      return { ...c, hp, maxHp, momentumForce: momentumForceOf(record.engine, world, c), ...(sheet ? { pills: { ...sheet.pillsTaken } } : {}) };
     }),
   };
 }
@@ -358,7 +360,9 @@ export function playerCombat(record: CampaignRecord): PlayerCombat | null {
       stabilized: Boolean(c.downed?.stabilized),
       suppressed: c.aura === "suppressed",
       surprise: Boolean(e.round === 0 && e.surprise?.includes(c.id)),
-      ...(c.characterId ? { characterId: c.characterId, beats: c.beats, beatsPerTurn: c.beatsPerTurn, pills: { ...c.pills } } : {}),
+      ...(c.characterId
+        ? { characterId: c.characterId, beats: c.beats, beatsPerTurn: c.beatsPerTurn, pills: { ...(record.sheet(c.characterId)?.pillsTaken ?? c.pills) } }
+        : {}),
     })),
   };
 }

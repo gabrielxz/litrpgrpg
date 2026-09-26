@@ -20,6 +20,7 @@ import {
   type GmView,
   auraSavers,
   flankingSuggested,
+  pillLimit,
   shapes,
   stabilizeAttribute,
 } from "@gradebreaker/record";
@@ -438,7 +439,7 @@ function CombatantRow({
       {c.spent.length > 0 && <div className="muted small">This round: {c.spent.join(", ")}</div>}
       {c.characterId && (c.pills.healing > 0 || c.pills.aether > 0) && (
         <div className="muted small">
-          Pills this fight: {c.pills.healing} healing, {c.pills.aether} Aether
+          Pills since the last Consolidation: {c.pills.healing} healing, {c.pills.aether} Aether
         </div>
       )}
       {(c.downed || (c.dead && c.kind !== "character" && c.hp === 0)) && (
@@ -586,7 +587,7 @@ function CombatantRow({
           me={actorOf(view, c)}
           people={e.combatants.map(mateOf)}
           pills={pillsOf(engine)}
-          pillLimit={engine.rules.items.pill_use.per_fight_limit_per_kind}
+          pillLimit={pillLimit(engine)}
           stabilizeWith={stabilizeAttribute(engine)}
           beats={c.beats}
           busy={busy}
