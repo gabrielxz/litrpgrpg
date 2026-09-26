@@ -21,6 +21,12 @@ Ruled by Gabriel, 2026-09-25.
 - **VE from a kill is shared** by every participant; a confirmed kill for the Slaughter titles is the finishing blow (Titles, "Achievement Titles"). With in-app dice, the finishing blow is whoever made the attack that took the creature to 0.
 - **"Once a day" resets at dawn** in the fiction, on the app's in-game clock. The book sentence is queued in the backlog.
 
+Ruled by Gabriel, 2026-09-26:
+
+- **The notices' wording stands** as written in `packages/web/src/text.ts` (`noticeLine`); a test holds it to in-world words.
+- **A correction changes a player's sheet silently.** No notice explains it, and a notice the correction made untrue stays in the feed; the GM explains at the table.
+- **Notices are not stored.** They reach an open page; a player who reloads starts with an empty feed.
+
 Ruled by Claude on Gabriel's delegation, 2026-09-25 (book sentences queued in the backlog):
 
 - **A collapse's own involuntary Consolidation does not return its temporary point.** The next Consolidation completed without interruption does.
@@ -134,10 +140,6 @@ A model keeps nothing between requests. Every request carries a context the app 
 Visibility is applied before assembly: a player-facing request never receives GM notes, HVE readings, hidden criteria, or another character's private record.
 
 ## Open
-
-- **The notices' wording** (`packages/web/src/text.ts`, `noticeLine`) is a first draft awaiting Gabriel's voice pass. A test holds it to in-world words.
-- **What a player sees when a correction changes their sheet.** The sheet changes and no notice explains it; a notice the correction made untrue stays in the player's feed. The GM explains at the table for now.
-- **Notice history.** Notices reach an open page only; a player who reloads loses the feed. They belong in the record with the GM composer (M1, "Notices").
 
 - **The speech-to-text vendor**, chosen at M3 against recorded test material.
 - **The rehearsal scene** before the tutorial: content that spoils nothing in the tutorial.
