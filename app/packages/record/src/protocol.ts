@@ -181,6 +181,8 @@ export interface InterfaceSheet {
   /** What the character carries. */
   items: Stack[];
   proficiencies: Sheet["proficiencies"];
+  /** Every title the character holds, hidden ones included; Echoed and released ones in the history. */
+  titles: Sheet["titles"];
 }
 
 export interface GmView {

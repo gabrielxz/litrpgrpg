@@ -12,6 +12,7 @@ import { PlayerCampaign } from "../player/PlayerCampaign.tsx";
 import { CombatSection } from "./Combat.tsx";
 import { Commit } from "./Commit.tsx";
 import { SpoilsCard } from "./Items.tsx";
+import { TitlesDueCard } from "./Titles.tsx";
 import { stackLine } from "../items.ts";
 import { ATTRIBUTES } from "../text.ts";
 import { Table } from "./Invites.tsx";
@@ -92,6 +93,14 @@ function CharacterCard({ c, player, party, items }: { c: Sheet; player: string; 
       {c.proficiencies.length > 0 && (
         <p className="small">
           Proficiencies: {c.proficiencies.map((p) => `${p.shape} ${p.tier} (${p.marks})`).join(", ")}
+        </p>
+      )}
+      {c.titles.length > 0 && (
+        <p className="small">
+          Titles:{" "}
+          {c.titles
+            .map((t) => `${t.name}${t.status !== "active" ? ` (${t.status})` : t.negative ? " (negative)" : t.choice ? " (stat to choose)" : ""}`)
+            .join(", ")}
         </p>
       )}
       {items.length > 0 && <p className="small">Carries: {items.map(stackLine).join(", ")}</p>}
@@ -241,6 +250,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
       {section === "party" && (
         <main className="gm">
           <section className="sheets">
+            {engine && <TitlesDueCard view={view} engine={engine} onRecorded={live.addToLog} />}
             {view.characters.length === 0 ? (
               <p className="muted">No characters yet. Players can build their own once they join, or you can create one under New character.</p>
             ) : (

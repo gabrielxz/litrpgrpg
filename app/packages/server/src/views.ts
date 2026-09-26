@@ -192,6 +192,7 @@ export function interfaceSheet(s: Sheet, record: CampaignRecord): InterfaceSheet
     invited: st.invites.filter((i) => i.fromId === s.id).map((i) => ({ id: i.id, toId: i.toId, toName: name(i.toId) })),
     items: (st.inventory.get(s.id) ?? []).map((x) => ({ ...x })),
     proficiencies: s.proficiencies,
+    titles: s.titles,
   };
 }
 
@@ -223,6 +224,9 @@ const ANNOUNCED: ReadonlySet<Effect["kind"]> = new Set([
   "kill-confirmed",
   "mark",
   "item-received",
+  "title-conferred",
+  "title-echoed",
+  "title-released",
 ]);
 
 /** Effects a player is shown: the announced ones about their own characters. */

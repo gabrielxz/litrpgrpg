@@ -34,6 +34,9 @@ export function tableWordsIn(text: string): string[] {
 const stack = (s: { name: string; count: number }) => (s.count === 1 ? s.name : `${s.name} ×${s.count}`);
 const holder = (h: string, name: Names) => (h === "spoils" ? "the spoils" : name(h));
 
+/** A count toward an Achievement title, in words: "locks-picked" is "locks picked". */
+export const counterLabel = (key: string) => key.replace(/-/g, " ");
+
 /** A weapon shape as the System names it: "axes and hammers" is Axes and Hammers. */
 const titleCase = (s: string) =>
   s
@@ -184,6 +187,20 @@ export function describe(
       return `${holder(a.from, name)} uses up ${stack(a)}${a.note ? ` (${a.note})` : ""}`;
     case "proficiency.mark":
       return `Mark by hand: ${name(a.characterId)}, ${a.shape}`;
+    case "title.grant":
+      return `Title for ${name(a.characterId)}: ${a.title.name ?? a.title.catalog}`;
+    case "title.choose":
+      return `${name(a.characterId)} places a title's point in ${a.attribute}`;
+    case "title.wear":
+      return `${name(a.characterId)} ${a.worn ? "wears" : "hides"} a Bestowed title`;
+    case "title.reveal":
+      return `${name(a.characterId)} reveals a Hidden Achievement`;
+    case "title.release":
+      return `${name(a.characterId)}: a negative title released${a.replacement ? `, becoming ${a.replacement.name ?? a.replacement.catalog}` : ""}`;
+    case "title.dismiss":
+      return `${name(a.characterId)}: ${a.catalog} passed on`;
+    case "counter.tick":
+      return `${name(a.characterId)}: ${counterLabel(a.counter)} +${a.count}`;
     case "void": {
       const seq = seqOf(a.targetId);
       const target = seq === undefined ? "an action" : `#${seq + 1}`;
@@ -272,6 +289,12 @@ export function effectLine(e: Effect, name: Names): string | null {
       return null; // the settlement's line names the kills
     case "encounter-settled":
       return null;
+    case "title-conferred":
+      return `${name(e.characterId)} holds ${e.name}${e.negative ? " (negative)" : ""}`;
+    case "title-echoed":
+      return `${name(e.characterId)}: ${e.name} is Echoed (its flat bonus stays)`;
+    case "title-released":
+      return `${name(e.characterId)}: ${e.name} released, its penalty returned`;
     case "mark":
       return `${name(e.characterId)}: a Mark in ${e.shape} (${e.marks}${e.nextAt ? ` of ${e.nextAt}` : ""}), ${e.tier}${e.advanced ? ", a new tier" : ""}`;
     case "spoils-added":
@@ -353,6 +376,12 @@ export function noticeLine(e: Effect): string | null {
       return `Kill confirmed. Grade ${e.victimGrade}, ${e.tier}.`;
     case "item-received":
       return `Item registered: ${stack(e)}.`;
+    case "title-conferred":
+      return `Title conferred: ${e.name}.`;
+    case "title-echoed":
+      return `Title echoed: ${e.name}.`;
+    case "title-released":
+      return `Title released: ${e.name}.`;
     case "mark": {
       const shape = titleCase(e.shape);
       if (e.marks === 1) return `Technique acquired: ${shape}. ${e.tier}.`;

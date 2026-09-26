@@ -11,6 +11,7 @@ import type { AftermathAction } from "./aftermath.ts";
 import type { CombatAction } from "./combat.ts";
 import type { ItemAction } from "./inventory.ts";
 import type { MarkByHand } from "./proficiency.ts";
+import type { TitleAction } from "./titles.ts";
 
 export type { CombatAction, CombatantSpec } from "./combat.ts";
 
@@ -287,6 +288,7 @@ export type Action =
   | AftermathAction
   | ItemAction
   | MarkByHand
+  | TitleAction
   | VoidAction;
 
 export type ActionType = Action["type"];

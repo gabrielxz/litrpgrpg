@@ -30,6 +30,7 @@ import { type LootResult, applyAftermath } from "./aftermath.ts";
 import { type DeathCause, type Encounter, type MomentumRollRecord, applyCombat, authorizeCombatPlayer, cloneEncounter } from "./combat.ts";
 import { type Stack, applyItems, authorizeItemsPlayer } from "./inventory.ts";
 import { addMark, checkShape, proficiencyOf } from "./proficiency.ts";
+import { type Title, applyTitles, count, titleStats } from "./titles.ts";
 
 export interface CharacterState {
   id: string;
@@ -59,6 +60,12 @@ export interface CharacterState {
   dead?: boolean;
   /** Marks by weapon shape; a shape's Proficiency tier is read from its count. */
   marks?: Record<string, number>;
+  /** Every title held, Echoed, or released, in the order granted. */
+  titles?: Title[];
+  /** Counts toward Achievement titles, by counter. */
+  counters?: Record<string, number>;
+  /** Due catalog titles the GM passed on. */
+  dismissedTitles?: string[];
 }
 
 /** A formal party: its members' character ids in the order they joined. */
@@ -144,6 +151,9 @@ export type Effect =
   | { kind: "kill-confirmed"; characterId: string; encounterId: string; victimId: string; victimGrade: string; tier: string }
   | { kind: "encounter-settled"; encounterId: string }
   | { kind: "spoils-added"; encounterId: string; items: Stack[] }
+  | { kind: "title-conferred"; characterId: string; titleId: string; name: string; negative: boolean }
+  | { kind: "title-echoed"; characterId: string; titleId: string; name: string }
+  | { kind: "title-released"; characterId: string; titleId: string; name: string }
   | {
       kind: "mark";
       characterId: string;
@@ -229,18 +239,18 @@ const sum = (s: Stats) => Object.values(s).reduce((a, b) => a + b, 0);
 
 // ------------------------------------------------------ derived values ---
 
-/** Raw Attributes as they stand: point buy, placed points, and any temporary collapse loss. */
+/** Raw Attributes as they stand: point buy, placed points, titles' flat bonuses, and any temporary collapse loss. */
 export function rawStats(c: CharacterState): Stats {
-  const out: Stats = {};
-  for (const a of ATTRIBUTES) out[a] = (c.base[a] ?? 0) + (c.placed[a] ?? 0);
+  const out = permanentStats(c);
   for (const t of c.temporary) out[t.attribute]! -= 1;
   return out;
 }
 
 /** Raw Attributes without temporary losses: what the Grade cap is checked against. */
-function permanentStats(c: CharacterState): Stats {
+export function permanentStats(c: CharacterState): Stats {
   const out: Stats = {};
-  for (const a of ATTRIBUTES) out[a] = (c.base[a] ?? 0) + (c.placed[a] ?? 0);
+  const titles = titleStats(c);
+  for (const a of ATTRIBUTES) out[a] = (c.base[a] ?? 0) + (c.placed[a] ?? 0) + (titles[a] ?? 0);
   return out;
 }
 
@@ -342,6 +352,9 @@ function cloneState(c: CharacterState): CharacterState {
     temporary: [...c.temporary],
     pendingSystemLevels: [...c.pendingSystemLevels],
     ...(c.marks ? { marks: { ...c.marks } } : {}),
+    ...(c.titles ? { titles: c.titles.map((t) => ({ ...t, bonus: { ...t.bonus }, ...(t.lost ? { lost: { ...t.lost } } : {}) })) } : {}),
+    ...(c.counters ? { counters: { ...c.counters } } : {}),
+    ...(c.dismissedTitles ? { dismissedTitles: [...c.dismissedTitles] } : {}),
   };
 }
 
@@ -445,6 +458,14 @@ function apply(engine: Engine, world: World, env: Envelope): Effect[] {
       return applyItems(world, a);
     case "proficiency.mark":
       return [addMark(engine, need(chars, a.characterId), a.shape)];
+    case "title.grant":
+    case "title.choose":
+    case "title.wear":
+    case "title.reveal":
+    case "title.release":
+    case "title.dismiss":
+    case "counter.tick":
+      return applyTitles(engine, need(chars, a.characterId), a, env.id);
     case "void":
       throw new Error("voids are handled before apply");
   }
@@ -470,6 +491,9 @@ function authorize(world: World, env: Envelope) {
       return;
     case "points.free":
     case "party.leave":
+    case "title.choose":
+    case "title.wear":
+    case "title.reveal":
       return mine(a.characterId);
     case "party.invite":
       return mine(a.fromId);
@@ -684,6 +708,8 @@ function consolidate(engine: Engine, chars: Map<string, CharacterState>, a: Cons
     // A rest interrupted before its first hour completes changes nothing; an uninterrupted one takes at least the minimum.
     if (!r.interrupted && r.hours < min) throw new Rejected(`a completed Consolidation takes at least ${min} hour`);
     out.push(...runHours(engine, c, r.hours, a.highDensity));
+    // A Consolidation counts as completed once its first full hour is done, interrupted or not (Titles, Deep Breather).
+    if (r.hours >= 1) count(c, "consolidations");
     if (!r.interrupted) {
       for (const t of c.temporary) out.push({ kind: "temporary-returned", characterId: c.id, attribute: t.attribute });
       c.temporary = [];

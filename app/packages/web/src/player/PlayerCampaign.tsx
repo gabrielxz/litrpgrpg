@@ -263,6 +263,92 @@ function Carried({ campaignId, c, roster, readOnly }: { campaignId: string; c: I
   );
 }
 
+/**
+ * Every title the character holds, hidden ones included (What Can Be Seen): the holder wears or
+ * hides a Bestowed title, reveals a Hidden Achievement for good, and places a player's-choice point.
+ */
+function Titles({ campaignId, c, readOnly }: { campaignId: string; c: InterfaceSheet; readOnly?: boolean }) {
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [revealing, setRevealing] = useState<string | null>(null);
+  const [stat, setStat] = useState<Record<string, string>>({});
+  if (!c.titles.length) return null;
+  const run = async (action: Action) => {
+    setBusy(true);
+    setError(null);
+    try {
+      await submit(campaignId, newActionId(), action);
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  };
+  const bonus = (b: Record<string, number>) =>
+    Object.entries(b)
+      .filter(([, v]) => v)
+      .map(([k, v]) => `${v > 0 ? "+" : "−"}${Math.abs(v)} ${ATTRIBUTE_NAMES[k]}`)
+      .join(", ");
+  const can = !readOnly && !c.dead;
+  return (
+    <div className="sys-section titles">
+      <h3>Titles</h3>
+      <ul className="items">
+        {c.titles.map((t) => (
+          <li key={t.id} className={t.status !== "active" ? "sys-dim" : ""}>
+            <span className="grow">
+              <strong>{t.name}</strong> <span className="sys-dim small">{t.category}
+                {t.category === "Hidden Achievement" ? (t.revealed ? ", revealed" : ", hidden from observers") : ""}
+                {t.status === "echoed" ? ", Echoed" : t.status === "released" ? ", released" : ""}
+              </span>
+              {bonus(t.bonus) && <span className="small"> · {bonus(t.bonus)}</span>}
+              {t.effect && <div className="small">{t.effect}</div>}
+              {t.negative && t.status === "active" && <div className="small sys-alert">Visible to every observer of your Grade or higher.{t.release ? ` Released by: ${t.release}` : ""}</div>}
+            </span>
+            {can && t.choice !== undefined && (
+              <span className="item-actions">
+                <select value={stat[t.id] ?? "STR"} onChange={(e) => setStat({ ...stat, [t.id]: e.target.value })} aria-label="Stat">
+                  {ATTRIBUTES.map((a) => (
+                    <option key={a} value={a}>
+                      {ATTRIBUTE_NAMES[a]}
+                    </option>
+                  ))}
+                </select>
+                <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "title.choose", characterId: c.id, titleId: t.id, attribute: stat[t.id] ?? "STR" })}>
+                  Place +{t.choice}
+                </button>
+              </span>
+            )}
+            {can && t.category === "Bestowed" && !t.negative && t.status !== "released" && (
+              <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "title.wear", characterId: c.id, titleId: t.id, worn: !t.worn })}>
+                {t.worn ? "Worn: hide it" : "Hidden: wear it"}
+              </button>
+            )}
+            {can && t.category === "Hidden Achievement" && !t.revealed && (
+              revealing === t.id ? (
+                <span className="item-actions">
+                  <span className="small">Revealing is permanent.</span>
+                  <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "title.reveal", characterId: c.id, titleId: t.id })}>
+                    Reveal {t.name}
+                  </button>
+                  <button className="sys-confirm inline" onClick={() => setRevealing(null)}>
+                    Keep it hidden
+                  </button>
+                </span>
+              ) : (
+                <button className="sys-confirm inline" onClick={() => setRevealing(t.id)}>
+                  Reveal…
+                </button>
+              )
+            )}
+          </li>
+        ))}
+      </ul>
+      {error && <p className="error">{error}</p>}
+    </div>
+  );
+}
+
 /** What the party has not divided: any player can claim an item for their own character. */
 function Spoils({ view, readOnly }: { view: PlayerView; readOnly?: boolean }) {
   const [busy, setBusy] = useState(false);
@@ -419,6 +505,8 @@ function Interface({
       )}
 
       <Carried campaignId={campaignId} c={c} roster={roster} readOnly={readOnly} />
+
+      <Titles campaignId={campaignId} c={c} readOnly={readOnly} />
 
       {c.freePoints > 0 &&
         (readOnly ? (

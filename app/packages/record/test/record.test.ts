@@ -820,6 +820,8 @@ describe("Downed, pills, Aura Pressure, and the Surprise Beat", () => {
     expect(end.effects).toContainEqual({ kind: "revived", encounterId: "e1", combatantId: "kara", characterId: "kara", hp: 1 });
     expect(end.effects).toContainEqual({ kind: "battle-memory-due", characterId: "kara", reason: "survived Downed" });
     expect(rec.sheet("kara")!.hp).toBe(1);
+    // Woken at 1 HP after the fight is not still standing at its end.
+    expect(rec.sheet("kara")!.counters).toEqual({ "survived-downed": 1 });
   });
 
   it("wakes a Downed character on a pill; two of each kind work per encounter, counted against the recipient", () => {
@@ -1072,6 +1074,123 @@ describe("Proficiencies and Marks", () => {
     expect(() => gm({ type: "proficiency.mark", characterId: "kara", shape: "lasers" })).toThrow(/not a weapon shape/);
     gm({ type: "proficiency.mark", characterId: "kara", shape: "firearms" });
     expect(prof("kara", "firearms")).toMatchObject({ marks: 1, tier: "Trained" });
+  });
+});
+
+describe("titles and achievement counts", () => {
+  const as = (actor: Draft["actor"], action: Action, ...dice: number[]) => rec.append(rollFor(rec, draft(action, actor), () => dice.shift()!));
+  const titles = (id: string) => rec.sheet(id)!.titles;
+  beforeEach(() => {
+    gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" });
+  });
+
+  it("grants a catalog title with its flat bonus once, and refuses holding it twice", () => {
+    const out = gm({ type: "title.grant", characterId: "kara", title: { catalog: "Ten-Slayer" } });
+    expect(out.effects).toEqual([expect.objectContaining({ kind: "title-conferred", characterId: "kara", name: "Ten-Slayer", negative: false })]);
+    expect(rec.sheet("kara")!.raw.STR).toBe(9);
+    expect(titles("kara")[0]).toMatchObject({ name: "Ten-Slayer", category: "Achievement", bonus: { STR: 1 }, status: "active" });
+    expect(() => gm({ type: "title.grant", characterId: "kara", title: { catalog: "ten-slayer" } })).toThrow(/holds Ten-Slayer already/);
+  });
+
+  it("lets the player choose the stat for a player's-choice bonus", () => {
+    const t = gm({ type: "title.grant", characterId: "kara", title: { catalog: "Week One" } });
+    const id = (t.effects[0] as { titleId: string }).titleId;
+    expect(titles("kara")[0]).toMatchObject({ choice: 1, bonus: {} });
+    expect(() => as(P2, { type: "title.choose", characterId: "kara", titleId: id, attribute: "DEX" })).toThrow(/not this player's character/);
+    as(P1, { type: "title.choose", characterId: "kara", titleId: id, attribute: "DEX" });
+    expect(rec.sheet("kara")!.raw.DEX).toBe(6);
+    expect(() => as(P1, { type: "title.choose", characterId: "kara", titleId: id, attribute: "STR" })).toThrow(/no stat left/);
+  });
+
+  it("Echoes an HVE-Resonant title on the same axis pair, keeping its flat bonus", () => {
+    gm({ type: "title.grant", characterId: "kara", title: { name: "The Hungering Edge", category: "HVE-Resonant", axisPair: "Hunger + Force", bonus: { STR: 3, DEX: 2 }, effect: "Once per encounter, when you reduce a foe to 0 HP, gain 1 Beat next turn." } });
+    const out = gm({ type: "title.grant", characterId: "kara", title: { name: "The Devouring Edge", category: "HVE-Resonant", axisPair: "Force + Hunger", bonus: { STR: 2 } } });
+    expect(out.effects.map((e) => e.kind)).toEqual(["title-conferred", "title-echoed"]);
+    expect(titles("kara").map((t) => [t.name, t.status, t.axisPair])).toEqual([
+      ["The Hungering Edge", "echoed", "Force + Hunger"],
+      ["The Devouring Edge", "active", "Force + Hunger"],
+    ]);
+    expect(rec.sheet("kara")!.raw.STR).toBe(8 + 3 + 2);
+    expect(() => gm({ type: "title.grant", characterId: "kara", title: { name: "Bad", category: "HVE-Resonant", axisPair: "Force + Method" } })).toThrow(/one pole from each of two axes/);
+  });
+
+  it("holds a negative title's penalty until release, and converts it on release", () => {
+    const t = gm({ type: "title.grant", characterId: "kara", title: { catalog: "Salvaged" } });
+    const id = (t.effects[0] as { titleId: string }).titleId;
+    expect(titles("kara")[0]).toMatchObject({ category: "Bestowed", negative: true, bonus: { HRT: -2 }, worn: true, release: "last out of a collapsing, closing, or pursued situation, under their own power" });
+    expect(rec.sheet("kara")!.raw.HRT).toBe(2);
+    expect(() => as(P1, { type: "title.wear", characterId: "kara", titleId: id, worn: false })).toThrow(/cannot be hidden/);
+    const out = gm({ type: "title.release", characterId: "kara", titleId: id, replacement: { catalog: "Came Back Whole" } });
+    expect(out.effects.map((e) => e.kind)).toEqual(["title-released", "title-conferred"]);
+    expect(rec.sheet("kara")!.raw.HRT).toBe(5);
+  });
+
+  it("lets the holder wear or hide a Bestowed title and reveal a Hidden Achievement once", () => {
+    const b = gm({ type: "title.grant", characterId: "kara", title: { name: "Hand of the Iron Court", category: "Bestowed", effect: "+5 to social Clashes invoking lawful authority." } });
+    const h = gm({ type: "title.grant", characterId: "kara", title: { name: "Cornerless", category: "Hidden Achievement", effect: "At a quarter of Max HP or less, +5 STR and +5 DEX." } });
+    as(P1, { type: "title.wear", characterId: "kara", titleId: (b.effects[0] as { titleId: string }).titleId, worn: false });
+    as(P1, { type: "title.reveal", characterId: "kara", titleId: (h.effects[0] as { titleId: string }).titleId });
+    expect(titles("kara").map((t) => [t.worn, t.revealed])).toEqual([
+      [false, undefined],
+      [undefined, true],
+    ]);
+    expect(() => as(P1, { type: "title.reveal", characterId: "kara", titleId: (h.effects[0] as { titleId: string }).titleId })).toThrow(/revealed already/);
+    expect(() => as(P1, { type: "title.grant", characterId: "kara", title: { catalog: "Ten-Slayer" } })).toThrow(/only the GM/);
+  });
+
+  it("loses points past the stat cap", () => {
+    gm({ type: "character.create", characterId: "max", name: "Max", background: "x", stats: { STR: 10, DEX: 5, FOR: 5, HRT: 5, POW: 5, PER: 5, CHA: 5 } });
+    const cap = engine.statCap("F");
+    gm({ type: "title.grant", characterId: "max", title: { name: "Huge", category: "Bestowed", bonus: { STR: cap } } });
+    expect(rec.sheet("max")!.raw.STR).toBe(cap);
+    expect(titles("max")[0]).toMatchObject({ bonus: { STR: cap - 10 }, lost: { STR: 10 } });
+  });
+
+  it("counts Consolidations and GM ticks, and puts a catalog title on the due list without granting it", () => {
+    for (let i = 0; i < 20; i++) gm({ type: "consolidation.rest", highDensity: false, rests: [{ characterId: "kara", hours: 1, interrupted: true }] });
+    expect(rec.sheet("kara")!.counters.consolidations).toBe(20);
+    expect(rec.sheet("kara")!.titlesDue).toEqual(["Deep Breather"]);
+    expect(() => gm({ type: "counter.tick", characterId: "kara", counter: "consolidations", count: 1 })).toThrow(/counts that itself/);
+    gm({ type: "counter.tick", characterId: "kara", counter: "locks-picked", count: 5 });
+    expect(rec.sheet("kara")!.titlesDue).toEqual(["Lockbreaker", "Deep Breather"]);
+    gm({ type: "title.dismiss", characterId: "kara", catalog: "Lockbreaker" });
+    gm({ type: "title.grant", characterId: "kara", title: { catalog: "Deep Breather" } });
+    expect(rec.sheet("kara")!.titlesDue).toEqual([]);
+  });
+
+  it("counts confirmed kills from the aftermath's finishing blows, and the fights a character ends below half HP", () => {
+    const rat = (id: string, name: string) => ({ combatantId: id, sideId: "hostiles", name, creature: "Frenzy Rat", grade: "F", maxHp: 12, momentumForce: 8, beats: 1 });
+    gm({
+      type: "combat.start",
+      encounterId: "e1",
+      name: "Nest",
+      sides: [
+        { id: "party", name: "The party" },
+        { id: "hostiles", name: "Hostiles" },
+      ],
+      combatants: [{ combatantId: "kara", sideId: "party", characterId: "kara" }, rat("r1", "Rat 1"), rat("r2", "Rat 2"), rat("r3", "Rat 3")],
+    });
+    as(GM, { type: "combat.momentum" }, 60, 30);
+    as(P1, { type: "combat.act", combatantId: "kara" });
+    as(P1, { type: "combat.attack", attackerId: "kara", defenderId: "r1", attack: { attribute: "STR", modifier: 0 } });
+    as(GM, { type: "combat.defend", defense: { force: 8, modifier: 0 } }, 90, 10);
+    for (const r of ["r2", "r3"]) gm({ type: "combat.hp", combatantId: r, delta: -12 });
+    gm({ type: "combat.hp", combatantId: "kara", delta: -8 });
+    gm({ type: "combat.end" });
+    gm({
+      type: "encounter.settle",
+      encounterId: "e1",
+      participants: ["kara"],
+      kills: [
+        { combatantId: "r1", tier: "Trivial", byId: "kara" },
+        { combatantId: "r2", tier: "Trivial", byId: "kara" },
+        { combatantId: "r3", tier: "Severe", byId: "kara" },
+      ],
+      awards: [],
+      spoils: [],
+    });
+    expect(rec.sheet("kara")!.counters).toMatchObject({ "confirmed-kills": 3, "most-kills-in-a-fight": 3, "severe-or-peak-kills": 1, "fights-ended-below-half": 1, "first-blood": 1 });
+    expect(rec.sheet("kara")!.titlesDue).toEqual(["Pack-Breaker", "Giant-Feller"]);
   });
 });
 

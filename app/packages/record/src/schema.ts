@@ -24,6 +24,17 @@ const clashSide = z.object({
 });
 const zone = z.object({ id, name: z.string().max(60) });
 const stack = z.object({ name: z.string().max(80), count: whole });
+const titleSpec = z.object({
+  catalog: z.string().max(80).optional(),
+  name: z.string().max(80).optional(),
+  category: z.enum(["Achievement", "Hidden Achievement", "HVE-Resonant", "Bestowed"]).optional(),
+  negative: z.boolean().optional(),
+  bonus: stats.optional(),
+  choice: whole.optional(),
+  effect: z.string().max(500).optional(),
+  axisPair: z.string().max(40).optional(),
+  release: z.string().max(300).optional(),
+});
 const combatant = z.object({
   combatantId: id,
   sideId: id,
@@ -204,6 +215,13 @@ export const actionSchema = z.discriminatedUnion("type", [
   }),
   z.object({ type: z.literal("item.give"), to: id, items: z.array(stack).min(1).max(60) }),
   z.object({ type: z.literal("proficiency.mark"), characterId: id, shape: z.string().max(40) }),
+  z.object({ type: z.literal("title.grant"), characterId: id, title: titleSpec }),
+  z.object({ type: z.literal("title.choose"), characterId: id, titleId: id, attribute: z.string().max(10) }),
+  z.object({ type: z.literal("title.wear"), characterId: id, titleId: id, worn: z.boolean() }),
+  z.object({ type: z.literal("title.reveal"), characterId: id, titleId: id }),
+  z.object({ type: z.literal("title.release"), characterId: id, titleId: id, replacement: titleSpec.optional() }),
+  z.object({ type: z.literal("title.dismiss"), characterId: id, catalog: z.string().max(80) }),
+  z.object({ type: z.literal("counter.tick"), characterId: id, counter: z.string().max(60), count: whole }),
   z.object({ type: z.literal("item.move"), from: id, to: id, name: z.string().max(80), count: whole }),
   z.object({ type: z.literal("item.remove"), from: id, name: z.string().max(80), count: whole, note: z.string().max(200).optional() }),
   z.object({

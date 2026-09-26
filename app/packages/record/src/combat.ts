@@ -30,6 +30,7 @@ import type { KillEntry, LootResult } from "./aftermath.ts";
 import { type CharacterState, type Effect, Rejected, type World, maxAetherOf, maxHpOf, rawStats } from "./fold.ts";
 import { take } from "./inventory.ts";
 import { addMark, checkShape, proficiencyOf } from "./proficiency.ts";
+import { count } from "./titles.ts";
 
 // --------------------------------------------------------------- actions ---
 
@@ -440,6 +441,8 @@ export interface Encounter {
   loot?: LootResult[];
   settled?: boolean;
   kills?: KillEntry[];
+  /** The combatant whose hit drew the fight's first damage (Titles, First Blood). */
+  firstBlood?: string;
 }
 
 export function cloneEncounter(e: Encounter): Encounter {
@@ -939,12 +942,21 @@ function partyAfterDeath(world: World, characterId: string, name: string): Effec
   return out;
 }
 
-function end(world: World): Effect[] {
+function end(engine: Engine, world: World): Effect[] {
   const e = fight(world);
   noClash(e);
   const dying = e.combatants.filter((c) => c.characterId && c.downed && !c.downed.stabilized);
   if (dying.length)
     throw new Rejected(`${dying.map((c) => c.name).join(" and ")} ${dying.length === 1 ? "is" : "are"} dying: stabilize them or run the rounds out`);
+  // The counts behind Achievement titles, read before a stabilized character wakes: still
+  // standing means on their feet when the fight ends, not woken at 1 HP afterward.
+  for (const c of e.combatants) {
+    const ch = c.characterId ? world.characters.get(c.characterId) : undefined;
+    if (!ch || c.dead) continue;
+    if (c.wasDowned) count(ch, "survived-downed");
+    if (!c.downed && !c.out && ch.hp > 0 && ch.hp * 2 < maxHpOf(engine, ch)) count(ch, "fights-ended-below-half");
+    if (e.firstBlood === c.id) count(ch, "first-blood");
+  }
   const out: Effect[] = [];
   for (const c of e.combatants) {
     // A stabilized character wakes at 1 HP when the scene ends.
@@ -1413,6 +1425,7 @@ function land(engine: Engine, world: World, e: Encounter, y: number): Effect[] {
     res.drivenBack = drivenBack;
     res.drivable = drivenBack || y >= r.combat.yield.max_beats;
     if (drivenBack) def.exposed = { started: false };
+    if (damage > 0 && !e.firstBlood) e.firstBlood = att.id;
     if (damage > 0) out.push(...changeHp(engine, world, e, def, -damage, att.id));
   }
   e.lastClash = res;
@@ -1493,7 +1506,7 @@ export function applyCombat(engine: Engine, world: World, a: CombatAction, env: 
     case "combat.hp":
       return hp(engine, world, a);
     case "combat.end":
-      return end(world);
+      return end(engine, world);
     case "combat.attack":
       return attack(engine, world, a, env.id);
     case "combat.defend":

@@ -14,6 +14,7 @@ import type { Encounter } from "./combat.ts";
 import { type D100, rollD100s } from "./dice.ts";
 import { type Effect, Rejected, type World, storeVe } from "./fold.ts";
 import { SPOILS, type Stack, put } from "./inventory.ts";
+import { count, countMax } from "./titles.ts";
 
 /** One kill as the GM settles it: the tier for the party, the boss's ×1.5, and who finished it. */
 export interface KillEntry {
@@ -194,6 +195,18 @@ function settle(engine: Engine, world: World, a: Settle): Effect[] {
   }
   for (const s of a.spoils) out.push(...put(world, SPOILS, s));
   if (a.spoils.length) out.push({ kind: "spoils-added", encounterId: e.id, items: a.spoils.map((s) => ({ name: s.name.trim(), count: s.count })) });
+  // Confirmed kills are finishing blows (Titles, "Achievement Titles"); a Severe or Peak kill reads the killer's own tier.
+  const perKiller = new Map<string, number>();
+  for (const k of a.kills) {
+    const killer = k.byId ? e.combatants.find((c) => c.id === k.byId)?.characterId : undefined;
+    const ch = killer ? world.characters.get(killer) : undefined;
+    if (!ch) continue;
+    count(ch, "confirmed-kills");
+    const tier = k.tiers?.[ch.id] ?? k.tier;
+    if (tier === "Severe" || tier === "Peak") count(ch, "severe-or-peak-kills");
+    perKiller.set(ch.id, (perKiller.get(ch.id) ?? 0) + 1);
+  }
+  for (const [id, n] of perKiller) countMax(world.characters.get(id)!, "most-kills-in-a-fight", n);
   e.settled = true;
   e.kills = a.kills.map((k) => ({ ...k, ...(k.tiers ? { tiers: { ...k.tiers } } : {}) }));
   return [{ kind: "encounter-settled", encounterId: e.id }, ...out];

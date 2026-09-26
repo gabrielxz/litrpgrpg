@@ -5,6 +5,7 @@
 import { ATTRIBUTES, type Engine, type Stats } from "@gradebreaker/engine";
 import { type CharacterState, capLevel, maxAetherOf, maxHpOf, rawStats } from "./fold.ts";
 import { type Proficiency, proficienciesOf } from "./proficiency.ts";
+import { type Title, titlesDue } from "./titles.ts";
 
 export interface Sheet {
   id: string;
@@ -37,6 +38,11 @@ export interface Sheet {
   temporary: ("FOR" | "POW")[];
   /** Each weapon shape with a Mark: its count, tier, and bonus. */
   proficiencies: Proficiency[];
+  titles: Title[];
+  /** Counts toward Achievement titles: the GM's side of the screen. */
+  counters: Record<string, number>;
+  /** Catalog titles whose count is met, waiting on the GM. */
+  titlesDue: string[];
 }
 
 export function sheetOf(engine: Engine, c: CharacterState): Sheet {
@@ -71,6 +77,9 @@ export function sheetOf(engine: Engine, c: CharacterState): Sheet {
     freePoints: c.freePoints,
     temporary: c.temporary.map((t) => t.attribute),
     proficiencies: proficienciesOf(engine, c),
+    titles: (c.titles ?? []).map((t) => ({ ...t })),
+    counters: { ...(c.counters ?? {}) },
+    titlesDue: titlesDue(c),
   };
   if (c.playerId !== undefined) sheet.playerId = c.playerId;
   if (c.pregen !== undefined) sheet.pregen = c.pregen;
