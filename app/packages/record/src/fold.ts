@@ -31,6 +31,7 @@ import { type DeathCause, type Encounter, type MomentumRollRecord, applyCombat, 
 import { type Stack, applyItems, authorizeItemsPlayer } from "./inventory.ts";
 import { addMark, checkShape, proficiencyOf } from "./proficiency.ts";
 import { type Title, applyTitles, count, titleStats } from "./titles.ts";
+import { type Quest, type QuestNoticeKind, applyQuests, authorizeQuestPlayer, cloneQuest, questsOnJoin, questsOnLeave } from "./quests.ts";
 
 export interface CharacterState {
   id: string;
@@ -66,6 +67,8 @@ export interface CharacterState {
   counters?: Record<string, number>;
   /** Due catalog titles the GM passed on. */
   dismissedTitles?: string[];
+  /** Personal Opportunities refused, by flavor. */
+  refusals?: Record<string, number>;
 }
 
 /** A formal party: its members' character ids in the order they joined. */
@@ -151,6 +154,7 @@ export type Effect =
   | { kind: "kill-confirmed"; characterId: string; encounterId: string; victimId: string; victimGrade: string; tier: string }
   | { kind: "encounter-settled"; encounterId: string }
   | { kind: "spoils-added"; encounterId: string; items: Stack[] }
+  | { kind: QuestNoticeKind; characterId: string; questId: string; line: string; done?: number; of?: number }
   | { kind: "title-conferred"; characterId: string; titleId: string; name: string; negative: boolean }
   | { kind: "title-echoed"; characterId: string; titleId: string; name: string }
   | { kind: "title-released"; characterId: string; titleId: string; name: string }
@@ -223,6 +227,8 @@ export interface FoldResult {
   encounter: Encounter | null;
   /** Item stacks by holder: a character's id, or the spoils. */
   inventory: Map<string, Stack[]>;
+  /** Every quest issued, by log code. */
+  quests: Map<string, Quest>;
   /** Effects keyed by the id of the action that produced them. */
   effects: Map<string, Effect[]>;
   rejected: Rejection[];
@@ -277,6 +283,7 @@ export interface World {
   held: Map<string, HeldMessage>;
   encounter: Encounter | null;
   inventory: Map<string, Stack[]>;
+  quests: Map<string, Quest>;
 }
 
 function cloneWorld(w: World): World {
@@ -287,11 +294,12 @@ function cloneWorld(w: World): World {
     held: new Map(w.held),
     encounter: w.encounter && cloneEncounter(w.encounter),
     inventory: new Map([...w.inventory].map(([k, v]) => [k, v.map((s) => ({ ...s }))])),
+    quests: new Map([...w.quests].map(([k, v]) => [k, cloneQuest(v)])),
   };
 }
 
 export function emptyWorld(): World {
-  return { characters: new Map(), parties: new Map(), invites: [], held: new Map(), encounter: null, inventory: new Map() };
+  return { characters: new Map(), parties: new Map(), invites: [], held: new Map(), encounter: null, inventory: new Map(), quests: new Map() };
 }
 
 /** The world as the fold leaves it: what `rollFor` rolls against. */
@@ -303,6 +311,7 @@ export function worldOf(r: FoldResult): World {
     held: new Map(r.held.map((m) => [m.id, m])),
     encounter: r.encounter,
     inventory: r.inventory,
+    quests: r.quests,
   };
 }
 
@@ -338,6 +347,7 @@ export function fold(engine: Engine, log: readonly Envelope[]): FoldResult {
     held: [...world.held.values()],
     encounter: world.encounter,
     inventory: world.inventory,
+    quests: world.quests,
     effects,
     rejected,
     voided: voided.ids,
@@ -355,6 +365,7 @@ function cloneState(c: CharacterState): CharacterState {
     ...(c.titles ? { titles: c.titles.map((t) => ({ ...t, bonus: { ...t.bonus }, ...(t.lost ? { lost: { ...t.lost } } : {}) })) } : {}),
     ...(c.counters ? { counters: { ...c.counters } } : {}),
     ...(c.dismissedTitles ? { dismissedTitles: [...c.dismissedTitles] } : {}),
+    ...(c.refusals ? { refusals: { ...c.refusals } } : {}),
   };
 }
 
@@ -466,6 +477,15 @@ function apply(engine: Engine, world: World, env: Envelope): Effect[] {
     case "title.dismiss":
     case "counter.tick":
       return applyTitles(engine, need(chars, a.characterId), a, env.id);
+    case "quest.issue":
+    case "quest.answer":
+    case "quest.share":
+    case "quest.progress":
+    case "quest.reveal":
+    case "quest.complete":
+    case "quest.fail":
+    case "quest.withdraw":
+      return applyQuests(engine, world, a);
     case "void":
       throw new Error("voids are handled before apply");
   }
@@ -519,6 +539,9 @@ function authorize(world: World, env: Envelope) {
     case "item.move":
     case "item.remove":
       return authorizeItemsPlayer(world, a, me);
+    case "quest.answer":
+    case "quest.share":
+      return authorizeQuestPlayer(world, a, me);
     case "dice.roll":
       if (a.roller.kind !== "character") throw new Rejected("a player rolls for their own character");
       if (a.private) throw new Rejected("only the GM rolls privately");
@@ -843,6 +866,8 @@ function answerInvite(world: World, a: AnswerPartyInvite, id: string): Effect[] 
     existing.members.push(to.id);
     for (const m of existing.members)
       out.push({ kind: "party-joined", characterId: m, partyId: existing.id, memberId: to.id, memberName: to.name });
+    // A joiner takes the party's shared quests at their current count.
+    out.push(...questsOnJoin(world, existing.id, to.id));
   } else {
     const party = { id: `party-${id}`, members: [from.id, to.id] };
     world.parties.set(party.id, party);
@@ -855,6 +880,8 @@ function answerInvite(world: World, a: AnswerPartyInvite, id: string): Effect[] 
 
 function endParty(world: World, p: Party): Effect[] {
   world.parties.delete(p.id);
+  // The party's shared quests stay with their holders, no longer shared.
+  for (const q of world.quests.values()) if (q.sharedIn === p.id) delete q.sharedIn;
   return p.members.map((m) => ({ kind: "party-disbanded", characterId: m, partyId: p.id }) as const);
 }
 
@@ -864,6 +891,8 @@ function leaveParty(world: World, a: LeaveParty): Effect[] {
   if (!p) throw new Rejected(`${c.name} is not in a party`);
   const out: Effect[] = p.members.map((m) => ({ kind: "party-left", characterId: m, memberId: c.id, memberName: c.name }) as const);
   p.members = p.members.filter((m) => m !== c.id);
+  // A holder who leaves keeps none of the party's shared quests.
+  questsOnLeave(world, p.id, c.id);
   // A party of one is no party.
   if (p.members.length < 2) out.push(...endParty(world, p));
   return out;

@@ -1222,3 +1222,29 @@ ul.items li {
   gap: 0.25rem;
   margin-right: 0.5rem;
 }
+
+/* Quests: the book's entry shape, set as a monospace block. */
+pre.quest-entry {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 0.8rem;
+  white-space: pre-wrap;
+  margin: 0.3rem 0;
+}
+.quest-card {
+  border: 1px solid var(--stone);
+  background: #fbf7f0;
+  padding: 0.5rem 0.7rem;
+  margin-bottom: 0.6rem;
+}
+.quest-card.offered {
+  border-color: var(--cyan);
+}
+.quest-card.completed,
+.quest-card.failed,
+.quest-card.refused,
+.quest-card.expired {
+  opacity: 0.7;
+}
+.quest-log .quest {
+  margin-bottom: 0.5rem;
+}

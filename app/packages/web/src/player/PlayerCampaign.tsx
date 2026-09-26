@@ -4,7 +4,7 @@
  * beside it. The player spends free points and makes the party's choices here (inviting,
  * answering, leaving); everything else arrives from the GM's record.
  */
-import { type Action, type FeedItem, type InterfaceSheet, type PlayerView, shapes } from "@gradebreaker/record";
+import { type Action, type FeedItem, type InterfaceSheet, type PlayerQuest, type PlayerView, shapes } from "@gradebreaker/record";
 import { useEffect, useState } from "react";
 import { api, newActionId, submit } from "../api.ts";
 import { useAuth } from "../auth.ts";
@@ -349,6 +349,99 @@ function Titles({ campaignId, c, readOnly }: { campaignId: string; c: InterfaceS
   );
 }
 
+/** The quest log (System Quests, "The Quest UI"): each entry in the book's shape, and the player's answers. */
+function QuestLog({ campaignId, c, readOnly }: { campaignId: string; c: InterfaceSheet; readOnly?: boolean }) {
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [refusing, setRefusing] = useState<string | null>(null);
+  if (!c.quests.length) return null;
+  const run = async (action: Action) => {
+    setBusy(true);
+    setError(null);
+    try {
+      await submit(campaignId, newActionId(), action);
+      setRefusing(null);
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  };
+  const can = !readOnly && !c.dead;
+  const entry = (q: PlayerQuest) => {
+    const reward = [q.scaled ? "Proportional" : q.ve === null ? "" : `${q.ve} VE`, ...(q.items ?? []).map((i) => (i.count === 1 ? i.name : `${i.count} ${i.name}`)), q.rewardText ?? ""]
+      .filter(Boolean)
+      .join(", ");
+    const lines = [`[${q.id}] ${q.title}`];
+    if (!q.hidden || q.status === "completed") {
+      lines.push(`Issuer:     ${q.issuer}`, `Grade:      ${q.grade} · Difficulty: ${q.difficulty}`);
+      if (q.objective) lines.push(`Objective:  ${q.objective}${q.count ? ` (${q.count.done}/${q.count.of})` : ""}`);
+      if (reward) lines.push(`Reward:     ${reward}`);
+      if (q.time) lines.push(`Time:       ${q.time}`);
+    } else if (q.objective) lines.push(q.objective);
+    lines.push(`Status:     ${q.status === "offered" ? "Offered" : q.status[0]!.toUpperCase() + q.status.slice(1)}${q.shared ? " · Shared" : ""}`);
+    return lines.join("\n");
+  };
+  const open = c.quests.filter((q) => q.status === "offered" || q.status === "active");
+  const closed = c.quests.filter((q) => q.status !== "offered" && q.status !== "active");
+  return (
+    <div className="sys-section quest-log">
+      <h3>Quest log</h3>
+      {open.map((q) => (
+        <div key={q.id} className="quest">
+          <pre className="quest-entry">{entry(q)}</pre>
+          {can && (
+            <div className="row tight">
+              {q.status === "offered" && (
+                <>
+                  <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "quest.answer", questId: q.id, characterId: c.id, accept: true })}>
+                    Accept
+                  </button>
+                  <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "quest.answer", questId: q.id, characterId: c.id, accept: false })}>
+                    Refuse
+                  </button>
+                </>
+              )}
+              {q.sharable && (
+                <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "quest.share", questId: q.id, characterId: c.id })}>
+                  Share with the party
+                </button>
+              )}
+              {q.category === "Mandate" && q.status === "active" &&
+                (refusing === q.id ? (
+                  <>
+                    <span className="small">Refusing a Mandate has consequences.</span>
+                    <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "quest.answer", questId: q.id, characterId: c.id, accept: false })}>
+                      Refuse [{q.id}]
+                    </button>
+                    <button className="sys-confirm inline" onClick={() => setRefusing(null)}>
+                      Keep it
+                    </button>
+                  </>
+                ) : (
+                  <button className="sys-confirm inline" onClick={() => setRefusing(q.id)}>
+                    Refuse…
+                  </button>
+                ))}
+            </div>
+          )}
+        </div>
+      ))}
+      {closed.length > 0 && (
+        <details>
+          <summary className="small">Completed, failed, and refused ({closed.length})</summary>
+          {closed.map((q) => (
+            <pre key={q.id} className="quest-entry sys-dim">
+              {entry(q)}
+            </pre>
+          ))}
+        </details>
+      )}
+      {error && <p className="error">{error}</p>}
+    </div>
+  );
+}
+
 /** What the party has not divided: any player can claim an item for their own character. */
 function Spoils({ view, readOnly }: { view: PlayerView; readOnly?: boolean }) {
   const [busy, setBusy] = useState(false);
@@ -507,6 +600,8 @@ function Interface({
       <Carried campaignId={campaignId} c={c} roster={roster} readOnly={readOnly} />
 
       <Titles campaignId={campaignId} c={c} readOnly={readOnly} />
+
+      <QuestLog campaignId={campaignId} c={c} readOnly={readOnly} />
 
       {c.freePoints > 0 &&
         (readOnly ? (

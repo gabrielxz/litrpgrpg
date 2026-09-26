@@ -5,7 +5,7 @@
 import { Engine } from "@gradebreaker/engine";
 import { loadRules } from "@gradebreaker/engine/node";
 import { beforeEach, describe, expect, it } from "vitest";
-import { type Action, CampaignRecord, type Draft, RecordError, encounterAwards, hoursForGoal, flankingSuggested, killAwards, rollD100s, rollFor } from "../src/index.ts";
+import { type Action, CampaignRecord, type Draft, RecordError, encounterAwards, hoursForGoal, flankingSuggested, killAwards, questForHolder, rollD100s, rollFor } from "../src/index.ts";
 
 const engine = new Engine(loadRules());
 const GM = { role: "gm", userId: "gm-1" } as const;
@@ -1191,6 +1191,97 @@ describe("titles and achievement counts", () => {
     });
     expect(rec.sheet("kara")!.counters).toMatchObject({ "confirmed-kills": 3, "most-kills-in-a-fight": 3, "severe-or-peak-kills": 1, "fights-ended-below-half": 1, "first-blood": 1 });
     expect(rec.sheet("kara")!.titlesDue).toEqual(["Pack-Breaker", "Giant-Feller"]);
+  });
+});
+
+describe("System Quests", () => {
+  const as = (actor: Draft["actor"], action: Action) => rec.append(draft(action, actor));
+  const q181 = { id: "Q-181", category: "Routine", title: "Glow-Mote Cluster Containment", difficulty: "Trivial", objective: "Eliminate Glow-Mote swarms reported near the eastern perimeter.", count: 3, items: [{ name: "Stuttering Tincture", count: 1 }] } as const;
+  const P3 = { role: "player", userId: "player-3" } as const;
+  beforeEach(() => {
+    gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" });
+    gm({ type: "character.pregen", characterId: "joe", pregen: "Joe", playerId: "player-2" });
+    gm({ type: "character.pregen", characterId: "andre", pregen: "Andre", playerId: "player-3" });
+  });
+  const party = (...ids: string[]) => {
+    for (const id of ids.slice(1)) {
+      as({ role: "player", userId: rec.character(ids[0]!)!.playerId! }, { type: "party.invite", fromId: ids[0]!, toId: id });
+      const inv = rec.state.invites.find((i) => i.toId === id)!;
+      as({ role: "player", userId: rec.character(id)!.playerId! }, { type: "party.answer", inviteId: inv.id, accept: true });
+    }
+  };
+  const q = (id: string) => rec.state.quests.get(id)!;
+
+  it("offers a Routine quest with the table's VE, and the player accepts it on their own screen", () => {
+    const out = gm({ type: "quest.issue", quest: { ...q181, items: [...q181.items] }, to: ["kara"] });
+    expect(out.effects).toEqual([{ kind: "quest-offered", characterId: "kara", questId: "Q-181", line: "[Q-181] Glow-Mote Cluster Containment" }]);
+    expect(q("Q-181")).toMatchObject({ status: "offered", issuer: "System", grade: "F", ve: 3, count: { done: 0, of: 3 } });
+    expect(() => as(P2, { type: "quest.answer", questId: "Q-181", characterId: "kara", accept: true })).toThrow(/their own character/);
+    as(P1, { type: "quest.answer", questId: "Q-181", characterId: "kara", accept: true });
+    expect(q("Q-181").status).toBe("active");
+  });
+
+  it("multiplies a shared count by the holders at that moment; a leaver keeps nothing and a joiner takes the current count", () => {
+    party("kara", "joe", "andre");
+    gm({ type: "quest.issue", quest: { ...q181, items: [...q181.items] }, to: ["kara"] });
+    as(P1, { type: "quest.answer", questId: "Q-181", characterId: "kara", accept: true });
+    const out = as(P1, { type: "quest.share", questId: "Q-181", characterId: "kara" });
+    expect(out.effects).toHaveLength(3);
+    expect(q("Q-181")).toMatchObject({ holders: ["kara", "joe", "andre"], count: { done: 0, of: 9 } });
+    gm({ type: "quest.progress", questId: "Q-181", by: 2 });
+    as(P3, { type: "party.leave", characterId: "andre" });
+    expect(q("Q-181").holders).toEqual(["kara", "joe"]);
+    party("kara", "andre");
+    expect(q("Q-181")).toMatchObject({ holders: ["kara", "joe", "andre"], count: { done: 2, of: 9 } });
+    expect(() => as(P3, { type: "quest.share", questId: "Q-181", characterId: "andre" })).toThrow(/shared already/);
+    // When the party ends, the quest stays with whoever still holds it, no longer shared.
+    as(P3, { type: "party.leave", characterId: "andre" });
+    as(P2, { type: "party.leave", characterId: "joe" });
+    expect(q("Q-181")).toMatchObject({ holders: ["kara"], count: { done: 2, of: 9 } });
+    expect(q("Q-181").sharedIn).toBeUndefined();
+  });
+
+  it("pays every participating holder on completion and sends the items to the spoils or a holder", () => {
+    party("kara", "joe");
+    gm({ type: "quest.issue", quest: { ...q181, items: [...q181.items] }, to: ["kara"] });
+    as(P1, { type: "quest.answer", questId: "Q-181", characterId: "kara", accept: true });
+    as(P1, { type: "quest.share", questId: "Q-181", characterId: "kara" });
+    const out = gm({ type: "quest.complete", questId: "Q-181", awards: [{ characterId: "kara", ve: 3 }, { characterId: "joe", ve: 3 }], itemsTo: "joe" });
+    expect(out.effects.filter((e) => e.kind === "quest-completed")).toHaveLength(2);
+    expect([rec.sheet("kara")!.storedVe, rec.sheet("joe")!.storedVe]).toEqual([3, 3]);
+    expect(rec.state.inventory.get("joe")).toEqual([{ name: "Stuttering Tincture", count: 1 }]);
+    expect(() => gm({ type: "quest.complete", questId: "Q-181", awards: [] })).toThrow(/not active/);
+  });
+
+  it("binds a Mandate at once, refuses sharing it, and lets one character refuse it", () => {
+    gm({ type: "quest.issue", quest: { id: "M-04", category: "Mandate", title: "Report to Sector 7", difficulty: "Hard", objective: "Report to coordinates [4.7, -12.1] within 72 hours.", time: "72 hours" }, to: ["kara", "joe"] });
+    expect(q("M-04")).toMatchObject({ status: "active", ve: 125, holders: ["kara", "joe"] });
+    expect(() => as(P1, { type: "quest.share", questId: "M-04", characterId: "kara" })).toThrow(/cannot be shared/);
+    expect(() => as(P1, { type: "quest.answer", questId: "M-04", characterId: "kara", accept: true })).toThrow(/binds already/);
+    as(P2, { type: "quest.answer", questId: "M-04", characterId: "joe", accept: false });
+    expect(q("M-04")).toMatchObject({ status: "active", holders: ["kara"], refusedBy: ["joe"] });
+  });
+
+  it("counts refused Personal Opportunities by flavor", () => {
+    for (let i = 1; i <= 3; i++) {
+      gm({ type: "quest.issue", quest: { id: `PO-${i}`, category: "Personal Opportunity", title: "Hostile detected", difficulty: "Moderate", objective: "Eliminate within 6 hours.", flavor: "combat", scaled: true }, to: ["kara"] });
+      as(P1, { type: "quest.answer", questId: `PO-${i}`, characterId: "kara", accept: false });
+    }
+    expect(rec.character("kara")!.refusals).toEqual({ combat: 3 });
+    expect(q("PO-1")).toMatchObject({ status: "refused", ve: null });
+  });
+
+  it("shows a hidden quest's holder only what its mode allows, down to the notices", () => {
+    const out = gm({ type: "quest.issue", quest: { id: "Q-HID-014", category: "Hidden", title: "Let It Finish", difficulty: "Hard", objective: "Spare a surrendered foe three times.", hidden: "obscured" }, to: ["kara"] });
+    expect(out.effects).toEqual([{ kind: "quest-issued", characterId: "kara", questId: "Q-???", line: "[Q-???] Hidden Objective: ???" }]);
+    expect(questForHolder(q("Q-HID-014"))).toMatchObject({ id: "Q-???", objective: "", ve: null });
+    gm({ type: "quest.reveal", questId: "Q-HID-014", name: "Let It Finish" });
+    expect(questForHolder(q("Q-HID-014"))).toMatchObject({ title: 'Hidden Objective: "Let It Finish"', objective: "Conditions: Unclear." });
+    const done = gm({ type: "quest.complete", questId: "Q-HID-014", awards: [{ characterId: "kara", ve: 60 }] });
+    expect(done.effects[0]).toMatchObject({ kind: "quest-completed", questId: "Q-HID-014", line: "[Q-HID-014] Let It Finish" });
+    // A post-completion quest is silent until it is complete.
+    expect(gm({ type: "quest.issue", quest: { id: "Q-HID-015", category: "Hidden", title: "Stayed", difficulty: "Easy", objective: "x", hidden: "post-completion" }, to: ["kara"] }).effects).toEqual([]);
+    expect(questForHolder(q("Q-HID-015"))).toBeNull();
   });
 });
 

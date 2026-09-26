@@ -16,7 +16,9 @@ import {
   type PlayerClash,
   type EncounterView,
   type PlayerCombat,
+  type PlayerQuest,
   SPOILS,
+  questForHolder,
   momentumForceOf,
   worldOf,
 } from "@gradebreaker/record";
@@ -150,6 +152,27 @@ export function rollsFor(record: CampaignRecord, members: Member[], role: Role):
   return out;
 }
 
+/** A character's quest log, newest first: what their log shows of each quest they hold or refused. */
+export function questLog(record: CampaignRecord, characterId: string): PlayerQuest[] {
+  const st = record.state;
+  const inParty = [...st.parties.values()].some((p) => p.members.includes(characterId));
+  const out: PlayerQuest[] = [];
+  for (const q of [...st.quests.values()].reverse()) {
+    const refused = q.refusedBy.includes(characterId);
+    if (!refused && !q.holders.includes(characterId)) continue;
+    const shown = questForHolder(q);
+    if (!shown) continue;
+    const { holders: _h, refusedBy: _r, sharedIn, ...rest } = shown;
+    out.push({
+      ...rest,
+      status: refused ? "refused" : shown.status,
+      shared: Boolean(sharedIn),
+      sharable: !refused && inParty && !sharedIn && shown.status === "active" && (q.category === "Routine" || q.category === "Faction"),
+    });
+  }
+  return out;
+}
+
 export function interfaceSheet(s: Sheet, record: CampaignRecord): InterfaceSheet {
   const st = record.state;
   const e = st.encounter && !st.encounter.ended ? st.encounter : null;
@@ -193,6 +216,7 @@ export function interfaceSheet(s: Sheet, record: CampaignRecord): InterfaceSheet
     items: (st.inventory.get(s.id) ?? []).map((x) => ({ ...x })),
     proficiencies: s.proficiencies,
     titles: s.titles,
+    quests: questLog(record, s.id),
   };
 }
 
@@ -227,6 +251,15 @@ const ANNOUNCED: ReadonlySet<Effect["kind"]> = new Set([
   "title-conferred",
   "title-echoed",
   "title-released",
+  "quest-offered",
+  "quest-issued",
+  "quest-accepted",
+  "quest-refused",
+  "quest-shared",
+  "quest-progress",
+  "quest-revealed",
+  "quest-completed",
+  "quest-failed",
 ]);
 
 /** Effects a player is shown: the announced ones about their own characters. */
@@ -354,6 +387,7 @@ export function viewFor(
       encounter: encounterView(record),
       aftermath: encounterView(record, "aftermath"),
       inventory: Object.fromEntries([...st.inventory].map(([k, v]) => [k, v.map((x) => ({ ...x }))])),
+      quests: [...st.quests.values()].reverse(),
     };
   }
   const own = sheets.filter((s) => s.playerId === who.userId);

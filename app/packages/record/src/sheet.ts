@@ -43,6 +43,8 @@ export interface Sheet {
   counters: Record<string, number>;
   /** Catalog titles whose count is met, waiting on the GM. */
   titlesDue: string[];
+  /** Personal Opportunities refused, by flavor: at 3 a flavor comes half as often, at 6 it stops. */
+  refusals: Record<string, number>;
 }
 
 export function sheetOf(engine: Engine, c: CharacterState): Sheet {
@@ -80,6 +82,7 @@ export function sheetOf(engine: Engine, c: CharacterState): Sheet {
     titles: (c.titles ?? []).map((t) => ({ ...t })),
     counters: { ...(c.counters ?? {}) },
     titlesDue: titlesDue(c),
+    refusals: { ...(c.refusals ?? {}) },
   };
   if (c.playerId !== undefined) sheet.playerId = c.playerId;
   if (c.pregen !== undefined) sheet.pregen = c.pregen;

@@ -201,6 +201,22 @@ export function describe(
       return `${name(a.characterId)}: ${a.catalog} passed on`;
     case "counter.tick":
       return `${name(a.characterId)}: ${counterLabel(a.counter)} +${a.count}`;
+    case "quest.issue":
+      return `Quest ${a.quest.category === "Mandate" || a.quest.category === "Hidden" ? "issued" : "offered"}: [${a.quest.id}] ${a.quest.title} to ${a.to.map(name).join(", ")}`;
+    case "quest.answer":
+      return `${name(a.characterId)} ${a.accept ? "accepts" : "refuses"} [${a.questId}]`;
+    case "quest.share":
+      return `${name(a.characterId)} shares [${a.questId}] with the party`;
+    case "quest.progress":
+      return `[${a.questId}] ${a.by > 0 ? "+" : ""}${a.by}`;
+    case "quest.reveal":
+      return `[${a.questId}] partly revealed as "${a.name}"`;
+    case "quest.complete":
+      return `[${a.questId}] complete: ${a.awards.map((w) => `${name(w.characterId)} ${w.ve} VE`).join(", ") || "no VE"}`;
+    case "quest.fail":
+      return `[${a.questId}] failed`;
+    case "quest.withdraw":
+      return `[${a.questId}] expires`;
     case "void": {
       const seq = seqOf(a.targetId);
       const target = seq === undefined ? "an action" : `#${seq + 1}`;
@@ -289,6 +305,24 @@ export function effectLine(e: Effect, name: Names): string | null {
       return null; // the settlement's line names the kills
     case "encounter-settled":
       return null;
+    case "quest-offered":
+      return `${name(e.characterId)}'s log: ${e.line}, offered`;
+    case "quest-issued":
+      return `${name(e.characterId)}'s log: ${e.line}`;
+    case "quest-accepted":
+      return `${name(e.characterId)} accepts ${e.line}`;
+    case "quest-refused":
+      return `${name(e.characterId)} refuses ${e.line}`;
+    case "quest-shared":
+      return `${name(e.characterId)} holds ${e.line}${e.of ? ` (${e.done}/${e.of})` : ""}`;
+    case "quest-progress":
+      return null; // the count shows on the quest
+    case "quest-revealed":
+      return `${name(e.characterId)}'s log: ${e.line}`;
+    case "quest-completed":
+      return `${name(e.characterId)}: ${e.line} complete`;
+    case "quest-failed":
+      return `${name(e.characterId)}: ${e.line} failed`;
     case "title-conferred":
       return `${name(e.characterId)} holds ${e.name}${e.negative ? " (negative)" : ""}`;
     case "title-echoed":
@@ -378,6 +412,24 @@ export function noticeLine(e: Effect): string | null {
       return `Item registered: ${stack(e)}.`;
     case "title-conferred":
       return `Title conferred: ${e.name}.`;
+    case "quest-offered":
+      return `Quest offered: ${e.line}.`;
+    case "quest-issued":
+      return `Quest registered: ${e.line}.`;
+    case "quest-accepted":
+      return `Quest accepted: ${e.line}.`;
+    case "quest-refused":
+      return `Quest refused: ${e.line}.`;
+    case "quest-shared":
+      return `Quest shared: ${e.line}.${e.of ? ` Objective: ${e.done}/${e.of}.` : ""}`;
+    case "quest-progress":
+      return `${e.line}: ${e.done}/${e.of}.`;
+    case "quest-revealed":
+      return `Hidden objective updated: ${e.line}.`;
+    case "quest-completed":
+      return `Quest complete: ${e.line}.`;
+    case "quest-failed":
+      return `Quest failed: ${e.line}.`;
     case "title-echoed":
       return `Title echoed: ${e.name}.`;
     case "title-released":

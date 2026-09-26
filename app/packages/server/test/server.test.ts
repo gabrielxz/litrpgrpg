@@ -538,6 +538,22 @@ describe("the combat tracker", () => {
     expect(bv.rolls[0]).toMatchObject({ roller: "Joe", rollKind: "check", label: "Stabilize Kara" });
   });
 
+  it("keeps a hidden quest's code, title, and objective out of its holder's view until it completes", async () => {
+    const { campaignId, gm, player, playerId } = await table();
+    await act(campaignId, gm, { type: "character.pregen", characterId: "kara", pregen: "Kara", playerId });
+    await act(campaignId, gm, {
+      type: "quest.issue",
+      quest: { id: "Q-HID-014", category: "Hidden", title: "Let It Finish", difficulty: "Hard", objective: "Spare a surrendered foe three times.", hidden: "obscured" },
+      to: ["kara"],
+    });
+    const raw = JSON.stringify((await call("GET", `/campaigns/${campaignId}`, { token: player })).json);
+    for (const secret of ["Q-HID-014", "Let It Finish", "Spare a surrendered"]) expect(raw).not.toContain(secret);
+    expect(raw).toContain("Hidden Objective: ???");
+    await act(campaignId, gm, { type: "quest.complete", questId: "Q-HID-014", awards: [{ characterId: "kara", ve: 60 }] });
+    const pv = (await call("GET", `/campaigns/${campaignId}`, { token: player })).json;
+    expect(pv.characters[0].quests[0]).toMatchObject({ id: "Q-HID-014", title: "Let It Finish", status: "completed" });
+  });
+
   it("settles a fight: the kill and the VE reach the player, and the spoils wait for them to claim", async () => {
     const { campaignId, gm, player, playerId } = await table();
     await act(campaignId, gm, { type: "character.pregen", characterId: "kara", pregen: "Kara", playerId });

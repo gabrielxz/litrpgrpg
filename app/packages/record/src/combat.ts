@@ -31,6 +31,7 @@ import { type CharacterState, type Effect, Rejected, type World, maxAetherOf, ma
 import { take } from "./inventory.ts";
 import { addMark, checkShape, proficiencyOf } from "./proficiency.ts";
 import { count } from "./titles.ts";
+import { questsOnLeave } from "./quests.ts";
 
 // --------------------------------------------------------------- actions ---
 
@@ -933,9 +934,11 @@ function partyAfterDeath(world: World, characterId: string, name: string): Effec
   const p = [...world.parties.values()].find((x) => x.members.includes(characterId));
   if (!p) return [];
   p.members = p.members.filter((m) => m !== characterId);
+  questsOnLeave(world, p.id, characterId);
   const out: Effect[] = p.members.map((m) => ({ kind: "party-member-died", characterId: m, memberId: characterId, memberName: name }) as const);
   if (p.members.length < 2) {
     world.parties.delete(p.id);
+    for (const q of world.quests.values()) if (q.sharedIn === p.id) delete q.sharedIn;
     out.push(...p.members.map((m) => ({ kind: "party-disbanded", characterId: m, partyId: p.id }) as const));
   }
   world.invites = world.invites.filter((i) => i.fromId !== characterId && i.toId !== characterId);

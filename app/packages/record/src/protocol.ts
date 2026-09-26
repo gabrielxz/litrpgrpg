@@ -4,6 +4,7 @@
  */
 import type { Effect, HeldMessage, Party, PartyInvite } from "./fold.ts";
 import type { Stack } from "./inventory.ts";
+import type { Quest } from "./quests.ts";
 import type { Combatant, Encounter } from "./combat.ts";
 import type { Envelope } from "./actions.ts";
 import type { Sheet } from "./sheet.ts";
@@ -183,6 +184,8 @@ export interface InterfaceSheet {
   proficiencies: Sheet["proficiencies"];
   /** Every title the character holds, hidden ones included; Echoed and released ones in the history. */
   titles: Sheet["titles"];
+  /** The quest log: offered, active, and closed quests as this character's log shows them. */
+  quests: PlayerQuest[];
 }
 
 export interface GmView {
@@ -204,6 +207,15 @@ export interface GmView {
   aftermath: EncounterView | null;
   /** Item stacks by holder: each character's id, and `spoils`. */
   inventory: Record<string, Stack[]>;
+  /** Every quest issued, newest first. */
+  quests: Quest[];
+}
+
+/** A quest on one character's log: hidden content obscured, and their own answer as its status. */
+export interface PlayerQuest extends Omit<Quest, "holders" | "refusedBy" | "sharedIn"> {
+  shared: boolean;
+  /** A Routine or Faction quest the character can share with their party now. */
+  sharable: boolean;
 }
 
 export interface PlayerView {

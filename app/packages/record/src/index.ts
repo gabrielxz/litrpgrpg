@@ -25,6 +25,7 @@ export type {
   CombatantView,
   EncounterView,
   PlayerCombat,
+  PlayerQuest,
   PlayerClash,
   GmView,
   InterfaceSheet,
@@ -39,6 +40,17 @@ export { rollFor } from "./rolling.ts";
 export { type KillEntry, type LootResult, type RollLoot, type Settle, encounterAwards, lootRow } from "./aftermath.ts";
 export { type ItemAction, SPOILS, type Stack } from "./inventory.ts";
 export { type MarkByHand, type Proficiency, shapes } from "./proficiency.ts";
+export {
+  type Flavor,
+  type HiddenMode,
+  QUEST_CATEGORIES,
+  type Quest,
+  type QuestAction,
+  type QuestCategory,
+  type QuestSpec,
+  questForHolder,
+  questTableVe,
+} from "./quests.ts";
 export { COUNTED, DERIVED_COUNTERS, TICKED_COUNTERS, type Title, type TitleAction, type TitleCategory, type TitleSpec, catalogSpec } from "./titles.ts";
 export {
   type ClashResult,
