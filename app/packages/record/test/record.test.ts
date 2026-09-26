@@ -803,10 +803,10 @@ describe("Downed, pills, Aura Pressure, and the Surprise Beat", () => {
     gm({ type: "combat.hp", combatantId: "kara", delta: -14 });
     gm({ type: "combat.move", combatantId: "joe", zoneId: "road", forced: true });
     as(P2, { type: "combat.act", combatantId: "joe" });
-    expect(() => as(P2, { type: "combat.stabilize", combatantId: "joe", targetId: "kara", attribute: "DEX" }, 90)).toThrow(/Kara's Zone/);
+    expect(() => as(P2, { type: "combat.stabilize", combatantId: "joe", targetId: "kara" }, 90)).toThrow(/Kara's Zone/);
     gm({ type: "combat.move", combatantId: "joe", zoneId: "treeline", forced: true });
     // Joe the EMT rolls with Advantage: 40 and 88, keeps 88, + DEX 5 = 93 against 90.
-    const out = as(P2, { type: "combat.stabilize", combatantId: "joe", targetId: "kara", attribute: "DEX", advantage: true }, 40, 88);
+    const out = as(P2, { type: "combat.stabilize", combatantId: "joe", targetId: "kara", advantage: true }, 40, 88);
     expect(out.effects).toEqual([
       expect.objectContaining({ kind: "combat-check", total: 93, resistance: 90, success: true }),
       { kind: "stabilized", encounterId: "e1", combatantId: "kara", characterId: "kara" },

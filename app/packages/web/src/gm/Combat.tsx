@@ -20,6 +20,7 @@ import {
   type GmView,
   auraSavers,
   flankingSuggested,
+  stabilizeAttribute,
 } from "@gradebreaker/record";
 import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
@@ -574,6 +575,7 @@ function CombatantRow({
           people={e.combatants.map(mateOf)}
           pills={pillsOf(engine)}
           pillLimit={engine.rules.items.pill_use.per_fight_limit_per_kind}
+          stabilizeWith={stabilizeAttribute(engine)}
           beats={c.beats}
           busy={busy}
           run={run}

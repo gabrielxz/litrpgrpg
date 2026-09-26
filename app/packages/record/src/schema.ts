@@ -153,7 +153,6 @@ export const actionSchema = z.discriminatedUnion("type", [
     type: z.literal("combat.stabilize"),
     combatantId: id,
     targetId: id,
-    attribute: z.string().max(10).optional(),
     force: whole.optional(),
     advantage: z.boolean().optional(),
     dice: rolledDice.optional(),

@@ -531,7 +531,7 @@ describe("the combat tracker", () => {
       await act(campaignId, gm, { type: "combat.done", combatantId: "rat" });
     }
     expect((await act(campaignId, bo, { type: "combat.act", combatantId: "joe" })).status).toBe(201);
-    const st = await act(campaignId, bo, { type: "combat.stabilize", combatantId: "joe", targetId: "kara", attribute: "DEX", advantage: true });
+    const st = await act(campaignId, bo, { type: "combat.stabilize", combatantId: "joe", targetId: "kara", advantage: true });
     expect(st.status).toBe(201);
     expect(st.json.envelope.action.dice.natural.length).toBeGreaterThanOrEqual(1);
     const bv = (await call("GET", `/campaigns/${campaignId}`, { token: bo })).json;

@@ -19,7 +19,7 @@
  * dies, and the GM may rule either way. Vital coherence starts at 3 and falls by one at the
  * end of each round, the round of Downing included; at 0 the character dies (Gabriel,
  * 2026-09-26). Stabilizing by bare hands needs the same Zone, like HP restoration (Gabriel,
- * 2026-09-26). Pills count per encounter (99-to-do.md, queued edit 7: the book's "ten quiet
+ * 2026-09-26) and rolls DEX (Gabriel, 2026-09-26; backlog edit 11). Pills count per encounter (99-to-do.md, queued edit 7: the book's "ten quiet
  * minutes" gave no moment to reset). Aura Pressure's Will Save, Suppression, and the Surprise
  * Beat follow Core Mechanics; a defender may Yield against a Surprise Beat (Gabriel, 2026-09-26).
  */
@@ -230,14 +230,12 @@ export interface Fate {
   fate: "dead" | "stabilized";
 }
 
-/** Bare hands: 1 Beat and a Moderate check by someone in the Downed character's Zone. */
+/** Bare hands: 1 Beat and a Moderate DEX check by someone in the Downed character's Zone. */
 export interface Stabilize {
   type: "combat.stabilize";
   combatantId: string;
   targetId: string;
-  /** A character's Attribute for the check. */
-  attribute?: string;
-  /** A creature's or NPC's Force. */
+  /** A creature's or NPC's Force; a character rolls DEX. */
   force?: number;
   /** A medical Background rolls with Advantage. */
   advantage?: boolean;
@@ -992,6 +990,11 @@ function helperForce(engine: Engine, world: World, c: Combatant, attribute: stri
   return force;
 }
 
+/** Bare-hands stabilizing is a DEX check; the rules data names it once backlog edit 11 lands there. */
+export function stabilizeAttribute(engine: Engine): string {
+  return engine.rules.combat.downed.stabilize_check.attribute ?? "DEX";
+}
+
 function stabilize(engine: Engine, world: World, a: Stabilize): Effect[] {
   const e = fight(world);
   const helper = combatant(e, a.combatantId);
@@ -1000,7 +1003,7 @@ function stabilize(engine: Engine, world: World, a: Stabilize): Effect[] {
   if (!target.downed || target.dead) throw new Rejected(`${target.name} is not Downed`);
   if (target.downed.stabilized) throw new Rejected(`${target.name} is already stabilized`);
   if (!sameZone(helper, target)) throw new Rejected(`${helper.name} must be in ${target.name}'s Zone`);
-  const force = helperForce(engine, world, helper, a.attribute, a.force);
+  const force = helperForce(engine, world, helper, stabilizeAttribute(engine), a.force);
   spend(e, helper, `Stabilize ${target.name}`);
   const resistance = engine.rules.combat.downed.stabilize_check.resistance;
   const r = checkRoll(engine, helper.grade, force, resistance, a.dice, Boolean(a.advantage));
@@ -1542,7 +1545,7 @@ export function rollCheckDice<A extends Stabilize | WillSave | AuraPressure>(eng
       if (a.dice) return a;
       const helper = who(a.combatantId);
       if (!helper) return a;
-      const force = helperForce(engine, world, helper, a.attribute, a.force);
+      const force = helperForce(engine, world, helper, stabilizeAttribute(engine), a.force);
       const dice = roll(helper, force, engine.rules.combat.downed.stabilize_check.resistance, Boolean(a.advantage));
       return dice ? { ...a, dice } : a;
     }

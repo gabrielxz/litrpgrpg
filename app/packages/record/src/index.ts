@@ -48,4 +48,5 @@ export {
   flankingSuggested,
   momentumForceOf,
   momentumRoller,
+  stabilizeAttribute,
 } from "./combat.ts";

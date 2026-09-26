@@ -51,6 +51,7 @@ export function CareActions({
   people,
   pills,
   pillLimit,
+  stabilizeWith,
   beats,
   busy,
   run,
@@ -59,6 +60,8 @@ export function CareActions({
   people: Mate[];
   pills: Pill[];
   pillLimit: number;
+  /** The Attribute a character rolls to stabilize by bare hands. */
+  stabilizeWith: string;
   beats: number;
   busy: boolean;
   run: (a: Action) => Promise<boolean>;
@@ -66,7 +69,6 @@ export function CareActions({
   const [open, setOpen] = useState<Open>(null);
   const [target, setTarget] = useState("");
   const [pill, setPill] = useState(pills[0]?.name ?? "");
-  const [attribute, setAttribute] = useState("DEX");
   const [force, setForce] = useState("");
   const [advantage, setAdvantage] = useState(false);
   const live = people.filter((p) => !p.out);
@@ -109,7 +111,7 @@ export function CareActions({
             Pill…
           </button>
         )}
-        <button disabled={noBeat || dying.length === 0} onClick={() => toggle("stabilize")} title="Bare hands: a Moderate (90) check in the Downed character's Zone">
+        <button disabled={noBeat || dying.length === 0} onClick={() => toggle("stabilize")} title={`Bare hands: a Moderate (90) ${stabilizeWith} check in the Downed character's Zone`}>
           Stabilize…
         </button>
         <button disabled={noBeat || downed.length === 0} onClick={() => toggle("execute")} title="A deliberate attack on a Downed combatant kills them: 1 Beat, no roll">
@@ -146,13 +148,9 @@ export function CareActions({
         <div className="row tight subform">
           {targetSelect}
           {me.force ? (
-            <select value={attribute} onChange={(e) => setAttribute(e.target.value)} aria-label="Attribute">
-              {Object.entries(me.force).map(([a, f]) => (
-                <option key={a} value={a}>
-                  {a} {f}
-                </option>
-              ))}
-            </select>
+            <span className="small">
+              {stabilizeWith} {me.force[stabilizeWith]}
+            </span>
           ) : (
             <input type="number" className="narrow-input" value={force} onChange={(e) => setForce(e.target.value)} placeholder="Force" aria-label="Force" />
           )}
@@ -167,7 +165,7 @@ export function CareActions({
                 type: "combat.stabilize",
                 combatantId: me.id,
                 targetId: picked,
-                ...(me.force ? { attribute } : { force: Math.trunc(Number(force)) }),
+                ...(me.force ? {} : { force: Math.trunc(Number(force)) }),
                 ...(advantage ? { advantage: true } : {}),
               })
             }
