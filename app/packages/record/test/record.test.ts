@@ -5,7 +5,7 @@
 import { Engine } from "@gradebreaker/engine";
 import { loadRules } from "@gradebreaker/engine/node";
 import { beforeEach, describe, expect, it } from "vitest";
-import { type Action, CampaignRecord, type Draft, RecordError, hoursForGoal, killAwards } from "../src/index.ts";
+import { type Action, CampaignRecord, type Draft, RecordError, hoursForGoal, killAwards, rollD100s } from "../src/index.ts";
 
 const engine = new Engine(loadRules());
 const GM = { role: "gm", userId: "gm-1" } as const;
@@ -358,6 +358,72 @@ describe("System messages", () => {
     expect(() => gm({ type: "message.send", to: [], text: "x" })).toThrow(/at least one/);
     expect(() => gm({ type: "message.send", to: ["nobody"], text: "x" })).toThrow(/no character/);
     expect(() => rec.append(draft({ type: "message.send", to: ["kara"], text: "x" }, P1))).toThrow(/only the GM/);
+  });
+});
+
+describe("dice", () => {
+  const seq = (...xs: number[]) => () => xs.shift()!;
+  const roll = (over: Partial<Extract<Action, { type: "dice.roll" }>>, actor: Draft["actor"] = GM) =>
+    rec.append(
+      draft({ type: "dice.roll", roller: { kind: "character", characterId: "kara", attribute: "STR" }, rollKind: "clash", modifier: 0, ...over } as Action, actor),
+    );
+  const rolled = (out: { effects: unknown[] }) => out.effects[0] as Extract<import("../src/index.ts").Effect, { kind: "rolled" }>;
+  beforeEach(() => gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" }));
+
+  it("explodes at the F-Grade threshold, and only the kept die under Advantage", () => {
+    expect(rollD100s(96, {}, seq(40))).toEqual({ natural: [40] });
+    expect(rollD100s(96, {}, seq(96, 100, 12))).toEqual({ natural: [96, 100, 12] });
+    expect(rollD100s(96, { advantage: true }, seq(98, 30, 7))).toEqual({ natural: [98, 7], dropped: 30 });
+    expect(rollD100s(96, { advantage: true }, seq(20, 99, 3))).toEqual({ natural: [99, 3], dropped: 20 });
+    expect(rollD100s(96, { explodes: false }, seq(100))).toEqual({ natural: [100] });
+  });
+
+  it("totals the dice, the named Attribute's Force, and the modifiers", () => {
+    const r = rolled(roll({ natural: [62], modifier: 10 }));
+    expect(r).toMatchObject({ characterId: "kara", total: 62 + 8 + 10, diceTotal: 62, force: 8, exploded: false, battleMemory: false });
+  });
+
+  it("flags a cascade of two extra dice on a character's roll for a Battle Memory Card", () => {
+    expect(rolled(roll({ natural: [97, 40] }))).toMatchObject({ exploded: true, extraDice: 1, battleMemory: false });
+    expect(rolled(roll({ natural: [97, 99, 40] }))).toMatchObject({ total: 97 + 99 + 40 + 8, extraDice: 2, battleMemory: true });
+    const creature = rolled(roll({ roller: { kind: "other", name: "Frenzy Rat", grade: "F" }, natural: [97, 99, 40], modifier: 6 }));
+    expect(creature).toMatchObject({ total: 242, battleMemory: false });
+    expect(creature).not.toHaveProperty("characterId");
+  });
+
+  it("refuses dice that could not have come up that way", () => {
+    expect(() => roll({ natural: [90, 50] })).toThrow(/under the F-Grade threshold 96/);
+    expect(() => roll({ natural: [99] })).toThrow(/explodes: roll another/);
+    expect(() => roll({ natural: [101] })).toThrow(/1 to 100/);
+    expect(() => roll({ advantage: true, natural: [40], dropped: 60 })).toThrow(/keeps the higher/);
+    expect(() => roll({})).toThrow(/not rolled/);
+    expect(() => roll({ rollKind: "table", natural: [100], advantage: true, dropped: 3 })).toThrow(/table/);
+  });
+
+  it("charges a Surge half of Maximum Aether for +5 on a Clash only", () => {
+    const r = rolled(roll({ natural: [50], surge: true }));
+    expect(r).toMatchObject({ total: 50 + 8 + 5, surgeCost: 3 });
+    expect(rec.sheet("kara")!.aether).toBe(3);
+    roll({ natural: [50], surge: true });
+    expect(() => roll({ natural: [50], surge: true })).toThrow(/has 0 Aether and a Surge costs 3/);
+    expect(() => roll({ rollKind: "check", natural: [50], surge: true })).toThrow(/Surge adds to a Clash/);
+  });
+
+  it("reads a check against an entered Resistance, Exceptional when the die explodes", () => {
+    const check = { rollKind: "check" as const, roller: { kind: "character" as const, characterId: "kara", attribute: "PER" }, resistance: 90 };
+    expect(rolled(roll({ ...check, natural: [85] })).outcome).toBe("success");
+    expect(rolled(roll({ ...check, natural: [97, 10] })).outcome).toBe("exceptional");
+    expect(rolled(roll({ ...check, natural: [60] })).outcome).toBe("soft");
+    expect(rolled(roll({ ...check, natural: [40] })).outcome).toBe("hard");
+    expect(rolled(roll({ ...check, natural: [3] })).outcome).toBe("catastrophic");
+  });
+
+  it("lets a player roll openly for their own character and never take a roll back", () => {
+    const mine = roll({ natural: [30] }, P1);
+    expect(() => roll({ natural: [30] }, P2)).toThrow(/not this player's character/);
+    expect(() => roll({ natural: [30], private: true }, P1)).toThrow(/only the GM rolls privately/);
+    expect(() => rec.append(draft({ type: "void", targetId: mine.envelope.id, reason: "undo" }, P1))).toThrow(/a roll stands/);
+    gm({ type: "void", targetId: mine.envelope.id, reason: "undo" });
   });
 });
 

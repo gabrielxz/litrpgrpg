@@ -19,6 +19,7 @@ import type {
   PartyFrame,
   PlayerView,
   Role,
+  RollView,
   Sheet,
   View,
 } from "@gradebreaker/record";
@@ -27,6 +28,51 @@ export type { CampaignInfo, GmView, InterfaceSheet, LiveMessage, Member, PlayerV
 
 /** The newest notices a player's feed carries. */
 export const FEED_LENGTH = 100;
+/** The newest rolls either view carries. */
+export const ROLLS_LENGTH = 40;
+
+/** Recent rolls that stand, newest first; for a player, the open ones without what the GM keeps. */
+export function rollsFor(record: CampaignRecord, members: Member[], role: Role): RollView[] {
+  const { effects, voided, rejected } = record.state;
+  const skip = new Set([...voided, ...rejected.map((r) => r.envelope.id)]);
+  const person = (id: string) => members.find((m) => m.userId === id)?.displayName ?? "someone";
+  const out: RollView[] = [];
+  for (let i = record.log.length - 1; i >= 0 && out.length < ROLLS_LENGTH; i--) {
+    const env = record.log[i]!;
+    const a = env.action;
+    if (a.type !== "dice.roll" || skip.has(env.id)) continue;
+    if (a.private && role !== "gm") continue;
+    const e = effects.get(env.id)?.find((x) => x.kind === "rolled");
+    if (!e || e.kind !== "rolled") continue;
+    const roller = a.roller.kind === "character" ? (record.character(a.roller.characterId)?.name ?? a.roller.characterId) : a.roller.name;
+    const v: RollView = {
+      id: env.id,
+      at: env.at,
+      by: person(env.actor.userId),
+      roller,
+      rollKind: a.rollKind,
+      natural: a.natural ?? [],
+      surge: Boolean(a.surge),
+      force: e.force,
+      modifier: a.modifier,
+      total: e.total,
+      exploded: e.exploded,
+      entered: Boolean(a.entered),
+      private: Boolean(a.private),
+    };
+    if (e.characterId) v.characterId = e.characterId;
+    if (a.label) v.label = a.label;
+    if (a.roller.kind === "character" && a.roller.attribute) v.attribute = a.roller.attribute;
+    if (a.dropped !== undefined) v.dropped = a.dropped;
+    if (role === "gm") {
+      v.battleMemory = e.battleMemory;
+      if (a.resistance !== undefined) v.resistance = a.resistance;
+      if (e.outcome) v.outcome = e.outcome;
+    }
+    out.push(v);
+  }
+  return out;
+}
 
 export function interfaceSheet(s: Sheet, record: CampaignRecord): InterfaceSheet {
   const st = record.state;
@@ -90,7 +136,7 @@ const ANNOUNCED: ReadonlySet<Effect["kind"]> = new Set([
 
 /** Effects a player is shown: the announced ones about their own characters. */
 export function noticesFor(effects: Effect[], ownCharacterIds: ReadonlySet<string>): Effect[] {
-  return effects.filter((e) => ANNOUNCED.has(e.kind) && "characterId" in e && ownCharacterIds.has(e.characterId));
+  return effects.filter((e) => ANNOUNCED.has(e.kind) && "characterId" in e && e.characterId !== undefined && ownCharacterIds.has(e.characterId));
 }
 
 /** The feed for a set of characters: every standing action's notices about them, newest first. */
@@ -129,6 +175,7 @@ export function viewFor(
       parties: [...st.parties.values()],
       invites: st.invites,
       held: st.held,
+      rolls: rollsFor(record, members, "gm"),
     };
   }
   const own = sheets.filter((s) => s.playerId === who.userId);
@@ -140,5 +187,6 @@ export function viewFor(
     characters: own.map((s) => interfaceSheet(s, record)),
     roster: sheets.filter((s) => s.playerId !== undefined && !ownIds.has(s.id)).map((s) => ({ id: s.id, name: s.name })),
     feed: feedFor(record, ownIds),
+    rolls: rollsFor(record, members, "player"),
   };
 }

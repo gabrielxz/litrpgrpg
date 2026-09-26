@@ -8,6 +8,7 @@ import type { Action, FeedItem, InterfaceSheet, PlayerView } from "@gradebreaker
 import { useEffect, useState } from "react";
 import { api, newActionId, submit } from "../api.ts";
 import { useAuth } from "../auth.ts";
+import { RollForm, RollList } from "../Dice.tsx";
 import { useEngine } from "../live.ts";
 import { ATTRIBUTES, ATTRIBUTE_NAMES, noticeLine } from "../text.ts";
 import { type CharacterSpec, Creator } from "./Creator.tsx";
@@ -417,7 +418,19 @@ export function PlayerCampaign({
           ))}
         </div>
       )}
-      <Notices feed={view.feed} names={names} />
+      <div className="side-column">
+        <Notices feed={view.feed} names={names} />
+        <section className="table-dice">
+          <h3>Dice</h3>
+          {!readOnly && view.characters.length > 0 && (
+            <RollForm
+              campaignId={view.campaign.id}
+              characters={view.characters.map((c) => ({ id: c.id, name: c.name, force: c.force, aether: c.aether, surgeCost: c.surgeCost }))}
+            />
+          )}
+          <RollList rolls={view.rolls} />
+        </section>
+      </div>
     </main>
   );
 }

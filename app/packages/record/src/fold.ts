@@ -22,6 +22,7 @@ import type {
   LeaveParty,
   PlaceSystemPoints,
   ReleaseMessage,
+  RollDice,
   SendMessage,
   SpendFreePoints,
 } from "./actions.ts";
@@ -91,6 +92,23 @@ export type Effect =
   | { kind: "party-disbanded"; characterId: string; partyId: string }
   | { kind: "message"; characterId: string; messageId: string; text: string }
   | { kind: "message-held"; messageId: string; to: string[] }
+  | {
+      kind: "rolled";
+      /** Absent for a roller outside the record. */
+      characterId?: string;
+      total: number;
+      /** The dice added to the total: the kept die and its explosion. */
+      diceTotal: number;
+      /** The character's Force in the rolled Attribute, if one was named. */
+      force: number;
+      exploded: boolean;
+      extraDice: number;
+      /** A cascade on a character's roll that grants a Battle Memory Card. */
+      battleMemory: boolean;
+      surgeCost?: number;
+      /** A check against an entered Resistance: success, exceptional, soft, hard, or catastrophic. */
+      outcome?: string;
+    }
   | { kind: "voided"; targetId: string; reason: string };
 
 export interface Rejection {
@@ -229,6 +247,8 @@ function collectVoids(log: readonly Envelope[]) {
       else if (ids.has(a.targetId)) reason = `${a.targetId} is already voided`;
       else if (env.actor.role === "player" && target.actor.userId !== env.actor.userId)
         reason = "a player can undo only their own actions";
+      else if (env.actor.role === "player" && target.action.type === "dice.roll")
+        reason = "a roll stands; the GM can undo one made by mistake";
       if (reason) rejected.push({ envelope: env, reason });
       else ids.add(a.targetId);
     }
@@ -274,6 +294,8 @@ function apply(engine: Engine, world: World, env: Envelope): Effect[] {
       return sendMessage(world, a, env.id);
     case "message.release":
       return releaseMessage(world, a);
+    case "dice.roll":
+      return rollDice(engine, world, a);
     case "void":
       throw new Error("voids are handled before apply");
   }
@@ -307,6 +329,10 @@ function authorize(world: World, env: Envelope) {
       if (inv) mine(inv.toId);
       return;
     }
+    case "dice.roll":
+      if (a.roller.kind !== "character") throw new Rejected("a player rolls for their own character");
+      if (a.private) throw new Rejected("only the GM rolls privately");
+      return mine(a.roller.characterId);
     default:
       throw new Rejected(`only the GM records ${a.type}`);
   }
@@ -674,4 +700,72 @@ function releaseMessage(world: World, a: ReleaseMessage): Effect[] {
   if (!m) throw new Rejected("no held message with that id");
   world.held.delete(m.id);
   return deliver(m.to, m.id, m.text);
+}
+
+// ------------------------------------------------------------------ dice ---
+
+function rollDice(engine: Engine, world: World, a: RollDice): Effect[] {
+  const c = a.roller.kind === "character" ? need(world.characters, a.roller.characterId) : undefined;
+  let grade: string;
+  if (c) grade = c.grade;
+  else {
+    if (a.roller.kind !== "other" || !a.roller.name.trim()) throw new Rejected("name who rolls");
+    grade = a.roller.grade;
+  }
+  let threshold: number;
+  try {
+    threshold = engine.volatilityThreshold(grade);
+  } catch {
+    throw new Rejected(`no Grade ${grade}`);
+  }
+  const dice = a.natural;
+  if (!dice || dice.length === 0) throw new Rejected("the dice were not rolled");
+  for (const d of [...dice, ...(a.dropped === undefined ? [] : [a.dropped])])
+    if (!Number.isInteger(d) || d < 1 || d > 100) throw new Rejected(`a d100 reads 1 to 100, not ${d}`);
+  const table = a.rollKind === "table";
+  if (table && (a.advantage || a.surge || dice.length !== 1))
+    throw new Rejected("a roll read against a table is one die, with no Advantage, no Surge, and no explosion");
+  if (!table) {
+    // Every die but the last met the threshold; the last did not, or the cascade is unfinished.
+    dice.slice(0, -1).forEach((d) => {
+      if (d < threshold) throw new Rejected(`${d} is under the ${grade}-Grade threshold ${threshold}, so it did not explode`);
+    });
+    if (dice[dice.length - 1]! >= threshold) throw new Rejected(`the last die, ${dice[dice.length - 1]}, explodes: roll another`);
+  }
+  if (a.advantage) {
+    if (a.dropped === undefined) throw new Rejected("Advantage rolls two dice: enter the lower one too");
+    if (a.dropped > dice[0]!) throw new Rejected("Advantage keeps the higher die");
+  } else if (a.dropped !== undefined) throw new Rejected("only Advantage sets a die aside");
+  if (!Number.isInteger(a.modifier)) throw new Rejected("modifiers are whole numbers");
+
+  let force = 0;
+  if (a.roller.kind === "character" && a.roller.attribute) {
+    const raw = rawStats(c!)[a.roller.attribute];
+    if (raw === undefined) throw new Rejected(`${a.roller.attribute} is not an Attribute`);
+    force = engine.force(raw, grade);
+  }
+  let surgeCost: number | undefined;
+  if (a.surge) {
+    if (!c) throw new Rejected("record a creature's Surge in its modifier");
+    if (a.rollKind !== "clash") throw new Rejected("Surge adds to a Clash roll");
+    surgeCost = engine.surgeCost(maxAetherOf(engine, c));
+    if (c.aether < surgeCost) throw new Rejected(`${c.name} has ${c.aether} Aether and a Surge costs ${surgeCost}`);
+    c.aether -= surgeCost;
+  }
+  const diceTotal = dice.reduce((x, y) => x + y, 0);
+  const total = diceTotal + force + a.modifier + (a.surge ? engine.rules.combat.surge.bonus : 0);
+  const extraDice = dice.length - 1;
+  const effect: Effect = {
+    kind: "rolled",
+    total,
+    diceTotal,
+    force,
+    exploded: extraDice > 0,
+    extraDice,
+    battleMemory: Boolean(c) && extraDice >= engine.rules.grades.volatility.battle_memory_cascade_dice,
+  };
+  if (c) effect.characterId = c.id;
+  if (surgeCost !== undefined) effect.surgeCost = surgeCost;
+  if (a.rollKind === "check" && a.resistance !== undefined) effect.outcome = engine.checkOutcome(total, a.resistance, dice[0]!, grade);
+  return [effect];
 }

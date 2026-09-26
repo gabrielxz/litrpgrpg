@@ -207,6 +207,43 @@ export interface ReleaseMessage {
   messageId: string;
 }
 
+// ------------------------------------------------------------------ dice ---
+
+/** Who rolls: a character in the record, or anyone else the GM names (a creature, an NPC). */
+export type Roller =
+  | { kind: "character"; characterId: string; attribute?: string }
+  | { kind: "other"; name: string; grade: string };
+
+/**
+ * A d100 roll (Core Mechanics, "Core Resolution"). A Clash or a check explodes at the roller's
+ * Volatility Threshold; a roll read against a table (an effect table, the collapse clock) does
+ * not. The total is the dice, the character's Force in `attribute`, and `modifier` (every other
+ * bonus; for a roller outside the record, their Force too).
+ *
+ * The server rolls the dice when `natural` is absent and records them, so replay reads the
+ * same dice. `entered` marks dice the table rolled by hand and typed in.
+ */
+export interface RollDice {
+  type: "dice.roll";
+  roller: Roller;
+  rollKind: "clash" | "check" | "table";
+  label?: string;
+  modifier: number;
+  /** Two d100, keep the higher; only the kept die explodes. */
+  advantage?: boolean;
+  /** Half of Maximum Aether for +5 on a Clash, declared before the roll (Core Mechanics, "Surge"). */
+  surge?: boolean;
+  /** The GM's roll, seen by the GM only. */
+  private?: boolean;
+  /** A check's Resistance, when the GM enters it: the outcome is computed. */
+  resistance?: number;
+  /** The kept die and every die it exploded into, in order. */
+  natural?: number[];
+  /** With Advantage, the lower die, set aside. */
+  dropped?: number;
+  entered?: boolean;
+}
+
 // ------------------------------------------------------------ the record ---
 
 /**
@@ -237,6 +274,7 @@ export type Action =
   | DisbandParty
   | SendMessage
   | ReleaseMessage
+  | RollDice
   | VoidAction;
 
 export type ActionType = Action["type"];

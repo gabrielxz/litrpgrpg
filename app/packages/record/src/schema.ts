@@ -62,6 +62,23 @@ export const actionSchema = z.discriminatedUnion("type", [
   }),
   z.object({ type: z.literal("message.release"), messageId: id }),
   z.object({
+    type: z.literal("dice.roll"),
+    roller: z.discriminatedUnion("kind", [
+      z.object({ kind: z.literal("character"), characterId: id, attribute: z.string().max(10).optional() }),
+      z.object({ kind: z.literal("other"), name: z.string().max(100), grade: z.string().max(4) }),
+    ]),
+    rollKind: z.enum(["clash", "check", "table"]),
+    label: z.string().max(200).optional(),
+    modifier: whole,
+    advantage: z.boolean().optional(),
+    surge: z.boolean().optional(),
+    private: z.boolean().optional(),
+    resistance: whole.optional(),
+    natural: z.array(whole).max(50).optional(),
+    dropped: whole.optional(),
+    entered: z.boolean().optional(),
+  }),
+  z.object({
     type: z.literal("void"),
     targetId: id,
     reason: z.enum(["undo", "correction"]),

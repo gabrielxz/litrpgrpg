@@ -873,3 +873,102 @@ table.sys-stats td.num {
 .notices em {
   white-space: pre-wrap;
 }
+
+/* ---- the table's dice (table talk, never the System's voice) ---- */
+
+.side-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.table-dice {
+  border: 1px dashed var(--sys-line);
+  padding: 0.6rem 0.8rem;
+  color: var(--bone);
+  font-style: normal;
+}
+.table-dice h3 {
+  margin: 0 0 0.4rem;
+  font-weight: 500;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.table-dice .form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 0.6rem;
+}
+.table-dice label {
+  font-size: 0.85rem;
+}
+.player input:not([type="checkbox"]):not([type="radio"]) {
+  background: var(--sys-ground);
+  color: var(--cyan-light);
+  border: 1px solid var(--sys-line);
+  padding: 0.25rem 0.4rem;
+}
+.player .muted {
+  color: color-mix(in srgb, var(--bone) 55%, var(--sys-ground));
+}
+.player button.primary {
+  background: transparent;
+  color: var(--bone);
+  border: 1px solid var(--bone);
+  padding: 0.3rem 1rem;
+}
+.player button.primary:disabled {
+  opacity: 0.4;
+}
+.rolls {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.rolls li.private {
+  opacity: 0.75;
+  border-left: 2px solid var(--stone);
+  padding-left: 0.4rem;
+}
+.roll-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  align-items: center;
+}
+.die {
+  display: inline-block;
+  min-width: 1.9rem;
+  text-align: center;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  padding: 0 0.2rem;
+  font-variant-numeric: tabular-nums;
+}
+.die.exploded {
+  border-width: 2px;
+  font-weight: 600;
+}
+.die.dropped {
+  opacity: 0.45;
+  text-decoration: line-through;
+}
+.roll-total {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-left: 0.2rem;
+}
+.rolls-heading {
+  margin: 1rem 0 0.4rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+details.typed summary {
+  cursor: pointer;
+  font-size: 0.85rem;
+}

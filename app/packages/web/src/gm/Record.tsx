@@ -17,11 +17,13 @@ import {
 import { useMemo, useState } from "react";
 import { ATTRIBUTES, type Names } from "../text.ts";
 import { Commit } from "./Commit.tsx";
+import { RollForm, RollList } from "../Dice.tsx";
 import { MessageForm, PartyForm } from "./Social.tsx";
 
-type Tab = "character" | "ve" | "rest" | "points" | "vitals" | "collapse" | "party" | "message";
+type Tab = "character" | "ve" | "rest" | "points" | "vitals" | "collapse" | "party" | "message" | "dice";
 
 const TABS: [Tab, string][] = [
+  ["dice", "Dice"],
   ["ve", "Award VE"],
   ["rest", "Consolidation"],
   ["points", "Assigned points"],
@@ -66,8 +68,25 @@ export function RecordPanel(props: Omit<FormProps, "onRecorded"> & { onRecorded:
         {tab === "collapse" && <CollapseForm {...p} />}
         {tab === "party" && <PartyForm {...p} />}
         {tab === "message" && <MessageForm {...p} />}
+        {tab === "dice" && <DiceTab {...p} />}
       </div>
     </section>
+  );
+}
+
+function DiceTab({ view, engine }: FormProps) {
+  return (
+    <>
+      <RollForm
+        campaignId={view.campaign.id}
+        gm
+        characters={view.characters.map((c) => ({ id: c.id, name: c.name, force: c.force, aether: c.aether, surgeCost: c.surgeCost }))}
+        difficulties={engine.rules.resolution.resistance_card}
+        grades={engine.rules.grades.grades.map((g: { code: string }) => g.code)}
+      />
+      <h3 className="rolls-heading">Recent rolls</h3>
+      <RollList rolls={view.rolls} gm />
+    </>
   );
 }
 

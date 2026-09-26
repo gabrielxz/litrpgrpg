@@ -416,6 +416,44 @@ describe("the party and the System's notices", () => {
   });
 });
 
+describe("dice", () => {
+  it("rolls on the server, keeps a retry to one roll, and shows players only the open rolls", async () => {
+    const { campaignId, gm, player, playerId } = await table();
+    await act(campaignId, gm, { type: "character.pregen", characterId: "kara", pregen: "Kara", playerId });
+    const roll = { type: "dice.roll", roller: { kind: "character", characterId: "kara", attribute: "STR" }, rollKind: "clash", modifier: 5 };
+
+    const first = await act(campaignId, player, roll, "roll-1");
+    expect(first.status).toBe(201);
+    const natural: number[] = first.json.envelope.action.natural;
+    expect(natural[0]).toBeGreaterThanOrEqual(1);
+    expect(natural[0]).toBeLessThanOrEqual(100);
+    expect(first.json.envelope.action.entered).toBeUndefined();
+    const again = await act(campaignId, player, roll, "roll-1");
+    expect(again.status).toBe(200);
+    expect(again.json.envelope.action.natural).toEqual(natural);
+
+    await act(campaignId, gm, { ...roll, roller: { kind: "other", name: "Frenzy Rat", grade: "F" }, private: true, modifier: 6 });
+    await act(campaignId, gm, { ...roll, rollKind: "check", resistance: 90, natural: [97, 12] }, "roll-3");
+
+    const pv = (await call("GET", `/campaigns/${campaignId}`, { token: player })).json;
+    expect(pv.rolls.map((r: { roller: string }) => r.roller)).toEqual(["Kara", "Kara"]);
+    expect(pv.rolls[0]).toMatchObject({ natural: [97, 12], total: 97 + 12 + 8 + 5, exploded: true, entered: true, by: "Gabriel" });
+    expect(pv.rolls[0]).not.toHaveProperty("resistance");
+    expect(pv.rolls[0]).not.toHaveProperty("outcome");
+    expect(pv.rolls[1]).toMatchObject({ natural, by: "Ana", attribute: "STR", total: natural.reduce((a, b) => a + b, 0) + 13 });
+
+    const gv = (await call("GET", `/campaigns/${campaignId}`, { token: gm })).json;
+    expect(gv.rolls.map((r: { roller: string }) => r.roller)).toEqual(["Kara", "Frenzy Rat", "Kara"]);
+    expect(gv.rolls[0]).toMatchObject({ resistance: 90, outcome: "exceptional", battleMemory: false });
+    expect(gv.rolls[1].private).toBe(true);
+
+    // A roll stands for the player; the GM can take one back.
+    expect((await act(campaignId, player, { type: "void", targetId: "roll-1", reason: "undo" })).status).toBe(422);
+    expect((await act(campaignId, gm, { type: "void", targetId: "roll-1", reason: "undo" })).status).toBe(201);
+    expect((await call("GET", `/campaigns/${campaignId}`, { token: player })).json.rolls).toHaveLength(1);
+  });
+});
+
 describe("the live channel", () => {
   let server: Server;
   let hub: LiveHub;

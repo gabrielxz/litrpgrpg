@@ -19,6 +19,7 @@ export type {
   FeedItem,
   PartyFrame,
   PartyFrameMember,
+  RollView,
   GmView,
   InterfaceSheet,
   LiveMessage,
@@ -27,3 +28,4 @@ export type {
   Role,
   View,
 } from "./protocol.ts";
+export { type D100, type Dice, rollD100s } from "./dice.ts";

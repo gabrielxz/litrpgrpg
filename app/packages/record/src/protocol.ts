@@ -35,6 +35,36 @@ export interface PartyFrame {
   members: PartyFrameMember[];
 }
 
+/**
+ * A roll as the table sees it. Dice are the table's, never the System's, so they sit apart
+ * from the notice feed. A player sees every open roll without the GM's Resistance, outcome,
+ * or the Battle Memory flag; the GM sees every roll, private ones included.
+ */
+export interface RollView {
+  id: string;
+  at: string;
+  /** The person who rolled. */
+  by: string;
+  /** Who the roll is for: a character's name or the name the GM gave. */
+  roller: string;
+  characterId?: string;
+  label?: string;
+  rollKind: "clash" | "check" | "table";
+  attribute?: string;
+  natural: number[];
+  dropped?: number;
+  surge: boolean;
+  force: number;
+  modifier: number;
+  total: number;
+  exploded: boolean;
+  entered: boolean;
+  private: boolean;
+  battleMemory?: boolean;
+  resistance?: number;
+  outcome?: string;
+}
+
 /** One System notice about one of the player's characters, rebuilt from the log on every view. */
 export interface FeedItem {
   key: string;
@@ -82,6 +112,8 @@ export interface GmView {
   parties: Party[];
   invites: PartyInvite[];
   held: HeldMessage[];
+  /** The newest rolls first, private ones included. */
+  rolls: RollView[];
 }
 
 export interface PlayerView {
@@ -93,6 +125,8 @@ export interface PlayerView {
   roster: { id: string; name: string }[];
   /** The System's notices to this player's characters, newest first. */
   feed: FeedItem[];
+  /** The table's open rolls, newest first. */
+  rolls: RollView[];
 }
 
 export type View = GmView | PlayerView;

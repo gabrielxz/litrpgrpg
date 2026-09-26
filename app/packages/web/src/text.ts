@@ -101,6 +101,11 @@ export function describe(
       const seq = seqOf(a.messageId);
       return `Sent held message ${seq === undefined ? "" : `#${seq + 1}`}`.trim();
     }
+    case "dice.roll": {
+      const who = a.roller.kind === "character" ? name(a.roller.characterId) : a.roller.name;
+      const dice = (a.natural ?? []).join(" + ");
+      return `${a.private ? "Private roll" : "Roll"}: ${who}${a.label ? `, ${a.label}` : ""} (${dice}${a.entered ? ", by hand" : ""})`;
+    }
     case "void": {
       const seq = seqOf(a.targetId);
       const target = seq === undefined ? "an action" : `#${seq + 1}`;
@@ -148,6 +153,10 @@ export function effectLine(e: Effect, name: Names): string | null {
       return `${name(e.characterId)} receives the message`;
     case "message-held":
       return `Held for ${e.to.map(name).join(", ")}; nobody sees it until you send it`;
+    case "rolled":
+      return `Total ${e.total}${e.exploded ? `, exploded (${e.extraDice} extra)` : ""}${e.outcome ? `: ${e.outcome}` : ""}${
+        e.battleMemory ? `; ${e.characterId ? name(e.characterId) : "the roller"} earns a Battle Memory Card` : ""
+      }${e.surgeCost ? `; Surge spent ${e.surgeCost} Aether` : ""}`;
     case "voided":
       return null;
   }
