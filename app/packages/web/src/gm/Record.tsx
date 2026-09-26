@@ -13,6 +13,7 @@ import {
   type Sheet,
   hoursForGoal,
   pointBuyProblems,
+  shapes,
 } from "@gradebreaker/record";
 import { useMemo, useState } from "react";
 import { ATTRIBUTES, type Names } from "../text.ts";
@@ -21,7 +22,7 @@ import { RollForm, RollList } from "../Dice.tsx";
 import { ItemsForm } from "./Items.tsx";
 import { MessageForm, PartyForm } from "./Social.tsx";
 
-type Tab = "character" | "ve" | "rest" | "points" | "vitals" | "items" | "collapse" | "party" | "message" | "dice";
+type Tab = "character" | "ve" | "rest" | "points" | "vitals" | "items" | "marks" | "collapse" | "party" | "message" | "dice";
 
 const TABS: [Tab, string][] = [
   ["dice", "Dice"],
@@ -30,6 +31,7 @@ const TABS: [Tab, string][] = [
   ["points", "Assigned points"],
   ["vitals", "HP and Aether"],
   ["items", "Items"],
+  ["marks", "Marks"],
   ["message", "System message"],
   ["party", "Party"],
   ["character", "New character"],
@@ -68,6 +70,7 @@ export function RecordPanel(props: Omit<FormProps, "onRecorded"> & { onRecorded:
         {tab === "points" && <PointsForm {...p} />}
         {tab === "vitals" && <VitalsForm {...p} />}
         {tab === "items" && <ItemsForm {...p} />}
+        {tab === "marks" && <MarkForm {...p} />}
         {tab === "collapse" && <CollapseForm {...p} />}
         {tab === "party" && <PartyForm {...p} />}
         {tab === "message" && <MessageForm {...p} />}
@@ -83,7 +86,8 @@ function DiceTab({ view, engine }: FormProps) {
       <RollForm
         campaignId={view.campaign.id}
         gm
-        characters={view.characters.map((c) => ({ id: c.id, name: c.name, force: c.force, aether: c.aether, surgeCost: c.surgeCost }))}
+        characters={view.characters.map((c) => ({ id: c.id, name: c.name, force: c.force, aether: c.aether, surgeCost: c.surgeCost, proficiencies: c.proficiencies }))}
+        shapes={shapes(engine)}
         difficulties={engine.rules.resolution.resistance_card}
         grades={engine.rules.grades.grades.map((g: { code: string }) => g.code)}
       />
@@ -645,6 +649,53 @@ function VitalsForm({ view, names, onRecorded }: FormProps) {
         problem={problem}
         names={names}
         label={`Apply ${Number.isNaN(d) ? "" : d > 0 ? `+${d}` : d} ${resource === "hp" ? "HP" : "Aether"} to ${c.name}`}
+        onRecorded={onRecorded}
+      />
+    </div>
+  );
+}
+
+// ----------------------------------------------------------------- Marks ---
+
+/** A Mark the table earned where the roll did not name the weapon shape (Core Mechanics, "Marks"). */
+function MarkForm({ view, engine, names, onRecorded }: FormProps) {
+  const [characterId, setCharacterId] = useState(view.characters[0]?.id ?? "");
+  const [shape, setShape] = useState(shapes(engine)[0] ?? "");
+  const c = view.characters.find((x) => x.id === characterId) ?? view.characters[0];
+  if (!c) return <NoCharacters />;
+  return (
+    <div className="form">
+      <div className="row">
+        <label>
+          Character
+          <select value={c.id} onChange={(e) => setCharacterId(e.target.value)}>
+            {view.characters.map((x) => (
+              <option key={x.id} value={x.id}>
+                {x.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Weapon shape
+          <select value={shape} onChange={(e) => setShape(e.target.value)}>
+            {shapes(engine).map((s) => {
+              const p = c.proficiencies.find((x) => x.shape === s);
+              return (
+                <option key={s} value={s}>
+                  {s} {p ? `(${p.marks} Mark${p.marks === 1 ? "" : "s"}, ${p.tier})` : "(none)"}
+                </option>
+              );
+            })}
+          </select>
+        </label>
+      </div>
+      <p className="muted">A Clash that names its weapon shape records its Mark when the die explodes. Record one here where the shape was unclear at the roll.</p>
+      <Commit
+        campaignId={view.campaign.id}
+        action={{ type: "proficiency.mark", characterId: c.id, shape }}
+        names={names}
+        label={`Mark ${c.name}: ${shape}`}
         onRecorded={onRecorded}
       />
     </div>

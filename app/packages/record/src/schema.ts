@@ -20,6 +20,7 @@ const clashSide = z.object({
   modifier: whole,
   advantage: z.boolean().optional(),
   surge: z.boolean().optional(),
+  shape: z.string().max(40).optional(),
 });
 const zone = z.object({ id, name: z.string().max(60) });
 const stack = z.object({ name: z.string().max(80), count: whole });
@@ -102,6 +103,7 @@ export const actionSchema = z.discriminatedUnion("type", [
     modifier: whole,
     advantage: z.boolean().optional(),
     surge: z.boolean().optional(),
+    shape: z.string().max(40).optional(),
     private: z.boolean().optional(),
     resistance: whole.optional(),
     natural: z.array(whole).max(50).optional(),
@@ -201,6 +203,7 @@ export const actionSchema = z.discriminatedUnion("type", [
     spoils: z.array(stack).max(60),
   }),
   z.object({ type: z.literal("item.give"), to: id, items: z.array(stack).min(1).max(60) }),
+  z.object({ type: z.literal("proficiency.mark"), characterId: id, shape: z.string().max(40) }),
   z.object({ type: z.literal("item.move"), from: id, to: id, name: z.string().max(80), count: whole }),
   z.object({ type: z.literal("item.remove"), from: id, name: z.string().max(80), count: whole, note: z.string().max(200).optional() }),
   z.object({

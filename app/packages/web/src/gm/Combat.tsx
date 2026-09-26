@@ -20,6 +20,7 @@ import {
   type GmView,
   auraSavers,
   flankingSuggested,
+  shapes,
   stabilizeAttribute,
 } from "@gradebreaker/record";
 import { useState } from "react";
@@ -331,9 +332,18 @@ function Setup({ view, engine, onRecorded }: { view: GmView; engine: Engine; onR
 const BEAT_KINDS = ["Check", "Item", "Application", "Disengage"];
 
 /** A combatant as the Clash forms need them: a character's Forces, or a creature's stat block lines. */
-export function clasherOf(view: GmView, c: CombatantView, role: "attack" | "defense"): Clasher {
+export function clasherOf(view: GmView, c: CombatantView, role: "attack" | "defense", engine?: Engine): Clasher {
   const sheet = c.characterId ? view.characters.find((s) => s.id === c.characterId) : undefined;
-  if (sheet) return { kind: "character", name: c.name, force: sheet.force, aether: sheet.aether, surgeCost: sheet.surgeCost };
+  if (sheet)
+    return {
+      kind: "character",
+      name: c.name,
+      force: sheet.force,
+      aether: sheet.aether,
+      surgeCost: sheet.surgeCost,
+      shapes: engine ? shapes(engine) : [],
+      proficiencies: sheet.proficiencies,
+    };
   return { kind: "creature", name: c.name, options: (role === "attack" ? c.offense : c.defense) ?? [] };
 }
 
@@ -515,7 +525,7 @@ function CombatantRow({
       )}
       {attacking && !e.clash && (
         <AttackForm
-          attacker={clasherOf(view, c, "attack")}
+          attacker={clasherOf(view, c, "attack", engine)}
           targets={targets}
           suggestFlanking={(d) => flankingSuggested(e as unknown as Encounter, c.id, d)}
           gm
@@ -817,7 +827,7 @@ function ClashPanel({
               {def.characterId ? `${def.name}'s player can answer on their screen, or record it here.` : `${def.name} defends.`}
               {def.exposed ? " Exposed: −10." : ""}
             </p>
-            <DefenseForm defender={clasherOf(view, def, "defense")} busy={busy} onDefend={(s) => run({ type: "combat.defend", defense: s })} />
+            <DefenseForm defender={clasherOf(view, def, "defense", engine)} busy={busy} onDefend={(s) => run({ type: "combat.defend", defense: s })} />
           </>
         ) : (
           <>

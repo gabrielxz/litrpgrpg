@@ -4,7 +4,7 @@
  * beside it. The player spends free points and makes the party's choices here (inviting,
  * answering, leaving); everything else arrives from the GM's record.
  */
-import type { Action, FeedItem, InterfaceSheet, PlayerView } from "@gradebreaker/record";
+import { type Action, type FeedItem, type InterfaceSheet, type PlayerView, shapes } from "@gradebreaker/record";
 import { useEffect, useState } from "react";
 import { api, newActionId, submit } from "../api.ts";
 import { useAuth } from "../auth.ts";
@@ -209,7 +209,11 @@ function PartySection({
   );
 }
 
-/** What the character carries: hand an item to someone in the campaign or the spoils, or mark one used. */
+/**
+ * What the character carries: hand an item to someone in the campaign or the spoils, or mark
+ * one used. The table's record, beside the interface: What Can Be Seen does not list items
+ * among what the System shows.
+ */
 function Carried({ campaignId, c, roster, readOnly }: { campaignId: string; c: InterfaceSheet; roster: PlayerView["roster"]; readOnly?: boolean }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -227,8 +231,8 @@ function Carried({ campaignId, c, roster, readOnly }: { campaignId: string; c: I
     }
   };
   return (
-    <div className="sys-section">
-      <h3>Carried</h3>
+    <section className="table-dice">
+      <h3>{c.name} carries</h3>
       <ul className="items">
         {c.items.map((s) => (
           <li key={s.name}>
@@ -255,7 +259,7 @@ function Carried({ campaignId, c, roster, readOnly }: { campaignId: string; c: I
         ))}
       </ul>
       {error && <p className="error">{error}</p>}
-    </div>
+    </section>
   );
 }
 
@@ -388,8 +392,6 @@ function Interface({
         </div>
       </div>
 
-      <Carried campaignId={campaignId} c={c} roster={roster} readOnly={readOnly} />
-
       <PartySection campaignId={campaignId} c={c} roster={roster} readOnly={readOnly} />
 
       <div className="sys-section">
@@ -399,6 +401,22 @@ function Interface({
           <span className="num">{toNext === null ? "Grade limit" : `${c.refinedVe} / ${c.refinedVe + toNext}`}</span>
         </div>
       </div>
+
+      {c.proficiencies.length > 0 && (
+        <div className="sys-section">
+          <h3>Proficiencies</h3>
+          <ul className="items">
+            {c.proficiencies.map((p) => (
+              <li key={p.shape}>
+                <span className="grow">{p.shape}</span>
+                <span className="sys-dim">
+                  {p.tier} +{p.bonus} · {p.marks} Mark{p.marks === 1 ? "" : "s"}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {c.freePoints > 0 &&
         (readOnly ? (
@@ -516,7 +534,7 @@ export function PlayerCampaign({
 }) {
   // A player with several characters here sees which one each notice is about.
   const names = view.characters.length > 1 ? new Map(view.characters.map((c) => [c.id, c.name])) : null;
-  const engine = useEngine(view.combat ? view.campaign.rulesVersion : undefined);
+  const engine = useEngine(view.campaign.rulesVersion);
   return (
     <main className="player">
       {view.characters.length === 0 ? (
@@ -537,13 +555,17 @@ export function PlayerCampaign({
       <div className="side-column">
         <Notices feed={view.feed} names={names} />
         {view.combat && <Fight view={view} engine={engine} combat={view.combat} readOnly={readOnly} />}
+        {view.characters.map((c) => (
+          <Carried key={c.id} campaignId={view.campaign.id} c={c} roster={view.roster} readOnly={readOnly} />
+        ))}
         <Spoils view={view} readOnly={readOnly} />
         <section className="table-dice">
           <h3>Dice</h3>
           {!readOnly && view.characters.length > 0 && (
             <RollForm
               campaignId={view.campaign.id}
-              characters={view.characters.map((c) => ({ id: c.id, name: c.name, force: c.force, aether: c.aether, surgeCost: c.surgeCost }))}
+              characters={view.characters.map((c) => ({ id: c.id, name: c.name, force: c.force, aether: c.aether, surgeCost: c.surgeCost, proficiencies: c.proficiencies }))}
+              shapes={engine ? shapes(engine) : []}
             />
           )}
           <RollList rolls={view.rolls} />

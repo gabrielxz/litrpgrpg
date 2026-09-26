@@ -4,6 +4,7 @@
  */
 import { ATTRIBUTES, type Engine, type Stats } from "@gradebreaker/engine";
 import { type CharacterState, capLevel, maxAetherOf, maxHpOf, rawStats } from "./fold.ts";
+import { type Proficiency, proficienciesOf } from "./proficiency.ts";
 
 export interface Sheet {
   id: string;
@@ -34,6 +35,8 @@ export interface Sheet {
   pendingSystemLevels: number[];
   freePoints: number;
   temporary: ("FOR" | "POW")[];
+  /** Each weapon shape with a Mark: its count, tier, and bonus. */
+  proficiencies: Proficiency[];
 }
 
 export function sheetOf(engine: Engine, c: CharacterState): Sheet {
@@ -67,6 +70,7 @@ export function sheetOf(engine: Engine, c: CharacterState): Sheet {
     pendingSystemLevels: [...c.pendingSystemLevels].sort((a, b) => a - b),
     freePoints: c.freePoints,
     temporary: c.temporary.map((t) => t.attribute),
+    proficiencies: proficienciesOf(engine, c),
   };
   if (c.playerId !== undefined) sheet.playerId = c.playerId;
   if (c.pregen !== undefined) sheet.pregen = c.pregen;

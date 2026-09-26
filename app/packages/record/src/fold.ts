@@ -29,6 +29,7 @@ import type {
 import { type LootResult, applyAftermath } from "./aftermath.ts";
 import { type DeathCause, type Encounter, type MomentumRollRecord, applyCombat, authorizeCombatPlayer, cloneEncounter } from "./combat.ts";
 import { type Stack, applyItems, authorizeItemsPlayer } from "./inventory.ts";
+import { addMark, checkShape, proficiencyOf } from "./proficiency.ts";
 
 export interface CharacterState {
   id: string;
@@ -56,6 +57,8 @@ export interface CharacterState {
   freePoints: number;
   /** Death is permanent at F-Grade. */
   dead?: boolean;
+  /** Marks by weapon shape; a shape's Proficiency tier is read from its count. */
+  marks?: Record<string, number>;
 }
 
 /** A formal party: its members' character ids in the order they joined. */
@@ -113,6 +116,8 @@ export type Effect =
       surgeCost?: number;
       /** A check against an entered Resistance: success, exceptional, soft, hard, or catastrophic. */
       outcome?: string;
+      /** The Proficiency bonus the named weapon shape added. */
+      proficiency?: number;
     }
   | { kind: "combat-started"; encounterId: string }
   | { kind: "momentum"; encounterId: string; holder: string; totals: { sideId: string; total: number }[]; rolls: MomentumRollRecord[] }
@@ -139,6 +144,17 @@ export type Effect =
   | { kind: "kill-confirmed"; characterId: string; encounterId: string; victimId: string; victimGrade: string; tier: string }
   | { kind: "encounter-settled"; encounterId: string }
   | { kind: "spoils-added"; encounterId: string; items: Stack[] }
+  | {
+      kind: "mark";
+      characterId: string;
+      shape: string;
+      marks: number;
+      tier: string;
+      /** This Mark reached a new tier. */
+      advanced?: boolean;
+      /** The count the next tier needs, if one is left. */
+      nextAt?: number;
+    }
   | {
       kind: "combat-check";
       encounterId: string;
@@ -325,6 +341,7 @@ function cloneState(c: CharacterState): CharacterState {
     placed: { ...c.placed },
     temporary: [...c.temporary],
     pendingSystemLevels: [...c.pendingSystemLevels],
+    ...(c.marks ? { marks: { ...c.marks } } : {}),
   };
 }
 
@@ -426,6 +443,8 @@ function apply(engine: Engine, world: World, env: Envelope): Effect[] {
     case "item.move":
     case "item.remove":
       return applyItems(world, a);
+    case "proficiency.mark":
+      return [addMark(engine, need(chars, a.characterId), a.shape)];
     case "void":
       throw new Error("voids are handled before apply");
   }
@@ -897,6 +916,13 @@ function rollDice(engine: Engine, world: World, a: RollDice): Effect[] {
     if (raw === undefined) throw new Rejected(`${a.roller.attribute} is not an Attribute`);
     force = engine.force(raw, grade);
   }
+  // A Clash made with a weapon shape adds the character's tier in it, and an explosion earns a Mark.
+  let proficiency = 0;
+  if (a.shape !== undefined) {
+    if (!c || a.rollKind !== "clash") throw new Rejected("a weapon shape goes with a character's Clash");
+    checkShape(engine, a.shape);
+    proficiency = proficiencyOf(engine, c, a.shape).bonus;
+  }
   let surgeCost: number | undefined;
   if (a.surge) {
     if (!c) throw new Rejected("record a creature's Surge in its modifier");
@@ -906,7 +932,7 @@ function rollDice(engine: Engine, world: World, a: RollDice): Effect[] {
     c.aether -= surgeCost;
   }
   const diceTotal = dice.reduce((x, y) => x + y, 0);
-  const total = diceTotal + force + a.modifier + (a.surge ? engine.rules.combat.surge.bonus : 0);
+  const total = diceTotal + force + proficiency + a.modifier + (a.surge ? engine.rules.combat.surge.bonus : 0);
   const extraDice = dice.length - 1;
   const effect: Effect = {
     kind: "rolled",
@@ -920,5 +946,6 @@ function rollDice(engine: Engine, world: World, a: RollDice): Effect[] {
   if (c) effect.characterId = c.id;
   if (surgeCost !== undefined) effect.surgeCost = surgeCost;
   if (a.rollKind === "check" && a.resistance !== undefined) effect.outcome = engine.checkOutcome(total, a.resistance, dice[0]!, grade);
-  return [effect];
+  if (proficiency) effect.proficiency = proficiency;
+  return a.shape !== undefined && extraDice > 0 ? [effect, addMark(engine, c!, a.shape)] : [effect];
 }

@@ -191,12 +191,14 @@ export function interfaceSheet(s: Sheet, record: CampaignRecord): InterfaceSheet
     invitations: st.invites.filter((i) => i.toId === s.id).map((i) => ({ id: i.id, fromId: i.fromId, fromName: name(i.fromId) })),
     invited: st.invites.filter((i) => i.fromId === s.id).map((i) => ({ id: i.id, toId: i.toId, toName: name(i.toId) })),
     items: (st.inventory.get(s.id) ?? []).map((x) => ({ ...x })),
+    proficiencies: s.proficiencies,
   };
 }
 
 /**
  * The effects the System announces to a character. Anything else (Saturation, which the GM
- * narrates; creation; reassignment; a held message; a void) reaches the GM only.
+ * narrates; creation; reassignment; a held message; a void; items changing hands, which What
+ * Can Be Seen does not list among what the System shows) reaches the GM only.
  */
 const ANNOUNCED: ReadonlySet<Effect["kind"]> = new Set([
   "ve-acquired",
@@ -220,7 +222,7 @@ const ANNOUNCED: ReadonlySet<Effect["kind"]> = new Set([
   "revived",
   "pill",
   "kill-confirmed",
-  "item-received",
+  "mark",
 ]);
 
 /** Effects a player is shown: the announced ones about their own characters. */

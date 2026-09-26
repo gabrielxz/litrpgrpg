@@ -3,7 +3,7 @@
  * roll itself and there is no preview. A player rolls for their own characters; the GM rolls
  * for anyone, privately if they choose, against a Resistance, or types in dice rolled by hand.
  */
-import type { Action, RollView } from "@gradebreaker/record";
+import type { Action, Proficiency, RollView } from "@gradebreaker/record";
 import { useState } from "react";
 import { newActionId, submit } from "./api.ts";
 import { ATTRIBUTES } from "./text.ts";
@@ -14,6 +14,7 @@ export interface RollerOption {
   force: Record<string, number>;
   aether: number;
   surgeCost: number;
+  proficiencies: Proficiency[];
 }
 
 const OUTCOME: Record<string, string> = {
@@ -33,9 +34,12 @@ export function RollForm({
   difficulties,
   grades,
   onRolled,
+  shapes = [],
 }: {
   campaignId: string;
   characters: RollerOption[];
+  /** The weapon shapes a character's Clash can be made with. */
+  shapes?: string[];
   /** The GM's controls: anyone as roller, tables, Resistance, private rolls, typed-in dice. */
   gm?: boolean;
   difficulties?: { difficulty: string; resistance: number }[];
@@ -50,6 +54,7 @@ export function RollForm({
   const [modifier, setModifier] = useState("");
   const [advantage, setAdvantage] = useState(false);
   const [surge, setSurge] = useState(false);
+  const [shape, setShape] = useState("");
   const [priv, setPriv] = useState(false);
   const [resistance, setResistance] = useState("");
   const [label, setLabel] = useState("");
@@ -80,6 +85,7 @@ export function RollForm({
       ...(label.trim() ? { label: label.trim() } : {}),
       ...(advantage && kind !== "table" ? { advantage: true } : {}),
       ...(surge && canSurge ? { surge: true } : {}),
+      ...(shape && canSurge ? { shape } : {}),
       ...(gm && priv ? { private: true } : {}),
       ...(gm && kind === "check" && resistance ? { resistance: int(resistance) } : {}),
       ...(typedDice ? { natural: typedDice } : {}),
@@ -184,6 +190,22 @@ export function RollForm({
         {kind !== "table" && (
           <label className="check" title="Two d100, keep the higher. The GM grants it from the fiction.">
             <input type="checkbox" checked={advantage} onChange={(e) => setAdvantage(e.target.checked)} /> Advantage
+          </label>
+        )}
+        {canSurge && shapes.length > 0 && (
+          <label title="The weapon shape adds its Proficiency bonus, and an exploding roll earns a Mark in it">
+            With
+            <select value={shape} onChange={(e) => setShape(e.target.value)}>
+              <option value="">No weapon shape</option>
+              {shapes.map((s) => {
+                const p = c!.proficiencies.find((x) => x.shape === s);
+                return (
+                  <option key={s} value={s}>
+                    {s} {p ? `(${p.tier} +${p.bonus})` : "(untrained)"}
+                  </option>
+                );
+              })}
+            </select>
           </label>
         )}
         {canSurge && (

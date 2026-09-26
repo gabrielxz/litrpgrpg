@@ -3,12 +3,21 @@
  * attack, the defense (the server rolls both sides when it is recorded), and the defender's
  * Yield once the Margin is known.
  */
-import type { ClashSide, ForceOption } from "@gradebreaker/record";
+import type { ClashSide, ForceOption, Proficiency } from "@gradebreaker/record";
 import { useState } from "react";
 
 /** Who is Clashing: a character (Force by Attribute) or a creature (its stat block's lines). */
 export type Clasher =
-  | { kind: "character"; name: string; force: Record<string, number>; aether: number; surgeCost: number }
+  | {
+      kind: "character";
+      name: string;
+      force: Record<string, number>;
+      aether: number;
+      surgeCost: number;
+      /** The weapon shapes from the rules, and the character's tier in each they have a Mark in. */
+      shapes: string[];
+      proficiencies: Proficiency[];
+    }
   | { kind: "creature"; name: string; options: ForceOption[] };
 
 const OFFENSE = [
@@ -79,6 +88,28 @@ function SideFields({
           </select>
         </label>
       )}
+      {who.kind === "character" && who.shapes.length > 0 && (
+        <label title="The weapon shape adds its Proficiency bonus, and an exploding roll earns a Mark in it">
+          With
+          <select
+            value={value.shape ?? ""}
+            onChange={(e) => {
+              const { shape: _, ...rest } = value;
+              onChange(e.target.value ? { ...rest, shape: e.target.value } : rest);
+            }}
+          >
+            <option value="">{role === "attack" ? "No weapon shape (improvised)" : "No weapon (dodge, absorb)"}</option>
+            {who.shapes.map((s) => {
+              const p = who.proficiencies.find((x) => x.shape === s);
+              return (
+                <option key={s} value={s}>
+                  {s} {p ? `(${p.tier} +${p.bonus})` : "(untrained)"}
+                </option>
+              );
+            })}
+          </select>
+        </label>
+      )}
       <label>
         Modifiers
         <input
@@ -111,7 +142,11 @@ function SideFields({
 }
 
 function initial(who: Clasher, role: "attack" | "defense"): ClashSide {
-  if (who.kind === "character") return { attribute: role === "attack" ? "STR" : "DEX", modifier: 0 };
+  if (who.kind === "character") {
+    // An attack starts with the shape the character has the most Marks in.
+    const best = [...who.proficiencies].sort((a, b) => b.marks - a.marks)[0];
+    return { attribute: role === "attack" ? "STR" : "DEX", modifier: 0, ...(role === "attack" && best ? { shape: best.shape } : {}) };
+  }
   const o = who.options[0];
   return o ? { force: o.force, ...(o.means ? { means: o.means } : {}), modifier: 0 } : { force: 0, modifier: 0 };
 }

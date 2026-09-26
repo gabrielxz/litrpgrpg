@@ -34,6 +34,13 @@ export function tableWordsIn(text: string): string[] {
 const stack = (s: { name: string; count: number }) => (s.count === 1 ? s.name : `${s.name} ×${s.count}`);
 const holder = (h: string, name: Names) => (h === "spoils" ? "the spoils" : name(h));
 
+/** A weapon shape as the System names it: "axes and hammers" is Axes and Hammers. */
+const titleCase = (s: string) =>
+  s
+    .split(" ")
+    .map((w) => (w === "and" || w === "to" ? w : w[0]!.toUpperCase() + w.slice(1)))
+    .join(" ");
+
 const clip = (t: string, n = 70) => (t.length > n ? `${t.slice(0, n - 1)}…` : t);
 
 const signed = (n: number) => (n >= 0 ? `+${n}` : `−${-n}`);
@@ -175,6 +182,8 @@ export function describe(
       return `${holder(a.from, name)} → ${holder(a.to, name)}: ${stack(a)}`;
     case "item.remove":
       return `${holder(a.from, name)} uses up ${stack(a)}${a.note ? ` (${a.note})` : ""}`;
+    case "proficiency.mark":
+      return `Mark by hand: ${name(a.characterId)}, ${a.shape}`;
     case "void": {
       const seq = seqOf(a.targetId);
       const target = seq === undefined ? "an action" : `#${seq + 1}`;
@@ -263,6 +272,8 @@ export function effectLine(e: Effect, name: Names): string | null {
       return null; // the settlement's line names the kills
     case "encounter-settled":
       return null;
+    case "mark":
+      return `${name(e.characterId)}: a Mark in ${e.shape} (${e.marks}${e.nextAt ? ` of ${e.nextAt}` : ""}), ${e.tier}${e.advanced ? ", a new tier" : ""}`;
     case "spoils-added":
       return `Into the spoils: ${e.items.map(stack).join(", ")}`;
     case "combat-check":
@@ -340,8 +351,12 @@ export function noticeLine(e: Effect): string | null {
       return e.pillKind === "healing" ? `Health restored: ${e.restored}.` : `Aether restored: ${e.restored}.`;
     case "kill-confirmed":
       return `Kill confirmed. Grade ${e.victimGrade}, ${e.tier}.`;
-    case "item-received":
-      return `Item registered: ${stack(e)}.`;
+    case "mark": {
+      const shape = titleCase(e.shape);
+      if (e.marks === 1) return `Technique acquired: ${shape}. ${e.tier}.`;
+      if (e.advanced) return `Technique advanced: ${shape}. ${e.tier}.`;
+      return `Technique noted: ${shape}. ${e.nextAt ? `${e.marks}/${e.nextAt}` : e.marks}.`;
+    }
     default:
       return null;
   }

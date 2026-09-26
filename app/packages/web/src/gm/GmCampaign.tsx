@@ -89,6 +89,11 @@ function CharacterCard({ c, player, party, items }: { c: Sheet; player: string; 
         </tbody>
       </table>
       {c.temporary.length > 0 && <p className="small muted">Temporarily down 1 {c.temporary.join(", 1 ")} until a clean Consolidation.</p>}
+      {c.proficiencies.length > 0 && (
+        <p className="small">
+          Proficiencies: {c.proficiencies.map((p) => `${p.shape} ${p.tier} (${p.marks})`).join(", ")}
+        </p>
+      )}
       {items.length > 0 && <p className="small">Carries: {items.map(stackLine).join(", ")}</p>}
       <p className="small muted">{c.background}</p>
     </article>

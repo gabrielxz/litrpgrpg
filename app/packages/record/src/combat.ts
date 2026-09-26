@@ -29,6 +29,7 @@ import { type D100, type Dice, rollD100s } from "./dice.ts";
 import type { KillEntry, LootResult } from "./aftermath.ts";
 import { type CharacterState, type Effect, Rejected, type World, maxAetherOf, maxHpOf, rawStats } from "./fold.ts";
 import { take } from "./inventory.ts";
+import { addMark, checkShape, proficiencyOf } from "./proficiency.ts";
 
 // --------------------------------------------------------------- actions ---
 
@@ -77,6 +78,8 @@ export interface ClashSide {
   advantage?: boolean;
   /** Half of Maximum Aether for +5, declared before the roll. */
   surge?: boolean;
+  /** A character's weapon shape: its Proficiency bonus is added, and an explosion earns a Mark. */
+  shape?: string;
 }
 
 export interface StartCombat {
@@ -1239,6 +1242,10 @@ export function flankingSuggested(e: Encounter, attackerId: string, defenderId: 
 }
 
 function sideForce(engine: Engine, world: World, c: Combatant, s: ClashSide, role: string): number {
+  if (s.shape !== undefined) {
+    if (!c.characterId) throw new Rejected(`${c.name}'s training is in its Force`);
+    checkShape(engine, s.shape);
+  }
   if (c.characterId) {
     if (!s.attribute) throw new Rejected(`name the Attribute ${c.name} ${role} with`);
     const raw = rawStats(world.characters.get(c.characterId)!)[s.attribute];
@@ -1318,8 +1325,10 @@ function defend(engine: Engine, world: World, a: Defend): Effect[] {
   paySurge(engine, world, def, a.defense);
 
   const r = engine.rules;
+  const prof = (c: Combatant, s: ClashSide) =>
+    s.shape !== undefined && c.characterId ? proficiencyOf(engine, world.characters.get(c.characterId)!, s.shape).bonus : 0;
   const mods = (c: Combatant, s: ClashSide, flank: boolean) =>
-    s.modifier + (s.surge ? r.combat.surge.bonus : 0) + (flank ? r.resolution.flanking_bonus : 0) + (c.exposed ? r.resolution.exposed : 0);
+    s.modifier + prof(c, s) + (s.surge ? r.combat.surge.bonus : 0) + (flank ? r.resolution.flanking_bonus : 0) + (c.exposed ? r.resolution.exposed : 0);
   const attMods = mods(att, cl.attack, cl.flanking);
   const defMods = mods(def, a.defense, false);
   const attDice = sum(a.attackDice!.natural);
@@ -1357,6 +1366,13 @@ function defend(engine: Engine, world: World, a: Defend): Effect[] {
   const effects: Effect[] = [
     { kind: "clash", encounterId: e.id, attackerId: att.id, defenderId: def.id, margin: out.margin, attackTotal: out.attacker_total, defenseTotal: out.defender_total, rolls, battleMemory },
   ];
+  // One Mark per exploding roll made with a weapon shape.
+  for (const [c, s, d] of [
+    [att, cl.attack, a.attackDice!],
+    [def, a.defense, a.defenseDice!],
+  ] as const) {
+    if (c.characterId && s.shape !== undefined && d.natural.length > 1) effects.push(addMark(engine, world.characters.get(c.characterId)!, s.shape));
+  }
 
   if (out.attacker_wins && out.margin > 0 && yieldCap > 0) {
     cl.stage = "yield";

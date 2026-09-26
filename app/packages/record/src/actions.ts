@@ -10,6 +10,7 @@ import type { Stats } from "@gradebreaker/engine";
 import type { AftermathAction } from "./aftermath.ts";
 import type { CombatAction } from "./combat.ts";
 import type { ItemAction } from "./inventory.ts";
+import type { MarkByHand } from "./proficiency.ts";
 
 export type { CombatAction, CombatantSpec } from "./combat.ts";
 
@@ -238,6 +239,8 @@ export interface RollDice {
   advantage?: boolean;
   /** Half of Maximum Aether for +5 on a Clash, declared before the roll (Core Mechanics, "Surge"). */
   surge?: boolean;
+  /** A character's Clash made with this weapon shape: its Proficiency bonus, and a Mark if the die explodes. */
+  shape?: string;
   /** The GM's roll, seen by the GM only. */
   private?: boolean;
   /** A check's Resistance, when the GM enters it: the outcome is computed. */
@@ -283,6 +286,7 @@ export type Action =
   | CombatAction
   | AftermathAction
   | ItemAction
+  | MarkByHand
   | VoidAction;
 
 export type ActionType = Action["type"];

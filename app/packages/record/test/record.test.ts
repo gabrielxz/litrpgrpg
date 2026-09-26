@@ -1015,6 +1015,66 @@ describe("the aftermath and the inventory", () => {
   });
 });
 
+describe("Proficiencies and Marks", () => {
+  const enc = () => rec.state.encounter!;
+  const as = (actor: Draft["actor"], action: Action, ...dice: number[]) => rec.append(rollFor(rec, draft(action, actor), () => dice.shift()!));
+  const prof = (id: string, shape: string) => rec.sheet(id)!.proficiencies.find((p) => p.shape === shape);
+  beforeEach(() => {
+    gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" });
+  });
+
+  it("starts with none; an exploding Clash with a weapon shape earns the first Mark and Trained", () => {
+    expect(rec.sheet("kara")!.proficiencies).toEqual([]);
+    gm({
+      type: "combat.start",
+      encounterId: "e1",
+      name: "Treeline",
+      sides: [
+        { id: "party", name: "The party" },
+        { id: "hostiles", name: "Hostiles" },
+      ],
+      combatants: [{ combatantId: "kara", sideId: "party", characterId: "kara" }, { combatantId: "rat", sideId: "hostiles", name: "Frenzy Rat", grade: "F", maxHp: 400, momentumForce: 1, beats: 1 }],
+    });
+    as(GM, { type: "combat.momentum" }, 60, 30);
+    as(P1, { type: "combat.act", combatantId: "kara" });
+    as(P1, { type: "combat.attack", attackerId: "kara", defenderId: "rat", attack: { attribute: "STR", modifier: 0, shape: "axes and hammers" } });
+    // Kara 97 + 20 (explodes) + STR 8 = 125, and the Mark is hers: the first grants Trained.
+    const out = as(GM, { type: "combat.defend", defense: { force: 8, modifier: 0 } }, 97, 20, 10);
+    expect(out.effects).toContainEqual({ kind: "mark", characterId: "kara", shape: "axes and hammers", marks: 1, tier: "Trained", advanced: true, nextAt: 3 });
+    expect(prof("kara", "axes and hammers")).toEqual({ shape: "axes and hammers", marks: 1, tier: "Trained", bonus: 5 });
+    // The next swing with an axe adds +5; a creature's training is in its Force.
+    as(P1, { type: "combat.done", combatantId: "kara" });
+    gm({ type: "combat.act", combatantId: "rat" });
+    expect(() => gm({ type: "combat.attack", attackerId: "rat", defenderId: "kara", attack: { force: 6, modifier: 0, shape: "blades" } })).toThrow(/training is in its Force/);
+    gm({ type: "combat.done", combatantId: "rat" });
+    gm({ type: "combat.round" });
+    as(P1, { type: "combat.act", combatantId: "kara" });
+    as(P1, { type: "combat.attack", attackerId: "kara", defenderId: "rat", attack: { attribute: "STR", modifier: 0, shape: "axes and hammers" } });
+    as(GM, { type: "combat.defend", defense: { force: 8, modifier: 0 } }, 50, 50);
+    expect(enc().clash?.result?.attackTotal ?? enc().lastClash!.attackTotal).toBe(63);
+  });
+
+  it("makes Seasoned at 3 Marks and banks Marks past 10 in an F-Grade body", () => {
+    const roll = () => as(P1, { type: "dice.roll", roller: { kind: "character", characterId: "kara", attribute: "DEX" }, rollKind: "clash", modifier: 0, shape: "blades" }, 99, 1);
+    roll();
+    expect(roll().effects[1]).toMatchObject({ kind: "mark", marks: 2, tier: "Trained", nextAt: 3 });
+    const third = roll();
+    expect(third.effects[1]).toEqual({ kind: "mark", characterId: "kara", shape: "blades", marks: 3, tier: "Seasoned", advanced: true, nextAt: 10 });
+    for (let i = 0; i < 8; i++) roll();
+    expect(prof("kara", "blades")).toEqual({ shape: "blades", marks: 11, tier: "Seasoned", bonus: 10 });
+    // A roll that does not explode earns nothing; the bonus is in the total.
+    const plain = as(P1, { type: "dice.roll", roller: { kind: "character", characterId: "kara", attribute: "DEX" }, rollKind: "clash", modifier: 0, shape: "blades" }, 40);
+    expect(plain.effects).toEqual([expect.objectContaining({ kind: "rolled", total: 55, proficiency: 10 })]);
+  });
+
+  it("lets the GM record a Mark by hand, and nobody else", () => {
+    expect(() => as(P1, { type: "proficiency.mark", characterId: "kara", shape: "firearms" })).toThrow(/only the GM/);
+    expect(() => gm({ type: "proficiency.mark", characterId: "kara", shape: "lasers" })).toThrow(/not a weapon shape/);
+    gm({ type: "proficiency.mark", characterId: "kara", shape: "firearms" });
+    expect(prof("kara", "firearms")).toMatchObject({ marks: 1, tier: "Trained" });
+  });
+});
+
 describe("the log", () => {
   beforeEach(() => gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" }));
 

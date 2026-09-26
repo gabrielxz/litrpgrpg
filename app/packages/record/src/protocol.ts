@@ -180,6 +180,7 @@ export interface InterfaceSheet {
   invited: { id: string; toId: string; toName: string }[];
   /** What the character carries. */
   items: Stack[];
+  proficiencies: Sheet["proficiencies"];
 }
 
 export interface GmView {

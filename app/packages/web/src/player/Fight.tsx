@@ -6,7 +6,7 @@
  * the Will Save again. The GM records anything a player does not.
  */
 import type { Engine } from "@gradebreaker/engine";
-import { type Action, type InterfaceSheet, type PlayerView, stabilizeAttribute } from "@gradebreaker/record";
+import { type Action, type InterfaceSheet, type PlayerView, shapes, stabilizeAttribute } from "@gradebreaker/record";
 import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
 import { CareActions, type Mate, pillsOf } from "../Care.tsx";
@@ -33,7 +33,15 @@ function useAct(campaignId: string) {
   return { run, busy, error };
 }
 
-const clasher = (c: InterfaceSheet): Clasher => ({ kind: "character", name: c.name, force: c.force, aether: c.aether, surgeCost: c.surgeCost });
+const clasher = (c: InterfaceSheet, engine: Engine | null): Clasher => ({
+  kind: "character",
+  name: c.name,
+  force: c.force,
+  aether: c.aether,
+  surgeCost: c.surgeCost,
+  shapes: engine ? shapes(engine) : [],
+  proficiencies: c.proficiencies,
+});
 
 /** Flanking from the Zones: another hostile of the target shares its Zone. */
 function flanks(combat: Combat, attackerId: string, defenderId: string): boolean {
@@ -83,7 +91,7 @@ function MyTurn({
       </p>
       {attacking ? (
         <AttackForm
-          attacker={clasher(c)}
+          attacker={clasher(c, engine)}
           targets={targets}
           suggestFlanking={(d) => flanks(combat, me.id, d)}
           busy={busy}
@@ -141,7 +149,7 @@ function MyTurn({
   );
 }
 
-function Defending({ view, combat, c }: { view: PlayerView; combat: Combat; c: InterfaceSheet }) {
+function Defending({ view, engine, combat, c }: { view: PlayerView; engine: Engine | null; combat: Combat; c: InterfaceSheet }) {
   const { run, busy, error } = useAct(view.campaign.id);
   const cl = combat.clash!;
   return (
@@ -151,7 +159,7 @@ function Defending({ view, combat, c }: { view: PlayerView; combat: Combat; c: I
         {cl.label ? ` (${cl.label})` : ""}.
       </p>
       {cl.stage === "defense" ? (
-        <DefenseForm defender={clasher(c)} busy={busy} onDefend={(s) => run({ type: "combat.defend", defense: s })} />
+        <DefenseForm defender={clasher(c, engine)} busy={busy} onDefend={(s) => run({ type: "combat.defend", defense: s })} />
       ) : (
         <>
           <p className="small">
@@ -236,7 +244,7 @@ export function Fight({ view, engine, combat, readOnly }: { view: PlayerView; en
           {cl.stage === "yield" ? `: ${cl.attackTotal} against ${cl.defenseTotal}` : ""}.
         </p>
       )}
-      {defending && <Defending view={view} combat={combat} c={mine.get(defending.characterId!)!} />}
+      {defending && <Defending view={view} engine={engine} combat={combat} c={mine.get(defending.characterId!)!} />}
       {actingMine && !cl && <MyTurn view={view} engine={engine} combat={combat} c={mine.get(actingMine.characterId!)!} combatantId={actingMine.id} />}
       {last && !cl && (
         <p className="small sys-dim">
