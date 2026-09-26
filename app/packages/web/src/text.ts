@@ -31,6 +31,9 @@ export function tableWordsIn(text: string): string[] {
   return [...new Set([...text.matchAll(TABLE_WORDS)].map((m) => m[0].toLowerCase()))];
 }
 
+const stack = (s: { name: string; count: number }) => (s.count === 1 ? s.name : `${s.name} ×${s.count}`);
+const holder = (h: string, name: Names) => (h === "spoils" ? "the spoils" : name(h));
+
 const clip = (t: string, n = 70) => (t.length > n ? `${t.slice(0, n - 1)}…` : t);
 
 const signed = (n: number) => (n >= 0 ? `+${n}` : `−${-n}`);
@@ -160,6 +163,18 @@ export function describe(
       return `${name(a.combatantId)}: ${a.suppressed ? "Suppressed" : "no longer Suppressed"}`;
     case "combat.surprise":
       return `Surprise Beat: ${a.combatantIds.map(name).join(", ")}`;
+    case "encounter.loot":
+      return `Loot rolled for ${a.kills.map((k) => name(k.combatantId)).join(", ")}`;
+    case "encounter.settle":
+      return `Fight settled: ${a.kills.length} kill${a.kills.length === 1 ? "" : "s"}, ${a.awards.map((w) => `${name(w.characterId)} ${w.ve} VE`).join(", ") || "no VE"}${
+        a.spoils.length ? `; spoils: ${a.spoils.map(stack).join(", ")}` : ""
+      }`;
+    case "item.give":
+      return `Items to ${holder(a.to, name)}: ${a.items.map(stack).join(", ")}`;
+    case "item.move":
+      return `${holder(a.from, name)} → ${holder(a.to, name)}: ${stack(a)}`;
+    case "item.remove":
+      return `${holder(a.from, name)} uses up ${stack(a)}${a.note ? ` (${a.note})` : ""}`;
     case "void": {
       const seq = seqOf(a.targetId);
       const target = seq === undefined ? "an action" : `#${seq + 1}`;
@@ -240,6 +255,16 @@ export function effectLine(e: Effect, name: Names): string | null {
       return null; // the death's own line says it
     case "battle-memory-due":
       return `${name(e.characterId)} survived Downed: a Battle Memory Card, unless the Downing taught nothing`;
+    case "item-received":
+      return `${name(e.characterId)} receives ${stack(e)}`;
+    case "loot":
+      return `Loot: ${e.results.map((r) => `${name(r.combatantId)} (${r.row}${r.die === null ? "" : `, ${r.die}`}): ${r.drop}`).join("; ")}`;
+    case "kill-confirmed":
+      return null; // the settlement's line names the kills
+    case "encounter-settled":
+      return null;
+    case "spoils-added":
+      return `Into the spoils: ${e.items.map(stack).join(", ")}`;
     case "combat-check":
       return `${e.label}: ${e.rolls.length ? `${e.total} against ${e.resistance}` : "the Force alone meets it"}, ${e.success ? "success" : "failure"}${
         e.aura ? ` (${e.aura === "steeled" ? "steeled for the encounter" : "Suppressed: 1 Beat"})` : ""
@@ -313,6 +338,10 @@ export function noticeLine(e: Effect): string | null {
       return `Party member deceased: ${e.memberName}.`;
     case "pill":
       return e.pillKind === "healing" ? `Health restored: ${e.restored}.` : `Aether restored: ${e.restored}.`;
+    case "kill-confirmed":
+      return `Kill confirmed. Grade ${e.victimGrade}, ${e.tier}.`;
+    case "item-received":
+      return `Item registered: ${stack(e)}.`;
     default:
       return null;
   }

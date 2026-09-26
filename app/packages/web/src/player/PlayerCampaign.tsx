@@ -11,6 +11,7 @@ import { useAuth } from "../auth.ts";
 import { RollForm, RollList } from "../Dice.tsx";
 import { useEngine } from "../live.ts";
 import { Fight } from "./Fight.tsx";
+import { stackLine } from "../items.ts";
 import { ATTRIBUTES, ATTRIBUTE_NAMES, noticeLine } from "../text.ts";
 import { type CharacterSpec, Creator } from "./Creator.tsx";
 
@@ -208,6 +209,105 @@ function PartySection({
   );
 }
 
+/** What the character carries: hand an item to someone in the campaign or the spoils, or mark one used. */
+function Carried({ campaignId, c, roster, readOnly }: { campaignId: string; c: InterfaceSheet; roster: PlayerView["roster"]; readOnly?: boolean }) {
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [to, setTo] = useState<Record<string, string>>({});
+  if (!c.items.length) return null;
+  const run = async (action: Action) => {
+    setBusy(true);
+    setError(null);
+    try {
+      await submit(campaignId, newActionId(), action);
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <div className="sys-section">
+      <h3>Carried</h3>
+      <ul className="items">
+        {c.items.map((s) => (
+          <li key={s.name}>
+            {stackLine(s)}
+            {!readOnly && !c.dead && (
+              <span className="item-actions">
+                <select value={to[s.name] ?? "spoils"} onChange={(e) => setTo({ ...to, [s.name]: e.target.value })} aria-label={`Where ${s.name} goes`}>
+                  <option value="spoils">To the spoils</option>
+                  {roster.map((r) => (
+                    <option key={r.id} value={r.id}>
+                      To {r.name}
+                    </option>
+                  ))}
+                </select>
+                <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "item.move", from: c.id, to: to[s.name] ?? "spoils", name: s.name, count: 1 })}>
+                  Hand over one
+                </button>
+                <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "item.remove", from: c.id, name: s.name, count: 1, note: "used" })}>
+                  Used one
+                </button>
+              </span>
+            )}
+          </li>
+        ))}
+      </ul>
+      {error && <p className="error">{error}</p>}
+    </div>
+  );
+}
+
+/** What the party has not divided: any player can claim an item for their own character. */
+function Spoils({ view, readOnly }: { view: PlayerView; readOnly?: boolean }) {
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const living = view.characters.filter((c) => !c.dead);
+  const [who, setWho] = useState(living[0]?.id ?? "");
+  if (!view.spoils.length) return null;
+  const claimer = living.some((c) => c.id === who) ? who : (living[0]?.id ?? "");
+  const take = async (name: string) => {
+    setBusy(true);
+    setError(null);
+    try {
+      await submit(view.campaign.id, newActionId(), { type: "item.move", from: "spoils", to: claimer, name, count: 1 });
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <section className="table-dice">
+      <h3>Spoils</h3>
+      <p className="small sys-dim">What the party has not divided yet.</p>
+      {!readOnly && living.length > 1 && (
+        <select value={claimer} onChange={(e) => setWho(e.target.value)} aria-label="Claim for">
+          {living.map((c) => (
+            <option key={c.id} value={c.id}>
+              For {c.name}
+            </option>
+          ))}
+        </select>
+      )}
+      <ul className="items">
+        {view.spoils.map((s) => (
+          <li key={s.name}>
+            {stackLine(s)}
+            {!readOnly && claimer && (
+              <button className="sys-confirm inline" disabled={busy} onClick={() => take(s.name)}>
+                Take one
+              </button>
+            )}
+          </li>
+        ))}
+      </ul>
+      {error && <p className="error">{error}</p>}
+    </section>
+  );
+}
+
 function Interface({
   campaignId,
   c,
@@ -287,6 +387,8 @@ function Interface({
           </span>
         </div>
       </div>
+
+      <Carried campaignId={campaignId} c={c} roster={roster} readOnly={readOnly} />
 
       <PartySection campaignId={campaignId} c={c} roster={roster} readOnly={readOnly} />
 
@@ -435,6 +537,7 @@ export function PlayerCampaign({
       <div className="side-column">
         <Notices feed={view.feed} names={names} />
         {view.combat && <Fight view={view} engine={engine} combat={view.combat} readOnly={readOnly} />}
+        <Spoils view={view} readOnly={readOnly} />
         <section className="table-dice">
           <h3>Dice</h3>
           {!readOnly && view.characters.length > 0 && (

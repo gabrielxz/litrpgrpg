@@ -1195,3 +1195,30 @@ details.panel > summary {
   cursor: pointer;
   color: var(--slate);
 }
+
+/* Items: carried, the spoils, and the controls beside each stack. */
+ul.items {
+  list-style: none;
+  padding: 0;
+  margin: 0.3rem 0;
+}
+ul.items li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.15rem 0;
+}
+.item-actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-left: auto;
+}
+.aftermath table.rows td label.small {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.25rem;
+  margin-right: 0.5rem;
+}

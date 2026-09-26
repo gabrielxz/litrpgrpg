@@ -16,6 +16,7 @@ import {
   type PlayerClash,
   type EncounterView,
   type PlayerCombat,
+  SPOILS,
   momentumForceOf,
   worldOf,
 } from "@gradebreaker/record";
@@ -86,6 +87,32 @@ export function rollsFor(record: CampaignRecord, members: Member[], role: Role):
         };
         if (c?.characterId) v.characterId = c.characterId;
         out.push(v);
+      }
+      continue;
+    }
+    if (a.type === "encounter.loot") {
+      // One table roll per kill whose row has a chance.
+      const loot = effects.get(env.id)?.find((x) => x.kind === "loot");
+      if (!loot || loot.kind !== "loot") continue;
+      const names = new Map((record.state.encounter?.combatants ?? []).map((c) => [c.id, c.name]));
+      for (const [j, r] of [...loot.results.entries()].reverse()) {
+        if (r.die === null) continue;
+        out.push({
+          id: `${env.id}:${j}`,
+          at: env.at,
+          by: person(env.actor.userId),
+          roller: names.get(r.combatantId) ?? r.combatantId,
+          label: `Loot (${r.row})`,
+          rollKind: "table",
+          natural: [r.die],
+          surge: false,
+          force: 0,
+          modifier: 0,
+          total: r.die,
+          exploded: false,
+          entered: false,
+          private: false,
+        });
       }
       continue;
     }
@@ -163,6 +190,7 @@ export function interfaceSheet(s: Sheet, record: CampaignRecord): InterfaceSheet
     party,
     invitations: st.invites.filter((i) => i.toId === s.id).map((i) => ({ id: i.id, fromId: i.fromId, fromName: name(i.fromId) })),
     invited: st.invites.filter((i) => i.fromId === s.id).map((i) => ({ id: i.id, toId: i.toId, toName: name(i.toId) })),
+    items: (st.inventory.get(s.id) ?? []).map((x) => ({ ...x })),
   };
 }
 
@@ -191,6 +219,8 @@ const ANNOUNCED: ReadonlySet<Effect["kind"]> = new Set([
   "stabilized",
   "revived",
   "pill",
+  "kill-confirmed",
+  "item-received",
 ]);
 
 /** Effects a player is shown: the announced ones about their own characters. */
@@ -225,9 +255,10 @@ export function feedFor(record: CampaignRecord, own: ReadonlySet<string>): FeedI
 }
 
 /** The running fight with each combatant's HP and Momentum Force read where they live. */
-export function encounterView(record: CampaignRecord): EncounterView | null {
+export function encounterView(record: CampaignRecord, which: "running" | "aftermath" = "running"): EncounterView | null {
   const e = record.state.encounter;
-  if (!e || e.ended) return null;
+  if (!e) return null;
+  if (which === "running" ? e.ended : !e.ended || e.settled) return null;
   const world = worldOf(record.state);
   return {
     ...e,
@@ -315,6 +346,8 @@ export function viewFor(
       held: st.held,
       rolls: rollsFor(record, members, "gm"),
       encounter: encounterView(record),
+      aftermath: encounterView(record, "aftermath"),
+      inventory: Object.fromEntries([...st.inventory].map(([k, v]) => [k, v.map((x) => ({ ...x }))])),
     };
   }
   const own = sheets.filter((s) => s.playerId === who.userId);
@@ -328,5 +361,6 @@ export function viewFor(
     feed: feedFor(record, ownIds),
     rolls: rollsFor(record, members, "player"),
     combat: playerCombat(record),
+    spoils: (record.state.inventory.get(SPOILS) ?? []).map((x) => ({ ...x })),
   };
 }

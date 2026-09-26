@@ -22,9 +22,10 @@ export interface Mate {
   pills?: { healing: number; aether: number };
 }
 
-/** The acting combatant: a character's Forces for the check, or none for a creature or NPC. */
+/** The acting combatant: a character's Forces for the check and what they carry, or neither for a creature or NPC. */
 export interface Actor extends Mate {
   force?: Record<string, number>;
+  items?: { name: string; count: number }[];
 }
 
 export interface Pill {
@@ -66,9 +67,13 @@ export function CareActions({
   busy: boolean;
   run: (a: Action) => Promise<boolean>;
 }) {
+  // A character gives only the pills they carry; a creature's or NPC's are the GM's to say.
+  const held = (p: Pill) => me.items?.find((i) => i.name.toLowerCase() === p.name.toLowerCase())?.count ?? 0;
+  pills = me.characterId ? pills.filter((p) => held(p) > 0) : pills;
   const [open, setOpen] = useState<Open>(null);
   const [target, setTarget] = useState("");
-  const [pill, setPill] = useState(pills[0]?.name ?? "");
+  const [pillChoice, setPill] = useState(pills[0]?.name ?? "");
+  const pill = pills.some((p) => p.name === pillChoice) ? pillChoice : (pills[0]?.name ?? "");
   const [force, setForce] = useState("");
   const [advantage, setAdvantage] = useState(false);
   const live = people.filter((p) => !p.out);
@@ -133,7 +138,7 @@ export function CareActions({
           <select value={pill} onChange={(e) => setPill(e.target.value)} aria-label="Pill">
             {pills.map((p) => (
               <option key={p.name} value={p.name}>
-                {p.name} ({p.kind === "healing" ? `${p.amount} HP` : `${p.amount} Aether`})
+                {p.name} ({p.kind === "healing" ? `${p.amount} HP` : `${p.amount} Aether`}){me.characterId ? `, ${held(p)} carried` : ""}
               </option>
             ))}
           </select>

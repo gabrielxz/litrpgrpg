@@ -3,7 +3,7 @@
  * campaign log, the table (members, invite links, who plays whom), and any player's screen as
  * that player sees it.
  */
-import type { Envelope, GmView, PlayerView, Sheet } from "@gradebreaker/record";
+import type { Envelope, GmView, PlayerView, Sheet, Stack } from "@gradebreaker/record";
 import { useEffect, useState } from "react";
 import { api } from "../api.ts";
 import type { useCampaign } from "../live.ts";
@@ -11,6 +11,8 @@ import { useEngine } from "../live.ts";
 import { PlayerCampaign } from "../player/PlayerCampaign.tsx";
 import { CombatSection } from "./Combat.tsx";
 import { Commit } from "./Commit.tsx";
+import { SpoilsCard } from "./Items.tsx";
+import { stackLine } from "../items.ts";
 import { ATTRIBUTES } from "../text.ts";
 import { Table } from "./Invites.tsx";
 import { Log } from "./Log.tsx";
@@ -25,7 +27,7 @@ function Meter({ value, max, className }: { value: number; max: number; classNam
   );
 }
 
-function CharacterCard({ c, player, party }: { c: Sheet; player: string; party: string | null }) {
+function CharacterCard({ c, player, party, items }: { c: Sheet; player: string; party: string | null; items: Stack[] }) {
   const band = c.saturation.band;
   return (
     <article className="sheet-card">
@@ -46,7 +48,7 @@ function CharacterCard({ c, player, party }: { c: Sheet; player: string; party: 
           {c.hp}/{c.maxHp}
         </span>
       </div>
-      {c.downed && <p className="tag danger">Downed</p>}
+      {c.dead ? <p className="tag danger">Dead</p> : c.downed && <p className="tag danger">Downed</p>}
       <div className="vital">
         <span>Aether</span>
         <Meter value={c.aether} max={c.maxAether} className="aether" />
@@ -87,6 +89,7 @@ function CharacterCard({ c, player, party }: { c: Sheet; player: string; party: 
         </tbody>
       </table>
       {c.temporary.length > 0 && <p className="small muted">Temporarily down 1 {c.temporary.join(", 1 ")} until a clean Consolidation.</p>}
+      {items.length > 0 && <p className="small">Carries: {items.map(stackLine).join(", ")}</p>}
       <p className="small muted">{c.background}</p>
     </article>
   );
@@ -226,6 +229,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
             {label}
             {s === "log" && view.rejected.length > 0 && <span className="tag attention">{view.rejected.length}</span>}
             {s === "combat" && view.encounter && <span className="tag attention">{view.encounter.round ? `Round ${view.encounter.round}` : "Set"}</span>}
+            {s === "combat" && !view.encounter && view.aftermath && <span className="tag attention">To settle</span>}
           </button>
         ))}
       </nav>
@@ -235,15 +239,16 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
             {view.characters.length === 0 ? (
               <p className="muted">No characters yet. Players can build their own once they join, or you can create one under New character.</p>
             ) : (
-              view.characters.map((c) => <CharacterCard key={c.id} c={c} player={playerName(c)} party={partyWith(c.id)} />)
+              view.characters.map((c) => <CharacterCard key={c.id} c={c} player={playerName(c)} party={partyWith(c.id)} items={view.inventory[c.id] ?? []} />)
             )}
+            <SpoilsCard view={view} onRecorded={live.addToLog} />
           </section>
           <aside className="side">
             {engine ? <RecordPanel view={view} engine={engine} names={names} onRecorded={live.addToLog} /> : <p className="muted">Loading rules…</p>}
           </aside>
         </main>
       )}
-      {section === "combat" && <CombatSection view={view} engine={engine} log={live.log} onRecorded={live.addToLog} />}
+      {section === "combat" && <CombatSection view={view} engine={engine} names={names} log={live.log} onRecorded={live.addToLog} />}
       {section === "log" && (
         <main className="page">
           <Log view={view} log={live.log} names={names} onRecorded={live.addToLog} />

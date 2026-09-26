@@ -3,6 +3,7 @@
  * messages. The server builds them (server/src/views.ts); the web client reads them.
  */
 import type { Effect, HeldMessage, Party, PartyInvite } from "./fold.ts";
+import type { Stack } from "./inventory.ts";
 import type { Combatant, Encounter } from "./combat.ts";
 import type { Envelope } from "./actions.ts";
 import type { Sheet } from "./sheet.ts";
@@ -177,6 +178,8 @@ export interface InterfaceSheet {
   invitations: { id: string; fromId: string; fromName: string }[];
   /** Invitations this character made that wait on an answer. */
   invited: { id: string; toId: string; toName: string }[];
+  /** What the character carries. */
+  items: Stack[];
 }
 
 export interface GmView {
@@ -194,6 +197,10 @@ export interface GmView {
   rolls: RollView[];
   /** The fight running now. */
   encounter: EncounterView | null;
+  /** The last fight, ended and waiting to be settled: kills, loot, VE, spoils. */
+  aftermath: EncounterView | null;
+  /** Item stacks by holder: each character's id, and `spoils`. */
+  inventory: Record<string, Stack[]>;
 }
 
 export interface PlayerView {
@@ -208,6 +215,8 @@ export interface PlayerView {
   /** The table's open rolls, newest first. */
   rolls: RollView[];
   combat: PlayerCombat | null;
+  /** What the party has not divided yet. */
+  spoils: Stack[];
 }
 
 export type View = GmView | PlayerView;

@@ -22,6 +22,7 @@ const clashSide = z.object({
   surge: z.boolean().optional(),
 });
 const zone = z.object({ id, name: z.string().max(60) });
+const stack = z.object({ name: z.string().max(80), count: whole });
 const combatant = z.object({
   combatantId: id,
   sideId: id,
@@ -175,6 +176,33 @@ export const actionSchema = z.discriminatedUnion("type", [
   }),
   z.object({ type: z.literal("combat.suppress"), combatantId: id, suppressed: z.boolean() }),
   z.object({ type: z.literal("combat.surprise"), combatantIds: z.array(id).min(1).max(60) }),
+  z.object({
+    type: z.literal("encounter.loot"),
+    encounterId: id,
+    kills: z.array(z.object({ combatantId: id, tier: z.string().max(20), boss: z.boolean().optional() })).max(60),
+    dice: z.array(whole.nullable()).max(60).optional(),
+  }),
+  z.object({
+    type: z.literal("encounter.settle"),
+    encounterId: id,
+    participants: z.array(id).max(20),
+    kills: z
+      .array(
+        z.object({
+          combatantId: id,
+          tier: z.string().max(20),
+          boss: z.boolean().optional(),
+          byId: id.optional(),
+          tiers: z.record(z.string(), z.string().max(20)).optional(),
+        }),
+      )
+      .max(60),
+    awards: z.array(z.object({ characterId: id, ve: whole })).max(20),
+    spoils: z.array(stack).max(60),
+  }),
+  z.object({ type: z.literal("item.give"), to: id, items: z.array(stack).min(1).max(60) }),
+  z.object({ type: z.literal("item.move"), from: id, to: id, name: z.string().max(80), count: whole }),
+  z.object({ type: z.literal("item.remove"), from: id, name: z.string().max(80), count: whole, note: z.string().max(200).optional() }),
   z.object({
     type: z.literal("void"),
     targetId: id,

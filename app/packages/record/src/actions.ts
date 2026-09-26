@@ -7,7 +7,9 @@
  * and the engine's number replay the same way under the campaign's pinned rules version.
  */
 import type { Stats } from "@gradebreaker/engine";
+import type { AftermathAction } from "./aftermath.ts";
 import type { CombatAction } from "./combat.ts";
+import type { ItemAction } from "./inventory.ts";
 
 export type { CombatAction, CombatantSpec } from "./combat.ts";
 
@@ -279,6 +281,8 @@ export type Action =
   | ReleaseMessage
   | RollDice
   | CombatAction
+  | AftermathAction
+  | ItemAction
   | VoidAction;
 
 export type ActionType = Action["type"];

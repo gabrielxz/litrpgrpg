@@ -5,7 +5,7 @@
 import { Engine } from "@gradebreaker/engine";
 import { loadRules } from "@gradebreaker/engine/node";
 import { beforeEach, describe, expect, it } from "vitest";
-import { type Action, CampaignRecord, type Draft, RecordError, hoursForGoal, flankingSuggested, killAwards, rollD100s, rollFor } from "../src/index.ts";
+import { type Action, CampaignRecord, type Draft, RecordError, encounterAwards, hoursForGoal, flankingSuggested, killAwards, rollD100s, rollFor } from "../src/index.ts";
 
 const engine = new Engine(loadRules());
 const GM = { role: "gm", userId: "gm-1" } as const;
@@ -826,6 +826,10 @@ describe("Downed, pills, Aura Pressure, and the Surprise Beat", () => {
     fight([npc]);
     gm({ type: "combat.hp", combatantId: "kara", delta: -14 });
     as(P2, { type: "combat.act", combatantId: "joe" });
+    // A character gives only what they carry.
+    expect(() => as(P2, { type: "combat.pill", combatantId: "joe", targetId: "kara", pill: "Stuttering Tincture" })).toThrow(/Joe holds 0/);
+    gm({ type: "item.give", to: "joe", items: [{ name: "Stuttering Tincture", count: 2 }] });
+    gm({ type: "item.give", to: "kara", items: [{ name: "stuttering tincture", count: 1 }, { name: "Sparkstone Tablet", count: 2 }] });
     const first = as(P2, { type: "combat.pill", combatantId: "joe", targetId: "kara", pill: "Stuttering Tincture" });
     expect(first.effects).toContainEqual({ kind: "revived", encounterId: "e1", combatantId: "kara", characterId: "kara", hp: 5 });
     expect(who("kara")).toMatchObject({ downed: null, beats: 2, pills: { healing: 1, aether: 0 } });
@@ -841,6 +845,8 @@ describe("Downed, pills, Aura Pressure, and the Surprise Beat", () => {
     const ae = as(P1, { type: "combat.pill", combatantId: "kara", targetId: "kara", pill: "Sparkstone Tablet" });
     expect(ae.effects[0]).toMatchObject({ pillKind: "aether", restored: 6 });
     expect(() => as(P1, { type: "combat.pill", combatantId: "kara", targetId: "thug", pill: "Sparkstone Tablet" })).toThrow(/no Aether for Thug/);
+    expect(rec.state.inventory.get("joe")).toEqual([]);
+    expect(rec.state.inventory.get("kara")).toEqual([{ name: "Sparkstone Tablet", count: 1 }]);
   });
 
   it("executes a Downed combatant for a Beat with no roll, and lets the GM rule a fate either way", () => {
@@ -915,6 +921,97 @@ describe("Downed, pills, Aura Pressure, and the Surprise Beat", () => {
     rolled({ type: "combat.momentum" }, 60, 30);
     expect(enc().surprise).toBeNull();
     expect([who("kara").beats, who("joe").beats, who("thug").beats]).toEqual([1, 2, 2]);
+  });
+});
+
+describe("the aftermath and the inventory", () => {
+  const enc = () => rec.state.encounter!;
+  const as = (actor: Draft["actor"], action: Action, ...dice: number[]) => rec.append(rollFor(rec, draft(action, actor), () => dice.shift()!));
+  const rat = (id: string, name: string) => ({ combatantId: id, sideId: "hostiles", name, creature: "Frenzy Rat", grade: "F", maxHp: 12, momentumForce: 8, beats: 1 });
+  beforeEach(() => {
+    gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" });
+    gm({ type: "character.pregen", characterId: "joe", pregen: "Joe", playerId: "player-2" });
+    gm({
+      type: "combat.start",
+      encounterId: "e1",
+      name: "Treeline",
+      sides: [
+        { id: "party", name: "The party" },
+        { id: "hostiles", name: "Hostiles" },
+      ],
+      combatants: [{ combatantId: "kara", sideId: "party", characterId: "kara" }, { combatantId: "joe", sideId: "party", characterId: "joe" }, rat("r1", "Rat 1"), rat("r2", "Rat 2"), { combatantId: "boss", sideId: "hostiles", name: "Brood Mother", kind: "creature", grade: "F", maxHp: 40, momentumForce: 10, beats: 2 }],
+    });
+    as(GM, { type: "combat.momentum" }, 60, 30);
+  });
+
+  it("credits the finishing blow to the attacker whose hit killed", () => {
+    gm({ type: "combat.act", combatantId: "kara" });
+    gm({ type: "combat.attack", attackerId: "kara", defenderId: "r1", attack: { attribute: "STR", modifier: 0 } });
+    const out = as(GM, { type: "combat.defend", defense: { force: 8, modifier: 0 } }, 90, 10);
+    expect(out.effects).toContainEqual({ kind: "combat-died", encounterId: "e1", combatantId: "r1", cause: "fell", byId: "kara", byCharacterId: "kara" });
+  });
+
+  it("rolls loot once per kill, a boss one row higher, and settles VE, kills, and spoils as one action", () => {
+    gm({ type: "combat.hp", combatantId: "r1", delta: -12 });
+    gm({ type: "combat.hp", combatantId: "r2", delta: -12 });
+    gm({ type: "combat.hp", combatantId: "boss", delta: -40 });
+    expect(() => gm({ type: "encounter.settle", encounterId: "e1", participants: [], kills: [], awards: [], spoils: [] })).toThrow(/still running/);
+    gm({ type: "combat.end" });
+    // Rats are Trivial: nothing to roll. The Brood Mother, Moderate and a boss, reads Hard: 25% for a shard or equipment.
+    const loot = as(GM, { type: "encounter.loot", encounterId: "e1", kills: [{ combatantId: "r1", tier: "Trivial" }, { combatantId: "boss", tier: "Moderate", boss: true }] }, 20);
+    expect(loot.effects[0]).toMatchObject({
+      kind: "loot",
+      results: [
+        { combatantId: "r1", row: "Trivial", die: null },
+        { combatantId: "boss", row: "Hard", die: 20, drop: "One consumable, plus a skill shard or equipment" },
+      ],
+    });
+    expect(() => as(GM, { type: "encounter.loot", encounterId: "e1", kills: [{ combatantId: "r2", tier: "Trivial" }] })).toThrow(/loot is rolled/);
+
+    const kills = [
+      { combatantId: "r1", tier: "Trivial", byId: "kara" },
+      { combatantId: "r2", tier: "Trivial" },
+      // The Brood Mother was Hard for Joe.
+      { combatantId: "boss", tier: "Moderate", boss: true, byId: "joe", tiers: { joe: "Hard" } },
+    ];
+    const awards = encounterAwards(engine, enc(), [{ characterId: "kara", grade: "F" }, { characterId: "joe", grade: "F" }], kills);
+    // Kara: 2 + 2 + 15 (10 × 1.5); Joe: 2 + 2 + 30.
+    expect(awards).toEqual([
+      { characterId: "kara", ve: 19 },
+      { characterId: "joe", ve: 34 },
+    ]);
+    const out = gm({ type: "encounter.settle", encounterId: "e1", participants: ["kara", "joe"], kills, awards, spoils: [{ name: "Lesser Healing Pill", count: 2 }, { name: "Edge Shard", count: 1 }] });
+    expect(out.effects.filter((e) => e.kind === "kill-confirmed")).toHaveLength(6);
+    expect(out.effects).toContainEqual({ kind: "kill-confirmed", characterId: "joe", encounterId: "e1", victimId: "boss", victimGrade: "F", tier: "Hard" });
+    expect(rec.sheet("kara")!.storedVe).toBe(19);
+    expect(rec.sheet("joe")!.storedVe).toBe(34);
+    expect(rec.state.inventory.get("spoils")).toEqual([
+      { name: "Lesser Healing Pill", count: 2 },
+      { name: "Edge Shard", count: 1 },
+    ]);
+    expect(enc()).toMatchObject({ settled: true });
+    expect(() => gm({ type: "encounter.settle", encounterId: "e1", participants: [], kills: [], awards: [], spoils: [] })).toThrow(/already settled/);
+  });
+
+  it("refuses a kill that did not die and a participant who was not there", () => {
+    gm({ type: "character.pregen", characterId: "andre", pregen: "Andre" });
+    gm({ type: "combat.end" });
+    expect(() => gm({ type: "encounter.settle", encounterId: "e1", participants: ["kara"], kills: [{ combatantId: "r1", tier: "Trivial" }], awards: [], spoils: [] })).toThrow(/did not die/);
+    expect(() => gm({ type: "encounter.settle", encounterId: "e1", participants: ["andre"], kills: [], awards: [], spoils: [] })).toThrow(/Andre was not in Treeline/);
+  });
+
+  it("lets players claim from the spoils for their own character and hand their own items on", () => {
+    gm({ type: "combat.end" });
+    gm({ type: "encounter.settle", encounterId: "e1", participants: ["kara", "joe"], kills: [], awards: [], spoils: [{ name: "Lesser Healing Pill", count: 2 }] });
+    expect(() => as(P1, { type: "item.move", from: "spoils", to: "joe", name: "Lesser Healing Pill", count: 1 })).toThrow(/claims from the spoils for them/);
+    const got = as(P1, { type: "item.move", from: "spoils", to: "kara", name: "lesser healing pill", count: 2 });
+    expect(got.effects).toEqual([{ kind: "item-received", characterId: "kara", name: "Lesser Healing Pill", count: 2 }]);
+    as(P1, { type: "item.move", from: "kara", to: "joe", name: "Lesser Healing Pill", count: 1 });
+    expect(() => as(P1, { type: "item.move", from: "joe", to: "kara", name: "Lesser Healing Pill", count: 1 })).toThrow(/their own character's items/);
+    expect(() => as(P2, { type: "item.remove", from: "joe", name: "Lesser Healing Pill", count: 2 })).toThrow(/Joe holds 1/);
+    as(P2, { type: "item.remove", from: "joe", name: "Lesser Healing Pill", count: 1, note: "used" });
+    expect(() => as(P1, { type: "item.give", to: "kara", items: [{ name: "Shield", count: 1 }] })).toThrow(/only the GM grants/);
+    expect([rec.state.inventory.get("kara"), rec.state.inventory.get("joe"), rec.state.inventory.get("spoils")]).toEqual([[{ name: "Lesser Healing Pill", count: 1 }], [], []]);
   });
 });
 

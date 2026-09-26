@@ -1,11 +1,12 @@
 /**
  * Fills in the dice for an action that asks the server to roll: a `dice.roll` without its
- * dice, a Momentum Roll, a Seize, a Clash's defense, stabilizing, or a Will Save. The record
+ * dice, a Momentum Roll, a Seize, a Clash's defense, stabilizing, a Will Save, or loot. The record
  * stays pure; the caller passes the random source. A retry of an action already recorded takes the recorded dice, so it matches and
  * records once. Dice the client sends for a `dice.roll` were rolled at the table and are
  * marked as entered.
  */
 import type { Action, Draft } from "./actions.ts";
+import { rollLootDice } from "./aftermath.ts";
 import { rollCheckDice, rollCombatDice } from "./combat.ts";
 import { type D100, rollD100s } from "./dice.ts";
 import { worldOf } from "./fold.ts";
@@ -56,6 +57,11 @@ export function rollFor(record: CampaignRecord, draft: Draft, d100: D100): Draft
     if (a.dice) return draft;
     if (prior?.type === a.type) return prior.dice ? { ...draft, action: { ...a, dice: prior.dice } as Action } : draft;
     return { ...draft, action: rollCheckDice(record.engine, worldOf(record.state), a, d100) };
+  }
+  if (a.type === "encounter.loot") {
+    if (a.dice) return draft;
+    if (prior?.type === "encounter.loot" && prior.dice) return { ...draft, action: { ...a, dice: prior.dice } };
+    return { ...draft, action: rollLootDice(record.engine, a, d100) };
   }
   if (a.type === "combat.aura") {
     if (a.saves) return draft;

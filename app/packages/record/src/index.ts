@@ -36,6 +36,8 @@ export type {
 } from "./protocol.ts";
 export { type D100, type Dice, rollD100s } from "./dice.ts";
 export { rollFor } from "./rolling.ts";
+export { type KillEntry, type LootResult, type RollLoot, type Settle, encounterAwards, lootRow } from "./aftermath.ts";
+export { type ItemAction, SPOILS, type Stack } from "./inventory.ts";
 export {
   type ClashResult,
   type ClashSide,

@@ -26,7 +26,9 @@ import type {
   SendMessage,
   SpendFreePoints,
 } from "./actions.ts";
+import { type LootResult, applyAftermath } from "./aftermath.ts";
 import { type DeathCause, type Encounter, type MomentumRollRecord, applyCombat, authorizeCombatPlayer, cloneEncounter } from "./combat.ts";
+import { type Stack, applyItems, authorizeItemsPlayer } from "./inventory.ts";
 
 export interface CharacterState {
   id: string;
@@ -132,6 +134,11 @@ export type Effect =
   | { kind: "combat-died"; encounterId: string; combatantId: string; characterId?: string; cause: DeathCause; byId?: string; byCharacterId?: string }
   | { kind: "party-member-died"; characterId: string; memberId: string; memberName: string }
   | { kind: "battle-memory-due"; characterId: string; reason: string }
+  | { kind: "item-received"; characterId: string; name: string; count: number }
+  | { kind: "loot"; encounterId: string; results: LootResult[] }
+  | { kind: "kill-confirmed"; characterId: string; encounterId: string; victimId: string; victimGrade: string; tier: string }
+  | { kind: "encounter-settled"; encounterId: string }
+  | { kind: "spoils-added"; encounterId: string; items: Stack[] }
   | {
       kind: "combat-check";
       encounterId: string;
@@ -188,6 +195,8 @@ export interface FoldResult {
   held: HeldMessage[];
   /** The fight running now, or the last one (ended). */
   encounter: Encounter | null;
+  /** Item stacks by holder: a character's id, or the spoils. */
+  inventory: Map<string, Stack[]>;
   /** Effects keyed by the id of the action that produced them. */
   effects: Map<string, Effect[]>;
   rejected: Rejection[];
@@ -241,6 +250,7 @@ export interface World {
   invites: PartyInvite[];
   held: Map<string, HeldMessage>;
   encounter: Encounter | null;
+  inventory: Map<string, Stack[]>;
 }
 
 function cloneWorld(w: World): World {
@@ -250,16 +260,24 @@ function cloneWorld(w: World): World {
     invites: [...w.invites],
     held: new Map(w.held),
     encounter: w.encounter && cloneEncounter(w.encounter),
+    inventory: new Map([...w.inventory].map(([k, v]) => [k, v.map((s) => ({ ...s }))])),
   };
 }
 
 export function emptyWorld(): World {
-  return { characters: new Map(), parties: new Map(), invites: [], held: new Map(), encounter: null };
+  return { characters: new Map(), parties: new Map(), invites: [], held: new Map(), encounter: null, inventory: new Map() };
 }
 
 /** The world as the fold leaves it: what `rollFor` rolls against. */
 export function worldOf(r: FoldResult): World {
-  return { characters: r.characters, parties: r.parties, invites: r.invites, held: new Map(r.held.map((m) => [m.id, m])), encounter: r.encounter };
+  return {
+    characters: r.characters,
+    parties: r.parties,
+    invites: r.invites,
+    held: new Map(r.held.map((m) => [m.id, m])),
+    encounter: r.encounter,
+    inventory: r.inventory,
+  };
 }
 
 export function fold(engine: Engine, log: readonly Envelope[]): FoldResult {
@@ -293,6 +311,7 @@ export function fold(engine: Engine, log: readonly Envelope[]): FoldResult {
     invites: world.invites,
     held: [...world.held.values()],
     encounter: world.encounter,
+    inventory: world.inventory,
     effects,
     rejected,
     voided: voided.ids,
@@ -400,6 +419,13 @@ function apply(engine: Engine, world: World, env: Envelope): Effect[] {
     case "combat.suppress":
     case "combat.surprise":
       return applyCombat(engine, world, a, env);
+    case "encounter.loot":
+    case "encounter.settle":
+      return applyAftermath(engine, world, a);
+    case "item.give":
+    case "item.move":
+    case "item.remove":
+      return applyItems(world, a);
     case "void":
       throw new Error("voids are handled before apply");
   }
@@ -446,6 +472,10 @@ function authorize(world: World, env: Envelope) {
     case "combat.pill":
     case "combat.will":
       return authorizeCombatPlayer(world, a, me);
+    case "item.give":
+    case "item.move":
+    case "item.remove":
+      return authorizeItemsPlayer(world, a, me);
     case "dice.roll":
       if (a.roller.kind !== "character") throw new Rejected("a player rolls for their own character");
       if (a.private) throw new Rejected("only the GM rolls privately");
@@ -552,13 +582,18 @@ function awardVe(engine: Engine, chars: Map<string, CharacterState>, a: AwardVe)
     if (ids.has(characterId)) throw new Rejected(`${characterId} is listed twice in one award`);
     ids.add(characterId);
     if (!Number.isInteger(ve) || ve < 0) throw new Rejected(`an award is a whole number of VE, not ${ve}`);
-    const c = need(chars, characterId);
-    const before = engine.saturation(c.storedVe, c.grade).band;
-    c.storedVe += ve;
-    out.push({ kind: "ve-acquired", characterId, ve });
-    const after = engine.saturation(c.storedVe, c.grade).band;
-    if (after !== before) out.push({ kind: "saturation", characterId, from: before, to: after });
+    out.push(...storeVe(engine, need(chars, characterId), ve));
   }
+  return out;
+}
+
+/** VE into a character's stored pool, with the Saturation band it crosses into. */
+export function storeVe(engine: Engine, c: CharacterState, ve: number): Effect[] {
+  const before = engine.saturation(c.storedVe, c.grade).band;
+  c.storedVe += ve;
+  const out: Effect[] = [{ kind: "ve-acquired", characterId: c.id, ve }];
+  const after = engine.saturation(c.storedVe, c.grade).band;
+  if (after !== before) out.push({ kind: "saturation", characterId: c.id, from: before, to: after });
   return out;
 }
 

@@ -18,9 +18,10 @@ import { useMemo, useState } from "react";
 import { ATTRIBUTES, type Names } from "../text.ts";
 import { Commit } from "./Commit.tsx";
 import { RollForm, RollList } from "../Dice.tsx";
+import { ItemsForm } from "./Items.tsx";
 import { MessageForm, PartyForm } from "./Social.tsx";
 
-type Tab = "character" | "ve" | "rest" | "points" | "vitals" | "collapse" | "party" | "message" | "dice";
+type Tab = "character" | "ve" | "rest" | "points" | "vitals" | "items" | "collapse" | "party" | "message" | "dice";
 
 const TABS: [Tab, string][] = [
   ["dice", "Dice"],
@@ -28,6 +29,7 @@ const TABS: [Tab, string][] = [
   ["rest", "Consolidation"],
   ["points", "Assigned points"],
   ["vitals", "HP and Aether"],
+  ["items", "Items"],
   ["message", "System message"],
   ["party", "Party"],
   ["character", "New character"],
@@ -65,6 +67,7 @@ export function RecordPanel(props: Omit<FormProps, "onRecorded"> & { onRecorded:
         {tab === "rest" && <RestForm {...p} />}
         {tab === "points" && <PointsForm {...p} />}
         {tab === "vitals" && <VitalsForm {...p} />}
+        {tab === "items" && <ItemsForm {...p} />}
         {tab === "collapse" && <CollapseForm {...p} />}
         {tab === "party" && <PartyForm {...p} />}
         {tab === "message" && <MessageForm {...p} />}

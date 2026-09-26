@@ -26,7 +26,9 @@
 import type { Engine } from "@gradebreaker/engine";
 import type { Envelope } from "./actions.ts";
 import { type D100, type Dice, rollD100s } from "./dice.ts";
+import type { KillEntry, LootResult } from "./aftermath.ts";
 import { type CharacterState, type Effect, Rejected, type World, maxAetherOf, maxHpOf, rawStats } from "./fold.ts";
+import { take } from "./inventory.ts";
 
 // --------------------------------------------------------------- actions ---
 
@@ -360,6 +362,10 @@ export interface Combatant {
   dead: boolean;
   /** Downed at any point in this fight: a survivor is due a Battle Memory Card. */
   wasDowned: boolean;
+  /** Whose hit Downed them: the finishing blow if the countdown or a ruling ends them. */
+  downedBy?: string;
+  /** Whose hit or execution killed them, when the record knows. */
+  killedBy?: string;
   /** Aura Pressure: steeled for the encounter, or Suppressed to 1 Beat. */
   aura: "steeled" | "suppressed" | null;
   /** Pills taken in this encounter, by kind; from the third, a kind has no effect. */
@@ -427,6 +433,10 @@ export interface Encounter {
   surprise: string[] | null;
   /** The last Aura Pressure: whose, and the Resistance a Suppressed character rolls against again. */
   aura: { entityId: string; resistance: number } | null;
+  /** After the fight: the loot rolled, and the settlement recorded (app/packages/record/src/aftermath.ts). */
+  loot?: LootResult[];
+  settled?: boolean;
+  kills?: KillEntry[];
 }
 
 export function cloneEncounter(e: Encounter): Encounter {
@@ -442,6 +452,8 @@ export function cloneEncounter(e: Encounter): Encounter {
     })),
     surprise: e.surprise && [...e.surprise],
     aura: e.aura && { ...e.aura },
+    ...(e.loot ? { loot: e.loot.map((r) => ({ ...r })) } : {}),
+    ...(e.kills ? { kills: e.kills.map((k) => ({ ...k })) } : {}),
     order: [...e.order],
     pending: e.pending && { ...e.pending },
     zones: e.zones.map((z) => ({ ...z })),
@@ -815,7 +827,7 @@ function round(engine: Engine, world: World): Effect[] {
   for (const c of e.combatants) {
     if (!c.downed || c.downed.stabilized || c.dead) continue;
     c.downed.coherence -= 1;
-    if (c.downed.coherence <= 0) out.push(...die(world, e, c, "countdown"));
+    if (c.downed.coherence <= 0) out.push(...die(world, e, c, "countdown", c.downedBy));
     else out.push({ kind: "vital-coherence", encounterId: e.id, combatantId: c.id, ...cid(c), coherence: c.downed.coherence });
   }
   if (e.pending && e.pending.sideId !== e.order[0]) {
@@ -837,7 +849,7 @@ function hp(engine: Engine, world: World, a: CombatHp): Effect[] {
   return changeHp(engine, world, e, c, a.delta);
 }
 
-function changeHp(engine: Engine, world: World, e: Encounter, c: Combatant, delta: number): Effect[] {
+function changeHp(engine: Engine, world: World, e: Encounter, c: Combatant, delta: number, byId?: string): Effect[] {
   if (c.dead) throw new Rejected(`${c.name} is dead`);
   const before = hpOf(engine, world, c);
   // HP does not go below 0 or above Max HP (Core Mechanics, "Downed and Death").
@@ -846,11 +858,13 @@ function changeHp(engine: Engine, world: World, e: Encounter, c: Combatant, delt
   const out: Effect[] = [{ kind: "combat-hp", encounterId: e.id, combatantId: c.id, from: before.hp, to: after }];
   const dr = engine.rules.combat.downed;
   // Annihilation: a single hit of 10 × Max HP or more, with no Downed state and no countdown.
-  if (delta < 0 && engine.annihilated(-delta, before.maxHp)) return [...out, ...die(world, e, c, "annihilated")];
+  if (delta < 0 && engine.annihilated(-delta, before.maxHp)) return [...out, ...die(world, e, c, "annihilated", byId)];
   if (after === 0 && before.hp > 0) {
-    if (c.kind === "creature") return [...out, ...die(world, e, c, "fell")];
+    if (c.kind === "creature") return [...out, ...die(world, e, c, "fell", byId)];
     c.downed = { coherence: dr.dies_at_end_of_round, stabilized: false };
     c.wasDowned = true;
+    if (byId) c.downedBy = byId;
+    else delete c.downedBy;
     c.beats = 0;
     if (e.acting === c.id) {
       finish(c);
@@ -880,6 +894,7 @@ function die(world: World, e: Encounter, c: Combatant, cause: DeathCause, byId?:
   c.dead = true;
   c.out = true;
   c.downed = null;
+  if (byId) c.killedBy = byId;
   c.beats = 0;
   if (e.acting === c.id) e.acting = null;
   if (e.clash && (e.clash.attackerId === c.id || e.clash.defenderId === c.id)) e.clash = null;
@@ -951,7 +966,7 @@ function fate(engine: Engine, world: World, a: Fate): Effect[] {
   if (hpOf(engine, world, c).hp !== 0) throw new Rejected(`${c.name} is not at 0 HP`);
   if (a.fate === "dead") {
     if (c.dead) throw new Rejected(`${c.name} is already dead`);
-    return die(world, e, c, "ruling");
+    return die(world, e, c, "ruling", c.downedBy);
   }
   if (c.dead) {
     // A creature that died at 0 by default, left alive instead (to be questioned).
@@ -1049,6 +1064,8 @@ function pill(engine: Engine, world: World, a: TakePill): Effect[] {
   if (!p) throw new Rejected(`no pill called ${a.pill}`);
   const kind = healing ? "healing" : "aether";
   if (kind === "aether" && !target.characterId) throw new Rejected(`the tracker keeps no Aether for ${target.name}`);
+  // A character gives from what they carry; a creature's or NPC's pill is the GM's to say.
+  if (giver.characterId) take(world, giver.characterId, p.name, 1);
   spend(e, giver, `${p.name}${giver.id === target.id ? "" : ` to ${target.name}`}`);
   // The recipient's count, never the giver's; the pill is taken whether or not it works.
   const taken = target.pills[kind];
@@ -1380,7 +1397,7 @@ function land(engine: Engine, world: World, e: Encounter, y: number): Effect[] {
     res.drivenBack = drivenBack;
     res.drivable = drivenBack || y >= r.combat.yield.max_beats;
     if (drivenBack) def.exposed = { started: false };
-    if (damage > 0) out.push(...changeHp(engine, world, e, def, -damage));
+    if (damage > 0) out.push(...changeHp(engine, world, e, def, -damage, att.id));
   }
   e.lastClash = res;
   e.clash = null;

@@ -538,6 +538,51 @@ describe("the combat tracker", () => {
     expect(bv.rolls[0]).toMatchObject({ roller: "Joe", rollKind: "check", label: "Stabilize Kara" });
   });
 
+  it("settles a fight: the kill and the VE reach the player, and the spoils wait for them to claim", async () => {
+    const { campaignId, gm, player, playerId } = await table();
+    await act(campaignId, gm, { type: "character.pregen", characterId: "kara", pregen: "Kara", playerId });
+    await act(campaignId, gm, {
+      type: "combat.start",
+      encounterId: "e1",
+      name: "The treeline",
+      sides: [
+        { id: "party", name: "The party" },
+        { id: "hostiles", name: "Hostiles" },
+      ],
+      combatants: [
+        { combatantId: "kara", sideId: "party", characterId: "kara" },
+        { combatantId: "rat", sideId: "hostiles", name: "Frenzy Rat", creature: "Frenzy Rat", grade: "F", maxHp: 12, momentumForce: 8, beats: 1 },
+      ],
+    });
+    await act(campaignId, gm, { type: "combat.momentum" });
+    await act(campaignId, gm, { type: "combat.hp", combatantId: "rat", delta: -12 });
+    await act(campaignId, gm, { type: "combat.end" });
+    const gv = (await call("GET", `/campaigns/${campaignId}`, { token: gm })).json;
+    expect(gv.encounter).toBeNull();
+    expect(gv.aftermath).toMatchObject({ id: "e1", combatants: expect.arrayContaining([expect.objectContaining({ id: "rat", dead: true })]) });
+    const loot = await act(campaignId, gm, { type: "encounter.loot", encounterId: "e1", kills: [{ combatantId: "rat", tier: "Easy" }] });
+    expect(loot.status).toBe(201);
+    expect(loot.json.envelope.action.dice[0]).toBeGreaterThanOrEqual(1);
+    const settled = await act(campaignId, gm, {
+      type: "encounter.settle",
+      encounterId: "e1",
+      participants: ["kara"],
+      kills: [{ combatantId: "rat", tier: "Easy" }],
+      awards: [{ characterId: "kara", ve: 5 }],
+      spoils: [{ name: "Stuttering Tincture", count: 1 }],
+    });
+    expect(settled.status).toBe(201);
+    expect((await call("GET", `/campaigns/${campaignId}`, { token: gm })).json.aftermath).toBeNull();
+
+    const pv = (await call("GET", `/campaigns/${campaignId}`, { token: player })).json;
+    expect(pv.feed.map((f: { effect: { kind: string } }) => f.effect.kind)).toEqual(expect.arrayContaining(["kill-confirmed", "ve-acquired"]));
+    expect(pv.spoils).toEqual([{ name: "Stuttering Tincture", count: 1 }]);
+    expect((await act(campaignId, player, { type: "item.move", from: "spoils", to: "kara", name: "Stuttering Tincture", count: 1 })).status).toBe(201);
+    const after = (await call("GET", `/campaigns/${campaignId}`, { token: player })).json;
+    expect(after.characters[0].items).toEqual([{ name: "Stuttering Tincture", count: 1 }]);
+    expect(after.spoils).toEqual([]);
+  });
+
   it("lets the player defend and Yield from their own screen, with the server rolling the Clash", async () => {
     const { campaignId, gm, player, playerId } = await table();
     await act(campaignId, gm, { type: "character.pregen", characterId: "kara", pregen: "Kara", playerId });

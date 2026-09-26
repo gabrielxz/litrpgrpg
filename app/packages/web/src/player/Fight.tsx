@@ -126,7 +126,7 @@ function MyTurn({
       )}
       {!attacking && (
         <CareActions
-          me={{ ...mateOf(me), force: c.force }}
+          me={{ ...mateOf(me), force: c.force, items: c.items }}
           people={combat.combatants.map(mateOf)}
           pills={pillsOf(engine)}
           pillLimit={engine?.rules.items.pill_use.per_fight_limit_per_kind ?? 2}

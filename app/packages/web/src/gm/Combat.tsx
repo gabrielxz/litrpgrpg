@@ -26,6 +26,8 @@ import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
 import { type Actor, CareActions, type Mate, pillsOf } from "../Care.tsx";
 import { AttackForm, type Clasher, DefenseForm, YieldChoice } from "../Clash.tsx";
+import type { Names } from "../text.ts";
+import { AftermathPanel } from "./Aftermath.tsx";
 import { RollList } from "../Dice.tsx";
 
 interface Creature {
@@ -587,7 +589,7 @@ function CombatantRow({
 
 function actorOf(view: GmView, c: CombatantView): Actor {
   const sheet = c.characterId ? view.characters.find((s) => s.id === c.characterId) : undefined;
-  return sheet ? { ...mateOf(c), force: sheet.force } : mateOf(c);
+  return sheet ? { ...mateOf(c), force: sheet.force, items: view.inventory[sheet.id] ?? [] } : mateOf(c);
 }
 
 function Running({
@@ -962,11 +964,13 @@ function AddMidFight({ view, engine, e, run }: { view: GmView; engine: Engine; e
 export function CombatSection({
   view,
   engine,
+  names,
   log,
   onRecorded,
 }: {
   view: GmView;
   engine: Engine | null;
+  names: Names;
   log: Envelope[];
   onRecorded: (env: Envelope) => void;
 }) {
@@ -975,6 +979,9 @@ export function CombatSection({
     <main className="page">
       {view.encounter ? (
         <Running view={view} engine={engine} e={view.encounter} log={log} onRecorded={onRecorded} />
+      ) : view.aftermath ? (
+        // Keyed by the fight, so a new aftermath starts from its own defaults.
+        <AftermathPanel key={view.aftermath.id} view={view} engine={engine} names={names} onRecorded={onRecorded} />
       ) : (
         <Setup view={view} engine={engine} onRecorded={onRecorded} />
       )}
