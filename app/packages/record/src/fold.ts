@@ -26,7 +26,7 @@ import type {
   SendMessage,
   SpendFreePoints,
 } from "./actions.ts";
-import { type Encounter, type MomentumRollRecord, applyCombat, authorizeCombatPlayer, cloneEncounter } from "./combat.ts";
+import { type DeathCause, type Encounter, type MomentumRollRecord, applyCombat, authorizeCombatPlayer, cloneEncounter } from "./combat.ts";
 
 export interface CharacterState {
   id: string;
@@ -52,6 +52,8 @@ export interface CharacterState {
   pendingSystemLevels: number[];
   /** Free points the player holds unallocated. */
   freePoints: number;
+  /** Death is permanent at F-Grade. */
+  dead?: boolean;
 }
 
 /** A formal party: its members' character ids in the order they joined. */
@@ -123,7 +125,39 @@ export type Effect =
     }
   | { kind: "momentum-shifted"; encounterId: string; holder: string; by: "seize" | "reversal" }
   | { kind: "combat-hp"; encounterId: string; combatantId: string; from: number; to: number }
-  | { kind: "combat-downed"; encounterId: string; combatantId: string }
+  | { kind: "combat-downed"; encounterId: string; combatantId: string; characterId?: string; coherence: number }
+  | { kind: "vital-coherence"; encounterId: string; combatantId: string; characterId?: string; coherence: number }
+  | { kind: "stabilized"; encounterId: string; combatantId: string; characterId?: string }
+  | { kind: "revived"; encounterId: string; combatantId: string; characterId?: string; hp: number }
+  | { kind: "combat-died"; encounterId: string; combatantId: string; characterId?: string; cause: DeathCause; byId?: string; byCharacterId?: string }
+  | { kind: "party-member-died"; characterId: string; memberId: string; memberName: string }
+  | { kind: "battle-memory-due"; characterId: string; reason: string }
+  | {
+      kind: "combat-check";
+      encounterId: string;
+      combatantId: string;
+      label: string;
+      total: number;
+      resistance: number;
+      success: boolean;
+      /** A Will Save's result: steeled for the encounter, or Suppressed. */
+      aura?: "steeled" | "suppressed";
+      /** Empty when the Force alone met the Resistance. */
+      rolls: MomentumRollRecord[];
+    }
+  | {
+      kind: "pill";
+      encounterId: string;
+      /** Who gave it; the recipient is `targetId`. */
+      combatantId: string;
+      targetId: string;
+      characterId?: string;
+      pill: string;
+      pillKind: "healing" | "aether";
+      restored: number;
+      /** A pill of another Grade, or the third of its kind in this encounter. */
+      noEffect?: "grade" | "limit";
+    }
   | { kind: "combat-ended"; encounterId: string }
   | {
       kind: "clash";
@@ -357,6 +391,14 @@ function apply(engine: Engine, world: World, env: Envelope): Effect[] {
     case "combat.move":
     case "combat.exposed":
     case "combat.zones":
+    case "combat.fate":
+    case "combat.stabilize":
+    case "combat.execute":
+    case "combat.pill":
+    case "combat.aura":
+    case "combat.will":
+    case "combat.suppress":
+    case "combat.surprise":
       return applyCombat(engine, world, a, env);
     case "void":
       throw new Error("voids are handled before apply");
@@ -399,6 +441,10 @@ function authorize(world: World, env: Envelope) {
     case "combat.attack":
     case "combat.defend":
     case "combat.resolve":
+    case "combat.stabilize":
+    case "combat.execute":
+    case "combat.pill":
+    case "combat.will":
       return authorizeCombatPlayer(world, a, me);
     case "dice.roll":
       if (a.roller.kind !== "character") throw new Rejected("a player rolls for their own character");
@@ -693,6 +739,7 @@ function inviteToParty(world: World, a: InviteToParty, id: string): Effect[] {
   const from = need(world.characters, a.fromId);
   const to = need(world.characters, a.toId);
   if (from.id === to.id) throw new Rejected("a character cannot invite themselves");
+  if (from.dead || to.dead) throw new Rejected(`${from.dead ? from.name : to.name} is dead`);
   const p = partyOf(world, from.id);
   if (p && p.members.includes(to.id)) throw new Rejected(`${to.name} is already in ${from.name}'s party`);
   if (world.invites.some((i) => i.fromId === from.id && i.toId === to.id))

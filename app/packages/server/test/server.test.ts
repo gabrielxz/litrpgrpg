@@ -485,7 +485,7 @@ describe("the combat tracker", () => {
     expect(pv.combat.round).toBe(1);
     expect(pv.combat.order.map((s: { name: string }) => s.name).sort()).toEqual(["Hostiles", "The party"]);
     const rat = pv.combat.combatants.find((c: { id: string }) => c.id === "rat");
-    expect(Object.keys(rat).sort()).toEqual(["acted", "acting", "exposed", "id", "name", "out", "sideId", "zoneId"]);
+    expect(Object.keys(rat).sort()).toEqual(["acted", "acting", "downed", "exposed", "id", "name", "out", "sideId", "stabilized", "suppressed", "surprise", "zoneId"]);
     expect(pv.combat.combatants.find((c: { id: string }) => c.id === "kara")).toMatchObject({ beats: 2, beatsPerTurn: 2 });
     // The Momentum dice are the table's, and players see them.
     const labels = pv.rolls.map((r: { label: string }) => r.label);
@@ -493,6 +493,49 @@ describe("the combat tracker", () => {
 
     await act(campaignId, gm, { type: "combat.end" });
     expect((await call("GET", `/campaigns/${campaignId}`, { token: player })).json.combat).toBeNull();
+  });
+
+  it("tells a Downed player their vital coherence, and lets an ally stabilize them from their own screen", async () => {
+    const { campaignId, gm, player, playerId } = await table();
+    const inv = (await call("POST", `/campaigns/${campaignId}/invites`, { token: gm, body: {} })).json.code;
+    const bo = await signIn("Bo");
+    await call("POST", `/invites/${inv}/accept`, { token: bo });
+    const boId = (await call("GET", "/me", { token: bo })).json.user.id as string;
+    await act(campaignId, gm, { type: "character.pregen", characterId: "kara", pregen: "Kara", playerId });
+    await act(campaignId, gm, { type: "character.pregen", characterId: "joe", pregen: "Joe", playerId: boId });
+    await act(campaignId, gm, {
+      type: "combat.start",
+      encounterId: "e1",
+      name: "The treeline",
+      sides: [
+        { id: "party", name: "The party" },
+        { id: "hostiles", name: "Hostiles" },
+      ],
+      combatants: [
+        { combatantId: "kara", sideId: "party", characterId: "kara" },
+        { combatantId: "joe", sideId: "party", characterId: "joe" },
+        { combatantId: "rat", sideId: "hostiles", name: "Frenzy Rat", grade: "F", maxHp: 12, momentumForce: 1, beats: 1 },
+      ],
+    });
+    await act(campaignId, gm, { type: "combat.momentum" });
+    await act(campaignId, gm, { type: "combat.hp", combatantId: "kara", delta: -14 });
+    const kv = (await call("GET", `/campaigns/${campaignId}`, { token: player })).json;
+    expect(kv.characters[0]).toMatchObject({ downed: true, dead: false, vitalCoherence: 3 });
+    expect(kv.feed[0].effect).toMatchObject({ kind: "combat-downed", coherence: 3 });
+    expect(kv.combat.combatants.find((c: { id: string }) => c.id === "kara")).toMatchObject({ downed: true, stabilized: false });
+
+    // Whoever holds Momentum, Joe acts on his side's turn; the GM moves the turn along if the rat has it.
+    const gv = (await call("GET", `/campaigns/${campaignId}`, { token: gm })).json;
+    if (gv.encounter.order[0] === "hostiles") {
+      await act(campaignId, gm, { type: "combat.act", combatantId: "rat" });
+      await act(campaignId, gm, { type: "combat.done", combatantId: "rat" });
+    }
+    expect((await act(campaignId, bo, { type: "combat.act", combatantId: "joe" })).status).toBe(201);
+    const st = await act(campaignId, bo, { type: "combat.stabilize", combatantId: "joe", targetId: "kara", attribute: "DEX", advantage: true });
+    expect(st.status).toBe(201);
+    expect(st.json.envelope.action.dice.natural.length).toBeGreaterThanOrEqual(1);
+    const bv = (await call("GET", `/campaigns/${campaignId}`, { token: bo })).json;
+    expect(bv.rolls[0]).toMatchObject({ roller: "Joe", rollKind: "check", label: "Stabilize Kara" });
   });
 
   it("lets the player defend and Yield from their own screen, with the server rolling the Clash", async () => {

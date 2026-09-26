@@ -111,7 +111,8 @@ function PartySection({
   const inParty = new Set(c.party?.members.map((m) => m.id) ?? []);
   // Someone already invited, or waiting on this character's answer, is not offered again.
   const pending = new Set([...c.invited.map((i) => i.toId), ...c.invitations.map((i) => i.fromId)]);
-  const invitable = roster.filter((r) => !inParty.has(r.id) && !pending.has(r.id));
+  // The dead neither invite nor are invited.
+  const invitable = c.dead ? [] : roster.filter((r) => !inParty.has(r.id) && !pending.has(r.id));
   const picked = invitable.some((r) => r.id === target) ? target : (invitable[0]?.id ?? "");
   const nothing = !c.party && !c.invitations.length && !c.invited.length && (readOnly || !invitable.length);
   if (nothing) return null;
@@ -253,6 +254,17 @@ function Interface({
       </div>
 
       <div className="sys-section vitals">
+        {c.dead ? (
+          <p className="sys-alert">
+            <em>Deceased.</em>
+          </p>
+        ) : (
+          c.vitalCoherence !== null && (
+            <p className="sys-alert">
+              <em>Vital coherence: {c.vitalCoherence}. Falling.</em>
+            </p>
+          )
+        )}
         <div className="sys-vital">
           <span>Health</span>
           <Bar value={c.hp} max={c.maxHp} />
@@ -402,6 +414,7 @@ export function PlayerCampaign({
 }) {
   // A player with several characters here sees which one each notice is about.
   const names = view.characters.length > 1 ? new Map(view.characters.map((c) => [c.id, c.name])) : null;
+  const engine = useEngine(view.combat ? view.campaign.rulesVersion : undefined);
   return (
     <main className="player">
       {view.characters.length === 0 ? (
@@ -421,7 +434,7 @@ export function PlayerCampaign({
       )}
       <div className="side-column">
         <Notices feed={view.feed} names={names} />
-        {view.combat && <Fight view={view} combat={view.combat} readOnly={readOnly} />}
+        {view.combat && <Fight view={view} engine={engine} combat={view.combat} readOnly={readOnly} />}
         <section className="table-dice">
           <h3>Dice</h3>
           {!readOnly && view.characters.length > 0 && (

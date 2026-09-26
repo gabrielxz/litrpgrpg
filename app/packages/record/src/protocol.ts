@@ -71,7 +71,6 @@ export interface CombatantView extends Omit<Combatant, "hp" | "maxHp" | "momentu
   hp: number;
   maxHp: number;
   momentumForce: number;
-  downed: boolean;
 }
 
 export interface EncounterView extends Omit<Encounter, "combatants"> {
@@ -126,10 +125,18 @@ export interface PlayerCombat {
     out: boolean;
     zoneId: string | null;
     exposed: boolean;
+    /** At 0 HP and alive; whether the countdown has stopped is what the table can see. */
+    downed: boolean;
+    stabilized: boolean;
+    suppressed: boolean;
+    /** Holds a Surprise Beat before Initial Momentum. */
+    surprise: boolean;
     /** Characters only. */
     beats?: number;
     beatsPerTurn?: number;
     characterId?: string;
+    /** Pills taken this encounter, by kind: characters only. */
+    pills?: { healing: number; aether: number };
   }[];
 }
 
@@ -152,6 +159,9 @@ export interface InterfaceSheet {
   hp: number;
   maxHp: number;
   downed: boolean;
+  dead: boolean;
+  /** While Downed in a fight: the System's reading, 3 falling to 1. */
+  vitalCoherence: number | null;
   aether: number;
   maxAether: number;
   surgeCost: number;

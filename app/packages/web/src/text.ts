@@ -142,6 +142,24 @@ export function describe(
       return `${name(a.combatantId)}: ${a.exposed ? "Exposed" : "no longer Exposed"}`;
     case "combat.zones":
       return `Zones: ${a.zones.map((z) => z.name).join(", ")}`;
+    case "combat.fate":
+      return `Ruling: ${name(a.combatantId)} ${a.fate === "dead" ? "dies" : "is stabilized"}`;
+    case "combat.stabilize":
+      return `${name(a.combatantId)} tries to stabilize ${name(a.targetId)}`;
+    case "combat.execute":
+      return `${name(a.combatantId)} executes ${name(a.targetId)}`;
+    case "combat.pill":
+      return a.combatantId === a.targetId ? `${name(a.combatantId)} takes a ${a.pill}` : `${name(a.combatantId)} gives ${name(a.targetId)} a ${a.pill}`;
+    case "combat.aura":
+      return `Aura Pressure: ${name(a.entityId)}${a.flare ? " flares" : ""} (${a.flaring ? "Hard" : "Moderate"})`;
+    case "combat.will":
+      return `${name(a.combatantId)} makes the Will Save again (${
+        a.reason === "principle" ? "pushes back" : a.reason === "intervention" ? `${name(a.helperId ?? "")} intervenes` : "the entity is hurt or distracted"
+      })`;
+    case "combat.suppress":
+      return `${name(a.combatantId)}: ${a.suppressed ? "Suppressed" : "no longer Suppressed"}`;
+    case "combat.surprise":
+      return `Surprise Beat: ${a.combatantIds.map(name).join(", ")}`;
     case "void": {
       const seq = seqOf(a.targetId);
       const target = seq === undefined ? "an action" : `#${seq + 1}`;
@@ -201,7 +219,35 @@ export function effectLine(e: Effect, name: Names): string | null {
     case "combat-hp":
       return `${name(e.combatantId)}: HP ${e.from} → ${e.to}`;
     case "combat-downed":
-      return `${name(e.combatantId)} is Downed`;
+      return `${name(e.combatantId)} is Downed: vital coherence ${e.coherence}`;
+    case "vital-coherence":
+      return `${name(e.combatantId)}: vital coherence ${e.coherence}`;
+    case "stabilized":
+      return `${name(e.combatantId)} is stabilized`;
+    case "revived":
+      return `${name(e.combatantId)} wakes at ${e.hp} HP`;
+    case "combat-died":
+      return `${name(e.combatantId)} dies${
+        e.cause === "annihilated"
+          ? ": annihilated"
+          : e.cause === "executed"
+            ? `, executed by ${name(e.byId ?? "")}${e.byCharacterId ? " (HVE: weighs heavily, on the Will or Hunger side)" : ""}`
+            : e.cause === "countdown"
+              ? ": vital coherence 0"
+              : ""
+      }`;
+    case "party-member-died":
+      return null; // the death's own line says it
+    case "battle-memory-due":
+      return `${name(e.characterId)} survived Downed: a Battle Memory Card, unless the Downing taught nothing`;
+    case "combat-check":
+      return `${e.label}: ${e.rolls.length ? `${e.total} against ${e.resistance}` : "the Force alone meets it"}, ${e.success ? "success" : "failure"}${
+        e.aura ? ` (${e.aura === "steeled" ? "steeled for the encounter" : "Suppressed: 1 Beat"})` : ""
+      }`;
+    case "pill":
+      return `${name(e.targetId)}: ${e.pill}${
+        e.noEffect === "grade" ? ", no effect (another Grade)" : e.noEffect === "limit" ? ", no effect (third of its kind this fight)" : `, ${e.restored} ${e.pillKind === "healing" ? "HP" : "Aether"}`
+      }`;
     case "clash":
       return `Clash: ${e.attackTotal} against ${e.defenseTotal}, Margin ${e.margin}${
         e.battleMemory.length ? `; ${e.battleMemory.map(name).join(", ")} earns a Battle Memory Card` : ""
@@ -255,6 +301,18 @@ export function noticeLine(e: Effect): string | null {
       return "Party dissolved.";
     case "message":
       return e.text;
+    case "combat-downed":
+      return `Vital coherence: ${e.coherence}. Falling. Stabilization: required.`;
+    case "vital-coherence":
+      return `Vital coherence: ${e.coherence}. Falling.`;
+    case "stabilized":
+      return "Vital coherence: stable.";
+    case "revived":
+      return `Consciousness restored. Health: ${e.hp}.`;
+    case "party-member-died":
+      return `Party member deceased: ${e.memberName}.`;
+    case "pill":
+      return e.pillKind === "healing" ? `Health restored: ${e.restored}.` : `Aether restored: ${e.restored}.`;
     default:
       return null;
   }

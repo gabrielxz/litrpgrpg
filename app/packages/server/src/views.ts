@@ -50,12 +50,21 @@ export function rollsFor(record: CampaignRecord, members: Member[], role: Role):
     const env = record.log[i]!;
     const a = env.action;
     if (skip.has(env.id)) continue;
-    if (a.type === "combat.momentum" || a.type === "combat.seize" || a.type === "combat.defend") {
-      // Momentum and Clash dice, newest first; a combatant's name as it stood in the fight.
-      const m = effects.get(env.id)?.find((x) => x.kind === "momentum" || x.kind === "seized" || x.kind === "clash");
-      if (!m || (m.kind !== "momentum" && m.kind !== "seized" && m.kind !== "clash")) continue;
+    if (
+      a.type === "combat.momentum" ||
+      a.type === "combat.seize" ||
+      a.type === "combat.defend" ||
+      a.type === "combat.stabilize" ||
+      a.type === "combat.will" ||
+      a.type === "combat.aura"
+    ) {
+      // Momentum, Clash, and check dice, newest first; a combatant's name as it stood in the fight.
+      const rolls = (effects.get(env.id) ?? []).flatMap((x) =>
+        x.kind === "momentum" || x.kind === "seized" || x.kind === "clash" || x.kind === "combat-check" ? x.rolls : [],
+      );
+      const kind = a.type === "combat.stabilize" || a.type === "combat.will" || a.type === "combat.aura" ? "check" : "clash";
       const names = new Map((record.state.encounter?.combatants ?? []).map((c) => [c.id, c]));
-      for (const [j, r] of [...m.rolls.entries()].reverse()) {
+      for (const [j, r] of [...rolls.entries()].reverse()) {
         const c = names.get(r.combatantId);
         const v: RollView = {
           id: `${env.id}:${j}`,
@@ -64,7 +73,7 @@ export function rollsFor(record: CampaignRecord, members: Member[], role: Role):
           by: c?.name ?? r.combatantId,
           roller: c?.name ?? r.combatantId,
           label: r.label,
-          rollKind: "clash",
+          rollKind: kind,
           natural: r.natural,
           surge: false,
           force: r.force,
@@ -116,6 +125,8 @@ export function rollsFor(record: CampaignRecord, members: Member[], role: Role):
 
 export function interfaceSheet(s: Sheet, record: CampaignRecord): InterfaceSheet {
   const st = record.state;
+  const e = st.encounter && !st.encounter.ended ? st.encounter : null;
+  const dying = e?.combatants.find((c) => c.characterId === s.id && !c.out);
   const name = (id: string) => st.characters.get(id)?.name ?? id;
   let party: PartyFrame | null = null;
   for (const p of st.parties.values()) {
@@ -137,6 +148,8 @@ export function interfaceSheet(s: Sheet, record: CampaignRecord): InterfaceSheet
     hp: s.hp,
     maxHp: s.maxHp,
     downed: s.downed,
+    dead: s.dead,
+    vitalCoherence: dying?.downed && !dying.downed.stabilized ? dying.downed.coherence : null,
     aether: s.aether,
     maxAether: s.maxAether,
     surgeCost: s.surgeCost,
@@ -171,12 +184,28 @@ const ANNOUNCED: ReadonlySet<Effect["kind"]> = new Set([
   "party-joined",
   "party-left",
   "party-disbanded",
+  "party-member-died",
   "message",
+  "combat-downed",
+  "vital-coherence",
+  "stabilized",
+  "revived",
+  "pill",
 ]);
 
 /** Effects a player is shown: the announced ones about their own characters. */
 export function noticesFor(effects: Effect[], ownCharacterIds: ReadonlySet<string>): Effect[] {
-  return effects.filter((e) => ANNOUNCED.has(e.kind) && "characterId" in e && e.characterId !== undefined && ownCharacterIds.has(e.characterId));
+  // A pill that wakes a Downed character is announced once, as the waking.
+  const woken = new Set(effects.flatMap((e) => (e.kind === "revived" && e.characterId ? [e.characterId] : [])));
+  return effects.filter(
+    (e) =>
+      ANNOUNCED.has(e.kind) &&
+      "characterId" in e &&
+      e.characterId !== undefined &&
+      ownCharacterIds.has(e.characterId) &&
+      // A pill that did nothing brings no notice.
+      !(e.kind === "pill" && (e.restored === 0 || woken.has(e.characterId!))),
+  );
 }
 
 /** The feed for a set of characters: every standing action's notices about them, newest first. */
@@ -206,7 +235,7 @@ export function encounterView(record: CampaignRecord): EncounterView | null {
       const sheet = c.characterId ? record.sheet(c.characterId) : undefined;
       const hp = sheet ? sheet.hp : (c.hp ?? 0);
       const maxHp = sheet ? sheet.maxHp : (c.maxHp ?? 0);
-      return { ...c, hp, maxHp, momentumForce: momentumForceOf(record.engine, world, c), downed: hp === 0 };
+      return { ...c, hp, maxHp, momentumForce: momentumForceOf(record.engine, world, c) };
     }),
   };
 }
@@ -255,7 +284,11 @@ export function playerCombat(record: CampaignRecord): PlayerCombat | null {
       out: c.out,
       zoneId: c.zoneId,
       exposed: Boolean(c.exposed),
-      ...(c.characterId ? { characterId: c.characterId, beats: c.beats, beatsPerTurn: c.beatsPerTurn } : {}),
+      downed: Boolean(c.downed),
+      stabilized: Boolean(c.downed?.stabilized),
+      suppressed: c.aura === "suppressed",
+      surprise: Boolean(e.round === 0 && e.surprise?.includes(c.id)),
+      ...(c.characterId ? { characterId: c.characterId, beats: c.beats, beatsPerTurn: c.beatsPerTurn, pills: { ...c.pills } } : {}),
     })),
   };
 }
@@ -291,7 +324,7 @@ export function viewFor(
     campaign,
     members,
     characters: own.map((s) => interfaceSheet(s, record)),
-    roster: sheets.filter((s) => s.playerId !== undefined && !ownIds.has(s.id)).map((s) => ({ id: s.id, name: s.name })),
+    roster: sheets.filter((s) => s.playerId !== undefined && !ownIds.has(s.id) && !s.dead).map((s) => ({ id: s.id, name: s.name })),
     feed: feedFor(record, ownIds),
     rolls: rollsFor(record, members, "player"),
     combat: playerCombat(record),

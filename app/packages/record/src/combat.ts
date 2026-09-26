@@ -14,6 +14,14 @@
  * is Cornered), the defense (posture and any Surge; the server rolls both sides here), and
  * the resolution, where the defender Yields once the Margin is known and before damage.
  * Damage, Driven Back, and a drive into another Zone follow from the Margin left after Yield.
+ *
+ * At 0 HP (Core Mechanics, "Downed and Death") a character or NPC is Downed and a creature
+ * dies, and the GM may rule either way. Vital coherence starts at 3 and falls by one at the
+ * end of each round, the round of Downing included; at 0 the character dies (Gabriel,
+ * 2026-09-26). Stabilizing by bare hands needs the same Zone, like HP restoration (Gabriel,
+ * 2026-09-26). Pills count per encounter (99-to-do.md, queued edit 7: the book's "ten quiet
+ * minutes" gave no moment to reset). Aura Pressure's Will Save, Suppression, and the Surprise
+ * Beat follow Core Mechanics; a defender may Yield against a Surprise Beat (Gabriel, 2026-09-26).
  */
 import type { Engine } from "@gradebreaker/engine";
 import type { Envelope } from "./actions.ts";
@@ -31,6 +39,8 @@ export interface CombatantSpec {
   name?: string;
   /** The Bestiary entry it came from, if any. */
   creature?: string;
+  /** At 0 HP a creature dies and an NPC is Downed. Absent: a creature if it names a Bestiary entry. */
+  kind?: "creature" | "npc";
   grade?: string;
   maxHp?: number;
   /** The higher of its HRT and PER Force. */
@@ -213,8 +223,92 @@ export interface SetZones {
   zones: { id: string; name: string }[];
 }
 
+/** A Downed combatant's fate by the GM's ruling: dead, or stabilized (a creature left alive, success at a cost). */
+export interface Fate {
+  type: "combat.fate";
+  combatantId: string;
+  fate: "dead" | "stabilized";
+}
+
+/** Bare hands: 1 Beat and a Moderate check by someone in the Downed character's Zone. */
+export interface Stabilize {
+  type: "combat.stabilize";
+  combatantId: string;
+  targetId: string;
+  /** A character's Attribute for the check. */
+  attribute?: string;
+  /** A creature's or NPC's Force. */
+  force?: number;
+  /** A medical Background rolls with Advantage. */
+  advantage?: boolean;
+  /** Absent when the helper's Force alone meets the Resistance. */
+  dice?: Dice;
+}
+
+/** 1 Beat, no roll: a deliberate attack on a Downed combatant kills them. */
+export interface Execute {
+  type: "combat.execute";
+  combatantId: string;
+  targetId: string;
+}
+
+/** A pill from the Items tables, swallowed or given to someone in the same Zone, for 1 Beat. */
+export interface TakePill {
+  type: "combat.pill";
+  combatantId: string;
+  targetId: string;
+  pill: string;
+}
+
+/**
+ * Aura Pressure from a higher-Grade combatant. On arrival, every lower-Grade character who has
+ * not yet faced it makes the Will Save. `flare` is the entity spending a Beat on its turn to
+ * flare its aura, which forces a fresh save from every lower-Grade character.
+ */
+export interface AuraPressure {
+  type: "combat.aura";
+  entityId: string;
+  flaring: boolean;
+  flare?: boolean;
+  saves?: { combatantId: string; dice?: Dice }[];
+}
+
+/**
+ * A Suppressed character rolls the Will Save again: pushing back with a Principle Application
+ * (their own Beat), an ally's intervention (the ally's Beat), or the entity hurt or distracted
+ * (the GM's call, no Beat).
+ */
+export interface WillSave {
+  type: "combat.will";
+  combatantId: string;
+  reason: "principle" | "intervention" | "distracted";
+  helperId?: string;
+  dice?: Dice;
+}
+
+/** Suppressed by the GM's ruling: a creature or NPC, or three or more Grades apart; or cleared. */
+export interface Suppress {
+  type: "combat.suppress";
+  combatantId: string;
+  suppressed: boolean;
+}
+
+/** Before Initial Momentum: each surprising combatant takes one free Beat. */
+export interface Surprise {
+  type: "combat.surprise";
+  combatantIds: string[];
+}
+
 export type CombatAction =
   | StartCombat
+  | Fate
+  | Stabilize
+  | Execute
+  | TakePill
+  | AuraPressure
+  | WillSave
+  | Suppress
+  | Surprise
   | AddCombatant
   | RemoveCombatant
   | RollMomentum
@@ -242,6 +336,7 @@ export interface Combatant {
   grade: string;
   characterId?: string;
   creature?: string;
+  kind: "character" | "creature" | "npc";
   /** A creature's own HP; a character's lives on their sheet. */
   hp?: number;
   maxHp?: number;
@@ -262,6 +357,15 @@ export interface Combatant {
   yields: boolean;
   offense?: ForceOption[];
   defense?: ForceOption[];
+  /** At 0 HP and alive: vital coherence left, and whether the countdown has stopped. */
+  downed: { coherence: number; stabilized: boolean } | null;
+  dead: boolean;
+  /** Downed at any point in this fight: a survivor is due a Battle Memory Card. */
+  wasDowned: boolean;
+  /** Aura Pressure: steeled for the encounter, or Suppressed to 1 Beat. */
+  aura: "steeled" | "suppressed" | null;
+  /** Pills taken in this encounter, by kind; from the third, a kind has no effect. */
+  pills: { healing: number; aether: number };
 }
 
 /** A Clash as it stands, from the attack to the resolution. */
@@ -321,13 +425,25 @@ export interface Encounter {
   clash: PendingClash | null;
   /** The last Clash resolved, for the drive and the tracker's line. */
   lastClash: ClashResult | null;
+  /** Before Initial Momentum: the combatants with a Surprise Beat. */
+  surprise: string[] | null;
+  /** The last Aura Pressure: whose, and the Resistance a Suppressed character rolls against again. */
+  aura: { entityId: string; resistance: number } | null;
 }
 
 export function cloneEncounter(e: Encounter): Encounter {
   return {
     ...e,
     sides: e.sides.map((s) => ({ ...s })),
-    combatants: e.combatants.map((c) => ({ ...c, spent: [...c.spent], exposed: c.exposed && { ...c.exposed } })),
+    combatants: e.combatants.map((c) => ({
+      ...c,
+      spent: [...c.spent],
+      exposed: c.exposed && { ...c.exposed },
+      downed: c.downed && { ...c.downed },
+      pills: { ...c.pills },
+    })),
+    surprise: e.surprise && [...e.surprise],
+    aura: e.aura && { ...e.aura },
     order: [...e.order],
     pending: e.pending && { ...e.pending },
     zones: e.zones.map((z) => ({ ...z })),
@@ -351,6 +467,38 @@ function combatant(e: Encounter, id: string): Combatant {
 }
 
 const active = (e: Encounter) => e.combatants.filter((c) => !c.out);
+
+/** In the fight and able to take a turn: a Downed combatant has no Beats and no defense. */
+const canTurn = (c: Combatant) => !c.out && !c.downed;
+
+/** The Beats a combatant's turn starts with before any Yield: 1 while Suppressed, none while Downed. */
+function turnBeats(engine: Engine, c: Combatant): number {
+  if (c.downed) return 0;
+  if (c.aura === "suppressed") return Math.min(c.beatsPerTurn, engine.rules.combat.aura_pressure.suppressed_beats);
+  return c.beatsPerTurn;
+}
+
+/** Their turn this round is still to come, so a change to their Beats lands on it. */
+function turnStillToCome(e: Encounter, c: Combatant): boolean {
+  if (e.round === 0) return false;
+  return !c.acted && e.acting !== c.id && e.order.indexOf(c.sideId) >= e.turn;
+}
+
+const cid = (c: Combatant) => (c.characterId ? { characterId: c.characterId } : {});
+
+/** The acting combatant spends a Beat on `what`. */
+function spend(e: Encounter, c: Combatant, what: string) {
+  if (e.acting !== c.id) throw new Rejected(`${c.name} is not acting`);
+  if (c.beats < 1) throw new Rejected(`${c.name} has no Beats left`);
+  noClash(e);
+  c.beats -= 1;
+  c.spent.push(what);
+}
+
+/** Both in the same Zone, or the scene has no Zones. */
+function sameZone(a: Combatant, b: Combatant): boolean {
+  return a.zoneId === null || b.zoneId === null || a.zoneId === b.zoneId;
+}
 
 /** The higher of HRT and PER Force: a character's from the sheet, a creature's as entered. */
 export function momentumForceOf(engine: Engine, world: World, c: Combatant): number {
@@ -403,7 +551,21 @@ function fresh(e: Encounter, s: CombatantSpec, yields: boolean) {
     if (!e.zones.some((z) => z.id === s.zoneId)) throw new Rejected(`no Zone ${s.zoneId}`);
     zoneId = s.zoneId;
   }
-  return { beats: 0, acted: false, out: false, spent: [] as string[], zoneId, debt: 0, exposed: null, yields };
+  return {
+    beats: 0,
+    acted: false,
+    out: false,
+    spent: [] as string[],
+    zoneId,
+    debt: 0,
+    exposed: null,
+    yields,
+    downed: null,
+    dead: false,
+    wasDowned: false,
+    aura: null,
+    pills: { healing: 0, aether: 0 },
+  };
 }
 
 function build(engine: Engine, world: World, e: Encounter, s: CombatantSpec): Combatant {
@@ -416,8 +578,11 @@ function build(engine: Engine, world: World, e: Encounter, s: CombatantSpec): Co
   if (s.characterId) {
     const ch: CharacterState | undefined = world.characters.get(s.characterId);
     if (!ch) throw new Rejected(`no character ${s.characterId}`);
+    if (ch.dead) throw new Rejected(`${ch.name} is dead`);
     if (e.combatants.some((x) => x.characterId === ch.id && !x.out)) throw new Rejected(`${ch.name} is already in the fight`);
-    c = { id: s.combatantId, sideId: s.sideId, name: ch.name, grade: ch.grade, characterId: ch.id, beatsPerTurn: beats, ...fresh(e, s, true) };
+    c = { id: s.combatantId, sideId: s.sideId, name: ch.name, grade: ch.grade, characterId: ch.id, kind: "character", beatsPerTurn: beats, ...fresh(e, s, true) };
+    // A character already at 0 HP joins Downed.
+    if (ch.hp === 0) c.downed = { coherence: engine.rules.combat.downed.dies_at_end_of_round, stabilized: false };
   } else {
     const name = s.name?.trim();
     if (!name) throw new Rejected("a creature or NPC needs a name");
@@ -431,13 +596,14 @@ function build(engine: Engine, world: World, e: Encounter, s: CombatantSpec): Co
     if (!Number.isInteger(maxHp) || maxHp < 1) throw new Rejected(`${name} needs its HP`);
     const mf = s.momentumForce ?? 0;
     if (!Number.isInteger(mf) || mf < 0) throw new Rejected("Momentum Force is a whole number");
-    c = { id: s.combatantId, sideId: s.sideId, name, grade, hp: maxHp, maxHp, momentumForce: mf, beatsPerTurn: beats, ...fresh(e, s, s.yields ?? false) };
+    const kind = s.kind ?? (s.creature ? "creature" : "npc");
+    c = { id: s.combatantId, sideId: s.sideId, name, grade, kind, hp: maxHp, maxHp, momentumForce: mf, beatsPerTurn: beats, ...fresh(e, s, s.yields ?? false) };
     if (s.creature) c.creature = s.creature;
     if (s.offense?.length) c.offense = s.offense.map((o) => ({ ...o }));
     if (s.defense?.length) c.defense = s.defense.map((o) => ({ ...o }));
   }
   // Joining mid-round: Beats now, to act if their side has not finished its turn.
-  if (e.round > 0) c.beats = c.beatsPerTurn;
+  if (e.round > 0) c.beats = turnBeats(engine, c);
   return c;
 }
 
@@ -459,6 +625,8 @@ function start(engine: Engine, world: World, a: StartCombat): Effect[] {
     zones: checkZones(a.zones ?? []),
     clash: null,
     lastClash: null,
+    surprise: null,
+    aura: null,
   };
   for (const s of a.combatants) e.combatants.push(build(engine, world, e, s));
   world.encounter = e;
@@ -485,6 +653,7 @@ function remove(world: World, a: RemoveCombatant): Effect[] {
 function momentum(engine: Engine, world: World, a: RollMomentum): Effect[] {
   const e = fight(world);
   if (e.round > 0) throw new Rejected("Initial Momentum is already rolled; a shift comes from Seize or a Reversal");
+  noClash(e);
   const sides = liveSides(e);
   if (sides.length < 2) throw new Rejected("Momentum needs two sides with someone in the fight");
   const attempts = a.attempts;
@@ -510,18 +679,19 @@ function momentum(engine: Engine, world: World, a: RollMomentum): Effect[] {
     if (tied !== i < attempts.length - 1) throw new Rejected(i < attempts.length - 1 ? "only a tie is rolled again" : "the last attempt ties: roll again");
   });
   e.order = [...totals].sort((x, y) => y.total - x.total).map((t) => t.sideId);
-  newRound(e);
+  newRound(engine, e);
   return [{ kind: "momentum", encounterId: e.id, holder: e.order[0]!, totals, rolls }];
 }
 
-function newRound(e: Encounter) {
+function newRound(engine: Engine, e: Encounter) {
   e.round += 1;
   e.turn = 0;
   e.acting = null;
   e.lastClash = null;
+  e.surprise = null;
   for (const c of e.combatants) {
     // Beats Yielded after last round's turn come out of this one.
-    c.beats = Math.max(0, c.beatsPerTurn - c.debt);
+    c.beats = Math.max(0, turnBeats(engine, c) - c.debt);
     c.debt = 0;
     c.acted = false;
     c.spent = [];
@@ -543,7 +713,7 @@ function noClash(e: Encounter) {
 function advance(e: Encounter) {
   while (e.turn < e.order.length) {
     const side = e.order[e.turn]!;
-    if (active(e).some((c) => c.sideId === side && !c.acted)) return;
+    if (e.combatants.some((c) => c.sideId === side && canTurn(c) && !c.acted)) return;
     e.turn += 1;
   }
 }
@@ -557,11 +727,17 @@ function currentSide(e: Encounter): string {
 
 function act(world: World, a: Act): Effect[] {
   const e = fight(world);
-  const side = currentSide(e);
   const c = combatant(e, a.combatantId);
   if (c.out) throw new Rejected(`${c.name} is out of the fight`);
-  if (c.sideId !== side) throw new Rejected(`${e.sides.find((s) => s.id === side)?.name} is taking its turn`);
-  if (c.acted) throw new Rejected(`${c.name} has acted this round`);
+  if (c.downed) throw new Rejected(`${c.name} is Downed`);
+  if (e.round === 0 && e.surprise) {
+    // Before Initial Momentum only the surprising combatants act, each once, in any order.
+    if (!e.surprise.includes(c.id)) throw new Rejected(`${c.name} has no Surprise Beat`);
+  } else {
+    const side = currentSide(e);
+    if (c.sideId !== side) throw new Rejected(`${e.sides.find((s) => s.id === side)?.name} is taking its turn`);
+  }
+  if (c.acted) throw new Rejected(`${c.name} has acted${e.round ? " this round" : ""}`);
   noClash(e);
   if (e.acting && e.acting !== c.id) finish(combatant(e, e.acting));
   e.acting = c.id;
@@ -571,12 +747,7 @@ function act(world: World, a: Act): Effect[] {
 
 function beat(world: World, a: SpendBeat): Effect[] {
   const e = fight(world);
-  const c = combatant(e, a.combatantId);
-  if (e.acting !== c.id) throw new Rejected(`${c.name} is not acting`);
-  if (c.beats < 1) throw new Rejected(`${c.name} has no Beats left`);
-  noClash(e);
-  c.beats -= 1;
-  c.spent.push(a.what.trim() || "Beat");
+  spend(e, combatant(e, a.combatantId), a.what.trim() || "Beat");
   return [];
 }
 
@@ -637,11 +808,18 @@ function reversal(world: World, a: Reversal): Effect[] {
   return [];
 }
 
-function round(world: World): Effect[] {
+function round(engine: Engine, world: World): Effect[] {
   const e = fight(world);
   if (e.round === 0) throw new Rejected("roll Initial Momentum first");
   noClash(e);
   const out: Effect[] = [];
+  // The round ends: every Downed combatant not stabilized loses one vital coherence; at 0 they die.
+  for (const c of e.combatants) {
+    if (!c.downed || c.downed.stabilized || c.dead) continue;
+    c.downed.coherence -= 1;
+    if (c.downed.coherence <= 0) out.push(...die(world, e, c, "countdown"));
+    else out.push({ kind: "vital-coherence", encounterId: e.id, combatantId: c.id, ...cid(c), coherence: c.downed.coherence });
+  }
   if (e.pending && e.pending.sideId !== e.order[0]) {
     // The new holder acts first; the other sides keep their order.
     e.order = [e.pending.sideId, ...e.order.filter((s) => s !== e.pending!.sideId)];
@@ -650,7 +828,7 @@ function round(world: World): Effect[] {
   // Sides that joined after the order was set take their turn last.
   for (const s of liveSides(e)) if (!e.order.includes(s)) e.order.push(s);
   e.pending = null;
-  newRound(e);
+  newRound(engine, e);
   return out;
 }
 
@@ -662,22 +840,330 @@ function hp(engine: Engine, world: World, a: CombatHp): Effect[] {
 }
 
 function changeHp(engine: Engine, world: World, e: Encounter, c: Combatant, delta: number): Effect[] {
+  if (c.dead) throw new Rejected(`${c.name} is dead`);
   const before = hpOf(engine, world, c);
   // HP does not go below 0 or above Max HP (Core Mechanics, "Downed and Death").
   const after = Math.max(0, Math.min(before.maxHp, before.hp + delta));
-  if (c.characterId) world.characters.get(c.characterId)!.hp = after;
-  else c.hp = after;
+  setHp(world, c, after);
   const out: Effect[] = [{ kind: "combat-hp", encounterId: e.id, combatantId: c.id, from: before.hp, to: after }];
-  if (after === 0 && before.hp > 0) out.push({ kind: "combat-downed", encounterId: e.id, combatantId: c.id });
+  const dr = engine.rules.combat.downed;
+  // Annihilation: a single hit of 10 × Max HP or more, with no Downed state and no countdown.
+  if (delta < 0 && engine.annihilated(-delta, before.maxHp)) return [...out, ...die(world, e, c, "annihilated")];
+  if (after === 0 && before.hp > 0) {
+    if (c.kind === "creature") return [...out, ...die(world, e, c, "fell")];
+    c.downed = { coherence: dr.dies_at_end_of_round, stabilized: false };
+    c.wasDowned = true;
+    c.beats = 0;
+    if (e.acting === c.id) {
+      finish(c);
+      e.acting = null;
+    }
+    advance(e);
+    out.push({ kind: "combat-downed", encounterId: e.id, combatantId: c.id, ...cid(c), coherence: c.downed.coherence });
+  } else if (after > 0 && c.downed) {
+    // Any HP restoration returns a Downed character to consciousness at the restored HP.
+    c.downed = null;
+    if (turnStillToCome(e, c)) c.beats = Math.max(0, turnBeats(engine, c) - c.debt);
+    out.push({ kind: "revived", encounterId: e.id, combatantId: c.id, ...cid(c), hp: after });
+  }
+  return out;
+}
+
+function setHp(world: World, c: Combatant, hp: number) {
+  if (c.characterId) world.characters.get(c.characterId)!.hp = hp;
+  else c.hp = hp;
+}
+
+/**
+ * A combatant dies: out of the fight for good. A character's death is permanent at F-Grade and
+ * ends their party membership (a party left with one member ends).
+ */
+function die(world: World, e: Encounter, c: Combatant, cause: DeathCause, byId?: string): Effect[] {
+  c.dead = true;
+  c.out = true;
+  c.downed = null;
+  c.beats = 0;
+  if (e.acting === c.id) e.acting = null;
+  if (e.clash && (e.clash.attackerId === c.id || e.clash.defenderId === c.id)) e.clash = null;
+  e.surprise = e.surprise && e.surprise.filter((x) => x !== c.id);
+  const by = byId ? e.combatants.find((x) => x.id === byId) : undefined;
+  const out: Effect[] = [
+    {
+      kind: "combat-died",
+      encounterId: e.id,
+      combatantId: c.id,
+      ...cid(c),
+      cause,
+      ...(byId ? { byId } : {}),
+      // A player character's execution weighs heavily in the Hidden Vector Engine.
+      ...(by?.characterId ? { byCharacterId: by.characterId } : {}),
+    },
+  ];
+  if (c.characterId) {
+    const ch = world.characters.get(c.characterId)!;
+    ch.dead = true;
+    out.push(...partyAfterDeath(world, ch.id, ch.name));
+  }
+  advance(e);
+  return out;
+}
+
+export type DeathCause = "countdown" | "annihilated" | "executed" | "fell" | "ruling";
+
+function partyAfterDeath(world: World, characterId: string, name: string): Effect[] {
+  const p = [...world.parties.values()].find((x) => x.members.includes(characterId));
+  if (!p) return [];
+  p.members = p.members.filter((m) => m !== characterId);
+  const out: Effect[] = p.members.map((m) => ({ kind: "party-member-died", characterId: m, memberId: characterId, memberName: name }) as const);
+  if (p.members.length < 2) {
+    world.parties.delete(p.id);
+    out.push(...p.members.map((m) => ({ kind: "party-disbanded", characterId: m, partyId: p.id }) as const));
+  }
+  world.invites = world.invites.filter((i) => i.fromId !== characterId && i.toId !== characterId);
   return out;
 }
 
 function end(world: World): Effect[] {
   const e = fight(world);
+  noClash(e);
+  const dying = e.combatants.filter((c) => c.characterId && c.downed && !c.downed.stabilized);
+  if (dying.length)
+    throw new Rejected(`${dying.map((c) => c.name).join(" and ")} ${dying.length === 1 ? "is" : "are"} dying: stabilize them or run the rounds out`);
+  const out: Effect[] = [];
+  for (const c of e.combatants) {
+    // A stabilized character wakes at 1 HP when the scene ends.
+    if (c.downed?.stabilized && !c.dead) {
+      setHp(world, c, 1);
+      c.downed = null;
+      out.push({ kind: "revived", encounterId: e.id, combatantId: c.id, ...cid(c), hp: 1 });
+    }
+    if (c.characterId && c.wasDowned && !c.dead) out.push({ kind: "battle-memory-due", characterId: c.characterId, reason: "survived Downed" });
+  }
   e.ended = true;
   e.acting = null;
-  e.clash = null;
-  return [{ kind: "combat-ended", encounterId: e.id }];
+  e.surprise = null;
+  return [{ kind: "combat-ended", encounterId: e.id }, ...out];
+}
+
+// ------------------------------------------------------ Downed and death ---
+
+function fate(engine: Engine, world: World, a: Fate): Effect[] {
+  const e = fight(world);
+  const c = combatant(e, a.combatantId);
+  if (hpOf(engine, world, c).hp !== 0) throw new Rejected(`${c.name} is not at 0 HP`);
+  if (a.fate === "dead") {
+    if (c.dead) throw new Rejected(`${c.name} is already dead`);
+    return die(world, e, c, "ruling");
+  }
+  if (c.dead) {
+    // A creature that died at 0 by default, left alive instead (to be questioned).
+    if (c.characterId) throw new Rejected("death is permanent; undo the action that killed them if it was a mistake");
+    c.dead = false;
+    c.out = false;
+    c.downed = { coherence: engine.rules.combat.downed.dies_at_end_of_round, stabilized: true };
+    c.wasDowned = true;
+  } else if (!c.downed) throw new Rejected(`${c.name} is not Downed`);
+  else if (c.downed.stabilized) throw new Rejected(`${c.name} is already stabilized`);
+  else c.downed.stabilized = true;
+  return [{ kind: "stabilized", encounterId: e.id, combatantId: c.id, ...cid(c) }];
+}
+
+/** The d100 against a Resistance, or none when the Force alone meets it. */
+function checkRoll(engine: Engine, grade: string, force: number, resistance: number, dice: Dice | undefined, advantage: boolean) {
+  if (force >= resistance) {
+    if (dice) throw new Rejected("the Force alone meets the Resistance: no roll");
+    return { total: force, success: true, auto: true, natural: [] as number[] };
+  }
+  checkDice(engine, grade, dice, advantage);
+  const total = sum(dice!.natural) + force;
+  const outcome = engine.checkOutcome(total, resistance, dice!.natural[0]!, grade);
+  return { total, success: outcome === "success" || outcome === "exceptional", auto: false, natural: dice!.natural };
+}
+
+/** The Force a helper brings to a check: a character's Attribute, or the Force entered for a creature or NPC. */
+function helperForce(engine: Engine, world: World, c: Combatant, attribute: string | undefined, force: number | undefined): number {
+  if (c.characterId) {
+    if (!attribute) throw new Rejected(`name the Attribute ${c.name} uses`);
+    const raw = rawStats(world.characters.get(c.characterId)!)[attribute];
+    if (raw === undefined) throw new Rejected(`${attribute} is not an Attribute`);
+    return engine.force(raw, c.grade);
+  }
+  if (force === undefined || !Number.isInteger(force) || force < 0) throw new Rejected(`enter ${c.name}'s Force`);
+  return force;
+}
+
+function stabilize(engine: Engine, world: World, a: Stabilize): Effect[] {
+  const e = fight(world);
+  const helper = combatant(e, a.combatantId);
+  const target = combatant(e, a.targetId);
+  if (helper.id === target.id) throw new Rejected("a Downed character cannot stabilize themselves");
+  if (!target.downed || target.dead) throw new Rejected(`${target.name} is not Downed`);
+  if (target.downed.stabilized) throw new Rejected(`${target.name} is already stabilized`);
+  if (!sameZone(helper, target)) throw new Rejected(`${helper.name} must be in ${target.name}'s Zone`);
+  const force = helperForce(engine, world, helper, a.attribute, a.force);
+  spend(e, helper, `Stabilize ${target.name}`);
+  const resistance = engine.rules.combat.downed.stabilize_check.resistance;
+  const r = checkRoll(engine, helper.grade, force, resistance, a.dice, Boolean(a.advantage));
+  if (r.success) target.downed.stabilized = true;
+  const out: Effect[] = [
+    {
+      kind: "combat-check",
+      encounterId: e.id,
+      combatantId: helper.id,
+      label: `Stabilize ${target.name}`,
+      total: r.total,
+      resistance,
+      success: r.success,
+      rolls: r.auto ? [] : [{ combatantId: helper.id, natural: r.natural, force, total: r.total, label: `Stabilize ${target.name}` }],
+    },
+  ];
+  if (r.success) out.push({ kind: "stabilized", encounterId: e.id, combatantId: target.id, ...cid(target) });
+  return out;
+}
+
+function execute(world: World, a: Execute): Effect[] {
+  const e = fight(world);
+  const c = combatant(e, a.combatantId);
+  const target = combatant(e, a.targetId);
+  if (!target.downed || target.dead) throw new Rejected(`${target.name} is not Downed`);
+  spend(e, c, `Execute ${target.name}`);
+  return die(world, e, target, "executed", c.id);
+}
+
+// ----------------------------------------------------------------- pills ---
+
+function pill(engine: Engine, world: World, a: TakePill): Effect[] {
+  const e = fight(world);
+  const giver = combatant(e, a.combatantId);
+  const target = combatant(e, a.targetId);
+  if (target.dead || target.out) throw new Rejected(`${target.name} is out of the fight`);
+  if (giver.id !== target.id && !sameZone(giver, target)) throw new Rejected(`${giver.name} must be in ${target.name}'s Zone`);
+  const items = engine.rules.items;
+  const find = (list: { name: string; grade: string }[]) => list.find((p) => p.name.toLowerCase() === a.pill.trim().toLowerCase());
+  const healing = find(items.healing_pills) as { name: string; grade: string; hp: number } | undefined;
+  const aetherPill = find(items.aether_pills) as { name: string; grade: string; aether: number } | undefined;
+  const p = healing ?? aetherPill;
+  if (!p) throw new Rejected(`no pill called ${a.pill}`);
+  const kind = healing ? "healing" : "aether";
+  if (kind === "aether" && !target.characterId) throw new Rejected(`the tracker keeps no Aether for ${target.name}`);
+  spend(e, giver, `${p.name}${giver.id === target.id ? "" : ` to ${target.name}`}`);
+  // The recipient's count, never the giver's; the pill is taken whether or not it works.
+  const taken = target.pills[kind];
+  target.pills[kind] += 1;
+  let noEffect: "grade" | "limit" | undefined;
+  if (p.grade !== target.grade) noEffect = "grade";
+  else if (taken >= items.pill_use.per_fight_limit_per_kind) noEffect = "limit";
+  const out: Effect[] = [];
+  let restored = 0;
+  if (!noEffect && healing) {
+    const hp = changeHp(engine, world, e, target, healing.hp);
+    const change = hp[0] as { from: number; to: number };
+    restored = change.to - change.from;
+    out.push(...hp);
+  } else if (!noEffect && aetherPill) {
+    const ch = world.characters.get(target.characterId!)!;
+    const before = ch.aether;
+    ch.aether = Math.min(maxAetherOf(engine, ch), ch.aether + aetherPill.aether);
+    restored = ch.aether - before;
+  }
+  return [
+    { kind: "pill", encounterId: e.id, combatantId: giver.id, targetId: target.id, ...cid(target), pill: p.name, pillKind: kind, restored, ...(noEffect ? { noEffect } : {}) },
+    ...out,
+  ];
+}
+
+// ---------------------------------------------------------- Aura Pressure ---
+
+/** Characters below the entity's Grade who make the Will Save: all of them on a flare, else those who have not faced it. */
+export function auraSavers(engine: Engine, e: Encounter, entityId: string, flare: boolean): Combatant[] {
+  const entity = e.combatants.find((c) => c.id === entityId);
+  if (!entity) return [];
+  const rank = engine.gradeOrder(entity.grade);
+  return e.combatants.filter(
+    (c) => c.characterId && canTurn(c) && c.id !== entity.id && engine.gradeOrder(c.grade) < rank && (flare || c.aura === null),
+  );
+}
+
+/** Suppressed turns 2 Beats to 1; a turn still to come this round gains or loses the difference now. */
+function setAura(engine: Engine, e: Encounter, c: Combatant, next: Combatant["aura"]) {
+  const before = turnBeats(engine, c);
+  c.aura = next;
+  if (turnStillToCome(e, c)) c.beats = Math.max(0, c.beats + turnBeats(engine, c) - before);
+}
+
+function willSave(engine: Engine, world: World, e: Encounter, c: Combatant, resistance: number, dice: Dice | undefined, label: string): Effect {
+  const force = hrtForce(engine, world, c);
+  const r = checkRoll(engine, c.grade, force, resistance, dice, false);
+  setAura(engine, e, c, r.success ? "steeled" : "suppressed");
+  return {
+    kind: "combat-check",
+    encounterId: e.id,
+    combatantId: c.id,
+    label,
+    total: r.total,
+    resistance,
+    success: r.success,
+    aura: c.aura!,
+    rolls: r.auto ? [] : [{ combatantId: c.id, natural: r.natural, force, total: r.total, label }],
+  };
+}
+
+function hrtForce(engine: Engine, world: World, c: Combatant): number {
+  const ch = world.characters.get(c.characterId!)!;
+  return engine.force(rawStats(ch).HRT!, ch.grade);
+}
+
+function aura(engine: Engine, world: World, a: AuraPressure): Effect[] {
+  const e = fight(world);
+  const entity = combatant(e, a.entityId);
+  if (!canTurn(entity)) throw new Rejected(`${entity.name} is out of the fight`);
+  const flare = Boolean(a.flare);
+  const savers = auraSavers(engine, e, entity.id, flare);
+  if (!savers.length) throw new Rejected(flare ? `nobody in the fight is below ${entity.name}'s Grade` : `everyone below ${entity.name}'s Grade has faced it`);
+  if (flare) spend(e, entity, "Flare aura");
+  const saves = a.saves ?? [];
+  if (saves.length !== savers.length || !savers.every((c) => saves.some((s) => s.combatantId === c.id)))
+    throw new Rejected(`the Will Save is made by ${savers.map((c) => c.name).join(", ")}`);
+  const resistance = engine.auraResistance(a.flaring);
+  e.aura = { entityId: entity.id, resistance };
+  return savers.map((c) => willSave(engine, world, e, c, resistance, saves.find((s) => s.combatantId === c.id)!.dice, "Will Save"));
+}
+
+function will(engine: Engine, world: World, a: WillSave): Effect[] {
+  const e = fight(world);
+  const c = combatant(e, a.combatantId);
+  if (!c.characterId) throw new Rejected("a creature's or NPC's Suppression is the GM's ruling");
+  if (c.aura !== "suppressed" || !e.aura) throw new Rejected(`${c.name} is not Suppressed`);
+  if (a.reason === "principle") spend(e, c, "Push back (Application)");
+  else if (a.reason === "intervention") {
+    const helper = combatant(e, a.helperId ?? "");
+    if (helper.id === c.id) throw new Rejected("an intervention comes from an ally");
+    if (helper.aura === "suppressed") throw new Rejected(`${helper.name} is Suppressed too`);
+    spend(e, helper, `Intervene for ${c.name}`);
+  }
+  return [willSave(engine, world, e, c, e.aura.resistance, a.dice, "Will Save again")];
+}
+
+function suppress(engine: Engine, world: World, a: Suppress): Effect[] {
+  const e = fight(world);
+  const c = combatant(e, a.combatantId);
+  if (!canTurn(c)) throw new Rejected(`${c.name} is out of the fight`);
+  setAura(engine, e, c, a.suppressed ? "suppressed" : null);
+  return [];
+}
+
+// -------------------------------------------------------------- surprise ---
+
+function surprise(engine: Engine, world: World, a: Surprise): Effect[] {
+  const e = fight(world);
+  if (e.round > 0) throw new Rejected("the Surprise Beat comes before Initial Momentum");
+  if (e.combatants.some((c) => c.acted) || e.acting || e.clash) throw new Rejected("the surprise is under way");
+  if (!a.combatantIds.length) throw new Rejected("name who has the surprise");
+  const ids = [...new Set(a.combatantIds)];
+  for (const id of ids) if (!canTurn(combatant(e, id))) throw new Rejected(`${combatant(e, id).name} cannot act`);
+  e.surprise = ids;
+  for (const c of e.combatants) c.beats = ids.includes(c.id) ? engine.rules.combat.surprise_beat : 0;
+  return [];
 }
 
 // ----------------------------------------------------------------- Zones ---
@@ -753,18 +1239,19 @@ function paySurge(engine: Engine, world: World, c: Combatant, s: ClashSide): voi
 }
 
 /** The Beats of the defender's next turn: this round's if it is still to come, else next round's. */
-function nextTurnBeats(e: Encounter, c: Combatant): { beats: number; thisRound: boolean } {
-  const stillToCome = e.round > 0 && !c.acted && e.acting !== c.id && e.order.indexOf(c.sideId) >= e.turn;
-  return stillToCome ? { beats: c.beats, thisRound: true } : { beats: Math.max(0, c.beatsPerTurn - c.debt), thisRound: false };
+function nextTurnBeats(engine: Engine, e: Encounter, c: Combatant): { beats: number; thisRound: boolean } {
+  return turnStillToCome(e, c) ? { beats: c.beats, thisRound: true } : { beats: Math.max(0, turnBeats(engine, c) - c.debt), thisRound: false };
 }
 
 function attack(engine: Engine, world: World, a: Attack, id: string): Effect[] {
   const e = fight(world);
-  if (e.round === 0) throw new Rejected("roll Initial Momentum first");
+  if (e.round === 0 && !(e.surprise && e.acting === a.attackerId && !a.free)) throw new Rejected("roll Initial Momentum first");
   noClash(e);
   const att = combatant(e, a.attackerId);
   const def = combatant(e, a.defenderId);
   if (att.out || def.out) throw new Rejected("both must be in the fight");
+  if (att.downed) throw new Rejected(`${att.name} is Downed`);
+  if (def.downed) throw new Rejected(`${def.name} is Downed: an attack on them is an execution`);
   if (att.sideId === def.sideId) throw new Rejected(`${def.name} is on ${att.name}'s side`);
   if (!Number.isInteger(a.attack.modifier)) throw new Rejected("modifiers are whole numbers");
   sideForce(engine, world, att, a.attack, "attacks");
@@ -819,7 +1306,7 @@ function defend(engine: Engine, world: World, a: Defend): Effect[] {
   const defDice = sum(a.defenseDice!.natural);
   const out = engine.clash(attDice, attForce, defDice, defForce, att.grade, def.grade, attMods, defMods);
 
-  const next = nextTurnBeats(e, def);
+  const next = nextTurnBeats(engine, e, def);
   let yieldCap = def.yields ? next.beats : 0;
   if (cl.cornered) yieldCap = Math.min(yieldCap, r.combat.yield.cornered_max_beats);
   const result: ClashResult = {
@@ -877,7 +1364,7 @@ function land(engine: Engine, world: World, e: Encounter, y: number): Effect[] {
     res.drivable = false;
   } else {
     if (y > 0) {
-      const next = nextTurnBeats(e, def);
+      const next = nextTurnBeats(engine, e, def);
       if (next.thisRound) def.beats -= y;
       else def.debt += y;
     }
@@ -932,6 +1419,14 @@ export function authorizeCombatPlayer(world: World, a: CombatAction, userId: str
     case "combat.defend":
     case "combat.resolve":
       return own(e?.clash?.defenderId);
+    case "combat.stabilize":
+    case "combat.execute":
+    case "combat.pill":
+      return own(a.combatantId);
+    case "combat.will":
+      if (a.reason === "principle") return own(a.combatantId);
+      if (a.reason === "intervention") return own(a.helperId);
+      throw new Rejected("the GM calls the entity hurt or distracted");
     default:
       throw new Rejected(`only the GM records ${a.type}`);
   }
@@ -958,7 +1453,7 @@ export function applyCombat(engine: Engine, world: World, a: CombatAction, env: 
     case "combat.done":
       return done(world, a);
     case "combat.round":
-      return round(world);
+      return round(engine, world);
     case "combat.hp":
       return hp(engine, world, a);
     case "combat.end":
@@ -975,6 +1470,22 @@ export function applyCombat(engine: Engine, world: World, a: CombatAction, env: 
       return setExposed(world, a);
     case "combat.zones":
       return setZones(world, a);
+    case "combat.fate":
+      return fate(engine, world, a);
+    case "combat.stabilize":
+      return stabilize(engine, world, a);
+    case "combat.execute":
+      return execute(world, a);
+    case "combat.pill":
+      return pill(engine, world, a);
+    case "combat.aura":
+      return aura(engine, world, a);
+    case "combat.will":
+      return will(engine, world, a);
+    case "combat.suppress":
+      return suppress(engine, world, a);
+    case "combat.surprise":
+      return surprise(engine, world, a);
   }
 }
 
@@ -1013,4 +1524,43 @@ export function rollCombatDice(engine: Engine, world: World, a: RollMomentum | S
     if (sum(t.seizer) + momentumForceOf(engine, world, c) !== sum(t.holder) + momentumForceOf(engine, world, holder)) break;
   }
   return { ...a, attempts };
+}
+
+/**
+ * Rolls the checks slice 3 adds (stabilizing, the Will Save, Aura Pressure's saves) for an
+ * action that arrives without dice. A roller whose Force alone meets the Resistance rolls
+ * nothing. Returns the action unchanged when it cannot be rolled; the record then says why.
+ */
+export function rollCheckDice<A extends Stabilize | WillSave | AuraPressure>(engine: Engine, world: World, a: A, d100: D100): A {
+  const e = world.encounter;
+  if (!e || e.ended) return a;
+  const who = (id: string | undefined) => e.combatants.find((c) => c.id === id);
+  const roll = (c: Combatant, force: number, resistance: number, advantage = false): Dice | undefined =>
+    force >= resistance ? undefined : rollD100s(engine.volatilityThreshold(c.grade), { advantage }, d100);
+  try {
+    if (a.type === "combat.stabilize") {
+      if (a.dice) return a;
+      const helper = who(a.combatantId);
+      if (!helper) return a;
+      const force = helperForce(engine, world, helper, a.attribute, a.force);
+      const dice = roll(helper, force, engine.rules.combat.downed.stabilize_check.resistance, Boolean(a.advantage));
+      return dice ? { ...a, dice } : a;
+    }
+    if (a.type === "combat.will") {
+      const c = who(a.combatantId);
+      if (a.dice || !c?.characterId || !e.aura) return a;
+      const dice = roll(c, hrtForce(engine, world, c), e.aura.resistance);
+      return dice ? { ...a, dice } : a;
+    }
+    if (a.saves) return a;
+    const resistance = engine.auraResistance(a.flaring);
+    const saves = auraSavers(engine, e, a.entityId, Boolean(a.flare)).map((c) => {
+      const dice = roll(c, hrtForce(engine, world, c), resistance);
+      return dice ? { combatantId: c.id, dice } : { combatantId: c.id };
+    });
+    return { ...a, saves };
+  } catch (err) {
+    if (err instanceof Rejected) return a;
+    throw err;
+  }
 }

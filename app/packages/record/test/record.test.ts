@@ -546,15 +546,16 @@ describe("the combat tracker", () => {
     expect(enc().order).toEqual(["party", "hostiles"]);
   });
 
-  it("damages a character's own HP and a creature's, down to 0 and Downed", () => {
+  it("damages a character's own HP and a creature's; a creature dies at 0", () => {
     rolled({ type: "combat.momentum" }, 60, 30);
     gm({ type: "combat.hp", combatantId: "kara", delta: -5 });
     expect(rec.sheet("kara")!.hp).toBe(9);
     const out = gm({ type: "combat.hp", combatantId: "rat", delta: -20 });
     expect(out.effects).toEqual([
       { kind: "combat-hp", encounterId: "e1", combatantId: "rat", from: 12, to: 0 },
-      { kind: "combat-downed", encounterId: "e1", combatantId: "rat" },
+      { kind: "combat-died", encounterId: "e1", combatantId: "rat", cause: "fell" },
     ]);
+    expect(who("rat")).toMatchObject({ dead: true, out: true });
   });
 
   it("brings in a combatant mid-fight and skips a side with nobody left", () => {
@@ -725,6 +726,195 @@ describe("the Clash in the tracker", () => {
     as(P1, { type: "combat.attack", attackerId: "kara", defenderId: "rat", attack: { attribute: "STR", modifier: 0 } });
     expect(() => as(P1, { type: "combat.defend", defense: { force: 8, modifier: 0 } }, 50, 50)).toThrow(/own character/);
     expect(() => as(P1, { type: "combat.round" })).toThrow(/only the GM/);
+  });
+});
+
+describe("Downed, pills, Aura Pressure, and the Surprise Beat", () => {
+  const enc = () => rec.state.encounter!;
+  const who = (id: string) => enc().combatants.find((c) => c.id === id)!;
+  const as = (actor: Draft["actor"], action: Action, ...dice: number[]) => rec.append(rollFor(rec, draft(action, actor), () => dice.shift()!));
+  const rolled = (action: Action, ...dice: number[]) => as(GM, action, ...dice);
+  const npc = { combatantId: "thug", sideId: "hostiles", name: "Thug", grade: "F", maxHp: 12, momentumForce: 8, beats: 2 };
+  /** Kara and Joe (in a party) against `foes`, in the Treeline; Momentum to the party unless the foes' rolls win. */
+  function fight(foes: object[], momentum: number[] = [60, 30]) {
+    gm({
+      type: "combat.start",
+      encounterId: "e1",
+      name: "Treeline",
+      sides: [
+        { id: "party", name: "The party" },
+        { id: "hostiles", name: "Hostiles" },
+      ],
+      zones: [
+        { id: "treeline", name: "Treeline" },
+        { id: "road", name: "Road" },
+      ],
+      combatants: [{ combatantId: "kara", sideId: "party", characterId: "kara" }, { combatantId: "joe", sideId: "party", characterId: "joe" }, ...foes] as never,
+    });
+    if (momentum.length) rolled({ type: "combat.momentum" }, ...momentum);
+  }
+  /** Ends every remaining turn of the round and starts the next. */
+  function nextRound() {
+    while (enc().turn < enc().order.length) {
+      const c = enc().combatants.find((x) => x.sideId === enc().order[enc().turn] && !x.out && !x.downed && !x.acted)!;
+      gm({ type: "combat.act", combatantId: c.id });
+      gm({ type: "combat.done", combatantId: c.id });
+    }
+    return gm({ type: "combat.round" });
+  }
+  beforeEach(() => {
+    gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" });
+    gm({ type: "character.pregen", characterId: "joe", pregen: "Joe", playerId: "player-2" });
+    as(P1, { type: "party.invite", fromId: "kara", toId: "joe" });
+    const inviteId = rec.state.invites[0]!.id;
+    as(P2, { type: "party.answer", inviteId, accept: true });
+  });
+
+  it("Downs a character at 0 with vital coherence 3, falling each round from the round of Downing, and kills them at 0", () => {
+    fight([npc]);
+    const down = gm({ type: "combat.hp", combatantId: "kara", delta: -14 });
+    expect(down.effects[1]).toEqual({ kind: "combat-downed", encounterId: "e1", combatantId: "kara", characterId: "kara", coherence: 3 });
+    expect(who("kara")).toMatchObject({ beats: 0, downed: { coherence: 3, stabilized: false } });
+    expect(() => gm({ type: "combat.act", combatantId: "kara" })).toThrow(/Downed/);
+    expect(() => gm({ type: "combat.attack", attackerId: "thug", defenderId: "kara", attack: { force: 6, modifier: 0 } })).toThrow(/execution/);
+    expect(nextRound().effects).toContainEqual({ kind: "vital-coherence", encounterId: "e1", combatantId: "kara", characterId: "kara", coherence: 2 });
+    expect(who("kara").beats).toBe(0);
+    nextRound();
+    expect(() => gm({ type: "combat.end" })).toThrow(/Kara is dying/);
+    const out = nextRound();
+    expect(out.effects).toContainEqual({ kind: "combat-died", encounterId: "e1", combatantId: "kara", characterId: "kara", cause: "countdown" });
+    // Death ends the party; a party of one is no party.
+    expect(out.effects).toContainEqual({ kind: "party-member-died", characterId: "joe", memberId: "kara", memberName: "Kara" });
+    expect(rec.state.parties.size).toBe(0);
+    expect(rec.sheet("kara")).toMatchObject({ dead: true, downed: false });
+    gm({ type: "combat.end" });
+    expect(() => gm({ type: "combat.start", encounterId: "e2", name: "Again", sides: [{ id: "a", name: "A" }, { id: "b", name: "B" }], combatants: [{ combatantId: "kara", sideId: "a", characterId: "kara" }, { ...npc, sideId: "b" }] })).toThrow(/Kara is dead/);
+  });
+
+  it("annihilates on a single hit of ten times Max HP, with no Downed state", () => {
+    fight([npc]);
+    const out = gm({ type: "combat.hp", combatantId: "kara", delta: -140 });
+    expect(out.effects.map((e) => e.kind)).toEqual(["combat-hp", "combat-died", "party-member-died", "party-disbanded"]);
+    expect(out.effects[1]).toMatchObject({ cause: "annihilated" });
+  });
+
+  it("stabilizes by bare hands in the same Zone on a Moderate check, and wakes them at 1 HP when the fight ends", () => {
+    fight([npc]);
+    gm({ type: "combat.hp", combatantId: "kara", delta: -14 });
+    gm({ type: "combat.move", combatantId: "joe", zoneId: "road", forced: true });
+    as(P2, { type: "combat.act", combatantId: "joe" });
+    expect(() => as(P2, { type: "combat.stabilize", combatantId: "joe", targetId: "kara", attribute: "DEX" }, 90)).toThrow(/Kara's Zone/);
+    gm({ type: "combat.move", combatantId: "joe", zoneId: "treeline", forced: true });
+    // Joe the EMT rolls with Advantage: 40 and 88, keeps 88, + DEX 5 = 93 against 90.
+    const out = as(P2, { type: "combat.stabilize", combatantId: "joe", targetId: "kara", attribute: "DEX", advantage: true }, 40, 88);
+    expect(out.effects).toEqual([
+      expect.objectContaining({ kind: "combat-check", total: 93, resistance: 90, success: true }),
+      { kind: "stabilized", encounterId: "e1", combatantId: "kara", characterId: "kara" },
+    ]);
+    expect(who("joe").beats).toBe(1);
+    nextRound();
+    nextRound();
+    nextRound();
+    expect(who("kara").downed).toEqual({ coherence: 3, stabilized: true });
+    const end = gm({ type: "combat.end" });
+    expect(end.effects).toContainEqual({ kind: "revived", encounterId: "e1", combatantId: "kara", characterId: "kara", hp: 1 });
+    expect(end.effects).toContainEqual({ kind: "battle-memory-due", characterId: "kara", reason: "survived Downed" });
+    expect(rec.sheet("kara")!.hp).toBe(1);
+  });
+
+  it("wakes a Downed character on a pill; two of each kind work per encounter, counted against the recipient", () => {
+    fight([npc]);
+    gm({ type: "combat.hp", combatantId: "kara", delta: -14 });
+    as(P2, { type: "combat.act", combatantId: "joe" });
+    const first = as(P2, { type: "combat.pill", combatantId: "joe", targetId: "kara", pill: "Stuttering Tincture" });
+    expect(first.effects).toContainEqual({ kind: "revived", encounterId: "e1", combatantId: "kara", characterId: "kara", hp: 5 });
+    expect(who("kara")).toMatchObject({ downed: null, beats: 2, pills: { healing: 1, aether: 0 } });
+    as(P2, { type: "combat.pill", combatantId: "joe", targetId: "kara", pill: "Stuttering Tincture" });
+    expect(rec.sheet("kara")!.hp).toBe(10);
+    as(P2, { type: "combat.done", combatantId: "joe" });
+    as(P1, { type: "combat.act", combatantId: "kara" });
+    const third = as(P1, { type: "combat.pill", combatantId: "kara", targetId: "kara", pill: "Stuttering Tincture" });
+    expect(third.effects).toEqual([expect.objectContaining({ kind: "pill", restored: 0, noEffect: "limit" })]);
+    expect(rec.sheet("kara")!.hp).toBe(10);
+    // Aether Pills count separately.
+    gm({ type: "aether.change", characterId: "kara", delta: -6 });
+    const ae = as(P1, { type: "combat.pill", combatantId: "kara", targetId: "kara", pill: "Sparkstone Tablet" });
+    expect(ae.effects[0]).toMatchObject({ pillKind: "aether", restored: 6 });
+    expect(() => as(P1, { type: "combat.pill", combatantId: "kara", targetId: "thug", pill: "Sparkstone Tablet" })).toThrow(/no Aether for Thug/);
+  });
+
+  it("executes a Downed combatant for a Beat with no roll, and lets the GM rule a fate either way", () => {
+    fight([npc, { combatantId: "rat", sideId: "hostiles", name: "Frenzy Rat", creature: "Frenzy Rat", grade: "F", maxHp: 12, momentumForce: 8, beats: 1 }]);
+    gm({ type: "combat.hp", combatantId: "thug", delta: -12 });
+    expect(who("thug").downed).toEqual({ coherence: 3, stabilized: false });
+    gm({ type: "combat.hp", combatantId: "rat", delta: -12 });
+    expect(who("rat").dead).toBe(true);
+    // The rat is left alive to be questioned.
+    gm({ type: "combat.fate", combatantId: "rat", fate: "stabilized" });
+    expect(who("rat")).toMatchObject({ dead: false, out: false, downed: { stabilized: true } });
+    as(P1, { type: "combat.act", combatantId: "kara" });
+    const out = as(P1, { type: "combat.execute", combatantId: "kara", targetId: "thug" });
+    expect(out.effects).toEqual([{ kind: "combat-died", encounterId: "e1", combatantId: "thug", cause: "executed", byId: "kara", byCharacterId: "kara" }]);
+    expect(who("kara").beats).toBe(1);
+    expect(() => as(P1, { type: "combat.fate", combatantId: "rat", fate: "dead" })).toThrow(/only the GM/);
+    gm({ type: "combat.fate", combatantId: "rat", fate: "dead" });
+    expect(who("rat").dead).toBe(true);
+  });
+
+  it("makes lower-Grade characters save against Aura Pressure; failure Suppresses to 1 Beat until a fresh save succeeds", () => {
+    const warden = { combatantId: "warden", sideId: "hostiles", name: "Warden", grade: "E", maxHp: 300, momentumForce: 20, beats: 2 };
+    fight([warden], [60, 10]);
+    // Kara (HRT 4) 50 + 4 = 54 against 90; Joe (HRT 5) 89 + 5 = 94.
+    const out = rolled({ type: "combat.aura", entityId: "warden", flaring: false }, 50, 89);
+    expect(out.effects.map((e) => e.kind === "combat-check" && [e.total, e.aura])).toEqual([
+      [54, "suppressed"],
+      [94, "steeled"],
+    ]);
+    expect(who("kara").beats).toBe(1);
+    expect(() => rolled({ type: "combat.aura", entityId: "warden", flaring: false }, 50)).toThrow(/everyone below/);
+    // Kara pushes back with a Principle Application: her one Beat, and the save again.
+    as(P1, { type: "combat.act", combatantId: "kara" });
+    const push = as(P1, { type: "combat.will", combatantId: "kara", reason: "principle" }, 30);
+    expect(push.effects[0]).toMatchObject({ total: 34, success: false, aura: "suppressed" });
+    expect(who("kara").beats).toBe(0);
+    as(P1, { type: "combat.done", combatantId: "kara" });
+    // Joe, steeled, shouts her through it.
+    as(P2, { type: "combat.act", combatantId: "joe" });
+    expect(() => as(P2, { type: "combat.will", combatantId: "kara", reason: "distracted" }, 90)).toThrow(/GM calls/);
+    as(P2, { type: "combat.will", combatantId: "kara", reason: "intervention", helperId: "joe" }, 90);
+    expect(who("kara").aura).toBe("steeled");
+    as(P2, { type: "combat.done", combatantId: "joe" });
+    // The Warden flares: a Beat on its turn, and a fresh save from everyone below it against 115.
+    gm({ type: "combat.act", combatantId: "warden" });
+    const flare = rolled({ type: "combat.aura", entityId: "warden", flaring: true, flare: true }, 90, 90);
+    expect(flare.effects.map((e) => e.kind === "combat-check" && e.aura)).toEqual(["suppressed", "suppressed"]);
+    expect(who("warden").beats).toBe(1);
+    gm({ type: "combat.done", combatantId: "warden" });
+    gm({ type: "combat.round" });
+    expect([who("kara").beats, who("joe").beats]).toEqual([1, 1]);
+    rolled({ type: "combat.will", combatantId: "joe", reason: "distracted" }, 95);
+    // 95 + 5 = 100 against the flare's 115: still Suppressed.
+    expect(who("joe").aura).toBe("suppressed");
+    gm({ type: "combat.suppress", combatantId: "joe", suppressed: false });
+    expect(who("joe").beats).toBe(2);
+  });
+
+  it("gives surprising combatants one Beat before Initial Momentum, and lets the defender Yield from their first turn", () => {
+    fight([npc], []);
+    expect(() => gm({ type: "combat.act", combatantId: "thug" })).toThrow(/roll Initial Momentum first/);
+    gm({ type: "combat.surprise", combatantIds: ["thug"] });
+    expect(() => gm({ type: "combat.act", combatantId: "kara" })).toThrow(/no Surprise Beat/);
+    gm({ type: "combat.act", combatantId: "thug" });
+    gm({ type: "combat.attack", attackerId: "thug", defenderId: "kara", attack: { force: 8, modifier: 0 } });
+    // The thug 60 + 8 = 68; Kara 30 + 5 = 35: Margin 33, and she Yields a Beat from her first turn.
+    as(P1, { type: "combat.defend", defense: { attribute: "DEX", modifier: 0 } }, 60, 30);
+    expect(enc().clash!.result!.yieldCap).toBe(2);
+    as(P1, { type: "combat.resolve", yield: 1 });
+    expect(rec.sheet("kara")!.hp).toBe(1);
+    expect(() => gm({ type: "combat.beat", combatantId: "thug", what: "Check" })).toThrow(/no Beats left/);
+    rolled({ type: "combat.momentum" }, 60, 30);
+    expect(enc().surprise).toBeNull();
+    expect([who("kara").beats, who("joe").beats, who("thug").beats]).toEqual([1, 2, 2]);
   });
 });
 

@@ -4,7 +4,9 @@
  * it follows the book's round: the side holding Momentum takes its turn first, one combatant
  * at a time spending their Beats, then the next side; Momentum shifts at the start of a round
  * after a won Seize or a Reversal the GM calls. Tracker actions are the GM's bookkeeping and
- * record at once, with Undo (app/DESIGN.md, "The GM is the captain").
+ * record at once, with Undo (app/DESIGN.md, "The GM is the captain"). Before Initial Momentum
+ * the GM can give the Surprise Beat; Aura Pressure asks for the Will Save when a higher-Grade
+ * combatant is in the fight; a Downed combatant shows vital coherence and the GM's rulings.
  */
 import type { Engine } from "@gradebreaker/engine";
 import {
@@ -16,10 +18,12 @@ import {
   type Envelope,
   type ForceOption,
   type GmView,
+  auraSavers,
   flankingSuggested,
 } from "@gradebreaker/record";
 import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
+import { type Actor, CareActions, type Mate, pillsOf } from "../Care.tsx";
 import { AttackForm, type Clasher, DefenseForm, YieldChoice } from "../Clash.tsx";
 import { RollList } from "../Dice.tsx";
 
@@ -80,7 +84,7 @@ function CreaturePicker({
   const [pick, setPick] = useState(bestiary[0]?.name ?? "");
   const [count, setCount] = useState("1");
   const [sideId, setSideId] = useState(sides[sides.length - 1]?.id ?? "");
-  const [custom, setCustom] = useState({ name: "", grade: "F", hp: "", beats: "2", momentum: "" });
+  const [custom, setCustom] = useState({ name: "", grade: "F", hp: "", beats: "2", momentum: "", kind: "npc" as "npc" | "creature" });
   const side = sides.some((s) => s.id === sideId) ? sideId : (sides[sides.length - 1]?.id ?? "");
 
   const addBestiary = () => {
@@ -112,6 +116,7 @@ function CreaturePicker({
         combatantId: `${slug(custom.name)}-${rid()}`,
         sideId: side,
         name: custom.name.trim(),
+        kind: custom.kind,
         grade: custom.grade,
         maxHp: hp,
         beats: Math.max(0, Math.trunc(Number(custom.beats)) || 0),
@@ -156,6 +161,13 @@ function CreaturePicker({
           <label>
             Name
             <input value={custom.name} onChange={(e) => setCustom({ ...custom, name: e.target.value })} />
+          </label>
+          <label title="At 0 HP an NPC is Downed and a creature dies">
+            At 0 HP
+            <select value={custom.kind} onChange={(e) => setCustom({ ...custom, kind: e.target.value as "npc" | "creature" })}>
+              <option value="npc">NPC: Downed</option>
+              <option value="creature">Creature: dies</option>
+            </select>
           </label>
           <label>
             Grade
@@ -332,10 +344,28 @@ function Pips({ n, of }: { n: number; of: number }) {
   );
 }
 
+/** A combatant as the shared in-fight forms read them. */
+export function mateOf(c: CombatantView): Mate {
+  const m: Mate = {
+    id: c.id,
+    name: c.name,
+    sideId: c.sideId,
+    zoneId: c.zoneId,
+    out: c.out,
+    downed: Boolean(c.downed),
+    stabilized: Boolean(c.downed?.stabilized),
+    suppressed: c.aura === "suppressed",
+    pills: c.pills,
+  };
+  if (c.characterId) m.characterId = c.characterId;
+  return m;
+}
+
 function CombatantRow({
   c,
   e,
   view,
+  engine,
   canAct,
   run,
   busy,
@@ -343,6 +373,7 @@ function CombatantRow({
   c: CombatantView;
   e: EncounterView;
   view: GmView;
+  engine: Engine;
   canAct: boolean;
   run: (a: Action) => Promise<boolean>;
   busy: boolean;
@@ -370,8 +401,13 @@ function CombatantRow({
         <span className="muted small"> · Momentum {c.momentumForce}</span>
         {c.zoneId && <span className="muted small"> · {zoneName(c.zoneId)}</span>}
         {c.exposed && <span className="tag danger">Exposed</span>}
-        {c.downed && <span className="tag danger">Downed</span>}
-        {c.out && <span className="tag">Out</span>}
+        {c.downed && (
+          <span className="tag danger">{c.downed.stabilized ? "Downed, stabilized" : `Downed: vital coherence ${c.downed.coherence}`}</span>
+        )}
+        {c.aura === "suppressed" && <span className="tag danger">Suppressed</span>}
+        {c.aura === "steeled" && <span className="tag">Steeled</span>}
+        {e.round === 0 && e.surprise?.includes(c.id) && <span className="tag attention">Surprise Beat</span>}
+        {c.dead ? <span className="tag danger">Dead</span> : c.out && <span className="tag">Out</span>}
         {acting && <span className="tag attention">Acting</span>}
         {c.acted && !c.out && <span className="muted small"> · acted</span>}
         <span className="grow" />
@@ -387,6 +423,26 @@ function CombatantRow({
         </span>
       </div>
       {c.spent.length > 0 && <div className="muted small">This round: {c.spent.join(", ")}</div>}
+      {c.characterId && (c.pills.healing > 0 || c.pills.aether > 0) && (
+        <div className="muted small">
+          Pills this fight: {c.pills.healing} healing, {c.pills.aether} Aether
+        </div>
+      )}
+      {(c.downed || (c.dead && c.kind !== "character" && c.hp === 0)) && (
+        <div className="row tight">
+          <span className="muted small">Your ruling:</span>
+          {(c.dead || !c.downed?.stabilized) && (
+            <button disabled={busy} onClick={() => run({ type: "combat.fate", combatantId: c.id, fate: "stabilized" })} title="Left alive, or success at a cost: the countdown stops">
+              {c.dead ? "Left alive" : "Stabilized"}
+            </button>
+          )}
+          {!c.dead && (
+            <button disabled={busy} onClick={() => run({ type: "combat.fate", combatantId: c.id, fate: "dead" })}>
+              Dies
+            </button>
+          )}
+        </div>
+      )}
       {!c.out && (
         <div className="row tight">
           <input type="number" className="narrow-input" min={1} value={delta} onChange={(ev) => setDelta(ev.target.value)} placeholder="HP" />
@@ -433,6 +489,20 @@ function CombatantRow({
           <button disabled={busy} onClick={() => run({ type: "combat.exposed", combatantId: c.id, exposed: !c.exposed })} title="−10 to Clash rolls until the end of their next turn">
             {c.exposed ? "Clear Exposed" : "Exposed"}
           </button>
+          {!c.downed && (
+            <button
+              disabled={busy}
+              onClick={() => run({ type: "combat.suppress", combatantId: c.id, suppressed: c.aura !== "suppressed" })}
+              title="Your ruling: a creature or NPC under Aura Pressure, or three or more Grades apart without a save"
+            >
+              {c.aura === "suppressed" ? "Clear Suppressed" : "Suppressed"}
+            </button>
+          )}
+          {c.aura === "suppressed" && c.characterId && e.aura && (
+            <button disabled={busy} onClick={() => run({ type: "combat.will", combatantId: c.id, reason: "distracted" })} title="The entity took significant damage or was distracted: the Will Save again">
+              Entity hurt: save again
+            </button>
+          )}
           {!acting && !e.clash && e.round > 0 && (
             <button disabled={busy} onClick={() => setAttacking(attacking === "free" ? null : "free")} title="Leaving a Zone without Disengaging: one Clash roll at no Beat">
               Free strike…
@@ -483,9 +553,14 @@ function CombatantRow({
           >
             Spend
           </button>
-          {c.sideId !== holder && (
+          {e.round > 0 && c.sideId !== holder && (
             <button disabled={busy || c.beats < 1} onClick={() => run({ type: "combat.seize", combatantId: c.id })} title="1 Beat: a Momentum Roll against the side holding Momentum">
               Seize Momentum
+            </button>
+          )}
+          {auraSavers(engine, e as unknown as Encounter, c.id, true).length > 0 && (
+            <button disabled={busy || c.beats < 1} onClick={() => run({ type: "combat.aura", entityId: c.id, flaring: true, flare: true })} title="1 Beat: a fresh Will Save against 115 from everyone below its Grade">
+              Flare aura
             </button>
           )}
           <button className="primary" disabled={busy} onClick={() => run({ type: "combat.done", combatantId: c.id })}>
@@ -493,8 +568,24 @@ function CombatantRow({
           </button>
         </div>
       )}
+      {acting && !e.clash && (
+        <CareActions
+          me={actorOf(view, c)}
+          people={e.combatants.map(mateOf)}
+          pills={pillsOf(engine)}
+          pillLimit={engine.rules.items.pill_use.per_fight_limit_per_kind}
+          beats={c.beats}
+          busy={busy}
+          run={run}
+        />
+      )}
     </li>
   );
+}
+
+function actorOf(view: GmView, c: CombatantView): Actor {
+  const sheet = c.characterId ? view.characters.find((s) => s.id === c.characterId) : undefined;
+  return sheet ? { ...mateOf(c), force: sheet.force } : mateOf(c);
 }
 
 function Running({
@@ -573,6 +664,8 @@ function Running({
       )}
       {roundOver && <p className="muted">Every side has acted. Start the next round.</p>}
       {error && <p className="error">{error}</p>}
+      {e.round === 0 && !e.surprise && <SurprisePanel e={e} run={run} busy={busy} />}
+      <AuraPanel engine={engine} e={e} run={run} busy={busy} />
       <ClashPanel view={view} engine={engine} e={e} run={run} busy={busy} />
       {e.zones.length > 0 && <ZonesBar e={e} run={run} busy={busy} />}
       <div className="sides">
@@ -588,7 +681,16 @@ function Running({
               </h3>
               <ol className="combatants">
                 {members.map((c) => (
-                  <CombatantRow key={c.id} c={c} e={e} view={view} canAct={taking && !c.acted && !c.out && !e.clash} run={run} busy={busy} />
+                  <CombatantRow
+                    key={c.id}
+                    c={c}
+                    e={e}
+                    view={view}
+                    engine={engine}
+                    canAct={(taking || (e.round === 0 && Boolean(e.surprise?.includes(c.id)))) && !c.acted && !c.out && !c.downed && !e.clash}
+                    run={run}
+                    busy={busy}
+                  />
                 ))}
               </ol>
             </div>
@@ -601,6 +703,65 @@ function Running({
       </details>
       <h3 className="rolls-heading">Recent rolls</h3>
       <RollList rolls={view.rolls.slice(0, 12)} gm />
+    </section>
+  );
+}
+
+/** Before Initial Momentum: who, if anyone, achieved true surprise. */
+function SurprisePanel({ e, run, busy }: { e: EncounterView; run: (a: Action) => Promise<boolean>; busy: boolean }) {
+  const [picked, setPicked] = useState<string[]>([]);
+  const able = e.combatants.filter((c) => !c.out && !c.downed);
+  return (
+    <details className="panel">
+      <summary>An ambush? Give the Surprise Beat</summary>
+      <p className="small muted">Each surprising combatant takes one free Beat before Initial Momentum is rolled.</p>
+      <div className="row tight">
+        {able.map((c) => (
+          <label key={c.id} className="check">
+            <input
+              type="checkbox"
+              checked={picked.includes(c.id)}
+              onChange={(ev) => setPicked(ev.target.checked ? [...picked, c.id] : picked.filter((x) => x !== c.id))}
+            />{" "}
+            {c.name}
+          </label>
+        ))}
+        <button className="primary" disabled={busy || picked.length === 0} onClick={() => run({ type: "combat.surprise", combatantIds: picked })}>
+          Give the Surprise Beat
+        </button>
+      </div>
+    </details>
+  );
+}
+
+/** A higher-Grade combatant in the fight: the Will Save for everyone below its Grade who has not faced it. */
+function AuraPanel({ engine, e, run, busy }: { engine: Engine; e: EncounterView; run: (a: Action) => Promise<boolean>; busy: boolean }) {
+  const pressing = e.combatants
+    .filter((c) => !c.out && !c.downed)
+    .map((c) => ({ c, savers: auraSavers(engine, e as unknown as Encounter, c.id, false) }))
+    .filter((x) => x.savers.length > 0);
+  if (!pressing.length) return null;
+  return (
+    <section className="clash-panel">
+      {pressing.map(({ c, savers }) => (
+        <div key={c.id}>
+          <h3>
+            Aura Pressure: {c.name} ({c.grade}-Grade)
+          </h3>
+          <p className="small">
+            {savers.map((s) => s.name).join(", ")} {savers.length === 1 ? "makes" : "make"} the Will Save, Heart against its aura. Three or more Grades
+            apart, you may mark them Suppressed without a save; an entity holding its aura in asks for no save.
+          </p>
+          <div className="row tight">
+            <button className="primary" disabled={busy} onClick={() => run({ type: "combat.aura", entityId: c.id, flaring: false })}>
+              Carried calmly: Moderate (90)
+            </button>
+            <button className="primary" disabled={busy} onClick={() => run({ type: "combat.aura", entityId: c.id, flaring: true })}>
+              Flaring: Hard (115)
+            </button>
+          </div>
+        </div>
+      ))}
     </section>
   );
 }

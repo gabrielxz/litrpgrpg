@@ -20,6 +20,7 @@ export interface Sheet {
   maxHp: number;
   hp: number;
   downed: boolean;
+  dead: boolean;
   maxAether: number;
   aether: number;
   surgeCost: number;
@@ -52,7 +53,8 @@ export function sheetOf(engine: Engine, c: CharacterState): Sheet {
     force,
     maxHp: maxHpOf(engine, c),
     hp: c.hp,
-    downed: c.hp === 0,
+    downed: c.hp === 0 && !c.dead,
+    dead: Boolean(c.dead),
     maxAether,
     aether: c.aether,
     surgeCost: engine.surgeCost(maxAether),

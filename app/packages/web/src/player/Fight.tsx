@@ -2,11 +2,14 @@
  * The fight on a player's screen: the table's shape (turn order, Momentum, who is acting,
  * where everyone stands) and the player's own part in it. A player acts for their own
  * characters: takes their activation, attacks, moves, finishes; defends and Yields when a
- * Clash is aimed at them. The GM records anything a player does not.
+ * Clash is aimed at them; takes or gives a pill, stabilizes or executes the Downed, and makes
+ * the Will Save again. The GM records anything a player does not.
  */
+import type { Engine } from "@gradebreaker/engine";
 import type { Action, InterfaceSheet, PlayerView } from "@gradebreaker/record";
 import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
+import { CareActions, type Mate, pillsOf } from "../Care.tsx";
 import { AttackForm, type Clasher, DefenseForm, YieldChoice } from "../Clash.tsx";
 
 type Combat = NonNullable<PlayerView["combat"]>;
@@ -39,7 +42,32 @@ function flanks(combat: Combat, attackerId: string, defenderId: string): boolean
   return combat.combatants.some((c) => !c.out && c.id !== attackerId && c.sideId !== d.sideId && c.zoneId === d.zoneId);
 }
 
-function MyTurn({ view, combat, c, combatantId }: { view: PlayerView; combat: Combat; c: InterfaceSheet; combatantId: string }) {
+const mateOf = (x: Combat["combatants"][number]): Mate => ({
+  id: x.id,
+  name: x.name,
+  sideId: x.sideId,
+  zoneId: x.zoneId,
+  out: x.out,
+  downed: x.downed,
+  stabilized: x.stabilized,
+  suppressed: x.suppressed,
+  ...(x.characterId ? { characterId: x.characterId } : {}),
+  ...(x.pills ? { pills: x.pills } : {}),
+});
+
+function MyTurn({
+  view,
+  engine,
+  combat,
+  c,
+  combatantId,
+}: {
+  view: PlayerView;
+  engine: Engine | null;
+  combat: Combat;
+  c: InterfaceSheet;
+  combatantId: string;
+}) {
   const { run, busy, error } = useAct(view.campaign.id);
   const [attacking, setAttacking] = useState(false);
   const me = combat.combatants.find((x) => x.id === combatantId)!;
@@ -96,6 +124,17 @@ function MyTurn({ view, combat, c, combatantId }: { view: PlayerView; combat: Co
           </button>
         </div>
       )}
+      {!attacking && (
+        <CareActions
+          me={{ ...mateOf(me), force: c.force }}
+          people={combat.combatants.map(mateOf)}
+          pills={pillsOf(engine)}
+          pillLimit={engine?.rules.items.pill_use.per_fight_limit_per_kind ?? 2}
+          beats={beats}
+          busy={busy}
+          run={run}
+        />
+      )}
       {error && <p className="error">{error}</p>}
     </div>
   );
@@ -131,7 +170,7 @@ function Defending({ view, combat, c }: { view: PlayerView; combat: Combat; c: I
   );
 }
 
-export function Fight({ view, combat, readOnly }: { view: PlayerView; combat: Combat; readOnly?: boolean }) {
+export function Fight({ view, engine, combat, readOnly }: { view: PlayerView; engine: Engine | null; combat: Combat; readOnly?: boolean }) {
   const { run, busy } = useAct(view.campaign.id);
   const mine = new Map(view.characters.map((c) => [c.id, c]));
   const zoneName = (id: string | null) => combat.zones.find((z) => z.id === id)?.name;
@@ -161,12 +200,16 @@ export function Fight({ view, combat, readOnly }: { view: PlayerView; combat: Co
               .filter((c) => c.sideId === s.id && !c.out)
               .map((c) => {
                 const own = c.characterId && mine.has(c.characterId);
-                const canAct = own && !readOnly && s.id === combat.turnSide && !c.acted && !someoneActing && !cl;
+                const onTurn = s.id === combat.turnSide || (combat.round === 0 && c.surprise);
+                const canAct = own && !readOnly && onTurn && !c.acted && !c.downed && !someoneActing && !cl;
                 return (
                   <li key={c.id} className={c.acting ? "acting" : c.acted ? "acted" : ""}>
                     {c.acting ? "▸ " : ""}
                     {c.name}
                     {c.exposed && <span className="fight-badge warn">Exposed</span>}
+                    {c.downed && <span className="fight-badge warn">{c.stabilized ? "Downed, stable" : "Downed"}</span>}
+                    {c.suppressed && <span className="fight-badge warn">Suppressed</span>}
+                    {c.surprise && !c.acted && <span className="fight-badge">Surprise</span>}
                     {c.zoneId && combat.zones.length > 1 && <span className="sys-dim small"> · {zoneName(c.zoneId)}</span>}
                     {c.beats !== undefined && (
                       <span className="pips">
@@ -193,7 +236,7 @@ export function Fight({ view, combat, readOnly }: { view: PlayerView; combat: Co
         </p>
       )}
       {defending && <Defending view={view} combat={combat} c={mine.get(defending.characterId!)!} />}
-      {actingMine && !cl && <MyTurn view={view} combat={combat} c={mine.get(actingMine.characterId!)!} combatantId={actingMine.id} />}
+      {actingMine && !cl && <MyTurn view={view} engine={engine} combat={combat} c={mine.get(actingMine.characterId!)!} combatantId={actingMine.id} />}
       {last && !cl && (
         <p className="small sys-dim">
           {last.attackerWins
