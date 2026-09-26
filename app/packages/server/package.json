@@ -1,0 +1,26 @@
+{
+  "name": "@gradebreaker/server",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/main.ts",
+    "dev": "node --watch src/main.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@gradebreaker/engine": "workspace:*",
+    "@gradebreaker/record": "workspace:*",
+    "@hono/node-server": "^2.1.1",
+    "hono": "^4.13.9",
+    "pg": "^8.23.0",
+    "ws": "^8.21.3",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
+    "@types/pg": "^8.23.1",
+    "@types/ws": "^8.18.1"
+  }
+}

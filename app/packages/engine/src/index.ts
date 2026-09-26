@@ -34,7 +34,11 @@ const floorDiv = (a: number, b: number): number => Math.floor(a / b);
 
 export class Engine {
   /** The snapshot this engine computes over, for callers that read a procedure's constants directly. */
-  constructor(readonly rules: RulesSnapshot) {}
+  readonly rules: RulesSnapshot;
+
+  constructor(rules: RulesSnapshot) {
+    this.rules = rules;
+  }
 
   private load(name: string) {
     const doc = this.rules[name];

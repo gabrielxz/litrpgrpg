@@ -16,6 +16,11 @@ export class RecordError extends Error {
   override name = "RecordError";
 }
 
+/** The id is already recorded with different content: a new action needs a new id. */
+export class IdConflict extends RecordError {
+  override name = "IdConflict";
+}
+
 export interface Appended {
   envelope: Envelope;
   effects: Effect[];
@@ -33,19 +38,26 @@ export interface Preview {
   newlyRejected: Rejection[];
 }
 
+/** JSON with object keys sorted, so the same content compares equal whatever order it was built in. */
+function canonical(value: unknown): string {
+  return JSON.stringify(value, (_, v) =>
+    v !== null && typeof v === "object" && !Array.isArray(v)
+      ? Object.fromEntries(Object.entries(v).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)))
+      : v,
+  );
+}
+
 const sameContent = (a: Draft | Envelope, b: Draft | Envelope) =>
-  JSON.stringify([a.actor, a.source, a.cause ?? null, a.action]) ===
-  JSON.stringify([b.actor, b.source, b.cause ?? null, b.action]);
+  canonical([a.actor, a.source, a.cause ?? null, a.action]) === canonical([b.actor, b.source, b.cause ?? null, b.action]);
 
 export class CampaignRecord {
+  readonly engine: Engine;
   private readonly entries: Envelope[];
   private cache: FoldResult | undefined;
 
   /** `log` is a stored log to resume from, in sequence order. */
-  constructor(
-    readonly engine: Engine,
-    log: readonly Envelope[] = [],
-  ) {
+  constructor(engine: Engine, log: readonly Envelope[] = []) {
+    this.engine = engine;
     this.entries = [...log];
     this.entries.forEach((e, i) => {
       if (e.seq !== i) throw new RecordError(`stored log is out of order at ${e.id}: seq ${e.seq}, expected ${i}`);
@@ -85,7 +97,7 @@ export class CampaignRecord {
   append<A extends Action>(draft: Draft<A>): Appended {
     const existing = this.find(draft.id);
     if (existing) {
-      if (!sameContent(existing, draft)) throw new RecordError(`id ${draft.id} is already recorded with different content`);
+      if (!sameContent(existing, draft)) throw new IdConflict(`id ${draft.id} is already recorded with different content`);
       return { envelope: existing, effects: this.state.effects.get(existing.id) ?? [], duplicate: true };
     }
     const envelope: Envelope = { ...draft, seq: this.entries.length };
