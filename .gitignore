@@ -18,3 +18,8 @@ reading/
 
 # The companion app's dependencies
 node_modules/
+
+# Local secrets (Supabase, Fly); never committed
+.env
+.env.*
+!.env.example
