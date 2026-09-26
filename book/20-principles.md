@@ -135,8 +135,8 @@ No character chooses a Principle from a menu. The GM watches what the character 
 
    **Choose the family from the character's behavior, then name the specific Principle.** Fire earned by someone who charges every line is Impact; Fire earned by someone who takes everything and leaves ash is Consumption. The two families that most often blur are **Architecture and Governance**: Architecture is how a character solves problems, and Governance is what they impose on the world. A meticulous planner is Architecture. Someone who writes rules other people must live by is Governance.
 
-2. **Resonance accrues.** When the character begins earning IP, the System reports it at the family level only: *Resonance accruing: IMPACT. 2/3.* The character knows a direction and nothing more.
-3. **At 3 IP, the Principle crystallizes.** The GM names one specific Principle, and the System announces it: *Initial Insight: Weight.* The slot fills for life, and the tier's minor passive arrives.
+2. **Resonance accrues.** When the character begins earning IP, the System reports it at the family level only, in a **Resonance notice**: *Resonance accruing: IMPACT. 2/3.* The character knows a direction and nothing more. Each award goes to the family its memory expresses, so a character can hold IP in two families at once.
+3. **At 3 IP, the Principle crystallizes.** The first family to reach 3 IP crystallizes. The GM names one specific Principle, and the System announces it: *Initial Insight: Weight.* The slot fills for life, and the tier's minor passive arrives. IP already earned in any other family stays with that family and counts toward the second Principle when its slot opens at E-Grade.
 4. **The player steers by playing.** How the player describes their meditations shapes which Principle a memory feeds. If the Principle stops matching the character's behavior over time, Refinement (below) changes it.
 
 **The second Principle.** The slot that opens at E-Grade fills the same way, with one difference: a veteran character can pursue a direction on purpose. The player may declare what they are seeking and pursue aligned experiences. The GM still names the Principle from what the character actually did, which may differ from what the player declared.
@@ -185,7 +185,7 @@ For an F-Grade table the practical point is smaller: **when the eight families d
 
 ## Distillation
 
-Meeting an IP threshold does not advance the tier. Advancement requires **Distillation**, a declared act during Consolidation. The procedure:
+After crystallization, meeting an IP threshold does not advance the tier. Advancement requires **Distillation**, a declared act during Consolidation. The procedure:
 
 1. **Declare.** During any Consolidation with a threshold met, the player declares Distillation.
 2. **The question.** The GM asks: *"What pattern have you discovered in how you act, or in how the world behaves?"*

@@ -151,7 +151,7 @@ Players begin with **whatever was on their person at the moment of Integration**
 | 3: The Recycling Node | System status notifications. The Quest UI. The Party. Scarcity. The shard economy. **Consolidation.** |
 | 4: The Field of Ruins | **Volatility, Exceptional Success, and Marks.** **Driven Back.** Aura Pressure. Saturation. **Leveling. Stat allocation.** Backgrounds and Advantage. Take 100. Shards in use. Personal Opportunities. The first Battle Memory. |
 | 5: The Convergence Crisis | The first Mandate. **Cornered.** Boss-tier combat. Sacrifice as a defining choice. |
-| 6: First Recognition | Titles. Affinity Notices (the System naming the Principle family a character's IP is building toward). Hidden Quest reveals. The Stinger. |
+| 6: First Recognition | Titles. Resonance notices (the System naming the Principle family a character's IP is building toward). Hidden Quest reveals. The Stinger. |
 
 Teach each system when the schedule brings it up. When a player asks "how does combat work," a good first answer is *"roll d100, add your Force, I'll tell you what happens"*; detail can wait until the table wants it. If confusion is costing fun, stop and explain.
 
@@ -1315,7 +1315,7 @@ Each player receives a **private System summary** as a card, note, or one-on-one
     INTEGRATION COMPLETE: INITIATE [name]
 ==========================================
 [Summary observation: 2 to 3 lines, clinical.]
-[Affinity Notice, or crystallized Principle.]
+[Resonance notice, or crystallized Principle.]
 [Proficiency status: Marks accrued, tiers gained.]
 [Title(s) granted: list.]
 [Hidden Quest reveals: list with rewards.]
@@ -1463,7 +1463,7 @@ Confirm each mechanic was introduced before the tutorial ends. Items marked **co
 - [ ] **Boss-tier combat** in Phase 5.
 - [ ] **Leveling and stat allocation** run as levels land, finishing at the post-gate rest.
 - [ ] **First Title** delivered in Phase 6.
-- [ ] **Affinity Notice** delivered in Phase 6.
+- [ ] **Resonance notice** delivered in Phase 6.
 - [ ] **Hidden Quest reveals** in Phase 6.
 - [ ] **The Stinger** ends the last session.
 
@@ -1501,7 +1501,7 @@ By the end of the tutorial, every player should have:
 - At least one **Mark**, and the Proficiency it grants, on the sheet (contingent on the dice).
 - Left you at least three moments that were still with you at the session-end sweep.
 - Earned **at least one Achievement Title**.
-- Received an **Affinity Notice**, the System's first hint at the family their Principle is forming in (see The Principle System). Characters who banked 3 IP crystallize a Principle instead.
+- Received a **Resonance notice**, the System's first hint at the family their Principle is forming in (see The Principle System). Characters who banked 3 IP crystallize a Principle instead.
 - Survived a **Mandate** (the Phase 5 dissolution event).
 
 If any of these is missing at the end of the last session, improvise to deliver it before transitioning out of the tutorial, with two exceptions. A character who did not earn 3 IP leaves with a direction and no name for it, which is the ordinary outcome. If no natural 96 or higher came up, give the explained example, never a manufactured roll.

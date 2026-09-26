@@ -1,7 +1,7 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.20"
+version: "0.1.21"
 dated: "2026-09-25"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
@@ -62,3 +62,10 @@ notes: >
   0.1.20: the Frenzy Rat is Trivial (one Beat, Off 06, Def 08, PER 08, HP 12), and the tutorial's treeline arrival is
   one rat. The pair downed a lone Level 1 character in 87% of arrivals in simulation, against about 15% for the other
   arrivals; one Trivial rat downs 17%. The arrival kill pays 2 VE for every arrival.
+  0.1.21: questions the companion app forced. Before crystallization IP can sit in two families; the first to reach 3
+  crystallizes and the rest stays banked toward the E-Grade slot; the threshold rule reads "after crystallization". The
+  family-level report is the Resonance notice (Affinity Notice retired). A Battle Memory is processed at a Consolidation of
+  the player's choosing. Once-per-Consolidation effects reset at the first full hour, with artifacts and Aether. A
+  Consolidation counts as completed (Deep Breather) once its first full hour is done. Cultivation's pill line names
+  Healing Pills (two of each kind, per Items). The Personal Opportunity template drops "slight HVE shift". The reference
+  engine's structured sweep counts a 0.5 entry as nothing unless raised to 1.0, matching the book since 0.1.16.

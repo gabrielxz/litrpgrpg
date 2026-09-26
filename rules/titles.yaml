@@ -43,6 +43,8 @@ negative_titles:
   common_shape: a flat penalty (−2 to a stat, +10 difficulty against a specific entity) plus a social consequence
   release: written into the title when granted; may convert to an Achievement when earned through the fiction ("Salvaged" becomes "Came Back Whole")
 
+consolidation_counts_as_completed: once its first full hour is done, interrupted or not   # Deep Breather
+
 # Twenty ready to grant. A countable deed, a flat bonus, a short name.
 achievement_catalog:
   Slaughter:

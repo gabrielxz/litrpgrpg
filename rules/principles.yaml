@@ -23,7 +23,9 @@ ladder:
 domain_requires_grade: D             # IP banks past 100 until then
 initial_insight_passive_example: +5 to defensive Clashes against the Principle's element
 crystallizes_at_ip: 3
-advancement_requires_distillation: true   # meeting a threshold does nothing on its own
+crystallization: the first family to reach 3 IP crystallizes; IP already in any other family stays with it and counts toward the second slot at E-Grade
+resonance_notice: "the System's family-level report before crystallization: Resonance accruing: IMPACT. 2/3."
+advancement_requires_distillation: true   # after crystallization, meeting a threshold does nothing on its own
 
 ip_sources:
   - {source: Battle Memory meditation,                                  ip_min: 1, ip_max: 3, note: by the memory's intensity}

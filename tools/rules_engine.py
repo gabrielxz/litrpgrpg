@@ -442,11 +442,13 @@ def sweep_update(current: dict[str, int], deep: dict[str, int]) -> dict:
 
 def structured_sweep(entries: list[dict], poles: list[str], deep: dict[str, int]) -> dict:
     """One axis. Structured logging records events; at session end the sweep is computed from them:
-    sum each entry's intensity by side into Current (a 0.5 entry counts as half a tally), then apply the
-    sweep's Deep update and wipe Current."""
+    sum each entry's intensity by side into Current, then apply the sweep's Deep update and wipe Current.
+    A 0.5 entry is a reminder and adds nothing; the GM raises it to 1.0 to count it (rules 0.1.16)."""
+    counts_as = load("hve")["structured_logging"]["half_tier_counts_as"]
+    below = load("hve")["structured_logging"]["intensities"]["below_threshold"]
     current = {p: 0.0 for p in poles}
     for e in entries:
-        current[e["side"]] += e["intensity"]
+        current[e["side"]] += counts_as if e["intensity"] == below else e["intensity"]
     return sweep_update(current, deep)
 
 

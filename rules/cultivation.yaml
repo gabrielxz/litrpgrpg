@@ -36,10 +36,11 @@ consolidation:
   minimum_hours: 1
   aether_refills_at_full_hour: 1
   artifacts_recharge_at_full_hour: 1
+  once_per_consolidation_effects_reset_at_full_hour: 1   # a title's once-per-Consolidation effect, same clock as Aether
   interruption: keeps every completed hour
   defenseless: true
   levels_land_mid_rest: true     # when refined VE reaches the next level's cost
-  battle_memory_meditation: during Consolidation
+  battle_memory_meditation: during a Consolidation of the player's choosing; a card can wait through several rests
 
 level_cost:
   base: 120                      # F-Grade, every level in the Grade; ×10 per Grade

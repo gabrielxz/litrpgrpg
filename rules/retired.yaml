@@ -113,6 +113,9 @@ patterns:
   - {pattern: '[Mm]ultiverse',                    replaced_by: "universe",                                     since: 2026-09-25}
   - {pattern: '2 Frenzy Rats',                    replaced_by: "1 Frenzy Rat, a Trivial arrival",               since: 2026-09-25}
   - {pattern: 'pair of Frenzy Rats',              replaced_by: "1 Frenzy Rat, a Trivial arrival",               since: 2026-09-25}
+  - {pattern: '\bAffinity Notices?\b',            replaced_by: "Resonance notice",                              since: 2026-09-25}
+  - {pattern: 'slight HVE shift',                 replaced_by: "only the sweep moves the vectors; a refusal narrows offerings", since: 2026-09-25}
+  - {pattern: 'first two pills a character',      replaced_by: "the first two of each kind (Items)",            since: 2026-09-25}
 
 # Chapter names as the book cites them, for the cross-reference check.
 chapters:

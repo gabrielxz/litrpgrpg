@@ -304,8 +304,8 @@ GENERATE:
 6. Hidden Alternative Outcome (optional): a different reward triggered if the
    character takes a non-obvious or counter-pattern approach.
 7. Refusal Consequence: what the System closes off if this offer
-   is refused (subtle: narrowed future offerings, slight HVE shift,
-   or closed minor path).
+   is refused (subtle: narrowed future offerings or a closed minor
+   path).
 8. System Voice Notification Text: 1 to 3 lines, terse and clinical,
    formatted as the in-fiction System message the character receives.
 ```

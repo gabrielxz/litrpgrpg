@@ -218,7 +218,7 @@ Twenty Achievement titles with their triggers. When a character meets a trigger,
 | Deep Breather | Completed twenty Consolidations | +1 HRT |
 <!-- /rules:table -->
 
-Where a catalog title also appears in a sample stack later in this chapter, the trigger and bonus here are the canonical ones.
+Where a catalog title also appears in a sample stack later in this chapter, the trigger and bonus here are the canonical ones. A Consolidation counts as completed once its first full hour is done, whether or not it is interrupted afterward.
 
 ### The Tutorial's Titles
 

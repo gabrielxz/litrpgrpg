@@ -55,10 +55,15 @@ cases:
     fn: sweep_update
     args: {current: {Hunger: 1, Restraint: 0}, deep: {Hunger: 2, Restraint: 0}}
     expect: {deep: {Hunger: 2, Restraint: 0}}
-  - name: Structured logging computes the sweep, a 1.0 and two 0.5 entries on Hunger lead by 2 and add one Deep tally
+  - name: Structured logging computes the sweep, two 0.5 reminders add nothing, so a 1.0 on Hunger does not lead by 2
     source: 50-hidden-vector-engine.md, "Structured Event Logging"
     fn: structured_sweep
     args: {entries: [{side: Hunger, intensity: 1.0}, {side: Hunger, intensity: 0.5}, {side: Hunger, intensity: 0.5}], poles: [Hunger, Restraint], deep: {Hunger: 2, Restraint: 0}}
+    expect: {deep: {Hunger: 2, Restraint: 0}}
+  - name: Structured logging computes the sweep, a 0.5 reminder the GM raises to 1.0 counts, and two 1.0 entries on Hunger add one Deep tally
+    source: 50-hidden-vector-engine.md, "Structured Event Logging"
+    fn: structured_sweep
+    args: {entries: [{side: Hunger, intensity: 1.0}, {side: Hunger, intensity: 1.0}, {side: Hunger, intensity: 0.5}], poles: [Hunger, Restraint], deep: {Hunger: 2, Restraint: 0}}
     expect: {deep: {Hunger: 3, Restraint: 0}}
   - name: Structured logging computes the sweep, a single 1.0 entry does not lead by 2 and Deep is unchanged
     source: 50-hidden-vector-engine.md, "Structured Event Logging"
