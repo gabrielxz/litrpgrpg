@@ -1,18 +1,24 @@
 /**
- * The HTTP API. Every route is JSON under /api. A caller identifies themselves with
- * `Authorization: Bearer <Supabase access token>`. The actor on every recorded action comes
- * from the token, never from the request body.
+ * The HTTP API and the web client. Every API route is JSON under /api. A caller identifies
+ * themselves with `Authorization: Bearer <Supabase access token>`. The actor on every
+ * recorded action comes from the token, never from the request body. Every other path serves
+ * the built web client, with unknown paths falling back to its index so deep links load.
  */
+import { readFileSync } from "node:fs";
+import { join, relative } from "node:path";
+import { serveStatic } from "@hono/node-server/serve-static";
 import { submissionSchema } from "@gradebreaker/record";
 import { Hono } from "hono";
 import type { ContentfulStatusCode } from "hono/utils/http-status";
 import { z } from "zod";
+import type { DevSignIn } from "./devauth.ts";
 import { HttpError, type Service, type User } from "./service.ts";
 
 type Env = { Variables: { user: User | null } };
 
 const createCampaign = z.object({ name: z.string() });
 const rename = z.object({ displayName: z.string() });
+const devName = z.object({ name: z.string().trim().min(1).max(40) });
 const createInvite = z.object({
   maxUses: z.number().int().positive().optional(),
   expiresInHours: z.number().positive().optional(),
@@ -30,8 +36,19 @@ async function body<T>(c: { req: { json: () => Promise<unknown> } }, schema: z.Z
   return parsed.data;
 }
 
-/** `connected` reports live connections for the health check, which the deploy workflow reads. */
-export function createApp(service: Service, status: { connected: () => number } = { connected: () => 0 }) {
+export interface AppOptions {
+  /** Live connections, for the health check the deploy workflow reads. */
+  connected?: () => number;
+  /** What the browser needs to reach Supabase Auth; both values are public. */
+  supabase?: { url: string; publishableKey: string };
+  /** Development sign-in, when enabled (devauth.ts). */
+  dev?: DevSignIn;
+  /** The built web client's directory; absent in tests. */
+  webDist?: string;
+}
+
+export function createApp(service: Service, opts: AppOptions = {}) {
+  const connected = opts.connected ?? (() => 0);
   const app = new Hono<Env>().basePath("/api");
 
   app.onError((err, c) => {
@@ -47,7 +64,28 @@ export function createApp(service: Service, status: { connected: () => number } 
     await next();
   });
 
-  app.get("/health", (c) => c.json({ ok: true, rulesVersion: service.rulesVersion, connected: status.connected() }));
+  app.get("/health", (c) => c.json({ ok: true, rulesVersion: service.rulesVersion, connected: connected() }));
+
+  app.get("/config", (c) =>
+    c.json({
+      supabaseUrl: opts.supabase?.url ?? null,
+      supabasePublishableKey: opts.supabase?.publishableKey ?? null,
+      devSignIn: Boolean(opts.dev),
+      rulesVersion: service.rulesVersion,
+    }),
+  );
+
+  app.post("/dev/sign-in", async (c) => {
+    if (!opts.dev) throw new HttpError(404, "not found");
+    const b = await body(c, devName);
+    return c.json({ token: await opts.dev.tokenFor(b.name) });
+  });
+
+  /** The rules data a campaign pins, so the client runs the same engine for plans and forms. */
+  app.get("/rules/:version", async (c) => {
+    if (!c.get("user")) throw new HttpError(401, "sign in first");
+    return c.json(await service.rules(c.req.param("version")));
+  });
 
   app.get("/me", async (c) => {
     const user = c.get("user");
@@ -117,5 +155,16 @@ export function createApp(service: Service, status: { connected: () => number } 
     return c.json(out, out.joined ? 201 : 200);
   });
 
-  return app;
+  app.all("/*", () => {
+    throw new HttpError(404, "not found");
+  });
+
+  if (!opts.webDist) return app;
+  const root = new Hono();
+  root.route("/", app);
+  const dir = relative(process.cwd(), opts.webDist) || ".";
+  const index = readFileSync(join(opts.webDist, "index.html"), "utf8");
+  root.use("/*", serveStatic({ root: dir }));
+  root.get("*", (c) => c.html(index));
+  return root;
 }

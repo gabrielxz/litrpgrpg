@@ -135,5 +135,9 @@ Visibility is applied before assembly: a player-facing request never receives GM
 
 ## Open
 
+- **The notices' wording** (`packages/web/src/text.ts`, `noticeLine`) is a first draft awaiting Gabriel's voice pass. A test holds it to in-world words.
+- **What a player sees when a correction changes their sheet.** The sheet changes and no notice explains it; a notice the correction made untrue stays in the player's feed. The GM explains at the table for now.
+- **Notice history.** Notices reach an open page only; a player who reloads loses the feed. They belong in the record with the GM composer (M1, "Notices").
+
 - **The speech-to-text vendor**, chosen at M3 against recorded test material.
 - **The rehearsal scene** before the tutorial: content that spoils nothing in the tutorial.

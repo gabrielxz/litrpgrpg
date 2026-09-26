@@ -23,3 +23,6 @@ node_modules/
 .env
 .env.*
 !.env.example
+
+# The web client build (served by the server; built in the Docker image)
+app/packages/web/dist/

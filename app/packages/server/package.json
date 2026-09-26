@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node src/main.ts",
-    "dev": "DATABASE_URL=postgres://gradebreaker:gradebreaker@localhost:54340/gradebreaker node --env-file-if-exists=../../.env --watch src/main.ts",
+    "dev": "DATABASE_URL=postgres://gradebreaker:gradebreaker@localhost:54340/gradebreaker DEV_SIGNIN=1 node --env-file-if-exists=../../.env --watch src/main.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },

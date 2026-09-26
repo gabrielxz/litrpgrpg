@@ -256,6 +256,15 @@ export class Service {
 
   // ------------------------------------------------------- the record ---
 
+  /** The stored rules snapshot for a version. */
+  async rules(version: string): Promise<RulesSnapshot> {
+    try {
+      return (await this.engine(version)).rules;
+    } catch {
+      throw new HttpError(404, `no rules ${version}`);
+    }
+  }
+
   private async engine(version: string): Promise<Engine> {
     let e = this.engines.get(version);
     if (!e) {

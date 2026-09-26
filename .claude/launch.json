@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "app-api",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--dir", "app", "--filter", "@gradebreaker/server", "dev"],
+      "port": 8787
+    },
+    {
+      "name": "app-web",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--dir", "app", "--filter", "@gradebreaker/web", "dev"],
+      "port": 5173
+    }
+  ]
+}

@@ -14,6 +14,7 @@ import { afterAll, beforeEach, describe, expect, it } from "vitest";
 import { WebSocket } from "ws";
 import { createApp } from "../src/app.ts";
 import { jwtVerifier } from "../src/auth.ts";
+import { devSignIn, eitherVerifier } from "../src/devauth.ts";
 import { type Db, migrate, pgliteDb } from "../src/db.ts";
 import { LiveHub } from "../src/live.ts";
 import { Service } from "../src/service.ts";
@@ -113,6 +114,40 @@ describe("sign-in", () => {
     expect(me.user.displayName).toBe("GM Gabe");
     expect(me.campaigns).toHaveLength(1);
     expect((await call("PATCH", "/me", { token: later, body: { displayName: "  " } })).status).toBe(400);
+  });
+});
+
+describe("configuration and rules", () => {
+  it("hands the browser its public settings and keeps dev sign-in off unless asked", async () => {
+    app = createApp(service, { supabase: { url: "https://x.supabase.co", publishableKey: "sb_publishable_test" } });
+    expect((await call("GET", "/config")).json).toEqual({
+      supabaseUrl: "https://x.supabase.co",
+      supabasePublishableKey: "sb_publishable_test",
+      devSignIn: false,
+      rulesVersion: rules.version.version,
+    });
+    expect((await call("POST", "/dev/sign-in", { body: { name: "GM" } })).status).toBe(404);
+    expect((await call("GET", "/no-such-route")).json).toEqual({ error: "not found" });
+  });
+
+  it("serves a campaign's rules snapshot to anyone signed in", async () => {
+    const version = rules.version.version;
+    expect((await call("GET", `/rules/${version}`)).status).toBe(401);
+    const got = await call("GET", `/rules/${version}`, { token: await signIn("Gabriel") });
+    expect(got.json.character.point_buy).toEqual(rules.character.point_buy);
+    expect((await call("GET", "/rules/0.0.0", { token: await signIn("Gabriel") })).status).toBe(404);
+  });
+
+  it("signs in named test people when development sign-in is on", async () => {
+    const dev = await devSignIn();
+    service = await Service.open(db, rules, eitherVerifier(verifier, dev.verifier));
+    app = createApp(service, { dev });
+    const a = (await call("POST", "/dev/sign-in", { body: { name: "Player One" } })).json.token;
+    const b = (await call("POST", "/dev/sign-in", { body: { name: "player one" } })).json.token;
+    const me = (await call("GET", "/me", { token: a })).json.user;
+    expect(me.displayName).toBe("Player One");
+    expect((await call("GET", "/me", { token: b })).json.user.id).toBe(me.id);
+    expect((await call("GET", "/me", { token: await signIn("Still Google") })).status).toBe(200);
   });
 });
 

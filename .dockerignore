@@ -9,3 +9,4 @@
 !rules
 app/packages/*/node_modules
 app/packages/*/test
+app/packages/web/dist
