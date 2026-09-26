@@ -1,13 +1,14 @@
 /**
  * The player's System interface: what What Can Be Seen lists under "Your Own Interface", in
- * its order, for each character the player holds, and the System's notices beside it. The
- * player spends free points here; everything else arrives from the GM's record.
+ * its order, for each character the player holds, the party frame, and the System's notices
+ * beside it. The player spends free points and makes the party's choices here (inviting,
+ * answering, leaving); everything else arrives from the GM's record.
  */
-import type { InterfaceSheet, PlayerView } from "@gradebreaker/record";
+import type { Action, FeedItem, InterfaceSheet, PlayerView } from "@gradebreaker/record";
 import { useEffect, useState } from "react";
 import { api, newActionId, submit } from "../api.ts";
 import { useAuth } from "../auth.ts";
-import { type Notice, useEngine } from "../live.ts";
+import { useEngine } from "../live.ts";
 import { ATTRIBUTES, ATTRIBUTE_NAMES, noticeLine } from "../text.ts";
 import { type CharacterSpec, Creator } from "./Creator.tsx";
 
@@ -70,7 +71,151 @@ function SpendPoints({ campaignId, c }: { campaignId: string; c: InterfaceSheet 
   );
 }
 
-function Interface({ campaignId, c, readOnly }: { campaignId: string; c: InterfaceSheet; readOnly?: boolean }) {
+/** Records one of the player's own actions, with a fresh idempotency key each time. */
+function useAct(campaignId: string) {
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const run = async (action: Action) => {
+    setBusy(true);
+    setError(null);
+    try {
+      await submit(campaignId, newActionId(), action);
+      return true;
+    } catch (e) {
+      setError((e as Error).message);
+      return false;
+    } finally {
+      setBusy(false);
+    }
+  };
+  return { run, busy, error };
+}
+
+/** The party frame (What Can Be Seen, "What a Party Shares") and the party's choices. */
+function PartySection({
+  campaignId,
+  c,
+  roster,
+  readOnly,
+}: {
+  campaignId: string;
+  c: InterfaceSheet;
+  roster: PlayerView["roster"];
+  readOnly?: boolean;
+}) {
+  const { run, busy, error } = useAct(campaignId);
+  const [target, setTarget] = useState("");
+  const [leaving, setLeaving] = useState(false);
+  const inParty = new Set(c.party?.members.map((m) => m.id) ?? []);
+  // Someone already invited, or waiting on this character's answer, is not offered again.
+  const pending = new Set([...c.invited.map((i) => i.toId), ...c.invitations.map((i) => i.fromId)]);
+  const invitable = roster.filter((r) => !inParty.has(r.id) && !pending.has(r.id));
+  const picked = invitable.some((r) => r.id === target) ? target : (invitable[0]?.id ?? "");
+  const nothing = !c.party && !c.invitations.length && !c.invited.length && (readOnly || !invitable.length);
+  if (nothing) return null;
+
+  return (
+    <div className="sys-section party">
+      <h3>Party</h3>
+      {c.party ? (
+        <ul className="party-frame">
+          {c.party.members.map((m) => (
+            <li key={m.id} className={m.downed ? "downed" : ""}>
+              <span className="who">{m.name}</span>
+              <Bar value={m.hp} max={m.maxHp} />
+              <span className="num">
+                {m.hp} / {m.maxHp}
+              </span>
+              <span className="num sys-dim">Aether {m.aether}</span>
+              {m.downed && <span className="sys-alert">Downed</span>}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="sys-dim">
+          <em>No party.</em>
+        </p>
+      )}
+      {c.invitations.map((i) => (
+        <div key={i.id} className="sys-row">
+          <em>Party invitation: {i.fromName}.</em>
+          {!readOnly && (
+            <>
+              <button className="sys-confirm" disabled={busy} onClick={() => run({ type: "party.answer", inviteId: i.id, accept: true })}>
+                Accept
+              </button>
+              <button className="sys-quiet" disabled={busy} onClick={() => run({ type: "party.answer", inviteId: i.id, accept: false })}>
+                Decline
+              </button>
+            </>
+          )}
+        </div>
+      ))}
+      {c.invited.map((i) => (
+        <div key={i.id} className="sys-row sys-dim">
+          <em>Invitation pending: {i.toName}.</em>
+          {!readOnly && (
+            <button className="sys-quiet" disabled={busy} onClick={() => run({ type: "void", targetId: i.id, reason: "undo" })}>
+              Withdraw
+            </button>
+          )}
+        </div>
+      ))}
+      {!readOnly && (
+        <div className="sys-row">
+          {invitable.length > 0 && (
+            <>
+              <select value={picked} onChange={(e) => setTarget(e.target.value)} aria-label="Character to invite">
+                {invitable.map((r) => (
+                  <option key={r.id} value={r.id}>
+                    {r.name}
+                  </option>
+                ))}
+              </select>
+              <button className="sys-confirm" disabled={busy || !picked} onClick={() => run({ type: "party.invite", fromId: c.id, toId: picked })}>
+                Invite {invitable.find((r) => r.id === picked)?.name}
+              </button>
+            </>
+          )}
+          {c.party &&
+            (leaving ? (
+              <>
+                <button
+                  className="sys-confirm"
+                  disabled={busy}
+                  onClick={async () => {
+                    if (await run({ type: "party.leave", characterId: c.id })) setLeaving(false);
+                  }}
+                >
+                  Leave the party
+                </button>
+                <button className="sys-quiet" onClick={() => setLeaving(false)}>
+                  Stay
+                </button>
+              </>
+            ) : (
+              <button className="sys-quiet" onClick={() => setLeaving(true)}>
+                Leave…
+              </button>
+            ))}
+        </div>
+      )}
+      {error && <p className="error">{error}</p>}
+    </div>
+  );
+}
+
+function Interface({
+  campaignId,
+  c,
+  roster,
+  readOnly,
+}: {
+  campaignId: string;
+  c: InterfaceSheet;
+  roster: PlayerView["roster"];
+  readOnly?: boolean;
+}) {
   const toNext = c.veToNextLevel;
   return (
     <article className="interface">
@@ -129,6 +274,8 @@ function Interface({ campaignId, c, readOnly }: { campaignId: string; c: Interfa
         </div>
       </div>
 
+      <PartySection campaignId={campaignId} c={c} roster={roster} readOnly={readOnly} />
+
       <div className="sys-section">
         <div className="sys-vital">
           <span>Level {c.level + 1}</span>
@@ -149,8 +296,8 @@ function Interface({ campaignId, c, readOnly }: { campaignId: string; c: Interfa
   );
 }
 
-function Notices({ notices }: { notices: Notice[] }) {
-  const lines = notices.map((n) => ({ ...n, text: noticeLine(n.effect) })).filter((n) => n.text);
+function Notices({ feed, names }: { feed: FeedItem[]; names: Map<string, string> | null }) {
+  const lines = feed.map((n) => ({ ...n, text: noticeLine(n.effect) })).filter((n) => n.text);
   return (
     <aside className="notices">
       {lines.length === 0 ? (
@@ -162,6 +309,7 @@ function Notices({ notices }: { notices: Notice[] }) {
           {lines.map((n) => (
             <li key={n.key}>
               <img src="/clave.svg" alt="" className="clave-tiny" />
+              {names && <span className="sys-dim small">{names.get(n.characterId)} · </span>}
               <em>{n.text}</em>
             </li>
           ))}
@@ -244,14 +392,14 @@ function Arrival({ view }: { view: PlayerView }) {
 
 export function PlayerCampaign({
   view,
-  notices,
   readOnly,
 }: {
   view: PlayerView;
-  notices: Notice[];
-  /** The GM viewing as this player: nothing can be changed, and notices are not shown. */
+  /** The GM viewing as this player: nothing can be changed. */
   readOnly?: boolean;
 }) {
+  // A player with several characters here sees which one each notice is about.
+  const names = view.characters.length > 1 ? new Map(view.characters.map((c) => [c.id, c.name])) : null;
   return (
     <main className="player">
       {view.characters.length === 0 ? (
@@ -265,17 +413,11 @@ export function PlayerCampaign({
       ) : (
         <div className="interfaces">
           {view.characters.map((c) => (
-            <Interface key={c.id} campaignId={view.campaign.id} c={c} readOnly={readOnly} />
+            <Interface key={c.id} campaignId={view.campaign.id} c={c} roster={view.roster} readOnly={readOnly} />
           ))}
         </div>
       )}
-      {readOnly ? (
-        <aside className="notices">
-          <p className="sys-dim small">Notices reach the player's open page as they happen and are not shown here.</p>
-        </aside>
-      ) : (
-        <Notices notices={notices} />
-      )}
+      <Notices feed={view.feed} names={names} />
     </main>
   );
 }

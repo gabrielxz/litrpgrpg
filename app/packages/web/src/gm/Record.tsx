@@ -17,19 +17,22 @@ import {
 import { useMemo, useState } from "react";
 import { ATTRIBUTES, type Names } from "../text.ts";
 import { Commit } from "./Commit.tsx";
+import { MessageForm, PartyForm } from "./Social.tsx";
 
-type Tab = "character" | "ve" | "rest" | "points" | "vitals" | "collapse";
+type Tab = "character" | "ve" | "rest" | "points" | "vitals" | "collapse" | "party" | "message";
 
 const TABS: [Tab, string][] = [
   ["ve", "Award VE"],
   ["rest", "Consolidation"],
   ["points", "Assigned points"],
   ["vitals", "HP and Aether"],
+  ["message", "System message"],
+  ["party", "Party"],
   ["character", "New character"],
   ["collapse", "Collapse"],
 ];
 
-interface FormProps {
+export interface FormProps {
   view: GmView;
   engine: Engine;
   names: Names;
@@ -61,6 +64,8 @@ export function RecordPanel(props: Omit<FormProps, "onRecorded"> & { onRecorded:
         {tab === "points" && <PointsForm {...p} />}
         {tab === "vitals" && <VitalsForm {...p} />}
         {tab === "collapse" && <CollapseForm {...p} />}
+        {tab === "party" && <PartyForm {...p} />}
+        {tab === "message" && <MessageForm {...p} />}
       </div>
     </section>
   );

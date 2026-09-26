@@ -24,8 +24,7 @@ Ruled by Gabriel, 2026-09-25.
 Ruled by Gabriel, 2026-09-26:
 
 - **The notices' wording stands** as written in `packages/web/src/text.ts` (`noticeLine`); a test holds it to in-world words.
-- **A correction changes a player's sheet silently.** No notice explains it, and a notice the correction made untrue stays in the feed; the GM explains at the table.
-- **Notices are not stored.** They reach an open page; a player who reloads starts with an empty feed.
+- **A correction changes a player's sheet silently.** No notice explains it; the GM explains at the table.
 
 Also ruled by Gabriel, 2026-09-26 (characters and screens):
 
@@ -35,6 +34,13 @@ Also ruled by Gabriel, 2026-09-26 (characters and screens):
 - **"Assigned points"** is the name for the three Attribute points the System assigns each level (the book's rename is queued). Free points are the player's.
 - **Roles belong to a campaign,** never to an account: the GM screen and the player's interface differ by the role held in that campaign. The GM screen has sections, and the GM can view any player's screen as that player sees it.
 - **Every GM action shows what it will record** under "If you record this", and its button names the action.
+
+Ruled by Gabriel, 2026-09-26 (the party and the composer):
+
+- **The notice feed is rebuilt from the log.** Engine notices are a view of the record and the GM's System messages are actions in it, so a reload shows the same feed an open page does. A notice from an action later undone or corrected leaves the feed on every screen at once. This replaces the earlier "notices are not stored".
+- **The party is part of the record.** One character invites another, and the invitee's player accepts or declines on their own screen; the GM can record either for a player away from theirs. Accepting joins the inviter's party, or forms one of the two. A character is in one party at a time and leaves before joining another; a party left with one member disbands; the GM disbands. The party frame shows each member's Health, Maximum Health, Aether, and Downed, and nothing else (What Can Be Seen). A player can invite the characters other players hold; characters the GM holds are left off that list. Quest sharing arrives with quests; membership ending at death arrives with the combat tracker.
+- **The composer addresses characters.** The System speaks to a character, so a message goes to characters; "the party" is expanded to its members when the GM sends. A held message reaches nobody until the GM sends it, and undoing it discards it. The composer warns on the table's words (`rules/system-ai.yaml`, `voice.units`) and leaves the call to the GM.
+- **Dice come before the combat tracker,** and the tracker is built in slices, each usable at the table: sides, Momentum, rounds, Beats, and HP; the Clash with the Rule of 40, Yield, Exposed, Flanking, and Advantage; Downed, pills, Aura Pressure, and the Will Save; encounter end.
 
 Ruled by Claude on Gabriel's delegation, 2026-09-25 (book sentences queued in the backlog):
 
@@ -53,10 +59,11 @@ Each milestone is usable at a table and feeds the next. Items are marked **activ
 | Rules engine in TypeScript | **active** | Ported from `tools/rules_engine.py`; both engines pass `rules/fixtures/` |
 | Campaigns, roles, invites | **active** | One GM per campaign; invite links; rules version pinned |
 | Character creation | **active** | Point buy (40 points, 3 to 10, exactly 40), Background, derived values, the three pregens |
-| Player interface | **active** | What Can Be Seen's list in its order; party frame; worn and hidden titles |
+| Player interface | **active** | What Can Be Seen's list in its order; party frame (built); worn and hidden titles |
+| Party | **active** | Built: invite, answer, leave, disband; the party frame. Quest sharing with Quests; death ends membership with the tracker |
 | GM character view and corrections | **active** | A correction is recorded apart from an award |
 | Action log | **active** | Append-only, idempotent, undo, correction preview |
-| Notices | **active** | Engine-emitted (VE acquired, level, title, quest, vital coherence) and the GM composer; the clave on every notice |
+| Notices | **active** | Engine-emitted (VE acquired, level, title, quest, vital coherence) and the GM composer (built: to characters or a party, now or held); the feed rebuilt from the log; the clave on every notice |
 | Dice | **active** | d100, explosion at the Grade threshold, Advantage, Surge declared before the roll, private GM rolls |
 | Combat tracker | **active** | Sides, Momentum roll and Seize, Decisive Tactical Reversal as a GM button, round and side, one character's Beats at a time, Yield debt, Zones, engagement and Flanking, the Clash with the Rule of 40, the Yield offer before damage, Exposed, Downed countdown and stabilizing, the two-per-kind pill limit, Aura Pressure and the Will Save |
 | Encounter end | **active** | Participants, VE per character at their own tier with GM override, finishing blows, loot rolls |

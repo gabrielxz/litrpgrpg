@@ -50,6 +50,17 @@ export const actionSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("points.free"), characterId: id, placement: stats }),
   z.object({ type: z.literal("hp.change"), characterId: id, delta: whole }),
   z.object({ type: z.literal("aether.change"), characterId: id, delta: whole }),
+  z.object({ type: z.literal("party.invite"), fromId: id, toId: id }),
+  z.object({ type: z.literal("party.answer"), inviteId: id, accept: z.boolean() }),
+  z.object({ type: z.literal("party.leave"), characterId: id }),
+  z.object({ type: z.literal("party.disband"), partyId: id }),
+  z.object({
+    type: z.literal("message.send"),
+    to: z.array(id).max(50),
+    text: z.string().max(2000),
+    hold: z.boolean().optional(),
+  }),
+  z.object({ type: z.literal("message.release"), messageId: id }),
   z.object({
     type: z.literal("void"),
     targetId: id,

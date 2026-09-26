@@ -152,6 +152,61 @@ export interface ChangeAether {
   delta: number;
 }
 
+// ---------------------------------------------------------------- party ---
+
+/**
+ * One character invites another to a formal party (System Quests, "The Party"). The invitation
+ * waits until the invitee answers; the inviting player withdraws it with an undo. Its id is the
+ * envelope's id. The player of `fromId` records it, or the GM.
+ */
+export interface InviteToParty {
+  type: "party.invite";
+  fromId: string;
+  toId: string;
+}
+
+/**
+ * The invitee's answer. Accepting joins the inviter's party as it stands when the answer is
+ * given, or forms a party of the two. The player of the invitee records it, or the GM.
+ */
+export interface AnswerPartyInvite {
+  type: "party.answer";
+  inviteId: string;
+  accept: boolean;
+}
+
+/** A member leaves. A party left with one member disbands. The member's player records it, or the GM. */
+export interface LeaveParty {
+  type: "party.leave";
+  characterId: string;
+}
+
+/** The party ends for every member. GM only. */
+export interface DisbandParty {
+  type: "party.disband";
+  partyId: string;
+}
+
+// -------------------------------------------------------------- messages ---
+
+/**
+ * A System message the GM composed, to one character or several (the party is expanded to
+ * its members when the GM sends, so replay reaches the same people). A held message is
+ * recorded and reaches nobody until it is released; undoing the send discards it. GM only.
+ */
+export interface SendMessage {
+  type: "message.send";
+  to: string[];
+  text: string;
+  hold?: boolean;
+}
+
+/** Delivers a held message, named by the id of its `message.send`. GM only. */
+export interface ReleaseMessage {
+  type: "message.release";
+  messageId: string;
+}
+
 // ------------------------------------------------------------ the record ---
 
 /**
@@ -176,6 +231,12 @@ export type Action =
   | SpendFreePoints
   | ChangeHp
   | ChangeAether
+  | InviteToParty
+  | AnswerPartyInvite
+  | LeaveParty
+  | DisbandParty
+  | SendMessage
+  | ReleaseMessage
   | VoidAction;
 
 export type ActionType = Action["type"];

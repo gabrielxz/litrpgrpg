@@ -359,6 +359,63 @@ describe("characters", () => {
   });
 });
 
+describe("the party and the System's notices", () => {
+  /** The table plus a second player, each with a character. */
+  async function twoPlayers() {
+    const t = await table();
+    const code = (await call("POST", `/campaigns/${t.campaignId}/invites`, { token: t.gm, body: {} })).json.code;
+    const bo = await signIn("Bo");
+    await call("POST", `/invites/${code}/accept`, { token: bo });
+    const boId = (await call("GET", "/me", { token: bo })).json.user.id as string;
+    await act(t.campaignId, t.gm, { type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: t.playerId });
+    await act(t.campaignId, t.gm, { type: "character.pregen", characterId: "joe", pregen: "Joe", playerId: boId });
+    await act(t.campaignId, t.gm, { type: "character.pregen", characterId: "andre", pregen: "Andre" });
+    const view = async (token: string) => (await call("GET", `/campaigns/${t.campaignId}`, { token })).json;
+    return { ...t, bo, view };
+  }
+
+  it("lets players invite and answer on their own screens, then shows each the party frame", async () => {
+    const { campaignId, gm, player, bo, view } = await twoPlayers();
+    const ana = await view(player);
+    // The roster names the characters other players hold; the GM's are left out.
+    expect(ana.roster).toEqual([{ id: "joe", name: "Joe" }]);
+    expect((await act(campaignId, player, { type: "party.invite", fromId: "kara", toId: "joe" }, "inv-1")).status).toBe(201);
+    expect((await view(player)).characters[0].invited).toEqual([{ id: "inv-1", toId: "joe", toName: "Joe" }]);
+    expect((await view(bo)).characters[0].invitations).toEqual([{ id: "inv-1", fromId: "kara", fromName: "Kara" }]);
+    expect((await act(campaignId, player, { type: "party.answer", inviteId: "inv-1", accept: true })).status).toBe(422);
+    expect((await act(campaignId, bo, { type: "party.answer", inviteId: "inv-1", accept: true })).status).toBe(201);
+    await act(campaignId, gm, { type: "hp.change", characterId: "joe", delta: -5 });
+
+    const frame = (await view(player)).characters[0].party;
+    expect(frame.members).toEqual([
+      { id: "kara", name: "Kara", hp: 14, maxHp: 14, aether: 6, downed: false },
+      { id: "joe", name: "Joe", hp: 9, maxHp: 14, aether: 4, downed: false },
+    ]);
+    // The frame carries Health, Aether, and Downed, and nothing else.
+    expect(Object.keys(frame.members[1]).sort()).toEqual(["aether", "downed", "hp", "id", "maxHp", "name"]);
+    expect((await view(gm)).parties).toEqual([{ id: frame.id, members: ["kara", "joe"] }]);
+  });
+
+  it("rebuilds each player's notices from the log, their own only, without held or voided messages", async () => {
+    const { campaignId, gm, player, bo, view } = await twoPlayers();
+    await act(campaignId, gm, { type: "message.send", to: ["kara", "joe"], text: "Anomaly logged." }, "m1");
+    await act(campaignId, gm, { type: "message.send", to: ["kara"], text: "Quest available.", hold: true }, "m2");
+    await act(campaignId, gm, { type: "message.send", to: ["kara"], text: "Mistake." }, "m3");
+    await act(campaignId, gm, { type: "void", targetId: "m3", reason: "undo" });
+    await act(campaignId, gm, { type: "ve.award", basis: { kind: "other", note: "x" }, awards: [{ characterId: "joe", ve: 10 }] });
+
+    const text = (v: { feed: { effect: { kind: string; text?: string; ve?: number } }[] }) =>
+      v.feed.map((f) => f.effect.text ?? `${f.effect.kind} ${f.effect.ve ?? ""}`.trim());
+    expect(text(await view(player))).toEqual(["Anomaly logged."]);
+    expect(text(await view(bo))).toEqual(["ve-acquired 10", "Anomaly logged."]);
+    expect((await view(gm)).held).toEqual([{ id: "m2", to: ["kara"], text: "Quest available." }]);
+
+    await act(campaignId, gm, { type: "message.release", messageId: "m2" });
+    expect(text(await view(player))).toEqual(["Quest available.", "Anomaly logged."]);
+    expect((await act(campaignId, player, { type: "message.send", to: ["joe"], text: "Hi" })).status).toBe(422);
+  });
+});
+
 describe("the live channel", () => {
   let server: Server;
   let hub: LiveHub;
@@ -414,7 +471,7 @@ describe("the live channel", () => {
     expect(gm2.effects).toContainEqual({ kind: "saturation", characterId: "kara", from: "None", to: "Mild" });
     const p2 = (await p.next(2))[1];
     expect(p2.type).toBe("update");
-    expect(p2.notices).toEqual([{ kind: "ve-acquired", characterId: "kara", ve: 90 }]);
+    expect(p2.view.feed.map((f: { effect: unknown }) => f.effect)).toEqual([{ kind: "ve-acquired", characterId: "kara", ve: 90 }]);
     expect(p2.view.characters[0].storedVe).toBe(90);
 
     // An award to a character that is not the player's reaches the GM only.

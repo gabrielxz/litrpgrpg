@@ -4,13 +4,13 @@
  * the URL would land in logs). The token is checked once, at connect; a client reconnecting
  * after a drop sends its current one. The server answers with the caller's view, then pushes
  * after every append: the GM receives each envelope, its effects, and the new view; a player
- * receives their notices and their new view, and only when something of theirs changed.
+ * receives their new view, notices included, and only when something of theirs changed.
  */
 import type { IncomingMessage, Server } from "node:http";
 import type { Duplex } from "node:stream";
 import { type WebSocket, WebSocketServer } from "ws";
 import type { Service, ServiceEvent } from "./service.ts";
-import { type LiveMessage, type PlayerView, type Role, noticesFor } from "./views.ts";
+import type { LiveMessage, PlayerView, Role } from "./views.ts";
 
 const PATH = /^\/api\/campaigns\/([^/]+)\/live$/;
 const AUTH_TIMEOUT_MS = 5000;
@@ -105,12 +105,10 @@ export class LiveHub {
           this.send(sub, { type: "appended", envelope, effects, view });
           return;
         }
-        const own = new Set(view.characters.map((c) => c.id));
-        const notices = noticesFor(effects, own);
         const text = JSON.stringify(view);
-        if (!notices.length && text === sub.lastSent) return;
+        if (text === sub.lastSent) return;
         sub.lastSent = text;
-        this.send(sub, { type: "update", notices, view: view as PlayerView });
+        this.send(sub, { type: "update", view: view as PlayerView });
       }),
     );
   }

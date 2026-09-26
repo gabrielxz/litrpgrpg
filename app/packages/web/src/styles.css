@@ -638,6 +638,50 @@ table.sys-stats td.num {
 .notices li {
   font-size: 0.95rem;
 }
+.sys-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.25rem 0;
+}
+.sys-quiet {
+  background: transparent;
+  color: color-mix(in srgb, var(--cyan-light) 70%, var(--sys-ground));
+  border: 1px solid var(--sys-line);
+  padding: 0.3rem 0.8rem;
+}
+.sys-alert {
+  color: #f0a39c;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.party-frame {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.4rem;
+}
+.party-frame li {
+  display: grid;
+  grid-template-columns: 8rem 1fr 5.5rem 5.5rem auto;
+  gap: 0.6rem;
+  align-items: center;
+  font-size: 0.9rem;
+  padding: 0.15rem 0;
+}
+.party-frame li.downed .sys-bar > div {
+  background: #f0a39c;
+}
+.party-frame .num {
+  text-align: right;
+}
+.player select {
+  background: var(--sys-ground);
+  color: var(--cyan-light);
+  border: 1px solid var(--sys-line);
+  padding: 0.25rem 0.4rem;
+}
 
 /* ---- sections, preview heading, view as player ---- */
 
@@ -785,4 +829,47 @@ table.sys-stats td.num {
 }
 .player .pool li {
   border-color: var(--sys-line);
+}
+
+/* ---- the composer ---- */
+
+.recipients {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+.chip {
+  font-size: 0.8rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+}
+.checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 1rem;
+}
+.system-sample {
+  background: var(--sys-ground);
+  color: var(--cyan-light);
+  padding: 0.6rem 0.8rem;
+  border-left: 2px solid var(--cyan-light);
+  white-space: pre-wrap;
+}
+.held ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.held li {
+  border: 1px solid var(--stone);
+  padding: 0.4rem 0.6rem;
+}
+.held li.picked {
+  border-color: var(--cyan);
+}
+.notices em {
+  white-space: pre-wrap;
 }

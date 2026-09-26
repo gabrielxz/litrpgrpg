@@ -8,6 +8,7 @@
 import { ATTRIBUTES, type Engine, type Stats } from "@gradebreaker/engine";
 import type {
   Action,
+  AnswerPartyInvite,
   AwardVe,
   ChangeAether,
   ChangeHp,
@@ -15,8 +16,13 @@ import type {
   Consolidate,
   CreateCharacter,
   CreatePregen,
+  DisbandParty,
   Envelope,
+  InviteToParty,
+  LeaveParty,
   PlaceSystemPoints,
+  ReleaseMessage,
+  SendMessage,
   SpendFreePoints,
 } from "./actions.ts";
 
@@ -46,6 +52,26 @@ export interface CharacterState {
   freePoints: number;
 }
 
+/** A formal party: its members' character ids in the order they joined. */
+export interface Party {
+  id: string;
+  members: string[];
+}
+
+/** An invitation waiting on the invitee's answer; its id is the id of the action that made it. */
+export interface PartyInvite {
+  id: string;
+  fromId: string;
+  toId: string;
+}
+
+/** A System message recorded and held for the GM to release; its id is the id of its send. */
+export interface HeldMessage {
+  id: string;
+  to: string[];
+  text: string;
+}
+
 export type Effect =
   | { kind: "created"; characterId: string }
   | { kind: "reassigned"; characterId: string; playerId: string | null }
@@ -57,6 +83,14 @@ export type Effect =
   | { kind: "collapsed"; characterId: string; attribute: "FOR" | "POW"; hours: number }
   | { kind: "temporary-returned"; characterId: string; attribute: "FOR" | "POW" }
   | { kind: "points-placed"; characterId: string; placement: Stats; by: "system" | "free" }
+  | { kind: "party-invited"; characterId: string; inviteId: string; fromId: string; fromName: string }
+  | { kind: "party-declined"; characterId: string; byId: string; byName: string }
+  | { kind: "party-formed"; characterId: string; partyId: string; withNames: string[] }
+  | { kind: "party-joined"; characterId: string; partyId: string; memberId: string; memberName: string }
+  | { kind: "party-left"; characterId: string; memberId: string; memberName: string }
+  | { kind: "party-disbanded"; characterId: string; partyId: string }
+  | { kind: "message"; characterId: string; messageId: string; text: string }
+  | { kind: "message-held"; messageId: string; to: string[] }
   | { kind: "voided"; targetId: string; reason: string };
 
 export interface Rejection {
@@ -66,6 +100,11 @@ export interface Rejection {
 
 export interface FoldResult {
   characters: Map<string, CharacterState>;
+  parties: Map<string, Party>;
+  /** Invitations still waiting, oldest first. */
+  invites: PartyInvite[];
+  /** Messages recorded and held, oldest first. */
+  held: HeldMessage[];
   /** Effects keyed by the id of the action that produced them. */
   effects: Map<string, Effect[]>;
   rejected: Rejection[];
@@ -112,9 +151,26 @@ export function capLevel(engine: Engine, c: CharacterState): number {
 
 // --------------------------------------------------------------- fold ---
 
+/** Everything an action can change. Each action works on a copy (see `fold`). */
+interface World {
+  characters: Map<string, CharacterState>;
+  parties: Map<string, Party>;
+  invites: PartyInvite[];
+  held: Map<string, HeldMessage>;
+}
+
+function cloneWorld(w: World): World {
+  return {
+    characters: new Map([...w.characters].map(([k, v]) => [k, cloneState(v)])),
+    parties: new Map([...w.parties].map(([k, v]) => [k, { id: v.id, members: [...v.members] }])),
+    invites: [...w.invites],
+    held: new Map(w.held),
+  };
+}
+
 export function fold(engine: Engine, log: readonly Envelope[]): FoldResult {
   const voided = collectVoids(log);
-  const characters = new Map<string, CharacterState>();
+  let world: World = { characters: new Map(), parties: new Map(), invites: [], held: new Map() };
   const effects = new Map<string, Effect[]>();
   const rejected: Rejection[] = [...voided.rejected];
   const rejectedIds = new Set(rejected.map((r) => r.envelope.id));
@@ -126,19 +182,26 @@ export function fold(engine: Engine, log: readonly Envelope[]): FoldResult {
       continue;
     }
     if (voided.ids.has(env.id)) continue;
-    // Each action works on copies, so a rejected action leaves no partial change behind.
-    const scratch = new Map([...characters].map(([k, v]) => [k, cloneState(v)]));
+    // Each action works on a copy, so a rejected action leaves no partial change behind.
+    const scratch = cloneWorld(world);
     try {
       const out = apply(engine, scratch, env);
-      characters.clear();
-      for (const [k, v] of scratch) characters.set(k, v);
+      world = scratch;
       effects.set(env.id, out);
     } catch (e) {
       if (!(e instanceof Rejected)) throw e;
       rejected.push({ envelope: env, reason: e.message });
     }
   }
-  return { characters, effects, rejected, voided: voided.ids };
+  return {
+    characters: world.characters,
+    parties: world.parties,
+    invites: world.invites,
+    held: [...world.held.values()],
+    effects,
+    rejected,
+    voided: voided.ids,
+  };
 }
 
 function cloneState(c: CharacterState): CharacterState {
@@ -174,9 +237,10 @@ function collectVoids(log: readonly Envelope[]) {
   return { ids, rejected };
 }
 
-function apply(engine: Engine, chars: Map<string, CharacterState>, env: Envelope): Effect[] {
+function apply(engine: Engine, world: World, env: Envelope): Effect[] {
   const a = env.action;
-  authorize(chars, env);
+  const chars = world.characters;
+  authorize(world, env);
   switch (a.type) {
     case "character.create":
       return createCharacter(engine, chars, a);
@@ -198,6 +262,18 @@ function apply(engine: Engine, chars: Map<string, CharacterState>, env: Envelope
       return changeHp(engine, need(chars, a.characterId), a);
     case "aether.change":
       return changeAether(engine, need(chars, a.characterId), a);
+    case "party.invite":
+      return inviteToParty(world, a, env.id);
+    case "party.answer":
+      return answerInvite(world, a, env.id);
+    case "party.leave":
+      return leaveParty(world, a);
+    case "party.disband":
+      return disband(world, a);
+    case "message.send":
+      return sendMessage(world, a, env.id);
+    case "message.release":
+      return releaseMessage(world, a);
     case "void":
       throw new Error("voids are handled before apply");
   }
@@ -205,19 +281,35 @@ function apply(engine: Engine, chars: Map<string, CharacterState>, env: Envelope
 
 /**
  * The GM records anything. A player records the choices the book gives the player, for their
- * own character: creating it, and spending its free points (app/DESIGN.md, "The player-choice rule").
+ * own character: creating it, spending its free points, and its party invitations, answers,
+ * and leaving (app/DESIGN.md, "The player-choice rule").
  */
-function authorize(chars: Map<string, CharacterState>, env: Envelope) {
+function authorize(world: World, env: Envelope) {
   if (env.actor.role === "gm") return;
   const a: Action = env.action;
   const me = env.actor.userId;
-  if (a.type === "character.create" || a.type === "character.pregen") {
-    if (a.playerId !== me) throw new Rejected("a player creates only their own character");
-    return;
+  const mine = (characterId: string) => {
+    const c = world.characters.get(characterId);
+    if (c && c.playerId !== me) throw new Rejected(`${c.name} is not this player's character`);
+  };
+  switch (a.type) {
+    case "character.create":
+    case "character.pregen":
+      if (a.playerId !== me) throw new Rejected("a player creates only their own character");
+      return;
+    case "points.free":
+    case "party.leave":
+      return mine(a.characterId);
+    case "party.invite":
+      return mine(a.fromId);
+    case "party.answer": {
+      const inv = world.invites.find((i) => i.id === a.inviteId);
+      if (inv) mine(inv.toId);
+      return;
+    }
+    default:
+      throw new Rejected(`only the GM records ${a.type}`);
   }
-  if (a.type !== "points.free") throw new Rejected(`only the GM records ${a.type}`);
-  const c = chars.get(a.characterId);
-  if (c && c.playerId !== me) throw new Rejected(`${c.name} is not this player's character`);
 }
 
 function need(chars: Map<string, CharacterState>, id: string): CharacterState {
@@ -483,4 +575,103 @@ function changeAether(engine: Engine, c: CharacterState, a: ChangeAether): Effec
   if (c.aether + a.delta < 0) throw new Rejected(`${c.name} has ${c.aether} Aether, not ${-a.delta}`);
   c.aether = Math.min(maxAetherOf(engine, c), c.aether + a.delta);
   return [];
+}
+
+// ------------------------------------------------------------- party ---
+
+function partyOf(world: World, characterId: string): Party | undefined {
+  for (const p of world.parties.values()) if (p.members.includes(characterId)) return p;
+  return undefined;
+}
+
+/** Drops invitations that no longer mean anything: to someone already in the inviter's party. */
+function pruneInvites(world: World) {
+  world.invites = world.invites.filter((i) => {
+    const p = partyOf(world, i.fromId);
+    return !(p && p.members.includes(i.toId));
+  });
+}
+
+function inviteToParty(world: World, a: InviteToParty, id: string): Effect[] {
+  const from = need(world.characters, a.fromId);
+  const to = need(world.characters, a.toId);
+  if (from.id === to.id) throw new Rejected("a character cannot invite themselves");
+  const p = partyOf(world, from.id);
+  if (p && p.members.includes(to.id)) throw new Rejected(`${to.name} is already in ${from.name}'s party`);
+  if (world.invites.some((i) => i.fromId === from.id && i.toId === to.id))
+    throw new Rejected(`${from.name} has already invited ${to.name}`);
+  world.invites.push({ id, fromId: from.id, toId: to.id });
+  return [{ kind: "party-invited", characterId: to.id, inviteId: id, fromId: from.id, fromName: from.name }];
+}
+
+function answerInvite(world: World, a: AnswerPartyInvite, id: string): Effect[] {
+  const inv = world.invites.find((i) => i.id === a.inviteId);
+  if (!inv) throw new Rejected("that invitation is no longer open");
+  const from = need(world.characters, inv.fromId);
+  const to = need(world.characters, inv.toId);
+  world.invites = world.invites.filter((i) => i !== inv);
+  if (!a.accept) return [{ kind: "party-declined", characterId: from.id, byId: to.id, byName: to.name }];
+
+  if (partyOf(world, to.id)) throw new Rejected(`${to.name} is in a party already and leaves it before joining another`);
+  const out: Effect[] = [];
+  const existing = partyOf(world, from.id);
+  if (existing) {
+    existing.members.push(to.id);
+    for (const m of existing.members)
+      out.push({ kind: "party-joined", characterId: m, partyId: existing.id, memberId: to.id, memberName: to.name });
+  } else {
+    const party = { id: `party-${id}`, members: [from.id, to.id] };
+    world.parties.set(party.id, party);
+    out.push({ kind: "party-formed", characterId: from.id, partyId: party.id, withNames: [to.name] });
+    out.push({ kind: "party-formed", characterId: to.id, partyId: party.id, withNames: [from.name] });
+  }
+  pruneInvites(world);
+  return out;
+}
+
+function endParty(world: World, p: Party): Effect[] {
+  world.parties.delete(p.id);
+  return p.members.map((m) => ({ kind: "party-disbanded", characterId: m, partyId: p.id }) as const);
+}
+
+function leaveParty(world: World, a: LeaveParty): Effect[] {
+  const c = need(world.characters, a.characterId);
+  const p = partyOf(world, c.id);
+  if (!p) throw new Rejected(`${c.name} is not in a party`);
+  const out: Effect[] = p.members.map((m) => ({ kind: "party-left", characterId: m, memberId: c.id, memberName: c.name }) as const);
+  p.members = p.members.filter((m) => m !== c.id);
+  // A party of one is no party.
+  if (p.members.length < 2) out.push(...endParty(world, p));
+  return out;
+}
+
+function disband(world: World, a: DisbandParty): Effect[] {
+  const p = world.parties.get(a.partyId);
+  if (!p) throw new Rejected("no such party");
+  return endParty(world, p);
+}
+
+// ---------------------------------------------------------- messages ---
+
+function deliver(to: string[], messageId: string, text: string): Effect[] {
+  return to.map((characterId) => ({ kind: "message", characterId, messageId, text }) as const);
+}
+
+function sendMessage(world: World, a: SendMessage, id: string): Effect[] {
+  if (!a.text.trim()) throw new Rejected("a message needs text");
+  if (a.to.length === 0) throw new Rejected("a message goes to at least one character");
+  if (new Set(a.to).size !== a.to.length) throw new Rejected("a character is listed twice");
+  for (const c of a.to) need(world.characters, c);
+  if (a.hold) {
+    world.held.set(id, { id, to: [...a.to], text: a.text });
+    return [{ kind: "message-held", messageId: id, to: [...a.to] }];
+  }
+  return deliver(a.to, id, a.text);
+}
+
+function releaseMessage(world: World, a: ReleaseMessage): Effect[] {
+  const m = world.held.get(a.messageId);
+  if (!m) throw new Rejected("no held message with that id");
+  world.held.delete(m.id);
+  return deliver(m.to, m.id, m.text);
 }

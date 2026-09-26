@@ -1,29 +1,21 @@
 /**
  * One campaign, kept current. Opens the live channel, authenticates with the current token,
- * and applies what arrives: the view on every message, the log for the GM, notices for a
- * player. A dropped connection reconnects with backoff and resynchronizes from the state the
+ * and applies what arrives: the view on every message (a player's carries their notices), and
+ * the log for the GM. A dropped connection reconnects with backoff and resynchronizes from the state the
  * server sends on connect.
  */
 import { Engine } from "@gradebreaker/engine";
-import type { Effect, Envelope, LiveMessage, View } from "@gradebreaker/record";
-import { useCallback, useEffect, useRef, useState } from "react";
+import type { Envelope, LiveMessage, View } from "@gradebreaker/record";
+import { useCallback, useEffect, useState } from "react";
 import { api, currentToken } from "./api.ts";
 
 export type LiveStatus = "connecting" | "live" | "reconnecting";
 
-export interface Notice {
-  key: string;
-  at: number;
-  effect: Effect;
-}
-
 export function useCampaign(campaignId: string) {
   const [view, setView] = useState<View | null>(null);
   const [log, setLog] = useState<Envelope[]>([]);
-  const [notices, setNotices] = useState<Notice[]>([]);
   const [status, setStatus] = useState<LiveStatus>("connecting");
   const [error, setError] = useState<string | null>(null);
-  const counter = useRef(0);
 
   /** Adds envelopes the page learned of directly (a POST's response) ahead of the live echo. */
   const addToLog = useCallback((env: Envelope) => {
@@ -57,10 +49,6 @@ export function useCampaign(campaignId: string) {
           addToLog(msg.envelope);
         } else if (msg.type === "update") {
           setView(msg.view);
-          const at = Date.now();
-          // Newest first: the last effect of an action is the latest thing that happened.
-          const fresh = msg.notices.map((effect) => ({ key: `n${++counter.current}`, at, effect })).reverse();
-          if (fresh.length) setNotices((n) => [...fresh, ...n].slice(0, 60));
         }
       };
       ws.onclose = (event) => {
@@ -83,7 +71,7 @@ export function useCampaign(campaignId: string) {
     };
   }, [campaignId, addToLog]);
 
-  return { view, log, notices, status, error, addToLog };
+  return { view, log, status, error, addToLog };
 }
 
 const engines = new Map<string, Promise<Engine>>();

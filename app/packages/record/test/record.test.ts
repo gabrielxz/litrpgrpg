@@ -253,6 +253,114 @@ describe("who creates and holds a character", () => {
   });
 });
 
+describe("the party", () => {
+  const P3 = { role: "player", userId: "player-3" } as const;
+  const as = (actor: Draft["actor"], action: Action, id?: string) => rec.append(draft(action, actor, id));
+  const members = () => [...rec.state.parties.values()].map((p) => p.members);
+  beforeEach(() => {
+    gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" });
+    gm({ type: "character.pregen", characterId: "joe", pregen: "Joe", playerId: "player-2" });
+    gm({ type: "character.pregen", characterId: "andre", pregen: "Andre", playerId: "player-3" });
+  });
+
+  it("forms a party when an invitation is accepted, and grows it with the next", () => {
+    as(P1, { type: "party.invite", fromId: "kara", toId: "joe" }, "inv-1");
+    expect(rec.state.invites).toEqual([{ id: "inv-1", fromId: "kara", toId: "joe" }]);
+    const formed = as(P2, { type: "party.answer", inviteId: "inv-1", accept: true }, "ans-1");
+    expect(formed.effects.map((e) => e.kind)).toEqual(["party-formed", "party-formed"]);
+    expect(members()).toEqual([["kara", "joe"]]);
+    // Joe invites Andre into the party Kara formed.
+    as(P2, { type: "party.invite", fromId: "joe", toId: "andre" }, "inv-2");
+    const joined = as(P3, { type: "party.answer", inviteId: "inv-2", accept: true });
+    expect(joined.effects.filter((e) => e.kind === "party-joined").map((e) => e.characterId)).toEqual(["kara", "joe", "andre"]);
+    expect(members()).toEqual([["kara", "joe", "andre"]]);
+    expect(rec.state.invites).toEqual([]);
+  });
+
+  it("tells the inviter of a refusal and keeps nothing open", () => {
+    as(P1, { type: "party.invite", fromId: "kara", toId: "joe" }, "inv-1");
+    const no = as(P2, { type: "party.answer", inviteId: "inv-1", accept: false });
+    expect(no.effects).toEqual([{ kind: "party-declined", characterId: "kara", byId: "joe", byName: "Joe" }]);
+    expect(rec.state.invites).toEqual([]);
+    expect(rec.state.parties.size).toBe(0);
+  });
+
+  it("lets each player act only for their own character", () => {
+    expect(() => as(P2, { type: "party.invite", fromId: "kara", toId: "joe" })).toThrow(/not this player's character/);
+    as(P1, { type: "party.invite", fromId: "kara", toId: "joe" }, "inv-1");
+    expect(() => as(P3, { type: "party.answer", inviteId: "inv-1", accept: true })).toThrow(/not this player's character/);
+    expect(() => as(P1, { type: "party.disband", partyId: "x" })).toThrow(/only the GM/);
+  });
+
+  it("refuses a second party until the first is left, and disbands a party of one", () => {
+    as(P1, { type: "party.invite", fromId: "kara", toId: "joe" }, "inv-1");
+    as(P2, { type: "party.answer", inviteId: "inv-1", accept: true });
+    as(P3, { type: "party.invite", fromId: "andre", toId: "joe" }, "inv-2");
+    expect(() => as(P2, { type: "party.answer", inviteId: "inv-2", accept: true })).toThrow(/leaves it before joining/);
+    const left = as(P1, { type: "party.leave", characterId: "kara" });
+    expect(left.effects.map((e) => e.kind)).toEqual(["party-left", "party-left", "party-disbanded"]);
+    expect(rec.state.parties.size).toBe(0);
+    as(P2, { type: "party.answer", inviteId: "inv-2", accept: true });
+    expect(members()).toEqual([["andre", "joe"]]);
+  });
+
+  it("drops an invitation made moot when the invitee joins by another route", () => {
+    as(P1, { type: "party.invite", fromId: "kara", toId: "joe" }, "inv-1");
+    as(P1, { type: "party.invite", fromId: "kara", toId: "andre" }, "inv-2");
+    as(P2, { type: "party.invite", fromId: "joe", toId: "andre" }, "inv-3");
+    as(P2, { type: "party.answer", inviteId: "inv-1", accept: true });
+    as(P3, { type: "party.answer", inviteId: "inv-2", accept: true });
+    expect(rec.state.invites).toEqual([]);
+  });
+
+  it("lets the GM disband a party, and an undo withdraws an invitation", () => {
+    as(P1, { type: "party.invite", fromId: "kara", toId: "joe" }, "inv-1");
+    as(P1, { type: "void", targetId: "inv-1", reason: "undo" });
+    expect(rec.state.invites).toEqual([]);
+    as(P1, { type: "party.invite", fromId: "kara", toId: "joe" }, "inv-2");
+    as(P2, { type: "party.answer", inviteId: "inv-2", accept: true });
+    const partyId = [...rec.state.parties.keys()][0]!;
+    const out = gm({ type: "party.disband", partyId });
+    expect(out.effects.map((e) => ("characterId" in e ? e.characterId : null))).toEqual(["kara", "joe"]);
+    expect(rec.state.parties.size).toBe(0);
+  });
+});
+
+describe("System messages", () => {
+  beforeEach(() => {
+    gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" });
+    gm({ type: "character.pregen", characterId: "joe", pregen: "Joe", playerId: "player-2" });
+  });
+
+  it("delivers to each named character at once", () => {
+    const out = gm({ type: "message.send", to: ["kara", "joe"], text: "Anomaly logged." }, "m1");
+    expect(out.effects).toEqual([
+      { kind: "message", characterId: "kara", messageId: "m1", text: "Anomaly logged." },
+      { kind: "message", characterId: "joe", messageId: "m1", text: "Anomaly logged." },
+    ]);
+  });
+
+  it("holds a message until the GM releases it, and an undo discards it", () => {
+    const held = gm({ type: "message.send", to: ["kara"], text: "Quest available.", hold: true }, "m1");
+    expect(held.effects).toEqual([{ kind: "message-held", messageId: "m1", to: ["kara"] }]);
+    expect(rec.state.held).toEqual([{ id: "m1", to: ["kara"], text: "Quest available." }]);
+    const out = gm({ type: "message.release", messageId: "m1" }, "r1");
+    expect(out.effects.map((e) => e.kind)).toEqual(["message"]);
+    expect(rec.state.held).toEqual([]);
+    expect(() => gm({ type: "message.release", messageId: "m1" })).toThrow(/no held message/);
+    gm({ type: "message.send", to: ["joe"], text: "Later.", hold: true }, "m2");
+    gm({ type: "void", targetId: "m2", reason: "undo" });
+    expect(rec.state.held).toEqual([]);
+  });
+
+  it("refuses an empty message, no recipients, and a player sender", () => {
+    expect(() => gm({ type: "message.send", to: ["kara"], text: "  " })).toThrow(/needs text/);
+    expect(() => gm({ type: "message.send", to: [], text: "x" })).toThrow(/at least one/);
+    expect(() => gm({ type: "message.send", to: ["nobody"], text: "x" })).toThrow(/no character/);
+    expect(() => rec.append(draft({ type: "message.send", to: ["kara"], text: "x" }, P1))).toThrow(/only the GM/);
+  });
+});
+
 describe("the log", () => {
   beforeEach(() => gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" }));
 

@@ -20,6 +20,19 @@ export const ATTRIBUTE_NAMES: Record<string, string> = {
 
 export type Names = (characterId: string) => string;
 
+/**
+ * The table's words, which the System never says (rules/system-ai.yaml, `voice.units`). The
+ * composer warns when a message uses one; some are ordinary English too ("turn back"), so the
+ * GM decides.
+ */
+export const TABLE_WORDS = /\b(rounds?|beats?|turns?|rolls?|rolled|dice|die|margins?|resistance|checks?|DC)\b/gi;
+
+export function tableWordsIn(text: string): string[] {
+  return [...new Set([...text.matchAll(TABLE_WORDS)].map((m) => m[0].toLowerCase()))];
+}
+
+const clip = (t: string, n = 70) => (t.length > n ? `${t.slice(0, n - 1)}…` : t);
+
 const signed = (n: number) => (n >= 0 ? `+${n}` : `−${-n}`);
 const placement = (p: Record<string, number>) =>
   Object.entries(p)
@@ -72,6 +85,22 @@ export function describe(
       return `HP: ${name(a.characterId)} ${signed(a.delta)}`;
     case "aether.change":
       return `Aether: ${name(a.characterId)} ${signed(a.delta)}`;
+    case "party.invite":
+      return `Party: ${name(a.fromId)} invites ${name(a.toId)}`;
+    case "party.answer": {
+      const seq = seqOf(a.inviteId);
+      return `Party: invitation ${seq === undefined ? "" : `#${seq + 1} `}${a.accept ? "accepted" : "declined"}`;
+    }
+    case "party.leave":
+      return `Party: ${name(a.characterId)} leaves`;
+    case "party.disband":
+      return "Party disbanded";
+    case "message.send":
+      return `System message${a.hold ? " held" : ""} to ${a.to.map(name).join(", ")}: “${clip(a.text)}”`;
+    case "message.release": {
+      const seq = seqOf(a.messageId);
+      return `Sent held message ${seq === undefined ? "" : `#${seq + 1}`}`.trim();
+    }
     case "void": {
       const seq = seqOf(a.targetId);
       const target = seq === undefined ? "an action" : `#${seq + 1}`;
@@ -103,6 +132,22 @@ export function effectLine(e: Effect, name: Names): string | null {
       return `${name(e.characterId)}: the lost ${e.attribute} point returns`;
     case "points-placed":
       return `${name(e.characterId)}: ${e.by === "system" ? "assigned" : "free"} points ${placement(e.placement)}`;
+    case "party-invited":
+      return `${e.fromName} invites ${name(e.characterId)} to a party`;
+    case "party-declined":
+      return `${e.byName} declines ${name(e.characterId)}'s invitation`;
+    case "party-formed":
+      return `${name(e.characterId)} is in a party with ${e.withNames.join(", ")}`;
+    case "party-joined":
+      return e.memberId === e.characterId ? `${e.memberName} joins the party` : null;
+    case "party-left":
+      return e.memberId === e.characterId ? `${e.memberName} leaves the party` : null;
+    case "party-disbanded":
+      return `${name(e.characterId)}: the party is disbanded`;
+    case "message":
+      return `${name(e.characterId)} receives the message`;
+    case "message-held":
+      return `Held for ${e.to.map(name).join(", ")}; nobody sees it until you send it`;
     case "voided":
       return null;
   }
@@ -130,6 +175,20 @@ export function noticeLine(e: Effect): string | null {
         .join(", ");
       return `${e.by === "system" ? "Attributes allocated" : "Allocation recorded"}: ${parts}.`;
     }
+    case "party-invited":
+      return `Party invitation received: ${e.fromName}.`;
+    case "party-declined":
+      return `Party invitation declined: ${e.byName}.`;
+    case "party-formed":
+      return `Party formed: ${e.withNames.join(", ")}.`;
+    case "party-joined":
+      return e.memberId === e.characterId ? "Party joined." : `Party member added: ${e.memberName}.`;
+    case "party-left":
+      return e.memberId === e.characterId ? "Party left." : `Party member departed: ${e.memberName}.`;
+    case "party-disbanded":
+      return "Party dissolved.";
+    case "message":
+      return e.text;
     default:
       return null;
   }

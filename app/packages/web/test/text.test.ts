@@ -4,7 +4,7 @@
  */
 import type { Effect } from "@gradebreaker/record";
 import { describe, expect, it } from "vitest";
-import { noticeLine } from "../src/text.ts";
+import { noticeLine, tableWordsIn } from "../src/text.ts";
 
 const TABLE_WORDS = /\b(round|beat|turn|roll|die|dice|margin|dc|check|hour 1|tier|band)\b/i;
 
@@ -19,6 +19,15 @@ const every: Effect[] = [
   { kind: "temporary-returned", characterId: "k", attribute: "POW" },
   { kind: "points-placed", characterId: "k", placement: { STR: 2, FOR: 1 }, by: "system" },
   { kind: "points-placed", characterId: "k", placement: { DEX: 2 }, by: "free" },
+  { kind: "party-invited", characterId: "k", inviteId: "i", fromId: "j", fromName: "Joe" },
+  { kind: "party-declined", characterId: "k", byId: "j", byName: "Joe" },
+  { kind: "party-formed", characterId: "k", partyId: "p", withNames: ["Joe"] },
+  { kind: "party-joined", characterId: "k", partyId: "p", memberId: "a", memberName: "Andre" },
+  { kind: "party-joined", characterId: "k", partyId: "p", memberId: "k", memberName: "Kara" },
+  { kind: "party-left", characterId: "k", memberId: "a", memberName: "Andre" },
+  { kind: "party-left", characterId: "k", memberId: "k", memberName: "Kara" },
+  { kind: "party-disbanded", characterId: "k", partyId: "p" },
+  { kind: "message-held", messageId: "m", to: ["k"] },
   { kind: "voided", targetId: "x", reason: "undo" },
 ];
 
@@ -34,6 +43,16 @@ describe("the System's notices", () => {
     expect(noticeLine({ kind: "saturation", characterId: "k", from: "None", to: "Mild" })).toBeNull();
     expect(noticeLine({ kind: "voided", targetId: "x", reason: "undo" })).toBeNull();
     expect(noticeLine({ kind: "created", characterId: "k" })).toBeNull();
+    expect(noticeLine({ kind: "message-held", messageId: "m", to: ["k"] })).toBeNull();
+  });
+
+  it("carry the GM's message as written", () => {
+    expect(noticeLine({ kind: "message", characterId: "k", messageId: "m", text: "Anomaly logged." })).toBe("Anomaly logged.");
+  });
+
+  it("warn the composer about the table's words and pass in-world text", () => {
+    expect(tableWordsIn("Roll for it next round, then check the DC.")).toEqual(["roll", "round", "check", "dc"]);
+    expect(tableWordsIn("Volatile Energy absorbed: 40. Level 3 attained.")).toEqual([]);
   });
 
   it("name Attributes in full", () => {

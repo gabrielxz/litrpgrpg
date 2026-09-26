@@ -24,7 +24,7 @@ function Meter({ value, max, className }: { value: number; max: number; classNam
   );
 }
 
-function CharacterCard({ c, player }: { c: Sheet; player: string }) {
+function CharacterCard({ c, player, party }: { c: Sheet; player: string; party: string | null }) {
   const band = c.saturation.band;
   return (
     <article className="sheet-card">
@@ -36,6 +36,7 @@ function CharacterCard({ c, player }: { c: Sheet; player: string }) {
         Level {c.level} · {c.grade}-Grade
         {c.pendingSystemLevels.length > 0 && <span className="tag attention">Assigned points due: Level {c.pendingSystemLevels.join(", ")}</span>}
         {c.freePoints > 0 && <span className="tag">{c.freePoints} free held</span>}
+        {party && <span className="tag">Party: {party}</span>}
       </div>
       <div className="vital">
         <span>HP</span>
@@ -169,7 +170,7 @@ function ViewAs({ view }: { view: GmView }) {
         <span className="muted small">exactly what their screen shows; nothing here can be changed</span>
       </div>
       {error && <p className="error">{error}</p>}
-      {shown && <PlayerCampaign view={shown} notices={[]} readOnly />}
+      {shown && <PlayerCampaign view={shown} readOnly />}
     </div>
   );
 }
@@ -201,6 +202,11 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
   const [section, setSection] = useSection();
   const byId = new Map(view.characters.map((c) => [c.id, c.name]));
   const names = (id: string) => byId.get(id) ?? id;
+  /** The other members of a character's party, by name. */
+  const partyWith = (id: string) => {
+    const p = view.parties.find((x) => x.members.includes(id));
+    return p ? p.members.filter((m) => m !== id).map(names).join(", ") : null;
+  };
   const playerName = (c: Sheet) =>
     c.playerId ? (view.members.find((m) => m.userId === c.playerId)?.displayName ?? "a former player") : "GM";
 
@@ -220,7 +226,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
             {view.characters.length === 0 ? (
               <p className="muted">No characters yet. Players can build their own once they join, or you can create one under New character.</p>
             ) : (
-              view.characters.map((c) => <CharacterCard key={c.id} c={c} player={playerName(c)} />)
+              view.characters.map((c) => <CharacterCard key={c.id} c={c} player={playerName(c)} party={partyWith(c.id)} />)
             )}
           </section>
           <aside className="side">
