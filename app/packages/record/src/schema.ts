@@ -11,6 +11,17 @@ const whole = z.number().int();
 const stats = z.record(z.string(), whole);
 
 const dice = z.array(whole).max(50);
+const rolledDice = z.object({ natural: dice, dropped: whole.optional() });
+const forceOption = z.object({ force: whole, stat: z.string().max(10), means: z.string().max(60).optional() });
+const clashSide = z.object({
+  attribute: z.string().max(10).optional(),
+  force: whole.optional(),
+  means: z.string().max(60).optional(),
+  modifier: whole,
+  advantage: z.boolean().optional(),
+  surge: z.boolean().optional(),
+});
+const zone = z.object({ id, name: z.string().max(60) });
 const combatant = z.object({
   combatantId: id,
   sideId: id,
@@ -21,6 +32,10 @@ const combatant = z.object({
   maxHp: whole.optional(),
   momentumForce: whole.optional(),
   beats: whole.optional(),
+  yields: z.boolean().optional(),
+  offense: z.array(forceOption).max(10).optional(),
+  defense: z.array(forceOption).max(10).optional(),
+  zoneId: id.optional(),
 });
 
 const basis = z.discriminatedUnion("kind", [
@@ -96,6 +111,7 @@ export const actionSchema = z.discriminatedUnion("type", [
     encounterId: id,
     name: z.string().max(100),
     sides: z.array(z.object({ id, name: z.string().max(60) })).max(8),
+    zones: z.array(zone).max(20).optional(),
     combatants: z.array(combatant).max(60),
   }),
   z.object({ type: z.literal("combat.add"), combatant }),
@@ -116,6 +132,21 @@ export const actionSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("combat.round") }),
   z.object({ type: z.literal("combat.hp"), combatantId: id, delta: whole }),
   z.object({ type: z.literal("combat.end") }),
+  z.object({
+    type: z.literal("combat.attack"),
+    attackerId: id,
+    defenderId: id,
+    attack: clashSide,
+    flanking: z.boolean().optional(),
+    cornered: z.boolean().optional(),
+    free: z.boolean().optional(),
+    label: z.string().max(60).optional(),
+  }),
+  z.object({ type: z.literal("combat.defend"), defense: clashSide, attackDice: rolledDice.optional(), defenseDice: rolledDice.optional() }),
+  z.object({ type: z.literal("combat.resolve"), yield: whole }),
+  z.object({ type: z.literal("combat.move"), combatantId: id, zoneId: id, forced: z.boolean().optional() }),
+  z.object({ type: z.literal("combat.exposed"), combatantId: id, exposed: z.boolean() }),
+  z.object({ type: z.literal("combat.zones"), zones: z.array(zone).max(20) }),
   z.object({
     type: z.literal("void"),
     targetId: id,

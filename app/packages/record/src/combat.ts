@@ -7,13 +7,18 @@
  *
  * Momentum dice are rolled on the server (`rollCombatDice`) and recorded in the action.
  * A tie rolls again: on Initial Momentum as the book says, and on Seize Momentum because
- * Seize is a Momentum Roll too.
+ * Seize is a Momentum Roll too (Gabriel, 2026-09-26).
+ *
+ * A Clash (Core Mechanics, "The Clash") is three actions, so each declaration comes before
+ * the dice that depend on it: the attack (with any Surge, Flanking, and whether the defender
+ * is Cornered), the defense (posture and any Surge; the server rolls both sides here), and
+ * the resolution, where the defender Yields once the Margin is known and before damage.
+ * Damage, Driven Back, and a drive into another Zone follow from the Margin left after Yield.
  */
 import type { Engine } from "@gradebreaker/engine";
 import type { Envelope } from "./actions.ts";
-import type { D100 } from "./dice.ts";
-import { rollD100s } from "./dice.ts";
-import { type CharacterState, type Effect, Rejected, type World, maxHpOf, rawStats } from "./fold.ts";
+import { type D100, type Dice, rollD100s } from "./dice.ts";
+import { type CharacterState, type Effect, Rejected, type World, maxAetherOf, maxHpOf, rawStats } from "./fold.ts";
 
 // --------------------------------------------------------------- actions ---
 
@@ -32,6 +37,34 @@ export interface CombatantSpec {
   momentumForce?: number;
   /** Beats per turn; the book's default when absent. */
   beats?: number;
+  /** A creature Yields only if its stat block says so; a character always can. */
+  yields?: boolean;
+  /** A creature's attacks and defenses from its stat block, offered when it Clashes. */
+  offense?: ForceOption[];
+  defense?: ForceOption[];
+  zoneId?: string;
+}
+
+/** One line of a stat block's offense or defense: its Force, the stat, what it is. */
+export interface ForceOption {
+  force: number;
+  stat: string;
+  means?: string;
+}
+
+/** One side of a Clash as declared, before the dice. */
+export interface ClashSide {
+  /** A character's Attribute; its Force is read from the sheet when the dice are rolled. */
+  attribute?: string;
+  /** A creature's or NPC's Force for this attack or defense. */
+  force?: number;
+  /** What it is: "bite", "dodge", "axe". */
+  means?: string;
+  /** Every other Tactical Modifier. Exposed, Flanking, and Surge are added from their own fields. */
+  modifier: number;
+  advantage?: boolean;
+  /** Half of Maximum Aether for +5, declared before the roll. */
+  surge?: boolean;
 }
 
 export interface StartCombat {
@@ -39,6 +72,8 @@ export interface StartCombat {
   encounterId: string;
   name: string;
   sides: { id: string; name: string }[];
+  /** The GM's Zones for the scene; everyone starts in the first unless placed. */
+  zones?: { id: string; name: string }[];
   combatants: CombatantSpec[];
 }
 
@@ -59,7 +94,7 @@ export interface MomentumRollRecord {
   natural: number[];
   force: number;
   total: number;
-  label: "Momentum" | "Seize Momentum" | "Momentum answer";
+  label: string;
 }
 
 /** One side's roll in a Momentum attempt: its roller and the dice. */
@@ -127,6 +162,57 @@ export interface EndCombat {
   type: "combat.end";
 }
 
+/**
+ * An attack. It costs the acting attacker a Beat; a free strike (leaving a Zone without
+ * Disengaging) costs none and needs no turn. `flanking` is the attacker's +10 when two or more
+ * hostiles engage the defender; `cornered` means the defender has nowhere to be driven.
+ */
+export interface Attack {
+  type: "combat.attack";
+  attackerId: string;
+  defenderId: string;
+  attack: ClashSide;
+  flanking?: boolean;
+  cornered?: boolean;
+  free?: boolean;
+  label?: string;
+}
+
+/** The defender's answer to the pending attack. The server rolls both sides' dice here. */
+export interface Defend {
+  type: "combat.defend";
+  defense: ClashSide;
+  attackDice?: Dice;
+  defenseDice?: Dice;
+}
+
+/** The defender gives up Beats from their next turn, 20 Margin each; then damage lands. */
+export interface ResolveClash {
+  type: "combat.resolve";
+  yield: number;
+}
+
+/** Into another Zone: for a Beat on the mover's turn, or forced (driven) at no Beat. */
+export interface Move {
+  type: "combat.move";
+  combatantId: string;
+  zoneId: string;
+  forced?: boolean;
+}
+
+/** Exposed from the fiction, or cleared: the GM's call. */
+export interface SetExposed {
+  type: "combat.exposed";
+  combatantId: string;
+  exposed: boolean;
+}
+
+/** The scene's Zones, renamed, added, or removed (an occupied Zone stays). */
+export interface SetZones {
+  type: "combat.zones";
+  zones: { id: string; name: string }[];
+}
+
 export type CombatAction =
   | StartCombat
   | AddCombatant
@@ -139,7 +225,13 @@ export type CombatAction =
   | Done
   | NextRound
   | CombatHp
-  | EndCombat;
+  | EndCombat
+  | Attack
+  | Defend
+  | ResolveClash
+  | Move
+  | SetExposed
+  | SetZones;
 
 // ----------------------------------------------------------------- state ---
 
@@ -162,6 +254,52 @@ export interface Combatant {
   out: boolean;
   /** Each Beat spent this round, by name. */
   spent: string[];
+  zoneId: string | null;
+  /** Beats Yielded after this round's turn, taken from the next. */
+  debt: number;
+  /** Exposed until the end of their next turn; `started` once that turn has begun. */
+  exposed: { started: boolean } | null;
+  yields: boolean;
+  offense?: ForceOption[];
+  defense?: ForceOption[];
+}
+
+/** A Clash as it stands, from the attack to the resolution. */
+export interface PendingClash {
+  id: string;
+  attackerId: string;
+  defenderId: string;
+  label?: string;
+  attack: ClashSide;
+  flanking: boolean;
+  cornered: boolean;
+  free: boolean;
+  stage: "defense" | "yield";
+  defense?: ClashSide;
+  result?: ClashResult;
+}
+
+export interface ClashResult {
+  attackerId: string;
+  defenderId: string;
+  label?: string;
+  attackTotal: number;
+  defenseTotal: number;
+  /** Attacker's total minus defender's; a tie goes to the attacker. */
+  margin: number;
+  attackerWins: boolean;
+  turnedAside: boolean;
+  attackExploded: boolean;
+  defenseExploded: boolean;
+  /** The most Beats the defender can Yield: their next turn's, one if Cornered, none for a creature that does not. */
+  yieldCap: number;
+  /** Set once resolved. */
+  yielded?: number;
+  remaining?: number;
+  damage?: number;
+  drivenBack?: boolean;
+  /** The attacker may drive the defender into an adjacent Zone: Driven Back, or two Beats Yielded. */
+  drivable?: boolean;
 }
 
 export interface Encounter {
@@ -179,15 +317,22 @@ export interface Encounter {
   /** A shift waiting for the start of the next round. */
   pending: { sideId: string; by: "seize" | "reversal" } | null;
   ended: boolean;
+  zones: { id: string; name: string }[];
+  clash: PendingClash | null;
+  /** The last Clash resolved, for the drive and the tracker's line. */
+  lastClash: ClashResult | null;
 }
 
 export function cloneEncounter(e: Encounter): Encounter {
   return {
     ...e,
     sides: e.sides.map((s) => ({ ...s })),
-    combatants: e.combatants.map((c) => ({ ...c, spent: [...c.spent] })),
+    combatants: e.combatants.map((c) => ({ ...c, spent: [...c.spent], exposed: c.exposed && { ...c.exposed } })),
     order: [...e.order],
     pending: e.pending && { ...e.pending },
+    zones: e.zones.map((z) => ({ ...z })),
+    clash: e.clash && { ...e.clash, ...(e.clash.result ? { result: { ...e.clash.result } } : {}) },
+    lastClash: e.lastClash && { ...e.lastClash },
   };
 }
 
@@ -252,6 +397,15 @@ function hpOf(engine: Engine, world: World, c: Combatant): { hp: number; maxHp: 
 
 // -------------------------------------------------------------- handlers ---
 
+function fresh(e: Encounter, s: CombatantSpec, yields: boolean) {
+  let zoneId: string | null = e.zones[0]?.id ?? null;
+  if (s.zoneId !== undefined) {
+    if (!e.zones.some((z) => z.id === s.zoneId)) throw new Rejected(`no Zone ${s.zoneId}`);
+    zoneId = s.zoneId;
+  }
+  return { beats: 0, acted: false, out: false, spent: [] as string[], zoneId, debt: 0, exposed: null, yields };
+}
+
 function build(engine: Engine, world: World, e: Encounter, s: CombatantSpec): Combatant {
   if (!s.combatantId.trim()) throw new Rejected("a combatant needs an id");
   if (e.combatants.some((c) => c.id === s.combatantId)) throw new Rejected(`${s.combatantId} is already in the fight`);
@@ -263,7 +417,7 @@ function build(engine: Engine, world: World, e: Encounter, s: CombatantSpec): Co
     const ch: CharacterState | undefined = world.characters.get(s.characterId);
     if (!ch) throw new Rejected(`no character ${s.characterId}`);
     if (e.combatants.some((x) => x.characterId === ch.id && !x.out)) throw new Rejected(`${ch.name} is already in the fight`);
-    c = { id: s.combatantId, sideId: s.sideId, name: ch.name, grade: ch.grade, characterId: ch.id, beatsPerTurn: beats, beats: 0, acted: false, out: false, spent: [] };
+    c = { id: s.combatantId, sideId: s.sideId, name: ch.name, grade: ch.grade, characterId: ch.id, beatsPerTurn: beats, ...fresh(e, s, true) };
   } else {
     const name = s.name?.trim();
     if (!name) throw new Rejected("a creature or NPC needs a name");
@@ -277,8 +431,10 @@ function build(engine: Engine, world: World, e: Encounter, s: CombatantSpec): Co
     if (!Number.isInteger(maxHp) || maxHp < 1) throw new Rejected(`${name} needs its HP`);
     const mf = s.momentumForce ?? 0;
     if (!Number.isInteger(mf) || mf < 0) throw new Rejected("Momentum Force is a whole number");
-    c = { id: s.combatantId, sideId: s.sideId, name, grade, hp: maxHp, maxHp, momentumForce: mf, beatsPerTurn: beats, beats: 0, acted: false, out: false, spent: [] };
+    c = { id: s.combatantId, sideId: s.sideId, name, grade, hp: maxHp, maxHp, momentumForce: mf, beatsPerTurn: beats, ...fresh(e, s, s.yields ?? false) };
     if (s.creature) c.creature = s.creature;
+    if (s.offense?.length) c.offense = s.offense.map((o) => ({ ...o }));
+    if (s.defense?.length) c.defense = s.defense.map((o) => ({ ...o }));
   }
   // Joining mid-round: Beats now, to act if their side has not finished its turn.
   if (e.round > 0) c.beats = c.beatsPerTurn;
@@ -300,6 +456,9 @@ function start(engine: Engine, world: World, a: StartCombat): Effect[] {
     acting: null,
     pending: null,
     ended: false,
+    zones: checkZones(a.zones ?? []),
+    clash: null,
+    lastClash: null,
   };
   for (const s of a.combatants) e.combatants.push(build(engine, world, e, s));
   world.encounter = e;
@@ -318,6 +477,7 @@ function remove(world: World, a: RemoveCombatant): Effect[] {
   if (c.out) throw new Rejected(`${c.name} is already out of the fight`);
   c.out = true;
   if (e.acting === c.id) e.acting = null;
+  if (e.clash && (e.clash.attackerId === c.id || e.clash.defenderId === c.id)) e.clash = null;
   advance(e);
   return [];
 }
@@ -358,12 +518,25 @@ function newRound(e: Encounter) {
   e.round += 1;
   e.turn = 0;
   e.acting = null;
+  e.lastClash = null;
   for (const c of e.combatants) {
-    c.beats = c.beatsPerTurn;
+    // Beats Yielded after last round's turn come out of this one.
+    c.beats = Math.max(0, c.beatsPerTurn - c.debt);
+    c.debt = 0;
     c.acted = false;
     c.spent = [];
   }
   advance(e);
+}
+
+/** A combatant's turn ends: an Exposed that began before this turn ends with it. */
+function finish(c: Combatant) {
+  c.acted = true;
+  if (c.exposed?.started) c.exposed = null;
+}
+
+function noClash(e: Encounter) {
+  if (e.clash) throw new Rejected("a Clash is waiting: finish it first");
 }
 
 /** Moves past sides whose every active combatant has acted (or who have nobody left). */
@@ -389,8 +562,10 @@ function act(world: World, a: Act): Effect[] {
   if (c.out) throw new Rejected(`${c.name} is out of the fight`);
   if (c.sideId !== side) throw new Rejected(`${e.sides.find((s) => s.id === side)?.name} is taking its turn`);
   if (c.acted) throw new Rejected(`${c.name} has acted this round`);
-  if (e.acting && e.acting !== c.id) combatant(e, e.acting).acted = true;
+  noClash(e);
+  if (e.acting && e.acting !== c.id) finish(combatant(e, e.acting));
   e.acting = c.id;
+  if (c.exposed) c.exposed.started = true;
   return [];
 }
 
@@ -399,6 +574,7 @@ function beat(world: World, a: SpendBeat): Effect[] {
   const c = combatant(e, a.combatantId);
   if (e.acting !== c.id) throw new Rejected(`${c.name} is not acting`);
   if (c.beats < 1) throw new Rejected(`${c.name} has no Beats left`);
+  noClash(e);
   c.beats -= 1;
   c.spent.push(a.what.trim() || "Beat");
   return [];
@@ -408,7 +584,8 @@ function done(world: World, a: Done): Effect[] {
   const e = fight(world);
   const c = combatant(e, a.combatantId);
   if (e.acting !== c.id) throw new Rejected(`${c.name} is not acting`);
-  c.acted = true;
+  noClash(e);
+  finish(c);
   e.acting = null;
   advance(e);
   return [];
@@ -419,6 +596,7 @@ function seize(engine: Engine, world: World, a: SeizeMomentum): Effect[] {
   const c = combatant(e, a.combatantId);
   if (e.acting !== c.id) throw new Rejected(`${c.name} is not acting`);
   if (c.sideId === e.order[0]) throw new Rejected(`${c.name}'s side holds Momentum`);
+  noClash(e);
   if (c.beats < 1) throw new Rejected(`${c.name} has no Beat to spend`);
   const holderSide = e.order[0]!;
   const holder = momentumRoller(engine, world, e, holderSide);
@@ -462,6 +640,7 @@ function reversal(world: World, a: Reversal): Effect[] {
 function round(world: World): Effect[] {
   const e = fight(world);
   if (e.round === 0) throw new Rejected("roll Initial Momentum first");
+  noClash(e);
   const out: Effect[] = [];
   if (e.pending && e.pending.sideId !== e.order[0]) {
     // The new holder acts first; the other sides keep their order.
@@ -479,9 +658,13 @@ function hp(engine: Engine, world: World, a: CombatHp): Effect[] {
   const e = fight(world);
   const c = combatant(e, a.combatantId);
   if (!Number.isInteger(a.delta) || a.delta === 0) throw new Rejected("HP changes by a whole number");
+  return changeHp(engine, world, e, c, a.delta);
+}
+
+function changeHp(engine: Engine, world: World, e: Encounter, c: Combatant, delta: number): Effect[] {
   const before = hpOf(engine, world, c);
   // HP does not go below 0 or above Max HP (Core Mechanics, "Downed and Death").
-  const after = Math.max(0, Math.min(before.maxHp, before.hp + a.delta));
+  const after = Math.max(0, Math.min(before.maxHp, before.hp + delta));
   if (c.characterId) world.characters.get(c.characterId)!.hp = after;
   else c.hp = after;
   const out: Effect[] = [{ kind: "combat-hp", encounterId: e.id, combatantId: c.id, from: before.hp, to: after }];
@@ -493,10 +676,268 @@ function end(world: World): Effect[] {
   const e = fight(world);
   e.ended = true;
   e.acting = null;
+  e.clash = null;
   return [{ kind: "combat-ended", encounterId: e.id }];
 }
 
-export function applyCombat(engine: Engine, world: World, a: CombatAction, _env: Envelope): Effect[] {
+// ----------------------------------------------------------------- Zones ---
+
+function checkZones(zones: { id: string; name: string }[]) {
+  if (new Set(zones.map((z) => z.id)).size !== zones.length) throw new Rejected("two Zones share an id");
+  return zones.map((z) => ({ id: z.id, name: z.name.trim() || z.id }));
+}
+
+function setZones(world: World, a: SetZones): Effect[] {
+  const e = fight(world);
+  const zones = checkZones(a.zones);
+  for (const c of active(e))
+    if (c.zoneId && !zones.some((z) => z.id === c.zoneId)) throw new Rejected(`${c.name} is in a Zone that would be removed`);
+  e.zones = zones;
+  return [];
+}
+
+function move(world: World, a: Move): Effect[] {
+  const e = fight(world);
+  const c = combatant(e, a.combatantId);
+  if (c.out) throw new Rejected(`${c.name} is out of the fight`);
+  if (!e.zones.some((z) => z.id === a.zoneId)) throw new Rejected(`no Zone ${a.zoneId}`);
+  if (c.zoneId === a.zoneId) throw new Rejected(`${c.name} is already there`);
+  if (!a.forced) {
+    if (e.acting !== c.id) throw new Rejected(`${c.name} is not acting; a move on someone else's turn is forced`);
+    if (c.beats < 1) throw new Rejected(`${c.name} has no Beats left`);
+    noClash(e);
+    c.beats -= 1;
+    c.spent.push("Move");
+  }
+  c.zoneId = a.zoneId;
+  return [];
+}
+
+function setExposed(world: World, a: SetExposed): Effect[] {
+  const e = fight(world);
+  const c = combatant(e, a.combatantId);
+  // Exposed from now until the end of the combatant's next turn.
+  c.exposed = a.exposed ? { started: false } : null;
+  return [];
+}
+
+// ----------------------------------------------------------------- Clash ---
+
+/** Flanking applies when two or more hostiles engage the defender: here, share its Zone. */
+export function flankingSuggested(e: Encounter, attackerId: string, defenderId: string): boolean {
+  const a = e.combatants.find((c) => c.id === attackerId);
+  const d = e.combatants.find((c) => c.id === defenderId);
+  if (!a || !d || !d.zoneId) return false;
+  const hostiles = active(e).filter((c) => c.sideId !== d.sideId && c.zoneId === d.zoneId && c.id !== a.id);
+  return hostiles.length >= 1;
+}
+
+function sideForce(engine: Engine, world: World, c: Combatant, s: ClashSide, role: string): number {
+  if (c.characterId) {
+    if (!s.attribute) throw new Rejected(`name the Attribute ${c.name} ${role} with`);
+    const raw = rawStats(world.characters.get(c.characterId)!)[s.attribute];
+    if (raw === undefined) throw new Rejected(`${s.attribute} is not an Attribute`);
+    return engine.force(raw, c.grade);
+  }
+  if (s.force === undefined || !Number.isInteger(s.force) || s.force < 0) throw new Rejected(`enter ${c.name}'s Force`);
+  return s.force;
+}
+
+function paySurge(engine: Engine, world: World, c: Combatant, s: ClashSide): void {
+  if (!s.surge) return;
+  if (!c.characterId) throw new Rejected("record a creature's Surge in its modifier");
+  const ch = world.characters.get(c.characterId)!;
+  const cost = engine.surgeCost(maxAetherOf(engine, ch));
+  if (ch.aether < cost) throw new Rejected(`${ch.name} has ${ch.aether} Aether and a Surge costs ${cost}`);
+  ch.aether -= cost;
+}
+
+/** The Beats of the defender's next turn: this round's if it is still to come, else next round's. */
+function nextTurnBeats(e: Encounter, c: Combatant): { beats: number; thisRound: boolean } {
+  const stillToCome = e.round > 0 && !c.acted && e.acting !== c.id && e.order.indexOf(c.sideId) >= e.turn;
+  return stillToCome ? { beats: c.beats, thisRound: true } : { beats: Math.max(0, c.beatsPerTurn - c.debt), thisRound: false };
+}
+
+function attack(engine: Engine, world: World, a: Attack, id: string): Effect[] {
+  const e = fight(world);
+  if (e.round === 0) throw new Rejected("roll Initial Momentum first");
+  noClash(e);
+  const att = combatant(e, a.attackerId);
+  const def = combatant(e, a.defenderId);
+  if (att.out || def.out) throw new Rejected("both must be in the fight");
+  if (att.sideId === def.sideId) throw new Rejected(`${def.name} is on ${att.name}'s side`);
+  if (!Number.isInteger(a.attack.modifier)) throw new Rejected("modifiers are whole numbers");
+  sideForce(engine, world, att, a.attack, "attacks");
+  if (!a.free) {
+    if (e.acting !== att.id) throw new Rejected(`${att.name} is not acting; an attack off-turn is a free strike`);
+    if (att.beats < 1) throw new Rejected(`${att.name} has no Beats left`);
+    att.beats -= 1;
+    att.spent.push(a.label?.trim() || "Attack");
+  }
+  paySurge(engine, world, att, a.attack);
+  e.clash = {
+    id,
+    attackerId: att.id,
+    defenderId: def.id,
+    attack: { ...a.attack },
+    flanking: Boolean(a.flanking),
+    cornered: Boolean(a.cornered),
+    free: Boolean(a.free),
+    stage: "defense",
+  };
+  if (a.label?.trim()) e.clash.label = a.label.trim();
+  return [];
+}
+
+function checkDice(engine: Engine, grade: string, d: Dice | undefined, advantage: boolean) {
+  if (!d) throw new Rejected("the dice were not rolled");
+  checkCascade(engine, grade, d.natural);
+  if (advantage) {
+    if (d.dropped === undefined || d.dropped > d.natural[0]!) throw new Rejected("Advantage keeps the higher of two dice");
+  } else if (d.dropped !== undefined) throw new Rejected("only Advantage sets a die aside");
+}
+
+function defend(engine: Engine, world: World, a: Defend): Effect[] {
+  const e = fight(world);
+  const cl = e.clash;
+  if (!cl || cl.stage !== "defense") throw new Rejected("no attack is waiting on a defense");
+  const att = combatant(e, cl.attackerId);
+  const def = combatant(e, cl.defenderId);
+  if (!Number.isInteger(a.defense.modifier)) throw new Rejected("modifiers are whole numbers");
+  const attForce = sideForce(engine, world, att, cl.attack, "attacks");
+  const defForce = sideForce(engine, world, def, a.defense, "defends");
+  checkDice(engine, att.grade, a.attackDice, Boolean(cl.attack.advantage));
+  checkDice(engine, def.grade, a.defenseDice, Boolean(a.defense.advantage));
+  paySurge(engine, world, def, a.defense);
+
+  const r = engine.rules;
+  const mods = (c: Combatant, s: ClashSide, flank: boolean) =>
+    s.modifier + (s.surge ? r.combat.surge.bonus : 0) + (flank ? r.resolution.flanking_bonus : 0) + (c.exposed ? r.resolution.exposed : 0);
+  const attMods = mods(att, cl.attack, cl.flanking);
+  const defMods = mods(def, a.defense, false);
+  const attDice = sum(a.attackDice!.natural);
+  const defDice = sum(a.defenseDice!.natural);
+  const out = engine.clash(attDice, attForce, defDice, defForce, att.grade, def.grade, attMods, defMods);
+
+  const next = nextTurnBeats(e, def);
+  let yieldCap = def.yields ? next.beats : 0;
+  if (cl.cornered) yieldCap = Math.min(yieldCap, r.combat.yield.cornered_max_beats);
+  const result: ClashResult = {
+    attackerId: att.id,
+    defenderId: def.id,
+    attackTotal: out.attacker_total,
+    defenseTotal: out.defender_total,
+    margin: out.margin,
+    attackerWins: out.attacker_wins,
+    turnedAside: out.turned_aside,
+    attackExploded: a.attackDice!.natural.length > 1,
+    defenseExploded: a.defenseDice!.natural.length > 1,
+    yieldCap,
+  };
+  if (cl.label) result.label = cl.label;
+  cl.defense = { ...a.defense };
+  cl.result = result;
+
+  const cascade = r.grades.volatility.battle_memory_cascade_dice;
+  const rolls: MomentumRollRecord[] = [
+    { combatantId: att.id, natural: a.attackDice!.natural, force: attForce, total: out.attacker_total, label: cl.label ?? "Attack" },
+    { combatantId: def.id, natural: a.defenseDice!.natural, force: defForce, total: out.defender_total, label: "Defense" },
+  ];
+  const battleMemory = [
+    ...(att.characterId && a.attackDice!.natural.length - 1 >= cascade ? [att.characterId] : []),
+    ...(def.characterId && a.defenseDice!.natural.length - 1 >= cascade ? [def.characterId] : []),
+  ];
+  const effects: Effect[] = [
+    { kind: "clash", encounterId: e.id, attackerId: att.id, defenderId: def.id, margin: out.margin, attackTotal: out.attacker_total, defenseTotal: out.defender_total, rolls, battleMemory },
+  ];
+
+  if (out.attacker_wins && out.margin > 0 && yieldCap > 0) {
+    cl.stage = "yield";
+    return effects;
+  }
+  // Nothing to Yield (the defender won, a tie, or no Beat to give): the Clash resolves now.
+  return [...effects, ...land(engine, world, e, 0)];
+}
+
+/** Applies the pending Clash's outcome with `y` Beats Yielded, and clears it. */
+function land(engine: Engine, world: World, e: Encounter, y: number): Effect[] {
+  const cl = e.clash!;
+  const res = cl.result!;
+  const att = combatant(e, cl.attackerId);
+  const def = combatant(e, cl.defenderId);
+  const r = engine.rules;
+  const out: Effect[] = [];
+  if (!res.attackerWins) {
+    // Turned Aside: the defender won by 40 or more and the attacker is Exposed.
+    if (res.turnedAside) att.exposed = { started: false };
+    res.yielded = 0;
+    res.remaining = 0;
+    res.damage = 0;
+    res.drivenBack = false;
+    res.drivable = false;
+  } else {
+    if (y > 0) {
+      const next = nextTurnBeats(e, def);
+      if (next.thisRound) def.beats -= y;
+      else def.debt += y;
+    }
+    const remaining = Math.max(0, res.margin - y * r.combat.yield.margin_reduction_per_beat);
+    const damage = remaining * engine.damageMultiplier(att.grade);
+    const drivenBack = remaining >= r.resolution.rule_of_40.driven_back_margin;
+    res.yielded = y;
+    res.remaining = remaining;
+    res.damage = damage;
+    res.drivenBack = drivenBack;
+    res.drivable = drivenBack || y >= r.combat.yield.max_beats;
+    if (drivenBack) def.exposed = { started: false };
+    if (damage > 0) out.push(...changeHp(engine, world, e, def, -damage));
+  }
+  e.lastClash = res;
+  e.clash = null;
+  return [{ kind: "clash-resolved", encounterId: e.id, defenderId: def.id, yielded: res.yielded!, damage: res.damage!, drivenBack: res.drivenBack!, turnedAside: res.turnedAside }, ...out];
+}
+
+function resolve(engine: Engine, world: World, a: ResolveClash): Effect[] {
+  const e = fight(world);
+  const cl = e.clash;
+  if (!cl || cl.stage !== "yield") throw new Rejected("no Clash is waiting on a Yield");
+  if (!Number.isInteger(a.yield) || a.yield < 0) throw new Rejected("Yield is a whole number of Beats");
+  if (a.yield > cl.result!.yieldCap) {
+    const def = combatant(e, cl.defenderId);
+    throw new Rejected(`${def.name} can give up ${cl.result!.yieldCap} Beat${cl.result!.yieldCap === 1 ? "" : "s"} here`);
+  }
+  return land(engine, world, e, a.yield);
+}
+
+/** What a player may record in a fight, for their own character; everything else is the GM's. */
+export function authorizeCombatPlayer(world: World, a: CombatAction, userId: string): void {
+  const e = world.encounter;
+  const own = (combatantId: string | undefined) => {
+    const c = e?.combatants.find((x) => x.id === combatantId);
+    const ch = c?.characterId ? world.characters.get(c.characterId) : undefined;
+    if (!ch || ch.playerId !== userId) throw new Rejected("a player acts only for their own character");
+  };
+  switch (a.type) {
+    case "combat.act":
+    case "combat.beat":
+    case "combat.done":
+    case "combat.seize":
+      return own(a.combatantId);
+    case "combat.move":
+      if (a.forced) throw new Rejected("a forced move is the GM's");
+      return own(a.combatantId);
+    case "combat.attack":
+      if (a.free) throw new Rejected("the GM calls a free strike");
+      return own(a.attackerId);
+    case "combat.defend":
+    case "combat.resolve":
+      return own(e?.clash?.defenderId);
+    default:
+      throw new Rejected(`only the GM records ${a.type}`);
+  }
+}
+
+export function applyCombat(engine: Engine, world: World, a: CombatAction, env: Envelope): Effect[] {
   switch (a.type) {
     case "combat.start":
       return start(engine, world, a);
@@ -522,6 +963,18 @@ export function applyCombat(engine: Engine, world: World, a: CombatAction, _env:
       return hp(engine, world, a);
     case "combat.end":
       return end(world);
+    case "combat.attack":
+      return attack(engine, world, a, env.id);
+    case "combat.defend":
+      return defend(engine, world, a);
+    case "combat.resolve":
+      return resolve(engine, world, a);
+    case "combat.move":
+      return move(world, a);
+    case "combat.exposed":
+      return setExposed(world, a);
+    case "combat.zones":
+      return setZones(world, a);
   }
 }
 

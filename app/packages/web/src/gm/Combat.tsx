@@ -7,9 +7,20 @@
  * record at once, with Undo (app/DESIGN.md, "The GM is the captain").
  */
 import type { Engine } from "@gradebreaker/engine";
-import type { Action, CombatantSpec, CombatantView, EncounterView, Envelope, GmView } from "@gradebreaker/record";
+import {
+  type Action,
+  type CombatantSpec,
+  type CombatantView,
+  type Encounter,
+  type EncounterView,
+  type Envelope,
+  type ForceOption,
+  type GmView,
+  flankingSuggested,
+} from "@gradebreaker/record";
 import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
+import { AttackForm, type Clasher, DefenseForm, YieldChoice } from "../Clash.tsx";
 import { RollList } from "../Dice.tsx";
 
 interface Creature {
@@ -20,6 +31,9 @@ interface Creature {
   beats: number;
   hrt: number;
   per: number;
+  yields: boolean;
+  offense: ForceOption[];
+  defense: ForceOption[];
 }
 
 const rid = () => Math.random().toString(36).slice(2, 6);
@@ -83,6 +97,9 @@ function CreaturePicker({
         maxHp: c.hp,
         beats: c.beats,
         momentumForce: Math.max(c.hrt, c.per),
+        yields: c.yields,
+        offense: c.offense,
+        defense: c.defense,
       })),
     );
   };
@@ -188,6 +205,12 @@ function Setup({ view, engine, onRecorded }: { view: GmView; engine: Engine; onR
     Object.fromEntries(view.characters.map((c) => [c.id, c.playerId ? "party" : ""])),
   );
   const [others, setOthers] = useState<CombatantSpec[]>([]);
+  const [zoneText, setZoneText] = useState("Here");
+  const zones = zoneText
+    .split(",")
+    .map((z) => z.trim())
+    .filter(Boolean)
+    .map((name, i) => ({ id: `z${i + 1}`, name }));
 
   const combatants: CombatantSpec[] = [
     ...view.characters.filter((c) => placed[c.id]).map((c) => ({ combatantId: c.id, sideId: placed[c.id]!, characterId: c.id })),
@@ -218,6 +241,13 @@ function Setup({ view, engine, onRecorded }: { view: GmView; engine: Engine; onR
             Add a side
           </button>
         )}
+      </div>
+      <h3>Zones</h3>
+      <div className="row">
+        <label>
+          Loose areas, separated by commas; everyone starts in the first
+          <input className="wide" value={zoneText} onChange={(e) => setZoneText(e.target.value)} placeholder="The bar, The floor, The doorway" />
+        </label>
       </div>
       <h3>Characters</h3>
       {view.characters.length === 0 && <p className="muted">No characters in the campaign yet.</p>}
@@ -270,6 +300,7 @@ function Setup({ view, engine, onRecorded }: { view: GmView; engine: Engine; onR
             encounterId: `fight-${rid()}`,
             name: name.trim() || "Fight",
             sides: sides.filter((s) => combatants.some((c) => c.sideId === s.id)),
+            zones,
             combatants,
           })
         }
@@ -282,7 +313,14 @@ function Setup({ view, engine, onRecorded }: { view: GmView; engine: Engine; onR
 
 // ------------------------------------------------------------ running ---
 
-const BEAT_KINDS = ["Attack", "Move", "Check", "Item", "Application", "Disengage"];
+const BEAT_KINDS = ["Check", "Item", "Application", "Disengage"];
+
+/** A combatant as the Clash forms need them: a character's Forces, or a creature's stat block lines. */
+export function clasherOf(view: GmView, c: CombatantView, role: "attack" | "defense"): Clasher {
+  const sheet = c.characterId ? view.characters.find((s) => s.id === c.characterId) : undefined;
+  if (sheet) return { kind: "character", name: c.name, force: sheet.force, aether: sheet.aether, surgeCost: sheet.surgeCost };
+  return { kind: "creature", name: c.name, options: (role === "attack" ? c.offense : c.defense) ?? [] };
+}
 
 function Pips({ n, of }: { n: number; of: number }) {
   return (
@@ -297,18 +335,25 @@ function Pips({ n, of }: { n: number; of: number }) {
 function CombatantRow({
   c,
   e,
+  view,
   canAct,
   run,
   busy,
 }: {
   c: CombatantView;
   e: EncounterView;
+  view: GmView;
   canAct: boolean;
   run: (a: Action) => Promise<boolean>;
   busy: boolean;
 }) {
   const [delta, setDelta] = useState("");
   const [other, setOther] = useState("");
+  const [attacking, setAttacking] = useState<null | "turn" | "free">(null);
+  const [zone, setZone] = useState(c.zoneId ?? "");
+  const targets = e.combatants.filter((x) => !x.out && x.sideId !== c.sideId).map((x) => ({ id: x.id, name: x.name }));
+  const zoneName = (id: string | null) => e.zones.find((z) => z.id === id)?.name ?? "";
+  const pickedZone = zone && zone !== c.zoneId ? zone : "";
   const acting = e.acting === c.id;
   const holder = e.order[0];
   const d = Math.trunc(Number(delta));
@@ -323,6 +368,8 @@ function CombatantRow({
         <strong>{c.name}</strong>
         {c.creature && c.creature !== c.name && <span className="muted small"> {c.creature}</span>}
         <span className="muted small"> · Momentum {c.momentumForce}</span>
+        {c.zoneId && <span className="muted small"> · {zoneName(c.zoneId)}</span>}
+        {c.exposed && <span className="tag danger">Exposed</span>}
         {c.downed && <span className="tag danger">Downed</span>}
         {c.out && <span className="tag">Out</span>}
         {acting && <span className="tag attention">Acting</span>}
@@ -360,8 +407,68 @@ function CombatantRow({
           </button>
         </div>
       )}
-      {acting && (
+      {!c.out && (
+        <div className="row tight">
+          {e.zones.length > 1 && (
+            <>
+              <select value={zone || c.zoneId || ""} onChange={(ev) => setZone(ev.target.value)} aria-label="Zone">
+                {e.zones.map((z) => (
+                  <option key={z.id} value={z.id}>
+                    {z.name}
+                  </option>
+                ))}
+              </select>
+              {pickedZone && acting && (
+                <button disabled={busy || c.beats < 1} onClick={() => run({ type: "combat.move", combatantId: c.id, zoneId: pickedZone })}>
+                  Move (1 Beat)
+                </button>
+              )}
+              {pickedZone && (
+                <button disabled={busy} onClick={() => run({ type: "combat.move", combatantId: c.id, zoneId: pickedZone, forced: true })} title="Driven, thrown, or placed: no Beat">
+                  Place
+                </button>
+              )}
+            </>
+          )}
+          <button disabled={busy} onClick={() => run({ type: "combat.exposed", combatantId: c.id, exposed: !c.exposed })} title="−10 to Clash rolls until the end of their next turn">
+            {c.exposed ? "Clear Exposed" : "Exposed"}
+          </button>
+          {!acting && !e.clash && e.round > 0 && (
+            <button disabled={busy} onClick={() => setAttacking(attacking === "free" ? null : "free")} title="Leaving a Zone without Disengaging: one Clash roll at no Beat">
+              Free strike…
+            </button>
+          )}
+        </div>
+      )}
+      {attacking && !e.clash && (
+        <AttackForm
+          attacker={clasherOf(view, c, "attack")}
+          targets={targets}
+          suggestFlanking={(d) => flankingSuggested(e as unknown as Encounter, c.id, d)}
+          gm
+          free={attacking === "free"}
+          busy={busy}
+          onCancel={() => setAttacking(null)}
+          onDeclare={async (d) => {
+            const ok = await run({
+              type: "combat.attack",
+              attackerId: c.id,
+              defenderId: d.defenderId,
+              attack: d.attack,
+              ...(d.flanking ? { flanking: true } : {}),
+              ...(d.cornered ? { cornered: true } : {}),
+              ...(attacking === "free" ? { free: true } : {}),
+              ...(d.label ? { label: d.label } : {}),
+            });
+            if (ok) setAttacking(null);
+          }}
+        />
+      )}
+      {acting && !e.clash && (
         <div className="row tight beats">
+          <button className="primary" disabled={busy || c.beats < 1} onClick={() => setAttacking(attacking === "turn" ? null : "turn")}>
+            Attack…
+          </button>
           {BEAT_KINDS.map((k) => (
             <button key={k} disabled={busy || c.beats < 1} onClick={() => run({ type: "combat.beat", combatantId: c.id, what: k })}>
               {k}
@@ -466,6 +573,8 @@ function Running({
       )}
       {roundOver && <p className="muted">Every side has acted. Start the next round.</p>}
       {error && <p className="error">{error}</p>}
+      <ClashPanel view={view} engine={engine} e={e} run={run} busy={busy} />
+      {e.zones.length > 0 && <ZonesBar e={e} run={run} busy={busy} />}
       <div className="sides">
         {order.map((sid, i) => {
           const members = e.combatants.filter((c) => c.sideId === sid);
@@ -479,7 +588,7 @@ function Running({
               </h3>
               <ol className="combatants">
                 {members.map((c) => (
-                  <CombatantRow key={c.id} c={c} e={e} canAct={taking && !c.acted && !c.out} run={run} busy={busy} />
+                  <CombatantRow key={c.id} c={c} e={e} view={view} canAct={taking && !c.acted && !c.out && !e.clash} run={run} busy={busy} />
                 ))}
               </ol>
             </div>
@@ -493,6 +602,146 @@ function Running({
       <h3 className="rolls-heading">Recent rolls</h3>
       <RollList rolls={view.rolls.slice(0, 12)} gm />
     </section>
+  );
+}
+
+/** The Clash waiting on its defense or Yield, and the last one resolved with its drive. */
+function ClashPanel({
+  view,
+  engine,
+  e,
+  run,
+  busy,
+}: {
+  view: GmView;
+  engine: Engine;
+  e: EncounterView;
+  run: (a: Action) => Promise<boolean>;
+  busy: boolean;
+}) {
+  const name = (id: string) => e.combatants.find((c) => c.id === id)?.name ?? id;
+  const [drive, setDrive] = useState("");
+  const cl = e.clash;
+  if (cl) {
+    const att = e.combatants.find((c) => c.id === cl.attackerId)!;
+    const def = e.combatants.find((c) => c.id === cl.defenderId)!;
+    const a = cl.attack;
+    const how = a.attribute ? `${a.attribute}` : `${a.means ?? "Force"} ${a.force}`;
+    const extras = [
+      a.modifier ? `${a.modifier > 0 ? "+" : ""}${a.modifier}` : "",
+      cl.flanking ? "Flanking +10" : "",
+      a.surge ? "Surge +5" : "",
+      a.advantage ? "Advantage" : "",
+      att.exposed ? "Exposed −10" : "",
+      cl.cornered ? `${def.name} Cornered` : "",
+      cl.free ? "free strike" : "",
+    ].filter(Boolean);
+    return (
+      <section className="clash-panel">
+        <h3>
+          {att.name} attacks {def.name}
+          {cl.label ? `: ${cl.label}` : ""}
+        </h3>
+        <p className="small muted">
+          {how}
+          {extras.length ? ` · ${extras.join(" · ")}` : ""}
+        </p>
+        {cl.stage === "defense" ? (
+          <>
+            <p className="small">
+              {def.characterId ? `${def.name}'s player can answer on their screen, or record it here.` : `${def.name} defends.`}
+              {def.exposed ? " Exposed: −10." : ""}
+            </p>
+            <DefenseForm defender={clasherOf(view, def, "defense")} busy={busy} onDefend={(s) => run({ type: "combat.defend", defense: s })} />
+          </>
+        ) : (
+          <>
+            <p>
+              {cl.result!.attackTotal} against {cl.result!.defenseTotal}: Margin {cl.result!.margin}.{" "}
+              {def.characterId ? `${def.name}'s player can choose on their screen.` : ""}
+            </p>
+            <YieldChoice
+              margin={cl.result!.margin}
+              cap={cl.result!.yieldCap}
+              multiplier={engine.damageMultiplier(att.grade)}
+              busy={busy}
+              onYield={(y) => run({ type: "combat.resolve", yield: y })}
+            />
+          </>
+        )}
+      </section>
+    );
+  }
+  const r = e.lastClash;
+  if (!r) return null;
+  const def = e.combatants.find((c) => c.id === r.defenderId);
+  const line = !r.attackerWins
+    ? `${name(r.defenderId)} turns the attack, ${r.defenseTotal} against ${r.attackTotal}${r.turnedAside ? `: Turned Aside, ${name(r.attackerId)} is Exposed` : ""}.`
+    : `${name(r.attackerId)} hits ${name(r.defenderId)}, Margin ${r.margin}${r.yielded ? `, ${r.yielded} Beat${r.yielded === 1 ? "" : "s"} Yielded` : ""}: ${r.damage} damage${r.drivenBack ? ", Driven Back and Exposed" : ""}.`;
+  const zones = e.zones.filter((z) => z.id !== def?.zoneId);
+  const target = zones.some((z) => z.id === drive) ? drive : (zones[0]?.id ?? "");
+  return (
+    <section className="clash-panel last">
+      <p>{line}</p>
+      {!r.attackerWins && r.defenseExploded && (
+        <p className="small muted">A defensive Clash won on an explosion can be a Decisive Tactical Reversal; call it above if it is.</p>
+      )}
+      {r.drivable && def && !def.out && zones.length > 0 && (
+        <div className="row tight">
+          <span className="small">{name(r.attackerId)} may drive {def.name} into an adjacent Zone:</span>
+          <select value={target} onChange={(ev) => setDrive(ev.target.value)}>
+            {zones.map((z) => (
+              <option key={z.id} value={z.id}>
+                {z.name}
+              </option>
+            ))}
+          </select>
+          <button disabled={busy} onClick={() => run({ type: "combat.move", combatantId: def.id, zoneId: target, forced: true })}>
+            Drive
+          </button>
+        </div>
+      )}
+    </section>
+  );
+}
+
+/** Who stands where, and the Zones renamed or added. */
+function ZonesBar({ e, run, busy }: { e: EncounterView; run: (a: Action) => Promise<boolean>; busy: boolean }) {
+  const [editing, setEditing] = useState(false);
+  const [text, setText] = useState(e.zones.map((z) => z.name).join(", "));
+  const save = async () => {
+    const names = text
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+    // Existing Zones keep their ids in order; new names get new ids.
+    const zones = names.map((n, i) => ({ id: e.zones[i]?.id ?? `z${Date.now().toString(36)}${i}`, name: n }));
+    if (await run({ type: "combat.zones", zones })) setEditing(false);
+  };
+  return (
+    <div className="zones-bar">
+      {e.zones.map((z) => (
+        <span key={z.id} className="zone">
+          <strong>{z.name}</strong>{" "}
+          <span className="muted small">
+            {e.combatants
+              .filter((c) => c.zoneId === z.id && !c.out)
+              .map((c) => c.name)
+              .join(", ") || "empty"}
+          </span>
+        </span>
+      ))}
+      {editing ? (
+        <>
+          <input className="wide" value={text} onChange={(ev) => setText(ev.target.value)} />
+          <button disabled={busy} onClick={save}>
+            Save Zones
+          </button>
+        </>
+      ) : (
+        <button onClick={() => setEditing(true)}>Edit Zones</button>
+      )}
+    </div>
   );
 }
 

@@ -83,9 +83,35 @@ export interface EncounterView extends Omit<Encounter, "combatants"> {
  * who is acting, a shift called for next round) and each character's Beats. No creature's
  * Health or Beats, and no character's Health beyond what the party frame shows.
  */
+/** A Clash as the table sees it: names, the totals once rolled, and what the defender may Yield. */
+export interface PlayerClash {
+  attackerId: string;
+  attackerName: string;
+  defenderId: string;
+  defenderName: string;
+  label?: string;
+  stage: "defense" | "yield" | "resolved";
+  cornered?: boolean;
+  attackTotal?: number;
+  defenseTotal?: number;
+  margin?: number;
+  attackerWins?: boolean;
+  /** For a character defender: the most Beats they can Yield. */
+  yieldCap?: number;
+  /** The attacker's Grade damage multiplier, for showing what each Yield leaves. */
+  damageMultiplier?: number;
+  yielded?: number;
+  damage?: number;
+  drivenBack?: boolean;
+  turnedAside?: boolean;
+}
+
 export interface PlayerCombat {
   name: string;
   round: number;
+  zones: { id: string; name: string }[];
+  clash: PlayerClash | null;
+  lastClash: PlayerClash | null;
   /** Sides in turn order; the first holds Momentum. */
   order: { id: string; name: string }[];
   /** The side taking its turn; null between rounds. */
@@ -98,6 +124,8 @@ export interface PlayerCombat {
     acting: boolean;
     acted: boolean;
     out: boolean;
+    zoneId: string | null;
+    exposed: boolean;
     /** Characters only. */
     beats?: number;
     beatsPerTurn?: number;

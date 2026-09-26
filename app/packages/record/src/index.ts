@@ -25,6 +25,7 @@ export type {
   CombatantView,
   EncounterView,
   PlayerCombat,
+  PlayerClash,
   GmView,
   InterfaceSheet,
   LiveMessage,
@@ -35,4 +36,14 @@ export type {
 } from "./protocol.ts";
 export { type D100, type Dice, rollD100s } from "./dice.ts";
 export { rollFor } from "./rolling.ts";
-export { type Combatant, type Encounter, momentumForceOf, momentumRoller } from "./combat.ts";
+export {
+  type ClashResult,
+  type ClashSide,
+  type Combatant,
+  type Encounter,
+  type ForceOption,
+  type PendingClash,
+  flankingSuggested,
+  momentumForceOf,
+  momentumRoller,
+} from "./combat.ts";

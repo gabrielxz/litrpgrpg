@@ -130,6 +130,18 @@ export function describe(
       return `${name(a.combatantId)}: HP ${signed(a.delta)}`;
     case "combat.end":
       return "Fight ends";
+    case "combat.attack":
+      return `${a.free ? "Free strike" : "Attack"}: ${name(a.attackerId)} at ${name(a.defenderId)}${a.label ? ` (${a.label})` : ""}`;
+    case "combat.defend":
+      return "Defense rolled";
+    case "combat.resolve":
+      return a.yield ? `Yield ${a.yield} Beat${a.yield === 1 ? "" : "s"}` : "Takes the hit";
+    case "combat.move":
+      return `${name(a.combatantId)} ${a.forced ? "is placed" : "moves"}`;
+    case "combat.exposed":
+      return `${name(a.combatantId)}: ${a.exposed ? "Exposed" : "no longer Exposed"}`;
+    case "combat.zones":
+      return `Zones: ${a.zones.map((z) => z.name).join(", ")}`;
     case "void": {
       const seq = seqOf(a.targetId);
       const target = seq === undefined ? "an action" : `#${seq + 1}`;
@@ -190,6 +202,14 @@ export function effectLine(e: Effect, name: Names): string | null {
       return `${name(e.combatantId)}: HP ${e.from} → ${e.to}`;
     case "combat-downed":
       return `${name(e.combatantId)} is Downed`;
+    case "clash":
+      return `Clash: ${e.attackTotal} against ${e.defenseTotal}, Margin ${e.margin}${
+        e.battleMemory.length ? `; ${e.battleMemory.map(name).join(", ")} earns a Battle Memory Card` : ""
+      }`;
+    case "clash-resolved":
+      return e.turnedAside
+        ? "Turned Aside: the attacker is Exposed"
+        : `${name(e.defenderId)} takes ${e.damage}${e.yielded ? ` after Yielding ${e.yielded}` : ""}${e.drivenBack ? ", Driven Back" : ""}`;
     case "rolled":
       return `Total ${e.total}${e.exploded ? `, exploded (${e.extraDice} extra)` : ""}${e.outcome ? `: ${e.outcome}` : ""}${
         e.battleMemory ? `; ${e.characterId ? name(e.characterId) : "the roller"} earns a Battle Memory Card` : ""

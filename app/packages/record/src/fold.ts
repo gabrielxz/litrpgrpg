@@ -26,7 +26,7 @@ import type {
   SendMessage,
   SpendFreePoints,
 } from "./actions.ts";
-import { type Encounter, type MomentumRollRecord, applyCombat, cloneEncounter } from "./combat.ts";
+import { type Encounter, type MomentumRollRecord, applyCombat, authorizeCombatPlayer, cloneEncounter } from "./combat.ts";
 
 export interface CharacterState {
   id: string;
@@ -125,6 +125,19 @@ export type Effect =
   | { kind: "combat-hp"; encounterId: string; combatantId: string; from: number; to: number }
   | { kind: "combat-downed"; encounterId: string; combatantId: string }
   | { kind: "combat-ended"; encounterId: string }
+  | {
+      kind: "clash";
+      encounterId: string;
+      attackerId: string;
+      defenderId: string;
+      margin: number;
+      attackTotal: number;
+      defenseTotal: number;
+      rolls: MomentumRollRecord[];
+      /** Characters whose roll cascaded far enough for a Battle Memory Card. */
+      battleMemory: string[];
+    }
+  | { kind: "clash-resolved"; encounterId: string; defenderId: string; yielded: number; damage: number; drivenBack: boolean; turnedAside: boolean }
   | { kind: "voided"; targetId: string; reason: string };
 
 export interface Rejection {
@@ -338,6 +351,12 @@ function apply(engine: Engine, world: World, env: Envelope): Effect[] {
     case "combat.round":
     case "combat.hp":
     case "combat.end":
+    case "combat.attack":
+    case "combat.defend":
+    case "combat.resolve":
+    case "combat.move":
+    case "combat.exposed":
+    case "combat.zones":
       return applyCombat(engine, world, a, env);
     case "void":
       throw new Error("voids are handled before apply");
@@ -372,6 +391,15 @@ function authorize(world: World, env: Envelope) {
       if (inv) mine(inv.toId);
       return;
     }
+    case "combat.act":
+    case "combat.beat":
+    case "combat.done":
+    case "combat.seize":
+    case "combat.move":
+    case "combat.attack":
+    case "combat.defend":
+    case "combat.resolve":
+      return authorizeCombatPlayer(world, a, me);
     case "dice.roll":
       if (a.roller.kind !== "character") throw new Rejected("a player rolls for their own character");
       if (a.private) throw new Rejected("only the GM rolls privately");

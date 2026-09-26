@@ -1102,3 +1102,74 @@ details.typed summary {
 .fight li.acted {
   opacity: 0.55;
 }
+
+/* ---- the Clash ---- */
+
+.clash-panel {
+  border: 2px solid var(--cyan);
+  background: color-mix(in srgb, var(--cyan) 6%, #fbf7f0);
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 0.8rem;
+}
+.clash-panel.last {
+  border-width: 1px;
+  border-color: var(--stone);
+  background: #fbf7f0;
+}
+.clash-panel h3 {
+  margin: 0 0 0.2rem;
+}
+.clash-panel p {
+  margin: 0.2rem 0;
+}
+.clash-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0.3rem 0;
+}
+.zones-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+.zone {
+  border: 1px dashed var(--stone);
+  padding: 0.15rem 0.5rem;
+}
+input.wide {
+  min-width: 18rem;
+}
+.narrow-input.wide {
+  min-width: 8rem;
+}
+.yield button {
+  font-size: 0.9rem;
+}
+
+.my-turn {
+  border-top: 1px solid var(--sys-line);
+  margin-top: 0.4rem;
+  padding-top: 0.4rem;
+}
+.fight-badge.warn {
+  color: #f0a39c;
+  margin-left: 0.3rem;
+}
+.sys-confirm.inline {
+  margin-left: 0.5rem;
+  padding: 0 0.5rem;
+  font-size: 0.8rem;
+}
+.player .clash-form select,
+.player .clash-form input {
+  max-width: 100%;
+}
+.player .yield button,
+.player .my-turn button:not(.primary) {
+  background: transparent;
+  color: var(--bone);
+  border: 1px solid var(--sys-line);
+}

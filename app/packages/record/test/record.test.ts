@@ -5,7 +5,7 @@
 import { Engine } from "@gradebreaker/engine";
 import { loadRules } from "@gradebreaker/engine/node";
 import { beforeEach, describe, expect, it } from "vitest";
-import { type Action, CampaignRecord, type Draft, RecordError, hoursForGoal, killAwards, rollD100s, rollFor } from "../src/index.ts";
+import { type Action, CampaignRecord, type Draft, RecordError, hoursForGoal, flankingSuggested, killAwards, rollD100s, rollFor } from "../src/index.ts";
 
 const engine = new Engine(loadRules());
 const GM = { role: "gm", userId: "gm-1" } as const;
@@ -575,6 +575,156 @@ describe("the combat tracker", () => {
 
   it("keeps the fight the GM's to record", () => {
     expect(() => rec.append(draft({ type: "combat.round" }, P1))).toThrow(/only the GM/);
+  });
+});
+
+describe("the Clash in the tracker", () => {
+  const ratSpec = { combatantId: "rat", sideId: "hostiles", name: "Frenzy Rat", grade: "F", maxHp: 12, momentumForce: 8, beats: 1, zoneId: "treeline" };
+  const enc = () => rec.state.encounter!;
+  const who = (id: string) => enc().combatants.find((c) => c.id === id)!;
+  const rolled = (action: Action, ...dice: number[]) => rec.append(rollFor(rec, draft(action), () => dice.shift()!));
+  const as = (actor: Draft["actor"], action: Action, ...dice: number[]) => rec.append(rollFor(rec, draft(action, actor), () => dice.shift()!));
+  /** Starts a fight with Momentum to `holder`: party (Joe PER 6 + 60 against the rat's 8 + 30) or hostiles. */
+  function fight(holder: "party" | "hostiles", extra: object[] = []) {
+    gm({
+      type: "combat.start",
+      encounterId: "e1",
+      name: "Treeline",
+      sides: [
+        { id: "party", name: "The party" },
+        { id: "hostiles", name: "Hostiles" },
+      ],
+      zones: [
+        { id: "treeline", name: "Treeline" },
+        { id: "road", name: "Road" },
+      ],
+      combatants: [
+        { combatantId: "kara", sideId: "party", characterId: "kara" },
+        { combatantId: "joe", sideId: "party", characterId: "joe" },
+        ratSpec,
+        ...extra,
+      ] as never,
+    });
+    rolled({ type: "combat.momentum" }, ...(holder === "party" ? [60, 30] : [30, 60]));
+  }
+  beforeEach(() => {
+    gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" });
+    gm({ type: "character.pregen", characterId: "joe", pregen: "Joe", playerId: "player-2" });
+  });
+
+  it("costs a Beat, rolls both sides at the defense, and lands a 40 Margin as Driven Back", () => {
+    fight("party");
+    gm({ type: "combat.act", combatantId: "kara" });
+    gm({ type: "combat.attack", attackerId: "kara", defenderId: "rat", attack: { attribute: "STR", modifier: 0 }, label: "Axe" });
+    expect(who("kara").beats).toBe(1);
+    expect(enc().clash).toMatchObject({ stage: "defense" });
+    expect(() => gm({ type: "combat.done", combatantId: "kara" })).toThrow(/Clash is waiting/);
+    // Kara 70 + 8 = 78; the rat 30 + 8 = 38. The rat cannot Yield, so the Clash lands at once.
+    const out = rolled({ type: "combat.defend", defense: { force: 8, means: "scampering", modifier: 0 } }, 70, 30);
+    expect(out.effects.map((e) => e.kind)).toEqual(["clash", "clash-resolved", "combat-hp", "combat-downed"]);
+    expect(enc().lastClash).toMatchObject({ margin: 40, damage: 40, drivenBack: true, drivable: true, yieldCap: 0 });
+    expect(who("rat")).toMatchObject({ hp: 0, exposed: { started: false } });
+    expect(enc().clash).toBeNull();
+  });
+
+  it("offers the defender Yield before damage, 20 Margin a Beat from their next turn", () => {
+    fight("hostiles");
+    gm({ type: "combat.act", combatantId: "rat" });
+    gm({ type: "combat.attack", attackerId: "rat", defenderId: "kara", attack: { force: 6, means: "bite", modifier: 0 } });
+    // The rat 60 + 6 = 66; Kara dodges 30 + 5 = 35: Margin 31.
+    as(P1, { type: "combat.defend", defense: { attribute: "DEX", modifier: 0 } }, 60, 30);
+    expect(enc().clash).toMatchObject({ stage: "yield", result: { margin: 31, yieldCap: 2 } });
+    expect(() => as(P2, { type: "combat.resolve", yield: 1 })).toThrow(/own character/);
+    const out = as(P1, { type: "combat.resolve", yield: 1 });
+    expect(out.effects[0]).toMatchObject({ kind: "clash-resolved", yielded: 1, damage: 11 });
+    expect(rec.sheet("kara")!.hp).toBe(3);
+    // Her turn this round is still to come: it has one Beat.
+    expect(who("kara").beats).toBe(1);
+  });
+
+  it("takes a Yield after the defender's turn from next round's Beats, and drives on two", () => {
+    fight("party");
+    gm({ type: "combat.act", combatantId: "kara" });
+    gm({ type: "combat.done", combatantId: "kara" });
+    gm({ type: "combat.act", combatantId: "joe" });
+    gm({ type: "combat.done", combatantId: "joe" });
+    gm({ type: "combat.act", combatantId: "rat" });
+    gm({ type: "combat.attack", attackerId: "rat", defenderId: "kara", attack: { force: 6, modifier: 0 } });
+    rolled({ type: "combat.defend", defense: { attribute: "DEX", modifier: 0 } }, 60, 30);
+    gm({ type: "combat.resolve", yield: 2 });
+    expect(enc().lastClash).toMatchObject({ remaining: 0, damage: 0, drivable: true });
+    expect(who("kara").debt).toBe(2);
+    gm({ type: "combat.move", combatantId: "kara", zoneId: "road", forced: true });
+    expect(who("kara").zoneId).toBe("road");
+    gm({ type: "combat.done", combatantId: "rat" });
+    gm({ type: "combat.round" });
+    expect(who("kara").beats).toBe(0);
+  });
+
+  it("caps Yield at one Beat when Cornered", () => {
+    fight("hostiles");
+    gm({ type: "combat.act", combatantId: "rat" });
+    gm({ type: "combat.attack", attackerId: "rat", defenderId: "kara", attack: { force: 6, modifier: 0 }, cornered: true });
+    rolled({ type: "combat.defend", defense: { attribute: "DEX", modifier: 0 } }, 60, 30);
+    expect(enc().clash!.result!.yieldCap).toBe(1);
+    expect(() => gm({ type: "combat.resolve", yield: 2 })).toThrow(/can give up 1 Beat here/);
+  });
+
+  it("leaves a Turned Aside attacker Exposed, at −10, until the end of their next turn", () => {
+    fight("hostiles");
+    gm({ type: "combat.act", combatantId: "rat" });
+    gm({ type: "combat.attack", attackerId: "rat", defenderId: "kara", attack: { force: 6, modifier: 0 } });
+    // The rat 10 + 6 = 16; Kara 60 + 7 = 67 on FOR: Turned Aside.
+    rolled({ type: "combat.defend", defense: { attribute: "FOR", modifier: 0 } }, 10, 60);
+    expect(enc().lastClash).toMatchObject({ turnedAside: true, damage: 0 });
+    expect(who("rat").exposed).toEqual({ started: false });
+    gm({ type: "combat.done", combatantId: "rat" });
+    gm({ type: "combat.act", combatantId: "kara" });
+    gm({ type: "combat.attack", attackerId: "kara", defenderId: "rat", attack: { attribute: "STR", modifier: 0 } });
+    // Kara 40 + 8 = 48; the rat 45 + 8 − 10 = 43.
+    rolled({ type: "combat.defend", defense: { force: 8, modifier: 0 } }, 40, 45);
+    expect(enc().lastClash).toMatchObject({ margin: 5, defenseTotal: 43 });
+    gm({ type: "combat.done", combatantId: "kara" });
+    gm({ type: "combat.act", combatantId: "joe" });
+    gm({ type: "combat.done", combatantId: "joe" });
+    gm({ type: "combat.round" });
+    gm({ type: "combat.act", combatantId: "rat" });
+    expect(who("rat").exposed).toEqual({ started: true });
+    gm({ type: "combat.done", combatantId: "rat" });
+    expect(who("rat").exposed).toBeNull();
+  });
+
+  it("adds Flanking and a Surge to the totals, and suggests Flanking from the Zones", () => {
+    fight("party", [{ ...ratSpec, combatantId: "rat2", name: "Frenzy Rat 2" }]);
+    // Everyone starts in the Treeline, where both rats engage Kara.
+    expect(flankingSuggested(enc(), "rat", "kara")).toBe(true);
+    gm({ type: "combat.move", combatantId: "kara", zoneId: "road", forced: true });
+    gm({ type: "combat.move", combatantId: "rat", zoneId: "road", forced: true });
+    expect(flankingSuggested(enc(), "rat", "kara")).toBe(false);
+    gm({ type: "combat.move", combatantId: "rat2", zoneId: "road", forced: true });
+    expect(flankingSuggested(enc(), "rat", "kara")).toBe(true);
+    gm({ type: "combat.act", combatantId: "kara" });
+    gm({ type: "combat.done", combatantId: "kara" });
+    gm({ type: "combat.act", combatantId: "joe" });
+    gm({ type: "combat.done", combatantId: "joe" });
+    gm({ type: "combat.act", combatantId: "rat" });
+    gm({ type: "combat.attack", attackerId: "rat", defenderId: "kara", attack: { force: 6, modifier: 0 }, flanking: true });
+    rolled({ type: "combat.defend", defense: { attribute: "DEX", modifier: 0, surge: true } }, 50, 50);
+    // The rat 50 + 6 + 10 = 66; Kara 50 + 5 + 5 = 60, and the Surge cost her 3 Aether.
+    expect(enc().clash!.result).toMatchObject({ attackTotal: 66, defenseTotal: 60 });
+    expect(rec.sheet("kara")!.aether).toBe(3);
+  });
+
+  it("moves for a Beat on the mover's turn, and lets players act only for their own characters", () => {
+    fight("party");
+    as(P1, { type: "combat.act", combatantId: "kara" });
+    as(P1, { type: "combat.move", combatantId: "kara", zoneId: "road" });
+    expect(who("kara")).toMatchObject({ zoneId: "road", beats: 1, spent: ["Move"] });
+    expect(() => as(P1, { type: "combat.move", combatantId: "kara", zoneId: "treeline", forced: true })).toThrow(/forced move is the GM's/);
+    expect(() => as(P2, { type: "combat.attack", attackerId: "kara", defenderId: "rat", attack: { attribute: "STR", modifier: 0 } })).toThrow(/own character/);
+    as(P1, { type: "combat.attack", attackerId: "kara", defenderId: "rat", attack: { attribute: "STR", modifier: 0 } });
+    expect(() => as(P1, { type: "combat.defend", defense: { force: 8, modifier: 0 } }, 50, 50)).toThrow(/own character/);
+    expect(() => as(P1, { type: "combat.round" })).toThrow(/only the GM/);
   });
 });
 

@@ -11,6 +11,9 @@
 import {
   type CampaignInfo,
   type CampaignRecord,
+  type ClashResult,
+  type Encounter,
+  type PlayerClash,
   type EncounterView,
   type PlayerCombat,
   momentumForceOf,
@@ -47,24 +50,26 @@ export function rollsFor(record: CampaignRecord, members: Member[], role: Role):
     const env = record.log[i]!;
     const a = env.action;
     if (skip.has(env.id)) continue;
-    if (a.type === "combat.momentum" || a.type === "combat.seize") {
-      // Momentum dice, newest first; a combatant's name as it stood in the fight.
-      const m = effects.get(env.id)?.find((x) => x.kind === "momentum" || x.kind === "seized");
-      if (!m || (m.kind !== "momentum" && m.kind !== "seized")) continue;
+    if (a.type === "combat.momentum" || a.type === "combat.seize" || a.type === "combat.defend") {
+      // Momentum and Clash dice, newest first; a combatant's name as it stood in the fight.
+      const m = effects.get(env.id)?.find((x) => x.kind === "momentum" || x.kind === "seized" || x.kind === "clash");
+      if (!m || (m.kind !== "momentum" && m.kind !== "seized" && m.kind !== "clash")) continue;
       const names = new Map((record.state.encounter?.combatants ?? []).map((c) => [c.id, c]));
       for (const [j, r] of [...m.rolls.entries()].reverse()) {
         const c = names.get(r.combatantId);
         const v: RollView = {
           id: `${env.id}:${j}`,
           at: env.at,
-          by: person(env.actor.userId),
+          // One action rolls both sides of a Clash; the dice belong to the combatants, not to whoever recorded them.
+          by: c?.name ?? r.combatantId,
           roller: c?.name ?? r.combatantId,
           label: r.label,
           rollKind: "clash",
           natural: r.natural,
           surge: false,
           force: r.force,
-          modifier: 0,
+          // Everything else in the total: Flanking, Exposed, Surge, the Cross-Grade Adjustment.
+          modifier: r.total - r.natural.reduce((x, y) => x + y, 0) - r.force,
           total: r.total,
           exploded: r.natural.length > 1,
           entered: false,
@@ -206,6 +211,28 @@ export function encounterView(record: CampaignRecord): EncounterView | null {
   };
 }
 
+function playerClash(engine: CampaignRecord["engine"], e: Encounter, cl: { attackerId: string; defenderId: string; label?: string; cornered?: boolean }, stage: PlayerClash["stage"], r?: ClashResult): PlayerClash {
+  const who = (id: string) => e.combatants.find((c) => c.id === id);
+  const out: PlayerClash = {
+    attackerId: cl.attackerId,
+    attackerName: who(cl.attackerId)?.name ?? cl.attackerId,
+    defenderId: cl.defenderId,
+    defenderName: who(cl.defenderId)?.name ?? cl.defenderId,
+    stage,
+  };
+  if (cl.label) out.label = cl.label;
+  if (cl.cornered) out.cornered = true;
+  if (r) {
+    Object.assign(out, { attackTotal: r.attackTotal, defenseTotal: r.defenseTotal, margin: r.margin, attackerWins: r.attackerWins, turnedAside: r.turnedAside });
+    if (who(cl.defenderId)?.characterId) {
+      out.yieldCap = r.yieldCap;
+      out.damageMultiplier = engine.damageMultiplier(who(cl.attackerId)?.grade ?? "F");
+    }
+    if (r.yielded !== undefined) Object.assign(out, { yielded: r.yielded, damage: r.damage, drivenBack: r.drivenBack });
+  }
+  return out;
+}
+
 export function playerCombat(record: CampaignRecord): PlayerCombat | null {
   const e = record.state.encounter;
   if (!e || e.ended) return null;
@@ -213,6 +240,9 @@ export function playerCombat(record: CampaignRecord): PlayerCombat | null {
   return {
     name: e.name,
     round: e.round,
+    zones: e.zones,
+    clash: e.clash ? playerClash(record.engine, e, e.clash, e.clash.stage, e.clash.result) : null,
+    lastClash: e.lastClash ? playerClash(record.engine, e, e.lastClash, "resolved", e.lastClash) : null,
     order: (e.round ? e.order : e.sides.map((s) => s.id)).map(side),
     turnSide: e.round ? (e.order[e.turn] ?? null) : null,
     pendingShift: e.pending?.sideId ?? null,
@@ -223,6 +253,8 @@ export function playerCombat(record: CampaignRecord): PlayerCombat | null {
       acting: e.acting === c.id,
       acted: c.acted,
       out: c.out,
+      zoneId: c.zoneId,
+      exposed: Boolean(c.exposed),
       ...(c.characterId ? { characterId: c.characterId, beats: c.beats, beatsPerTurn: c.beatsPerTurn } : {}),
     })),
   };

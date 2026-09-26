@@ -29,6 +29,24 @@ export function rollFor(record: CampaignRecord, draft: Draft, d100: D100): Draft
     const dice = rollD100s(threshold, { advantage: Boolean(a.advantage), explodes: a.rollKind !== "table" }, d100);
     return { ...draft, action: { ...a, ...dice } };
   }
+  if (a.type === "combat.defend") {
+    if (a.attackDice && a.defenseDice) return draft;
+    if (prior?.type === "combat.defend" && prior.attackDice && prior.defenseDice)
+      return { ...draft, action: { ...a, attackDice: prior.attackDice, defenseDice: prior.defenseDice } };
+    const e = record.state.encounter;
+    const cl = e?.clash;
+    if (!e || !cl) return draft;
+    const grade = (id: string) => e.combatants.find((c) => c.id === id)?.grade ?? "F";
+    const roll = (g: string, advantage: boolean) => rollD100s(record.engine.volatilityThreshold(g), { advantage }, d100);
+    return {
+      ...draft,
+      action: {
+        ...a,
+        attackDice: roll(grade(cl.attackerId), Boolean(cl.attack.advantage)),
+        defenseDice: roll(grade(cl.defenderId), Boolean(a.defense.advantage)),
+      },
+    };
+  }
   if (a.type === "combat.momentum" || a.type === "combat.seize") {
     if (a.attempts) return draft;
     if (prior?.type === a.type && prior.attempts) return { ...draft, action: { ...a, attempts: prior.attempts } as Action };

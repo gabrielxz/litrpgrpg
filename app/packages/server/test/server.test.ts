@@ -485,7 +485,7 @@ describe("the combat tracker", () => {
     expect(pv.combat.round).toBe(1);
     expect(pv.combat.order.map((s: { name: string }) => s.name).sort()).toEqual(["Hostiles", "The party"]);
     const rat = pv.combat.combatants.find((c: { id: string }) => c.id === "rat");
-    expect(Object.keys(rat).sort()).toEqual(["acted", "acting", "id", "name", "out", "sideId"]);
+    expect(Object.keys(rat).sort()).toEqual(["acted", "acting", "exposed", "id", "name", "out", "sideId", "zoneId"]);
     expect(pv.combat.combatants.find((c: { id: string }) => c.id === "kara")).toMatchObject({ beats: 2, beatsPerTurn: 2 });
     // The Momentum dice are the table's, and players see them.
     const labels = pv.rolls.map((r: { label: string }) => r.label);
@@ -493,6 +493,46 @@ describe("the combat tracker", () => {
 
     await act(campaignId, gm, { type: "combat.end" });
     expect((await call("GET", `/campaigns/${campaignId}`, { token: player })).json.combat).toBeNull();
+  });
+
+  it("lets the player defend and Yield from their own screen, with the server rolling the Clash", async () => {
+    const { campaignId, gm, player, playerId } = await table();
+    await act(campaignId, gm, { type: "character.pregen", characterId: "kara", pregen: "Kara", playerId });
+    await act(campaignId, gm, {
+      type: "combat.start",
+      encounterId: "e1",
+      name: "Treeline",
+      sides: [
+        { id: "party", name: "The party" },
+        { id: "hostiles", name: "Hostiles" },
+      ],
+      combatants: [
+        { combatantId: "kara", sideId: "party", characterId: "kara" },
+        { combatantId: "boss", sideId: "hostiles", name: "Rival Initiate", grade: "F", maxHp: 56, momentumForce: 12, beats: 2, yields: true },
+      ],
+    });
+    await act(campaignId, gm, { type: "combat.momentum" });
+    const holder = (await call("GET", `/campaigns/${campaignId}`, { token: gm })).json.encounter.order[0];
+    const attacker = holder === "party" ? "kara" : "boss";
+    const defender = holder === "party" ? "boss" : "kara";
+    await act(campaignId, holder === "party" ? player : gm, { type: "combat.act", combatantId: attacker });
+    const attack = holder === "party" ? { attribute: "STR", modifier: 0 } : { force: 12, modifier: 60 };
+    expect((await act(campaignId, holder === "party" ? player : gm, { type: "combat.attack", attackerId: attacker, defenderId: defender, attack })).status).toBe(201);
+    const defense = defender === "kara" ? { attribute: "DEX", modifier: 0 } : { force: 10, modifier: 0 };
+    const d = await act(campaignId, defender === "kara" ? player : gm, { type: "combat.defend", defense });
+    expect(d.status).toBe(201);
+    expect(d.json.envelope.action.attackDice.natural.length).toBeGreaterThanOrEqual(1);
+    const pv = (await call("GET", `/campaigns/${campaignId}`, { token: player })).json;
+    const rolls = pv.rolls.map((r: { label: string }) => r.label);
+    expect(rolls).toContain("Defense");
+    if (pv.combat.clash?.stage === "yield") {
+      expect(pv.combat.clash.defenderName).toBe(defender === "kara" ? "Kara" : "Rival Initiate");
+      const r = await act(campaignId, defender === "kara" ? player : gm, { type: "combat.resolve", yield: 0 });
+      expect(r.status).toBe(201);
+    }
+    const after = (await call("GET", `/campaigns/${campaignId}`, { token: player })).json.combat;
+    expect(after.clash).toBeNull();
+    expect(after.lastClash.stage).toBe("resolved");
   });
 });
 
