@@ -5,6 +5,10 @@
  * after a drop sends its current one. The server answers with the caller's view, then pushes
  * after every append: the GM receives each envelope, its effects, and the new view; a player
  * receives their new view, notices included, and only when something of theirs changed.
+ *
+ * Every socket is pinged on a heartbeat and closed if it missed the last one: a peer that
+ * vanished without closing (a laptop asleep, a dropped network) would otherwise count as
+ * connected forever, and the deploy waits for nobody to be connected.
  */
 import type { IncomingMessage, Server } from "node:http";
 import type { Duplex } from "node:stream";
@@ -14,6 +18,7 @@ import type { LiveMessage, PlayerView, Role } from "./views.ts";
 
 const PATH = /^\/api\/campaigns\/([^/]+)\/live$/;
 const AUTH_TIMEOUT_MS = 5000;
+const HEARTBEAT_MS = 30_000;
 
 interface Subscriber {
   campaignId: string;
@@ -22,6 +27,8 @@ interface Subscriber {
   socket: WebSocket;
   /** The last view sent to a player, to skip pushes that change nothing for them. */
   lastSent?: string;
+  /** Answered the last heartbeat ping. */
+  alive: boolean;
 }
 
 export class LiveHub {
@@ -30,11 +37,26 @@ export class LiveHub {
   private readonly subs = new Set<Subscriber>();
   private readonly log: (msg: string) => void;
   private readonly unsubscribe: () => void;
+  private readonly heartbeat: NodeJS.Timeout;
 
-  constructor(service: Service, log: (msg: string) => void = () => {}) {
+  constructor(service: Service, log: (msg: string) => void = () => {}, heartbeatMs = HEARTBEAT_MS) {
     this.service = service;
     this.log = log;
     this.unsubscribe = service.on((e) => void this.dispatch(e).catch((err) => this.log(`live: ${err}`)));
+    this.heartbeat = setInterval(() => this.beat(), heartbeatMs);
+    this.heartbeat.unref();
+  }
+
+  private beat() {
+    for (const sub of this.subs) {
+      if (!sub.alive) {
+        this.subs.delete(sub);
+        sub.socket.terminate();
+        continue;
+      }
+      sub.alive = false;
+      sub.socket.ping();
+    }
   }
 
   /** Routes the HTTP server's upgrade requests for live paths here. */
@@ -55,6 +77,7 @@ export class LiveHub {
   }
 
   close() {
+    clearInterval(this.heartbeat);
     this.unsubscribe();
     for (const s of this.subs) s.socket.close(1001, "server closing");
     this.wss.close();
@@ -70,8 +93,9 @@ export class LiveHub {
         if (!user) return ws.close(4401, "auth required");
         const role = await this.service.roleIn(campaignId, user.id);
         if (!role) return ws.close(4404, "no such campaign");
-        const sub: Subscriber = { campaignId, userId: user.id, role, socket: ws };
+        const sub: Subscriber = { campaignId, userId: user.id, role, socket: ws, alive: true };
         this.subs.add(sub);
+        ws.on("pong", () => (sub.alive = true));
         ws.on("close", () => this.subs.delete(sub));
         await this.sendState(sub);
       } catch (err) {

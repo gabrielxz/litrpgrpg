@@ -542,8 +542,8 @@ describe("the live channel", () => {
   let port: number;
   const sockets: WebSocket[] = [];
 
-  async function listen() {
-    hub = new LiveHub(service);
+  async function listen(heartbeatMs?: number) {
+    hub = new LiveHub(service, undefined, heartbeatMs);
     app = createApp(service, { connected: () => hub.connected });
     server = await new Promise<Server>((resolve) => {
       const s = serve({ fetch: app.fetch, port: 0 }, () => resolve(s as Server)) as Server;
@@ -553,8 +553,8 @@ describe("the live channel", () => {
   }
 
   /** Opens a socket, authenticates, and collects every message it receives. */
-  async function connect(campaignId: string, token: string) {
-    const ws = new WebSocket(`ws://127.0.0.1:${port}/api/campaigns/${campaignId}/live`);
+  async function connect(campaignId: string, token: string, opts: { autoPong?: boolean } = {}) {
+    const ws = new WebSocket(`ws://127.0.0.1:${port}/api/campaigns/${campaignId}/live`, opts);
     sockets.push(ws);
     const messages: any[] = [];
     const closed = new Promise<number>((resolve) => ws.on("close", (code) => resolve(code)));
@@ -635,5 +635,19 @@ describe("the live channel", () => {
     await g.closed;
     await new Promise((r) => setTimeout(r, 50));
     expect((await health()).connected).toBe(0);
+  });
+
+  it("stops counting a peer that no longer answers the heartbeat", async () => {
+    const { campaignId, gm, player } = await table();
+    await listen(40);
+    const health = () => fetch(`http://127.0.0.1:${port}/api/health`).then((r) => r.json());
+    const live = await connect(campaignId, gm);
+    const dead = await connect(campaignId, player, { autoPong: false });
+    await live.next(1);
+    await dead.next(1);
+    expect((await health()).connected).toBe(2);
+    await dead.closed;
+    await new Promise((r) => setTimeout(r, 100));
+    expect((await health()).connected).toBe(1);
   });
 });
