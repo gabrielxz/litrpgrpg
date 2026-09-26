@@ -15,3 +15,6 @@ __pycache__/
 
 # The annotated read-through copy
 reading/
+
+# The companion app's dependencies
+node_modules/

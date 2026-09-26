@@ -75,7 +75,7 @@ ART_MASTERS := $(shell find $(ART_SRC) -name '*.png')
 TITLE_FONT   := $(shell kpsewhich Alegreya-Black.otf)
 BYLINE_FONT  := $(shell kpsewhich EBGaramond-Italic.otf)
 
-.PHONY: all pdf epub kit art tutorial tables test check notes reading-copy clean
+.PHONY: all pdf epub kit art tutorial tables test check app-check notes reading-copy clean
 
 all: pdf epub
 
@@ -192,7 +192,9 @@ epub: $(EPUB_BASE)
 # --- Rules data: tables, tests, lint --------------------------------------
 # The book's rules tables render from rules/*.yaml; the worked examples in the
 # book are fixtures the reference engine runs; the prose lint fails on retired
-# values and dead cross-references. `make check` runs all three read-only.
+# values and dead cross-references. `make check` runs all three read-only, and
+# the companion app's TypeScript engine against the same fixtures once
+# `cd app && pnpm install` has run.
 tables:
 	python3 tools/render_tables.py
 
@@ -204,6 +206,15 @@ check:
 	python3 tools/render_tables.py --check
 	python3 tools/test_rules.py
 	python3 tools/lint_prose.py
+	@if [ -d app/node_modules ]; then $(MAKE) --no-print-directory app-check; \
+	else echo "app engine not installed (cd app && pnpm install): skipping its fixture run"; fi
+
+# The app's engine meets the same fixtures, and has a method for every function
+# in tools/rules_engine.py (the signature table must regenerate unchanged).
+app-check:
+	python3 app/packages/engine/scripts/signatures.py | diff -u app/packages/engine/src/signatures.ts - \
+	  || (echo "signatures.ts is stale: regenerate it and port the new function"; exit 1)
+	cd app && pnpm -r typecheck && pnpm -r test
 
 # --- Read-through ----------------------------------------------------------
 # reading/ holds the copy annotated during a read. No build writes there and

@@ -1,0 +1,132 @@
+# Companion App Design
+
+The app listens to an online session, logs what happened, keeps the HVE record, and offers the GM real-time suggestions for quests, titles, and classes. Around those four features it keeps the campaign's game record: characters, combat, Consolidation, advancement, and the System's notices to each player.
+
+Sources, in order of authority: the book (`book/`) for procedures, `rules/*.yaml` for numbers, then this file. The ChatGPT handoff spec (2026-09-25) was input to this file; where the two differ, this file holds. A question the book does not answer goes into the book first (the RulesGap rule in `rules/README.md`), then into the app.
+
+## Decisions
+
+Ruled by Gabriel, 2026-09-25.
+
+- **The core is listening, event logging, HVE logging, and live suggestions.** Rules answers are a convenience and sit at the bottom of the list.
+- **First target: the tutorial, played online with Gabriel's group, after the app listens and logs.** In-person listening at a physical table stays an idea for later.
+- **The GM is the captain.** AI observes, drafts, and proposes. Every AI-assisted action has a manual control that produces the same record.
+- **What reaches a player needs the GM's tap.** Bookkeeping only the GM's tracker shows (start the round, apply damage, run a Consolidation) executes at once with undo. Awards, notices, titles, and anything else a player would see wait for one-tap confirmation, whether they came from speech, a suggestion, or a counter.
+- **Dice are rolled in the app.** The engine reads the natural die, so explosions grant Marks and cascades grant Battle Memory Cards without anyone reporting them. The GM can roll privately. Typed-in results stay available and record the natural die and the extra dice.
+- **Zones live in the combat tracker** as named buckets with each combatant in one. No map.
+- **What Can Be Seen filters every player view,** including anything sent to a player-facing AI. Players wear or hide Bestowed titles from their own interface. Open HVE logs are a campaign option, off by default (Introduction, "Who Reads What").
+- **Consolidation goals are table talk.** The GM enters hours per character; the app computes and previews.
+- **The GM has one composer for System messages:** to one player, several, or the party; sent now or held; typed, or drafted by AI in the System's voice. The engine's automatic notices go through the same channel.
+- **Campaigns pin a rules version** and migrate when the GM says so.
+- **VE from a kill is shared** by every participant; a confirmed kill for the Slaughter titles is the finishing blow (Titles, "Achievement Titles"). With in-app dice, the finishing blow is whoever made the attack that took the creature to 0.
+- **"Once a day" resets at dawn** in the fiction, on the app's in-game clock. The book sentence is queued in the backlog.
+
+## Milestones
+
+Each milestone is usable at a table and feeds the next. Items are marked **active** or *deferred*.
+
+### M1: the record and the manual app (no AI)
+
+| Item | | Notes |
+|---|---|---|
+| Rules engine in TypeScript | **active** | Ported from `tools/rules_engine.py`; both engines pass `rules/fixtures/` |
+| Campaigns, roles, invites | **active** | One GM per campaign; invite links; rules version pinned |
+| Character creation | **active** | Point buy (40 points, 3 to 10, exactly 40), Background, derived values, the three pregens |
+| Player interface | **active** | What Can Be Seen's list in its order; party frame; worn and hidden titles |
+| GM character view and corrections | **active** | A correction is recorded apart from an award |
+| Action log | **active** | Append-only, idempotent, undo, correction preview |
+| Notices | **active** | Engine-emitted (VE acquired, level, title, quest, vital coherence) and the GM composer; the clave on every notice |
+| Dice | **active** | d100, explosion at the Grade threshold, Advantage, Surge declared before the roll, private GM rolls |
+| Combat tracker | **active** | Sides, Momentum roll and Seize, Decisive Tactical Reversal as a GM button, round and side, one character's Beats at a time, Yield debt, Zones, engagement and Flanking, the Clash with the Rule of 40, the Yield offer before damage, Exposed, Downed countdown and stabilizing, the two-per-kind pill limit, Aura Pressure and the Will Save |
+| Encounter end | **active** | Participants, VE per character at their own tier with GM override, finishing blows, loot rolls |
+| Bestiary library and encounter builder | **active** | From `rules/bestiary.yaml`, with the sizing table and party size |
+| Prep | **active** | Encounters, quests, and notices prepared to fire live; the tutorial as a loadable content pack |
+| Consolidation | **active** | Hours per character, guards excluded, preview and apply: refining, healing, Aether and recharges at the first hour, levels mid-rest, the cap, density, interruption, Saturation and the collapse clock |
+| Level-ups | **active** | GM places System points with the Behavioral Stat Mapping table beside them; players hold and spend free points; capped stats redirect |
+| Battle Memories and Principles | **active** | Automatic and GM-granted cards; meditation at a Consolidation the player chooses; IP, Resonance notices, crystallization, Distillation grants recorded |
+| Proficiencies and Marks | **active** | Marks from exploding weapon rolls |
+| Titles | **active** | The catalog, the tutorial's titles, custom titles; stacking, HVE-Resonant supersession, negative titles |
+| Achievement counters | **active** | Counted from the tracker and rest log; fiction-only deeds ticked by the GM; crossing a count proposes the title |
+| Quests | **active** | Five categories, the log with hidden modes, sharing rules, deadlines, completion and failure, refusal counts by flavor |
+| In-game clock | **active** | Days, dawn, quest windows |
+| Events | **active** | Manual entry with participants and GM notes; the record M2 and M3 write into |
+| HVE sweep by hand | **active** | Per-character sheet, Current and Deep, the weights, the circled Defining note, Coherence |
+| Sessions | **active** | Start, end, attendance |
+| Inspection | **active** | The Grade-gap table in What Can Be Seen |
+| Class offers entered by hand | *deferred* | Reached at Level 10, after the tutorial |
+| Skill Synthesis | *deferred* | |
+| Phone layout for players | *deferred* | Online play runs on laptops |
+
+### M2: AI drafting from typed input
+
+| Item | | Notes |
+|---|---|---|
+| Provider adapter and the GM's key | **active** | Held on the server per campaign, never sent to a player's browser; setup check and usage shown |
+| Campaign memory | **active** | See "AI context" below |
+| Suggestion panel | **active** | Battle Memories, titles, Hidden Achievements, Personal Opportunities, quests, overlooked rewards; alternatives where they differ; dismissed items stay dismissed |
+| System voice drafting | **active** | Notices and visions, held to the voice rules in `rules/system-ai.yaml` |
+| Stat allocation suggestions | **active** | Behavioral Stat Mapping from events since the last level |
+| Class offers | **active** | Three offers from the record; the guarded list only when the GM asks |
+| Sweep drafts | **active** | From logged events; 0.5 entries shown as reminders |
+| Summaries | **active** | Running recap, session, per character; GM edits, publishes selected text |
+| Rules questions | *deferred* | Chapter and heading citations; players' questions draw only on player chapters |
+
+### M3: listening
+
+| Item | | Notes |
+|---|---|---|
+| Consent and capture | **active** | Per-participant consent; capture indicator and mute in every tab; pause that stops capture |
+| Speech-to-text adapter | **active** | Streaming, one stream per participant; vendor chosen here |
+| Event and HVE drafting | **active** | Events, HVE entries, counter ticks, all as proposals |
+| Shadow mode | **active** | Drafts to a GM-only panel with nothing proposed live, for measuring |
+| Test recordings | **active** | Kept only with separate, explicit consent, as material for measuring the listener |
+| A rehearsal session | **active** | Real voices on a throwaway scene before the tutorial |
+
+### M4: spoken commands
+
+| Item | | Notes |
+|---|---|---|
+| GM command recognition | **active** | Only the GM's stream carries authority; quotations, hypotheticals, and NPC speech stay speech |
+| Execution rules | **active** | GM-only bookkeeping executes with undo; player-visible results become confirm taps; repeats are recognized and dropped |
+| Auto-apply awards | *deferred* | A campaign toggle once precision is measured |
+
+### Later
+
+Spoken System delivery; campaign artifacts (survivors' forum retellings, character cards, timelines); a glyph-resolve effect on notices (the setting's script: meaning arrives with the sight); an in-app voice room; single-mic listening at a physical table; Battle Memory art. Grade Breakthrough workflows stay out.
+
+## Architecture
+
+- **One TypeScript workspace in `app/`**, managed with pnpm: `packages/engine` now, `packages/server` and `packages/web` when M1 reaches them. The web client is React with Vite; the server is Node with HTTP and WebSockets; Postgres holds the record (Docker for development).
+- **The engine is pure.** It takes a rules snapshot and computes; it holds no state and does no I/O. The server stores one snapshot per rules version and builds each campaign's engine from the version it pins. The Python engine stays the reference for the book's tables and sims; the fixtures are the contract both engines meet.
+- **The record is an append-only action log.** Every change is an action with an idempotency key, an actor (GM, player, accepted suggestion), a source (manual, voice, counter), and what caused it. Sheets are computed from the log. Undo is a compensating action. A correction's preview recomputes the log without the corrected action and shows the difference ("without this award Kara is Level 3, and her Level 4 points return unallocated"); the GM chooses what to apply. Suggestions live apart from the log until accepted.
+- **AI sits behind adapters** so providers can change without touching the game model: a language model (Claude by default) and a speech-to-text service. Deterministic rules never go through a model.
+
+## Voice capture
+
+Each participant opens the app in a browser tab; a player's tab is their character's interface. The tab captures that person's microphone and streams it to the server, and the group talks on Discord as usual. The app carries no conversation between people; it only listens. Each stream is one person, so the server knows who spoke.
+
+Known costs:
+
+- **Headphones.** A laptop speaker lets one microphone hear everyone. When the same words arrive on two streams at once, the server keeps the louder copy.
+- **Two mutes.** Muting in Discord does not reach the app. Each tab shows a live capture indicator and its own mute, and a player who steps away to talk in the room mutes the app too.
+- **The tab stays open** with microphone permission for the whole session.
+
+A failure in capture loses the listening and leaves the game on Discord. The audio sits behind one interface, so an in-app voice room (LiveKit is the candidate) can replace it later without changes downstream.
+
+## AI context
+
+A model keeps nothing between requests. Every request carries a context the app assembles, and its size stays about constant however long the campaign runs:
+
+1. **Standing context**, always sent: the premise and each character's sheet, Deep reads, and Defining moments (the book's template, `rules/templates/standing-context.txt`).
+2. **Rolling summaries.** The GM approves a session summary at wrap-up. The campaign summary is rewritten from the previous one plus the new session's, and each character's chronicle the same way. GM edits are what the next rewrite starts from, so a correction stays corrected.
+3. **Retrieval.** The full event log stays in the database; a suggestion that needs a callback gets the few events that match.
+4. **The current scene:** the last minutes of transcript and the tracker's state.
+
+Visibility is applied before assembly: a player-facing request never receives GM notes, HVE readings, hidden criteria, or another character's private record.
+
+## Open
+
+- **Hosting** for sessions with remote players: needed from the first multi-user test.
+- **Sign-in:** invite links are enough for a private beta; accounts come later.
+- **The speech-to-text vendor**, chosen at M3 against recorded test material.
+- **The rehearsal scene** before the tutorial: content that spoils nothing in the tutorial.

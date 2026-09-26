@@ -206,6 +206,16 @@ cases:
     fn: surge_cost
     args: {max_aether_value: 6}
     expect: 3
+  - name: A Surge rounds down, so Andre's Aether 5 pays 2
+    source: 10-core-mechanics.md, "Surge"
+    fn: surge_cost
+    args: {max_aether_value: 5}
+    expect: 2
+  - name: A Surge costs at least 1, so an Aether of 1 pays 1
+    source: 10-core-mechanics.md, "Surge"
+    fn: surge_cost
+    args: {max_aether_value: 1}
+    expect: 1
   - name: An F-Peak caster with 99 Aether gets nine uses of a Seed Application between rests
     source: 10-core-mechanics.md, "What Things Cost"
     fn: application_uses
