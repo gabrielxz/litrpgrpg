@@ -21,6 +21,12 @@ Ruled by Gabriel, 2026-09-25.
 - **VE from a kill is shared** by every participant; a confirmed kill for the Slaughter titles is the finishing blow (Titles, "Achievement Titles"). With in-app dice, the finishing blow is whoever made the attack that took the creature to 0.
 - **"Once a day" resets at dawn** in the fiction, on the app's in-game clock. The book sentence is queued in the backlog.
 
+Ruled by Claude on Gabriel's delegation, 2026-09-25 (book sentences queued in the backlog):
+
+- **A collapse's own involuntary Consolidation does not return its temporary point.** The next Consolidation completed without interruption does.
+- **An hour of Consolidation that refines VE does not count toward the collapse clock.** Resting at Critical is the remedy the collapse would force. At the Level cap, where nothing refines, the clock keeps running (Grade Breakthroughs: it runs until Ignition).
+- **A collapse ends when stored VE falls to Tolerance or below, or, once the character is at the Level cap, after 5 full hours in all.** A character who reaches the cap mid-collapse wakes at the fifth hour, or at once if five have passed.
+
 ## Milestones
 
 Each milestone is usable at a table and feeds the next. Items are marked **active** or *deferred*.
@@ -53,7 +59,7 @@ Each milestone is usable at a table and feeds the next. Items are marked **activ
 | HVE sweep by hand | **active** | Per-character sheet, Current and Deep, the weights, the circled Defining note, Coherence |
 | Sessions | **active** | Start, end, attendance |
 | Inspection | **active** | The Grade-gap table in What Can Be Seen |
-| Class offers entered by hand | *deferred* | Reached at Level 10, after the tutorial |
+| Class offers entered by hand | **active** | The GM enters three offers, the player accepts one, the lead Attribute gains its bonus, and the profile places System points from Level 10; after the items the tutorial needs, before any campaign reaches Level 10 |
 | Skill Synthesis | *deferred* | |
 | Phone layout for players | *deferred* | Online play runs on laptops |
 

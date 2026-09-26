@@ -26,6 +26,7 @@ saturation:
     cost: 1 temporary Raw point of FOR or POW, player's choice, returned after the next Consolidation completed without interruption
     wakes_when: stored VE falls to Tolerance or below
     at_level_cap: wakes after 5 full hours with the VE still stored   # Consolidation at the cap refines nothing
+    at_level_cap_hours: 5
   gm_narrates_symptoms: true     # the System does not announce band thresholds
 
 consolidation:

@@ -24,6 +24,12 @@ importers:
         specifier: ^2.9.1
         version: 2.9.1
 
+  packages/record:
+    dependencies:
+      '@gradebreaker/engine':
+        specifier: workspace:*
+        version: link:../engine
+
 packages:
 
   '@jridgewell/resolve-uri@3.1.2':

@@ -6,7 +6,7 @@ The players' System Interface and the System's voice. The book under `book/` is 
 
 ## Layout
 
-A pnpm workspace. `packages/engine` is the rules engine, a port of `tools/rules_engine.py`: it takes a rules snapshot (the parsed `rules/*.yaml`) and computes, with no state and no I/O. The server and the web client join it as M1 reaches them.
+A pnpm workspace. `packages/engine` is the rules engine, a port of `tools/rules_engine.py`: it takes a rules snapshot (the parsed `rules/*.yaml`) and computes, with no state and no I/O. `packages/record` is the campaign record: an append-only log of actions (characters, VE awards, Consolidation, collapses, point placement, voids) and the sheets computed by replaying it, with a preview of any action or correction before it is recorded. It is pure TypeScript over the engine and does no storage of its own. The server and the web client join them as M1 reaches them.
 
 ```bash
 cd app && pnpm install
