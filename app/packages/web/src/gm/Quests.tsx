@@ -237,7 +237,7 @@ function IssueForm({ view, engine, names, onRecorded }: { view: GmView; engine: 
 
 // -------------------------------------------------------------- log ---
 
-function QuestCard({ q, view, names, onRecorded }: { q: Quest; view: GmView; names: Names; onRecorded: (env: Envelope) => void }) {
+function QuestCard({ q, view, engine, names, onRecorded }: { q: Quest; view: GmView; engine: Engine; names: Names; onRecorded: (env: Envelope) => void }) {
   const { run, busy, error } = useRun(view.campaign.id, onRecorded);
   const [completing, setCompleting] = useState(false);
   const [awards, setAwards] = useState<Record<string, string>>({});
@@ -247,11 +247,16 @@ function QuestCard({ q, view, names, onRecorded }: { q: Quest; view: GmView; nam
   const reward = [q.scaled ? "proportional" : q.ve === null ? "" : `${q.ve} VE`, ...(q.items ?? []).map((i) => (i.count === 1 ? i.name : `${i.count} ${i.name}`)), q.rewardText ?? ""].filter(Boolean).join(", ");
   const open = q.status === "offered" || q.status === "active";
   const holders = q.holders.filter((h) => took.has(h));
+  // Every participating holder collects the stated award; a holder above the quest's Grade collects nothing (book edit 16).
+  const stated = (h: string) => {
+    const grade = view.characters.find((c) => c.id === h)?.grade ?? q.grade;
+    return engine.gradeOrder(grade) > engine.gradeOrder(q.grade) ? 0 : (q.ve ?? 0);
+  };
   const complete = () =>
     run({
       type: "quest.complete",
       questId: q.id,
-      awards: holders.map((h) => ({ characterId: h, ve: Math.max(0, int(awards[h] ?? "") ?? q.ve ?? 0) })),
+      awards: holders.map((h) => ({ characterId: h, ve: Math.max(0, int(awards[h] ?? "") ?? stated(h)) })),
       ...(q.items?.length ? { itemsTo } : {}),
     }).then((ok) => ok && setCompleting(false));
   return (
@@ -317,7 +322,7 @@ Status:     ${q.status[0]!.toUpperCase() + q.status.slice(1)}${q.flavor ? ` · $
       {completing && (
         <div className="subform">
           <p className="small">
-            Every holder who meaningfully took part collects the award.{q.scaled ? " Proportional: exceptional performance pays up to half again, poor performance half." : ""}
+            Every holder who meaningfully took part collects the stated award; a holder above the quest's Grade collects nothing.{q.scaled ? " Proportional: exceptional performance pays up to half again, poor performance half." : ""}
           </p>
           {q.holders.map((h) => (
             <div key={h} className="row tight">
@@ -339,7 +344,7 @@ Status:     ${q.status[0]!.toUpperCase() + q.status.slice(1)}${q.flavor ? ` · $
                 className="narrow-input"
                 min={0}
                 value={awards[h] ?? ""}
-                placeholder={String(q.ve ?? 0)}
+                placeholder={String(stated(h))}
                 onChange={(e) => setAwards({ ...awards, [h]: e.target.value })}
                 aria-label={`${names(h)}'s VE`}
               />
@@ -401,13 +406,13 @@ export function QuestsSection({ view, engine, names, onRecorded }: { view: GmVie
       <h2>Open quests</h2>
       {open.length === 0 && <p className="muted">None.</p>}
       {open.map((q) => (
-        <QuestCard key={q.id} q={q} view={view} names={names} onRecorded={onRecorded} />
+        <QuestCard key={q.id} q={q} view={view} engine={engine} names={names} onRecorded={onRecorded} />
       ))}
       {closed.length > 0 && (
         <details>
           <summary>Completed, failed, refused, and expired ({closed.length})</summary>
           {closed.map((q) => (
-            <QuestCard key={q.id} q={q} view={view} names={names} onRecorded={onRecorded} />
+            <QuestCard key={q.id} q={q} view={view} engine={engine} names={names} onRecorded={onRecorded} />
           ))}
         </details>
       )}
