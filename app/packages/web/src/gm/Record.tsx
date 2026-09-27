@@ -16,6 +16,7 @@ import {
   shapes,
 } from "@gradebreaker/record";
 import { useMemo, useState } from "react";
+import { newActionId, submit } from "../api.ts";
 import { ATTRIBUTES, type Names } from "../text.ts";
 import { Commit } from "./Commit.tsx";
 import { RollForm, RollList } from "../Dice.tsx";
@@ -426,6 +427,8 @@ function RestForm({ view, engine, names, onRecorded }: FormProps) {
   const [amount, setAmount] = useState<Record<string, string>>({});
   const [hours, setHours] = useState<Record<string, string>>({});
   const [interrupted, setInterrupted] = useState<Record<string, boolean>>({});
+  const [moveClock, setMoveClock] = useState(true);
+  const [clockError, setClockError] = useState<string | null>(null);
 
   if (!view.characters.length) return <NoCharacters />;
 
@@ -442,6 +445,7 @@ function RestForm({ view, engine, names, onRecorded }: FormProps) {
     : chosen.some((r) => Number.isNaN(r.h) || r.h < 0)
       ? "Hours are whole and not negative."
       : null;
+  const longest = Math.max(0, ...chosen.map((r) => (Number.isNaN(r.h) ? 0 : r.h)));
   const action: Action = {
     type: "consolidation.rest",
     highDensity,
@@ -508,7 +512,30 @@ function RestForm({ view, engine, names, onRecorded }: FormProps) {
         </tbody>
       </table>
       <p className="muted">Enter the full hours each character completed. An interrupted rest keeps them.</p>
-      <Commit campaignId={view.campaign.id} action={action} problem={problem} names={names} label="Record the rest" onRecorded={onRecorded} />
+      {view.clock && longest > 0 && (
+        <label className="check">
+          <input type="checkbox" checked={moveClock} onChange={(e) => setMoveClock(e.target.checked)} /> Then move the clock forward {longest} hour{longest === 1 ? "" : "s"}, the
+          longest rest (recorded after the rest, undone on its own)
+        </label>
+      )}
+      <Commit
+        campaignId={view.campaign.id}
+        action={action}
+        problem={problem}
+        names={names}
+        label={view.clock && moveClock && longest > 0 ? `Record the rest and move the clock ${longest} h` : "Record the rest"}
+        onRecorded={async (env) => {
+          onRecorded(env);
+          if (!view.clock || !moveClock || longest <= 0) return;
+          try {
+            const r = await submit(view.campaign.id, newActionId(), { type: "clock.advance", minutes: longest * 60 });
+            onRecorded(r.envelope);
+          } catch (e) {
+            setClockError((e as Error).message);
+          }
+        }}
+      />
+      {clockError && <p className="error">The rest is recorded; the clock did not move: {clockError}</p>}
     </div>
   );
 }
