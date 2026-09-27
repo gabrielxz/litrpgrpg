@@ -17,6 +17,9 @@ import {
   type EncounterView,
   type PlayerCombat,
   type PlayerQuest,
+  type ClassPackage,
+  type PlayerClass,
+  MINUTES_PER_DAY,
   SPOILS,
   questForHolder,
   interfacePrinciples,
@@ -178,6 +181,18 @@ export function questLog(record: CampaignRecord, characterId: string): PlayerQue
   return out;
 }
 
+/** A class without what only the GM knows of it. */
+function playerClass(p: ClassPackage): PlayerClass {
+  const { guarded: _g, book: _b, bonus: _n, lost: _l, ...rest } = p as ClassPackage & { bonus?: number; lost?: number };
+  return structuredClone(rest);
+}
+
+function classUsed(record: CampaignRecord, s: Sheet): boolean | null {
+  const clock = record.state.clock;
+  if (!clock) return null;
+  return s.classUsedDay === Math.floor((clock.at - clock.dawn * 60) / MINUTES_PER_DAY);
+}
+
 export function interfaceSheet(s: Sheet, record: CampaignRecord): InterfaceSheet {
   const st = record.state;
   const e = st.encounter && !st.encounter.ended ? st.encounter : null;
@@ -224,6 +239,8 @@ export function interfaceSheet(s: Sheet, record: CampaignRecord): InterfaceSheet
     titles: s.titles,
     principle: interfacePrinciples(record.engine, record.character(s.id)!),
     quests: questLog(record, s.id),
+    class: s.class ? { ...playerClass(s.class), bonus: s.class.bonus, ...(s.class.permission.onceADay ? { usedSinceDawn: classUsed(record, s) } : {}) } : null,
+    classOffers: s.classOffers.map(playerClass),
   };
 }
 
@@ -275,6 +292,8 @@ const ANNOUNCED: ReadonlySet<Effect["kind"]> = new Set([
   "distillation-offered",
   "distilled",
   "principle-refined",
+  "classification",
+  "class-accepted",
 ]);
 
 /** Effects a player is shown: the announced ones about their own characters. */

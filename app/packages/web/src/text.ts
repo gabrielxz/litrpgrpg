@@ -249,6 +249,12 @@ export function describe(
       return `${name(a.characterId)}: ${a.quiet ? "Distillation offered" : a.refine ? "Refinement" : "Distillation"} (${a.family})`;
     case "principle.answer":
       return `${name(a.characterId)} ${a.accept ? "accepts" : "vetoes"} the offered articulation`;
+    case "class.offer":
+      return `Class offers to ${name(a.characterId)}: ${a.offers.map((o) => o.name).join(", ")}`;
+    case "class.accept":
+      return `${name(a.characterId)} accepts ${a.name}`;
+    case "class.use":
+      return `${name(a.characterId)} uses the class's once-a-day permission`;
     case "clock.set":
       return `Clock set to ${clockLine((a.day - 1) * MINUTES_PER_DAY + a.hour * 60 + (a.minute ?? 0))}${a.dawnHour !== undefined ? `, dawn at ${String(a.dawnHour).padStart(2, "0")}:00` : ""}`;
     case "clock.advance":
@@ -280,6 +286,12 @@ export function effectLine(e: Effect, name: Names): string | null {
     }
     case "hve-copied":
       return `${name(e.characterId)}: Deep tallies set from the copied sheet`;
+    case "classification":
+      return `${name(e.characterId)} is offered ${e.offers.map((o) => o.name).join(", ")}`;
+    case "class-accepted":
+      return `${name(e.characterId)} holds ${e.name}: ${e.lead} +${e.bonus}`;
+    case "class-used":
+      return `${name(e.characterId)} uses ${e.name}`;
     case "memory-granted":
       return `${name(e.characterId)} receives a Battle Memory Card`;
     case "vision":
@@ -494,6 +506,10 @@ export function noticeLine(e: Effect): string | null {
       return `Item registered: ${stack(e)}.`;
     case "title-conferred":
       return `Title conferred: ${e.name}.`;
+    case "classification":
+      return [e.text, ...e.offers.map((o) => `${o.heading}\n${o.notice}`)].join("\n\n");
+    case "class-accepted":
+      return `Class accepted: ${e.name}. ${ATTRIBUTE_NAMES[e.lead]} +${e.bonus}.`;
     case "memory-granted":
       return "Battle Memory retained.";
     case "vision":

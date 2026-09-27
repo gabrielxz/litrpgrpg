@@ -18,6 +18,7 @@ import { EventsSection } from "./Events.tsx";
 import { SessionBar, SessionsCard } from "./Sessions.tsx";
 import { ClockControls } from "./Clock.tsx";
 import { PrinciplesSection, principlesWaiting } from "./Principles.tsx";
+import { ClassesSection, classesWaiting } from "./Classes.tsx";
 import { TitlesDueCard } from "./Titles.tsx";
 import { stackLine } from "../items.ts";
 import { ATTRIBUTES } from "../text.ts";
@@ -46,6 +47,8 @@ function CharacterCard({ c, player, party, items }: { c: Sheet; player: string; 
         Level {c.level} · {c.grade}-Grade
         {c.pendingSystemLevels.length > 0 && <span className="tag attention">Assigned points due: Level {c.pendingSystemLevels.join(", ")}</span>}
         {c.freePoints > 0 && <span className="tag">{c.freePoints} free held</span>}
+        {c.class && <span className="tag">{c.class.name}</span>}
+        {c.classOffers.length > 0 && <span className="tag attention">Class offers standing</span>}
         {party && <span className="tag">Party: {party}</span>}
       </div>
       <div className="vital">
@@ -199,12 +202,13 @@ function ViewAs({ view }: { view: GmView }) {
   );
 }
 
-type Section = "party" | "combat" | "quests" | "principles" | "events" | "hve" | "log" | "table" | "player";
+type Section = "party" | "combat" | "quests" | "principles" | "classes" | "events" | "hve" | "log" | "table" | "player";
 const SECTIONS: [Section, string][] = [
   ["party", "Party"],
   ["combat", "Combat"],
   ["quests", "Quests"],
   ["principles", "Principles"],
+  ["classes", "Classes"],
   ["events", "Events"],
   ["hve", "HVE"],
   ["log", "Campaign log"],
@@ -265,6 +269,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
           <button key={s} className={s === section ? "active" : ""} onClick={() => setSection(s)}>
             {label}
             {s === "principles" && principlesWaiting(view) > 0 && <span className="tag attention">{principlesWaiting(view)}</span>}
+            {s === "classes" && classesWaiting(view, engine) > 0 && <span className="tag attention">{classesWaiting(view, engine)}</span>}
             {s === "log" && view.rejected.length > 0 && <span className="tag attention">{view.rejected.length}</span>}
             {s === "combat" && view.encounter && <span className="tag attention">{view.encounter.round ? `Round ${view.encounter.round}` : "Set"}</span>}
             {s === "combat" && !view.encounter && view.aftermath && <span className="tag attention">To settle</span>}
@@ -294,6 +299,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
       {section === "combat" && <CombatSection view={view} engine={engine} names={names} log={live.log} onRecorded={live.addToLog} />}
       {section === "quests" && <QuestsSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
       {section === "principles" && <PrinciplesSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
+      {section === "classes" && <ClassesSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
       {section === "events" && <EventsSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
       {section === "hve" && <HveSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
       {section === "log" && (

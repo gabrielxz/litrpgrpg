@@ -8,6 +8,7 @@ import { type Proficiency, proficienciesOf } from "./proficiency.ts";
 import { type Title, titlesDue } from "./titles.ts";
 import { type SweepEntry, archetypeOf, leadsOf, poles } from "./hve.ts";
 import { type PrinciplesSheet, principlesSheet } from "./principles.ts";
+import type { ClassPackage, HeldClass } from "./classes.ts";
 
 export interface Sheet {
   id: string;
@@ -51,6 +52,13 @@ export interface Sheet {
   pillsTaken: { healing: number; aether: number };
   /** Battle Memory Cards, Insight, and Principles as the GM runs them. */
   principles: PrinciplesSheet;
+  /** Class offers standing until one is accepted. */
+  classOffers: ClassPackage[];
+  class: HeldClass | null;
+  /** Assigned points past the cap by level, which the GM places in place of the profile. */
+  redirect: Record<number, number>;
+  /** The dawn-to-dawn day the once-a-day permission was last used. */
+  classUsedDay: number | null;
   /** The Hidden Vector Engine's sheet: the GM's side of the screen only. */
   hve: {
     /** Every side of every axis, 0 included. */
@@ -101,6 +109,10 @@ export function sheetOf(engine: Engine, c: CharacterState): Sheet {
     pillsTaken: { healing: 0, aether: 0, ...(c.pillsTaken ?? {}) },
     hve: hveOf(engine, c),
     principles: principlesSheet(engine, c),
+    classOffers: (c.classes?.offers ?? []).map((o) => structuredClone(o)),
+    class: c.classes?.held ? structuredClone(c.classes.held) : null,
+    redirect: { ...(c.classes?.redirect ?? {}) },
+    classUsedDay: c.classes?.usedDay ?? null,
   };
   if (c.playerId !== undefined) sheet.playerId = c.playerId;
   if (c.pregen !== undefined) sheet.pregen = c.pregen;

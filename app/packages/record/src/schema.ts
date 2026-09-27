@@ -35,6 +35,18 @@ const titleSpec = z.object({
   axisPair: z.string().max(40).optional(),
   release: z.string().max(300).optional(),
 });
+const classPackage = z.object({
+  name: z.string().max(60),
+  notice: z.string().max(1000),
+  book: z.string().max(60).optional(),
+  profile: z.object({
+    shape: z.enum(["Fixed", "Guided", "Open"]),
+    points: z.array(z.object({ attribute: z.string().max(10), points: whole })).max(7),
+  }),
+  technique: z.object({ name: z.string().max(60), cost: z.enum(["Aether", "Frequency", "Drawback"]), effect: z.string().max(600), actionEconomy: z.boolean().optional() }),
+  permission: z.object({ name: z.string().max(60), effect: z.string().max(600), actionEconomy: z.boolean().optional(), onceADay: z.boolean().optional() }),
+  guarded: z.boolean().optional(),
+});
 const combatant = z.object({
   combatantId: id,
   sideId: id,
@@ -323,6 +335,9 @@ export const actionSchema = z.discriminatedUnion("type", [
     attunements: z.string().max(1000).optional(),
   }),
   z.object({ type: z.literal("principle.answer"), characterId: id, family: z.string().max(40), accept: z.boolean(), articulation: whole.optional() }),
+  z.object({ type: z.literal("class.offer"), characterId: id, offers: z.array(classPackage).max(5) }),
+  z.object({ type: z.literal("class.accept"), characterId: id, name: z.string().max(60) }),
+  z.object({ type: z.literal("class.use"), characterId: id }),
   z.object({ type: z.literal("clock.set"), day: whole, hour: whole, minute: whole.optional(), dawnHour: whole.optional() }),
   z.object({ type: z.literal("clock.advance"), minutes: whole }),
   z.object({ type: z.literal("session.start"), label: z.string().max(80).optional(), present: z.array(id).max(20) }),

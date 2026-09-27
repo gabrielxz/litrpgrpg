@@ -26,6 +26,7 @@ export type {
   EncounterView,
   PlayerCombat,
   PlayerQuest,
+  PlayerClass,
   PlayerClash,
   GmView,
   InterfaceSheet,
@@ -69,6 +70,17 @@ export {
   nextRung,
   slotsFor,
 } from "./principles.ts";
+export {
+  type ClassAction,
+  type ClassPackage,
+  type CostShape,
+  type HeldClass,
+  type ProfileShape,
+  bookClasses,
+  leadOf,
+  packageProblems,
+  packageWarnings,
+} from "./classes.ts";
 export { type Clock, type ClockAction, MINUTES_PER_DAY, clockLine, dayOf, toNextDawn } from "./clock.ts";
 export { type CampaignSession, type SessionAction, sessionName } from "./sessions.ts";
 export { type CampaignEvent, type EventAction, type HveEntry, type LogEvent, intensities, sweepWeight } from "./events.ts";

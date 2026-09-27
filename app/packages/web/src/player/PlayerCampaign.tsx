@@ -4,6 +4,7 @@
  * beside it. The player spends free points and makes the party's choices here (inviting,
  * answering, leaving); everything else arrives from the GM's record.
  */
+import type { Engine } from "@gradebreaker/engine";
 import { type Action, type FeedItem, type InterfaceSheet, type PlayerQuest, type PlayerView, shapes } from "@gradebreaker/record";
 import { useEffect, useState } from "react";
 import { api, newActionId, submit } from "../api.ts";
@@ -16,6 +17,7 @@ import { stackLine } from "../items.ts";
 import { ATTRIBUTES, ATTRIBUTE_NAMES, noticeLine } from "../text.ts";
 import { type CharacterSpec, Creator } from "./Creator.tsx";
 import { PrincipleSection } from "./Principle.tsx";
+import { ClassHeld, ClassOffers } from "./Class.tsx";
 
 function Bar({ value, max }: { value: number; max: number }) {
   const pct = max > 0 ? Math.max(0, Math.min(100, (value / max) * 100)) : 0;
@@ -511,11 +513,13 @@ function Interface({
   roster,
   readOnly,
   pills,
+  engine,
 }: {
   campaignId: string;
   c: InterfaceSheet;
   roster: PlayerView["roster"];
   readOnly?: boolean;
+  engine: Engine | null;
   /** Pill names from the Items tables, lower-cased: these are taken, not just used. */
   pills: string[];
 }) {
@@ -527,10 +531,12 @@ function Interface({
         <div>
           <h2>{c.name}</h2>
           <div className="sys-dim">
-            Level {c.level} · {c.grade}-Grade
+            Level {c.level} · {c.grade}-Grade{c.class ? ` · ${c.class.name}` : ""}
           </div>
         </div>
       </header>
+
+      <ClassOffers campaignId={campaignId} engine={engine} c={c} readOnly={readOnly} />
 
       <div className="sys-section">
         <table className="sys-stats">
@@ -597,6 +603,8 @@ function Interface({
           <span className="num">{toNext === null ? "Grade limit" : `${c.refinedVe} / ${c.refinedVe + toNext}`}</span>
         </div>
       </div>
+
+      <ClassHeld campaignId={campaignId} engine={engine} c={c} readOnly={readOnly} />
 
       {c.proficiencies.length > 0 && (
         <div className="sys-section">
@@ -759,6 +767,7 @@ export function PlayerCampaign({
               roster={view.roster}
               readOnly={readOnly}
               pills={pillsOf(engine).map((p) => p.name.toLowerCase())}
+              engine={engine}
             />
           ))}
         </div>

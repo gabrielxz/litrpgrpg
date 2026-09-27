@@ -37,6 +37,8 @@ const every: Effect[] = [
   { kind: "distilled", characterId: "k", name: "Weight", tier: "Seed", grantKind: "application", grant: "Falling Star" },
   { kind: "distilled", characterId: "k", name: "Weight", tier: "Mid Fragment", grantKind: "infusion", grant: "Everything I swing" },
   { kind: "principle-refined", characterId: "k", from: "Fire", name: "Consuming Flame" },
+  { kind: "classification", characterId: "k", text: "Level 10. Classification available. Three offers follow. One will be accepted; the others close.", offers: [] },
+  { kind: "class-accepted", characterId: "k", name: "Battle Medic", lead: "POW", bonus: 10 },
 ];
 
 describe("the System's notices", () => {

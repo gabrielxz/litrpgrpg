@@ -5,7 +5,7 @@
 import { Engine } from "@gradebreaker/engine";
 import { loadRules } from "@gradebreaker/engine/node";
 import { beforeEach, describe, expect, it } from "vitest";
-import { type Action, CampaignRecord, type Draft, RecordError, encounterAwards, hoursForGoal, flankingSuggested, killAwards, questForHolder, rollD100s, rollFor } from "../src/index.ts";
+import { type Action, type ClassPackage, CampaignRecord, bookClasses, packageWarnings, type Draft, RecordError, encounterAwards, hoursForGoal, flankingSuggested, killAwards, questForHolder, rollD100s, rollFor } from "../src/index.ts";
 
 const engine = new Engine(loadRules());
 const GM = { role: "gm", userId: "gm-1" } as const;
@@ -222,7 +222,7 @@ describe("level-ups", () => {
   it("leaves Level 10's assigned points to the class", () => {
     levelTo("kara", 10);
     expect(rec.sheet("kara")!.pendingSystemLevels).toEqual([10]);
-    expect(() => gm({ type: "points.system", characterId: "kara", level: 10, placement: { STR: 3 } })).toThrow(/class profile/);
+    expect(() => gm({ type: "points.system", characterId: "kara", level: 10, placement: { STR: 3 } })).toThrow(/until a class is accepted/);
   });
 });
 
@@ -1678,5 +1678,148 @@ describe("Battle Memories and Principles", () => {
     gm({ type: "clock.advance", minutes: 60 }); // dawn
     vision();
     expect(() => gm({ type: "insight.award", characterId: "kara", source: "Battle Memory meditation", family: "Impact", ip: 1 })).toThrow(/from the card/);
+  });
+});
+
+describe("classes", () => {
+  const book = (name: string) => bookClasses(engine).find((c) => c.name === name)!;
+  const offer = (characterId: string, names = ["Battle Medic", "Standing Surety", "Witness"]) =>
+    gm({ type: "class.offer", characterId, offers: names.map(book) });
+  const player = (action: Action) => rec.append(draft(action, P1));
+
+  /** Nia from Classes, "Battle Medic": Level 10 with the level's assigned points held for the class. */
+  function nia() {
+    const stats = { STR: 4, DEX: 5, FOR: 6, HRT: 7, POW: 7, PER: 6, CHA: 5 };
+    gm({ type: "character.create", characterId: "nia", name: "Nia", stats, background: "Trauma nurse, nine years", playerId: "player-1" });
+    const assigned: Record<string, number>[] = [{ FOR: 3 }, { FOR: 3 }, { FOR: 3 }, { HRT: 3 }, { HRT: 3 }, { HRT: 3 }, { POW: 3 }, { POW: 3 }];
+    for (let level = 2; level <= 10; level++) {
+      award("nia", 120);
+      rest("nia", 6);
+      if (level < 10) gm({ type: "points.system", characterId: "nia", level, placement: assigned[level - 2]! });
+    }
+    player({ type: "points.free", characterId: "nia", placement: { POW: 8, DEX: 2, PER: 2, CHA: 6 } });
+  }
+
+  it("runs Nia's Level 10: the selection bonus, then the profile places the held points", () => {
+    nia();
+    expect(rec.sheet("nia")).toMatchObject({ level: 10, pendingSystemLevels: [10], freePoints: 0 });
+    expect(rec.sheet("nia")!.raw).toEqual({ STR: 4, DEX: 7, FOR: 15, HRT: 16, POW: 21, PER: 8, CHA: 11 });
+    const out = offer("nia");
+    expect(out.effects).toHaveLength(1);
+    expect(out.effects[0]).toMatchObject({
+      kind: "classification",
+      characterId: "nia",
+      text: "Level 10. Classification available. Three offers follow. One will be accepted; the others close.",
+    });
+    expect((out.effects[0] as { offers: unknown[] }).offers[0]).toEqual({ name: "Battle Medic", heading: "Class offered: Battle Medic.", notice: expect.stringMatching(/^Care under threat/) });
+    const took = player({ type: "class.accept", characterId: "nia", name: "Battle Medic" });
+    expect(took.effects).toEqual([
+      { kind: "class-accepted", characterId: "nia", name: "Battle Medic", lead: "POW", bonus: 10 },
+      { kind: "points-placed", characterId: "nia", placement: { POW: 1, DEX: 1, HRT: 1 }, by: "system" },
+    ]);
+    // The book's Level 10 line: 4 / 8 / 15 / 17 / 32 / 8 / 11, Health 30, Aether 32.
+    expect(rec.sheet("nia")!.raw).toEqual({ STR: 4, DEX: 8, FOR: 15, HRT: 17, POW: 32, PER: 8, CHA: 11 });
+    expect(rec.sheet("nia")).toMatchObject({ maxHp: 30, maxAether: 32, pendingSystemLevels: [], classOffers: [], class: { name: "Battle Medic", bonus: 10 } });
+    // Every later level is placed at once, and the player's two stay free.
+    award("nia", 120);
+    const lv = rest("nia", 6);
+    expect(lv.effects).toContainEqual({ kind: "points-placed", characterId: "nia", placement: { POW: 1, DEX: 1, HRT: 1 }, by: "system" });
+    expect(rec.sheet("nia")).toMatchObject({ level: 11, pendingSystemLevels: [], freePoints: 2 });
+    expect(rec.sheet("nia")!.raw.POW).toBe(33);
+  });
+
+  it("returns a Guided or Open profile's points to the player as free points", () => {
+    nia();
+    offer("nia", ["Burner", "Registrar", "Witness"]);
+    player({ type: "class.accept", characterId: "nia", name: "Registrar" });
+    // Open: 1 PER, 2 returned.
+    expect(rec.sheet("nia")).toMatchObject({ freePoints: 2 });
+    expect(rec.sheet("nia")!.raw.PER).toBe(8 + 10 + 1);
+  });
+
+  it("holds the offers to the book's package and to Level 10", () => {
+    gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" });
+    expect(() => offer("kara")).toThrow(/Level 1; the offers come at Level 10/);
+    levelTo("kara", 10);
+    expect(() => gm({ type: "class.offer", characterId: "kara", offers: [book("Burner"), book("Witness")] })).toThrow(/offers 3 classes, not 2/);
+    const bad: ClassPackage = { ...book("Burner"), name: "Bleeder", profile: { shape: "Guided", points: [{ attribute: "STR", points: 3 }] } };
+    expect(() => gm({ type: "class.offer", characterId: "kara", offers: [bad, book("Witness"), book("Kindler")] })).toThrow(/Guided profile assigns 2 points, not 3/);
+    expect(() => gm({ type: "class.offer", characterId: "kara", offers: [book("Burner"), book("Burner"), book("Kindler")] })).toThrow(/different names/);
+    expect(() => player({ type: "class.offer", characterId: "kara", offers: ["Burner", "Witness", "Kindler"].map(book) })).toThrow(/only the GM/);
+    const fresh: ClassPackage = {
+      name: "Line Breaker",
+      notice: "Through the wall, and the wall remembers. Selection: Strength +10.",
+      profile: { shape: "Fixed", points: [{ attribute: "STR", points: 2 }, { attribute: "FOR", points: 1 }] },
+      technique: { name: "Shoulder", cost: "Frequency", effect: "+10 to a Clash that Drives Back" },
+      permission: { name: "Wall", effect: "Driving a target into a wall Exposes it" },
+    };
+    const first = gm({ type: "class.offer", characterId: "kara", offers: [fresh, book("Burner"), book("Breaching Vanguard")] });
+    expect(() => offer("kara", ["Kindler", "Witness", "Maker"])).toThrow(/offers stand until one is accepted/);
+    gm({ type: "void", targetId: first.envelope.id, reason: "undo" });
+    offer("kara", ["Kindler", "Witness", "Maker"]);
+    expect(rec.sheet("kara")!.classOffers.map((o) => o.name)).toEqual(["Kindler", "Witness", "Maker"]);
+  });
+
+  it("lets only the holder's player, or the GM, accept one of the standing offers", () => {
+    nia();
+    offer("nia");
+    expect(() => rec.append(draft({ type: "class.accept", characterId: "nia", name: "Witness" }, P2))).toThrow(/not this player's character/);
+    expect(() => player({ type: "class.accept", characterId: "nia", name: "Kindler" })).toThrow(/no offer named Kindler/);
+    const took = player({ type: "class.accept", characterId: "nia", name: "Witness" });
+    expect(() => player({ type: "void", targetId: took.envelope.id, reason: "undo" })).toThrow(/accepted class stands/);
+    gm({ type: "void", targetId: took.envelope.id, reason: "undo" });
+    gm({ type: "class.accept", characterId: "nia", name: "Witness" });
+    expect(rec.sheet("nia")!.class!.name).toBe("Witness");
+    expect(() => offer("nia")).toThrow(/holds Witness; new offers come at the F→E Breakthrough/);
+  });
+
+  it("holds a profile point the cap turns away for the GM, and loses selection bonus past the cap", () => {
+    const rules = structuredClone(loadRules());
+    rules.grades.grades[0].raw_max = 32;
+    rec = new CampaignRecord(new Engine(rules));
+    nia();
+    offer("nia");
+    player({ type: "class.accept", characterId: "nia", name: "Battle Medic" });
+    expect(rec.sheet("nia")!.raw.POW).toBe(32);
+    award("nia", 120);
+    const lv = rest("nia", 6);
+    expect(lv.effects).toContainEqual({ kind: "points-placed", characterId: "nia", placement: { DEX: 1, HRT: 1 }, by: "system" });
+    expect(rec.sheet("nia")).toMatchObject({ pendingSystemLevels: [11], redirect: { 11: 1 } });
+    expect(() => gm({ type: "points.system", characterId: "nia", level: 11, placement: { FOR: 3 } })).toThrow(/exactly 1 assigned points/);
+    gm({ type: "points.system", characterId: "nia", level: 11, placement: { FOR: 1 } });
+    expect(rec.sheet("nia")).toMatchObject({ pendingSystemLevels: [], redirect: {} });
+
+    rules.grades.grades[0].raw_max = 25;
+    rec = new CampaignRecord(new Engine(rules));
+    nia();
+    offer("nia");
+    const took = player({ type: "class.accept", characterId: "nia", name: "Battle Medic" });
+    expect(took.effects[0]).toMatchObject({ kind: "class-accepted", bonus: 4 });
+    expect(rec.sheet("nia")!.class).toMatchObject({ bonus: 4, lost: 6 });
+    expect(rec.sheet("nia")).toMatchObject({ pendingSystemLevels: [10], redirect: { 10: 1 } });
+  });
+
+  it("readies a once-a-day permission at dawn on the clock, and leaves the count to the GM without one", () => {
+    nia();
+    offer("nia", ["Lightfingers", "Witness", "Maker"]);
+    player({ type: "class.accept", characterId: "nia", name: "Lightfingers" });
+    expect(rec.sheet("nia")!.class!.permission).toMatchObject({ name: "Finder's Share", onceADay: true });
+    player({ type: "class.use", characterId: "nia" });
+    player({ type: "class.use", characterId: "nia" });
+    gm({ type: "clock.set", day: 3, hour: 14 });
+    player({ type: "class.use", characterId: "nia" });
+    expect(() => player({ type: "class.use", characterId: "nia" })).toThrow(/used Finder's Share since dawn/);
+    gm({ type: "clock.advance", minutes: 15 * 60 }); // 05:00, before dawn
+    expect(() => player({ type: "class.use", characterId: "nia" })).toThrow(/since dawn/);
+    gm({ type: "clock.advance", minutes: 60 });
+    player({ type: "class.use", characterId: "nia" });
+  });
+
+  it("marks the book's action-economy effects and warns past one", () => {
+    const medic = book("Battle Medic");
+    expect(medic.permission.actionEconomy).toBe(true);
+    expect(packageWarnings(engine, medic)).toEqual([]);
+    expect(packageWarnings(engine, { ...medic, technique: { ...medic.technique, actionEconomy: true } })[0]).toMatch(/2 action-economy effects/);
+    expect(book("Devourer").guarded).toBe(true);
   });
 });

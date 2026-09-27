@@ -37,6 +37,7 @@ import { type CampaignEvent, applyEvents, cloneEvent } from "./events.ts";
 import { type CampaignSession, applySessions, cloneSession } from "./sessions.ts";
 import { type Clock, applyClock } from "./clock.ts";
 import { type PrincipleState, applyPrinciples, clonePrinciples, collectDue } from "./principles.ts";
+import { type ClassState, applyClasses, cloneClass, placeByProfile } from "./classes.ts";
 import { type Quest, type QuestNoticeKind, applyQuests, authorizeQuestPlayer, cloneQuest, questsOnJoin, questsOnLeave } from "./quests.ts";
 
 export interface CharacterState {
@@ -81,6 +82,8 @@ export interface CharacterState {
   hve?: HveState;
   /** Battle Memory Cards, Insight by family, and the Principles held. */
   principles?: PrincipleState;
+  /** Class offers standing, or the class held. */
+  classes?: ClassState;
 }
 
 /** A formal party: its members' character ids in the order they joined. */
@@ -104,6 +107,10 @@ export interface HeldMessage {
 }
 
 export type Effect =
+  /** The Level 10 notice: the opening line, then each offer's heading and notice, in order. */
+  | { kind: "classification"; characterId: string; text: string; offers: { name: string; heading: string; notice: string }[] }
+  | { kind: "class-accepted"; characterId: string; name: string; lead: string; bonus: number }
+  | { kind: "class-used"; characterId: string; name: string }
   | { kind: "memory-granted"; characterId: string; memoryId: string }
   | { kind: "vision"; characterId: string; text: string }
   | { kind: "resonance"; characterId: string; family: string; ip: number; of: number }
@@ -292,6 +299,8 @@ export function permanentStats(c: CharacterState): Stats {
   const out: Stats = {};
   const titles = titleStats(c);
   for (const a of ATTRIBUTES) out[a] = (c.base[a] ?? 0) + (c.placed[a] ?? 0) + (titles[a] ?? 0);
+  const held = c.classes?.held;
+  if (held?.bonus) out[held.profile.points[0]!.attribute]! += held.bonus;
   return out;
 }
 
@@ -417,6 +426,7 @@ function cloneState(c: CharacterState): CharacterState {
     ...(c.pillsTaken ? { pillsTaken: { ...c.pillsTaken } } : {}),
     ...(c.hve ? { hve: cloneHve(c.hve) } : {}),
     ...(c.principles ? { principles: clonePrinciples(c.principles) } : {}),
+    ...(c.classes ? { classes: cloneClass(c.classes) } : {}),
   };
 }
 
@@ -437,6 +447,8 @@ function collectVoids(log: readonly Envelope[]) {
         reason = "a player can undo only their own actions";
       else if (env.actor.role === "player" && target.action.type === "dice.roll")
         reason = "a roll stands; the GM can undo one made by mistake";
+      else if (env.actor.role === "player" && target.action.type === "class.accept")
+        reason = "an accepted class stands and the other offers close; the GM can undo one recorded by mistake";
       if (reason) rejected.push({ envelope: env, reason });
       else ids.add(a.targetId);
     }
@@ -561,6 +573,10 @@ function apply(engine: Engine, world: World, env: Envelope): Effect[] {
     case "principle.distill":
     case "principle.answer":
       return applyPrinciples(engine, world, a, env);
+    case "class.offer":
+    case "class.accept":
+    case "class.use":
+      return applyClasses(engine, world, a);
     case "void":
       throw new Error("voids are handled before apply");
   }
@@ -591,6 +607,8 @@ function authorize(world: World, env: Envelope) {
     case "title.reveal":
     case "memory.choose":
     case "principle.answer":
+    case "class.accept":
+    case "class.use":
       return mine(a.characterId);
     case "party.invite":
       return mine(a.fromId);
@@ -764,8 +782,8 @@ function runHours(engine: Engine, c: CharacterState, hours: number, highDensity:
       c.refinedVe += r;
       while (c.refinedVe >= cost && c.level < cap) {
         c.refinedVe -= cost;
-        levelUp(engine, c);
-        out.push({ kind: "level", characterId: c.id, level: c.level, hour: h });
+        const placed = levelUp(engine, c);
+        out.push({ kind: "level", characterId: c.id, level: c.level, hour: h }, ...placed);
       }
       if (c.level >= cap && c.refinedVe > 0) {
         // Refined past the cap within the hour: it waits in the tank with the rest.
@@ -792,11 +810,14 @@ function runHours(engine: Engine, c: CharacterState, hours: number, highDensity:
   return out;
 }
 
-function levelUp(engine: Engine, c: CharacterState) {
+/** A level lands: its free points, and its assigned points held for the GM, or placed by the class profile. */
+function levelUp(engine: Engine, c: CharacterState): Effect[] {
   const lv = engine.rules.character.leveling;
   c.level += 1;
-  c.pendingSystemLevels.push(c.level);
   c.freePoints += lv.free * engine.scale(c.grade);
+  if (c.classes?.held && c.level >= lv.class_level) return placeByProfile(engine, c, c.level);
+  c.pendingSystemLevels.push(c.level);
+  return [];
 }
 
 function consolidate(engine: Engine, chars: Map<string, CharacterState>, a: Consolidate): Effect[] {
@@ -869,13 +890,16 @@ function placeSystem(engine: Engine, c: CharacterState, a: PlaceSystemPoints): E
   const lv = engine.rules.character.leveling;
   const i = c.pendingSystemLevels.indexOf(a.level);
   if (i < 0) throw new Rejected(`${c.name} has no unplaced assigned points for Level ${a.level}`);
-  if (a.level >= lv.class_level)
-    throw new Rejected(`from Level ${lv.class_level} the class profile places assigned points; class selection is not in the app yet`);
-  const due = lv.system_assigned * engine.scale(c.grade);
+  // From Level 10 the profile places them; what reaches the GM is only what the cap turned away.
+  const redirect = c.classes?.redirect?.[a.level];
+  if (a.level >= lv.class_level && redirect === undefined)
+    throw new Rejected(`${c.name}'s assigned points from Level ${lv.class_level} wait until a class is accepted; its profile places them`);
+  const due = redirect ?? lv.system_assigned * engine.scale(c.grade);
   const total = checkPlacement(engine, c, a.placement);
   if (total !== due) throw new Rejected(`Level ${a.level} places exactly ${due} assigned points, not ${total}`);
   for (const [attr, pts] of Object.entries(a.placement)) c.placed[attr] = (c.placed[attr] ?? 0) + pts;
   c.pendingSystemLevels.splice(i, 1);
+  if (redirect !== undefined) delete c.classes!.redirect![a.level];
   return [{ kind: "points-placed", characterId: c.id, placement: a.placement, by: "system" }];
 }
 

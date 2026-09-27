@@ -9,6 +9,8 @@ selection:
   published: false               # inspection at any Grade does not show a class
   lead_attribute_bonus: 10       # added to the class's lead Attribute at selection, before Level 10's points land
   new_offers_at: the F→E Breakthrough
+  opening_notice: "Level 10. Classification available. Three offers follow. One will be accepted; the others close."
+  offer_notice: "Class offered: {name}."   # heads each offer's notice; the class's `notice` follows it
 
 profile:
   system_points_per_level: 3     # Progression: 3 assigned + 2 free per level from Level 10
@@ -67,90 +69,105 @@ notice_vocabulary:
 classes:
   - name: Battle Medic
     built_for: Nia
+    notice: "Care under threat. Triage: 5 Aether closes wounds on one ally within reach or on the ground beside you, restoring 10 Health. Reaching a fallen ally takes no time. Selection: Power +10. Growth: Power, Dexterity, Heart."
     poles: [Restraint, Accord]
     profile: {shape: Fixed, points: {POW: 1, DEX: 1, HRT: 1}}
     technique: {name: Triage, cost: Aether, effect: "Restores 10 Health to an ally in your Zone or an adjacent one"}
     permission: {name: Reach the Fallen, effect: "Moving into a Zone holding a Downed ally costs no Beat", action_economy: true}
   - name: Breaching Vanguard
     built_for: Kara
+    notice: "First through. Breach: once per fight, the first blow after entering new ground lands with Strength counting 10 higher and carries the target back. Entering ground and striking there is one act. Selection: Strength +10. Growth: Strength, Strength, Fortitude."
     poles: [Force, Hunger]
     profile: {shape: Fixed, points: {STR: 2, FOR: 1}}
     technique: {name: Breach, cost: Frequency, effect: "+10 to a Clash against a target in a Zone you entered this turn; a win Drives it Back whatever the Margin"}
     permission: {name: Rush, effect: "Moving into an adjacent Zone and attacking there costs 1 Beat in total", action_economy: true}
   - name: Burner
     built_for: Coleman
+    notice: "Pay in Blood: 10 Health spent, and in the next blow, given or taken, your Attribute counts 10 higher. Blood may pay for what Aether pays for: a Surge for 10 Health. Selection: Strength +10. Growth: Strength, Fortitude, one point yours."
     poles: [Force, Hunger]
     profile: {shape: Guided, points: {STR: 1, FOR: 1}}
     technique: {name: Pay in Blood, cost: Drawback, effect: "Part of one Clash you roll this turn, attack or defense, declared before rolling; take 10 damage for +10", no_own_beat: true}
     permission: {name: Blood for Aether, effect: "You may pay a Surge with 10 Health instead of Aether", action_economy: false}
   - name: Counterpuncher
     built_for: Ines
+    notice: "Riposte: once per fight, a blow you turn well aside is answered at once, and the answer takes no time. While the other side holds the press, the first blow you throw in each exchange lands with its Attribute counting 5 higher. Selection: Dexterity +10. Growth: Dexterity, Perception, one point yours."
     poles: [Method, Restraint]
     profile: {shape: Guided, points: {DEX: 1, PER: 1}}
     technique: {name: Riposte, cost: Frequency, effect: "Win a defensive Clash by 20 or more and Clash back at once for no Beat", reaction: true}
     permission: {name: Second Hand, effect: "While your side lacks Momentum, the first Clash roll you make on your own turn is +5", action_economy: false}
   - name: Lightfingers
     built_for: Dani
+    notice: "Lift: once per fight, one carried thing leaves an off-balance enemy within reach and arrives in your hand. Once a day, the remains of a kill you name yield more than expected. Selection: Dexterity +10. Growth: Dexterity, Perception, one point yours."
     poles: [Method, Hunger]
     profile: {shape: Guided, points: {DEX: 1, PER: 1}}
     technique: {name: Lift, cost: Frequency, effect: "Take one item an Exposed enemy in your Zone holds or carries; a held weapon counts, worn gear does not"}
-    permission: {name: Finder's Share, effect: "Once a day, a kill you name rolls its loot one step up the table", action_economy: false}
+    permission: {name: Finder's Share, effect: "Once a day, a kill you name rolls its loot one step up the table", action_economy: false, once_a_day: true}
   - name: Standing Surety
     built_for: Wendell
+    notice: "Hold Fast: once a fight, and until your next act no one standing with you is cornered. A blow aimed at an ally beside you may be blunted by you, at the cost of your own next acts. Selection: Fortitude +10. Growth: Fortitude, Fortitude, Heart."
     poles: [Restraint, Accord]
     profile: {shape: Fixed, points: {FOR: 2, HRT: 1}}
     technique: {name: Hold Fast, cost: Frequency, effect: "Until your next turn, you and every ally in your Zone may Yield two Beats even with nowhere to be driven; the second Beat gives ground in place"}
     permission: {name: Take It, effect: "Once per round, after an ally in your Zone loses a Clash and before damage lands, give up one available Beat from your next turn to cut that Margin by 40; declared before the ally decides whether to Yield, and combines with it", action_economy: false, reaction: true, paid_in_beats: true, margin_cut: 40}
   - name: Vowbound
     built_for: Yusuf
+    notice: "Sworn Blow: 5 Aether, and a blow against the object of your vow lands with its Attribute counting 10 higher. Speak one vow when a fight begins: what serves it is strengthened by 5, and acting against it leaves you open until the fight ends. Selection: Heart +10. Growth: Heart, Heart, Strength."
     poles: [Will, Restraint]
     profile: {shape: Fixed, points: {HRT: 2, STR: 1}}
     technique: {name: Sworn Blow, cost: Aether, effect: "+10 to a Clash against the object of your vow"}
     permission: {name: The Vow, effect: "Swear one thing aloud at the start of a fight, naming an act or an object: +5 to Clashes that serve it; act against it and you are Exposed for the rest of the fight", action_economy: false}
   - name: Adjudicator
     built_for: Ruth
+    notice: "Sanction: 5 Aether names an act. The next creature in sight that commits it is left open until it has acted again, unless its Heart withstands yours. One sanction stands at a time. Once per fight, an execution attempted within reach of you draws your blow first. Selection: Heart +10. Growth: Heart, Charisma, Perception."
     poles: [Will, Control]
     profile: {shape: Fixed, points: {HRT: 1, CHA: 1, PER: 1}}
     technique: {name: Sanction, cost: Aether, effect: "Name an action; the next creature in sight that takes it is Exposed until the end of its next turn unless it wins a Clash, HRT Force against yours; one Sanction at a time, expiring with the scene"}
     permission: {name: Contempt, effect: "Once per encounter, an execution attempted in your Zone provokes a free Clash from you before it lands", action_economy: true, reaction: true}
   - name: Peacemaker
     built_for: Hal
+    notice: "Open Hand: 5 Aether. One enemy within reach at half its Health or less leaves the fight, or stands still through its next acts, as it chooses, unless its Heart withstands yours. What has no mind does not hear it. Anything that will give ground will also talk. Selection: Charisma +10. Growth: Charisma, Heart, one point yours."
     poles: [Accord, Freedom]
     profile: {shape: Guided, points: {CHA: 1, HRT: 1}}
     technique: {name: Open Hand, cost: Aether, effect: "One enemy in your Zone at half Health or less, its choice, leaves the fight or has no Beats on its next turn, unless it wins a Clash, HRT Force against yours; mindless creatures ignore it"}
     permission: {name: Terms, effect: "A creature whose stat block Yields can be parleyed with mid-fight", action_economy: false}
   - name: Registrar
     built_for: Maren
+    notice: "Reclassify: 5 Aether, and one creature or object in sight is read again; its Grade, its danger, and one habit are stated as the record holds them. Once a day, a proposal you put to the System is heard and answered. Selection: Perception +10. Growth: Perception; the rest is yours."
     poles: [Control, Accord]
     profile: {shape: Open, points: {PER: 1}}
     technique: {name: Reclassify, cost: Aether, effect: "The System re-reads one creature or object in sight and returns the record's entry: Grade, tier, one Tactics line; exact for anything priced, wrong only where the record is"}
-    permission: {name: Standing, effect: "Once a day, a proposal you put to the System receives an answer; Standing guarantees the audience, the answer is the System's", action_economy: false}
+    permission: {name: Standing, effect: "Once a day, a proposal you put to the System receives an answer; Standing guarantees the audience, the answer is the System's", action_economy: false, once_a_day: true}
   - name: Still One
     built_for: Priya
+    notice: "Go Cold: 5 Aether, and until your next act you are hard to find, and nothing that hunts by reading finds you at all. Do nothing, and the record shows no life in you until you move. Selection: Dexterity +10. Growth: Dexterity; the rest is yours."
     poles: [Freedom, Restraint]
     profile: {shape: Open, points: {DEX: 1}}
     technique: {name: Go Cold, cost: Aether, effect: "Until your next turn, a creature trying to find or target you must first win a Clash, PER Force against your DEX Force +10; a creature that hunts by the System's reading does not find you at all"}
     permission: {name: No Life Here, effect: "On a turn you spend no Beats, the System reads you as dead until you act: inspection returns nothing, titles included; the party frame is unaffected", action_economy: false}
   - name: Witness
     built_for: Sabine
+    notice: "Note the Pattern: once per fight, after watching a creature through one exchange, its next act is known to you. At an unusual death in your sight, the observation comes to you: Grade, danger, and one habit. Selection: Perception +10. Growth: Perception, Heart, one point yours."
     poles: [Method, Restraint]
     profile: {shape: Guided, points: {PER: 1, HRT: 1}}
     technique: {name: Note the Pattern, cost: Frequency, effect: "After one round watching a creature, the GM says what it does on its next turn"}
     permission: {name: The Observation, effect: "At an unusual death in your sight, the System's observation comes to you: Grade, tier, one Tactics line", action_economy: false}
   - name: Kindler
     built_for: Oona
+    notice: "Fire at a word. Cast Fire: 5 Aether, and flame leaves your hand for one target within reach or on the ground beside you, striking with Power in place of Strength; what burns, burns. What you set alight stays alight, and its ground hinders everyone but you. Selection: Power +10. Growth: Power, Power, Perception."
     poles: [Force, Freedom]
     profile: {shape: Fixed, points: {POW: 2, PER: 1}}
     technique: {name: Cast Fire, cost: Aether, effect: "A ranged attack on one target in your Zone or an adjacent one, rolled on POW Force in place of STR or DEX; damage as Margin; what burns catches"}
     permission: {name: Tinder, effect: "What you set alight stays alight through the scene; a burning Zone is a Hindering environment (−10) for everyone in it except you", action_economy: false}
   - name: Maker
     built_for: Bram
+    notice: "Make Do: 5 Aether and one hour turn what is at hand into one remedy or one piece of gear the record lists. What lies in wreckage shows you what it could become. Selection: Perception +10. Growth: Perception, Dexterity, one point yours."
     poles: [Method, Control]
     profile: {shape: Guided, points: {PER: 1, DEX: 1}}
     technique: {name: Make Do, cost: Aether, effect: "One hour and 5 Aether, out of combat: turn the materials on hand into one Healing Pill up to the Healing Pill (30) or one piece of Scavenged Field Gear that those materials could yield; the GM says which; never an Aether Pill, a Foundation Pill, an Attribute Treasure, or a Volatile Artifact"}
     permission: {name: Salvage Eye, effect: "Looking at wreckage or parts, you know what it could become: the GM lists the pills and gear the materials on hand could yield", action_economy: false}
   - name: Devourer
     built_for: Aron
+    notice: "What the fallen release is yours: once per fight, a death by your hand returns 5 Aether. The Health of what stands near you is visible to you. Selection: Power +10. Growth: Power, Strength, Heart."
     guarded: true
     poles: [Hunger, Will]
     profile: {shape: Fixed, points: {POW: 1, STR: 1, HRT: 1}}
@@ -158,6 +175,7 @@ classes:
     permission: {name: What Is Left, effect: "You read the current Health of every creature in your Zone (an exception to What Can Be Seen)", action_economy: false}
   - name: Underdog
     built_for: Tess
+    notice: "Find the Seam: once per fight, a blow against what stands above your Grade finds the gap that Grade leaves, and the difference of Grade weighs 20 less. Against what stands above you, a Surge costs no more than 5 Aether. Selection: Strength +10. Growth: Strength, Strength, Heart."
     guarded: true
     poles: [Force, Will]
     profile: {shape: Fixed, points: {STR: 2, HRT: 1}}

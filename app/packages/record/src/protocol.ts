@@ -9,6 +9,7 @@ import type { CampaignEvent } from "./events.ts";
 import type { CampaignSession } from "./sessions.ts";
 import type { Clock } from "./clock.ts";
 import type { InterfacePrinciples } from "./principles.ts";
+import type { ClassPackage } from "./classes.ts";
 import type { Combatant, Encounter } from "./combat.ts";
 import type { Envelope } from "./actions.ts";
 import type { Sheet } from "./sheet.ts";
@@ -194,6 +195,18 @@ export interface InterfaceSheet {
   principle: InterfacePrinciples;
   /** The quest log: offered, active, and closed quests as this character's log shows them. */
   quests: PlayerQuest[];
+  /** The class held, in both descriptions: the System's notice and the mechanics the table runs. */
+  class: PlayerClass | null;
+  /** Offers standing until one is accepted. */
+  classOffers: PlayerClass[];
+}
+
+/** A class as its holder sees it: the guarded mark and the book's name are the GM's alone. */
+export interface PlayerClass extends Omit<ClassPackage, "guarded" | "book"> {
+  /** The selection bonus that landed on the lead Attribute. */
+  bonus?: number;
+  /** A once-a-day permission spent since dawn; null when the table keeps no clock. */
+  usedSinceDawn?: boolean | null;
 }
 
 export interface GmView {

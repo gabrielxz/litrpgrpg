@@ -13,6 +13,9 @@ Two checks over the chapter sources, the kit, and the pipeline, and two warning 
    Negation is allowed; stacking it is the tic. A sentence that needs its
    negations goes in tools/negation_ok.txt (one opening fragment per line), so
    the warning stays a signal. Never fails the build.
+5. Class notices: each class's `notice` in rules/classes.yaml, and the Level 10
+   opening line, must match the systemvoice box in Classes word for word. The
+   app shows the data's copy, so the two cannot drift.
 
     python3 tools/lint_prose.py
 """
@@ -86,6 +89,30 @@ def cited(section: str, heads: set[str]) -> bool:
     return any(h.startswith(section + " (") for h in heads)
 
 
+def class_notice_drift() -> list[str]:
+    path = os.path.join(BOOK, "18-classes.md")
+    with open(path, encoding="utf-8") as fh:
+        book = fh.read()
+    with open(os.path.join(ROOT, "rules", "classes.yaml"), encoding="utf-8") as fh:
+        data = yaml.safe_load(fh)
+    sel = data["selection"]
+    boxes = []
+    for section in re.split(r"^### ", book, flags=re.M):
+        heading = section.split("\n", 1)[0].strip()
+        for m in re.finditer(r"::: systemvoice\n(.*?)\n:::", section, re.S):
+            boxes.append((heading, [p.strip().strip("*") for p in m.group(1).strip().split("\n\n")]))
+    out = []
+    if not any(paras == [sel["opening_notice"]] for _, paras in boxes):
+        out.append("rules/classes.yaml: selection.opening_notice matches no systemvoice box in Classes")
+    by_heading = {h: paras for h, paras in boxes}
+    for c in data["classes"]:
+        want = [sel["offer_notice"].format(name=c["name"]), c.get("notice", "")]
+        got = by_heading.get(c["name"])
+        if got is None or [got[0], " ".join(got[1:])] != want:
+            out.append(f"rules/classes.yaml: {c['name']}'s notice differs from its box in Classes; the book's box wins, copy it into the data")
+    return out
+
+
 def main() -> int:
     with open(os.path.join(ROOT, "rules", "retired.yaml"), encoding="utf-8") as fh:
         cfg = yaml.safe_load(fh)
@@ -114,6 +141,9 @@ def main() -> int:
                     chapter, section = m.group(1), m.group(2).strip()
                     if chapter in heads and not cited(section, heads[chapter]):
                         problems.append(f"{os.path.relpath(path, ROOT)}:{n}: cites {chapter}, \"{section}\" but that heading does not exist")
+
+    # 5. class notices match the book's boxes
+    problems.extend(class_notice_drift())
 
     # 3. voice warnings (never fail)
     warnings = []

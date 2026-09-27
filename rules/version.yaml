@@ -1,7 +1,7 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.23"
+version: "0.1.24"
 dated: "2026-09-27"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
@@ -81,3 +81,6 @@ notes: >
   above the quest's Grade.
   0.1.23: the table's clock reads dawn at 06:00 (classes.yaml dawn_hour), which the GM may move where the party is; the
   companion app's in-game clock reads it. The book sentence is queued.
+  0.1.24: classes.yaml carries each class's System notice, the Level 10 opening line, and the offer's heading
+  (the book's boxes, held word for word by the prose lint), and marks the two once-a-day permissions (Finder's Share,
+  Standing). No number moved; the companion app offers the book's classes as written.

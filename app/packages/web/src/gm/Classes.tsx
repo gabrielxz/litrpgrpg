@@ -1,0 +1,445 @@
+/**
+ * The GM's Classes section (Classes, "Building a Class for a Specific Human"). A character at
+ * Level 10 without a class is due three offers: the GM reads the record beside the writer, starts
+ * each offer from one of the book's classes or writes it fresh, and records the three together.
+ * The player accepts one on their own screen, or the GM records the choice for a player away.
+ * Classes held are listed with their once-a-day permission against dawn on the clock.
+ */
+import type { Engine } from "@gradebreaker/engine";
+import {
+  type ClassPackage,
+  type CostShape,
+  type Envelope,
+  type GmView,
+  MINUTES_PER_DAY,
+  type ProfileShape,
+  type Sheet,
+  bookClasses,
+  packageProblems,
+  packageWarnings,
+  weights,
+} from "@gradebreaker/record";
+import { useEffect, useState } from "react";
+import { costLine, profileLine, returnedOf, selectionLine } from "../classes.ts";
+import { ATTRIBUTES, type Names, tableWordsIn } from "../text.ts";
+import { Commit } from "./Commit.tsx";
+
+type Props = { view: GmView; engine: Engine | null; names: Names; onRecorded: (env: Envelope) => void };
+
+const blank = (): ClassPackage => ({
+  name: "",
+  notice: "",
+  profile: { shape: "Fixed", points: [{ attribute: "STR", points: 3 }] },
+  technique: { name: "", cost: "Aether", effect: "" },
+  permission: { name: "", effect: "" },
+});
+
+/** Classes held or offered in the campaign that carry a guarded power. */
+function guardedInPlay(view: GmView): number {
+  return view.characters.reduce((n, c) => n + Number(Boolean(c.class?.guarded)) + c.classOffers.filter((o) => o.guarded).length, 0);
+}
+
+/** The book's classes whose two poles both lead the character's Deep. */
+function fitsDeep(engine: Engine, c: Sheet): Set<string> {
+  const leading = new Set(c.hve.leads.map((l) => l.pole).filter(Boolean));
+  const out = new Set<string>();
+  for (const k of engine.rules.classes.classes as { name: string; poles: string[] }[]) if (k.poles.every((p) => leading.has(p))) out.add(k.name);
+  return out;
+}
+
+// ------------------------------------------------------------ the record ---
+
+/** What the offers are read from (Classes, "Building a Class for a Specific Human", step 1). */
+function RecordRead({ engine, c }: { engine: Engine; c: Sheet }) {
+  const ws = weights(engine);
+  const circled = c.hve.sweeps.flatMap((s) => s.moments.filter((m) => ws.find((w) => w.tallies === m.weight)?.circled && m.note).map((m) => ({ label: s.label, m })));
+  const principle = c.principles.principles[0];
+  const insight = Object.entries(c.principles.insight).sort((a, b) => b[1] - a[1]);
+  return (
+    <div className="class-record">
+      <h3>{c.name}'s record</h3>
+      <p className="small">
+        {ATTRIBUTES.map((a) => `${a} ${c.raw[a]}`).join(" · ")}
+      </p>
+      <p className="small">Background: {c.background}</p>
+      <p className="small">
+        Deep leads:{" "}
+        {c.hve.leads.map((l) => (l.pole ? `${l.pole} by ${l.by}` : `${l.axis} even`)).join(", ")}
+        {c.hve.archetype ? ` · ${c.hve.archetype}` : ""} · Coherence {c.hve.coherence.profile}
+      </p>
+      {circled.length > 0 && (
+        <div className="small">
+          Circled:
+          <ul>
+            {circled.map(({ label, m }, i) => (
+              <li key={i}>
+                {m.pole}: {m.note} <span className="muted">({label})</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <p className="small">
+        Principle: {principle ? `${principle.name}, ${principle.tier}` : insight.length ? `none yet; Insight ${insight.map(([f, n]) => `${f} ${n}`).join(", ")}` : "none"}
+      </p>
+      {c.proficiencies.length > 0 && <p className="small">Proficiencies: {c.proficiencies.map((p) => `${p.shape} ${p.tier}`).join(", ")}</p>}
+      {c.titles.some((t) => t.status === "active") && (
+        <p className="small">
+          Titles:{" "}
+          {c.titles
+            .filter((t) => t.status === "active")
+            .map((t) => t.name)
+            .join(", ")}
+        </p>
+      )}
+      <p className="small muted">And the thing the player keeps doing that no rule asked for.</p>
+    </div>
+  );
+}
+
+// ------------------------------------------------------------ one offer ---
+
+function OfferEditor({ engine, c, value, onChange, index }: { engine: Engine; c: Sheet; value: ClassPackage; onChange: (p: ClassPackage) => void; index: number }) {
+  const book = bookClasses(engine);
+  const meta = engine.rules.classes.classes as { name: string; built_for: string; poles: string[] }[];
+  const fits = fitsDeep(engine, c);
+  const shapes = (engine.rules.classes.profile.shapes as { shape: ProfileShape; system: number }[]).map((s) => s);
+  const costs = (engine.rules.classes.technique.cost_shapes as { shape: CostShape }[]).map((s) => s.shape);
+  const set = (patch: Partial<ClassPackage>) => onChange({ ...value, ...patch });
+  const points = value.profile.points;
+  const setPoints = (next: ClassPackage["profile"]["points"]) => set({ profile: { ...value.profile, points: next } });
+  const shape = shapes.find((s) => s.shape === value.profile.shape);
+  const assigned = points.reduce((s, x) => s + (x.points || 0), 0);
+  const words = tableWordsIn(value.notice);
+  return (
+    <fieldset className="class-editor">
+      <legend>Offer {index + 1}</legend>
+      <label>
+        Start from
+        <select
+          value={value.book ?? ""}
+          onChange={(e) => {
+            const picked = book.find((b) => b.name === e.target.value);
+            onChange(picked ? structuredClone(picked) : blank());
+          }}
+        >
+          <option value="">Written fresh</option>
+          {meta.map((m) => (
+            <option key={m.name} value={m.name}>
+              {m.name} ({m.poles.join(", ")}; built for {m.built_for}){fits.has(m.name) ? " · fits the Deep leads" : ""}
+              {book.find((b) => b.name === m.name)?.guarded ? " · guarded" : ""}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Name
+        <input value={value.name} maxLength={60} onChange={(e) => set({ name: e.target.value })} />
+      </label>
+      <label>
+        The System's notice
+        <textarea rows={3} maxLength={1000} value={value.notice} onChange={(e) => set({ notice: e.target.value })} placeholder="In the System's units: Attributes, levels, Health, Aether, hours, meters." />
+      </label>
+      {words.length > 0 && <p className="warning small">The notice uses the table's words: {words.join(", ")}. The System speaks in-world units.</p>}
+
+      <div className="row">
+        <label>
+          Profile
+          <select value={value.profile.shape} onChange={(e) => set({ profile: { ...value.profile, shape: e.target.value as ProfileShape } })}>
+            {shapes.map((s) => (
+              <option key={s.shape} value={s.shape}>
+                {s.shape} ({s.system} assigned)
+              </option>
+            ))}
+          </select>
+        </label>
+        <span className="small muted">
+          {assigned} of {shape?.system ?? "?"} assigned
+          {returnedOf(engine, value) ? `, ${returnedOf(engine, value)} returned to the player` : ""}
+        </span>
+      </div>
+      {points.map((x, i) => (
+        <div key={i} className="row">
+          <label>
+            {i === 0 ? "Lead" : "Then"}
+            <select value={x.attribute} onChange={(e) => setPoints(points.map((y, j) => (j === i ? { ...y, attribute: e.target.value } : y)))}>
+              {ATTRIBUTES.map((a) => (
+                <option key={a}>{a}</option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Points
+            <input
+              type="number"
+              min={1}
+              max={3}
+              value={x.points || ""}
+              onChange={(e) => setPoints(points.map((y, j) => (j === i ? { ...y, points: Number(e.target.value) || 0 } : y)))}
+            />
+          </label>
+          {points.length > 1 && (
+            <button className="link" onClick={() => setPoints(points.filter((_, j) => j !== i))}>
+              Remove
+            </button>
+          )}
+        </div>
+      ))}
+      {points.length < 3 && (
+        <button className="link" onClick={() => setPoints([...points, { attribute: ATTRIBUTES.find((a) => !points.some((p) => p.attribute === a))!, points: 1 }])}>
+          Add an Attribute
+        </button>
+      )}
+
+      <div className="row">
+        <label>
+          Technique
+          <input value={value.technique.name} maxLength={60} onChange={(e) => set({ technique: { ...value.technique, name: e.target.value } })} />
+        </label>
+        <label>
+          Cost
+          <select value={value.technique.cost} onChange={(e) => set({ technique: { ...value.technique, cost: e.target.value as CostShape } })}>
+            {costs.map((k) => (
+              <option key={k}>{k}</option>
+            ))}
+          </select>
+        </label>
+      </div>
+      <label>
+        What it does <span className="muted small">({costLine(engine, value)})</span>
+        <textarea rows={2} maxLength={600} value={value.technique.effect} onChange={(e) => set({ technique: { ...value.technique, effect: e.target.value } })} />
+      </label>
+      <label className="check">
+        <input type="checkbox" checked={Boolean(value.technique.actionEconomy)} onChange={(e) => set({ technique: { ...value.technique, actionEconomy: e.target.checked || undefined } })} />
+        The technique changes the action economy (a reaction, a free or combined act)
+      </label>
+      <label>
+        Permission
+        <input value={value.permission.name} maxLength={60} onChange={(e) => set({ permission: { ...value.permission, name: e.target.value } })} />
+      </label>
+      <label>
+        What it permits
+        <textarea rows={2} maxLength={600} value={value.permission.effect} onChange={(e) => set({ permission: { ...value.permission, effect: e.target.value } })} />
+      </label>
+      <label className="check">
+        <input type="checkbox" checked={Boolean(value.permission.actionEconomy)} onChange={(e) => set({ permission: { ...value.permission, actionEconomy: e.target.checked || undefined } })} />
+        The permission changes the action economy
+      </label>
+      <label className="check">
+        <input type="checkbox" checked={Boolean(value.permission.onceADay)} onChange={(e) => set({ permission: { ...value.permission, onceADay: e.target.checked || undefined } })} />
+        Once a day, ready again at dawn
+      </label>
+      <label className="check">
+        <input type="checkbox" checked={Boolean(value.guarded)} onChange={(e) => set({ guarded: e.target.checked || undefined })} />
+        Carries a guarded power (known to the GM only)
+      </label>
+    </fieldset>
+  );
+}
+
+// ---------------------------------------------------------- the writer ---
+
+const draftKey = (campaignId: string, characterId: string) => `gradebreaker.classDraft.${campaignId}.${characterId}`;
+
+function readDraft(key: string, n: number): ClassPackage[] {
+  try {
+    const raw = window.localStorage.getItem(key);
+    const parsed = raw ? (JSON.parse(raw) as ClassPackage[]) : null;
+    if (Array.isArray(parsed) && parsed.length === n) return parsed;
+  } catch {
+    // A draft is a convenience; start over without one.
+  }
+  return Array.from({ length: n }, blank);
+}
+
+function OfferWriter({ view, engine, names, onRecorded, c }: Props & { engine: Engine; c: Sheet }) {
+  const n = engine.rules.classes.selection.offers as number;
+  const key = draftKey(view.campaign.id, c.id);
+  const [offers, setOffers] = useState<ClassPackage[]>(() => readDraft(key, n));
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(key, JSON.stringify(offers));
+    } catch {
+      // Kept in memory only.
+    }
+  }, [key, offers]);
+  const clean = offers.map((o) => ({ ...o, name: o.name.trim(), notice: o.notice.trim() }));
+  const problems = clean.flatMap((o) => packageProblems(engine, o));
+  const names3 = clean.map((o) => o.name.toLowerCase()).filter(Boolean);
+  if (new Set(names3).size !== names3.length) problems.push("The offers need different names.");
+  const warnings = clean.flatMap((o) => (o.name ? packageWarnings(engine, o) : []));
+  const guarded = guardedInPlay(view);
+  const draftGuarded = clean.filter((o) => o.guarded).length;
+  if (draftGuarded && guarded + draftGuarded > 1)
+    warnings.push(`${guarded + draftGuarded} guarded classes would be in play. The book: offer a guarded power with great care; one in a campaign is plenty.`);
+  const bonus = engine.rules.classes.selection.lead_attribute_bonus as number;
+  return (
+    <section className="card class-writer">
+      <h2>{c.name} is due three class offers</h2>
+      <p className="muted small">
+        Level {c.level}. The offers differ in role and in which part of the record they weigh; one may amplify the dominant pattern,
+        one formalize the secondary, one combine them. The player accepts one; the selection adds {bonus} to its lead Attribute and the
+        profile places the held assigned points.
+      </p>
+      <div className="class-writer-body">
+        <RecordRead engine={engine} c={c} />
+        <div className="class-editors">
+          {offers.map((o, i) => (
+            <OfferEditor key={i} index={i} engine={engine} c={c} value={o} onChange={(p) => setOffers(offers.map((x, j) => (j === i ? p : x)))} />
+          ))}
+        </div>
+      </div>
+      {warnings.map((w) => (
+        <p key={w} className="warning small">
+          {w}
+        </p>
+      ))}
+      <Commit
+        campaignId={view.campaign.id}
+        action={{ type: "class.offer", characterId: c.id, offers: clean.map((o) => (o.book === undefined ? (({ book: _b, ...rest }) => rest)(o) : o)) }}
+        problem={problems.length ? problems.join(" ") : null}
+        names={names}
+        label={`Offer ${c.name} these three classes`}
+        onRecorded={(env) => {
+          try {
+            window.localStorage.removeItem(key);
+          } catch {
+            // Nothing to clear.
+          }
+          onRecorded(env);
+        }}
+      />
+    </section>
+  );
+}
+
+// ------------------------------------------------- offers and classes ---
+
+function PackageLines({ engine, p, bonus }: { engine: Engine | null; p: ClassPackage; bonus?: number }) {
+  const selection = selectionLine(engine, p, bonus);
+  return (
+    <>
+      <p className="small">
+        <em>{p.notice}</em>
+      </p>
+      <ul className="small">
+        <li>
+          Profile: {profileLine(engine, p)}
+          {selection ? ` Selection: ${selection}.` : ""}
+        </li>
+        <li>
+          {p.technique.name}: {costLine(engine, p)}. {p.technique.effect}
+          {p.technique.actionEconomy ? " (action economy)" : ""}
+        </li>
+        <li>
+          {p.permission.name}: {p.permission.effect}
+          {p.permission.actionEconomy ? " (action economy)" : ""}
+          {p.permission.onceADay ? " (once a day)" : ""}
+        </li>
+      </ul>
+    </>
+  );
+}
+
+function Standing({ view, engine, names, onRecorded, c }: Props & { c: Sheet }) {
+  const from = (engine?.rules.character.leveling.class_level as number | undefined) ?? 0;
+  const held = c.pendingSystemLevels.filter((l) => l >= from);
+  return (
+    <section className="card">
+      <h2>{c.name}'s offers stand</h2>
+      <p className="muted small">They wait on the player's choice{held.length ? `, and Level ${held.join(", ")}'s assigned points wait with them` : ""}. Undo the offer in the campaign log to write others.</p>
+      {c.classOffers.map((o) => (
+        <div key={o.name} className="class-offer">
+          <h3>
+            {o.name}
+            {o.guarded && <span className="tag attention">guarded</span>}
+          </h3>
+          <PackageLines engine={engine} p={o} />
+          <Commit
+            campaignId={view.campaign.id}
+            action={{ type: "class.accept", characterId: c.id, name: o.name }}
+            names={names}
+            label={`Record that ${c.name} accepts ${o.name}`}
+            onRecorded={onRecorded}
+          />
+        </div>
+      ))}
+    </section>
+  );
+}
+
+function Held({ view, engine, names, onRecorded }: Props) {
+  const held = view.characters.filter((c) => c.class);
+  if (!held.length) return null;
+  const clock = view.clock;
+  const today = clock ? Math.floor((clock.at - clock.dawn * 60) / MINUTES_PER_DAY) : null;
+  return (
+    <section className="card">
+      <h2>Classes held</h2>
+      <p className="muted small">A class is not published: inspection never shows it, and only its holder's player sees it.</p>
+      {held.map((c) => {
+        const k = c.class!;
+        const used = today !== null && c.classUsedDay === today;
+        return (
+          <div key={c.id} className="class-offer">
+            <h3>
+              {c.name}: {k.name}
+              {k.guarded && <span className="tag attention">guarded</span>}
+            </h3>
+            <PackageLines engine={engine} p={k} bonus={k.bonus} />
+            {k.lost ? <p className="small muted">{k.lost} of the selection bonus was lost past the stat cap.</p> : null}
+            {k.permission.onceADay && (
+              <>
+                <p className="small">
+                  {k.permission.name}: {today === null ? "set the clock to track it against dawn; until then you keep the count" : used ? "used since dawn" : "ready"}
+                </p>
+                {!used && (
+                  <Commit
+                    campaignId={view.campaign.id}
+                    action={{ type: "class.use", characterId: c.id }}
+                    names={names}
+                    label={`Record ${c.name}'s use of ${k.permission.name}`}
+                    onRecorded={onRecorded}
+                  />
+                )}
+              </>
+            )}
+          </div>
+        );
+      })}
+    </section>
+  );
+}
+
+/** Characters due offers: at the class level, with no class and no offers standing. */
+export function classesWaiting(view: GmView, engine: Engine | null): number {
+  if (!engine) return 0;
+  const level = engine.rules.classes.selection.level as number;
+  return view.characters.filter((c) => !c.dead && c.level >= level && !c.class && !c.classOffers.length).length;
+}
+
+export function ClassesSection(props: Props) {
+  const { view, engine } = props;
+  if (!engine) return <p className="muted pad">Loading rules…</p>;
+  const level = engine.rules.classes.selection.level as number;
+  const due = view.characters.filter((c) => !c.dead && c.level >= level && !c.class && !c.classOffers.length);
+  const standing = view.characters.filter((c) => c.classOffers.length);
+  return (
+    <main className="page">
+      {due.map((c) => (
+        <OfferWriter key={c.id} {...props} engine={engine} c={c} />
+      ))}
+      {standing.map((c) => (
+        <Standing key={c.id} {...props} c={c} />
+      ))}
+      <Held {...props} />
+      {!due.length && !standing.length && !view.characters.some((c) => c.class) && (
+        <section className="card">
+          <p className="muted">
+            No character has reached Level {level}. At Level {level} the System offers three classes, and they are written here.
+          </p>
+        </section>
+      )}
+    </main>
+  );
+}

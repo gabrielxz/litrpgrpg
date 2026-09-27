@@ -1388,3 +1388,72 @@ ul.events li.event {
   padding-top: 0.5rem;
   margin-top: 0.5rem;
 }
+
+/* Classes: the GM's offer writer and the offers on the player's interface. */
+.class-writer-body {
+  display: grid;
+  grid-template-columns: minmax(14rem, 1fr) 3fr;
+  gap: 1rem;
+  align-items: start;
+}
+.class-record {
+  position: sticky;
+  top: 0.5rem;
+  border: 1px solid var(--stone);
+  border-radius: 3px;
+  padding: 0.5rem 0.75rem;
+}
+.class-record ul {
+  margin: 0.2rem 0 0.4rem 1rem;
+  padding: 0;
+}
+.class-editors {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 0.75rem;
+}
+.class-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  border: 1px solid var(--stone);
+  border-radius: 3px;
+  padding: 0.5rem 0.75rem;
+  min-width: 0;
+}
+.class-editor input,
+.class-editor textarea,
+.class-editor select {
+  max-width: 100%;
+}
+.class-editor .row input[type="number"] {
+  width: 4rem;
+}
+.class-offer {
+  border-top: 1px solid var(--stone);
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+}
+.class-offer h4 {
+  margin: 0.2rem 0;
+}
+.class-mechanics {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.15rem 0.6rem;
+  margin: 0.3rem 0;
+}
+.class-mechanics dt {
+  font-weight: 600;
+}
+.class-mechanics dd {
+  margin: 0;
+}
+@media (max-width: 800px) {
+  .class-writer-body {
+    grid-template-columns: 1fr;
+  }
+  .class-record {
+    position: static;
+  }
+}

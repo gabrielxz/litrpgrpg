@@ -6,7 +6,9 @@
 import { randomUUID } from "node:crypto";
 import { PGlite } from "@electric-sql/pglite";
 import { serve } from "@hono/node-server";
+import { Engine } from "@gradebreaker/engine";
 import { loadRules } from "@gradebreaker/engine/node";
+import { bookClasses } from "@gradebreaker/record";
 import type { AddressInfo } from "node:net";
 import type { Server } from "node:http";
 import { SignJWT, createLocalJWKSet, exportJWK, generateKeyPair } from "jose";
@@ -720,6 +722,40 @@ describe("Battle Memories and Principles", () => {
     expect(view.json.feed.map((f: { effect: { kind: string } }) => f.effect.kind)).toEqual(expect.arrayContaining(["memory-granted", "vision", "resonance"]));
     const text = JSON.stringify(view.json);
     for (const leak of ["stopped fighting", "afterRests", '"due"']) expect(text).not.toContain(leak);
+  });
+});
+
+describe("classes", () => {
+  it("shows the offers and the class to the holder's player alone, without the guarded mark", async () => {
+    const { campaignId, gm, player, playerId, invite } = await table();
+    const other = await signIn("Bo");
+    await call("POST", `/invites/${invite}/accept`, { token: other });
+    const otherId = (await call("GET", "/me", { token: other })).json.user.id as string;
+    await act(campaignId, gm, { type: "character.pregen", characterId: "kara", pregen: "Kara", playerId });
+    await act(campaignId, gm, { type: "character.pregen", characterId: "joe", pregen: "Joe", playerId: otherId });
+    for (let level = 2; level <= 10; level++) {
+      await act(campaignId, gm, { type: "ve.award", basis: { kind: "other", note: "test" }, awards: [{ characterId: "kara", ve: 120 }] });
+      await act(campaignId, gm, { type: "consolidation.rest", highDensity: false, rests: [{ characterId: "kara", hours: 6 }] });
+      if (level < 10) await act(campaignId, gm, { type: "points.system", characterId: "kara", level, placement: { STR: 3 } });
+    }
+    const pkgs = bookClasses(new Engine(rules)).filter((c) => ["Devourer", "Breaching Vanguard", "Burner"].includes(c.name));
+    expect((await act(campaignId, gm, { type: "class.offer", characterId: "kara", offers: pkgs })).status).toBe(201);
+
+    const mine = (await call("GET", `/campaigns/${campaignId}`, { token: player })).json;
+    expect(mine.characters[0].classOffers.map((o: { name: string }) => o.name)).toEqual(["Breaching Vanguard", "Burner", "Devourer"]);
+    expect(JSON.stringify(mine.characters[0].classOffers)).not.toMatch(/guarded|"book"/);
+    expect(mine.feed.map((f: { effect: { kind: string } }) => f.effect.kind)).toContain("classification");
+    const theirs = JSON.stringify((await call("GET", `/campaigns/${campaignId}`, { token: other })).json);
+    for (const leak of ["Devourer", "Classification", "classification"]) expect(theirs).not.toContain(leak);
+
+    expect((await act(campaignId, other, { type: "class.accept", characterId: "kara", name: "Devourer" })).status).toBe(422);
+    expect((await act(campaignId, player, { type: "class.accept", characterId: "kara", name: "Devourer" })).status).toBe(201);
+    const after = (await call("GET", `/campaigns/${campaignId}`, { token: player })).json.characters[0];
+    expect(after.class).toMatchObject({ name: "Devourer", bonus: 10, technique: { name: "Consume" } });
+    expect(after.class.guarded).toBeUndefined();
+    expect(after.classOffers).toEqual([]);
+    const gmView = (await call("GET", `/campaigns/${campaignId}`, { token: gm })).json;
+    expect(gmView.characters.find((c: { id: string }) => c.id === "kara").class.guarded).toBe(true);
   });
 });
 
