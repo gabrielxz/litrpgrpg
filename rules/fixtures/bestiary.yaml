@@ -15,3 +15,64 @@ cases:
     fn: sized_force
     args: {row_force: 40, party_size: 4}
     expect: 40
+  - name: A creature whose Offense and Defense differ counts at the higher
+    source: '60-bestiary.md, "GM Reference: Encounter Building"'
+    fn: creature_sizing_force
+    args: {offense: [50], defense: [40]}
+    expect: 50
+  - name: Two creatures at Force 30 fight like one at Force 50
+    source: '60-bestiary.md, "GM Reference: Encounter Building"'
+    fn: encounter_force
+    args: {forces: [30, 30]}
+    expect: 50
+  - name: Two at 20 is the Level 8 to 12 standard fight
+    source: '60-bestiary.md, "GM Reference: Encounter Building" (the sizing table)'
+    fn: encounter_force
+    args: {forces: [20, 20]}
+    expect: 40
+  - name: The table sizes one or two creatures
+    source: '60-bestiary.md, "GM Reference: Encounter Building"'
+    fn: encounter_force
+    args: {forces: [30, 30, 30]}
+    expect: null
+    expect_error: RulesGap
+  - name: One creature at Force 40 is a standard fight for four at Level 10
+    source: '60-bestiary.md, "GM Reference: Encounter Building" (the sizing table)'
+    fn: encounter_column_force
+    args: {party_level: 10, party_size: 4, force: 40}
+    expect: standard
+  - name: A party of three at Level 10 meets a standard fight at Force 30
+    source: '60-bestiary.md, "Parties of three and five"'
+    fn: encounter_column_force
+    args: {party_level: 10, party_size: 3, force: 30}
+    expect: standard
+  - name: A party of five at Level 10 meets a standard fight at Force 50
+    source: '60-bestiary.md, "Parties of three and five"'
+    fn: encounter_column_force
+    args: {party_level: 10, party_size: 5, force: 50}
+    expect: standard
+  - name: The Corrupted System Warden at Force 95 sits above the hard row even at Level 25
+    source: '60-bestiary.md, "GM Reference: Encounter Building"'
+    fn: encounter_column_force
+    args: {party_level: 25, party_size: 4, force: 95}
+    expect: above
+  - name: 1 Easy + 1 Trivial is a standard fight at Levels 1 to 3
+    source: '60-bestiary.md, "GM Reference: Encounter Building" (the sizing table)'
+    fn: encounter_column_mix
+    args: {party_level: 2, party_size: 4, tiers: [Trivial, Easy]}
+    expect: standard
+  - name: 1 Hard is a hard fight at Levels 4 to 7
+    source: '60-bestiary.md, "GM Reference: Encounter Building" (the sizing table)'
+    fn: encounter_column_mix
+    args: {party_level: 5, party_size: 4, tiers: [Hard]}
+    expect: hard
+  - name: The easy column's creatures are a standard fight for a party of three
+    source: '60-bestiary.md, "Parties of three and five"'
+    fn: encounter_column_mix
+    args: {party_level: 2, party_size: 3, tiers: [Trivial, Trivial]}
+    expect: standard
+  - name: Two Moderates are no cell of the Level 1 to 3 row
+    source: '60-bestiary.md, "GM Reference: Encounter Building" (the sizing table)'
+    fn: encounter_column_mix
+    args: {party_level: 2, party_size: 4, tiers: [Moderate, Moderate]}
+    expect: null

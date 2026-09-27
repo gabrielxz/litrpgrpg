@@ -31,6 +31,7 @@ import { AttackForm, type Clasher, DefenseForm, YieldChoice } from "../Clash.tsx
 import type { Names } from "../text.ts";
 import { AftermathPanel } from "./Aftermath.tsx";
 import { RollList } from "../Dice.tsx";
+import { SizingPanel, sizedOf } from "./Sizing.tsx";
 
 interface Creature {
   name: string;
@@ -306,6 +307,11 @@ function Setup({ view, engine, onRecorded }: { view: GmView; engine: Engine; onR
           </tbody>
         </table>
       )}
+      <SizingPanel
+        engine={engine}
+        party={view.characters.filter((c) => placed[c.id])}
+        creatures={others.filter((o) => !view.characters.some((c) => placed[c.id] === o.sideId)).map((o) => sizedOf(engine, o))}
+      />
       {problem && <p className="muted">{problem}</p>}
       {error && <p className="error">{error}</p>}
       <button

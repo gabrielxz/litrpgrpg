@@ -344,6 +344,63 @@ def sized_force(row_force: int, party_size: int) -> int:
     return row_force + g["force_per_character"] * (party_size - g["party_size_written_for"])
 
 
+
+COLUMNS = ("easy", "standard", "hard")
+
+
+def sizing_row(party_level: int) -> dict:
+    """The encounter sizing row for a party level (Bestiary, "GM Reference: Encounter Building")."""
+    for row in load("bestiary")["encounter_sizing"]:
+        lo, hi = row["levels"]
+        if lo <= party_level <= hi:
+            return row
+    raise KeyError(f"no sizing row for Level {party_level}")
+
+
+def creature_sizing_force(offense: list, defense: list) -> int:
+    """From Level 8 a creature counts at the higher of its Offense and Defense Force."""
+    return max(list(offense) + list(defense))
+
+
+def encounter_force(forces: list) -> int:
+    """One creature fights at its Force; a second counts as 20 Force. The table sizes one or two."""
+    if not forces:
+        raise ValueError("an encounter has at least one creature")
+    if len(forces) > 2:
+        raise RulesGap("the sizing table sizes one or two creatures; the Bestiary does not say what a third adds")
+    return max(forces) + load("bestiary")["encounter_guidance"]["second_creature_worth_force"] * (len(forces) - 1)
+
+
+def encounter_column_force(party_level: int, party_size: int, force: int) -> str:
+    """Where an encounter's Force sits in the row (Level 8 and up), each column sized for the party:
+    the lowest column whose Force meets it, `below` under the easy column, `above` past the hard one."""
+    cols = sizing_row(party_level).get("force")
+    if cols is None:
+        raise KeyError(f"Level {party_level} is sized by creature tier, not Force")
+    if force < sized_force(cols["easy"], party_size):
+        return "below"
+    for c in COLUMNS:
+        if force <= sized_force(cols[c], party_size):
+            return c
+    return "above"
+
+
+def encounter_column_mix(party_level: int, party_size: int, tiers: list):
+    """Which column a set of creature tiers is (Levels 1 to 7), shifted one column per character from
+    four: the same creatures are one column harder for three and one easier for five. None when the
+    set is no cell of the row."""
+    mix = sizing_row(party_level).get("mix")
+    if mix is None:
+        raise KeyError(f"Level {party_level} is sized by creature Force, not tier")
+    g = load("bestiary")["encounter_guidance"]
+    want = sorted(t.lower() for t in tiers)
+    for i, c in enumerate(COLUMNS):
+        if any(sorted(t.lower() for t in alt) == want for alt in mix[c]):
+            j = i + (g["party_size_written_for"] - party_size) * g["columns_per_character"]
+            return "below" if j < 0 else "above" if j >= len(COLUMNS) else COLUMNS[j]
+    return None
+
+
 # ---------------------------------------------------------- breakthrough ---
 
 def energy_density_bonus(tier: str) -> int:

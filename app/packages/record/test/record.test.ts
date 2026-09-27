@@ -5,7 +5,7 @@
 import { Engine } from "@gradebreaker/engine";
 import { loadRules } from "@gradebreaker/engine/node";
 import { beforeEach, describe, expect, it } from "vitest";
-import { type Action, type ClassPackage, CampaignRecord, bookClasses, packageWarnings, type Draft, RecordError, encounterAwards, hoursForGoal, flankingSuggested, killAwards, questForHolder, rollD100s, rollFor } from "../src/index.ts";
+import { type Action, type ClassPackage, CampaignRecord, partyLevelOf, sizeEncounter, bookClasses, packageWarnings, type Draft, RecordError, encounterAwards, hoursForGoal, flankingSuggested, killAwards, questForHolder, rollD100s, rollFor } from "../src/index.ts";
 
 const engine = new Engine(loadRules());
 const GM = { role: "gm", userId: "gm-1" } as const;
@@ -1821,5 +1821,31 @@ describe("classes", () => {
     expect(packageWarnings(engine, medic)).toEqual([]);
     expect(packageWarnings(engine, { ...medic, technique: { ...medic.technique, actionEconomy: true } })[0]).toMatch(/2 action-economy effects/);
     expect(book("Devourer").guarded).toBe(true);
+  });
+});
+
+describe("encounter sizing", () => {
+  const bestiary = engine.rules.bestiary.creatures as { name: string; tier: string; grade: string; beats: number; offense: { force: number }[]; defense: { force: number }[] }[];
+  const sized = (name: string) => {
+    const c = bestiary.find((x) => x.name === name)!;
+    return { name, tier: c.tier, grade: c.grade, beats: c.beats, offense: c.offense.map((o) => o.force), defense: c.defense.map((d) => d.force) };
+  };
+
+  it("reads Levels 1 to 7 by tier, shifted for the party's size", () => {
+    expect(sizeEncounter(engine, 2, 4, "F", [sized("Frenzy Rat"), sized("Husk Crawler")])).toMatchObject({ row: "L1–3", column: "easy" });
+    expect(sizeEncounter(engine, 2, 4, "F", [sized("Pre-System Brigand"), sized("Frenzy Rat")]).column).toBe("standard");
+    expect(sizeEncounter(engine, 2, 3, "F", [sized("Pre-System Brigand"), sized("Frenzy Rat")]).column).toBe("hard");
+    expect(sizeEncounter(engine, 2, 4, "F", [sized("Snarljaw"), sized("Snarljaw")]).column).toBeNull();
+  });
+
+  it("reads Level 8 and up by creature Force, and says where the table stops", () => {
+    const wraith = sizeEncounter(engine, 20, 4, "F", [sized("Fragment Wraith")]);
+    expect(wraith).toMatchObject({ row: "L18–22", force: 70, column: "hard", columns: { easy: 50, standard: 60, hard: 70 } });
+    const warden = sizeEncounter(engine, 25, 4, "F", [sized("Corrupted System Warden")]);
+    expect(warden.column).toBe("above");
+    expect(warden.notes[0]).toMatch(/two Beats; Corrupted System Warden takes 3/);
+    expect(sizeEncounter(engine, 10, 4, "F", [sized("Snarljaw"), sized("Snarljaw"), sized("Snarljaw")]).notes[0]).toMatch(/one or two creatures/);
+    expect(sizeEncounter(engine, 10, 4, "F", [{ ...sized("Snarljaw"), grade: "E" }]).notes[0]).toMatch(/Cross-Grade/);
+    expect(partyLevelOf([9, 10, 10, 12])).toBe(10);
   });
 });

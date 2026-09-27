@@ -1457,3 +1457,32 @@ ul.events li.event {
     position: static;
   }
 }
+
+/* The encounter builder's sizing reading. */
+.sizing {
+  border-left: 3px solid var(--stone);
+  padding: 0.3rem 0.7rem;
+  margin: 0.6rem 0;
+}
+.inline-label {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.35rem;
+}
+.stat-blocks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  gap: 0.75rem;
+}
+.stat-block {
+  border: 1px solid var(--stone);
+  border-radius: 3px;
+  padding: 0.5rem 0.75rem;
+}
+.stat-block h3 {
+  margin: 0 0 0.3rem;
+}
+tr.current-row td {
+  background: var(--sys-ground, #eee);
+  color: var(--cyan-light, inherit);
+}

@@ -19,6 +19,7 @@ import { SessionBar, SessionsCard } from "./Sessions.tsx";
 import { ClockControls } from "./Clock.tsx";
 import { PrinciplesSection, principlesWaiting } from "./Principles.tsx";
 import { ClassesSection, classesWaiting } from "./Classes.tsx";
+import { BestiarySection } from "./Bestiary.tsx";
 import { TitlesDueCard } from "./Titles.tsx";
 import { stackLine } from "../items.ts";
 import { ATTRIBUTES } from "../text.ts";
@@ -202,10 +203,11 @@ function ViewAs({ view }: { view: GmView }) {
   );
 }
 
-type Section = "party" | "combat" | "quests" | "principles" | "classes" | "events" | "hve" | "log" | "table" | "player";
+type Section = "party" | "combat" | "bestiary" | "quests" | "principles" | "classes" | "events" | "hve" | "log" | "table" | "player";
 const SECTIONS: [Section, string][] = [
   ["party", "Party"],
   ["combat", "Combat"],
+  ["bestiary", "Bestiary"],
   ["quests", "Quests"],
   ["principles", "Principles"],
   ["classes", "Classes"],
@@ -297,6 +299,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
         </main>
       )}
       {section === "combat" && <CombatSection view={view} engine={engine} names={names} log={live.log} onRecorded={live.addToLog} />}
+      {section === "bestiary" && <BestiarySection view={view} engine={engine} />}
       {section === "quests" && <QuestsSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
       {section === "principles" && <PrinciplesSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
       {section === "classes" && <ClassesSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}

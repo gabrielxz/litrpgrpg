@@ -29,6 +29,9 @@ export const ATTRIBUTES = ["STR", "DEX", "FOR", "HRT", "POW", "PER", "CHA"] as c
 export type Attribute = (typeof ATTRIBUTES)[number];
 export type Stats = Record<string, number>;
 
+/** The sizing table's columns, easiest first. */
+export const SIZING_COLUMNS = ["easy", "standard", "hard"] as const;
+
 /** Python's `//`: floor division. */
 const floorDiv = (a: number, b: number): number => Math.floor(a / b);
 
@@ -366,6 +369,59 @@ export class Engine {
   sizedForce(rowForce: number, partySize: number): number {
     const g = this.load("bestiary").encounter_guidance;
     return rowForce + g.force_per_character * (partySize - g.party_size_written_for);
+  }
+
+  /** The encounter sizing row for a party level (Bestiary, "GM Reference: Encounter Building"). */
+  sizingRow(partyLevel: number) {
+    for (const row of this.load("bestiary").encounter_sizing) {
+      const [lo, hi] = row.levels;
+      if (lo <= partyLevel && partyLevel <= hi) return row;
+    }
+    throw new KeyError(`no sizing row for Level ${partyLevel}`);
+  }
+
+  /** From Level 8 a creature counts at the higher of its Offense and Defense Force. */
+  creatureSizingForce(offense: number[], defense: number[]): number {
+    return Math.max(...offense, ...defense);
+  }
+
+  /** One creature fights at its Force; a second counts as 20 Force. The table sizes one or two. */
+  encounterForce(forces: number[]): number {
+    if (forces.length === 0) throw new ValueError("an encounter has at least one creature");
+    if (forces.length > 2) throw new RulesGap("the sizing table sizes one or two creatures; the Bestiary does not say what a third adds");
+    return Math.max(...forces) + this.load("bestiary").encounter_guidance.second_creature_worth_force * (forces.length - 1);
+  }
+
+  /**
+   * Where an encounter's Force sits in the row (Level 8 and up), each column sized for the party:
+   * the lowest column whose Force meets it, `below` under the easy column, `above` past the hard one.
+   */
+  encounterColumnForce(partyLevel: number, partySize: number, force: number): string {
+    const cols = this.sizingRow(partyLevel).force;
+    if (cols === undefined) throw new KeyError(`Level ${partyLevel} is sized by creature tier, not Force`);
+    if (force < this.sizedForce(cols.easy, partySize)) return "below";
+    for (const c of SIZING_COLUMNS) if (force <= this.sizedForce(cols[c], partySize)) return c;
+    return "above";
+  }
+
+  /**
+   * Which column a set of creature tiers is (Levels 1 to 7), shifted one column per character from
+   * four: the same creatures are one column harder for three and one easier for five. Null when the
+   * set is no cell of the row.
+   */
+  encounterColumnMix(partyLevel: number, partySize: number, tiers: string[]): string | null {
+    const mix = this.sizingRow(partyLevel).mix;
+    if (mix === undefined) throw new KeyError(`Level ${partyLevel} is sized by creature Force, not tier`);
+    const g = this.load("bestiary").encounter_guidance;
+    const key = (ts: string[]) => ts.map((t) => t.toLowerCase()).sort().join(",");
+    const want = key(tiers);
+    for (let i = 0; i < SIZING_COLUMNS.length; i++) {
+      if ((mix[SIZING_COLUMNS[i]!] as string[][]).some((alt) => key(alt) === want)) {
+        const j = i + (g.party_size_written_for - partySize) * g.columns_per_character;
+        return j < 0 ? "below" : j >= SIZING_COLUMNS.length ? "above" : SIZING_COLUMNS[j]!;
+      }
+    }
+    return null;
   }
 
   // ------------------------------------------------------ breakthrough ---

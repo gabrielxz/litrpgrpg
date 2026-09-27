@@ -50,3 +50,74 @@ export function killAwards(
 ): { characterId: string; ve: number }[] {
   return participants.map((p) => ({ characterId: p.characterId, ve: engine.killVe(p.tier, p.grade, victimGrade) }));
 }
+
+/** A creature as the sizing table reads it: its tier, its Grade, its Forces, and its Beats. */
+export interface SizedCreature {
+  name: string;
+  tier?: string;
+  grade: string;
+  offense: number[];
+  defense: number[];
+  beats?: number;
+}
+
+export interface Sizing {
+  /** The row's label, "L8–12". */
+  row: string;
+  /** easy, standard, hard, below, or above; null when the table does not size these creatures. */
+  column: string | null;
+  /** From Level 8: the encounter's Force and the row's columns sized for the party. */
+  force?: number;
+  columns?: Record<string, number>;
+  /** Why the table stops short, or what it leaves out. */
+  notes: string[];
+}
+
+/**
+ * Where a fight sits in the Bestiary's sizing table for a party (Bestiary, "GM Reference:
+ * Encounter Building"): at Levels 1 to 7 by the creatures' tiers, from Level 8 by creature Force,
+ * each column shifted for a party other than four. The table sizes creatures of the party's own
+ * Grade, and from Level 8 one or two of them with two Beats each; past that it says so.
+ */
+export function sizeEncounter(engine: Engine, partyLevel: number, partySize: number, partyGrade: string, creatures: SizedCreature[]): Sizing {
+  const row = engine.sizingRow(partyLevel);
+  const out: Sizing = { row: row.party_level, column: null, notes: [] };
+  if (!creatures.length) return out;
+  const other = creatures.filter((c) => c.grade !== partyGrade);
+  if (other.length) {
+    out.notes.push(`${other.map((c) => c.name).join(", ")} ${other.length === 1 ? "is" : "are"} not ${partyGrade}-Grade: the Cross-Grade Adjustment applies and the table does not size it.`);
+    return out;
+  }
+  if (row.mix) {
+    const tiers = creatures.map((c) => c.tier);
+    if (tiers.some((t) => !t)) {
+      out.notes.push("A creature entered by hand has no tier: size it by the Difficulty Card.");
+      return out;
+    }
+    out.column = engine.encounterColumnMix(partyLevel, partySize, tiers as string[]);
+    if (out.column === null) out.notes.push("These creatures are no cell of the row: size the fight by the Difficulty Card, or step a cell by one creature of its lowest tier.");
+    return out;
+  }
+  out.columns = Object.fromEntries(SIZING.map((c) => [c, engine.sizedForce(row.force[c], partySize)]));
+  if (creatures.some((c) => !c.offense.length && !c.defense.length)) {
+    out.notes.push("A creature entered by hand has no Forces: size it by the Difficulty Card.");
+    return out;
+  }
+  const forces = creatures.map((c) => engine.creatureSizingForce(c.offense, c.defense));
+  if (creatures.length > 2) {
+    out.notes.push("The table sizes one or two creatures. Every further body is two more attacks a round: extra bodies multiply danger.");
+    return out;
+  }
+  out.force = engine.encounterForce(forces);
+  out.column = engine.encounterColumnForce(partyLevel, partySize, out.force);
+  const beats = creatures.filter((c) => c.beats !== undefined && c.beats !== 2);
+  if (beats.length) out.notes.push(`The rows assume two Beats; ${beats.map((c) => `${c.name} takes ${c.beats}`).join(", ")}.`);
+  return out;
+}
+
+const SIZING = ["easy", "standard", "hard"] as const;
+
+/** The party level the sizing table reads: the party's average level, rounded down. */
+export function partyLevelOf(levels: number[]): number {
+  return levels.length ? Math.floor(levels.reduce((a, b) => a + b, 0) / levels.length) : 1;
+}

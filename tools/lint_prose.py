@@ -16,6 +16,8 @@ Two checks over the chapter sources, the kit, and the pipeline, and two warning 
 5. Class notices: each class's `notice` in rules/classes.yaml, and the Level 10
    opening line, must match the systemvoice box in Classes word for word. The
    app shows the data's copy, so the two cannot drift.
+6. Encounter sizing: each row's `mix` and `force` in rules/bestiary.yaml must say
+   what its rendered text cells say.
 
     python3 tools/lint_prose.py
 """
@@ -89,6 +91,28 @@ def cited(section: str, heads: set[str]) -> bool:
     return any(h.startswith(section + " (") for h in heads)
 
 
+def sizing_drift() -> list[str]:
+    with open(os.path.join(ROOT, "rules", "bestiary.yaml"), encoding="utf-8") as fh:
+        rows = yaml.safe_load(fh)["encounter_sizing"]
+    out = []
+    for r in rows:
+        for col in ("easy", "standard", "hard"):
+            text = r[col]
+            if "mix" in r:
+                alts = []
+                for alt in text.split(" or "):
+                    tiers = []
+                    for part in alt.split(" + "):
+                        n, tier = part.split(" ", 1)
+                        tiers += [tier] * int(n)
+                    alts.append(sorted(tiers))
+                if sorted(alts) != sorted(sorted(a) for a in r["mix"][col]):
+                    out.append(f"rules/bestiary.yaml: {r['party_level']} {col}: mix differs from \"{text}\"")
+            elif f"Force {r['force'][col]}" not in text:
+                out.append(f"rules/bestiary.yaml: {r['party_level']} {col}: force {r['force'][col]} differs from \"{text}\"")
+    return out
+
+
 def class_notice_drift() -> list[str]:
     path = os.path.join(BOOK, "18-classes.md")
     with open(path, encoding="utf-8") as fh:
@@ -144,6 +168,7 @@ def main() -> int:
 
     # 5. class notices match the book's boxes
     problems.extend(class_notice_drift())
+    problems.extend(sizing_drift())
 
     # 3. voice warnings (never fail)
     warnings = []
