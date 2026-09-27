@@ -164,7 +164,29 @@ A model keeps nothing between requests. Every request carries a context the app 
 
 Visibility is applied before assembly: a player-facing request never receives GM notes, HVE readings, hidden criteria, or another character's private record.
 
+## Testing the listening
+
+Scripted sessions exercise the listening, the drafting, and the suggestions before any real play does. Real play follows: the rehearsal (M3), then the tutorial. The pipeline has three layers, and each is tested on its own:
+
+1. **Audio to text.** Each tab's capture and its transcription, including game terms and the characters' names.
+2. **Text to events.** The drafted events, HVE entries, and counter ticks against what happened at the table, and silence where nothing happened: a hypothetical Yield, a joke, a retcon, a rules question.
+3. **Events to suggestions.** The right quest, title, or tally, offered at the right moment.
+
+| Item | | Notes |
+|---|---|---|
+| Scripted sessions | **active**, before M2's prompts | A script is a timeline of lines (speaker, text) and its expected record: the events, HVE entries, counter ticks, and suggestions it should produce, and the lines that must produce nothing. Scripts are fixtures beside the code, like `rules/fixtures/`. Writing an expected record is design work; a gap it finds in the HVE rules goes under "Queued for the book" |
+| Script sources | **active** | Tutorial scenes, the first target; one scene played by four tables, one per HVE archetype in Titles' sample stacks, whose HVE records should differ; table talk made messy on purpose (crosstalk, off-topic talk, rules questions, retcons, in character and out) |
+| Text evaluation | **active**, M2 | Scripts go to the drafting pipeline as typed input. A model's output varies between runs, so each script runs several times and the harness reports precision and recall against the expected record. Prompt changes are judged by those numbers |
+| Other games' actual play | **active**, M2 | Transcripts of other games' actual-play videos, as text. The pass condition is almost nothing logged. Internal test material, never committed |
+| Synthetic audio per speaker | **active**, M3 | Text-to-speech renders each speaker's lines as a separate file in a separate voice (a local model such as Piper or Kokoro). Headless Chromium gives each tab its file as the microphone (`--use-file-for-fake-audio-capture`), so the real capture path runs. Measures transcription errors on game terms and names; the same files compare speech-to-text vendors |
+| Degraded audio | **active**, M3 | Overlapping speech, background noise, mic bleed (one player's speakers heard on another's microphone; Voice capture, "Headphones"), filler words and laughter, a stream that drops mid-sentence. Clean synthetic speech overstates accuracy |
+| Real-time runs | **active**, M3 | Scripts played at speaking pace into shadow mode, measuring latency and when suggestions arrive |
+| Real sessions as fixtures | **active**, after the rehearsal | With the consent under Test recordings, a session whose log the GM has corrected becomes a script with its expected record, so each session played adds a regression case |
+| Simulated players | *deferred* | Model-driven players voicing a party against a live GM, for volume and variety; less trustworthy than written scripts |
+
+The order: the script format and the expected-record schema; text evaluation at M2; synthetic and degraded audio at M3; the rehearsal; real sessions kept as fixtures.
+
 ## Open
 
-- **The speech-to-text vendor**, chosen at M3 against recorded test material.
+- **The speech-to-text vendor**, chosen at M3 against the synthetic audio and the test recordings (Testing the listening).
 - **The rehearsal scene** before the tutorial: content that spoils nothing in the tutorial.

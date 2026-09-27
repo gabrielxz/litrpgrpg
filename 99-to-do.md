@@ -109,7 +109,7 @@ Edits an app session forces, each with Gabriel's ruling or Claude's recommendati
 
 **State (2026-09-26).** Production healthy at https://gradebreaker.fly.dev (deploy of 3256d11 succeeded). M1 progress is the table in `app/DESIGN.md` (Built notes on each row); the decisions are under Decisions there.
 
-**Next.** First the two items queued below, then the rest of M1 in Gabriel's order (Claude recommends the HVE sweep by hand: design priority 4 and a small piece). Unbuilt M1 rows: Battle Memories and Principles, Events, the HVE sweep, Sessions, the Bestiary library and encounter builder, Prep, the in-game clock, Inspection, class offers by hand.
+**Next.** First the two items queued below, then the rest of M1 in Gabriel's order (Claude recommends the HVE sweep by hand: design priority 4 and a small piece). Unbuilt M1 rows: Battle Memories and Principles, Events, the HVE sweep, Sessions, the Bestiary library and encounter builder, Prep, the in-game clock, Inspection, class offers by hand. The loose plan for testing the listening is `app/DESIGN.md`, "Testing the listening" (Gabriel, 2026-09-27); its script format and expected-record schema come before M2's prompts.
 
 ### Queued for the app
 
