@@ -651,13 +651,23 @@ describe("the Hidden Vector Engine", () => {
       sheets: [{ characterId: "kara", moments: [{ pole: "Hunger", weight: 3, note: "Took the pill while the others argued." }] }],
     });
     expect(swept.status).toBe(201);
+    const logged = await act(campaignId, gm, {
+      type: "event.log",
+      summary: "Bribed the warden in front of the others",
+      participants: ["kara"],
+      notes: "Ana grinned.",
+      entries: [{ characterId: "kara", pole: "Hunger", intensity: 0.5 }],
+    });
+    expect(logged.status).toBe(201);
+    expect((await act(campaignId, player, { type: "event.log", summary: "x", participants: ["kara"] })).status).toBe(422);
     expect((await act(campaignId, player, { type: "hve.deep", characterId: "kara", deep: { Force: 9 } })).status).toBe(422);
     const view = await call("GET", `/campaigns/${campaignId}`, { token: player });
     expect(view.json.feed).toEqual(before.json.feed);
     const text = JSON.stringify(view.json);
-    for (const leak of ["hve", "Hunger", "argued", "Scattered", "Session 1"]) expect(text).not.toContain(leak);
+    for (const leak of ["hve", "Hunger", "argued", "Scattered", "Session 1", "events", "warden", "grinned"]) expect(text).not.toContain(leak);
     const gmView = await call("GET", `/campaigns/${campaignId}`, { token: gm });
     expect(gmView.json.characters[0].hve.deep.Hunger).toBe(1);
+    expect(gmView.json.events[0]).toMatchObject({ summary: "Bribed the warden in front of the others", notes: "Ana grinned." });
   });
 });
 

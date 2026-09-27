@@ -1313,3 +1313,27 @@ table.hve-rows {
 .deep-inputs input {
   width: 100%;
 }
+
+/* ---- events ---- */
+
+fieldset.participants {
+  border: 1px solid var(--bone-deep);
+  padding: 0.4rem 0.6rem;
+}
+.participant {
+  border-bottom: 1px dashed var(--bone-deep);
+  padding: 0.3rem 0;
+}
+.participant:last-child {
+  border-bottom: none;
+}
+ul.events {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0;
+}
+ul.events li.event {
+  border-bottom: 1px solid var(--bone-deep);
+  padding: 0.45rem 0;
+  font-size: 0.9rem;
+}

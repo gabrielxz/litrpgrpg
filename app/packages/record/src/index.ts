@@ -52,6 +52,7 @@ export {
   questTableVe,
 } from "./quests.ts";
 export { type TakePillOutside, pillLimit } from "./pills.ts";
+export { type CampaignEvent, type EventAction, type HveEntry, type LogEvent, intensities, sweepWeight } from "./events.ts";
 export { type CopyDeep, type HveAction, type Moment, type SweepEntry, type SweepHve, type Weight, axes, currentOf, weights } from "./hve.ts";
 export { DERIVED_COUNTERS, type Title, type TitleAction, type TitleCategory, type TitleSpec, catalogSpec, counted, tickedCounters } from "./titles.ts";
 export {

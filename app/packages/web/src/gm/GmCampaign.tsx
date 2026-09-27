@@ -14,6 +14,7 @@ import { Commit } from "./Commit.tsx";
 import { SpoilsCard } from "./Items.tsx";
 import { QuestsSection } from "./Quests.tsx";
 import { HveSection } from "./Hve.tsx";
+import { EventsSection } from "./Events.tsx";
 import { TitlesDueCard } from "./Titles.tsx";
 import { stackLine } from "../items.ts";
 import { ATTRIBUTES } from "../text.ts";
@@ -195,11 +196,12 @@ function ViewAs({ view }: { view: GmView }) {
   );
 }
 
-type Section = "party" | "combat" | "quests" | "hve" | "log" | "table" | "player";
+type Section = "party" | "combat" | "quests" | "events" | "hve" | "log" | "table" | "player";
 const SECTIONS: [Section, string][] = [
   ["party", "Party"],
   ["combat", "Combat"],
   ["quests", "Quests"],
+  ["events", "Events"],
   ["hve", "HVE"],
   ["log", "Campaign log"],
   ["table", "Table"],
@@ -282,6 +284,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
       )}
       {section === "combat" && <CombatSection view={view} engine={engine} names={names} log={live.log} onRecorded={live.addToLog} />}
       {section === "quests" && <QuestsSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
+      {section === "events" && <EventsSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
       {section === "hve" && <HveSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
       {section === "log" && (
         <main className="page">

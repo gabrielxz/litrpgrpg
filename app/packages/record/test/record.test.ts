@@ -1433,3 +1433,55 @@ describe("the Hidden Vector Engine sweep", () => {
     expect(() => gm({ type: "hve.sweep", sheets: [{ characterId: "kara", moments: [] }, { characterId: "kara", moments: [] }] })).toThrow(/one sheet per character/);
   });
 });
+
+describe("events", () => {
+  beforeEach(() => {
+    gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" });
+    gm({ type: "character.pregen", characterId: "joe", pregen: "Joe" });
+  });
+  const pill = (id = "ev1") =>
+    gm(
+      {
+        type: "event.log",
+        summary: "Took the party's only healing pill while the others argued",
+        context: "Recycling Node loot split",
+        participants: ["kara", "joe"],
+        notes: "Joe noticed.",
+        entries: [{ characterId: "kara", pole: "Hunger", intensity: 1, intent: "Secure her own survival", outcome: "Kept it; nobody challenged her" }],
+      },
+      id,
+    );
+
+  it("logs an event with its HVE entries in the book's structured shape, the GM's alone", () => {
+    const out = pill();
+    expect(out.effects).toEqual([{ kind: "event-logged", eventId: "ev1", summary: "Took the party's only healing pill while the others argued" }]);
+    const e = rec.state.events.get("ev1")!;
+    expect(e).toMatchObject({ id: "ev1", context: "Recycling Node loot split", participants: ["kara", "joe"], notes: "Joe noticed." });
+    expect(e.entries[0]).toMatchObject({ characterId: "kara", pole: "Hunger", intensity: 1 });
+    expect(() => rec.append(draft({ type: "event.log", summary: "x", participants: ["kara"] }, P1))).toThrow(/only the GM/);
+  });
+
+  it("checks each entry against the sweep's rules, with 0.5 as a reminder tier", () => {
+    const ev = (entries: object[], participants = ["kara"]) => gm({ type: "event.log", summary: "A moment", participants, entries } as Action);
+    expect(() => ev([{ characterId: "kara", pole: "Hunger", intensity: 4 }])).toThrow(/0.5, 1, 2, 3/);
+    expect(() => ev([{ characterId: "joe", pole: "Force", intensity: 1 }])).toThrow(/not in the event/);
+    expect(() => ev([{ characterId: "kara", pole: "Force", intensity: 2, secondary: "Method" }])).toThrow(/another axis/);
+    expect(() => ev([{ characterId: "kara", pole: "Will", intensity: 0.5, coercion: true }])).toThrow(/of Will/);
+    expect(() => ev([{ characterId: "kara", pole: "Force", intensity: 1 }, { characterId: "kara", pole: "Hunger", intensity: 1 }])).toThrow(/one entry per character/);
+    expect(() => gm({ type: "event.log", summary: "  ", participants: [] })).toThrow(/summary/);
+    ev([{ characterId: "kara", pole: "Accord", intensity: 0.5 }]);
+  });
+
+  it("marks an entry swept when a sweep moment names its event, once", () => {
+    pill();
+    const sweep = gm({ type: "hve.sweep", sheets: [{ characterId: "kara", moments: [{ pole: "Hunger", weight: 1, eventId: "ev1" }] }] });
+    expect(rec.state.events.get("ev1")!.entries[0]!.sweptIn).toBe(sweep.envelope.id);
+    expect(() => gm({ type: "hve.sweep", sheets: [{ characterId: "kara", moments: [{ pole: "Hunger", weight: 1, eventId: "ev1" }] }] })).toThrow(/already swept/);
+    expect(() => gm({ type: "hve.sweep", sheets: [{ characterId: "joe", moments: [{ pole: "Force", weight: 1, eventId: "ev1" }] }] })).toThrow(/no entry for Joe/);
+    // Undoing the event strands the sweep that drew on it.
+    const pv = rec.preview(draft({ type: "void", targetId: "ev1", reason: "correction" }));
+    expect(pv.newlyRejected.map((r) => r.envelope.id)).toEqual([sweep.envelope.id]);
+    gm({ type: "void", targetId: sweep.envelope.id, reason: "undo" });
+    expect(rec.state.events.get("ev1")!.entries[0]!.sweptIn).toBeUndefined();
+  });
+});

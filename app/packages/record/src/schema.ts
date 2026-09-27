@@ -266,12 +266,34 @@ export const actionSchema = z.discriminatedUnion("type", [
                 note: z.string().max(300).optional(),
                 secondary: z.string().max(20).optional(),
                 coercion: z.boolean().optional(),
+                eventId: id.optional(),
               }),
             )
             .max(40),
         }),
       )
       .max(20),
+  }),
+  z.object({
+    type: z.literal("event.log"),
+    summary: z.string().max(300),
+    context: z.string().max(300).optional(),
+    participants: z.array(id).max(20),
+    notes: z.string().max(2000).optional(),
+    entries: z
+      .array(
+        z.object({
+          characterId: id,
+          pole: z.string().max(20),
+          intensity: z.number(),
+          intent: z.string().max(300).optional(),
+          outcome: z.string().max(300).optional(),
+          secondary: z.string().max(20).optional(),
+          coercion: z.boolean().optional(),
+        }),
+      )
+      .max(20)
+      .optional(),
   }),
   z.object({ type: z.literal("hve.deep"), characterId: id, deep: z.record(z.string().max(20), whole) }),
   z.object({ type: z.literal("pill.take"), characterId: id, targetId: id, pill: z.string().max(60) }),

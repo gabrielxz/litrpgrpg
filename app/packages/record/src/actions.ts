@@ -15,6 +15,7 @@ import type { TitleAction } from "./titles.ts";
 import type { QuestAction } from "./quests.ts";
 import type { TakePillOutside } from "./pills.ts";
 import type { HveAction } from "./hve.ts";
+import type { EventAction } from "./events.ts";
 
 export type { CombatAction, CombatantSpec } from "./combat.ts";
 
@@ -294,6 +295,7 @@ export type Action =
   | QuestAction
   | TakePillOutside
   | HveAction
+  | EventAction
   | VoidAction;
 
 export type ActionType = Action["type"];

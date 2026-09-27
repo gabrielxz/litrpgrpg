@@ -392,6 +392,7 @@ export function viewFor(
       aftermath: encounterView(record, "aftermath"),
       inventory: Object.fromEntries([...st.inventory].map(([k, v]) => [k, v.map((x) => ({ ...x }))])),
       quests: [...st.quests.values()].reverse(),
+      events: [...st.events.values()].reverse(),
     };
   }
   const own = sheets.filter((s) => s.playerId === who.userId);

@@ -5,10 +5,23 @@
  * circled notes, past sweeps). Nothing here reaches a player.
  */
 import type { Engine } from "@gradebreaker/engine";
-import { type Envelope, type GmView, type Moment, type Sheet, type Weight, axes, currentOf, weights } from "@gradebreaker/record";
+import {
+  type CampaignEvent,
+  type Envelope,
+  type GmView,
+  type HveEntry,
+  type Moment,
+  type Sheet,
+  type Weight,
+  axes,
+  currentOf,
+  sweepWeight,
+  weights,
+} from "@gradebreaker/record";
 import { useEffect, useState } from "react";
 import type { Names } from "../text.ts";
 import { Commit } from "./Commit.tsx";
+import { entryLine } from "./Events.tsx";
 
 type Drafts = Record<string, Moment[]>;
 
@@ -167,7 +180,20 @@ function SweepForm({ view, engine, names, onRecorded }: { view: GmView; engine: 
   const sweep = engine.rules.hve.sweep;
   const [low, high] = sweep.expected_tallies_per_session_party as [number, number];
   const living = view.characters.filter((c) => !c.dead);
-  const momentsOf = (id: string) => drafts[id] ?? [];
+  // Entries from logged events not yet swept: offered in, a reminder left out until the GM raises it.
+  const [picked, setPicked] = useState<Record<string, boolean>>({});
+  const below = engine.rules.hve.structured_logging.intensities.below_threshold as number;
+  const logged = (id: string) =>
+    [...view.events].reverse().flatMap((e) => e.entries.filter((x) => x.characterId === id && !x.sweptIn).map((x) => ({ e, x })));
+  const isIn = (e: CampaignEvent, x: HveEntry) => picked[`${e.id}:${x.characterId}`] ?? x.intensity !== below;
+  const fromEntry = (e: CampaignEvent, x: HveEntry): Moment => {
+    const m: Moment = { pole: x.pole, weight: sweepWeight(engine, x.intensity), note: e.summary, eventId: e.id };
+    if (x.secondary) m.secondary = x.secondary;
+    if (x.coercion) m.coercion = true;
+    return m;
+  };
+  const handMoments = (id: string) => drafts[id] ?? [];
+  const momentsOf = (id: string) => [...logged(id).filter(({ e, x }) => isIn(e, x)).map(({ e, x }) => fromEntry(e, x)), ...handMoments(id)];
   const set = (id: string, ms: Moment[]) => setDrafts({ ...drafts, [id]: ms });
   const sheets = living.filter((c) => momentsOf(c.id).length > 0).map((c) => ({ characterId: c.id, moments: momentsOf(c.id) }));
   const total = sheets.reduce((n, s) => n + Object.values(currentOf(engine, s.moments)).reduce((a, b) => a + b, 0), 0);
@@ -217,20 +243,39 @@ function SweepForm({ view, engine, names, onRecorded }: { view: GmView; engine: 
       {living.map((c) => (
         <div key={c.id} className="sweep-sheet">
           <h3>{c.name}</h3>
-          {momentsOf(c.id).length > 0 && (
+          {logged(c.id).length > 0 && (
+            <div>
+              <h4>Logged since the last sweep</h4>
+              <ul className="moments">
+                {logged(c.id).map(({ e, x }) => (
+                  <li key={e.id}>
+                    <label className="check">
+                      <input type="checkbox" checked={isIn(e, x)} onChange={(ev) => setPicked({ ...picked, [`${e.id}:${x.characterId}`]: ev.target.checked })} />
+                      <span>
+                        {entryLine(x)}
+                        {x.intensity === below && <span className="muted"> ({isIn(e, x) ? "raised to a full tally" : "a reminder"})</span>}
+                        <span className="muted"> · {e.summary}</span>
+                      </span>
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {handMoments(c.id).length > 0 && (
             <ul className="moments">
-              {momentsOf(c.id).map((m, i) => (
+              {handMoments(c.id).map((m, i) => (
                 <li key={i}>
                   <span className={ws.find((w) => w.tallies === m.weight)?.circled ? "circled" : ""}>{momentLine(ws, m)}</span>
                   {m.note && <span className="muted"> · {m.note}</span>}{" "}
-                  <button className="link" onClick={() => set(c.id, momentsOf(c.id).filter((_, j) => j !== i))}>
+                  <button className="link" onClick={() => set(c.id, handMoments(c.id).filter((_, j) => j !== i))}>
                     remove
                   </button>
                 </li>
               ))}
             </ul>
           )}
-          <AddMoment engine={engine} onAdd={(m) => set(c.id, [...momentsOf(c.id), m])} />
+          <AddMoment engine={engine} onAdd={(m) => set(c.id, [...handMoments(c.id), m])} />
           <SheetRows engine={engine} current={currentOf(engine, momentsOf(c.id))} deep={c.hve.deep} />
         </div>
       ))}
@@ -247,6 +292,7 @@ function SweepForm({ view, engine, names, onRecorded }: { view: GmView; engine: 
         label="Record the sweep"
         onRecorded={(env) => {
           setDrafts({});
+          setPicked({});
           setLabel("");
           onRecorded(env);
         }}

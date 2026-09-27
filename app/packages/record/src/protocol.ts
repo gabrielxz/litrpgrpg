@@ -5,6 +5,7 @@
 import type { Effect, HeldMessage, Party, PartyInvite } from "./fold.ts";
 import type { Stack } from "./inventory.ts";
 import type { Quest } from "./quests.ts";
+import type { CampaignEvent } from "./events.ts";
 import type { Combatant, Encounter } from "./combat.ts";
 import type { Envelope } from "./actions.ts";
 import type { Sheet } from "./sheet.ts";
@@ -211,6 +212,8 @@ export interface GmView {
   inventory: Record<string, Stack[]>;
   /** Every quest issued, newest first. */
   quests: Quest[];
+  /** Every event logged, newest first. */
+  events: CampaignEvent[];
 }
 
 /** A quest on one character's log: hidden content obscured, and their own answer as its status. */

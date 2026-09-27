@@ -225,6 +225,8 @@ export function describe(
     }
     case "hve.deep":
       return `${name(a.characterId)}: Deep tallies copied across`;
+    case "event.log":
+      return `Event: ${a.summary}${a.participants.length ? ` (${a.participants.map(name).join(", ")})` : ""}${a.entries?.length ? `, ${a.entries.length} HVE ${a.entries.length === 1 ? "entry" : "entries"}` : ""}`;
     case "void": {
       const seq = seqOf(a.targetId);
       const target = seq === undefined ? "an action" : `#${seq + 1}`;
@@ -242,6 +244,8 @@ export function effectLine(e: Effect, name: Names): string | null {
     }
     case "hve-copied":
       return `${name(e.characterId)}: Deep tallies set from the copied sheet`;
+    case "event-logged":
+      return `Event logged: ${e.summary}`;
     case "created":
       return null; // the preview's sheet changes already show the new character
     case "reassigned":

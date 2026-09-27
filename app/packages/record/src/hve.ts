@@ -14,7 +14,7 @@
  * moving from paper copies its Deep tallies across (`hve.deep`). Players never see any of it.
  */
 import type { Engine } from "@gradebreaker/engine";
-import { type CharacterState, type Effect, Rejected } from "./fold.ts";
+import { type CharacterState, type Effect, Rejected, type World } from "./fold.ts";
 
 /** One remembered moment on one character's sheet. */
 export interface Moment {
@@ -27,6 +27,8 @@ export interface Moment {
   secondary?: string;
   /** Coercion aimed at another player character. */
   coercion?: boolean;
+  /** The event whose HVE entry for this character the moment sweeps. */
+  eventId?: string;
 }
 
 /** The session-end sweep: each listed character's moments into Current, then Deep. GM only. */
@@ -99,12 +101,10 @@ export function currentOf(engine: Engine, moments: Moment[]): Record<string, num
   return out;
 }
 
-function checkMoment(engine: Engine, name: string, m: Moment) {
+/** The sides a tally lands on: a real side, a secondary on another axis one weight lower, coercion as Will. */
+export function checkSides(engine: Engine, m: { pole: string; weight: number; secondary?: string; coercion?: boolean }) {
   const all = poles(engine);
   if (!all.includes(m.pole)) throw new Rejected(`${m.pole} is not a side of an axis`);
-  const w = weights(engine).find((x) => x.tallies === m.weight);
-  if (!w) throw new Rejected(`a moment carries ${weights(engine).map((x) => x.tallies).join(", ")} tallies`);
-  if (w.margin_note && !m.note?.trim()) throw new Rejected(`${name}'s ${w.name} moment needs its margin note`);
   if (m.secondary !== undefined) {
     if (!all.includes(m.secondary)) throw new Rejected(`${m.secondary} is not a side of an axis`);
     if (axisOf(engine, m.secondary) === axisOf(engine, m.pole)) throw new Rejected("a secondary tally goes on another axis");
@@ -114,6 +114,13 @@ function checkMoment(engine: Engine, name: string, m: Moment) {
     const min = engine.rules.hve.sweep.pvp_coercion_min_will_tallies as number;
     if (m.pole !== "Will" || m.weight < min) throw new Rejected(`coercion aimed at another player character is at least ${min} tallies of Will`);
   }
+}
+
+function checkMoment(engine: Engine, name: string, m: Moment) {
+  const w = weights(engine).find((x) => x.tallies === m.weight);
+  if (!w) throw new Rejected(`a moment carries ${weights(engine).map((x) => x.tallies).join(", ")} tallies`);
+  if (w.margin_note && !m.note?.trim()) throw new Rejected(`${name}'s ${w.name} moment needs its margin note`);
+  checkSides(engine, m);
 }
 
 /** The leading side of each axis of Deep and by how much; a tied axis has no leader. */
@@ -142,7 +149,8 @@ function stateOf(c: CharacterState): HveState {
   return c.hve;
 }
 
-export function applyHve(engine: Engine, chars: Map<string, CharacterState>, a: HveAction, id: string): Effect[] {
+export function applyHve(engine: Engine, world: World, a: HveAction, id: string): Effect[] {
+  const chars = world.characters;
   const need = (characterId: string) => {
     const c = chars.get(characterId);
     if (!c) throw new Rejected(`no character ${characterId}`);
@@ -167,7 +175,14 @@ export function applyHve(engine: Engine, chars: Map<string, CharacterState>, a: 
     seen.add(s.characterId);
     const c = need(s.characterId);
     if (c.dead) throw new Rejected(`${c.name} is dead`);
-    for (const m of s.moments) checkMoment(engine, c.name, m);
+    for (const m of s.moments) {
+      checkMoment(engine, c.name, m);
+      if (m.eventId === undefined) continue;
+      const entry = world.events.get(m.eventId)?.entries.find((x) => x.characterId === c.id);
+      if (!entry) throw new Rejected(`no entry for ${c.name} on event ${m.eventId}`);
+      if (entry.sweptIn) throw new Rejected(`${c.name}'s entry on that event is already swept`);
+      entry.sweptIn = id;
+    }
     const h = stateOf(c);
     const current = currentOf(engine, s.moments);
     const added: string[] = [];
