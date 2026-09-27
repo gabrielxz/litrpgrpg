@@ -559,18 +559,15 @@ function PointsForm({ view, engine, names, onRecorded }: FormProps) {
       </p>
     );
   const lvl = level !== null && c.pendingSystemLevels.includes(level) ? level : c.pendingSystemLevels[0]!;
-  // A class profile places its own points; what reaches the GM is only what the cap turned away.
-  const redirect = c.redirect[lvl];
-  const due = redirect ?? lv.system_assigned * engine.scale(c.grade);
+  const due = lv.system_assigned * engine.scale(c.grade);
+  const cap = engine.statCap(c.grade);
   const numbers = Object.fromEntries(
     ATTRIBUTES.map((a) => [a, int(placement[a] ?? "") || 0]).filter(([, v]) => v !== 0),
   ) as Record<string, number>;
   const total = Object.values(numbers).reduce((a, b) => a + b, 0);
   const problem =
-    lvl >= lv.class_level && redirect === undefined
-      ? c.class
-        ? null
-        : `Level ${lvl}'s points wait for ${c.name}'s class, whose profile places them. Offer three classes under Classes.`
+    lvl >= lv.class_level
+      ? `Level ${lvl}'s points wait for ${c.name}'s class, whose profile places them. Offer three classes under Classes.`
       : total !== due
         ? `Place exactly ${due} points (${total} placed).`
         : null;
@@ -629,11 +626,8 @@ function PointsForm({ view, engine, names, onRecorded }: FormProps) {
           ))}
         </tbody>
       </table>
-      {redirect !== undefined && (
-        <p className="attention">
-          {c.name}'s class profile could not place {redirect} of Level {lvl}'s points: the stat is at the Grade cap. Place them on the
-          next-best behavioral match (Progression, "Capped stats").
-        </p>
+      {Object.entries(numbers).some(([a, v]) => c.raw[a]! + v > cap) && (
+        <p className="warning small">Points past the {c.grade}-Grade cap of {cap} are lost.</p>
       )}
       <p className="muted">
         Assigned points: the {due} Attribute points each level gives by how the character behaved since the last level

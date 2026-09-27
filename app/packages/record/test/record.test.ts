@@ -204,7 +204,7 @@ describe("level-ups", () => {
     expect(rec.sheet("kara")!.raw.DEX).toBe(7);
   });
 
-  it("never places points into a stat past the Grade cap", () => {
+  it("keeps free points under the Grade cap and loses assigned points past it", () => {
     // No character reaches 99 before class selection, so this runs against a cap of 12.
     const rules = structuredClone(loadRules());
     rules.grades.grades[0].raw_max = 12;
@@ -212,10 +212,16 @@ describe("level-ups", () => {
     gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" });
     award("kara", 120);
     rest("kara", 6);
-    expect(() => gm({ type: "points.system", characterId: "kara", level: 2, placement: { STR: 5 } })).toThrow(/STR is 8 and the F-Grade cap is 12/);
+    expect(() => gm({ type: "points.system", characterId: "kara", level: 2, placement: { STR: 5 } })).toThrow(/exactly 3/);
     gm({ type: "points.system", characterId: "kara", level: 2, placement: { STR: 3 } });
     expect(() => rec.append(draft({ type: "points.free", characterId: "kara", placement: { STR: 2 } }, P1))).toThrow(/STR is 11 and the F-Grade cap is 12/);
     rec.append(draft({ type: "points.free", characterId: "kara", placement: { STR: 1, DEX: 1 } }, P1));
+    expect(rec.sheet("kara")!.raw.STR).toBe(12);
+    // Assigned points bound for a stat at the cap are lost, never placed elsewhere (Gabriel, 2026-09-27).
+    award("kara", 120);
+    rest("kara", 6);
+    const capped = gm({ type: "points.system", characterId: "kara", level: 3, placement: { STR: 2, FOR: 1 } });
+    expect(capped.effects).toEqual([{ kind: "points-placed", characterId: "kara", placement: { FOR: 1 }, by: "system", lost: { STR: 2 } }]);
     expect(rec.sheet("kara")!.raw.STR).toBe(12);
   });
 
@@ -1773,7 +1779,7 @@ describe("classes", () => {
     expect(() => offer("nia")).toThrow(/holds Witness; new offers come at the F→E Breakthrough/);
   });
 
-  it("holds a profile point the cap turns away for the GM, and loses selection bonus past the cap", () => {
+  it("loses profile points and selection bonus bound past the cap", () => {
     const rules = structuredClone(loadRules());
     rules.grades.grades[0].raw_max = 32;
     rec = new CampaignRecord(new Engine(rules));
@@ -1783,11 +1789,9 @@ describe("classes", () => {
     expect(rec.sheet("nia")!.raw.POW).toBe(32);
     award("nia", 120);
     const lv = rest("nia", 6);
-    expect(lv.effects).toContainEqual({ kind: "points-placed", characterId: "nia", placement: { DEX: 1, HRT: 1 }, by: "system" });
-    expect(rec.sheet("nia")).toMatchObject({ pendingSystemLevels: [11], redirect: { 11: 1 } });
-    expect(() => gm({ type: "points.system", characterId: "nia", level: 11, placement: { FOR: 3 } })).toThrow(/exactly 1 assigned points/);
-    gm({ type: "points.system", characterId: "nia", level: 11, placement: { FOR: 1 } });
-    expect(rec.sheet("nia")).toMatchObject({ pendingSystemLevels: [], redirect: {} });
+    expect(lv.effects).toContainEqual({ kind: "points-placed", characterId: "nia", placement: { DEX: 1, HRT: 1 }, by: "system", lost: { POW: 1 } });
+    expect(rec.sheet("nia")).toMatchObject({ pendingSystemLevels: [] });
+    expect(rec.sheet("nia")!.raw.POW).toBe(32);
 
     rules.grades.grades[0].raw_max = 25;
     rec = new CampaignRecord(new Engine(rules));
@@ -1795,8 +1799,9 @@ describe("classes", () => {
     offer("nia");
     const took = player({ type: "class.accept", characterId: "nia", name: "Battle Medic" });
     expect(took.effects[0]).toMatchObject({ kind: "class-accepted", bonus: 4 });
+    expect(took.effects[1]).toMatchObject({ kind: "points-placed", placement: { DEX: 1, HRT: 1 }, lost: { POW: 1 } });
     expect(rec.sheet("nia")!.class).toMatchObject({ bonus: 4, lost: 6 });
-    expect(rec.sheet("nia")).toMatchObject({ pendingSystemLevels: [10], redirect: { 10: 1 } });
+    expect(rec.sheet("nia")).toMatchObject({ pendingSystemLevels: [] });
   });
 
   it("readies a once-a-day permission at dawn on the clock, and leaves the count to the GM without one", () => {

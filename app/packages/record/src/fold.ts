@@ -138,7 +138,14 @@ export type Effect =
   | { kind: "healed-full"; characterId: string; hour: number }
   | { kind: "collapsed"; characterId: string; attribute: "FOR" | "POW"; hours: number }
   | { kind: "temporary-returned"; characterId: string; attribute: "FOR" | "POW" }
-  | { kind: "points-placed"; characterId: string; placement: Stats; by: "system" | "free" }
+  | {
+      kind: "points-placed";
+      characterId: string;
+      placement: Stats;
+      by: "system" | "free";
+      /** Assigned points bound for a stat at the cap, lost (Gabriel, 2026-09-27). */
+      lost?: Stats;
+    }
   | { kind: "party-invited"; characterId: string; inviteId: string; fromId: string; fromName: string }
   | { kind: "party-declined"; characterId: string; byId: string; byName: string }
   | { kind: "party-formed"; characterId: string; partyId: string; withNames: string[] }
@@ -826,7 +833,7 @@ function levelUp(engine: Engine, c: CharacterState): Effect[] {
   const lv = engine.rules.character.leveling;
   c.level += 1;
   c.freePoints += lv.free * engine.scale(c.grade);
-  if (c.classes?.held && c.level >= lv.class_level) return placeByProfile(engine, c, c.level);
+  if (c.classes?.held && c.level >= lv.class_level) return placeByProfile(engine, c);
   c.pendingSystemLevels.push(c.level);
   return [];
 }
@@ -885,37 +892,59 @@ function collapse(engine: Engine, chars: Map<string, CharacterState>, a: Collaps
 
 // --------------------------------------------------------- level-ups ---
 
-function checkPlacement(engine: Engine, c: CharacterState, placement: Stats): number {
+/** Checks a placement; free points never pass the cap, and assigned points past it are only counted. */
+function checkPlacement(engine: Engine, c: CharacterState, placement: Stats, pastCap: "reject" | "allow"): number {
   const cap = engine.statCap(c.grade);
   const now = permanentStats(c);
   for (const [attr, pts] of Object.entries(placement)) {
     if (!(ATTRIBUTES as readonly string[]).includes(attr)) throw new Rejected(`${attr} is not an Attribute`);
     if (!Number.isInteger(pts) || pts < 0) throw new Rejected(`points are whole and not negative, not ${pts}`);
-    if (pts > 0 && now[attr]! + pts > cap)
+    if (pastCap === "reject" && pts > 0 && now[attr]! + pts > cap)
       throw new Rejected(`${attr} is ${now[attr]} and the ${c.grade}-Grade cap is ${cap}: place these points elsewhere`);
   }
   return sum(placement);
+}
+
+/**
+ * Lands assigned points on the sheet. Points bound for a stat at the Grade cap are lost, never
+ * placed elsewhere (Gabriel, 2026-09-27; queued for Progression, "Capped stats"). Returns the
+ * points that landed and the points lost.
+ */
+export function landAssigned(engine: Engine, c: CharacterState, placement: Stats): { placed: Stats; lost: Stats } {
+  const cap = engine.statCap(c.grade);
+  const now = permanentStats(c);
+  const placed: Stats = {};
+  const lost: Stats = {};
+  for (const [attr, pts] of Object.entries(placement)) {
+    const fits = Math.max(0, Math.min(pts, cap - now[attr]!));
+    if (fits) placed[attr] = fits;
+    if (pts > fits) lost[attr] = pts - fits;
+    c.placed[attr] = (c.placed[attr] ?? 0) + fits;
+  }
+  return { placed, lost };
+}
+
+export function assignedEffect(c: CharacterState, placed: Stats, lost: Stats): Effect[] {
+  if (!Object.keys(placed).length && !Object.keys(lost).length) return [];
+  return [{ kind: "points-placed", characterId: c.id, placement: placed, by: "system", ...(Object.keys(lost).length ? { lost } : {}) }];
 }
 
 function placeSystem(engine: Engine, c: CharacterState, a: PlaceSystemPoints): Effect[] {
   const lv = engine.rules.character.leveling;
   const i = c.pendingSystemLevels.indexOf(a.level);
   if (i < 0) throw new Rejected(`${c.name} has no unplaced assigned points for Level ${a.level}`);
-  // From Level 10 the profile places them; what reaches the GM is only what the cap turned away.
-  const redirect = c.classes?.redirect?.[a.level];
-  if (a.level >= lv.class_level && redirect === undefined)
+  if (a.level >= lv.class_level)
     throw new Rejected(`${c.name}'s assigned points from Level ${lv.class_level} wait until a class is accepted; its profile places them`);
-  const due = redirect ?? lv.system_assigned * engine.scale(c.grade);
-  const total = checkPlacement(engine, c, a.placement);
+  const due = lv.system_assigned * engine.scale(c.grade);
+  const total = checkPlacement(engine, c, a.placement, "allow");
   if (total !== due) throw new Rejected(`Level ${a.level} places exactly ${due} assigned points, not ${total}`);
-  for (const [attr, pts] of Object.entries(a.placement)) c.placed[attr] = (c.placed[attr] ?? 0) + pts;
+  const { placed, lost } = landAssigned(engine, c, a.placement);
   c.pendingSystemLevels.splice(i, 1);
-  if (redirect !== undefined) delete c.classes!.redirect![a.level];
-  return [{ kind: "points-placed", characterId: c.id, placement: a.placement, by: "system" }];
+  return assignedEffect(c, placed, lost);
 }
 
 function spendFree(engine: Engine, c: CharacterState, a: SpendFreePoints): Effect[] {
-  const total = checkPlacement(engine, c, a.placement);
+  const total = checkPlacement(engine, c, a.placement, "reject");
   if (total === 0) throw new Rejected("spend at least one point");
   if (total > c.freePoints) throw new Rejected(`${c.name} holds ${c.freePoints} free points, not ${total}`);
   for (const [attr, pts] of Object.entries(a.placement)) c.placed[attr] = (c.placed[attr] ?? 0) + pts;

@@ -55,8 +55,6 @@ export interface Sheet {
   /** Class offers standing until one is accepted. */
   classOffers: ClassPackage[];
   class: HeldClass | null;
-  /** Assigned points past the cap by level, which the GM places in place of the profile. */
-  redirect: Record<number, number>;
   /** The dawn-to-dawn day the once-a-day permission was last used. */
   classUsedDay: number | null;
   /** The Hidden Vector Engine's sheet: the GM's side of the screen only. */
@@ -111,7 +109,6 @@ export function sheetOf(engine: Engine, c: CharacterState): Sheet {
     principles: principlesSheet(engine, c),
     classOffers: (c.classes?.offers ?? []).map((o) => structuredClone(o)),
     class: c.classes?.held ? structuredClone(c.classes.held) : null,
-    redirect: { ...(c.classes?.redirect ?? {}) },
     classUsedDay: c.classes?.usedDay ?? null,
   };
   if (c.playerId !== undefined) sheet.playerId = c.playerId;

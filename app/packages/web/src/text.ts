@@ -345,7 +345,7 @@ export function effectLine(e: Effect, name: Names): string | null {
     case "temporary-returned":
       return `${name(e.characterId)}: the lost ${e.attribute} point returns`;
     case "points-placed":
-      return `${name(e.characterId)}: ${e.by === "system" ? "assigned" : "free"} points ${placement(e.placement)}`;
+      return `${name(e.characterId)}: ${e.by === "system" ? "assigned" : "free"} points ${placement(e.placement) || "none"}${e.lost ? `; lost past the cap: ${placement(e.lost)}` : ""}`;
     case "party-invited":
       return `${e.fromName} invites ${name(e.characterId)} to a party`;
     case "party-declined":
@@ -478,6 +478,7 @@ export function noticeLine(e: Effect): string | null {
         .filter(([, v]) => v)
         .map(([k, v]) => `${ATTRIBUTE_NAMES[k]} +${v}`)
         .join(", ");
+      if (!parts) return null;
       return `${e.by === "system" ? "Attributes allocated" : "Allocation recorded"}: ${parts}.`;
     }
     case "party-invited":

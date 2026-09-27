@@ -1,7 +1,8 @@
 /**
  * The campaign's record, newest first. Undo and Correct each record a void, previewed first:
  * the preview names every later action that would stop applying. Actions that no longer apply
- * stay in the log, marked, for the GM to resolve.
+ * stay in the log, marked, for the GM to resolve. Prep's saves and removals are the GM's
+ * preparation, not play, so they are hidden unless the GM shows them.
  */
 import type { Envelope, GmView } from "@gradebreaker/record";
 import { useMemo, useState } from "react";
@@ -22,6 +23,7 @@ export function Log({
   const [open, setOpen] = useState<{ id: string; reason: "undo" | "correction" } | null>(null);
   const [note, setNote] = useState("");
   const [limit, setLimit] = useState(40);
+  const [showPrep, setShowPrep] = useState(false);
   const rejected = useMemo(() => new Map(view.rejected.map((r) => [r.id, r.reason])), [view.rejected]);
   const seqOf = useMemo(() => {
     const m = new Map(log.map((e) => [e.id, e.seq]));
@@ -33,7 +35,14 @@ export function Log({
     return s;
   }, [log, rejected]);
   const who = (userId: string) => view.members.find((m) => m.userId === userId)?.displayName ?? "someone";
-  const shown = [...log].reverse().slice(0, limit);
+  // Prep entries, and undos of them, are preparation rather than play.
+  const prepIds = useMemo(() => new Set(log.filter((e) => e.action.type.startsWith("prep.")).map((e) => e.id)), [log]);
+  const isPrep = (e: Envelope) => prepIds.has(e.id) || (e.action.type === "void" && prepIds.has(e.action.targetId));
+  const prepCount = log.filter(isPrep).length;
+  const shown = [...log]
+    .reverse()
+    .filter((e) => showPrep || !isPrep(e))
+    .slice(0, limit);
 
   return (
     <section className="card log">
@@ -45,6 +54,11 @@ export function Log({
         </p>
       )}
       {log.length === 0 && <p className="muted">Nothing recorded yet.</p>}
+      {prepCount > 0 && (
+        <label className="check small">
+          <input type="checkbox" checked={showPrep} onChange={(e) => setShowPrep(e.target.checked)} /> Show Prep entries ({prepCount})
+        </label>
+      )}
       <ol className="entries">
         {shown.map((e) => {
           const isVoided = voided.has(e.id);

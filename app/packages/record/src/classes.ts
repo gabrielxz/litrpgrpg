@@ -9,13 +9,12 @@
  * Attribute, then the profile places every held assigned point from Level 10 on, and places each
  * later level's at once. A profile's returned points arrive as free points.
  *
- * A profile point that would pass the stat cap is held for the GM, who places it on the
- * next-best behavioral match (Progression, "Capped stats"); selection bonus points past the cap
- * are lost, as a title's are. A permission used once a day is ready again at the next dawn on
+ * A profile point bound for a stat at the cap is lost, and so is selection bonus past it
+ * (Gabriel, 2026-09-27: assigned points are never redirected; queued for Progression). A permission used once a day is ready again at the next dawn on
  * the in-game clock; without the clock the GM keeps the count.
  */
 import { ATTRIBUTES, type Engine, type Stats } from "@gradebreaker/engine";
-import { type CharacterState, type Effect, Rejected, type World, permanentStats } from "./fold.ts";
+import { type CharacterState, type Effect, Rejected, type World, assignedEffect, landAssigned, permanentStats } from "./fold.ts";
 import { MINUTES_PER_DAY } from "./clock.ts";
 
 export type ProfileShape = "Fixed" | "Guided" | "Open";
@@ -46,8 +45,6 @@ export interface ClassState {
   /** The offers standing, until one is accepted. */
   offers?: ClassPackage[];
   held?: HeldClass;
-  /** Assigned points past the cap, by level, waiting on the GM's placement. */
-  redirect?: Record<number, number>;
   /** The dawn-to-dawn day on which the once-a-day permission was last used. */
   usedDay?: number;
 }
@@ -79,7 +76,6 @@ export function cloneClass(s: ClassState): ClassState {
     ...s,
     ...(s.offers ? { offers: s.offers.map(clonePackage) } : {}),
     ...(s.held ? { held: { ...clonePackage(s.held), bonus: s.held.bonus, ...(s.held.lost ? { lost: s.held.lost } : {}) } } : {}),
-    ...(s.redirect ? { redirect: { ...s.redirect } } : {}),
   };
 }
 
@@ -161,30 +157,17 @@ export function usedSinceDawn(world: Pick<World, "clock">, c: CharacterState): b
 }
 
 /**
- * Places one level's assigned points by the class profile. Points that would pass the cap are
- * held for the GM; the profile's returned points arrive as free points.
+ * Places one level's assigned points by the class profile; points bound for a stat at the cap
+ * are lost. The profile's returned points arrive as free points.
  */
-export function placeByProfile(engine: Engine, c: CharacterState, level: number): Effect[] {
+export function placeByProfile(engine: Engine, c: CharacterState): Effect[] {
   const held = c.classes!.held!;
   const scale = engine.scale(c.grade);
-  const cap = engine.statCap(c.grade);
-  const now = permanentStats(c);
-  const placement: Stats = {};
-  let over = 0;
-  for (const { attribute, points } of held.profile.points) {
-    const want = points * scale;
-    const fits = Math.max(0, Math.min(want, cap - now[attribute]!));
-    if (fits) placement[attribute] = fits;
-    over += want - fits;
-  }
-  for (const [a, pts] of Object.entries(placement)) c.placed[a] = (c.placed[a] ?? 0) + pts;
+  const want: Stats = Object.fromEntries(held.profile.points.map((x) => [x.attribute, x.points * scale]));
+  const { placed, lost } = landAssigned(engine, c, want);
   const system = held.profile.points.reduce((s, x) => s + x.points, 0);
   c.freePoints += (engine.rules.classes.profile.system_points_per_level - system) * scale;
-  if (over) {
-    c.pendingSystemLevels.push(level);
-    c.classes!.redirect = { ...(c.classes!.redirect ?? {}), [level]: over };
-  }
-  return Object.keys(placement).length ? [{ kind: "points-placed", characterId: c.id, placement, by: "system" }] : [];
+  return assignedEffect(c, placed, lost);
 }
 
 function need(world: World, id: string): CharacterState {
@@ -226,7 +209,7 @@ export function applyClasses(engine: Engine, world: World, a: ClassAction): Effe
       const classLevel = engine.rules.character.leveling.class_level as number;
       const waiting = c.pendingSystemLevels.filter((l) => l >= classLevel).sort((x, y) => x - y);
       c.pendingSystemLevels = c.pendingSystemLevels.filter((l) => l < classLevel);
-      for (const l of waiting) out.push(...placeByProfile(engine, c, l));
+      for (const _ of waiting) out.push(...placeByProfile(engine, c));
       return out;
     }
     case "class.use": {
