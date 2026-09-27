@@ -7,7 +7,9 @@
  * when the GM grants it. The player chooses which card to meditate on (the player-choice rule);
  * at a Consolidation after the card arrived, the GM awards 1 to 3 Insight toward the family the
  * memory expresses and gives the System's vision, and the card is spent. Other Insight sources
- * are awarded by the GM within the book's ranges; a Consolidation vision comes once a session.
+ * are awarded by the GM within the book's ranges; a Consolidation vision comes once a day, dawn
+ * to dawn, on the in-game clock (Gabriel, 2026-09-27: nothing counts sessions; the book sentence
+ * is queued), and without the clock the GM keeps the count.
  *
  * Insight is kept by family. The first family to reach 3 crystallizes into the slot the Grade
  * allows: the GM names the Principle and its minor passive. After that, a threshold met does
@@ -19,7 +21,7 @@
 import type { Engine } from "@gradebreaker/engine";
 import type { Envelope } from "./actions.ts";
 import { type CharacterState, type Effect, Rejected, type World } from "./fold.ts";
-import { runningSession } from "./sessions.ts";
+import { MINUTES_PER_DAY } from "./clock.ts";
 
 export interface BattleMemory {
   id: string;
@@ -86,8 +88,8 @@ export interface PrincipleState {
   /** Families in the order they reached crystallization's threshold. */
   reached: string[];
   principles: Principle[];
-  /** Sessions in which the character had a Consolidation vision. */
-  visions: string[];
+  /** In-game days, counted dawn to dawn, on which the character had a Consolidation vision. */
+  visions: number[];
 }
 
 export function clonePrinciples(p: PrincipleState): PrincipleState {
@@ -374,12 +376,10 @@ export function applyPrinciples(engine: Engine, world: World, a: PrincipleAction
       if (a.source === MEDITATION) throw new Rejected("a meditation spends a Battle Memory; record it from the card");
       checkFamily(engine, a.family);
       checkIp(engine, a.source, a.ip);
-      if (a.source === VISION) {
-        const s = runningSession(world);
-        if (s) {
-          if (p.visions.includes(s.id)) throw new Rejected(`${c.name} has had a Consolidation vision this session`);
-          p.visions.push(s.id);
-        }
+      if (a.source === VISION && world.clock) {
+        const day = Math.floor((world.clock.at - world.clock.dawn * 60) / MINUTES_PER_DAY);
+        if (p.visions.includes(day)) throw new Rejected(`${c.name} has had a Consolidation vision since dawn`);
+        p.visions.push(day);
       }
       return [addInsight(engine, c, a.family, a.ip)];
     }

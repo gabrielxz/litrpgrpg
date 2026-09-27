@@ -1668,10 +1668,15 @@ describe("Battle Memories and Principles", () => {
     expect(pr().principles[0]!.grants[0]).toMatchObject({ articulation: "What falls, stays down", quiet: true });
   });
 
-  it("rations Consolidation visions to one a session", () => {
-    gm({ type: "session.start", present: ["kara"] });
-    gm({ type: "insight.award", characterId: "kara", source: "Consolidation vision", family: "Impact", ip: 1 });
-    expect(() => gm({ type: "insight.award", characterId: "kara", source: "Consolidation vision", family: "Impact", ip: 1 })).toThrow(/this session/);
+  it("rations Consolidation visions to one a day, dawn to dawn", () => {
+    const vision = () => gm({ type: "insight.award", characterId: "kara", source: "Consolidation vision", family: "Impact", ip: 1 });
+    gm({ type: "clock.set", day: 1, hour: 20 });
+    vision();
+    expect(vision).toThrow(/since dawn/);
+    gm({ type: "clock.advance", minutes: 9 * 60 }); // Day 2, 05:00: still before dawn
+    expect(vision).toThrow(/since dawn/);
+    gm({ type: "clock.advance", minutes: 60 }); // dawn
+    vision();
     expect(() => gm({ type: "insight.award", characterId: "kara", source: "Battle Memory meditation", family: "Impact", ip: 1 })).toThrow(/from the card/);
   });
 });
