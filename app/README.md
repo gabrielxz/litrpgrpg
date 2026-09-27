@@ -44,7 +44,7 @@ Every table lives in the Postgres schema `gradebreaker`. The Supabase project ru
 
 ## Deploying
 
-Production is the Fly.io app `gradebreaker` in the **personal** organization (https://gradebreaker.fly.dev, region `ord`, one always-on machine), built from the repository root's `Dockerfile` and `fly.toml`. `DATABASE_URL`, `SUPABASE_URL`, and `SUPABASE_PUBLISHABLE_KEY` are Fly secrets. The deploy token in the GitHub secret `FLY_API_TOKEN` deploys only this app and expires 2027-09-26; replace it with `flyctl tokens create deploy -a gradebreaker -x 8760h | gh secret set FLY_API_TOKEN`. The workflow `.github/workflows/deploy-app.yml` runs the tests and deploys on every push to `main` that touches `app/`, `rules/`, or the deploy files; it first waits until the health check reports nobody connected, and a manual run with `force` skips the wait. To deploy by hand:
+Production is the Fly.io app `gradebreaker` in the **personal** organization (https://gradebreaker.fly.dev, region `ord`, one always-on machine), built from the repository root's `Dockerfile` and `fly.toml`. `DATABASE_URL`, `SUPABASE_URL`, and `SUPABASE_PUBLISHABLE_KEY` are Fly secrets. The deploy token in the GitHub secret `FLY_API_TOKEN` deploys only this app and expires 2027-09-26; replace it with `flyctl tokens create deploy -a gradebreaker -x 8760h | gh secret set FLY_API_TOKEN`. The workflow `.github/workflows/deploy-app.yml` runs the tests and deploys on every push to `main` that touches `app/` (Markdown aside), `rules/`, or the deploy files; it first waits until the health check reports nobody connected, and a manual run with `force` skips the wait. To deploy by hand:
 
 ```bash
 flyctl deploy --remote-only -a gradebreaker

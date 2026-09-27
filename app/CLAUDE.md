@@ -1,0 +1,17 @@
+App sessions. These conventions bind everything under `app/`. The root CLAUDE.md binds as well, including the System's voice: every notice, composer draft, and prompt the app writes follows it.
+
+SOURCES, in order of authority: the book (`book/`) for procedures, `rules/*.yaml` for numbers, then `app/DESIGN.md`. The app reads the rules data; it never restates a number in code when the data can carry it. When the app needs a field the data lacks, add it to the data (with a version bump and `make check`) or queue it for the book. When the app meets a question the book does not answer, it does not invent the rule: write the question under "Queued for the book" in `99-to-do.md` with Gabriel's ruling or Claude's recommendation, record the call in `app/DESIGN.md` Decisions, and run the recommendation meanwhile. Book sentences are written in a book session, never an app session.
+
+DESIGN.md: the decisions, the milestones M1 to M4 with each item **active** or *deferred*, and the architecture. Its M1 table is the progress record: a row's notes say "Built:" and what landed. Keep it current in the same commit as the code. Claude's calls go under Decisions, open to Gabriel's cut.
+
+STANDING RULES (Gabriel):
+- The GM is the captain. Bookkeeping only the GM's tracker shows executes at once with undo; anything a player would see (awards, notices, titles) waits for the GM's confirmation.
+- What Can Be Seen filters every player view on the server, including anything sent to a player-facing AI.
+- Every AI feature has a manual path producing the same record (the Unplugged Floor applies to the app).
+- Player-facing text uses in-world words; `packages/web/src/text.ts` holds the notices and a test enforces it.
+
+CHECKS: `make app-check` typechecks the workspace and runs every package's tests, the engine against `rules/fixtures/`; `make check` runs it too. A function added to `tools/rules_engine.py` fails the check until `scripts/signatures.py` is rerun and the method is ported.
+
+RUNNING IT (details in `app/README.md`): the development Postgres is the Docker container on 127.0.0.1:54340 (`docker compose up -d --wait` in `app/`); another project's Supabase runs on 54322, so leave it alone. `.claude/launch.json` starts app-api (8787) and app-web (5173) for the browser pane. Development sign-in gives each browser tab its own person, so a GM tab and player tabs run side by side: seed by a fetch to `/api/dev/sign-in` and set sessionStorage `gradebreaker.devToken` per tab. A screenshot of a background tab can render stale; read the DOM instead. Verify every screen change in the browser pane with a GM tab and at least one player tab.
+
+DEPLOYING: production is the Fly.io app `gradebreaker` in the **personal** org only (never `benefactor-intelligence`; the local flyctl login belongs to both), at https://gradebreaker.fly.dev, with Supabase for Postgres and Auth. A push to `main` touching `app/` (other than Markdown), `rules/`, or the deploy files runs `.github/workflows/deploy-app.yml`: tests, then a deploy that waits until nobody is connected. Ask Gabriel before pushing a change that deploys. After a push, check the run (`gh run list`) and the health check. Secrets live in `app/.env` and Fly secrets, never in chat. Before any commit or push, `gh auth status` must show `gabrielxz` (`gh auth switch -h github.com -u gabrielxz`).
