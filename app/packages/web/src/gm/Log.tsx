@@ -30,8 +30,8 @@ export function Log({
     return (id: string) => m.get(id);
   }, [log]);
   const voided = useMemo(() => {
-    const s = new Set<string>();
-    for (const e of log) if (e.action.type === "void" && !rejected.has(e.id)) s.add(e.action.targetId);
+    const s = new Map<string, "undo" | "correction">();
+    for (const e of log) if (e.action.type === "void" && !rejected.has(e.id)) s.set(e.action.targetId, e.action.reason);
     return s;
   }, [log, rejected]);
   const who = (userId: string) => view.members.find((m) => m.userId === userId)?.displayName ?? "someone";
@@ -83,7 +83,7 @@ export function Log({
                   </span>
                 )}
               </div>
-              {isVoided && <div className="small muted">Undone: it no longer counts.</div>}
+              {isVoided && <div className="small muted">{voided.get(e.id) === "correction" ? "Corrected" : "Undone"}: it no longer counts.</div>}
               {reason && <div className="small error">No longer applies: {reason}</div>}
               {open?.id === e.id && (
                 <div className="void-form">

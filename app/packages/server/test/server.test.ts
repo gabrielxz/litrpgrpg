@@ -759,6 +759,19 @@ describe("classes", () => {
   });
 });
 
+describe("the player's titles", () => {
+  it("leave an HVE-Resonant title's axis pair on the server", async () => {
+    const { campaignId, gm, player, playerId } = await table();
+    await act(campaignId, gm, { type: "character.pregen", characterId: "kara", pregen: "Kara", playerId });
+    await act(campaignId, gm, { type: "title.grant", characterId: "kara", title: { name: "Pack Hunter", category: "HVE-Resonant", axisPair: "Force + Hunger" } });
+    const own = (await call("GET", `/campaigns/${campaignId}`, { token: player })).json.characters[0].titles as Record<string, unknown>[];
+    expect(own.map((t) => t.name)).toEqual(["Pack Hunter"]);
+    expect(own[0]).not.toHaveProperty("axisPair");
+    const gmView = (await call("GET", `/campaigns/${campaignId}`, { token: gm })).json;
+    expect(gmView.characters.find((c: { id: string }) => c.id === "kara").titles[0].axisPair).toBe("Force + Hunger");
+  });
+});
+
 describe("inspection", () => {
   it("reads another character's titles by the Grade gap, and a higher-Grade creature not at all", async () => {
     const { campaignId, gm, player, playerId, invite } = await table();

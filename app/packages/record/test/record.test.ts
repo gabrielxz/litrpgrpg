@@ -67,6 +67,7 @@ describe("character creation", () => {
     expect(() => create({ ...brawler, STR: 11, DEX: 5 })).toThrow(/STR 11 is outside 3 to 10/);
     expect(() => create({ ...brawler, CHA: 5 })).toThrow(/total 41/);
     expect(() => create(brawler, "  ")).toThrow(/Background/);
+    expect(() => gm({ type: "character.create", characterId: "x", name: "  ", stats: brawler, background: "Locksmith" })).toThrow(/needs a name/);
     expect(() => gm({ type: "character.pregen", characterId: "b", pregen: "Joe" })).toThrow(/already exists/);
   });
 });
@@ -1364,6 +1365,7 @@ describe("the log", () => {
     rest("kara", 6);
     const spent = rec.append(draft({ type: "points.free", characterId: "kara", placement: { STR: 2 } }, P1));
     expect(() => rec.append(draft({ type: "void", targetId: a.envelope.id, reason: "undo" }, P1))).toThrow(/only their own/);
+    expect(() => rec.append(draft({ type: "void", targetId: spent.envelope.id, reason: "correction" }, P1))).toThrow(/correction is the GM's/);
     rec.append(draft({ type: "void", targetId: spent.envelope.id, reason: "undo" }, P1));
     expect(rec.sheet("kara")).toMatchObject({ freePoints: 2 });
     expect(() => gm({ type: "void", targetId: spent.envelope.id, reason: "undo" })).toThrow(/already voided/);

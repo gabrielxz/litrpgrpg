@@ -41,7 +41,9 @@ export function Table({ view }: { view: GmView }) {
       .filter((c) => c.playerId === userId)
       .map((c) => c.name)
       .join(", ");
-  const active = invites.filter((i) => !i.revokedAt);
+  const open = (i: Invite) =>
+    !i.revokedAt && !(i.expiresAt && new Date(i.expiresAt) <= new Date()) && !(i.maxUses !== null && i.uses >= i.maxUses);
+  const active = invites.filter(open);
 
   return (
     <section className="card">

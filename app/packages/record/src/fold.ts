@@ -459,6 +459,7 @@ function collectVoids(log: readonly Envelope[]) {
       if (!target) reason = `no earlier action ${a.targetId}`;
       else if (target.action.type === "void") reason = "a void cannot be voided; record the action again instead";
       else if (ids.has(a.targetId)) reason = `${a.targetId} is already voided`;
+      else if (env.actor.role === "player" && a.reason === "correction") reason = "a correction is the GM's; a player can undo their own action";
       else if (env.actor.role === "player" && target.actor.userId !== env.actor.userId)
         reason = "a player can undo only their own actions";
       else if (env.actor.role === "player" && target.action.type === "dice.roll")
@@ -733,6 +734,7 @@ function createCharacter(engine: Engine, chars: Map<string, CharacterState>, a: 
   if (chars.has(a.characterId)) throw new Rejected(`character ${a.characterId} already exists`);
   const problems = pointBuyProblems(engine, a.stats);
   if (problems.length) throw new Rejected(problems.join("; "));
+  if (!a.name.trim()) throw new Rejected("a character needs a name");
   if (!a.background.trim()) throw new Rejected("a character needs a Background");
   chars.set(a.characterId, newCharacter(engine, a.characterId, a.name, a.stats, a.background, a.playerId));
   return [{ kind: "created", characterId: a.characterId }];

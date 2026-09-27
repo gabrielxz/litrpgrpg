@@ -264,7 +264,8 @@ export function interfaceSheet(s: Sheet, record: CampaignRecord): InterfaceSheet
     items: (st.inventory.get(s.id) ?? []).map((x) => ({ ...x })),
     proficiencies: s.proficiencies,
     pillsTaken: s.pillsTaken,
-    titles: s.titles,
+    // An HVE-Resonant title's axis pair is the engine's (What Can Be Seen: the interface shows nothing the HVE holds).
+    titles: s.titles.map(({ axisPair: _, ...t }) => t),
     principle: interfacePrinciples(record.engine, record.character(s.id)!),
     quests: questLog(record, s.id),
     class: s.class ? { ...playerClass(s.class), bonus: s.class.bonus, ...(s.class.permission.onceADay ? { usedSinceDawn: classUsed(record, s) } : {}) } : null,

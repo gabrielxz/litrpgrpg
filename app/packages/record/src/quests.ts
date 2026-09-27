@@ -13,7 +13,7 @@
  * counted objective multiplies by the number of holders at that moment and stays there. A holder
  * who leaves the party keeps nothing; a joiner takes the quest at its current count. On completion
  * every participating holder collects the quest's VE, and its items go to one holder or the spoils.
- * Deadlines stay text until the in-game clock is built.
+ * A time limit in hours falls due on the in-game clock; any other deadline stays text.
  */
 import type { Engine } from "@gradebreaker/engine";
 import { type CharacterState, type Effect, Rejected, type World, storeVe } from "./fold.ts";

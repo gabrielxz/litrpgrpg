@@ -1,0 +1,174 @@
+# The Recycling Node: Q-001 completing, the party formed out loud, and the Scarcity Test.
+# The format is in app/DESIGN.md, "Testing the listening", and src/script.ts.
+id: tutorial-node-scarcity
+title: The Recycling Node, party formation and the Scarcity Test
+source: book/70-tutorial.md, Phase 3, "Party Formation" and "The Scarcity Test"
+rules: 0.1.29
+notes: >
+  Joe drew The Dying Scavenger in Phase 2 and kept Ray Okafor alive; Kara drew The High Ground
+  and comes down hurt. The pile is the book's default list for four, less one Edge Shard for three.
+  The traps: a rules question, a joke, a hypothetical theft, a retracted pick, Wren's line, and
+  Kara's Health read aloud (a state, not a change). The players play against the pregens' notes
+  (Kara's generosity is never first; Andre takes only what the plan needs), so a drafter that
+  tallies from the character sheet instead of the decision loses the entries.
+
+speakers:
+  - {id: gm, role: gm, name: Dana}
+  - {id: priya, role: player, name: Priya, characters: [kara]}
+  - {id: tom, role: player, name: Tom, characters: [joe]}
+  - {id: lena, role: player, name: Lena, characters: [andre]}
+
+# The record before the first line, appended in order as the GM.
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara, playerId: priya}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe, playerId: tom}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre, playerId: lena}}
+  - {id: kara-hurt, action: {type: hp.change, characterId: kara, delta: -8}}
+  - id: q-kara
+    action: &q001
+      type: quest.issue
+      to: [kara]
+      quest: {id: Q-001, category: Routine, title: First Contact, issuer: System, grade: F, difficulty: Trivial,
+              objective: "Stand within sight of two other Initiates.", count: 2, ve: 10,
+              rewardText: "Party formation unlocked.", time: Open.}
+  - {id: q-kara-yes, action: {type: quest.answer, questId: q-kara, characterId: kara, accept: true}}
+  - {id: q-joe, action: {<<: *q001, to: [joe]}}
+  - {id: q-joe-yes, action: {type: quest.answer, questId: q-joe, characterId: joe, accept: true}}
+  - {id: q-andre, action: {<<: *q001, to: [andre]}}
+  - {id: q-andre-yes, action: {type: quest.answer, questId: q-andre, characterId: andre, accept: true}}
+  - id: pile
+    action:
+      type: item.give
+      to: spoils
+      items:
+        - {name: Resonance Shard, count: 1}
+        - {name: Edge Shard, count: 1}
+        - {name: Veil Shard, count: 1}
+        - {name: Spear, count: 1}
+        - {name: Low-Grade Armor Scraps, count: 1}
+        - {name: Reactive Buckler, count: 1}
+        - {name: Healing Pill, count: 1}
+        - {name: Resonance Glass, count: 1}
+
+lines:
+  - {id: l01, speaker: gm, text: "Okay, you're all converging on the Node. Kara, coming down the east slope, you can see Joe by the boat and Andre on the far side of the pile."}
+  - {id: l02, speaker: gm, text: "That's two Initiates in sight for each of you. First Contact completes, all three of you."}
+  - {id: l03, speaker: gm, text: "And each of you gets a line: compatible units detected, party formation available, accept?"}
+  - {id: l04, speaker: tom, text: "Wait, does the party thing show everybody's HP?"}
+  - {id: l05, speaker: gm, text: "HP, Aether, and whether you're Downed. Everyone in it sees it."}
+  - {id: l06, speaker: priya, as: kara, text: "You. Boat guy. You kept that man alive back there. I'd rather have you where I can see you. Group up?"}
+  - {id: l07, speaker: tom, as: joe, text: "Yeah. Yes. Sure."}
+  - {id: l08, speaker: lena, text: "Andre doesn't say anything. He's already walking the edge of the pile, looking at stuff."}
+  - {id: l09, speaker: priya, text: "Dibs on the boat."}
+  - {id: l10, speaker: tom, text: "You can't carry a boat."}
+  - {id: l11, speaker: gm, text: "Here's the pile, and all of you can see all of it: a Resonance Shard, an Edge Shard, a Veil Shard, a spear, some armor scraps, a reactive buckler, one healing pill, a resonance glass, and a lot of junk."}
+  - {id: l12, speaker: gm, as: Wren, text: "The girl from before, Wren, calls from thirty feet off: You're just going to split it? Nobody's even going to fight over it?"}
+  - {id: l13, speaker: tom, as: joe, text: "Nobody's fighting. Here's how it goes. One pick each, we go around, whoever's hurt worst picks first."}
+  - {id: l14, speaker: lena, text: "What if Andre just grabs everything and runs for it?"}
+  - {id: l15, speaker: priya, text: "Then Kara stabs Andre. Next question."}
+  - {id: l16, speaker: gm, text: "Kara, you're the hurt one. You're at 6 out of 14."}
+  - {id: l17, speaker: priya, as: kara, text: "I'm fine. Ray's worse. Give the pill to Ray."}
+  - {id: l18, speaker: tom, text: "Whoa. Okay."}
+  - {id: l19, speaker: gm, text: "Ray takes it from Joe with both hands. He's got some color back in about a minute."}
+  - {id: l20, speaker: tom, as: joe, text: "Then I'll take the buckler."}
+  - {id: l21, speaker: tom, text: "No, wait, scratch that. Spear. Joe takes the spear, not the buckler."}
+  - {id: l22, speaker: lena, text: "While they're doing the pill thing, Andre picks up the shard, the resonance one, and puts it in his pocket. He doesn't say anything."}
+  - {id: l23, speaker: gm, text: "When his fingers close on it, Andre gets a line: Resonance Shard. Insight, plus one on meditation. Principle undetermined."}
+  - {id: l24, speaker: priya, text: "Did he just pocket the magic rock?"}
+  - {id: l25, speaker: lena, as: andre, text: "I'll tell you what it says when I figure it out."}
+  - {id: l26, speaker: priya, as: kara, text: "Fine. That's your pick, then."}
+  - {id: l27, speaker: gm, text: "Okay, let's close it out. Who has what?"}
+  - {id: l28, speaker: tom, text: "Kara gets the buckler. I've got the spear and the armor scraps, Andre the Veil Shard and the glass, plus the rock. Kara, you want the Edge Shard too?"}
+  - {id: l29, speaker: priya, text: "Yeah, give me the Edge Shard."}
+  - {id: l30, speaker: tom, as: joe, text: "Andre. You in? The group, I mean."}
+  - {id: l31, speaker: lena, as: andre, text: "For now."}
+  - {id: l32, speaker: gm, text: "Okay. The System has one more thing for each of you, privately."}
+
+expected:
+  actions:
+    # Q-001 completes for each character. Progress to 2 first is also a right reading; items on one
+    # line replay in the order written.
+    - {id: x-qp-kara, lines: [l02], optional: true, action: {type: quest.progress, questId: q-kara, by: 2}}
+    - {id: x-qp-joe, lines: [l02], optional: true, action: {type: quest.progress, questId: q-joe, by: 2}}
+    - {id: x-qp-andre, lines: [l02], optional: true, action: {type: quest.progress, questId: q-andre, by: 2}}
+    - {id: x-q-kara, lines: [l02], action: {type: quest.complete, questId: q-kara, awards: [{characterId: kara, ve: 10}]}}
+    - {id: x-q-joe, lines: [l02], action: {type: quest.complete, questId: q-joe, awards: [{characterId: joe, ve: 10}]}}
+    - {id: x-q-andre, lines: [l02], action: {type: quest.complete, questId: q-andre, awards: [{characterId: andre, ve: 10}]}}
+
+    - {id: x-invite-joe, lines: [l06], action: {type: party.invite, fromId: kara, toId: joe}}
+    - {id: x-joe-joins, lines: [l07], action: {type: party.answer, inviteId: x-invite-joe, accept: true}}
+    - id: x-ev-invite
+      lines: [l06, l07]
+      action:
+        type: event.log
+        summary: Kara asks Joe to group up, on the strength of his keeping Ray alive; he accepts at once.
+        participants: [kara, joe]
+        entries:
+          - {characterId: kara, pole: Accord, intensity: 0.5, intent: Keep a proven ally close}
+
+    - id: x-ev-division
+      lines: [l13]
+      action:
+        type: event.log
+        summary: Joe sets the rule for the pile, one pick each with the most hurt first, before anyone reaches for it.
+        participants: [joe, kara, andre]
+        entries:
+          - {characterId: joe, pole: Control, intensity: 1, intent: Divide the pile without a fight, outcome: The group follows his order}
+      also:
+        - {characterId: joe, pole: Accord, intensity: 1}
+
+    - {id: x-pill, lines: [l17, l19], action: {type: item.remove, from: spoils, name: Healing Pill, count: 1, note: Given to Ray Okafor}}
+    - id: x-ev-pill
+      lines: [l17, l18, l19]
+      action:
+        type: event.log
+        summary: Kara, at 6 of 14 Health with the first pick, passes the only healing pill to Ray.
+        context: Joe's rule gave her first pick as the most hurt.
+        participants: [kara, joe]
+        entries:
+          - {characterId: kara, pole: Restraint, intensity: 2, intent: Put the most hurt first, outcome: Ray recovers; Kara stays at 6}
+      also:
+        - {characterId: kara, pole: Restraint, intensity: 1}
+
+    - {id: x-spear, lines: [l21], action: {type: item.move, from: spoils, to: joe, name: Spear, count: 1}}
+
+    - {id: x-shard, lines: [l22], action: {type: item.move, from: spoils, to: andre, name: Resonance Shard, count: 1}}
+    - id: x-ev-shard
+      lines: [l22, l24, l25]
+      action:
+        type: event.log
+        summary: Andre pockets the Resonance Shard while the others settle the pill, and says so only when asked.
+        participants: [andre, kara]
+        entries:
+          - {characterId: andre, pole: Hunger, intensity: 1, intent: Take the unknown prize before the round reaches it, outcome: Kara lets it stand as his pick}
+
+    - {id: x-buckler, lines: [l28], action: {type: item.move, from: spoils, to: kara, name: Reactive Buckler, count: 1}}
+    - {id: x-armor, lines: [l28], action: {type: item.move, from: spoils, to: joe, name: Low-Grade Armor Scraps, count: 1}}
+    - {id: x-veil, lines: [l28], action: {type: item.move, from: spoils, to: andre, name: Veil Shard, count: 1}}
+    - {id: x-glass, lines: [l28], action: {type: item.move, from: spoils, to: andre, name: Resonance Glass, count: 1}}
+    - {id: x-edge, lines: [l28, l29], action: {type: item.move, from: spoils, to: kara, name: Edge Shard, count: 1}}
+
+    - {id: x-invite-andre, lines: [l30], action: {type: party.invite, fromId: joe, toId: andre}}
+    - {id: x-andre-joins, lines: [l31], action: {type: party.answer, inviteId: x-invite-andre, accept: true}}
+    - id: x-ev-andre-joins
+      lines: [l08, l30, l31]
+      optional: true
+      action:
+        type: event.log
+        summary: Andre keeps apart through the formation and joins only when asked, "for now".
+        participants: [andre, joe]
+        entries:
+          - {characterId: andre, pole: Freedom, intensity: 0.5}
+
+  suggestions:
+    - {id: s-formation, lines: [l02, l03], kind: prep-cue, key: party-formation}
+    - {id: s-shard-line, lines: [l22, l23], kind: prep-cue, key: resonance-shard}
+    - {id: s-status, lines: [l28, l29, l31, l32], kind: prep-cue, key: first-status}
+
+  quiet:
+    - {lines: [l04, l05], why: rules-question}
+    - {lines: [l09, l10], why: joke}
+    - {lines: [l12], why: npc-speech}
+    - {lines: [l14, l15], why: hypothetical}
+    - {lines: [l16], why: state-read-aloud}
+    - {lines: [l20], why: retracted}
