@@ -33,7 +33,6 @@ export type {
   Member,
   PlayerView,
   Role,
-  RulesMove,
   View,
 } from "./protocol.ts";
 export { type D100, type Dice, rollD100s } from "./dice.ts";

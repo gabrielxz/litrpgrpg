@@ -17,7 +17,7 @@ Ruled by Gabriel, 2026-09-25.
 - **What Can Be Seen filters every player view,** including anything sent to a player-facing AI. Players wear or hide Bestowed titles from their own interface. Open HVE logs are a campaign option, off by default (Introduction, "Who Reads What").
 - **Consolidation goals are table talk.** The GM enters hours per character; the app computes and previews.
 - **The GM has one composer for System messages:** to one player, several, or the party; sent now or held; typed, or drafted by AI in the System's voice. The engine's automatic notices go through the same channel.
-- **Campaigns pin a rules version** and migrate when the GM says so.
+- **Campaigns pin a rules version** and migrate when the GM says so. Amended by Gabriel, 2026-09-27: until the first printed edition every campaign follows the current rules; from then, campaigns pin an edition (see "Rules editions").
 - **VE from a kill is shared** by every participant; a confirmed kill for the Slaughter titles is the finishing blow (Titles, "Achievement Titles"). With in-app dice, the finishing blow is whoever made the attack that took the creature to 0.
 - **"Once a day" resets at dawn** in the fiction, on the app's in-game clock. The book sentence is queued in the backlog.
 
@@ -51,7 +51,6 @@ Ruled by Gabriel, 2026-09-26 (the party and the composer):
 - **Claude's calls in slice 3, all five accepted by Gabriel (2026-09-26):** a fight with a character still dying cannot end (the GM stabilizes them, rules their fate, or runs the rounds out); the Will Save is rolled for characters, and a creature's or NPC's Suppression is the GM's toggle; resistance from a save lasts the encounter whichever higher-Grade entity is present; a Downed character makes the presence save when they wake; a pill that does nothing still costs its Beat and counts toward the recipient's two.
 
 - **Claude's calls in the HVE sweep, open to Gabriel's cut (2026-09-27):** the sweep is one action covering every character with a moment, so undoing it undoes the session's sweep; a session where nothing comes to mind records nothing; a note may ride on any moment as a cue, and only a Defining moment requires one; a moment of 1 tally carries no secondary (one weight lower is none); a dead character is not swept; copying Deep across sets all eight sides at once; the sweep in progress is kept in the GM's browser until it is recorded; the party-wide count past the expected 3 to 6 is a warning, never a block.
-- **Moving a campaign's rules (Claude's call, open to Gabriel's cut, 2026-09-27):** the move is a change to the campaign, not an action in its log: the whole log replays under the new rules, so the GM sees every sheet change and every action that would stop applying before moving, and the move cannot be undone except by the log's own undo on what it stranded. App code reads the current rules without fallbacks for older snapshots; a campaign on older rules shows its version on the Table tab until the GM moves it.
 
 Ruled by Claude on Gabriel's delegation, 2026-09-25 (book sentences queued in the backlog):
 
@@ -68,7 +67,7 @@ Each milestone is usable at a table and feeds the next. Items are marked **activ
 | Item | | Notes |
 |---|---|---|
 | Rules engine in TypeScript | **active** | Ported from `tools/rules_engine.py`; both engines pass `rules/fixtures/` |
-| Campaigns, roles, invites | **active** | One GM per campaign; invite links; rules version pinned. Built: the GM moves a campaign to the current rules from the Table section, after a preview of every sheet change and every action that would stop applying |
+| Campaigns, roles, invites | **active** | One GM per campaign; invite links; the rules version recorded. Built: every campaign moves to the current rules when the server starts (Rules editions, stage 1), and the Table section shows the version |
 | Character creation | **active** | Point buy (40 points, 3 to 10, exactly 40), Background, derived values, the three pregens |
 | Player interface | **active** | What Can Be Seen's list in its order; party frame (built); worn and hidden titles |
 | Party | **active** | Built: invite, answer, leave, disband; the party frame; death ends membership. Quest sharing with Quests |
@@ -133,6 +132,19 @@ Each milestone is usable at a table and feeds the next. Items are marked **activ
 ### Later
 
 Spoken System delivery; campaign artifacts (survivors' forum retellings, character cards, timelines); a glyph-resolve effect on notices (the setting's script: meaning arrives with the sight); an in-app voice room; single-mic listening at a physical table; Battle Memory art. Grade Breakthrough workflows stay out.
+
+## Rules editions
+
+Ruled by Gabriel, 2026-09-27. A campaign's log replays under its rules, and the app's code runs only the rules shapes it knows, so it supports a window of versions and retires the rest. Minor versions change numbers and tables; major versions change procedures (`rules/version.yaml`). An edition is a major version, matching a printed book.
+
+| Stage | | Gate | What it holds |
+|---|---|---|---|
+| 1 | **active** (built) | none | Every campaign moves to the current rules when the server starts; an action a new version no longer applies lands in the rejected list |
+| 2 | *deferred* | the first printed edition (1.0) is locked | Campaigns pin an edition, never a minor version. Minor versions migrate within an edition automatically, and the GM gets a notice of each sheet's changes. A new campaign records its edition |
+| 3 | *deferred* | a second edition (2.0) exists | The app runs the current edition and the one before, side by side. Upcasters rewrite an older edition's actions as the log is read. Moving between editions is upcasting plus replay, offered to the GM with a preview, never automatic. When a third edition ships, the oldest edition's campaigns become read-only with an export, unless a migration is written |
+| Export | *deferred* | none | A campaign's log as a file: backups, the listening tests, and stage 3's retirement |
+
+**Reminder:** a session that sees either gate reached (a book session locking 1.0, or any mention of a 2.0) raises the next stage with Gabriel before other work.
 
 ## Architecture
 

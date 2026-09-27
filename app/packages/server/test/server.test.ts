@@ -662,8 +662,8 @@ describe("the Hidden Vector Engine", () => {
 });
 
 describe("the rules version", () => {
-  it("moves a campaign to the current rules when the GM says so, showing what changes first", async () => {
-    const { campaignId, gm, player } = await table();
+  it("moves every campaign to the current rules when the server starts, replaying its log under them", async () => {
+    const { campaignId, gm } = await table();
     // An older snapshot in which Kara was built with one point moved from FOR to STR.
     const old = structuredClone(rules);
     old.version.version = "0.0.1-old";
@@ -671,28 +671,18 @@ describe("the rules version", () => {
     kara.stats = { ...kara.stats, FOR: kara.stats.FOR - 1, STR: kara.stats.STR + 1 };
     await db.query("insert into rules_snapshots (version, content_hash, snapshot) values ($1, 'old', $2::json)", ["0.0.1-old", JSON.stringify(old)]);
     await db.query("update campaigns set rules_version = '0.0.1-old' where id = $1", [campaignId]);
-    service = await Service.open(db, rules, verifier);
+    service = await Service.open(db, old, verifier);
     app = createApp(service);
     await act(campaignId, gm, { type: "character.pregen", characterId: "kara", pregen: "Kara" });
-    const current = rules.version.version;
+    expect((await call("GET", `/campaigns/${campaignId}`, { token: gm })).json.characters[0].raw.FOR).toBe(kara.stats.FOR);
 
-    const before = await call("GET", `/campaigns/${campaignId}`, { token: gm });
-    expect(before.json.campaign.rulesVersion).toBe("0.0.1-old");
-    expect(before.json.currentRules).toBe(current);
-    expect((await call("GET", `/campaigns/${campaignId}/rules`, { token: player })).status).toBe(403);
-
-    const preview = await call("GET", `/campaigns/${campaignId}/rules`, { token: gm });
-    expect(preview.json.from).toBe("0.0.1-old");
-    expect(preview.json.to).toBe(current);
-    expect(preview.json.changes[0].changes).toContainEqual({ field: "raw.FOR", before: kara.stats.FOR, after: kara.stats.FOR + 1 });
-    expect(preview.json.newlyRejected).toEqual([]);
-
-    expect((await call("POST", `/campaigns/${campaignId}/rules`, { token: player })).status).toBe(403);
-    expect((await call("POST", `/campaigns/${campaignId}/rules`, { token: gm })).status).toBe(200);
+    const lines: string[] = [];
+    service = await Service.open(db, rules, verifier, (m) => lines.push(m));
+    app = createApp(service);
     const after = await call("GET", `/campaigns/${campaignId}`, { token: gm });
-    expect(after.json.campaign.rulesVersion).toBe(current);
+    expect(after.json.campaign.rulesVersion).toBe(rules.version.version);
     expect(after.json.characters[0].raw.FOR).toBe(kara.stats.FOR + 1);
-    expect((await call("POST", `/campaigns/${campaignId}/rules`, { token: gm })).status).toBe(409);
+    expect(lines).toContain(`rules ${rules.version.version}: 1 campaign(s) moved to the current rules`);
   });
 });
 

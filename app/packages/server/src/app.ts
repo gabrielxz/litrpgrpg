@@ -153,10 +153,6 @@ export function createApp(service: Service, opts: AppOptions = {}) {
     return c.json(out, out.duplicate ? 200 : 201);
   });
 
-  app.get("/campaigns/:id/rules", async (c) => c.json(await service.previewRulesMove(c.req.param("id"), c.get("user"))));
-
-  app.post("/campaigns/:id/rules", async (c) => c.json(await service.moveRules(c.req.param("id"), c.get("user"))));
-
   app.post("/campaigns/:id/preview", async (c) => {
     const s = await body(c, submissionSchema);
     return c.json(await service.preview(c.req.param("id"), c.get("user"), s));
