@@ -36,6 +36,7 @@ import { type HveState, applyHve, cloneHve } from "./hve.ts";
 import { type CampaignEvent, applyEvents, cloneEvent } from "./events.ts";
 import { type CampaignSession, applySessions, cloneSession } from "./sessions.ts";
 import { type Clock, applyClock } from "./clock.ts";
+import { type PrincipleState, applyPrinciples, clonePrinciples, collectDue } from "./principles.ts";
 import { type Quest, type QuestNoticeKind, applyQuests, authorizeQuestPlayer, cloneQuest, questsOnJoin, questsOnLeave } from "./quests.ts";
 
 export interface CharacterState {
@@ -78,6 +79,8 @@ export interface CharacterState {
   pillsTaken?: { healing: number; aether: number };
   /** The Hidden Vector Engine's sheet: Deep, and every sweep's moments. */
   hve?: HveState;
+  /** Battle Memory Cards, Insight by family, and the Principles held. */
+  principles?: PrincipleState;
 }
 
 /** A formal party: its members' character ids in the order they joined. */
@@ -101,6 +104,14 @@ export interface HeldMessage {
 }
 
 export type Effect =
+  | { kind: "memory-granted"; characterId: string; memoryId: string }
+  | { kind: "vision"; characterId: string; text: string }
+  | { kind: "resonance"; characterId: string; family: string; ip: number; of: number }
+  | { kind: "insight"; characterId: string; line: string }
+  | { kind: "principle-crystallized"; characterId: string; name: string }
+  | { kind: "distillation-offered"; characterId: string; name: string }
+  | { kind: "distilled"; characterId: string; name: string; tier: string; grantKind: "application" | "infusion" | "domain"; grant?: string }
+  | { kind: "principle-refined"; characterId: string; from: string; name: string }
   | { kind: "clock"; from: number | null; to: number }
   | { kind: "dawn"; count: number }
   | { kind: "quest-due"; questId: string }
@@ -366,6 +377,7 @@ export function fold(engine: Engine, log: readonly Envelope[]): FoldResult {
     const scratch = cloneWorld(world);
     try {
       const out = apply(engine, scratch, env);
+      collectDue(engine, scratch, env, out);
       world = scratch;
       effects.set(env.id, out);
     } catch (e) {
@@ -404,6 +416,7 @@ function cloneState(c: CharacterState): CharacterState {
     ...(c.refusals ? { refusals: { ...c.refusals } } : {}),
     ...(c.pillsTaken ? { pillsTaken: { ...c.pillsTaken } } : {}),
     ...(c.hve ? { hve: cloneHve(c.hve) } : {}),
+    ...(c.principles ? { principles: clonePrinciples(c.principles) } : {}),
   };
 }
 
@@ -539,6 +552,15 @@ function apply(engine: Engine, world: World, env: Envelope): Effect[] {
     case "clock.set":
     case "clock.advance":
       return applyClock(engine, world, a);
+    case "memory.grant":
+    case "memory.pass":
+    case "memory.choose":
+    case "memory.meditate":
+    case "insight.award":
+    case "principle.name":
+    case "principle.distill":
+    case "principle.answer":
+      return applyPrinciples(engine, world, a, env);
     case "void":
       throw new Error("voids are handled before apply");
   }
@@ -567,6 +589,8 @@ function authorize(world: World, env: Envelope) {
     case "title.choose":
     case "title.wear":
     case "title.reveal":
+    case "memory.choose":
+    case "principle.answer":
       return mine(a.characterId);
     case "party.invite":
       return mine(a.fromId);

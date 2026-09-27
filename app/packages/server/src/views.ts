@@ -19,6 +19,7 @@ import {
   type PlayerQuest,
   SPOILS,
   questForHolder,
+  interfacePrinciples,
   momentumForceOf,
   worldOf,
 } from "@gradebreaker/record";
@@ -221,6 +222,7 @@ export function interfaceSheet(s: Sheet, record: CampaignRecord): InterfaceSheet
     proficiencies: s.proficiencies,
     pillsTaken: s.pillsTaken,
     titles: s.titles,
+    principle: interfacePrinciples(record.engine, record.character(s.id)!),
     quests: questLog(record, s.id),
   };
 }
@@ -265,6 +267,14 @@ const ANNOUNCED: ReadonlySet<Effect["kind"]> = new Set([
   "quest-revealed",
   "quest-completed",
   "quest-failed",
+  "memory-granted",
+  "vision",
+  "resonance",
+  "insight",
+  "principle-crystallized",
+  "distillation-offered",
+  "distilled",
+  "principle-refined",
 ]);
 
 /** Effects a player is shown: the announced ones about their own characters. */

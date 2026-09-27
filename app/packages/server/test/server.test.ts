@@ -696,6 +696,33 @@ describe("the in-game clock", () => {
   });
 });
 
+describe("Battle Memories and Principles", () => {
+  it("shows the player their cards, visions, and resonance, and keeps the GM's bookkeeping", async () => {
+    const { campaignId, gm, player, playerId } = await table();
+    await act(campaignId, gm, { type: "character.pregen", characterId: "kara", pregen: "Kara", playerId });
+    const card = await act(campaignId, gm, { type: "memory.grant", characterId: "kara", text: "Held the slab while the ceiling came down" });
+    expect((await act(campaignId, player, { type: "memory.choose", characterId: "kara", memoryId: card.json.envelope.id, chosen: true })).status).toBe(201);
+    await act(campaignId, gm, { type: "consolidation.rest", highDensity: false, rests: [{ characterId: "kara", hours: 1 }] });
+    expect((await act(campaignId, player, { type: "memory.meditate", characterId: "kara", memoryId: card.json.envelope.id, family: "Impact", ip: 3 })).status).toBe(422);
+    await act(campaignId, gm, {
+      type: "memory.meditate",
+      characterId: "kara",
+      memoryId: card.json.envelope.id,
+      family: "Impact",
+      ip: 2,
+      words: "She stopped fighting the weight",
+      vision: "A mountain hangs from a thread.",
+    });
+    const view = await call("GET", `/campaigns/${campaignId}`, { token: player });
+    const p = view.json.characters[0].principle;
+    expect(p.resonance).toEqual([{ family: "Impact", ip: 2, of: 3 }]);
+    expect(p.memories).toEqual([{ id: card.json.envelope.id, text: "Held the slab while the ceiling came down", chosen: false, spent: true, vision: "A mountain hangs from a thread." }]);
+    expect(view.json.feed.map((f: { effect: { kind: string } }) => f.effect.kind)).toEqual(expect.arrayContaining(["memory-granted", "vision", "resonance"]));
+    const text = JSON.stringify(view.json);
+    for (const leak of ["stopped fighting", "afterRests", '"due"']) expect(text).not.toContain(leak);
+  });
+});
+
 describe("the rules version", () => {
   it("moves every campaign to the current rules when the server starts, replaying its log under them", async () => {
     const { campaignId, gm } = await table();

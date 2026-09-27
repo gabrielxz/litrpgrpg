@@ -15,6 +15,7 @@ import { pillsOf } from "../Care.tsx";
 import { stackLine } from "../items.ts";
 import { ATTRIBUTES, ATTRIBUTE_NAMES, noticeLine } from "../text.ts";
 import { type CharacterSpec, Creator } from "./Creator.tsx";
+import { PrincipleSection } from "./Principle.tsx";
 
 function Bar({ value, max }: { value: number; max: number }) {
   const pct = max > 0 ? Math.max(0, Math.min(100, (value / max) * 100)) : 0;
@@ -614,6 +615,8 @@ function Interface({
       )}
 
       <Carried campaignId={campaignId} c={c} roster={roster} readOnly={readOnly} pills={pills} />
+
+      <PrincipleSection campaignId={campaignId} c={c} readOnly={readOnly} />
 
       <Titles campaignId={campaignId} c={c} readOnly={readOnly} />
 

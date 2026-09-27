@@ -233,6 +233,22 @@ export function describe(
     }
     case "hve.deep":
       return `${name(a.characterId)}: Deep tallies copied across`;
+    case "memory.grant":
+      return `${name(a.characterId)}: Battle Memory Card granted (${a.text})`;
+    case "memory.pass":
+      return `${name(a.characterId)}: Battle Memory Card withheld (the Downing taught nothing)`;
+    case "memory.choose":
+      return `${name(a.characterId)} ${a.chosen ? "will meditate on" : "sets aside"} a Battle Memory`;
+    case "memory.meditate":
+      return `${name(a.characterId)} meditates: ${a.ip} Insight toward ${a.family}`;
+    case "insight.award":
+      return `${name(a.characterId)}: ${a.ip} Insight toward ${a.family} (${a.source})`;
+    case "principle.name":
+      return `${name(a.characterId)}: ${a.family} crystallizes as ${a.name}`;
+    case "principle.distill":
+      return `${name(a.characterId)}: ${a.quiet ? "Distillation offered" : a.refine ? "Refinement" : "Distillation"} (${a.family})`;
+    case "principle.answer":
+      return `${name(a.characterId)} ${a.accept ? "accepts" : "vetoes"} the offered articulation`;
     case "clock.set":
       return `Clock set to ${clockLine((a.day - 1) * MINUTES_PER_DAY + a.hour * 60 + (a.minute ?? 0))}${a.dawnHour !== undefined ? `, dawn at ${String(a.dawnHour).padStart(2, "0")}:00` : ""}`;
     case "clock.advance":
@@ -264,6 +280,22 @@ export function effectLine(e: Effect, name: Names): string | null {
     }
     case "hve-copied":
       return `${name(e.characterId)}: Deep tallies set from the copied sheet`;
+    case "memory-granted":
+      return `${name(e.characterId)} receives a Battle Memory Card`;
+    case "vision":
+      return `${name(e.characterId)} sees: ${e.text}`;
+    case "resonance":
+      return `${name(e.characterId)}: Resonance accruing, ${e.family} ${e.ip}/${e.of}${e.ip >= e.of ? " (crystallizes: name the Principle)" : ""}`;
+    case "insight":
+      return `${name(e.characterId)}: Insight ${e.line}`;
+    case "principle-crystallized":
+      return `${name(e.characterId)}: Initial Insight, ${e.name}`;
+    case "distillation-offered":
+      return `${name(e.characterId)} is offered a Distillation of ${e.name}, to accept or veto`;
+    case "distilled":
+      return `${name(e.characterId)}: ${e.name} reaches ${e.tier}${e.grant ? `; ${e.grant}` : ""}`;
+    case "principle-refined":
+      return `${name(e.characterId)}: ${e.from} refined into ${e.name}`;
     case "clock":
       return `The clock reads ${clockLine(e.to)}`;
     case "dawn":
@@ -407,6 +439,8 @@ export function effectLine(e: Effect, name: Names): string | null {
 }
 
 /** The System's notice on a player's interface, or null for effects the System does not announce. */
+const GRANT_NOTICE = { application: "Application registered", infusion: "Infusion", domain: "Domain" } as const;
+
 export function noticeLine(e: Effect): string | null {
   switch (e.kind) {
     case "ve-acquired":
@@ -460,6 +494,22 @@ export function noticeLine(e: Effect): string | null {
       return `Item registered: ${stack(e)}.`;
     case "title-conferred":
       return `Title conferred: ${e.name}.`;
+    case "memory-granted":
+      return "Battle Memory retained.";
+    case "vision":
+      return e.text;
+    case "resonance":
+      return `Resonance accruing: ${e.family.toUpperCase()}. ${e.ip}/${e.of}.`;
+    case "insight":
+      return `Insight Gained: ${e.line}`;
+    case "principle-crystallized":
+      return `Initial Insight: ${e.name}.`;
+    case "distillation-offered":
+      return `Articulation proposed: ${e.name}. Confirmation required.`;
+    case "distilled":
+      return `Distillation complete: ${e.name}, ${e.tier}.${e.grant ? ` ${GRANT_NOTICE[e.grantKind]}: ${e.grant}.` : ""}`;
+    case "principle-refined":
+      return `Principle refined: ${e.from} is now ${e.name}.`;
     case "quest-offered":
       return `Quest offered: ${e.line}.`;
     case "quest-issued":

@@ -7,6 +7,7 @@ import { type CharacterState, capLevel, maxAetherOf, maxHpOf, rawStats } from ".
 import { type Proficiency, proficienciesOf } from "./proficiency.ts";
 import { type Title, titlesDue } from "./titles.ts";
 import { type SweepEntry, archetypeOf, leadsOf, poles } from "./hve.ts";
+import { type PrinciplesSheet, principlesSheet } from "./principles.ts";
 
 export interface Sheet {
   id: string;
@@ -48,6 +49,8 @@ export interface Sheet {
   refusals: Record<string, number>;
   /** Pills taken since the last Consolidation, by kind. */
   pillsTaken: { healing: number; aether: number };
+  /** Battle Memory Cards, Insight, and Principles as the GM runs them. */
+  principles: PrinciplesSheet;
   /** The Hidden Vector Engine's sheet: the GM's side of the screen only. */
   hve: {
     /** Every side of every axis, 0 included. */
@@ -97,6 +100,7 @@ export function sheetOf(engine: Engine, c: CharacterState): Sheet {
     refusals: { ...(c.refusals ?? {}) },
     pillsTaken: { healing: 0, aether: 0, ...(c.pillsTaken ?? {}) },
     hve: hveOf(engine, c),
+    principles: principlesSheet(engine, c),
   };
   if (c.playerId !== undefined) sheet.playerId = c.playerId;
   if (c.pregen !== undefined) sheet.pregen = c.pregen;

@@ -52,6 +52,23 @@ export {
   questTableVe,
 } from "./quests.ts";
 export { type TakePillOutside, pillLimit } from "./pills.ts";
+export {
+  type BattleMemory,
+  type DistillOffer,
+  type Grant,
+  type MemoryDue,
+  type Principle,
+  type PrincipleAction,
+  type InterfacePrinciples,
+  type PrinciplesSheet,
+  families,
+  interfacePrinciples,
+  insightLine,
+  ipSources,
+  ladder,
+  nextRung,
+  slotsFor,
+} from "./principles.ts";
 export { type Clock, type ClockAction, MINUTES_PER_DAY, clockLine, dayOf, toNextDawn } from "./clock.ts";
 export { type CampaignSession, type SessionAction, sessionName } from "./sessions.ts";
 export { type CampaignEvent, type EventAction, type HveEntry, type LogEvent, intensities, sweepWeight } from "./events.ts";

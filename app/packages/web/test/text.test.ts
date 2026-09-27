@@ -29,6 +29,14 @@ const every: Effect[] = [
   { kind: "party-disbanded", characterId: "k", partyId: "p" },
   { kind: "message-held", messageId: "m", to: ["k"] },
   { kind: "voided", targetId: "x", reason: "undo" },
+  { kind: "memory-granted", characterId: "k", memoryId: "m" },
+  { kind: "resonance", characterId: "k", family: "Impact", ip: 2, of: 3 },
+  { kind: "insight", characterId: "k", line: "Weight 8/10" },
+  { kind: "principle-crystallized", characterId: "k", name: "Weight" },
+  { kind: "distillation-offered", characterId: "k", name: "Weight" },
+  { kind: "distilled", characterId: "k", name: "Weight", tier: "Seed", grantKind: "application", grant: "Falling Star" },
+  { kind: "distilled", characterId: "k", name: "Weight", tier: "Mid Fragment", grantKind: "infusion", grant: "Everything I swing" },
+  { kind: "principle-refined", characterId: "k", from: "Fire", name: "Consuming Flame" },
 ];
 
 describe("the System's notices", () => {

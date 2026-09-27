@@ -18,6 +18,7 @@ import type { HveAction } from "./hve.ts";
 import type { EventAction } from "./events.ts";
 import type { SessionAction } from "./sessions.ts";
 import type { ClockAction } from "./clock.ts";
+import type { PrincipleAction } from "./principles.ts";
 
 export type { CombatAction, CombatantSpec } from "./combat.ts";
 
@@ -300,6 +301,7 @@ export type Action =
   | EventAction
   | SessionAction
   | ClockAction
+  | PrincipleAction
   | VoidAction;
 
 export type ActionType = Action["type"];

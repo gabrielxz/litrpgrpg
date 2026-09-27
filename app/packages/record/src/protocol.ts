@@ -8,6 +8,7 @@ import type { Quest } from "./quests.ts";
 import type { CampaignEvent } from "./events.ts";
 import type { CampaignSession } from "./sessions.ts";
 import type { Clock } from "./clock.ts";
+import type { InterfacePrinciples } from "./principles.ts";
 import type { Combatant, Encounter } from "./combat.ts";
 import type { Envelope } from "./actions.ts";
 import type { Sheet } from "./sheet.ts";
@@ -189,6 +190,8 @@ export interface InterfaceSheet {
   pillsTaken: Sheet["pillsTaken"];
   /** Every title the character holds, hidden ones included; Echoed and released ones in the history. */
   titles: Sheet["titles"];
+  /** The Principle, the Battle Memory Cards held, and a Quiet Path offer. */
+  principle: InterfacePrinciples;
   /** The quest log: offered, active, and closed quests as this character's log shows them. */
   quests: PlayerQuest[];
 }

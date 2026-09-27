@@ -1371,3 +1371,20 @@ ul.events li.event {
 .clock input[type="number"] {
   width: 5rem;
 }
+
+/* ---- Principles ---- */
+
+.principle-entry {
+  border-left: 3px solid var(--cyan);
+  padding: 0.2rem 0 0.3rem 0.6rem;
+  margin: 0.4rem 0;
+}
+.principle-entry .grant {
+  margin-top: 0.2rem;
+}
+.due-memory,
+.crystallizing {
+  border-top: 1px dashed var(--stone);
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+}

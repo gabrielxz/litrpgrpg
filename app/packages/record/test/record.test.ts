@@ -827,6 +827,11 @@ describe("Downed, pills, Aura Pressure, and the Surprise Beat", () => {
     const end = gm({ type: "combat.end" });
     expect(end.effects).toContainEqual({ kind: "revived", encounterId: "e1", combatantId: "kara", characterId: "kara", hp: 1 });
     expect(end.effects).toContainEqual({ kind: "battle-memory-due", characterId: "kara", reason: "survived Downed" });
+    // The card is due on the GM's list, and the GM may withhold it.
+    const due = rec.character("kara")!.principles!.due.find((d) => d.reason === "downed")!;
+    expect(due).toMatchObject({ key: `${end.envelope.id}:kara`, label: "survived Downed" });
+    gm({ type: "memory.pass", characterId: "kara", due: due.key });
+    expect(rec.character("kara")!.principles!.due.some((d) => d.reason === "downed")).toBe(false);
     expect(rec.sheet("kara")!.hp).toBe(1);
     // Woken at 1 HP after the fight is not still standing at its end.
     expect(rec.sheet("kara")!.counters).toEqual({ "survived-downed": 1 });
@@ -1577,5 +1582,96 @@ describe("the in-game clock", () => {
     gm({ type: "session.end" });
     expect(rec.state.events.get("e1")!.clock).toBe(24 * 60 + 9 * 60);
     expect(rec.state.sessions.get("s1")).toMatchObject({ clockStart: 33 * 60, clockEnd: 36 * 60 });
+  });
+});
+
+describe("Battle Memories and Principles", () => {
+  beforeEach(() => {
+    gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" });
+  });
+  const pr = () => rec.character("kara")!.principles!;
+  const rest = () => gm({ type: "consolidation.rest", highDensity: false, rests: [{ characterId: "kara", hours: 1 }] });
+  const card = (text = "Held the slab while the ceiling came down") => gm({ type: "memory.grant", characterId: "kara", text }).envelope.id;
+  const meditate = (memoryId: string, ip: number, family = "Impact", vision?: string) =>
+    gm({ type: "memory.meditate", characterId: "kara", memoryId, family, ip, ...(vision ? { vision } : {}) });
+
+  it("makes a card due on a cascade of two extra dice, and the GM grants it", () => {
+    const cascade = engine.rules.grades.volatility.battle_memory_cascade_dice;
+    const threshold = engine.volatilityThreshold("F");
+    const natural = [threshold, ...Array.from({ length: cascade - 1 }, () => threshold), 12];
+    const roll = gm({ type: "dice.roll", roller: { kind: "character", characterId: "kara", attribute: "STR" }, rollKind: "clash", modifier: 0, natural, entered: true });
+    const due = pr().due;
+    expect(due).toEqual([{ key: `${roll.envelope.id}:kara`, reason: "cascade", label: `a cascade of ${cascade} extra dice` }]);
+    expect(() => gm({ type: "memory.pass", characterId: "kara", due: due[0]!.key })).toThrow(/automatic/);
+    const out = gm({ type: "memory.grant", characterId: "kara", text: "The blow that kept going", due: due[0]!.key });
+    expect(out.effects).toEqual([{ kind: "memory-granted", characterId: "kara", memoryId: out.envelope.id }]);
+    expect(pr().due).toEqual([]);
+    expect(pr().memories[0]).toMatchObject({ text: "The blow that kept going", source: "cascade" });
+  });
+
+  it("meditates at a later Consolidation for 1 to 3 Insight, with the vision, and spends the card", () => {
+    const m = card();
+    expect(() => meditate(m, 2)).toThrow(/Consolidation after it arrived/);
+    rec.append(draft({ type: "memory.choose", characterId: "kara", memoryId: m, chosen: true }, P1));
+    expect(pr().memories[0]!.chosen).toBe(true);
+    rest();
+    expect(() => meditate(m, 4)).toThrow(/pays 1 to 3/);
+    const out = meditate(m, 2, "Impact", "A mountain hangs from a thread.");
+    expect(out.effects).toEqual([
+      { kind: "vision", characterId: "kara", text: "A mountain hangs from a thread." },
+      { kind: "resonance", characterId: "kara", family: "Impact", ip: 2, of: 3 },
+    ]);
+    expect(() => meditate(m, 1)).toThrow(/spent/);
+    expect(() => rec.append(draft({ type: "memory.meditate", characterId: "kara", memoryId: m, family: "Impact", ip: 1 }, P1))).toThrow(/only the GM/);
+  });
+
+  it("crystallizes the first family to reach 3 and waits on the GM's name", () => {
+    gm({ type: "insight.award", characterId: "kara", source: "Surviving a life-or-death situation through the Principle", family: "Consumption", ip: 2 });
+    gm({ type: "insight.award", characterId: "kara", source: "Any other Principle-aligned experience, GM's call", family: "Impact", ip: 3 });
+    gm({ type: "insight.award", characterId: "kara", source: "Consuming an affinity treasure", family: "Consumption", ip: 1 });
+    expect(pr().reached).toEqual(["Impact", "Consumption"]);
+    expect(() => gm({ type: "principle.name", characterId: "kara", family: "Consumption", name: "Hunger" })).toThrow(/Impact crystallizes first/);
+    const out = gm({ type: "principle.name", characterId: "kara", family: "Impact", name: "Weight", passive: "+5 to defensive Clashes against falling things" });
+    expect(out.effects).toEqual([{ kind: "principle-crystallized", characterId: "kara", name: "Weight" }]);
+    // One slot at F-Grade: Consumption's Insight stays with it for the second.
+    expect(() => gm({ type: "principle.name", characterId: "kara", family: "Consumption", name: "Hunger" })).toThrow(/nothing crystallizing/);
+    const more = gm({ type: "insight.award", characterId: "kara", source: "Any other Principle-aligned experience, GM's call", family: "Impact", ip: 3 });
+    expect(more.effects).toEqual([{ kind: "insight", characterId: "kara", line: "Weight 6/10" }]);
+  });
+
+  it("advances a tier only by Distillation, priced by the tier that granted it", () => {
+    gm({ type: "insight.award", characterId: "kara", source: "Any other Principle-aligned experience, GM's call", family: "Impact", ip: 3 });
+    gm({ type: "principle.name", characterId: "kara", family: "Impact", name: "Weight" });
+    const distill = { type: "principle.distill" as const, characterId: "kara", family: "Impact", articulations: ["The mountain does not strike. It arrives."], name: "Falling Star", text: "+10 to the Clash; the blow lands like a dropped weight" };
+    expect(() => gm(distill)).toThrow(/needs 10 Insight for Seed/);
+    for (let i = 0; i < 3; i++) gm({ type: "insight.award", characterId: "kara", source: "Any other Principle-aligned experience, GM's call", family: "Impact", ip: 3 });
+    expect(pr().principles[0]!.tier).toBe("Initial Insight");
+    const out = gm({ ...distill, attunements: "Feels the weight of anything she lifts" });
+    expect(out.effects).toEqual([{ kind: "distilled", characterId: "kara", name: "Weight", tier: "Seed", grantKind: "application", grant: "Falling Star" }]);
+    expect(pr().principles[0]!.grants[0]).toMatchObject({ tier: "Seed", kind: "application", aether: 10, attunements: "Feels the weight of anything she lifts" });
+    gm({ type: "principle.distill", characterId: "kara", family: "Impact", articulations: ["Weight chooses where it falls"], refine: true, rename: "Gravity" });
+    expect(pr().principles[0]).toMatchObject({ name: "Gravity", tier: "Seed" });
+  });
+
+  it("offers a Quiet Path articulation the player accepts or vetoes", () => {
+    gm({ type: "insight.award", characterId: "kara", source: "Any other Principle-aligned experience, GM's call", family: "Impact", ip: 3 });
+    gm({ type: "principle.name", characterId: "kara", family: "Impact", name: "Weight" });
+    for (let i = 0; i < 3; i++) gm({ type: "insight.award", characterId: "kara", source: "Any other Principle-aligned experience, GM's call", family: "Impact", ip: 3 });
+    const quiet = { type: "principle.distill" as const, characterId: "kara", family: "Impact", articulations: ["Heavy things end fights", "What falls, stays down"], quiet: true, name: "Falling Star" };
+    expect(gm(quiet).effects).toEqual([{ kind: "distillation-offered", characterId: "kara", name: "Weight" }]);
+    expect(() => gm(quiet)).toThrow(/offer waiting/);
+    rec.append(draft({ type: "principle.answer", characterId: "kara", family: "Impact", accept: false }, P1));
+    expect(pr().principles[0]!.tier).toBe("Initial Insight");
+    gm(quiet);
+    const out = rec.append(draft({ type: "principle.answer", characterId: "kara", family: "Impact", accept: true, articulation: 1 }, P1));
+    expect(out.effects[0]).toMatchObject({ kind: "distilled", tier: "Seed" });
+    expect(pr().principles[0]!.grants[0]).toMatchObject({ articulation: "What falls, stays down", quiet: true });
+  });
+
+  it("rations Consolidation visions to one a session", () => {
+    gm({ type: "session.start", present: ["kara"] });
+    gm({ type: "insight.award", characterId: "kara", source: "Consolidation vision", family: "Impact", ip: 1 });
+    expect(() => gm({ type: "insight.award", characterId: "kara", source: "Consolidation vision", family: "Impact", ip: 1 })).toThrow(/this session/);
+    expect(() => gm({ type: "insight.award", characterId: "kara", source: "Battle Memory meditation", family: "Impact", ip: 1 })).toThrow(/from the card/);
   });
 });
