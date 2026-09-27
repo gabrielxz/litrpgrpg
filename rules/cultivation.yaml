@@ -23,7 +23,8 @@ saturation:
     hourly_roll: d100
     collapse_at_or_below: [25, 50, 75]   # end of hours 1, 2, 3 at Critical
     automatic_hour: 4
-    cost: 1 temporary Raw point of FOR or POW, player's choice, returned after the next Consolidation completed without interruption
+    counts_hours: every full hour at Critical except an hour of Consolidation that refines VE   # at the Level cap every hour counts
+    cost: 1 temporary Raw point of FOR or POW, player's choice, returned after the next Consolidation completed without interruption (not the collapse's own)
     wakes_when: stored VE falls to Tolerance or below
     at_level_cap: wakes after 5 full hours with the VE still stored   # Consolidation at the cap refines nothing
     at_level_cap_hours: 5
@@ -63,9 +64,8 @@ awards:
   peer_kills_per_level: 12
   cross_grade_kill: victim's tier within its own Grade × the killer's Peer Kill × 10 per Grade the victim sits above the killer
   sub_grade_kill: 0                # a victim below the killer's Grade pays nothing (Gabriel, 2026-09-11)
-  boss_multiplier_gm_discretion: 1.5
+  boss_multiplier_gm_discretion: 1.5   # rounded down, as every kill award is
   per_participant: full award to every character who meaningfully participated; nothing pooled or divided
-  session_survival: 5
   quest_completion: GM-assigned in levels (a small errand a peer kill or two; a side quest a quarter to half a level; an arc a level or more)
   hidden_achievement: half a level to a full level, plus a Title or narrative reward
   ambient_absorption_per_hour:

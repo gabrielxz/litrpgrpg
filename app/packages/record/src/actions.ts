@@ -129,7 +129,6 @@ export interface Collapse {
 
 /**
  * The GM places a level's assigned points from behavior (Progression, "Behavioral Stat Mapping").
- * The book's current term is "System points"; the rename to "assigned points" is queued.
  */
 export interface PlaceSystemPoints {
   type: "points.system";

@@ -529,14 +529,14 @@ export class Engine {
   }
 
   /**
-   * Apply `levels` class levels: the profile's System points every level, and the player's free
+   * Apply `levels` class levels: the profile's assigned points every level, and the player's free
    * points (2 a level plus whatever the profile returns) as one total.
    */
   classGrowth(stats: Stats, profile: Stats, freeTotal: Stats, levels: number): Stats {
     const perLevel = this.load("classes").profile.system_points_per_level;
     const sum = (o: Stats) => Object.values(o).reduce((a, b) => a + b, 0);
     const system = sum(profile);
-    if (system < 1 || system > perLevel) throw new ValueError(`a profile places 1 to ${perLevel} System points, not ${system}`);
+    if (system < 1 || system > perLevel) throw new ValueError(`a profile places 1 to ${perLevel} assigned points, not ${system}`);
     const freePerLevel = this.load("character").leveling.free + (perLevel - system);
     if (sum(freeTotal) !== freePerLevel * levels) {
       throw new ValueError(`free points must total ${freePerLevel * levels} over ${levels} levels, not ${sum(freeTotal)}`);

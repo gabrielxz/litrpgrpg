@@ -3,8 +3,8 @@
 
 pill_use:
   cost_beats: 1                    # paid by whoever takes the action; the recipient of an administered pill spends nothing
-  per_fight_limit_per_kind: 2      # the first two work in full; further pills do nothing until ten quiet minutes out of combat
-  reset_after_quiet_minutes: 10
+  per_consolidation_limit_per_kind: 5   # the first five of each kind work in full, in a fight or out of one; from the sixth, nothing
+  resets_at: the first full hour of a Consolidation   # the same clock as Aether and once-per-Consolidation effects
   administered_counts_against: recipient
   foundation_pills_exempt: true
   heal_cap: Max HP

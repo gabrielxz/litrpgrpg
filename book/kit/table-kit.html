@@ -137,6 +137,14 @@
     font-size: 10.5px; letter-spacing: 0.12em; font-weight: 600;
   }
   .bigbox { flex: 1; }
+  .pillbox { flex: 0 0 auto; padding-top: 12px; }
+  .pillbox .ticks { gap: 3px; }
+  .pillbox .tick { width: 11px; height: 11px; }
+  .pillbox .sub {
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 8.5px; letter-spacing: 0.06em; color: var(--pencil);
+    text-align: center; margin-top: 7px; white-space: nowrap;
+  }
   .bigbox .boxed { height: 36px; width: 100%; }
   .bigbox .sub {
     font-family: ui-monospace, Menlo, Consolas, monospace;
@@ -349,12 +357,14 @@
               <div class="bigbox"><div class="boxed"></div></div>
               <span class="slash" style="padding-top:8px;">/</span>
               <div class="bigbox"><div class="boxed"></div><div class="sub">MAX &middot; FOR &times; 2</div></div>
+              <div class="pillbox"><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span><div class="sub">PILLS</div></div>
             </div>
             <div class="gauge">
               <span class="glabel">AETHER</span>
               <div class="bigbox"><div class="boxed"></div></div>
               <span class="slash" style="padding-top:8px;">/</span>
               <div class="bigbox"><div class="boxed"></div><div class="sub">MAX &middot; POW</div></div>
+              <div class="pillbox"><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span><div class="sub">PILLS</div></div>
             </div>
           </div>
         </div>
@@ -741,12 +751,14 @@
               <div class="bigbox"><div class="boxed"></div></div>
               <span class="slash" style="padding-top:8px;">/</span>
               <div class="bigbox"><div class="boxed penfill">14</div><div class="sub">MAX &middot; FOR &times; 2</div></div>
+              <div class="pillbox"><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span><div class="sub">PILLS</div></div>
             </div>
             <div class="gauge">
               <span class="glabel">AETHER</span>
               <div class="bigbox"><div class="boxed"></div></div>
               <span class="slash" style="padding-top:8px;">/</span>
               <div class="bigbox"><div class="boxed penfill">6</div><div class="sub">MAX &middot; POW</div></div>
+              <div class="pillbox"><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span><div class="sub">PILLS</div></div>
             </div>
           </div>
         </div>
@@ -888,12 +900,14 @@
               <div class="bigbox"><div class="boxed"></div></div>
               <span class="slash" style="padding-top:8px;">/</span>
               <div class="bigbox"><div class="boxed penfill">14</div><div class="sub">MAX &middot; FOR &times; 2</div></div>
+              <div class="pillbox"><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span><div class="sub">PILLS</div></div>
             </div>
             <div class="gauge">
               <span class="glabel">AETHER</span>
               <div class="bigbox"><div class="boxed"></div></div>
               <span class="slash" style="padding-top:8px;">/</span>
               <div class="bigbox"><div class="boxed penfill">4</div><div class="sub">MAX &middot; POW</div></div>
+              <div class="pillbox"><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span><div class="sub">PILLS</div></div>
             </div>
           </div>
         </div>
@@ -1035,12 +1049,14 @@
               <div class="bigbox"><div class="boxed"></div></div>
               <span class="slash" style="padding-top:8px;">/</span>
               <div class="bigbox"><div class="boxed penfill">10</div><div class="sub">MAX &middot; FOR &times; 2</div></div>
+              <div class="pillbox"><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span><div class="sub">PILLS</div></div>
             </div>
             <div class="gauge">
               <span class="glabel">AETHER</span>
               <div class="bigbox"><div class="boxed"></div></div>
               <span class="slash" style="padding-top:8px;">/</span>
               <div class="bigbox"><div class="boxed penfill">5</div><div class="sub">MAX &middot; POW</div></div>
+              <div class="pillbox"><span class="ticks"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span></span><div class="sub">PILLS</div></div>
             </div>
           </div>
         </div>
@@ -1561,7 +1577,7 @@
         <div class="zone">
           <header>[ ITEMS IN A FIGHT ]</header>
           <div class="zbody">
-            <p><b>1 Beat to use.</b> Pills: the first two of each kind per fight work in full; more do nothing until ten quiet minutes out of combat. Shards: backfire on a natural 01&ndash;05.</p>
+            <p><b>1 Beat to use.</b> Pills: the first 5 of each kind work in full; more do nothing until a Consolidation&rsquo;s first full hour. Shards: backfire on a natural 01&ndash;05.</p>
           </div>
         </div>
       </div>
@@ -1570,7 +1586,7 @@
         <div class="zone">
           <header>[ AT 0 HP &middot; DOWNED ]</header>
           <div class="zbody">
-            <p>No Beats, no defense. <b>Dead at the end of your third round</b> unless stabilized: any healing, or an ally&rsquo;s 1 Beat and a Moderate (90) check. Survive a fight that Downed you and you gain a Battle Memory.</p>
+            <p>No Beats, no defense. <b>Dead at the end of your third round</b> (the round you fell is the first) unless an ally in your Zone stabilizes you: any healing, or 1 Beat and a Moderate (90) DEX check. Survive a fight that Downed you and you gain a Battle Memory.</p>
           </div>
         </div>
         <div class="zone">
@@ -1642,7 +1658,6 @@
           <div class="zbody">
             <div class="kv"><b>A LEVEL</b><span>120</span></div>
             <div class="kv"><b>KILL BY TIER</b><span>2 / 5 / 10 / 20 / 30 / 50</span></div>
-            <div class="kv"><b>SESSION SURVIVAL</b><span>5</span></div>
             <div class="kv"><b>ACCESSION RIFT</b><span>25 / 50 / 90 / 150 at Moderate / Hard / Severe / Peak, plus the kills</span></div>
             <div class="kv"><b>CROSS-GRADE KILL</b><span>victim&rsquo;s tier at its Grade, &times;10 per Grade up</span></div>
           </div>
@@ -1671,8 +1686,8 @@
         <div class="zone">
           <header class="plainhead">DOWNED &middot; DEATH</header>
           <div class="zbody">
-            <div class="kv"><b>AT 0 HP</b><span>dies end of third round unless stabilized</span></div>
-            <div class="kv"><b>STABILIZE</b><span>any healing, or 1 Beat + Moderate 90 (Advantage for a medical Background)</span></div>
+            <div class="kv"><b>AT 0 HP</b><span>dies end of third round, the round of Downing the first, unless stabilized</span></div>
+            <div class="kv"><b>STABILIZE</b><span>same Zone: any healing, or 1 Beat + Moderate 90 DEX (Advantage for a medical Background)</span></div>
             <div class="kv"><b>EXECUTION</b><span>1 Beat, no roll, deliberate only</span></div>
             <div class="kv"><b>ONE HIT &ge; 10&times; MAX HP</b><span>annihilated outright</span></div>
           </div>

@@ -57,7 +57,7 @@ def grow(stats, per_level, levels):
     return out
 
 # Level 10 lines are the chapter's (after the selection bonus and Level 10's points).
-# per_level = the profile's System points plus the two free points where the run puts them.
+# per_level = the profile's assigned points plus the two free points where the run puts them.
 BUILDS = {
     "Kara":    {"cls": "Vanguard", "l10": dict(STR=35, DEX=5, FOR=17, HRT=10, POW=18, PER=5, CHA=5),
                 "per": dict(STR=4, FOR=1), "trained": True},

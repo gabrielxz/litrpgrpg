@@ -35,14 +35,17 @@ functions:
   - name: Identify and Inspect
     unplugged: GM narrates; visibility per What Can Be Seen
 
+# `drop` is the book's cell. A row with a `chance` rolls d100 (an effect-table roll, no explosion):
+# at or under the chance it drops `on_hit`, otherwise `on_miss`; a row without one always drops `on_hit`.
 loot_table:
-  - {tier: Trivial,  drop: "Nothing, or salvage on a memorable kill"}
-  - {tier: Easy,     drop: "50% chance of one minor consumable"}
-  - {tier: Moderate, drop: "One consumable"}
-  - {tier: Hard,     drop: "One consumable, plus a 25% chance of a skill shard or equipment"}
-  - {tier: Severe,   drop: "One meaningful item, guaranteed"}
-  - {tier: Peak,     drop: "One meaningful item plus one bespoke drop"}
+  - {tier: Trivial,  drop: "Nothing, or salvage on a memorable kill",                        on_hit: "Nothing, or salvage on a memorable kill"}
+  - {tier: Easy,     drop: "50% chance of one minor consumable",                             chance: 50, on_hit: "One minor consumable", on_miss: "Nothing"}
+  - {tier: Moderate, drop: "One consumable",                                                 on_hit: "One consumable"}
+  - {tier: Hard,     drop: "One consumable, plus a 25% chance of a skill shard or equipment", chance: 25, on_hit: "One consumable, plus a skill shard or equipment", on_miss: "One consumable"}
+  - {tier: Severe,   drop: "One meaningful item, guaranteed",                                on_hit: "One meaningful item"}
+  - {tier: Peak,     drop: "One meaningful item plus one bespoke drop",                      on_hit: "One meaningful item plus one bespoke drop"}
 loot_bosses: one row higher; a boss already at Peak drops one meaningful item plus two bespoke drops
+loot_peak_boss_drop: One meaningful item plus two bespoke drops
 
 standing_context_template: templates/standing-context.txt
 

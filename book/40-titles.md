@@ -57,7 +57,7 @@ Rare, with larger bonuses (+3 to +5 at F-Grade). Players never see criteria in a
 
 - **Trigger.** A behavior the character repeated or a moment the table remembers; a circled Defining moment on the HVE sheet is the usual source. Write it as the deed: "Triggered by surviving an encounter against an enemy a full Grade above you."
 - **Bonus.** The Hidden Achievement row under "Bonus Magnitudes": +3 to +5 to one stat at F-Grade. A conditional bonus in the same range, a Clash bonus priced by the Modifier Budget, or an action economy effect may take its place (see "Mechanical Effects").
-- **Name and notice.** A short name, announced in the System's voice (The System AI, "The Voice of the System"): *Title conferred: Cornerless.* The VE that comes with it is in Cultivation, "Quest & Survival".
+- **Name and notice.** A short name, announced in the System's voice (The System AI, "The Voice of the System"): *Title conferred: Cornerless.* The VE that comes with it is in Cultivation, "Quests and Hidden Achievements".
 
 ### HVE-Resonant Titles
 
@@ -218,7 +218,7 @@ Twenty Achievement titles with their triggers. When a character meets a trigger,
 | Deep Breather | Completed twenty Consolidations | +1 HRT |
 <!-- /rules:table -->
 
-Where a catalog title also appears in a sample stack later in this chapter, the trigger and bonus here are the canonical ones. A Consolidation counts as completed once its first full hour is done, whether or not it is interrupted afterward.
+Where a catalog title also appears in a sample stack later in this chapter, the trigger and bonus here are the canonical ones. A Consolidation counts as completed once its first full hour is done, whether or not it is interrupted afterward. A character draws first blood by dealing the first damage any Clash deals in a fight. "Still standing" is read at the fight's end: a character Downed then, and later stabilized and woken at 1 HP, did not end that fight standing.
 
 ### The Tutorial's Titles
 

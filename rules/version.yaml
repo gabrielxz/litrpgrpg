@@ -1,8 +1,8 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.21"
-dated: "2026-09-25"
+version: "0.1.22"
+dated: "2026-09-26"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
   flat-value VE (Tolerance 80, level 120, 20 per hour), the Grade Gap Rule,
@@ -69,3 +69,13 @@ notes: >
   Consolidation counts as completed (Deep Breather) once its first full hour is done. Cultivation's pill line names
   Healing Pills (two of each kind, per Items). The Personal Opportunity template drops "slight HVE shift". The reference
   engine's structured sweep counts a 0.5 entry as nothing unless raised to 1.0, matching the book since 0.1.16.
+  0.1.22: book answers the companion app forced. Session survival VE is cut (quest VE guarantees the baseline; the tutorial's
+  guaranteed awards are about 220, Session 1 pays 12 to 42, and After the Gate's second and third waves assume 130 and 190).
+  "System points" are assigned points. The pill limit is 5 of each kind per Consolidation, every pill counting in a fight or
+  out of one (per_consolidation_limit_per_kind; the per-fight limit and the ten quiet minutes are retired). A Seize tie rolls
+  again; a surprised defender may Yield; vital coherence counts the round of Downing as the first; stabilizing needs the same
+  Zone on both paths, and bare hands is a DEX check. Collapse: an hour of Consolidation that refines VE does not count toward
+  the clock, and the collapse's own Consolidation does not return the temporary point. "Once a day" runs dawn to dawn. The
+  loot rows carry their chances as fields, a boss's 1.5× rounds down, the interface lists what the character carries, the
+  Achievement catalog carries counter and threshold fields, and a quest pays its stated award to every holder, nothing to one
+  above the quest's Grade.

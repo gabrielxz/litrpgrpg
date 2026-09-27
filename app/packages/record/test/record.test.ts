@@ -24,7 +24,7 @@ const award = (characterId: string, ve: number) =>
 const rest = (characterId: string, hours: number, interrupted = false) =>
   gm({ type: "consolidation.rest", highDensity: false, rests: [{ characterId, hours, interrupted }] });
 
-/** Level a character by whole levels, placing each level's System points in STR and spending free points in FOR. */
+/** Level a character by whole levels, placing each level's assigned points in STR and spending free points in FOR. */
 function levelTo(characterId: string, level: number) {
   while (rec.sheet(characterId)!.level < level) {
     award(characterId, 120);
@@ -105,7 +105,7 @@ describe("VE and Consolidation", () => {
     expect(rec.sheet("joe")!.hp).toBe(14);
   });
 
-  it("lands a level mid-rest, with System points pending and free points held", () => {
+  it("lands a level mid-rest, with assigned points pending and free points held", () => {
     award("joe", 130);
     const out = rest("joe", 7);
     expect(out.effects).toContainEqual({ kind: "level", characterId: "joe", level: 2, hour: 6 });
@@ -182,7 +182,7 @@ describe("level-ups", () => {
     rest("kara", 6);
   });
 
-  it("has the GM place exactly 3 System points for a pending level", () => {
+  it("has the GM place exactly 3 assigned points for a pending level", () => {
     const place = (placement: Record<string, number>, level = 2) =>
       gm({ type: "points.system", characterId: "kara", level, placement });
     expect(() => place({ STR: 2 })).toThrow(/exactly 3/);
@@ -219,7 +219,7 @@ describe("level-ups", () => {
     expect(rec.sheet("kara")!.raw.STR).toBe(12);
   });
 
-  it("leaves Level 10's System points to the class", () => {
+  it("leaves Level 10's assigned points to the class", () => {
     levelTo("kara", 10);
     expect(rec.sheet("kara")!.pendingSystemLevels).toEqual([10]);
     expect(() => gm({ type: "points.system", characterId: "kara", level: 10, placement: { STR: 3 } })).toThrow(/class profile/);

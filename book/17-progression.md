@@ -18,7 +18,7 @@ Characters grow on a single loop: fight, quest, and survive to accumulate Volati
 
 ## Earning Levels
 
-Kills at or above your Grade, completed quests, session survival, and consumed cores add VE to the character's stored pool. Stored VE counts toward a level only once it is refined during a **Consolidation** rest. When the character's refined VE reaches the cost of the next level (Cultivation, "Leveling: The Cost of a Level"), they level up on the spot, mid-rest. A character can end a battle carrying three levels' worth of unrefined VE and still be the level they woke up as.
+Kills at or above your Grade, completed quests, and consumed cores add VE to the character's stored pool. Stored VE counts toward a level only once it is refined during a **Consolidation** rest. When the character's refined VE reaches the cost of the next level (Cultivation, "Leveling: The Cost of a Level"), they level up on the spot, mid-rest. A character can end a battle carrying three levels' worth of unrefined VE and still be the level they woke up as.
 
 Levels are numbered continuously across Grades: each Grade spans 25 of them, so Levels 1–25 are F-Grade, 26–50 are E-Grade, and so on. Every level inside a Grade costs the same, and a kill pays a multiple of the Peer Kill set by how hard the enemy was for the character who fought it (Cultivation, "Combat Kills"). At the cap, leveling stops; only a Grade Breakthrough (its own chapter) opens the next span.
 
@@ -26,20 +26,20 @@ Levels are numbered continuously across Grades: each Grade spans 25 of them, so 
 
 Each level grants **5 stat points** at F-Grade:
 
-- **3 System points.** Before a character has a class (Levels 2–9), the GM assigns these based on how the character has actually been behaving, using the Behavioral Stat Mapping table below. From Level 10 onward, the class's stat profile assigns them instead.
+- **3 assigned points.** The System assigns three points each level. Before a character has a class (Levels 2–9), the GM places them from how the character has actually been behaving, using the Behavioral Stat Mapping table below. From Level 10 onward, the class's stat profile places them.
 - **2 free points.** The player assigns these to any Attributes they choose; in the fiction, the character allocates them through the System interface.
 
-**Points can wait.** The three System points are placed at the level-up. The two free points arrive **unallocated**, and the player may hold them as long as they like, to see what the next fight demands; unallocated points add nothing until they are spent.
+**Points can wait.** The three assigned points are placed at the level-up. The two free points arrive **unallocated**, and the player may hold them as long as they like, to see what the next fight demands; unallocated points add nothing until they are spent.
 
 **Free points and the body.** A character whose class profile has no FOR and who puts every free point into one other Attribute reaches Level 25 with the Health they had at Level 10 (Classes, "Battle Medic": Nia at the cap with 30 Health). From Level 13, enemies in a standard fight deal hits of 40 and more, and the Health that FOR provides decides whether such a hit wounds the character or Downs them. Two free points a level into FOR from Level 10 add 60 Health by the cap.
 
-**Capped stats.** A stat at the Grade maximum (99 at F-Grade) takes no further allocation: the player sends free points elsewhere, and the GM places the System points on the next-best behavioral match, never into a full stat. On level-up points alone, a dedicated build ends the Grade just short of its favorite stat's cap (Kara's all-STR run reaches STR 95 at Level 25; Classes, "Breaching Vanguard"); titles and treasures bring the cap sooner, and the redirection over the last stretch of the Grade is expected. A bonus from a title or treasure is not redirected: the points past the cap are lost.
+**Capped stats.** A stat at the Grade maximum (99 at F-Grade) takes no further allocation: the player sends free points elsewhere, and the GM places the assigned points on the next-best behavioral match, never into a full stat. On level-up points alone, a dedicated build ends the Grade just short of its favorite stat's cap (Kara's all-STR run reaches STR 95 at Level 25; Classes, "Breaching Vanguard"); titles and treasures bring the cap sooner, and the redirection over the last stretch of the Grade is expected. A bonus from a title or treasure is not redirected: the points past the cap are lost.
 
 At higher Grades, the budget scales with Grade magnitude (×10 at E, ×100 at D, and so on), with the same 3-to-2 split.
 
 ## Behavioral Stat Mapping (GM Reference)
 
-At each level-up during the pre-class window, review what the character has done since the last level and assign the 3 System points to the stats that best match their behavior. The table is a guide; the GM may split points across rows or depart from it.
+At each level-up during the pre-class window, review what the character has done since the last level and place the 3 assigned points on the stats that best match their behavior. The table is a guide; the GM may split points across rows or depart from it.
 
 <!-- rules:table behavioral-mapping -->
 | Behavior Pattern | Primary Stat | Secondary Stat |
@@ -66,7 +66,7 @@ By Level 9, a character has accumulated:
 | Source | Points |
 |---|---|
 | Point buy (creation) | 40 |
-| System-assigned (3 × 8 levels) | 24 |
+| Assigned (3 × 8 levels) | 24 |
 | Free allocation (2 × 8 levels) | 16 |
 | **Total at Level 9** | **80** |
 <!-- /rules:table -->
@@ -77,9 +77,9 @@ A character who acted consistently toward one behavioral archetype will have a c
 
 At Level 10 the System offers three classes built from the character's Hidden Vector Engine record across Levels 1–9. The Classes chapter owns the offers, the package, and the procedure for building them (Classes, "The Level 10 Scene"). The mechanical effect at this milestone:
 
-1. The player accepts one of the three offers. The offers cannot be refused, and Level 10's three System points are not placed until the player chooses.
+1. The player accepts one of the three offers. The offers cannot be refused, and Level 10's three assigned points are not placed until the player chooses.
 2. The class adds **10 to its lead Attribute** at once, before the level's points are placed.
-3. From Level 10 onward, the level's **3 System points follow the class's profile**, which fixes all three, or fixes two and returns one to the player, or fixes one and returns two. The player's **2 points stay free**, plus whatever the profile returns.
+3. From Level 10 onward, the level's **3 assigned points follow the class's profile**, which fixes all three, or fixes two and returns one to the player, or fixes one and returns two. The player's **2 points stay free**, plus whatever the profile returns.
 
 The pre-class observation period is over. The Hidden Vector Engine continues tracking behavior for class evolution, the Principle track, and world response.
 

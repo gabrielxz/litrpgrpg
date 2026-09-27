@@ -14,7 +14,7 @@ Bel Sar, route account
 the survivors' forum
 :::
 
-A character reaches Level 10 with nine levels of play on the record, and the System offers three classes built from that record. The player accepts one. From then on the class directs the System's share of each level's growth, and it grants one technique and one standing permission. This chapter covers what a class is, the Level 10 scene, the package every class is built from, how to build one for a particular character, and sixteen worked classes with the people they were built for. Progression owns the level itself and the three System points the class directs. The Hidden Vector Engine owns the record the offers are read from. The Principle System owns the other track of personal power, and the two are compared below. Grade Breakthroughs owns what a class becomes at the F→E Breakthrough.
+A character reaches Level 10 with nine levels of play on the record, and the System offers three classes built from that record. The player accepts one. From then on the class directs each level's assigned points, and it grants one technique and one standing permission. This chapter covers what a class is, the Level 10 scene, the package every class is built from, how to build one for a particular character, and sixteen worked classes with the people they were built for. Progression owns the level itself and the three assigned points the class directs. The Hidden Vector Engine owns the record the offers are read from. The Principle System owns the other track of personal power, and the two are compared below. Grade Breakthroughs owns what a class becomes at the F→E Breakthrough.
 
 ## What a Class Is
 
@@ -42,7 +42,7 @@ At Level 10 the System offers three classes. Each offer arrives in the System's 
 
 **The offers differ.** They may differ in role, in technique, and in which part of the character's record they weigh. One may name what the character does most. Another may name what they did once, under pressure, and never explained. A third may be a stock class the record plainly fits. A GM who wants a starting point can build one offer that amplifies the dominant pattern, one that formalizes the secondary pattern, and one that combines them; that is a template, and any three offers the record supports are correct.
 
-**Offers cannot be refused.** The same three stand until one is chosen. Level 10's three System points, and every System point after them, are held until the player chooses (Progression, "Class Selection (Level 10)"). New offers arrive at the F→E Breakthrough (Grade Breakthroughs, "Outputs by Quality Tier").
+**Offers cannot be refused.** The same three stand until one is chosen. Level 10's three assigned points, and every assigned point after them, are held until the player chooses (Progression, "Class Selection (Level 10)"). New offers arrive at the F→E Breakthrough (Grade Breakthroughs, "Outputs by Quality Tier").
 
 **The offers reveal the System's reading.** The three offers show something of how the System reads the character, exactly as a Personal Opportunity does (System Quests, "Personal Opportunities"). The offers are private. The character may tell the party about them or keep them to themselves.
 
@@ -50,7 +50,7 @@ At Level 10 the System offers three classes. Each offer arrives in the System's 
 
 **The selection bonus.** Choosing a class adds **10 to the class's lead Attribute** at once, before Level 10's points are placed. Every profile names its Attributes in order and the first named is the lead. Health and Aether follow their Attributes as always: a FOR lead adds 20 Health, and a POW lead adds 10 Aether.
 
-**From Level 10 on**, each level's three System points follow the class's profile and the player's two are free, as Progression says. Principles, titles, and items grow on their own tracks as they did before.
+**From Level 10 on**, each level's three assigned points follow the class's profile and the player's two are free, as Progression says. Principles, titles, and items grow on their own tracks as they did before.
 
 ## The Package
 
@@ -81,7 +81,7 @@ Where the notice has to convey a table quantity, it states a world quantity and 
 From Level 10 on, the class directs the System's three points each level. Three shapes are allowed:
 
 <!-- rules:table class-profile-shapes -->
-| **Shape** | **System points** | **Returned to the player** |
+| **Shape** | **Assigned points** | **Returned to the player** |
 |---|---|---|
 | Fixed | 3 | 0 |
 | Guided | 2 | 1 |
@@ -113,7 +113,7 @@ Each class carries one technique.
 
 ### One standing permission
 
-A permission costs no Aether and has no roll of its own; a permission that is a reaction or is paid in Beats follows those rules. It changes a decision the character already makes: where they stand, whom they reach, when they commit, what they can see. *Moving into a Zone holding a Downed ally costs no Beat. A creature whose stat block says Yields can be parleyed with. Once a day, a kill you name rolls its loot one step up.*
+A permission costs no Aether and has no roll of its own; a permission that is a reaction or is paid in Beats follows those rules. It changes a decision the character already makes: where they stand, whom they reach, when they commit, what they can see. *Moving into a Zone holding a Downed ally costs no Beat. A creature whose stat block says Yields can be parleyed with. Once a day, a kill you name rolls its loot one step up.* A day runs from one dawn to the next where the character is: a permission used once a day is ready again at the next dawn.
 
 - **At most one action-economy effect per class**, counting the technique and the permission together: a Rush, a free Disengage, a free move, or a reaction.
 - **A reaction is once per encounter.** A reaction is a permission or technique used on someone else's turn; the Iron Verdict title (Titles) is the model. A reaction paid in Beats, such as a Yield taken on an ally's behalf, is limited by the Beats instead.

@@ -62,7 +62,7 @@ A party grants three things:
 
 - **Status sharing.** Every member's interface shows a party frame: each member's current HP, Maximum HP, Aether, and whether they are Downed, and nothing else. See What Can Be Seen.
 - **Quest sharing.** A member may share a Routine, Faction, or Bestowed quest with the party. The entry appears in every member's log, and any holder's progress advances the shared objective. **When a quest with a counted objective is shared, the count multiplies by the number of holders at that moment and does not change afterward; a holder who leaves keeps nothing, and a joiner takes the quest at its current count.** "Eliminate ten" held by three hunters becomes thirty between them, announced in every holder's log. Objectives that cannot scale (reach a place, protect a person, recover a thing) stay as written. Mandates need no sharing (they already bind everyone in scope), and Personal Opportunities cannot be shared; they are addressed to one behavioral signature.
-- **Rewards are per holder.** On completion, every holder who meaningfully participated collects the quest's award at their own level, the same rule combat kills use (see Cultivation, "Awarding VE").
+- **Rewards are per holder.** Every holder who meaningfully participated collects the quest's stated award; a holder above the quest's Grade collects nothing, as with a kill below one's Grade (Cultivation, "Combat Kills").
 
 ---
 
@@ -322,8 +322,8 @@ Objective:  A Glow-Stalker injured during your last engagement
 Reward:     30 VE, 1 minor core (5 VE absorption value)
 Hidden:     If the Glow-Stalker is spared and left in its den,
             +1 IP toward the Preservation family.
-Refusal:    Predator-tier opportunities offered less frequently
-            for the next session.
+Refusal:    Noted against the combat flavor. At 3 refusals,
+            combat offers come half as often; at 6, they stop.
 
 System Voice:
 "Predator wounded: 1.2km, 8°. Recovery imminent.

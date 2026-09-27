@@ -243,7 +243,7 @@ The two sides may be rolling different Attributes. Highest total holds Momentum 
 
 Momentum measures nerve and awareness: the combatant who keeps their head at first contact sets the tempo, and the one who reads the field can take it back.
 
-**Surprise.** A side that achieves true surprise acts before combat properly begins: each surprising character immediately takes one free Beat, the **Surprise Beat**. Then Initial Momentum is rolled normally. A sharp defender can absorb an ambush and still take the first full round.
+**Surprise.** A side that achieves true surprise acts before combat properly begins: each surprising character immediately takes one free Beat, the **Surprise Beat**. Then Initial Momentum is rolled normally. A surprised defender defends and may Yield as usual. A sharp defender can absorb an ambush and still take the first full round.
 
 **Round structure.** When a side takes its turn:
 
@@ -257,7 +257,7 @@ Momentum measures nerve and awareness: the combatant who keeps their head at fir
 **Momentum Shifts.** Between rounds, Momentum can shift on two triggers:
 
 - **Decisive Tactical Reversal.** A character reshapes the fight: springing a trap, weaponizing terrain, completing a multi-round setup, exposing a hidden combatant, winning a defensive Clash with a Volatility explosion, bringing a new combatant into the fight, or any other move the GM judges to qualify. Momentum shifts to that character's side at the start of the next round. The threshold is GM judgment, and it is the GM's flexible reward for clever play.
-- **Seize Momentum.** A character spends 1 Beat and rolls a Momentum Roll against the side currently holding Momentum, using **their own** HRT or PER Force, whichever is higher. The side holding Momentum answers with its highest such value. On a win, Momentum shifts at the start of the next round. The Beat is spent either way.
+- **Seize Momentum.** A character spends 1 Beat and rolls a Momentum Roll against the side currently holding Momentum, using **their own** HRT or PER Force, whichever is higher. The side holding Momentum answers with its highest such value. On a win, Momentum shifts at the start of the next round. On a tie, both roll again. The Beat is spent either way.
 
 When no Shift fires, Momentum stays where it is. If two Shifts fire in the same round, the later one wins. With three or more sides, the new holder acts first and the other sides keep their order.
 
@@ -453,12 +453,12 @@ Multi-target capability is a property of specific abilities, spells, and effects
 *Vital coherence: 3. Falling. Stabilization: required.*
 :::
 
-**The countdown.** A Downed character dies at the end of their third round Downed unless stabilized. The System reads out vital coherence as a number that falls by one each round, 3 at the moment of Downing.
+**The countdown.** Vital coherence is 3 at the moment of Downing and falls by one at the end of each round, the round of Downing included as the first. At the end of the third round it reaches 0, and the character dies unless stabilized before then. The System reads the number out to the Downed character as it falls.
 
-**Stabilizing.** Two paths:
+**Stabilizing.** Two paths, each taken by an ally in the Downed character's Zone; a healing technique that states a longer reach, such as Triage (Classes, "Battle Medic"), reaches as far as it states:
 
-- **Any HP restoration.** A pill, medkit, or healing skill from an ally in the same Zone (1 Beat) returns them to consciousness at the restored HP.
-- **Bare hands.** 1 Beat and a Moderate (90) check; a medical Background rolls it with Advantage. Success stops the countdown; the character stays Downed at 0 HP and wakes at 1 HP when the scene ends.
+- **Any HP restoration.** A pill, medkit, or healing skill (1 Beat) returns them to consciousness at the restored HP.
+- **Bare hands.** 1 Beat and a Moderate (90) DEX check; a medical Background rolls it with Advantage. Success stops the countdown; the character stays Downed at 0 HP and wakes at 1 HP when the scene ends.
 
 **Annihilation.** A single hit dealing **10 × the target's Max HP** or more destroys them outright, with no Downed state and no countdown. A fresh initiate with 12 Max HP takes an E-Grade glancing blow for 130 and is gone; a FOR 40 scout with 80 Max HP takes the same blow and drops, Downed and counting.
 

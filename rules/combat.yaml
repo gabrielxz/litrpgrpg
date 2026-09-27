@@ -25,6 +25,7 @@ momentum:
   shift_triggers: [Decisive Tactical Reversal, Seize Momentum]   # a new combatant arriving is one kind of Reversal
   two_triggers_in_a_round: the later one wins
   seize_beat_spent: either way
+  tie: both roll again          # Initial Momentum and Seize alike
 
 movement:
   adjacent_zone_cost_beats: 1
@@ -67,8 +68,8 @@ yield:
 downed:
   hp_floor: 0
   npcs: Downed at 0 by default; creatures die; the GM may rule either way for any of them
-  dies_at_end_of_round: 3
-  stabilize_check: {difficulty: Moderate, resistance: 90, cost_beats: 1}   # a medical Background rolls with Advantage
+  dies_at_end_of_round: 3        # the round of Downing counts as the first
+  stabilize_check: {difficulty: Moderate, resistance: 90, cost_beats: 1, attribute: DEX, same_zone: true}   # a medical Background rolls with Advantage
   stabilize_by_healing: any HP restoration from an ally in the same Zone, 1 Beat
   annihilation_multiple_of_max_hp: 10
   execution: {cost_beats: 1, roll: false}

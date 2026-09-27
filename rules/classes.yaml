@@ -5,13 +5,13 @@
 selection:
   level: 10
   offers: 3
-  refusable: false               # the same three stand until one is chosen; System points wait
+  refusable: false               # the same three stand until one is chosen; assigned points wait
   published: false               # inspection at any Grade does not show a class
   lead_attribute_bonus: 10       # added to the class's lead Attribute at selection, before Level 10's points land
   new_offers_at: the F→E Breakthrough
 
 profile:
-  system_points_per_level: 3     # Progression: 3 System + 2 free per level from Level 10
+  system_points_per_level: 3     # Progression: 3 assigned + 2 free per level from Level 10
   shapes:
     - {shape: Fixed,  system: 3, returned: 0}
     - {shape: Guided, system: 2, returned: 1}
@@ -38,6 +38,7 @@ permission:
   cost: no Aether and no roll of its own; one that is a reaction or is paid in Beats follows those rules
   action_economy_effects_max: 1  # across the technique and the permission together
   reactions_per_encounter: 1     # a reaction paid in Beats (a shared Yield) is limited by the Beats instead
+  once_a_day_resets: dawn        # a day runs from one dawn to the next where the character is
   death_clock_hold_rounds: 1     # the one thing a class may do to the countdown, for a Beat
 
 guarded:

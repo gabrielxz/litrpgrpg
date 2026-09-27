@@ -94,7 +94,7 @@ The Titles chapter defines the four categories and their bonus magnitudes, and g
 | Peak | One meaningful item plus one bespoke drop |
 <!-- /rules:table -->
 
-Bosses and named enemies drop one row higher on the table; one already at Peak drops one meaningful item plus two bespoke drops. At higher Grades, the same table applies to that Grade's catalog.
+Where a row names a chance, roll d100 for it: a result at or under the chance drops the item. Bosses and named enemies drop one row higher on the table; one already at Peak drops one meaningful item plus two bespoke drops. At higher Grades, the same table applies to that Grade's catalog.
 
 ### Skill Synthesis
 

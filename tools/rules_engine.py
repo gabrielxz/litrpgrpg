@@ -499,13 +499,13 @@ def class_technique_uses(max_aether_value: int, acquired_grade: str = "F") -> in
 
 
 def class_growth(stats: dict, profile: dict, free_total: dict, levels: int) -> dict:
-    """Apply `levels` class levels: the profile's System points every level, and the
+    """Apply `levels` class levels: the profile's assigned points every level, and the
     player's free points (2 a level plus whatever the profile returns) as one total."""
     c = load("classes")
     per_level = c["profile"]["system_points_per_level"]
     system = sum(profile.values())
     if system < 1 or system > per_level:
-        raise ValueError(f"a profile places 1 to {per_level} System points, not {system}")
+        raise ValueError(f"a profile places 1 to {per_level} assigned points, not {system}")
     returned = per_level - system
     free_per_level = load("character")["leveling"]["free"] + returned
     if sum(free_total.values()) != free_per_level * levels:

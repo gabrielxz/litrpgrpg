@@ -6,7 +6,7 @@
 
 **Two Beats.** One Beat buys: an attack, a spell, a Zone move, an item, a Principle Application, a check, a Disengage, or a Seize Momentum attempt. **Free:** speaking, drawing a weapon, dropping something, moving inside your Zone.
 
-**Surprise Beat:** ambushers act once before the first round. **Master's free action:** once on your turn, the first action with a Mastered Proficiency's weapon costs no Beat and cannot be given up to Yield.
+**Surprise Beat:** ambushers act once before the first round; the surprised defend and may Yield as usual. **Master's free action:** once on your turn, the first action with a Mastered Proficiency's weapon costs no Beat and cannot be given up to Yield.
 
 ## Rolling
 
@@ -26,7 +26,7 @@
 - **Exceptional Success:** a check that explodes and succeeds. Narrate a step beyond what was asked.
 - **Background:** in its field, attempt trained work, succeed at Trivial and Easy without rolling, and roll checks with Advantage. Never on an attack or a defense.
 - **Cross-Grade:** vs. passive obstacles, the Adjustment counts toward Force ≥ Resistance and Take 100 (2+ Grades up never rolls).
-- **Momentum:** a Clash between sides: d100 + HRT or PER Force (whichever is higher); a tie rerolls. Winning side acts first each round. Seize: 1 Beat, spent either way.
+- **Momentum:** a Clash between sides: d100 + HRT or PER Force (whichever is higher); a tie rerolls. Winning side acts first each round. Seize: 1 Beat, spent either way; a tie rerolls.
 - **Free Step:** DEX Force 50+ grants one free Zone move per turn.
 - **Cross-Grade movement:** the higher Grade auto-wins movement contests. A combatant a full Grade above every hostile present moves between Zones without spending Beats at all.
 
@@ -85,13 +85,13 @@ One number at the top of the die. When the natural die reaches it, the roll expl
 
 Weapons carry no bonus of their own; the bonus is the wielder's tier. Untrained is +0.
 
-**Gear:** a shield adds +5 to your Clash when defending and occupies a hand; there is no shield Proficiency. Armor Scraps add +5 Defense Force with FOR and impose −5 on DEX-based Clashes. Pills take 1 Beat; the first two of each kind per fight work in full, and further pills do nothing until ten quiet minutes out of combat.
+**Gear:** a shield adds +5 to your Clash when defending and occupies a hand; there is no shield Proficiency. Armor Scraps add +5 Defense Force with FOR and impose −5 on DEX-based Clashes. Pills take 1 Beat; the first 5 of each kind work in full, and further pills of that kind do nothing until a Consolidation's first full hour completes. Every pill counts, in a fight or out of one.
 
 **Fighting domains, by weapon shape:** blades | axes and hammers | spears and staves | hand to hand | archery and throwing | firearms. Anything you let go of is archery and throwing.
 
 **Interpretation:** every Integrant translates deliberately communicated messages, both directions, and one holder in a conversation is enough. A lie translates perfectly; involuntary displays and cultural implications do not translate. Initiates in an old tutorial sector lack it until they register past the gate.
 
-**Downed:** PCs at 0 HP (NPCs by default; creatures die unless the GM rules otherwise): no Beats, no defense; dies at the end of their third round unless stabilized (any healing, or 1 Beat + Moderate 90 check, with Advantage for a medical Background). One hit ≥ 10× Max HP kills outright. Attacking a Downed character: 1 Beat, no roll, kills. Surviving being Downed in a fight grants a Battle Memory Card, at the GM's discretion when it taught nothing.
+**Downed:** PCs at 0 HP (NPCs by default; creatures die unless the GM rules otherwise): no Beats, no defense; dies at the end of their third round, the round of Downing counting as the first, unless an ally in the same Zone stabilizes them (any healing, or 1 Beat + Moderate 90 DEX check, with Advantage for a medical Background). One hit ≥ 10× Max HP kills outright. Attacking a Downed character: 1 Beat, no roll, kills. Surviving being Downed in a fight grants a Battle Memory Card, at the GM's discretion when it taught nothing.
 
 **Principle Application Costs (by tier, never by Grade):** Seed 10 | Early Fragment 15 | Infusion free | Domain 3,000 + 500/round. Scale grows with the character's current Grade. Domains require a D-Grade body. Spell and class-technique costs follow the Grade at which they were acquired, ×10 per Grade; a class technique acquired at F costs 5 Aether, or no Aether if it is once per encounter or carries a drawback.
 
@@ -130,7 +130,6 @@ Force runs 0 to 99 at every Grade; a lagging stat reads low (see Lagging stats a
 |---|---|
 | A level | 120 |
 | Kill, by tier: Trivial / Easy / Moderate / Hard / Severe / Peak | 2 / 5 / 10 / 20 / 30 / 50 |
-| Session survival | 5 |
 | Accession Rift, by difficulty: Moderate / Hard / Severe / Peak | 25 / 50 / 90 / 150, per character, on completion, and the kills as well |
 | Cross-Grade kill | the victim's tier read at its own Grade, ×10 per Grade above the killer; a victim below your Grade pays nothing |
 <!-- /rules:table -->

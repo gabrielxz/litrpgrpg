@@ -44,7 +44,7 @@ VE accumulates automatically after combat and from other sources. As long as sto
 
 - **Mild Saturation (past 80, up to 160):** −10 to all rolls.
 - **Heavy Saturation (past 160, up to 240):** −25 to all rolls.
-- **Critical Saturation (past 240):** Heavy Saturation penalties continue, and the **collapse clock** starts: at the end of each full hour spent at Critical, roll d100, and the character collapses on a result of 25 or less. The threshold rises by 25 each hour (50 the second hour, 75 the third), and in the fourth hour the collapse is automatic. A collapsed character drops into involuntary Consolidation on the spot: defenseless, processing at the normal rate, unwakeable until stored VE falls to Tolerance or below. At the Level cap, where Consolidation refines nothing, the character wakes after 5 full hours with the VE still stored. The collapse also costs 1 temporary Raw point of FOR or POW (player's choice), which returns after the character's next Consolidation completed without interruption.
+- **Critical Saturation (past 240):** Heavy Saturation penalties continue, and the **collapse clock** starts: at the end of each full hour spent at Critical, roll d100, and the character collapses on a result of 25 or less. The threshold rises by 25 each hour (50 the second hour, 75 the third), and in the fourth hour the collapse is automatic. An hour of Consolidation that refines VE does not count toward the clock; at the Level cap, where Consolidation refines nothing, every hour at Critical counts (Grade Breakthroughs). A collapsed character drops into involuntary Consolidation on the spot: defenseless, processing at the normal rate, unwakeable until stored VE falls to Tolerance or below. At the Level cap the character wakes after 5 full hours of collapse with the VE still stored; a character who reaches the cap mid-collapse wakes at the collapse's fifth hour, or at once if five hours have already passed. The collapse also costs 1 temporary Raw point of FOR or POW (player's choice), which returns after the character's next Consolidation completed without interruption; the collapse's own Consolidation does not return it.
 
 A level's worth of VE, 120, is Mild. Two levels, 240, is the top of Heavy; the next kill pushes stored VE past 240 into Critical and starts the collapse clock.
 
@@ -121,13 +121,12 @@ The transfer is visible: when something dies, its unrefined VE leaves the body a
 
 Cross-Grade kills multiply the award: read the victim's tier within its own Grade, take that multiple of your own Peer Kill, then multiply by ×10 for every Grade the victim sits above you. For an F-Grade character, an E-Grade peer-tier enemy pays 100 VE, most of a level, and an E-Grade Peak monster pays 500, enough VE for four levels after refinement, with stored VE well above the Critical threshold ("The Pressure Gauge", above). **A victim below your Grade pays nothing.** Its VE is too thin a shape for an ascended body to refine.
 
-The award depends on what died, whatever the method: a trap, an ambush, or a plan that ended the fight before it started pays the same as an open brawl. How the kill happened matters only to the Hidden Vector Engine. A defeated boss-tier encounter (rare, named, or designed for the moment) may be worth 1.5× the listed amount at the GM's discretion.
+The award depends on what died, whatever the method: a trap, an ambush, or a plan that ended the fight before it started pays the same as an open brawl. How the kill happened matters only to the Hidden Vector Engine. A defeated boss-tier encounter (rare, named, or designed for the moment) may be worth 1.5× the listed amount, rounded down, at the GM's discretion.
 
 **Who earns it.** Every character who meaningfully participated collects the full award; there is nothing to pool and nothing to divide. Fighting, guarding, scouting the escape route, and controlling the field all participate; being elsewhere does not. The killing blow earns no extra share, and individual excellence reaches the System through the Hidden Vector Engine, titles, and Hidden Achievements instead. A party spread across levels uses one award unless the enemy's tier differs between characters: a creature that is a peer for the strongest character may be Hard or Severe for the newest, and each character then collects the award for their own tier.
 
-### Quest & Survival
+### Quests and Hidden Achievements
 
-- **Session Survival:** 5 VE (F-Grade) per character per session, awarded for surviving meaningful play. Scales with Grade.
 - **Quest Completion:** GM-assigned, sized against the cost of a level. A small errand is worth a peer kill or two. A solid side quest runs a quarter to half a level. A quest arc that defined a stretch of play can be worth a full level or several, and should be when the table earned it.
 - **Hidden Achievements:** Rare, and worth being generous with: half a level to a full level, plus a Title or other narrative reward. Choose the award within that range to reflect the achievement's difficulty and significance.
 
@@ -138,7 +137,7 @@ The award depends on what died, whatever the method: a trap, an ambush, or a pla
 
 ### Pacing Reference
 
-At F-Grade, L1 → L2 requires 120 VE: twelve Moderate kills, twenty-four Easy ones, or a mix of hunting, quests, and survival over a session or two. Reaching Level 10 requires 1,080 VE, across roughly 15–20 sessions of moderate-pace play. Reaching the F-Grade cap at Level 25 requires 2,880 VE.
+At F-Grade, L1 → L2 requires 120 VE: twelve Moderate kills, twenty-four Easy ones, or a mix of hunting and quests over a session or two. Reaching Level 10 requires 1,080 VE, across roughly 15–20 sessions of moderate-pace play. Reaching the F-Grade cap at Level 25 requires 2,880 VE.
 
 On paper the pace is flat across Grades: rewards and costs both scale ×10, so the same number of peer kills spans a level at every Grade. In play, later Grades run slower anyway. Sub-Grade kills pay nothing, peer prey is rarer and defends better territory, and every peer fight is dangerous. Expect each Grade to take more sessions than the one before without touching the numbers.
 
@@ -146,7 +145,7 @@ Tracking every award as it lands is optional. A GM may instead keep running tota
 
 ### Risk vs. Rest
 
-Survival and quest completion guarantee baseline progression. Combat VE and environmental absorption are the accelerants. Characters who push into danger and time their rests well level faster than those who play it safe.
+Quest completion guarantees baseline progression. Combat VE and environmental absorption are the accelerants. Characters who push into danger and time their rests well level faster than those who play it safe.
 
 ---
 
@@ -164,7 +163,7 @@ Three paths, each with a cost:
 
 - **Rest Healing:** During Consolidation, characters recover one fifth of Max HP per hour, and all of it by the fifth hour. It takes time and a secure site.
 
-- **Healing Pills and Potions:** Instant recovery of a flat HP amount based on pill grade. Consuming one in combat costs 1 Beat, and only the first two Healing Pills a character takes in a fight have any effect (see Items, "Pill Limit in Combat").
+- **Healing Pills and Potions:** Instant recovery of a flat HP amount based on pill grade. Consuming one in combat costs 1 Beat, and a character's first 5 Healing Pills between Consolidations work; from the sixth, they do nothing (see Items, "The Pill Limit").
 
 - **Healing Skills and Spells:** Some classes possess healing abilities generated by the System AI. These cost Aether and one Beat in combat.
 

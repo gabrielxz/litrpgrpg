@@ -510,7 +510,7 @@ function RestForm({ view, engine, names, onRecorded }: FormProps) {
   );
 }
 
-// ------------------------------------------------------- System points ---
+// ----------------------------------------------------- assigned points ---
 
 function PointsForm({ view, engine, names, onRecorded }: FormProps) {
   const lv = engine.rules.character.leveling;

@@ -137,7 +137,6 @@ def g_quickref_ve():
     rift = " / ".join(str(by_difficulty[d]) for d in RIFT_DIFFICULTIES)
     rows = [["A level", c["level_cost"]["base"]],
             [f"Kill, by tier: {tiers}", vals],
-            ["Session survival", c["awards"]["session_survival"]],
             [f"Accession Rift, by difficulty: {' / '.join(RIFT_DIFFICULTIES)}", f"{rift}, per character, on completion, and the kills as well"],
             ["Cross-Grade kill", "the victim's tier read at its own Grade, ×10 per Grade above the killer; a victim below your Grade pays nothing"]]
     return table(["VE at F-Grade", "Amount"], rows)
@@ -296,7 +295,7 @@ def g_behavioral_mapping():
 
 def g_nine_levels():
     p = E.load("character")["leveling"]["points_by_level_9"]
-    rows = [["Point buy (creation)", p["point_buy"]], ["System-assigned (3 × 8 levels)", p["system_assigned"]], ["Free allocation (2 × 8 levels)", p["free"]], ["**Total at Level 9**", f"**{p['total']}**"]]
+    rows = [["Point buy (creation)", p["point_buy"]], ["Assigned (3 × 8 levels)", p["system_assigned"]], ["Free allocation (2 × 8 levels)", p["free"]], ["**Total at Level 9**", f"**{p['total']}**"]]
     return table(["Source", "Points"], rows, bold=False)
 
 
@@ -311,7 +310,7 @@ def g_sample_backgrounds():
 
 def g_class_profile_shapes():
     rows = [[s["shape"], s["system"], s["returned"]] for s in E.load("classes")["profile"]["shapes"]]
-    return table(["Shape", "System points", "Returned to the player"], rows)
+    return table(["Shape", "Assigned points", "Returned to the player"], rows)
 
 
 def g_class_technique_costs():
@@ -349,7 +348,7 @@ REGISTRY = {
     "sample-backgrounds":       ("15-character-creation.md", "| **Background** | **Covers** |", None, g_sample_backgrounds),
     "behavioral-mapping":       ("17-progression.md", "| Behavior Pattern | Primary Stat | Secondary Stat |", None, g_behavioral_mapping),
     "nine-levels":              ("17-progression.md", "| Source | Points |", None, g_nine_levels),
-    "class-profile-shapes":     ("18-classes.md", "| **Shape** | **System points** | **Returned to the player** |", None, g_class_profile_shapes),
+    "class-profile-shapes":     ("18-classes.md", "| **Shape** | **Assigned points** | **Returned to the player** |", None, g_class_profile_shapes),
     "class-technique-costs":    ("18-classes.md", "| **Cost shape** | **Cost** | **For** |", None, g_class_technique_costs),
     "class-guarded-list":       ("18-classes.md", "| **Guarded power** | **What it changes** |", None, g_class_guarded_list),
     "class-list":               ("18-classes.md", "| **Class** | **Built for** | **Poles** | **Profile** | **Technique cost** |", None, g_class_list),

@@ -32,6 +32,7 @@ Nobody else can see your interface, and it cannot be shown or handed to anyone. 
 - Health, Aether, and stored Volatile Energy against Tolerance.
 - Level, Grade, and progress toward the next level.
 - Proficiencies, their tiers, and the Marks accumulated in each.
+- What the character carries, with anything the System has identified about each item.
 - The Principle: its family while resonance is still accruing, its name once crystallized, its tier, and its Insight.
 - Every title held, including the ones being kept hidden from other people.
 - The quest log, active, completed, and failed.

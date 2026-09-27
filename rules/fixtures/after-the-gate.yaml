@@ -29,20 +29,20 @@ cases:
     fn: refine_hours
     args: {stored_ve: 100}
     expect: 5
-  - name: A second-wave session's 135 VE refines in seven hours
+  - name: A second-wave session's 130 VE refines in seven hours
     source: 72-after-the-gate.md, "Pacing to the Cap"
     fn: refine_hours
-    args: {stored_ve: 135}
+    args: {stored_ve: 130}
     expect: 7
-  - name: A third-wave session's 195 VE refines in ten hours
+  - name: A third-wave session's 190 VE refines in ten hours
     source: 72-after-the-gate.md, "Pacing to the Cap"
     fn: refine_hours
-    args: {stored_ve: 195}
+    args: {stored_ve: 190}
     expect: 10
-  - name: 195 VE taken in one day is past Heavy
+  - name: 190 VE taken in one day is past Heavy
     source: 72-after-the-gate.md, "Pacing to the Cap"
     fn: saturation
-    args: {stored_ve: 195}
+    args: {stored_ve: 190}
     expect: {band: Heavy}
   - name: 100 VE in a session crosses Tolerance (Mild)
     source: 72-after-the-gate.md, "Pacing to the Cap"

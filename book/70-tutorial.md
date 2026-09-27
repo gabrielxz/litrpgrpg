@@ -753,11 +753,11 @@ The last line states the cost of resting: a Consolidating character is defensele
 
 Close Session 1 with the party camping and declaring their first Consolidation (Cultivation chapter). Walk through the mechanic once: minimum 1 hour, and every full hour refines 20 VE and restores one fifth of Max HP (all of it by the fifth hour), with Aether refilling when the first full hour completes.
 
-Session 1 pays each character between about 15 and 45 VE, depending on the encounter they drew: the cache is the richest, and The High Ground and The Other Survivor pay only the arrival kill, Q-001, and session survival. Nobody is Saturated against a Tolerance of 80, and three hours clears the largest load. Narrate the tank emptying, the wounds closing, and the Aether returning at the first full hour. Saturation is taught in Phase 4.
+Session 1 pays each character between 12 and 42 VE, depending on the encounter they drew: the cache is the richest, and The High Ground and The Other Survivor pay only the arrival kill and Q-001. Nobody is Saturated against a Tolerance of 80, and three hours clears the largest load. Narrate the tank emptying, the wounds closing, and the Aether returning at the first full hour. Saturation is taught in Phase 4.
 
 **Somebody should stay awake.** A character on watch is not consolidating. Nothing attacks the camp tonight.
 
-Characters wake still Level 1, between an eighth and a third of the way to Level 2. The first level lands at the next Consolidation, the camp between the Field of Ruins sectors, and that is where the 3+2 stat allocation (Progression chapter) gets walked through at the table.
+Characters wake still Level 1, between a tenth and a third of the way to Level 2. The first level lands at the next Consolidation, the camp between the Field of Ruins sectors, and that is where the 3+2 stat allocation (Progression chapter) gets walked through at the table.
 
 ### Watch For
 
@@ -1481,9 +1481,8 @@ This ledger is denominated in VE and levels. A level is 120 VE at F-Grade (Culti
 | 4: The Field of Ruins | Two sector surveys (40 each) | Kills: Sector A's Sentries 10 each; Sector B's Snarljaws and Glow-Stalker 10 each and the Alpha 20; Sector C's Wraith 30; Sector D's Sentinel 20 and its records 10. A Hidden Opportunity. The Arriving Initiates (60, once). A Personal Opportunity (0 to 120) |
 | 5: The Convergence Crisis | The Mandate (125) | Anything killed on the run |
 | 6: First Recognition | The completion bonus, below | Hidden Quest reveals |
-| Every session | Session survival (5) | |
 
-**Totals.** The guaranteed awards come to about 230 VE in the two-session format and 240 in four, since survival pays per session: just under two levels. A cautious route (avoidance in Phase 2, surveys without the optional fights, no contact with the Initiates, a refused card) earns about 265, which is Level 3 with 25 VE banked before the completion bonus. A typical route (a rewarded encounter, four kills in the Ruins, the Initiates reached, a middling card) earns about 365, which is Level 4 with 5 to spare. A character who took every fight, a third sector, and every opportunity earns 480 or more and finishes at **Level 5**. The VE is processed across four Consolidations: the end of Session 1, the camp between the sectors, the end of the Ruins, and the long rest past the gate, which carries the bulk of it.
+**Totals.** The guaranteed awards come to about 220 VE: just under two levels. A cautious route (avoidance in Phase 2, surveys without the optional fights, no contact with the Initiates, a refused card) earns about 255, which is Level 3 with 15 VE banked before the completion bonus. A typical route (a rewarded encounter, four kills in the Ruins, the Initiates reached, a middling card) earns about 355, which is 5 VE short of Level 4; the completion bonus makes up the difference. A character who took every fight, a third sector, and every opportunity earns 480 or more and finishes at **Level 5**. The VE is processed across four Consolidations: the end of Session 1, the camp between the sectors, the end of the Ruins, and the long rest past the gate, which carries the bulk of it.
 
 **The Mandate is the biggest single award.** At 125 VE it is just over a level, the low end of what Awarding VE (Cultivation) gives a quest arc that defined a stretch of play.
 

@@ -50,11 +50,11 @@ Restore HP instantly. In combat, consuming a pill costs **1 Beat**, spent by who
 
 **A healing pill cannot raise HP above Max HP;** the excess is lost.
 
-#### Pill Limit in Combat
+#### The Pill Limit
 
-**The first two Healing Pills a character takes in a fight work in full. From the third on, pills have no effect on that character until they have spent ten quiet minutes out of combat.** Aether Pills follow the same rule, counted separately: two of each kind work per fight.
+**A character's first 5 Healing Pills work in full; from the sixth, Healing Pills have no effect on that character until a Consolidation's first full hour completes.** Aether Pills follow the same rule, counted separately. Every pill counts, in a fight or out of one.
 
-**Administering a pill to an ally** counts against the recipient's two, never the administrator's.
+**Administering a pill to an ally** counts against the recipient's 5, never the administrator's.
 
 **Foundation Pills are exempt.** They are not consumed during combat.
 

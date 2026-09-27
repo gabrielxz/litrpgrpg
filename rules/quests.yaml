@@ -15,7 +15,7 @@ party:
   accession_rift_pays: faction     # a Rift's stated reward is the Faction column at its difficulty (After the Gate)
   not_sharable: [Mandate, Personal Opportunity]     # Mandates already bind everyone in scope
   shared_count_multiplies_by_holders: true          # "Eliminate ten" held by three becomes thirty; unscalable objectives stay as written
-  rewards_per_holder: full award to every holder who meaningfully participated, at their own level
+  rewards_per_holder: the stated award to every holder who meaningfully participated; a holder above the quest's Grade collects nothing
   ve_split: none
 
 ve_policy:

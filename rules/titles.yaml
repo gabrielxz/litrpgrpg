@@ -46,31 +46,33 @@ negative_titles:
 consolidation_counts_as_completed: once its first full hour is done, interrupted or not   # Deep Breather
 
 # Twenty ready to grant. A countable deed, a flat bonus, a short name.
+# `counter` names the count a title reads and `at` the value that earns it; the app keeps the counts.
+# First blood is the first damage a Clash deals in a fight. "Still standing" is read at the fight's end.
 achievement_catalog:
   Slaughter:
-    - {title: Ten-Slayer,      trigger: Tenth confirmed kill,                          bonus: "+1 STR"}
-    - {title: Hundred-Slayer,  trigger: Hundredth confirmed kill,                      bonus: "+2 STR"}
-    - {title: First Blood,     trigger: Drew first blood in ten separate fights,       bonus: "+1 DEX"}
-    - {title: Pack-Breaker,    trigger: Killed three foes in a single fight,           bonus: "+1 STR"}
-    - {title: Giant-Feller,    trigger: Killed a Severe or Peak enemy,                 bonus: "+2 FOR"}
+    - {title: Ten-Slayer,      trigger: Tenth confirmed kill,                          bonus: "+1 STR", counter: confirmed-kills, at: 10}
+    - {title: Hundred-Slayer,  trigger: Hundredth confirmed kill,                      bonus: "+2 STR", counter: confirmed-kills, at: 100}
+    - {title: First Blood,     trigger: Drew first blood in ten separate fights,       bonus: "+1 DEX", counter: first-blood, at: 10}
+    - {title: Pack-Breaker,    trigger: Killed three foes in a single fight,           bonus: "+1 STR", counter: most-kills-in-a-fight, at: 3}
+    - {title: Giant-Feller,    trigger: Killed a Severe or Peak enemy,                 bonus: "+2 FOR", counter: severe-or-peak-kills, at: 1}
   Survival:
-    - {title: Stand,                 trigger: "Ended five separate fights below half HP, still standing", bonus: "+1 FOR"}
-    - {title: "First Down, First Up", trigger: Survived being Downed,                                    bonus: "+1 FOR"}
-    - {title: Week One,              trigger: Survived the first seven days after Integration,          bonus: "+1 to one stat, player's choice"}
-    - {title: Empty-Handed,          trigger: Won a fight with no weapon and no Aether spent,           bonus: "+1 STR"}
-    - {title: Hundredfoot,           trigger: Survived a climb or fall of a hundred feet,               bonus: "+1 DEX"}
+    - {title: Stand,                 trigger: "Ended five separate fights below half HP, still standing", bonus: "+1 FOR", counter: fights-ended-below-half, at: 5}
+    - {title: "First Down, First Up", trigger: Survived being Downed,                                    bonus: "+1 FOR", counter: survived-downed, at: 1}
+    - {title: Week One,              trigger: Survived the first seven days after Integration,          bonus: "+1 to one stat, player's choice", counter: days-survived, at: 7}
+    - {title: Empty-Handed,          trigger: Won a fight with no weapon and no Aether spent,           bonus: "+1 STR", counter: empty-handed-wins, at: 1}
+    - {title: Hundredfoot,           trigger: Survived a climb or fall of a hundred feet,               bonus: "+1 DEX", counter: hundred-foot-climbs-or-falls, at: 1}
   Craft and Ground:
-    - {title: Pillwright,            trigger: Crafted or refined ten consumables,                        bonus: "+1 PER"}
-    - {title: Forager,               trigger: Fed the party from the land for three days,                bonus: "+1 PER"}
-    - {title: Tinker,                trigger: Repaired or jury-rigged five things mid-crisis,            bonus: "+1 DEX"}
-    - {title: First Through the Gate, trigger: "First of the party into a hostile site, ten times",     bonus: "+1 DEX"}
-    - {title: Pathfinder,            trigger: Led the party through unmapped ground five times,          bonus: "+1 PER"}
+    - {title: Pillwright,            trigger: Crafted or refined ten consumables,                        bonus: "+1 PER", counter: consumables-crafted, at: 10}
+    - {title: Forager,               trigger: Fed the party from the land for three days,                bonus: "+1 PER", counter: days-fed-the-party, at: 3}
+    - {title: Tinker,                trigger: Repaired or jury-rigged five things mid-crisis,            bonus: "+1 DEX", counter: mid-crisis-repairs, at: 5}
+    - {title: First Through the Gate, trigger: "First of the party into a hostile site, ten times",     bonus: "+1 DEX", counter: first-into-a-hostile-site, at: 10}
+    - {title: Pathfinder,            trigger: Led the party through unmapped ground five times,          bonus: "+1 PER", counter: led-through-unmapped-ground, at: 5}
   Word and Bond:
-    - {title: Vow-Keeper,            trigger: Fulfilled three sworn oaths,                               bonus: "+1 HRT"}
-    - {title: Lockbreaker,           trigger: Picked five non-trivial locks,                             bonus: "+1 PER"}
-    - {title: Unseen,                trigger: Crossed ten guarded thresholds unseen,                     bonus: "+1 DEX"}
-    - {title: Peacemaker,            trigger: Ended three fights with words after weapons were out,      bonus: "+1 CHA"}
-    - {title: Deep Breather,         trigger: Completed twenty Consolidations,                           bonus: "+1 HRT"}
+    - {title: Vow-Keeper,            trigger: Fulfilled three sworn oaths,                               bonus: "+1 HRT", counter: oaths-fulfilled, at: 3}
+    - {title: Lockbreaker,           trigger: Picked five non-trivial locks,                             bonus: "+1 PER", counter: locks-picked, at: 5}
+    - {title: Unseen,                trigger: Crossed ten guarded thresholds unseen,                     bonus: "+1 DEX", counter: guarded-thresholds-crossed-unseen, at: 10}
+    - {title: Peacemaker,            trigger: Ended three fights with words after weapons were out,      bonus: "+1 CHA", counter: fights-ended-with-words, at: 3}
+    - {title: Deep Breather,         trigger: Completed twenty Consolidations,                           bonus: "+1 HRT", counter: consolidations, at: 20}
 
 # The Integration Tutorial's own titles (Tutorial chapter). Earned once, in
 # the valley; none of these names appears in the catalog above.

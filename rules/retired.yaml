@@ -115,7 +115,16 @@ patterns:
   - {pattern: 'pair of Frenzy Rats',              replaced_by: "1 Frenzy Rat, a Trivial arrival",               since: 2026-09-25}
   - {pattern: '\bAffinity Notices?\b',            replaced_by: "Resonance notice",                              since: 2026-09-25}
   - {pattern: 'slight HVE shift',                 replaced_by: "only the sweep moves the vectors; a refusal narrows offerings", since: 2026-09-25}
-  - {pattern: 'first two pills a character',      replaced_by: "the first two of each kind (Items)",            since: 2026-09-25}
+  - {pattern: 'first two pills a character',      replaced_by: "the first 5 of each kind per Consolidation (Items)",since: 2026-09-25}
+  - {pattern: '[Ss]ession [Ss]urvival|SESSION SURVIVAL', replaced_by: "cut; quest VE guarantees the baseline",   since: 2026-09-26}
+  - {pattern: 'Quest & Survival',                 replaced_by: "Quests and Hidden Achievements",               since: 2026-09-26}
+  - {pattern: '\bSystem points?\b',               replaced_by: "assigned points",                              since: 2026-09-26}
+  - {pattern: 'System-assigned',                  replaced_by: "assigned points",                              since: 2026-09-26}
+  - {pattern: 'ten quiet minutes',                replaced_by: "5 of each kind per Consolidation",             since: 2026-09-26}
+  - {pattern: 'Pill Limit in Combat',             replaced_by: "The Pill Limit",                               since: 2026-09-26}
+  - {pattern: 'first two (Healing )?[Pp]ills',    replaced_by: "the first 5 of each kind per Consolidation",   since: 2026-09-26}
+  - {pattern: 'Predator-tier opportunities offered less frequently', replaced_by: "the refusal table: half as often at 3, none at 6", since: 2026-09-26}
+  - {pattern: 'award at their own level',         replaced_by: "the stated award; nothing above the quest's Grade", since: 2026-09-26}
 
 # Chapter names as the book cites them, for the cross-reference check.
 chapters:

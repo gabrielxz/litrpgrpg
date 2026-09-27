@@ -62,7 +62,7 @@ leveling:
   free: 2
   scales_with_grade: true       # ×10 at E, ×100 at D, same 3-to-2 split
   points_can_wait: true         # unallocated until spent
-  capped_stat_takes_no_allocation: true   # free points redirect; System points go to the next-best behavioral match
+  capped_stat_takes_no_allocation: true   # free points redirect; assigned points go to the next-best behavioral match
   class_level: 10
   class_options_default: 3
   class_lead_attribute_bonus: 10   # at selection; the class package lives in classes.yaml
