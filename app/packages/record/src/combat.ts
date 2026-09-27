@@ -33,6 +33,7 @@ import { countPill, findPill, pillLimit } from "./pills.ts";
 import { addMark, checkShape, proficiencyOf } from "./proficiency.ts";
 import { count } from "./titles.ts";
 import { questsOnLeave } from "./quests.ts";
+import type { UseTechnique } from "./classes.ts";
 
 // --------------------------------------------------------------- actions ---
 
@@ -83,6 +84,8 @@ export interface ClashSide {
   surge?: boolean;
   /** A character's weapon shape: its Proficiency bonus is added, and an explosion earns a Mark. */
   shape?: string;
+  /** A character's class technique shapes this Clash: its cost is paid and its Clash hook's bonus added. */
+  technique?: boolean;
 }
 
 export interface StartCombat {
@@ -376,6 +379,8 @@ export interface Combatant {
   aura: "steeled" | "suppressed" | null;
   /** A creature's or NPC's pills this fight, by kind; a character's count lives on the character, per Consolidation. */
   pills: { healing: number; aether: number };
+  /** A character's once-per-fight class technique, spent. */
+  techniqueUsed?: boolean;
 }
 
 /** A Clash as it stands, from the attack to the resolution. */
@@ -1274,6 +1279,98 @@ function sideForce(engine: Engine, world: World, c: Combatant, s: ClashSide, rol
   return s.force;
 }
 
+// ------------------------------------------------------ class techniques ---
+
+function heldTechnique(world: World, characterId: string | undefined, who: string) {
+  const ch = characterId ? world.characters.get(characterId) : undefined;
+  const held = ch?.classes?.held;
+  if (!ch || !held) throw new Rejected(`${who} holds no class`);
+  return { ch, held, t: held.technique };
+}
+
+/**
+ * Pays a class technique's cost (Classes, "One technique"): 5 Aether at F (×10 per Grade of
+ * acquisition), or once per fight, or 10 Health or Exposed until the next turn.
+ */
+function payTechnique(
+  engine: Engine,
+  world: World,
+  e: Encounter | null,
+  cb: Combatant | null,
+  characterId: string,
+  choice?: "health" | "exposed",
+): Effect[] {
+  const { ch, held, t } = heldTechnique(world, characterId, world.characters.get(characterId)?.name ?? characterId);
+  const out: Effect[] = [{ kind: "technique-used", characterId, name: t.name }];
+  if (t.cost === "Aether") {
+    const cost = engine.classTechniqueCost(held.grade);
+    if (ch.aether < cost) throw new Rejected(`${ch.name} has ${ch.aether} Aether and ${t.name} costs ${cost}`);
+    ch.aether -= cost;
+  } else if (t.cost === "Frequency") {
+    if (!e || !cb) throw new Rejected(`${t.name} is once per fight: it is used in one`);
+    if (cb.techniqueUsed) throw new Rejected(`${ch.name} has used ${t.name} this fight`);
+    cb.techniqueUsed = true;
+  } else {
+    const kind = t.drawback ?? choice ?? "health";
+    if (kind === "exposed") {
+      if (!cb) throw new Rejected(`Exposed is a fight's state: outside one, ${t.name} costs 10 Health`);
+      cb.exposed = { started: false };
+    } else {
+      const hurt = engine.rules.classes.technique.drawback_health as number;
+      if (e && cb) out.push(...changeHp(engine, world, e, cb, -hurt));
+      else ch.hp = Math.max(0, ch.hp - hurt);
+    }
+  }
+  return out;
+}
+
+/** A technique's Clash hook bonus on this side, or 0; rejects a technique that cannot shape it. */
+function techniqueBonus(world: World, c: Combatant, s: ClashSide, role: "attack" | "defense"): number {
+  if (!s.technique) return 0;
+  const { t } = heldTechnique(world, c.characterId, c.name);
+  const h = t.hook;
+  if (h?.kind === "heal") throw new Rejected(`${t.name} heals; it does not shape a Clash`);
+  if (h?.kind === "clash") {
+    if (h.side !== "either" && h.side !== role) throw new Rejected(`${t.name} goes with ${h.side === "attack" ? "an attack" : "a defense"}`);
+    return h.bonus;
+  }
+  if (role === "defense") throw new Rejected(`${t.name} does not shape a defense`);
+  return 0;
+}
+
+/** A class technique on its own: the cost, its Beat in a fight, and a heal hook's Health. */
+export function useTechnique(engine: Engine, world: World, a: UseTechnique): Effect[] {
+  const who = world.characters.get(a.characterId);
+  if (!who) throw new Rejected(`no character ${a.characterId}`);
+  if (who.dead) throw new Rejected(`${who.name} is dead`);
+  const { t } = heldTechnique(world, a.characterId, who.name);
+  if (t.hook?.kind === "clash") throw new Rejected(`${t.name} is part of a Clash: declare it with the attack${t.hook.side === "attack" ? "" : " or the defense"}`);
+  const e = world.encounter && !world.encounter.ended ? world.encounter : null;
+  const cb = e?.combatants.find((c) => c.characterId === a.characterId && !c.out) ?? null;
+  const out: Effect[] = [];
+  if (e && cb) {
+    if (cb.downed) throw new Rejected(`${cb.name} is Downed`);
+    if (!t.noBeat) spend(e, cb, t.name);
+  }
+  if (t.hook?.kind === "heal") {
+    if (!a.targetId) throw new Rejected(`${t.name} restores Health to someone: name them`);
+    if (e && cb) {
+      const target = combatant(e, a.targetId);
+      if (target.dead || target.out) throw new Rejected(`${target.name} is out of the fight`);
+      if (t.hook.reach === "zone" && !sameZone(cb, target)) throw new Rejected(`${target.name} is not in ${cb.name}'s Zone`);
+      out.push(...payTechnique(engine, world, e, cb, a.characterId, a.drawback));
+      out.push(...changeHp(engine, world, e, target, t.hook.amount));
+      return out;
+    }
+    const target = world.characters.get(a.targetId);
+    if (!target || target.dead) throw new Rejected("name a living character to heal");
+    out.push(...payTechnique(engine, world, null, null, a.characterId, a.drawback));
+    target.hp = Math.min(maxHpOf(engine, target), target.hp + t.hook.amount);
+    return out;
+  }
+  return [...out, ...payTechnique(engine, world, e && cb ? e : null, cb, a.characterId, a.drawback)];
+}
+
 function paySurge(engine: Engine, world: World, c: Combatant, s: ClashSide): void {
   if (!s.surge) return;
   if (!c.characterId) throw new Rejected("record a creature's Surge in its modifier");
@@ -1307,6 +1404,8 @@ function attack(engine: Engine, world: World, a: Attack, id: string): Effect[] {
     att.spent.push(a.label?.trim() || "Attack");
   }
   paySurge(engine, world, att, a.attack);
+  techniqueBonus(world, att, a.attack, "attack");
+  const paid = a.attack.technique ? payTechnique(engine, world, e, att, att.characterId!) : [];
   e.clash = {
     id,
     attackerId: att.id,
@@ -1318,7 +1417,7 @@ function attack(engine: Engine, world: World, a: Attack, id: string): Effect[] {
     stage: "defense",
   };
   if (a.label?.trim()) e.clash.label = a.label.trim();
-  return [];
+  return paid;
 }
 
 function checkDice(engine: Engine, grade: string, d: Dice | undefined, advantage: boolean) {
@@ -1341,12 +1440,19 @@ function defend(engine: Engine, world: World, a: Defend): Effect[] {
   checkDice(engine, att.grade, a.attackDice, Boolean(cl.attack.advantage));
   checkDice(engine, def.grade, a.defenseDice, Boolean(a.defense.advantage));
   paySurge(engine, world, def, a.defense);
+  techniqueBonus(world, def, a.defense, "defense");
+  const paid = a.defense.technique ? payTechnique(engine, world, e, def, def.characterId!) : [];
 
   const r = engine.rules;
   const prof = (c: Combatant, s: ClashSide) =>
     s.shape !== undefined && c.characterId ? proficiencyOf(engine, world.characters.get(c.characterId)!, s.shape).bonus : 0;
   const mods = (c: Combatant, s: ClashSide, flank: boolean) =>
-    s.modifier + prof(c, s) + (s.surge ? r.combat.surge.bonus : 0) + (flank ? r.resolution.flanking_bonus : 0) + (c.exposed ? r.resolution.exposed : 0);
+    s.modifier +
+    prof(c, s) +
+    techniqueBonus(world, c, s, c.id === att.id ? "attack" : "defense") +
+    (s.surge ? r.combat.surge.bonus : 0) +
+    (flank ? r.resolution.flanking_bonus : 0) +
+    (c.exposed ? r.resolution.exposed : 0);
   const attMods = mods(att, cl.attack, cl.flanking);
   const defMods = mods(def, a.defense, false);
   const attDice = sum(a.attackDice!.natural);
@@ -1382,6 +1488,7 @@ function defend(engine: Engine, world: World, a: Defend): Effect[] {
     ...(def.characterId && a.defenseDice!.natural.length - 1 >= cascade ? [def.characterId] : []),
   ];
   const effects: Effect[] = [
+    ...paid,
     { kind: "clash", encounterId: e.id, attackerId: att.id, defenderId: def.id, margin: out.margin, attackTotal: out.attacker_total, defenseTotal: out.defender_total, rolls, battleMemory },
   ];
   // One Mark per exploding roll made with a weapon shape.

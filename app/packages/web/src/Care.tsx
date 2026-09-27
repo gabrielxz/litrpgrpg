@@ -6,6 +6,7 @@
  */
 import type { Engine } from "@gradebreaker/engine";
 import type { Action } from "@gradebreaker/record";
+import type { TechniqueOffer } from "./classes.ts";
 import { useState } from "react";
 
 /** A combatant as these forms need them, from either screen's view of the fight. */
@@ -26,6 +27,8 @@ export interface Mate {
 export interface Actor extends Mate {
   force?: Record<string, number>;
   items?: { name: string; count: number }[];
+  /** A character's class technique, when they hold a class. */
+  technique?: TechniqueOffer;
 }
 
 export interface Pill {
@@ -45,7 +48,7 @@ export function pillsOf(engine: Engine | null): Pill[] {
 
 const sameZone = (a: Mate, b: Mate) => a.zoneId === null || b.zoneId === null || a.zoneId === b.zoneId;
 
-type Open = null | "pill" | "stabilize" | "execute" | "intervene";
+type Open = null | "pill" | "stabilize" | "execute" | "intervene" | "technique";
 
 export function CareActions({
   me,
@@ -76,13 +79,19 @@ export function CareActions({
   const pill = pills.some((p) => p.name === pillChoice) ? pillChoice : (pills[0]?.name ?? "");
   const [force, setForce] = useState("");
   const [advantage, setAdvantage] = useState(false);
+  const [drawback, setDrawback] = useState<"health" | "exposed">("health");
+  const t = me.technique;
+  // A Clash hook's technique is declared with the Clash; anything else is used on its own here.
+  const ownUse = t && t.hook?.kind !== "clash" ? t : null;
   const live = people.filter((p) => !p.out);
   const zoneMates = live.filter((p) => p.id === me.id || sameZone(me, p));
   const pillTargets = zoneMates.filter((p) => p.id === me.id || p.characterId || p.downed);
   const dying = zoneMates.filter((p) => p.id !== me.id && p.downed && !p.stabilized);
   const downed = live.filter((p) => p.id !== me.id && p.downed);
   const suppressedAllies = live.filter((p) => p.id !== me.id && p.sideId === me.sideId && p.suppressed && p.characterId);
-  const choices: Record<Exclude<Open, null>, Mate[]> = { pill: pillTargets, stabilize: dying, execute: downed, intervene: suppressedAllies };
+  // A heal goes to an ally: someone on the character's own side, within the hook's reach.
+  const healTargets = ownUse?.hook?.kind === "heal" ? (ownUse.hook.reach === "zone" ? zoneMates : live).filter((p) => p.sideId === me.sideId) : [];
+  const choices: Record<Exclude<Open, null>, Mate[]> = { pill: pillTargets, stabilize: dying, execute: downed, intervene: suppressedAllies, technique: healTargets };
   const list = open ? choices[open] : [];
   const picked = list.some((p) => p.id === target) ? target : (list[0]?.id ?? "");
   const pickedMate = list.find((p) => p.id === picked);
@@ -122,6 +131,15 @@ export function CareActions({
         <button disabled={noBeat || downed.length === 0} onClick={() => toggle("execute")} title="A deliberate attack on a Downed combatant kills them: 1 Beat, no roll">
           Execute…
         </button>
+        {ownUse && me.characterId && (
+          <button
+            disabled={busy || Boolean(ownUse.blocked) || (!ownUse.noBeat && beats < 1)}
+            onClick={() => toggle("technique")}
+            title={ownUse.blocked ?? `${ownUse.noBeat ? "No Beat" : "1 Beat"}, ${ownUse.cost}`}
+          >
+            {ownUse.name}…
+          </button>
+        )}
         {me.suppressed && me.characterId && (
           <button disabled={noBeat} onClick={() => run({ type: "combat.will", combatantId: me.id, reason: "principle" })} title="A Principle Application that pushes back: 1 Beat, and the Will Save again">
             Push back (1 Beat)
@@ -177,6 +195,39 @@ export function CareActions({
           >
             Stabilize (1 Beat)
           </button>
+        </div>
+      )}
+      {open === "technique" && ownUse && (
+        <div className="row tight subform">
+          {ownUse.hook?.kind === "heal" && (
+            <>
+              {targetSelect}
+              <span className="small">
+                restores {ownUse.hook.amount} Health ({ownUse.hook.reach === "zone" ? "your Zone" : "your Zone or the next"})
+              </span>
+            </>
+          )}
+          {ownUse.chooseDrawback && (
+            <select value={drawback} onChange={(e) => setDrawback(e.target.value as "health" | "exposed")} aria-label="Drawback">
+              <option value="health">Pay 10 Health</option>
+              <option value="exposed">Be Exposed until the next turn</option>
+            </select>
+          )}
+          <button
+            className="primary"
+            disabled={busy || Boolean(ownUse.blocked) || (!ownUse.noBeat && beats < 1) || (ownUse.hook?.kind === "heal" && !picked)}
+            onClick={() =>
+              done({
+                type: "class.technique",
+                characterId: me.characterId!,
+                ...(ownUse.hook?.kind === "heal" ? { targetId: picked } : {}),
+                ...(ownUse.chooseDrawback ? { drawback } : {}),
+              })
+            }
+          >
+            Use {ownUse.name} ({ownUse.noBeat ? "no Beat" : "1 Beat"}, {ownUse.cost})
+          </button>
+          {ownUse.hook?.kind !== "heal" && <span className="small muted">The cost is paid here; the GM applies what it does.</span>}
         </div>
       )}
       {open === "execute" && (

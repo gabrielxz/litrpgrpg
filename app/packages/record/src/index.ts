@@ -76,6 +76,7 @@ export {
   type ClassPackage,
   type CostShape,
   type HeldClass,
+  type TechniqueHook,
   type ProfileShape,
   bookClasses,
   leadOf,

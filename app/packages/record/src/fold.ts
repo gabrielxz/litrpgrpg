@@ -27,7 +27,7 @@ import type {
   SpendFreePoints,
 } from "./actions.ts";
 import { type LootResult, applyAftermath } from "./aftermath.ts";
-import { type DeathCause, type Encounter, type MomentumRollRecord, applyCombat, authorizeCombatPlayer, cloneEncounter } from "./combat.ts";
+import { type DeathCause, type Encounter, type MomentumRollRecord, applyCombat, authorizeCombatPlayer, cloneEncounter, useTechnique } from "./combat.ts";
 import { type Stack, applyItems, authorizeItemsPlayer } from "./inventory.ts";
 import { addMark, checkShape, proficiencyOf } from "./proficiency.ts";
 import { type Title, applyTitles, count, titleStats } from "./titles.ts";
@@ -113,6 +113,7 @@ export type Effect =
   | { kind: "classification"; characterId: string; text: string; offers: { name: string; heading: string; notice: string }[] }
   | { kind: "class-accepted"; characterId: string; name: string; lead: string; bonus: number }
   | { kind: "class-used"; characterId: string; name: string }
+  | { kind: "technique-used"; characterId: string; name: string }
   | { kind: "memory-granted"; characterId: string; memoryId: string }
   | { kind: "vision"; characterId: string; text: string }
   | { kind: "resonance"; characterId: string; family: string; ip: number; of: number }
@@ -592,6 +593,8 @@ function apply(engine: Engine, world: World, env: Envelope): Effect[] {
     case "class.accept":
     case "class.use":
       return applyClasses(engine, world, a);
+    case "class.technique":
+      return useTechnique(engine, world, a);
     case "prep.save":
     case "prep.remove":
       return applyPrep(world, a);
@@ -627,6 +630,7 @@ function authorize(world: World, env: Envelope) {
     case "principle.answer":
     case "class.accept":
     case "class.use":
+    case "class.technique":
       return mine(a.characterId);
     case "party.invite":
       return mine(a.fromId);

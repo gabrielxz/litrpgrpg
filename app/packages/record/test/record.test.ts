@@ -1879,3 +1879,122 @@ describe("Prep", () => {
     expect(rec.state.prep.size).toBe(0);
   });
 });
+
+describe("class techniques", () => {
+  const book = (name: string) => bookClasses(engine).find((c) => c.name === name)!;
+  const enc = () => rec.state.encounter!;
+  const who = (id: string) => enc().combatants.find((c) => c.id === id)!;
+  const rolled = (action: Action, ...dice: number[]) => rec.append(rollFor(rec, draft(action), () => dice.shift()!));
+  /** A character at Level 10 holding a book class. */
+  function classed(id: string, pregen: string, cls: string, playerId: string) {
+    gm({ type: "character.pregen", characterId: id, pregen, playerId });
+    levelTo(id, 10);
+    const others = ["Witness", "Maker", "Registrar"].filter((n) => n !== cls).slice(0, 2);
+    gm({ type: "class.offer", characterId: id, offers: [cls, ...others].map(book) });
+    gm({ type: "class.accept", characterId: id, name: cls });
+    // The class raised the lead; an hour's rest fills Aether to the new maximum.
+    rest(id, 1);
+  }
+  function fight() {
+    gm({
+      type: "combat.start",
+      encounterId: "e1",
+      name: "Treeline",
+      sides: [
+        { id: "party", name: "The party" },
+        { id: "hostiles", name: "Hostiles" },
+      ],
+      zones: [
+        { id: "treeline", name: "Treeline" },
+        { id: "road", name: "Road" },
+      ],
+      combatants: [
+        { combatantId: "kara", sideId: "party", characterId: "kara" },
+        { combatantId: "joe", sideId: "party", characterId: "joe" },
+        { combatantId: "rat", sideId: "hostiles", name: "Frenzy Rat", grade: "F", maxHp: 200, momentumForce: 8, beats: 1 },
+      ],
+    });
+    // Joe's PER against the rat's: the party holds Momentum.
+    rolled({ type: "combat.momentum" }, 90, 10);
+  }
+  beforeEach(() => {
+    classed("kara", "Kara", "Breaching Vanguard", "player-1");
+    classed("joe", "Joe", "Battle Medic", "player-2");
+  });
+
+  it("adds a Clash hook's bonus to the attack it is declared with, once per fight for a Frequency technique", () => {
+    fight();
+    gm({ type: "combat.act", combatantId: "kara" });
+    const kara = rec.sheet("kara")!;
+    const declared = gm({ type: "combat.attack", attackerId: "kara", defenderId: "rat", attack: { attribute: "STR", modifier: 0, technique: true } });
+    expect(declared.effects).toEqual([{ kind: "technique-used", characterId: "kara", name: "Breach" }]);
+    const out = rolled({ type: "combat.defend", defense: { force: 8, modifier: 0 } }, 20, 30);
+    expect(out.effects[0]).toMatchObject({ kind: "clash", attackTotal: 20 + kara.force.STR! + 10 });
+    expect(who("kara").techniqueUsed).toBe(true);
+    expect(() => gm({ type: "combat.attack", attackerId: "kara", defenderId: "rat", attack: { attribute: "STR", modifier: 0, technique: true } })).toThrow(/used Breach this fight/);
+    expect(() => gm({ type: "class.technique", characterId: "kara" })).toThrow(/part of a Clash/);
+  });
+
+  it("refuses a technique on the wrong side of a Clash", () => {
+    fight();
+    gm({ type: "combat.act", combatantId: "joe" });
+    gm({ type: "combat.done", combatantId: "joe" });
+    gm({ type: "combat.act", combatantId: "kara" });
+    gm({ type: "combat.done", combatantId: "kara" });
+    gm({ type: "combat.act", combatantId: "rat" });
+    gm({ type: "combat.attack", attackerId: "rat", defenderId: "kara", attack: { force: 6, modifier: 0 } });
+    expect(() => rolled({ type: "combat.defend", defense: { attribute: "DEX", modifier: 0, technique: true } }, 20, 30)).toThrow(/Breach goes with an attack/);
+  });
+
+  it("runs Triage on its own: 5 Aether, a Beat, and 10 Health that wakes a Downed ally", () => {
+    fight();
+    gm({ type: "combat.hp", combatantId: "kara", delta: -200 });
+    expect(who("kara").downed).not.toBeNull();
+    gm({ type: "combat.act", combatantId: "joe" });
+    const aether = rec.sheet("joe")!.aether;
+    expect(() => rec.append(draft({ type: "class.technique", characterId: "joe", targetId: "kara" }, P1))).toThrow(/not this player's character/);
+    const out = rec.append(draft({ type: "class.technique", characterId: "joe", targetId: "kara" }, P2));
+    expect(out.effects.map((e) => e.kind)).toEqual(["technique-used", "combat-hp", "revived"]);
+    expect(rec.sheet("joe")!.aether).toBe(aether - 5);
+    expect(who("joe").beats).toBe(1);
+    expect(rec.sheet("kara")!.hp).toBe(10);
+    expect(who("kara").downed).toBeNull();
+  });
+
+  it("runs an Aether technique outside a fight, and a Frequency one only in a fight", () => {
+    gm({ type: "hp.change", characterId: "kara", delta: -8 });
+    const hp = rec.sheet("kara")!.hp;
+    gm({ type: "class.technique", characterId: "joe", targetId: "kara" });
+    expect(rec.sheet("kara")!.hp).toBe(Math.min(rec.sheet("kara")!.maxHp, hp + 10));
+    expect(() => gm({ type: "class.technique", characterId: "joe" })).toThrow(/name them/);
+    const drained = rec.sheet("joe")!.aether;
+    for (let i = 0; i < Math.floor(drained / 5); i++) gm({ type: "class.technique", characterId: "joe", targetId: "joe" });
+    expect(() => gm({ type: "class.technique", characterId: "joe", targetId: "joe" })).toThrow(/Triage costs 5/);
+  });
+
+  it("pays a Drawback technique in Health with the Clash it shapes", () => {
+    gm({ type: "character.pregen", characterId: "ana", pregen: "Andre", playerId: "player-1" });
+    levelTo("ana", 10);
+    gm({ type: "class.offer", characterId: "ana", offers: ["Burner", "Witness", "Maker"].map(book) });
+    gm({ type: "class.accept", characterId: "ana", name: "Burner" });
+    gm({
+      type: "combat.start",
+      encounterId: "e2",
+      name: "Road",
+      sides: [
+        { id: "party", name: "The party" },
+        { id: "hostiles", name: "Hostiles" },
+      ],
+      combatants: [
+        { combatantId: "ana", sideId: "party", characterId: "ana" },
+        { combatantId: "rat", sideId: "hostiles", name: "Rat", grade: "F", maxHp: 12, momentumForce: 1, beats: 1 },
+      ],
+    });
+    rolled({ type: "combat.momentum" }, 90, 10);
+    gm({ type: "combat.act", combatantId: "ana" });
+    const hp = rec.sheet("ana")!.hp;
+    const declared = gm({ type: "combat.attack", attackerId: "ana", defenderId: "rat", attack: { attribute: "STR", modifier: 0, technique: true } });
+    expect(declared.effects[0]).toEqual({ kind: "technique-used", characterId: "ana", name: "Pay in Blood" });
+    expect(rec.sheet("ana")!.hp).toBe(hp - 10);
+  });
+});

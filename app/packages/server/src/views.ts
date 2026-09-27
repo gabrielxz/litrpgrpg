@@ -423,7 +423,7 @@ export function playerCombat(record: CampaignRecord): PlayerCombat | null {
       suppressed: c.aura === "suppressed",
       surprise: Boolean(e.round === 0 && e.surprise?.includes(c.id)),
       ...(c.characterId
-        ? { characterId: c.characterId, beats: c.beats, beatsPerTurn: c.beatsPerTurn, pills: { ...(record.sheet(c.characterId)?.pillsTaken ?? c.pills) } }
+        ? { characterId: c.characterId, beats: c.beats, beatsPerTurn: c.beatsPerTurn, pills: { ...(record.sheet(c.characterId)?.pillsTaken ?? c.pills) }, techniqueUsed: Boolean(c.techniqueUsed) }
         : {}),
     })),
   };

@@ -20,6 +20,12 @@ profile:
     - {shape: Open,   system: 1, returned: 2}
   # A profile lists its Attributes in order; the first named is the lead.
 
+# A technique's `hook` is what the companion app applies itself: `clash` adds its bonus to a Clash
+# on the named side (attack, defense, or either) when the technique is declared with it, and `heal`
+# restores Health to a target within `reach` (zone, or adjacent: your Zone or the next). A technique
+# without a hook has its cost paid by the app and its effect applied by the GM. `drawback` names which
+# drawback a Drawback technique costs (health or exposed); `no_own_beat` and `reaction` mean it takes
+# no Beat of its own.
 technique:
   beats: 1
   aether_cost_at_f: 5            # ×10 per Grade of acquisition, like any acquired skill
@@ -72,21 +78,21 @@ classes:
     notice: "Care under threat. Triage: 5 Aether closes wounds on one ally within reach or on the ground beside you, restoring 10 Health. Reaching a fallen ally takes no time. Selection: Power +10. Growth: Power, Dexterity, Heart."
     poles: [Restraint, Accord]
     profile: {shape: Fixed, points: {POW: 1, DEX: 1, HRT: 1}}
-    technique: {name: Triage, cost: Aether, effect: "Restores 10 Health to an ally in your Zone or an adjacent one"}
+    technique: {name: Triage, cost: Aether, effect: "Restores 10 Health to an ally in your Zone or an adjacent one", hook: {heal: 10, reach: adjacent}}
     permission: {name: Reach the Fallen, effect: "Moving into a Zone holding a Downed ally costs no Beat", action_economy: true}
   - name: Breaching Vanguard
     built_for: Kara
     notice: "First through. Breach: once per fight, the first blow after entering new ground lands with Strength counting 10 higher and carries the target back. Entering ground and striking there is one act. Selection: Strength +10. Growth: Strength, Strength, Fortitude."
     poles: [Force, Hunger]
     profile: {shape: Fixed, points: {STR: 2, FOR: 1}}
-    technique: {name: Breach, cost: Frequency, effect: "+10 to a Clash against a target in a Zone you entered this turn; a win Drives it Back whatever the Margin"}
+    technique: {name: Breach, cost: Frequency, effect: "+10 to a Clash against a target in a Zone you entered this turn; a win Drives it Back whatever the Margin", hook: {clash: 10, side: attack}}
     permission: {name: Rush, effect: "Moving into an adjacent Zone and attacking there costs 1 Beat in total", action_economy: true}
   - name: Burner
     built_for: Coleman
     notice: "Pay in Blood: 10 Health spent, and in the next blow, given or taken, your Attribute counts 10 higher. Blood may pay for what Aether pays for: a Surge for 10 Health. Selection: Strength +10. Growth: Strength, Fortitude, one point yours."
     poles: [Force, Hunger]
     profile: {shape: Guided, points: {STR: 1, FOR: 1}}
-    technique: {name: Pay in Blood, cost: Drawback, effect: "Part of one Clash you roll this turn, attack or defense, declared before rolling; take 10 damage for +10", no_own_beat: true}
+    technique: {name: Pay in Blood, cost: Drawback, drawback: health, effect: "Part of one Clash you roll this turn, attack or defense, declared before rolling; take 10 damage for +10", no_own_beat: true, hook: {clash: 10, side: either}}
     permission: {name: Blood for Aether, effect: "You may pay a Surge with 10 Health instead of Aether", action_economy: false}
   - name: Counterpuncher
     built_for: Ines
@@ -114,7 +120,7 @@ classes:
     notice: "Sworn Blow: 5 Aether, and a blow against the object of your vow lands with its Attribute counting 10 higher. Speak one vow when a fight begins: what serves it is strengthened by 5, and acting against it leaves you open until the fight ends. Selection: Heart +10. Growth: Heart, Heart, Strength."
     poles: [Will, Restraint]
     profile: {shape: Fixed, points: {HRT: 2, STR: 1}}
-    technique: {name: Sworn Blow, cost: Aether, effect: "+10 to a Clash against the object of your vow"}
+    technique: {name: Sworn Blow, cost: Aether, effect: "+10 to a Clash against the object of your vow", hook: {clash: 10, side: attack}}
     permission: {name: The Vow, effect: "Swear one thing aloud at the start of a fight, naming an act or an object: +5 to Clashes that serve it; act against it and you are Exposed for the rest of the fight", action_economy: false}
   - name: Adjudicator
     built_for: Ruth

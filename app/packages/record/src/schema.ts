@@ -21,6 +21,7 @@ const clashSide = z.object({
   advantage: z.boolean().optional(),
   surge: z.boolean().optional(),
   shape: z.string().max(40).optional(),
+  technique: z.boolean().optional(),
 });
 const zone = z.object({ id, name: z.string().max(60) });
 const stack = z.object({ name: z.string().max(80), count: whole });
@@ -81,7 +82,20 @@ const classPackage = z.object({
     shape: z.enum(["Fixed", "Guided", "Open"]),
     points: z.array(z.object({ attribute: z.string().max(10), points: whole })).max(7),
   }),
-  technique: z.object({ name: z.string().max(60), cost: z.enum(["Aether", "Frequency", "Drawback"]), effect: z.string().max(600), actionEconomy: z.boolean().optional() }),
+  technique: z.object({
+    name: z.string().max(60),
+    cost: z.enum(["Aether", "Frequency", "Drawback"]),
+    effect: z.string().max(600),
+    actionEconomy: z.boolean().optional(),
+    hook: z
+      .discriminatedUnion("kind", [
+        z.object({ kind: z.literal("clash"), bonus: whole, side: z.enum(["attack", "defense", "either"]) }),
+        z.object({ kind: z.literal("heal"), amount: whole, reach: z.enum(["zone", "adjacent"]) }),
+      ])
+      .optional(),
+    drawback: z.enum(["health", "exposed"]).optional(),
+    noBeat: z.boolean().optional(),
+  }),
   permission: z.object({ name: z.string().max(60), effect: z.string().max(600), actionEconomy: z.boolean().optional(), onceADay: z.boolean().optional() }),
   guarded: z.boolean().optional(),
 });
@@ -358,6 +372,7 @@ export const actionSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("class.offer"), characterId: id, offers: z.array(classPackage).max(5) }),
   z.object({ type: z.literal("class.accept"), characterId: id, name: z.string().max(60) }),
   z.object({ type: z.literal("class.use"), characterId: id }),
+  z.object({ type: z.literal("class.technique"), characterId: id, targetId: id.optional(), drawback: z.enum(["health", "exposed"]).optional() }),
   z.object({ type: z.literal("prep.save"), items: z.array(prepItem).max(200), pack: z.string().max(60).optional() }),
   z.object({ type: z.literal("prep.remove"), prepIds: z.array(z.string().min(1).max(80)).max(200) }),
   z.object({ type: z.literal("clock.set"), day: whole, hour: whole, minute: whole.optional(), dawnHour: whole.optional() }),

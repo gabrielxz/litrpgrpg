@@ -32,6 +32,7 @@ import type { Names } from "../text.ts";
 import { AftermathPanel } from "./Aftermath.tsx";
 import { RollList } from "../Dice.tsx";
 import { SizingPanel, sizedOf } from "./Sizing.tsx";
+import { techniqueOffer } from "../classes.ts";
 import { type Firing, expandCreatures, prepCreaturesOf } from "./Prep.tsx";
 import { prepCause } from "@gradebreaker/record";
 import { Commit } from "./Commit.tsx";
@@ -387,6 +388,7 @@ export function clasherOf(view: GmView, c: CombatantView, role: "attack" | "defe
       surgeCost: sheet.surgeCost,
       shapes: engine ? shapes(engine) : [],
       proficiencies: sheet.proficiencies,
+      ...(sheet.class ? { technique: techniqueOffer(engine ?? null, sheet.class, { aether: sheet.aether, usedThisFight: Boolean(c.techniqueUsed), inFight: true }) } : {}),
     };
   return { kind: "creature", name: c.name, options: (role === "attack" ? c.offense : c.defense) ?? [] };
 }
@@ -627,7 +629,7 @@ function CombatantRow({
       )}
       {acting && !e.clash && (
         <CareActions
-          me={actorOf(view, c)}
+          me={actorOf(view, c, engine)}
           people={e.combatants.map(mateOf)}
           pills={pillsOf(engine)}
           pillLimit={pillLimit(engine)}
@@ -641,9 +643,15 @@ function CombatantRow({
   );
 }
 
-function actorOf(view: GmView, c: CombatantView): Actor {
+function actorOf(view: GmView, c: CombatantView, engine: Engine | null): Actor {
   const sheet = c.characterId ? view.characters.find((s) => s.id === c.characterId) : undefined;
-  return sheet ? { ...mateOf(c), force: sheet.force, items: view.inventory[sheet.id] ?? [] } : mateOf(c);
+  if (!sheet) return mateOf(c);
+  return {
+    ...mateOf(c),
+    force: sheet.force,
+    items: view.inventory[sheet.id] ?? [],
+    ...(sheet.class ? { technique: techniqueOffer(engine, sheet.class, { aether: sheet.aether, usedThisFight: Boolean(c.techniqueUsed), inFight: true }) } : {}),
+  };
 }
 
 function Running({

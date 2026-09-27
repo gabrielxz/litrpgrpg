@@ -4,6 +4,7 @@
  * Yield once the Margin is known.
  */
 import type { ClashSide, ForceOption, Proficiency } from "@gradebreaker/record";
+import type { TechniqueOffer } from "./classes.ts";
 import { useState } from "react";
 
 /** Who is Clashing: a character (Force by Attribute) or a creature (its stat block's lines). */
@@ -17,6 +18,8 @@ export type Clasher =
       /** The weapon shapes from the rules, and the character's tier in each they have a Mark in. */
       shapes: string[];
       proficiencies: Proficiency[];
+      /** The class technique, when the character holds a class. */
+      technique?: TechniqueOffer;
     }
   | { kind: "creature"; name: string; options: ForceOption[] };
 
@@ -126,6 +129,21 @@ function SideFields({
       <label className="check" title="Two d100, keep the higher. The GM grants it from the fiction.">
         <input type="checkbox" checked={Boolean(value.advantage)} onChange={(e) => onChange({ ...value, advantage: e.target.checked })} /> Advantage
       </label>
+      {who.kind === "character" && who.technique && who.technique.sides.includes(role) && (
+        <label className="check" title={who.technique.blocked ?? "Part of this Clash: its cost is paid, and the app adds its bonus"}>
+          <input
+            type="checkbox"
+            checked={Boolean(value.technique)}
+            disabled={Boolean(who.technique.blocked) && !value.technique}
+            onChange={(e) => {
+              const { technique: _, ...rest } = value;
+              onChange(e.target.checked ? { ...rest, technique: true } : rest);
+            }}
+          />{" "}
+          {who.technique.name} ({who.technique.hook?.kind === "clash" ? `+${who.technique.hook.bonus}, ` : ""}
+          {who.technique.cost}){who.technique.blocked ? `: ${who.technique.blocked}` : ""}
+        </label>
+      )}
       {who.kind === "character" && (
         <label className="check" title="Declared before the roll. No Beat.">
           <input

@@ -20,6 +20,13 @@ import { MINUTES_PER_DAY } from "./clock.ts";
 export type ProfileShape = "Fixed" | "Guided" | "Open";
 export type CostShape = "Aether" | "Frequency" | "Drawback";
 
+/**
+ * What the app applies of a technique itself (`classes.yaml`, the technique's `hook`): a bonus to
+ * a Clash on a named side when the technique is declared with it, or Health restored to a target
+ * within reach. A technique without one has its cost paid and its effect applied by the GM.
+ */
+export type TechniqueHook = { kind: "clash"; bonus: number; side: "attack" | "defense" | "either" } | { kind: "heal"; amount: number; reach: "zone" | "adjacent" };
+
 /** One class package as offered: the System's text and the mechanics the table runs. */
 export interface ClassPackage {
   name: string;
@@ -29,7 +36,17 @@ export interface ClassPackage {
   book?: string;
   /** The Attributes in order, the first named the lead; the points total the shape's assigned points. */
   profile: { shape: ProfileShape; points: { attribute: string; points: number }[] };
-  technique: { name: string; cost: CostShape; effect: string; actionEconomy?: boolean };
+  technique: {
+    name: string;
+    cost: CostShape;
+    effect: string;
+    actionEconomy?: boolean;
+    hook?: TechniqueHook;
+    /** A Drawback technique's drawback; absent, the player chooses when using it. */
+    drawback?: "health" | "exposed";
+    /** A reaction, or a part of a Clash: it takes no Beat of its own. */
+    noBeat?: boolean;
+  };
   permission: { name: string; effect: string; actionEconomy?: boolean; onceADay?: boolean };
   /** Carries a power from the guarded list: the GM's to know, never shown to the player. */
   guarded?: boolean;
@@ -39,6 +56,8 @@ export interface HeldClass extends ClassPackage {
   /** The selection bonus that landed on the lead, and any lost past the cap. */
   bonus: number;
   lost?: number;
+  /** The Grade it was acquired at: an Aether technique costs 5 at F, ×10 per Grade of acquisition. */
+  grade: string;
 }
 
 export interface ClassState {
@@ -69,13 +88,27 @@ export interface UseClassPermission {
   characterId: string;
 }
 
-export type ClassAction = OfferClasses | AcceptClass | UseClassPermission;
+/**
+ * The character uses the class technique on its own (combat.ts runs it): its cost paid, its Beat
+ * spent in a fight unless it takes none, and a heal hook applied to the target. A technique that
+ * shapes a Clash is declared on the Clash instead (`ClashSide.technique`).
+ */
+export interface UseTechnique {
+  type: "class.technique";
+  characterId: string;
+  /** A heal's target: a combatant in the fight, or a character outside one. */
+  targetId?: string;
+  /** For a Drawback technique that names none: the player's choice. */
+  drawback?: "health" | "exposed";
+}
+
+export type ClassAction = OfferClasses | AcceptClass | UseClassPermission | UseTechnique;
 
 export function cloneClass(s: ClassState): ClassState {
   return {
     ...s,
     ...(s.offers ? { offers: s.offers.map(clonePackage) } : {}),
-    ...(s.held ? { held: { ...clonePackage(s.held), bonus: s.held.bonus, ...(s.held.lost ? { lost: s.held.lost } : {}) } } : {}),
+    ...(s.held ? { held: { ...clonePackage(s.held), bonus: s.held.bonus, grade: s.held.grade, ...(s.held.lost ? { lost: s.held.lost } : {}) } } : {}),
   };
 }
 
@@ -83,7 +116,7 @@ function clonePackage(p: ClassPackage): ClassPackage {
   return {
     ...p,
     profile: { shape: p.profile.shape, points: p.profile.points.map((x) => ({ ...x })) },
-    technique: { ...p.technique },
+    technique: { ...p.technique, ...(p.technique.hook ? { hook: { ...p.technique.hook } } : {}) },
     permission: { ...p.permission },
   };
 }
@@ -106,6 +139,11 @@ export function bookClasses(engine: Engine): ClassPackage[] {
     if (c.permission.action_economy) pkg.permission.actionEconomy = true;
     if (c.permission.once_a_day) pkg.permission.onceADay = true;
     if (c.technique.reaction) pkg.technique.actionEconomy = true;
+    if (c.technique.reaction || c.technique.no_own_beat) pkg.technique.noBeat = true;
+    if (c.technique.drawback) pkg.technique.drawback = c.technique.drawback;
+    const h = c.technique.hook;
+    if (h?.clash !== undefined) pkg.technique.hook = { kind: "clash", bonus: h.clash, side: h.side };
+    else if (h?.heal !== undefined) pkg.technique.hook = { kind: "heal", amount: h.heal, reach: h.reach };
     if (c.guarded) pkg.guarded = true;
     return pkg;
   });
@@ -136,6 +174,14 @@ export function packageProblems(engine: Engine, p: ClassPackage): string[] {
   if (!costs.includes(p.technique.cost)) out.push(`${label}: the technique costs Aether, Frequency, or Drawback, not ${p.technique.cost}`);
   if (!p.technique.name.trim() || !p.technique.effect.trim()) out.push(`${label}: the technique needs a name and what it does`);
   if (!p.permission.name.trim() || !p.permission.effect.trim()) out.push(`${label}: the permission needs a name and what it does`);
+  const h = p.technique.hook;
+  const cap = rules.technique.bonus_cap as number;
+  if (h?.kind === "clash" && (!Number.isInteger(h.bonus) || h.bonus < 1 || h.bonus > cap))
+    out.push(`${label}: a technique's Clash bonus runs 1 to ${cap}, the Modifier Budget's peak`);
+  if (h?.kind === "clash" && !["attack", "defense", "either"].includes(h.side)) out.push(`${label}: the bonus goes on an attack, a defense, or either`);
+  if (h?.kind === "heal" && (!Number.isInteger(h.amount) || h.amount < 1)) out.push(`${label}: a heal restores a whole number of Health from 1`);
+  if (h?.kind === "heal" && !["zone", "adjacent"].includes(h.reach)) out.push(`${label}: a heal reaches the Zone or the next one`);
+  if (p.technique.drawback && p.technique.cost !== "Drawback") out.push(`${label}: only a Drawback technique names a drawback`);
   return out;
 }
 
@@ -201,7 +247,7 @@ export function applyClasses(engine: Engine, world: World, a: ClassAction): Effe
       const lead = leadOf(offer);
       const want = engine.rules.classes.selection.lead_attribute_bonus as number;
       const bonus = Math.max(0, Math.min(want, engine.statCap(c.grade) - permanentStats(c)[lead]!));
-      const held: HeldClass = { ...clonePackage(offer), bonus };
+      const held: HeldClass = { ...clonePackage(offer), bonus, grade: c.grade };
       if (want > bonus) held.lost = want - bonus;
       c.classes = { held };
       const out: Effect[] = [{ kind: "class-accepted", characterId: c.id, name: offer.name, lead, bonus }];
@@ -212,6 +258,8 @@ export function applyClasses(engine: Engine, world: World, a: ClassAction): Effe
       for (const _ of waiting) out.push(...placeByProfile(engine, c));
       return out;
     }
+    case "class.technique":
+      throw new Error("class.technique is run by the combat module");
     case "class.use": {
       const held = c.classes?.held;
       if (!held) throw new Rejected(`${c.name} holds no class`);

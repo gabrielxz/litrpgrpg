@@ -146,6 +146,8 @@ export interface PlayerCombat {
     characterId?: string;
     /** Pills taken this encounter, by kind: characters only. */
     pills?: { healing: number; aether: number };
+    /** The once-per-fight class technique spent: characters only. */
+    techniqueUsed?: boolean;
   }[];
 }
 
@@ -216,6 +218,8 @@ export interface InspectRead {
 
 /** A class as its holder sees it: the guarded mark and the book's name are the GM's alone. */
 export interface PlayerClass extends Omit<ClassPackage, "guarded" | "book"> {
+  /** The Grade it was acquired at, which prices an Aether technique. */
+  grade?: string;
   /** The selection bonus that landed on the lead Attribute. */
   bonus?: number;
   /** A once-a-day permission spent since dawn; null when the table keeps no clock. */

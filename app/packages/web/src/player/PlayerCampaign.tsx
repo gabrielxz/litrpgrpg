@@ -515,12 +515,15 @@ function Interface({
   readOnly,
   pills,
   engine,
+  inFight,
 }: {
   campaignId: string;
   c: InterfaceSheet;
   roster: PlayerView["roster"];
   readOnly?: boolean;
   engine: Engine | null;
+  /** In the running fight: the technique is used from the fight's panel. */
+  inFight: boolean;
   /** Pill names from the Items tables, lower-cased: these are taken, not just used. */
   pills: string[];
 }) {
@@ -605,7 +608,7 @@ function Interface({
         </div>
       </div>
 
-      <ClassHeld campaignId={campaignId} engine={engine} c={c} readOnly={readOnly} />
+      <ClassHeld campaignId={campaignId} engine={engine} c={c} readOnly={readOnly} inFight={inFight} />
 
       {c.proficiencies.length > 0 && (
         <div className="sys-section">
@@ -771,6 +774,7 @@ export function PlayerCampaign({
               readOnly={readOnly}
               pills={pillsOf(engine).map((p) => p.name.toLowerCase())}
               engine={engine}
+              inFight={Boolean(view.combat?.combatants.some((x) => x.characterId === c.id && !x.out))}
             />
           ))}
         </div>

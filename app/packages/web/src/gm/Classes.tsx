@@ -14,13 +14,14 @@ import {
   MINUTES_PER_DAY,
   type ProfileShape,
   type Sheet,
+  type TechniqueHook,
   bookClasses,
   packageProblems,
   packageWarnings,
   weights,
 } from "@gradebreaker/record";
 import { useEffect, useState } from "react";
-import { costLine, profileLine, returnedOf, selectionLine } from "../classes.ts";
+import { costLine, profileLine, returnedOf, selectionLine, techniqueOffer } from "../classes.ts";
 import { ATTRIBUTES, type Names, tableWordsIn } from "../text.ts";
 import { Commit } from "./Commit.tsx";
 
@@ -213,6 +214,27 @@ function OfferEditor({ engine, c, value, onChange, index }: { engine: Engine; c:
         <input type="checkbox" checked={Boolean(value.technique.actionEconomy)} onChange={(e) => set({ technique: { ...value.technique, actionEconomy: e.target.checked || undefined } })} />
         The technique changes the action economy (a reaction, a free or combined act)
       </label>
+      <label className="check">
+        <input type="checkbox" checked={Boolean(value.technique.noBeat)} onChange={(e) => set({ technique: { ...value.technique, noBeat: e.target.checked || undefined } })} />
+        It takes no Beat of its own (a reaction, or part of a Clash)
+      </label>
+      {value.technique.cost === "Drawback" && (
+        <label>
+          Its drawback
+          <select
+            value={value.technique.drawback ?? ""}
+            onChange={(e) => {
+              const { drawback: _, ...rest } = value.technique;
+              set({ technique: e.target.value ? { ...rest, drawback: e.target.value as "health" | "exposed" } : rest });
+            }}
+          >
+            <option value="">The player chooses each time</option>
+            <option value="health">10 Health</option>
+            <option value="exposed">Exposed until the next turn</option>
+          </select>
+        </label>
+      )}
+      <HookFields engine={engine} value={value} onChange={onChange} />
       <label>
         Permission
         <input value={value.permission.name} maxLength={60} onChange={(e) => set({ permission: { ...value.permission, name: e.target.value } })} />
@@ -234,6 +256,66 @@ function OfferEditor({ engine, c, value, onChange, index }: { engine: Engine; c:
         Carries a guarded power (known to the GM only)
       </label>
     </fieldset>
+  );
+}
+
+/** What the app applies of the technique itself: a Clash bonus, a heal, or nothing (the GM applies it). */
+function HookFields({ engine, value, onChange }: { engine: Engine; value: ClassPackage; onChange: (p: ClassPackage) => void }) {
+  const h = value.technique.hook;
+  const cap = engine.rules.classes.technique.bonus_cap as number;
+  const def = engine.rules.classes.technique.bonus_default as number;
+  const heal = engine.rules.classes.technique.reference.class_heal as number;
+  const setHook = (hook: TechniqueHook | undefined) => {
+    const { hook: _, ...rest } = value.technique;
+    onChange({ ...value, technique: hook ? { ...rest, hook } : rest });
+  };
+  return (
+    <div className="row tight">
+      <label>
+        The app applies
+        <select
+          value={h?.kind ?? ""}
+          onChange={(e) =>
+            setHook(e.target.value === "clash" ? { kind: "clash", bonus: def, side: "attack" } : e.target.value === "heal" ? { kind: "heal", amount: heal, reach: "zone" } : undefined)
+          }
+        >
+          <option value="">Nothing: the GM applies it</option>
+          <option value="clash">A bonus to a Clash</option>
+          <option value="heal">Health restored to someone</option>
+        </select>
+      </label>
+      {h?.kind === "clash" && (
+        <>
+          <label>
+            Bonus
+            <input type="number" className="narrow-input" min={1} max={cap} value={h.bonus} onChange={(e) => setHook({ ...h, bonus: Number(e.target.value) || 0 })} />
+          </label>
+          <label>
+            On
+            <select value={h.side} onChange={(e) => setHook({ ...h, side: e.target.value as "attack" | "defense" | "either" })}>
+              <option value="attack">an attack</option>
+              <option value="defense">a defense</option>
+              <option value="either">either</option>
+            </select>
+          </label>
+        </>
+      )}
+      {h?.kind === "heal" && (
+        <>
+          <label>
+            Health
+            <input type="number" className="narrow-input" min={1} value={h.amount} onChange={(e) => setHook({ ...h, amount: Number(e.target.value) || 0 })} />
+          </label>
+          <label>
+            Reach
+            <select value={h.reach} onChange={(e) => setHook({ ...h, reach: e.target.value as "zone" | "adjacent" })}>
+              <option value="zone">your Zone</option>
+              <option value="adjacent">your Zone or the next</option>
+            </select>
+          </label>
+        </>
+      )}
+    </div>
   );
 }
 
@@ -330,6 +412,8 @@ function PackageLines({ engine, p, bonus }: { engine: Engine | null; p: ClassPac
         <li>
           {p.technique.name}: {costLine(engine, p)}. {p.technique.effect}
           {p.technique.actionEconomy ? " (action economy)" : ""}
+          {p.technique.hook?.kind === "clash" && ` The app adds +${p.technique.hook.bonus} to ${p.technique.hook.side === "either" ? "an attack or a defense" : `a${p.technique.hook.side === "attack" ? "n attack" : " defense"}`} declared with it.`}
+          {p.technique.hook?.kind === "heal" && ` The app restores ${p.technique.hook.amount} Health to the ally named.`}
         </li>
         <li>
           {p.permission.name}: {p.permission.effect}
@@ -368,6 +452,46 @@ function Standing({ view, engine, names, onRecorded, c }: Props & { c: Sheet }) 
   );
 }
 
+/** The technique used outside a fight, recorded by the GM: its cost paid, a heal applied. */
+function TechniqueOutside({ view, engine, names, onRecorded, c }: Props & { c: Sheet }) {
+  const k = c.class!;
+  const living = view.characters.filter((x) => !x.dead);
+  const [target, setTarget] = useState(c.id);
+  const inFight = Boolean(view.encounter?.combatants.some((x) => x.characterId === c.id && !x.out));
+  const t = techniqueOffer(engine, k, { aether: c.aether, inFight: false });
+  if (c.dead || t.hook?.kind === "clash" || k.technique.cost === "Frequency") return null;
+  if (inFight) return <p className="small muted">{k.technique.name} is used from the fight's tracker while {c.name} is in it.</p>;
+  return (
+    <div className="row tight">
+      {t.hook?.kind === "heal" && (
+        <label>
+          {k.technique.name} restores {t.hook.amount} Health to
+          <select value={target} onChange={(e) => setTarget(e.target.value)}>
+            {living.map((x) => (
+              <option key={x.id} value={x.id}>
+                {x.name}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
+      <Commit
+        campaignId={view.campaign.id}
+        action={{
+          type: "class.technique",
+          characterId: c.id,
+          ...(t.hook?.kind === "heal" ? { targetId: target } : {}),
+          ...(t.chooseDrawback ? { drawback: "health" as const } : {}),
+        }}
+        problem={t.blocked}
+        names={names}
+        label={`Record ${c.name}'s ${k.technique.name} (${t.cost})`}
+        onRecorded={onRecorded}
+      />
+    </div>
+  );
+}
+
 function Held({ view, engine, names, onRecorded }: Props) {
   const held = view.characters.filter((c) => c.class);
   if (!held.length) return null;
@@ -388,6 +512,7 @@ function Held({ view, engine, names, onRecorded }: Props) {
             </h3>
             <PackageLines engine={engine} p={k} bonus={k.bonus} />
             {k.lost ? <p className="small muted">{k.lost} of the selection bonus was lost past the stat cap.</p> : null}
+            <TechniqueOutside view={view} engine={engine} names={names} onRecorded={onRecorded} c={c} />
             {k.permission.onceADay && (
               <>
                 <p className="small">

@@ -9,6 +9,7 @@ import type { Engine } from "@gradebreaker/engine";
 import { type Action, type InterfaceSheet, type PlayerView, pillLimit, shapes, stabilizeCheck } from "@gradebreaker/record";
 import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
+import { techniqueOffer } from "../classes.ts";
 import { CareActions, type Mate, pillsOf } from "../Care.tsx";
 import { AttackForm, type Clasher, DefenseForm, YieldChoice } from "../Clash.tsx";
 
@@ -33,7 +34,7 @@ function useAct(campaignId: string) {
   return { run, busy, error };
 }
 
-const clasher = (c: InterfaceSheet, engine: Engine | null): Clasher => ({
+const clasher = (c: InterfaceSheet, engine: Engine | null, combat: Combat): Clasher => ({
   kind: "character",
   name: c.name,
   force: c.force,
@@ -41,7 +42,12 @@ const clasher = (c: InterfaceSheet, engine: Engine | null): Clasher => ({
   surgeCost: c.surgeCost,
   shapes: engine ? shapes(engine) : [],
   proficiencies: c.proficiencies,
+  ...(c.class ? { technique: techniqueOf(engine, c, combat) } : {}),
 });
+
+/** The character's class technique as this fight offers it. */
+const techniqueOf = (engine: Engine | null, c: InterfaceSheet, combat: Combat) =>
+  techniqueOffer(engine, c.class!, { aether: c.aether, usedThisFight: Boolean(combat.combatants.find((x) => x.characterId === c.id)?.techniqueUsed), inFight: true });
 
 /** Flanking from the Zones: another hostile of the target shares its Zone. */
 function flanks(combat: Combat, attackerId: string, defenderId: string): boolean {
@@ -91,7 +97,7 @@ function MyTurn({
       </p>
       {attacking ? (
         <AttackForm
-          attacker={clasher(c, engine)}
+          attacker={clasher(c, engine, combat)}
           targets={targets}
           suggestFlanking={(d) => flanks(combat, me.id, d)}
           busy={busy}
@@ -134,7 +140,7 @@ function MyTurn({
       )}
       {!attacking && engine && (
         <CareActions
-          me={{ ...mateOf(me), force: c.force, items: c.items }}
+          me={{ ...mateOf(me), force: c.force, items: c.items, ...(c.class ? { technique: techniqueOf(engine, c, combat) } : {}) }}
           people={combat.combatants.map(mateOf)}
           pills={pillsOf(engine)}
           pillLimit={pillLimit(engine)}
@@ -159,7 +165,7 @@ function Defending({ view, engine, combat, c }: { view: PlayerView; engine: Engi
         {cl.label ? ` (${cl.label})` : ""}.
       </p>
       {cl.stage === "defense" ? (
-        <DefenseForm defender={clasher(c, engine)} busy={busy} onDefend={(s) => run({ type: "combat.defend", defense: s })} />
+        <DefenseForm defender={clasher(c, engine, combat)} busy={busy} onDefend={(s) => run({ type: "combat.defend", defense: s })} />
       ) : (
         <>
           <p className="small">

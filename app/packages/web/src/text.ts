@@ -255,6 +255,8 @@ export function describe(
       return `${name(a.characterId)} accepts ${a.name}`;
     case "class.use":
       return `${name(a.characterId)} uses the class's once-a-day permission`;
+    case "class.technique":
+      return `${name(a.characterId)} uses the class technique${a.targetId ? ` on ${name(a.targetId)}` : ""}${a.drawback ? ` (${a.drawback === "health" ? "10 Health" : "Exposed"})` : ""}`;
     case "prep.save":
       return a.pack ? `Loaded the ${a.pack} pack into Prep (${a.items.length} items)` : `Prepared: ${a.items.map((i) => i.title).join(", ")}`;
     case "prep.remove":
@@ -296,6 +298,8 @@ export function effectLine(e: Effect, name: Names): string | null {
       return `${name(e.characterId)} holds ${e.name}: ${e.lead} +${e.bonus}`;
     case "class-used":
       return `${name(e.characterId)} uses ${e.name}`;
+    case "technique-used":
+      return `${name(e.characterId)} uses ${e.name}, its cost paid`;
     case "prepared":
       return `${e.count} item${e.count === 1 ? "" : "s"} in Prep${e.pack ? ` from the ${e.pack} pack` : ""}`;
     case "memory-granted":
