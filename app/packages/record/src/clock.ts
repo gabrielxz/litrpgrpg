@@ -68,7 +68,7 @@ function move(world: World, from: number | null, clock: Clock): Effect[] {
     if (dawns) out.push({ kind: "dawn", count: dawns });
     for (const q of world.quests.values()) {
       if ((q.status === "active" || q.status === "offered") && q.due !== undefined && q.due > from && q.due <= clock.at) {
-        out.push({ kind: "quest-due", questId: q.id });
+        out.push({ kind: "quest-due", questId: q.id, code: q.code });
       }
     }
   }

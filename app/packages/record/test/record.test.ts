@@ -1239,11 +1239,12 @@ describe("System Quests", () => {
       as({ role: "player", userId: rec.character(id)!.playerId! }, { type: "party.answer", inviteId: inv.id, accept: true });
     }
   };
-  const q = (id: string) => rec.state.quests.get(id)!;
+  /** A quest by its code, where one quest carries it. */
+  const q = (code: string) => [...rec.state.quests.values()].find((x) => x.code === code)!;
 
   it("offers a Routine quest with the table's VE, and the player accepts it on their own screen", () => {
     const out = gm({ type: "quest.issue", quest: { ...q181, items: [...q181.items] }, to: ["kara"] });
-    expect(out.effects).toEqual([{ kind: "quest-offered", characterId: "kara", questId: "Q-181", line: "[Q-181] Glow-Mote Cluster Containment" }]);
+    expect(out.effects).toEqual([{ kind: "quest-offered", characterId: "kara", questId: out.envelope.id, line: "[Q-181] Glow-Mote Cluster Containment" }]);
     expect(q("Q-181")).toMatchObject({ status: "offered", issuer: "System", grade: "F", ve: 3, count: { done: 0, of: 3 } });
     expect(() => as(P2, { type: "quest.answer", questId: "Q-181", characterId: "kara", accept: true })).toThrow(/their own character/);
     as(P1, { type: "quest.answer", questId: "Q-181", characterId: "kara", accept: true });
@@ -1291,6 +1292,18 @@ describe("System Quests", () => {
     expect(q("M-04")).toMatchObject({ status: "active", holders: ["kara"], refusedBy: ["joe"] });
   });
 
+  it("issues the same code to each character as their own quest (the tutorial's Q-001)", () => {
+    const q001 = { id: "Q-001", category: "Routine" as const, title: "First Contact", difficulty: "Trivial", objective: "Stand within sight of two other Initiates.", count: 2, ve: 10 };
+    const toKara = gm({ type: "quest.issue", quest: q001, to: ["kara"] });
+    const toJoe = gm({ type: "quest.issue", quest: q001, to: ["joe"] });
+    expect(toKara.envelope.id).not.toBe(toJoe.envelope.id);
+    as(P1, { type: "quest.answer", questId: toKara.envelope.id, characterId: "kara", accept: true });
+    expect(rec.state.quests.get(toKara.envelope.id)!.status).toBe("active");
+    expect(rec.state.quests.get(toJoe.envelope.id)!.status).toBe("offered");
+    // A code two quests carry no longer names one of them.
+    expect(() => gm({ type: "quest.progress", questId: "Q-001", by: 1 })).toThrow(/2 quests carry the code Q-001/);
+  });
+
   it("counts refused Personal Opportunities by flavor", () => {
     for (let i = 1; i <= 3; i++) {
       gm({ type: "quest.issue", quest: { id: `PO-${i}`, category: "Personal Opportunity", title: "Hostile detected", difficulty: "Moderate", objective: "Eliminate within 6 hours.", flavor: "combat", scaled: true }, to: ["kara"] });
@@ -1302,12 +1315,12 @@ describe("System Quests", () => {
 
   it("shows a hidden quest's holder only what its mode allows, down to the notices", () => {
     const out = gm({ type: "quest.issue", quest: { id: "Q-HID-014", category: "Hidden", title: "Let It Finish", difficulty: "Hard", objective: "Spare a surrendered foe three times.", hidden: "obscured" }, to: ["kara"] });
-    expect(out.effects).toEqual([{ kind: "quest-issued", characterId: "kara", questId: "Q-???", line: "[Q-???] Hidden Objective: ???" }]);
-    expect(questForHolder(q("Q-HID-014"))).toMatchObject({ id: "Q-???", objective: "", ve: null });
+    expect(out.effects).toEqual([{ kind: "quest-issued", characterId: "kara", questId: out.envelope.id, line: "[Q-???] Hidden Objective: ???" }]);
+    expect(questForHolder(q("Q-HID-014"))).toMatchObject({ code: "Q-???", objective: "", ve: null });
     gm({ type: "quest.reveal", questId: "Q-HID-014", name: "Let It Finish" });
     expect(questForHolder(q("Q-HID-014"))).toMatchObject({ title: 'Hidden Objective: "Let It Finish"', objective: "Conditions: Unclear." });
     const done = gm({ type: "quest.complete", questId: "Q-HID-014", awards: [{ characterId: "kara", ve: 60 }] });
-    expect(done.effects[0]).toMatchObject({ kind: "quest-completed", questId: "Q-HID-014", line: "[Q-HID-014] Let It Finish" });
+    expect(done.effects[0]).toMatchObject({ kind: "quest-completed", questId: out.envelope.id, line: "[Q-HID-014] Let It Finish" });
     // A post-completion quest is silent until it is complete.
     expect(gm({ type: "quest.issue", quest: { id: "Q-HID-015", category: "Hidden", title: "Stayed", difficulty: "Easy", objective: "x", hidden: "post-completion" }, to: ["kara"] }).effects).toEqual([]);
     expect(questForHolder(q("Q-HID-015"))).toBeNull();
@@ -1573,11 +1586,11 @@ describe("the in-game clock", () => {
     expect(() => issue(72)).toThrow(/set the in-game clock/);
     gm({ type: "clock.set", day: 1, hour: 10 });
     issue(72);
-    const q = rec.state.quests.get("M-04")!;
+    const q = [...rec.state.quests.values()].find((x) => x.code === "M-04")!;
     expect(q).toMatchObject({ hours: 72, due: 10 * 60 + 72 * 60, time: "72 hours" });
     expect(gm({ type: "clock.advance", minutes: 71 * 60 }).effects.some((e) => e.kind === "quest-due")).toBe(false);
-    expect(gm({ type: "clock.advance", minutes: 60 }).effects).toContainEqual({ kind: "quest-due", questId: "M-04" });
-    expect(rec.state.quests.get("M-04")!.status).toBe("active");
+    expect(gm({ type: "clock.advance", minutes: 60 }).effects).toContainEqual({ kind: "quest-due", questId: q.id, code: "M-04" });
+    expect(q.status).toBe("active");
   });
 
   it("stamps events and sessions with the clock", () => {

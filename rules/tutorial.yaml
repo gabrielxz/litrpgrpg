@@ -112,7 +112,7 @@ notices:
 
 quests:
   - group: "Phase 3: The Recycling Node"
-    note: "Deliver to each character separately, while they are still walking and still alone. Fire it once per character; a code is used once in a campaign, so add a letter from the second on (Q-001B)."
+    note: "Deliver to each character separately, while they are still walking and still alone. Fire it once per character: each holds their own Q-001."
     quest: {id: Q-001, category: Routine, title: First Contact, issuer: System, grade: F, difficulty: Trivial,
             objective: "Stand within sight of two other Initiates.", count: 2, ve: 10,
             rewardText: "Party formation unlocked.", time: Open.}

@@ -54,7 +54,13 @@ export interface QuestSpec {
   hiddenName?: string;
 }
 
+/**
+ * A quest as issued. `id` is the record's key, the id of the action that issued it; `code` is the
+ * log's code (Q-181, M-04), which may repeat: the tutorial's Q-001 goes to each character
+ * separately, each their own quest under the same code.
+ */
 export interface Quest extends Omit<QuestSpec, "count" | "ve"> {
+  code: string;
   /** When the time limit runs out, in the clock's minutes since Day 1, 00:00. */
   due?: number;
   issuer: string;
@@ -125,13 +131,16 @@ export function questTableVe(engine: Engine, category: QuestCategory, difficulty
   return ve === null ? null : ve * engine.scale(grade);
 }
 
+/** A quest by its key, or by its code where one quest alone carries it (the log before quests had keys). */
 function quest(world: World, id: string): Quest {
   const q = world.quests.get(id);
-  if (!q) throw new Rejected(`no quest ${id}`);
-  return q;
+  if (q) return q;
+  const byCode = [...world.quests.values()].filter((x) => x.code === id);
+  if (byCode.length === 1) return byCode[0]!;
+  throw new Rejected(byCode.length ? `${byCode.length} quests carry the code ${id}: name the one meant` : `no quest ${id}`);
 }
 
-const log = (q: Quest) => `[${q.id}] ${q.title}`;
+const log = (q: Quest) => `[${q.code}] ${q.title}`;
 
 /**
  * A notice to each holder carries only what their log shows: a hidden quest's code and line stay
@@ -140,7 +149,7 @@ const log = (q: Quest) => `[${q.id}] ${q.title}`;
 function notices(q: Quest, kind: QuestNoticeKind, to = q.holders, extra: Record<string, unknown> = {}): Effect[] {
   const shown = questForHolder(q);
   if (!shown) return [];
-  return to.map((characterId) => ({ kind, characterId, questId: shown.id, line: `[${shown.id}] ${shown.title}`, ...extra }) as Effect);
+  return to.map((characterId) => ({ kind, characterId, questId: shown.id, line: `[${shown.code}] ${shown.title}`, ...extra }) as Effect);
 }
 
 export type QuestNoticeKind =
@@ -154,11 +163,10 @@ export type QuestNoticeKind =
   | "quest-completed"
   | "quest-failed";
 
-function issue(engine: Engine, world: World, a: IssueQuest): Effect[] {
+function issue(engine: Engine, world: World, a: IssueQuest, key: string): Effect[] {
   const s = a.quest;
-  const id = s.id.trim();
-  if (!id) throw new Rejected("a quest needs its log code");
-  if (world.quests.has(id)) throw new Rejected(`${id} is in the log already`);
+  const code = s.id.trim();
+  if (!code) throw new Rejected("a quest needs its log code");
   if (!s.title.trim()) throw new Rejected("a quest needs a title");
   if (!(s.category in { Mandate: 1, "Personal Opportunity": 1, Routine: 1, Hidden: 1, Faction: 1 })) throw new Rejected(`no quest category ${s.category}`);
   const grade = s.grade ?? "F";
@@ -183,7 +191,8 @@ function issue(engine: Engine, world: World, a: IssueQuest): Effect[] {
   if (s.count !== undefined && (!Number.isInteger(s.count) || s.count < 1)) throw new Rejected("a counted objective counts from 1");
   if (s.ve !== undefined && (!Number.isInteger(s.ve) || s.ve < 0)) throw new Rejected("quest VE is a whole number");
   const q: Quest = {
-    id,
+    id: key,
+    code,
     category: s.category,
     title: s.title.trim(),
     issuer: s.category === "Faction" ? s.issuer?.trim() || "an issuer" : "System",
@@ -209,7 +218,7 @@ function issue(engine: Engine, world: World, a: IssueQuest): Effect[] {
   if (s.items?.length) q.items = s.items.map((x) => ({ name: x.name.trim(), count: x.count }));
   // A post-completion Hidden quest appears only once it is complete.
   if (s.hidden === "post-completion") q.status = "active";
-  world.quests.set(id, q);
+  world.quests.set(key, q);
   if (s.hidden === "post-completion") return [];
   return notices(q, q.status === "offered" ? "quest-offered" : "quest-issued");
 }
@@ -313,10 +322,10 @@ function complete(engine: Engine, world: World, a: CompleteQuest): Effect[] {
   return out;
 }
 
-export function applyQuests(engine: Engine, world: World, a: QuestAction): Effect[] {
+export function applyQuests(engine: Engine, world: World, a: QuestAction, key: string): Effect[] {
   switch (a.type) {
     case "quest.issue":
-      return issue(engine, world, a);
+      return issue(engine, world, a, key);
     case "quest.answer":
       return answer(world, a);
     case "quest.share":
@@ -367,11 +376,11 @@ export function questForHolder(q: Quest): Quest | null {
   if (q.hidden === "post-completion" && q.status !== "completed") return null;
   if (q.hidden === "obscured" && q.status !== "completed") {
     const { rewardText: _r, items: _i, count: _c, time: _t, hours: _h, due: _d, ...rest } = q;
-    return { ...rest, id: "Q-???", title: "Hidden Objective: ???", objective: "", ve: null };
+    return { ...rest, code: "Q-???", title: "Hidden Objective: ???", objective: "", ve: null };
   }
   if (q.hidden === "partial" && q.status !== "completed") {
     const { rewardText: _r, items: _i, count: _c, ...rest } = q;
-    return { ...rest, id: "Q-???", title: `Hidden Objective: "${q.hiddenName}"`, objective: "Conditions: Unclear.", ve: null };
+    return { ...rest, code: "Q-???", title: `Hidden Objective: "${q.hiddenName}"`, objective: "Conditions: Unclear.", ve: null };
   }
   return q;
 }

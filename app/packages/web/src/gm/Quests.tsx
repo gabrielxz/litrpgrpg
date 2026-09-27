@@ -37,7 +37,7 @@ function useRun(campaignId: string, onRecorded: (env: Envelope) => void) {
 
 /** The next free code: Q-101 onward, M-01 onward for Mandates. */
 function nextCode(quests: Quest[], category: QuestCategory): string {
-  const taken = new Set(quests.map((q) => q.id));
+  const taken = new Set(quests.map((q) => q.code));
   const mandate = category === "Mandate";
   for (let n = 1; ; n++) {
     const id = mandate ? `M-${String(n).padStart(2, "0")}` : `Q-${100 + n}`;
@@ -308,7 +308,7 @@ function QuestCard({ q, view, engine, names, onRecorded }: { q: Quest; view: GmV
   return (
     <article className={`quest-card ${q.status}`}>
       <pre className="quest-entry">
-        {`[${q.id}] ${q.title}${q.hidden ? `   (hidden: ${q.hidden}${q.hiddenName ? `, "${q.hiddenName}"` : ""})` : ""}
+        {`[${q.code}] ${q.title}${q.hidden ? `   (hidden: ${q.hidden}${q.hiddenName ? `, "${q.hiddenName}"` : ""})` : ""}
 Issuer:     ${q.issuer}${q.category === "Faction" ? "" : ` · ${q.category}`}
 Grade:      ${q.grade} · Difficulty: ${q.difficulty}
 Objective:  ${q.objective}${q.count ? ` (${q.count.done}/${q.count.of})` : ""}
@@ -411,7 +411,7 @@ Status:     ${q.status[0]!.toUpperCase() + q.status.slice(1)}${q.flavor ? ` · $
             </label>
           ) : null}
           <button className="primary" disabled={busy} onClick={complete}>
-            Complete [{q.id}]
+            Complete [{q.code}]
           </button>
         </div>
       )}

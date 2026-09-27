@@ -53,6 +53,12 @@ const placement = (p: Record<string, number>) =>
     .map(([k, v]) => `${k} ${signed(v)}`)
     .join(", ");
 
+/** A quest in the GM's log: its code and title by its key, or the code an older action named it by. */
+const questName = (id: string, name: Names) => {
+  const n = name(id);
+  return n === id ? `[${id}]` : n;
+};
+
 /** "3 hours 20 minutes". */
 export function duration(minutes: number): string {
   const h = Math.floor(minutes / 60);
@@ -212,19 +218,19 @@ export function describe(
     case "quest.issue":
       return `Quest ${a.quest.category === "Mandate" || a.quest.category === "Hidden" ? "issued" : "offered"}: [${a.quest.id}] ${a.quest.title} to ${a.to.map(name).join(", ")}`;
     case "quest.answer":
-      return `${name(a.characterId)} ${a.accept ? "accepts" : "refuses"} [${a.questId}]`;
+      return `${name(a.characterId)} ${a.accept ? "accepts" : "refuses"} ${questName(a.questId, name)}`;
     case "quest.share":
-      return `${name(a.characterId)} shares [${a.questId}] with the party`;
+      return `${name(a.characterId)} shares ${questName(a.questId, name)} with the party`;
     case "quest.progress":
-      return `[${a.questId}] ${a.by > 0 ? "+" : ""}${a.by}`;
+      return `${questName(a.questId, name)} ${a.by > 0 ? "+" : ""}${a.by}`;
     case "quest.reveal":
-      return `[${a.questId}] partly revealed as "${a.name}"`;
+      return `${questName(a.questId, name)} partly revealed as "${a.name}"`;
     case "quest.complete":
-      return `[${a.questId}] complete: ${a.awards.map((w) => `${name(w.characterId)} ${w.ve} VE`).join(", ") || "no VE"}`;
+      return `${questName(a.questId, name)} complete: ${a.awards.map((w) => `${name(w.characterId)} ${w.ve} VE`).join(", ") || "no VE"}`;
     case "quest.fail":
-      return `[${a.questId}] failed`;
+      return `${questName(a.questId, name)} failed`;
     case "quest.withdraw":
-      return `[${a.questId}] expires`;
+      return `${questName(a.questId, name)} expires`;
     case "pill.take":
       return a.characterId === a.targetId ? `${name(a.characterId)} takes a ${a.pill}` : `${name(a.characterId)} gives ${name(a.targetId)} a ${a.pill}`;
     case "hve.sweep": {
@@ -323,7 +329,7 @@ export function effectLine(e: Effect, name: Names): string | null {
     case "dawn":
       return e.count === 1 ? "Dawn passes: once-a-day uses return" : `${e.count} dawns pass: once-a-day uses return`;
     case "quest-due":
-      return `[${e.questId}] reaches its time limit (fail or expire it from Quests)`;
+      return `[${e.code}] reaches its time limit (fail or expire it from Quests)`;
     case "session-started":
       return `${e.name} starts`;
     case "session-ended":

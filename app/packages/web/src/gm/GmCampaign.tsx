@@ -259,6 +259,8 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
     const specs = a.type === "combat.start" ? a.combatants : a.type === "combat.add" ? [a.combatant] : [];
     for (const s of specs) if (s.name && !byId.has(s.combatantId)) byId.set(s.combatantId, s.name);
   }
+  // Quests by their key, for the log's lines.
+  for (const q of view.quests) byId.set(q.id, `[${q.code}] ${q.title}`);
   const names = (id: string) => byId.get(id) ?? id;
   /** The other members of a character's party, by name. */
   const partyWith = (id: string) => {

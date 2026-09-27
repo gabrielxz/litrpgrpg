@@ -124,7 +124,7 @@ export type Effect =
   | { kind: "principle-refined"; characterId: string; from: string; name: string }
   | { kind: "clock"; from: number | null; to: number }
   | { kind: "dawn"; count: number }
-  | { kind: "quest-due"; questId: string }
+  | { kind: "quest-due"; questId: string; code: string }
   | { kind: "session-started"; sessionId: string; name: string }
   | { kind: "session-ended"; sessionId: string; name: string }
   | { kind: "event-logged"; eventId: string; summary: string }
@@ -564,7 +564,7 @@ function apply(engine: Engine, world: World, env: Envelope): Effect[] {
     case "quest.complete":
     case "quest.fail":
     case "quest.withdraw":
-      return applyQuests(engine, world, a);
+      return applyQuests(engine, world, a, env.id);
     case "pill.take":
       return takePillOutside(engine, world, a);
     case "hve.sweep":

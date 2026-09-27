@@ -553,7 +553,7 @@ describe("the combat tracker", () => {
     expect(raw).toContain("Hidden Objective: ???");
     await act(campaignId, gm, { type: "quest.complete", questId: "Q-HID-014", awards: [{ characterId: "kara", ve: 60 }] });
     const pv = (await call("GET", `/campaigns/${campaignId}`, { token: player })).json;
-    expect(pv.characters[0].quests[0]).toMatchObject({ id: "Q-HID-014", title: "Let It Finish", status: "completed" });
+    expect(pv.characters[0].quests[0]).toMatchObject({ code: "Q-HID-014", title: "Let It Finish", status: "completed" });
   });
 
   it("settles a fight: the kill and the VE reach the player, and the spoils wait for them to claim", async () => {
@@ -690,7 +690,7 @@ describe("the in-game clock", () => {
     });
     await act(campaignId, gm, { type: "clock.advance", minutes: 70 * 60 + 30 });
     const view = await call("GET", `/campaigns/${campaignId}`, { token: player });
-    expect(view.json.characters[0].quests[0]).toMatchObject({ id: "M-04", time: "72 hours", hoursLeft: 2 });
+    expect(view.json.characters[0].quests[0]).toMatchObject({ code: "M-04", time: "72 hours", hoursLeft: 2 });
     const text = JSON.stringify(view.json);
     for (const leak of ['"clock"', '"due"', "Day 2"]) expect(text).not.toContain(leak);
     expect((await act(campaignId, player, { type: "clock.advance", minutes: 60 })).status).toBe(422);

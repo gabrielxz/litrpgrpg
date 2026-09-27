@@ -388,7 +388,7 @@ function QuestLog({ campaignId, c, readOnly }: { campaignId: string; c: Interfac
     const reward = [q.scaled ? "Proportional" : q.ve === null ? "" : `${q.ve} VE`, ...(q.items ?? []).map((i) => (i.count === 1 ? i.name : `${i.count} ${i.name}`)), q.rewardText ?? ""]
       .filter(Boolean)
       .join(", ");
-    const lines = [`[${q.id}] ${q.title}`];
+    const lines = [`[${q.code}] ${q.title}`];
     if (!q.hidden || q.status === "completed") {
       lines.push(`Issuer:     ${q.issuer}`, `Grade:      ${q.grade} · Difficulty: ${q.difficulty}`);
       if (q.objective) lines.push(`Objective:  ${q.objective}${q.count ? ` (${q.count.done}/${q.count.of})` : ""}`);
@@ -429,7 +429,7 @@ function QuestLog({ campaignId, c, readOnly }: { campaignId: string; c: Interfac
                   <>
                     <span className="small">Refusing a Mandate has consequences.</span>
                     <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "quest.answer", questId: q.id, characterId: c.id, accept: false })}>
-                      Refuse [{q.id}]
+                      Refuse [{q.code}]
                     </button>
                     <button className="sys-confirm inline" onClick={() => setRefusing(null)}>
                       Keep it
