@@ -10,6 +10,7 @@ import type { CampaignSession } from "./sessions.ts";
 import type { Clock } from "./clock.ts";
 import type { InterfacePrinciples } from "./principles.ts";
 import type { ClassPackage } from "./classes.ts";
+import type { TitleRead } from "./titles.ts";
 import type { Combatant, Encounter } from "./combat.ts";
 import type { Envelope } from "./actions.ts";
 import type { Sheet } from "./sheet.ts";
@@ -199,6 +200,17 @@ export interface InterfaceSheet {
   class: PlayerClass | null;
   /** Offers standing until one is accepted. */
   classOffers: PlayerClass[];
+  /** What this character reads of each being it can inspect: the other players' characters, and everyone in the fight. */
+  inspection: InspectRead[];
+}
+
+/** One inspection (What Can Be Seen, "What You See of Others"): the titles the Grade gap reads, or nothing at all. */
+export interface InspectRead {
+  id: string;
+  name: string;
+  /** False when the target is a Grade or more above: "you look, and it does not resolve". */
+  resolves: boolean;
+  titles: TitleRead[];
 }
 
 /** A class as its holder sees it: the guarded mark and the book's name are the GM's alone. */

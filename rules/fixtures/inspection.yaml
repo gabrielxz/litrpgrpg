@@ -1,0 +1,62 @@
+# What Can Be Seen, "What You See of Others": the Grade-gap table, the Open Measure bulletin, and worn and hidden.
+cases:
+  - name: A lower-Grade inspector reads nothing
+    source: 57-what-can-be-seen.md, "What You See of Others"
+    fn: inspection_resolves
+    args: {inspector_grade: F, target_grade: E}
+    expect: false
+  - name: The same Grade resolves
+    source: 57-what-can-be-seen.md, "What You See of Others"
+    fn: inspection_resolves
+    args: {inspector_grade: F, target_grade: F}
+    expect: true
+  - name: Subjects inspecting upward read nothing, not even a negative title
+    source: 57-what-can-be-seen.md, "What You See of Others" (the Open Measure bulletin)
+    fn: title_readable
+    args: {inspector_grade: F, target_grade: E, category: Bestowed, negative: true}
+    expect: false
+  - name: The same Grade reads an Achievement title
+    source: 57-what-can-be-seen.md, "What You See of Others"
+    fn: title_readable
+    args: {inspector_grade: F, target_grade: F, category: Achievement}
+    expect: true
+  - name: The same Grade reads an HVE-Resonant title
+    source: 57-what-can-be-seen.md, "What You See of Others"
+    fn: title_readable
+    args: {inspector_grade: F, target_grade: F, category: HVE-Resonant}
+    expect: true
+  - name: One Grade higher reads a worn Bestowed title
+    source: 57-what-can-be-seen.md, "What You See of Others" (the Open Measure bulletin)
+    fn: title_readable
+    args: {inspector_grade: E, target_grade: F, category: Bestowed, worn: true}
+    expect: true
+  - name: One Grade higher reads no hidden Bestowed title
+    source: 57-what-can-be-seen.md, "Worn and hidden"
+    fn: title_readable
+    args: {inspector_grade: E, target_grade: F, category: Bestowed}
+    expect: false
+  - name: Two Grades higher reads a hidden Bestowed title
+    source: 57-what-can-be-seen.md, "What You See of Others"
+    fn: title_readable
+    args: {inspector_grade: D, target_grade: F, category: Bestowed}
+    expect: true
+  - name: A negative title cannot be hidden from the same Grade (Salvaged)
+    source: 57-what-can-be-seen.md, "Negative titles cannot be hidden"
+    fn: title_readable
+    args: {inspector_grade: F, target_grade: F, category: Bestowed, negative: true}
+    expect: true
+  - name: Two Grades higher does not read an unrevealed Hidden Achievement
+    source: 57-what-can-be-seen.md, "Hidden Achievement titles stay hidden"
+    fn: title_readable
+    args: {inspector_grade: D, target_grade: F, category: Hidden Achievement}
+    expect: false
+  - name: Three Grades higher reads every title
+    source: 57-what-can-be-seen.md, "What You See of Others"
+    fn: title_readable
+    args: {inspector_grade: C, target_grade: F, category: Hidden Achievement}
+    expect: true
+  - name: A revealed Hidden Achievement reads like a worn Bestowed title
+    source: 57-what-can-be-seen.md, "Hidden Achievement titles stay hidden"
+    fn: title_readable
+    args: {inspector_grade: F, target_grade: F, category: Hidden Achievement, revealed: true}
+    expect: true

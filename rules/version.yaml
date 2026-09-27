@@ -1,7 +1,7 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.24"
+version: "0.1.25"
 dated: "2026-09-27"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
@@ -84,3 +84,6 @@ notes: >
   0.1.24: classes.yaml carries each class's System notice, the Level 10 opening line, and the offer's heading
   (the book's boxes, held word for word by the prose lint), and marks the two once-a-day permissions (Finder's Share,
   Standing). No number moved; the companion app offers the book's classes as written.
+  0.1.25: titles.yaml carries What Can Be Seen's Grade-gap table as data (inspection: resolves from a gap of 0, hidden
+  Bestowed titles from 2, unrevealed Hidden Achievements from 3), with the engine's inspection_resolves and title_readable
+  and the table's rows as fixtures. No number moved.

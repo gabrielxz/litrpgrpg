@@ -538,6 +538,30 @@ def skill_cost_at_grade(cost_at_f: int, acquired_grade: str) -> int:
     return cost_at_f * scale(acquired_grade)
 
 
+# ------------------------------------------------------------ inspection ---
+
+def inspection_resolves(inspector_grade: str, target_grade: str) -> bool:
+    """A lower-Grade inspector reads nothing: the target does not resolve (What Can Be Seen)."""
+    return grade_order(inspector_grade) - grade_order(target_grade) >= load("titles")["inspection"]["resolves_from_gap"]
+
+
+def title_readable(inspector_grade: str, target_grade: str, category: str, negative: bool = False,
+                   worn: bool = False, revealed: bool = False) -> bool:
+    """Whether inspection reads one title, by the Grade gap (What Can Be Seen, "What You See of Others").
+    Negative titles cannot be hidden; a revealed Hidden Achievement reads like a worn Bestowed title."""
+    if not inspection_resolves(inspector_grade, target_grade):
+        return False
+    rules = load("titles")["inspection"]
+    gap = grade_order(inspector_grade) - grade_order(target_grade)
+    if negative or category in ("Achievement", "HVE-Resonant"):
+        return True
+    if category == "Bestowed":
+        return worn or gap >= rules["hidden_bestowed_from_gap"]
+    if category == "Hidden Achievement":
+        return revealed or gap >= rules["hidden_achievement_from_gap"]
+    raise KeyError(f"no title category {category}")
+
+
 # ----------------------------------------------------------------- items ---
 
 def pill_effect(listed_amount: int, pill_grade: str, body_grade: str) -> int:

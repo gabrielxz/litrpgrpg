@@ -22,8 +22,9 @@ import { RollForm, RollList } from "../Dice.tsx";
 import { ItemsForm } from "./Items.tsx";
 import { CountersForm, TitlesForm } from "./Titles.tsx";
 import { MessageForm, PartyForm } from "./Social.tsx";
+import { InspectionForm } from "./Inspection.tsx";
 
-type Tab = "character" | "ve" | "rest" | "points" | "vitals" | "items" | "marks" | "titles" | "counts" | "collapse" | "party" | "message" | "dice";
+type Tab = "character" | "ve" | "rest" | "points" | "vitals" | "items" | "marks" | "titles" | "counts" | "collapse" | "party" | "message" | "dice" | "inspect";
 
 const TABS: [Tab, string][] = [
   ["dice", "Dice"],
@@ -35,6 +36,7 @@ const TABS: [Tab, string][] = [
   ["marks", "Marks"],
   ["titles", "Titles"],
   ["counts", "Counts"],
+  ["inspect", "Inspection"],
   ["message", "System message"],
   ["party", "Party"],
   ["character", "New character"],
@@ -73,6 +75,7 @@ export function RecordPanel(props: Omit<FormProps, "onRecorded"> & { onRecorded:
         {tab === "points" && <PointsForm {...p} />}
         {tab === "vitals" && <VitalsForm {...p} />}
         {tab === "items" && <ItemsForm {...p} />}
+        {tab === "inspect" && <InspectionForm {...p} />}
         {tab === "marks" && <MarkForm {...p} />}
         {tab === "titles" && <TitlesForm {...p} />}
         {tab === "counts" && <CountersForm {...p} />}

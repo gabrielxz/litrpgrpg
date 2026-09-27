@@ -759,6 +759,45 @@ describe("classes", () => {
   });
 });
 
+describe("inspection", () => {
+  it("reads another character's titles by the Grade gap, and a higher-Grade creature not at all", async () => {
+    const { campaignId, gm, player, playerId, invite } = await table();
+    const other = await signIn("Bo");
+    await call("POST", `/invites/${invite}/accept`, { token: other });
+    const otherId = (await call("GET", "/me", { token: other })).json.user.id as string;
+    await act(campaignId, gm, { type: "character.pregen", characterId: "kara", pregen: "Kara", playerId });
+    await act(campaignId, gm, { type: "character.pregen", characterId: "joe", pregen: "Joe", playerId: otherId });
+    await act(campaignId, gm, { type: "title.grant", characterId: "kara", title: { catalog: "Week One" } });
+    await act(campaignId, gm, { type: "title.grant", characterId: "kara", title: { name: "Friend of the Co-op", category: "Bestowed" } });
+    await act(campaignId, gm, { type: "title.grant", characterId: "kara", title: { name: "Oathbroken", category: "Bestowed", negative: true, bonus: { CHA: -1 }, release: "Keep an oath" } });
+    await act(campaignId, gm, { type: "title.grant", characterId: "kara", title: { name: "The Quiet Door", category: "Hidden Achievement" } });
+    const joeReads = async () =>
+      (await call("GET", `/campaigns/${campaignId}`, { token: other })).json.characters[0].inspection as { id: string; resolves: boolean; titles: { name: string }[] }[];
+    // A Bestowed title arrives worn; the unrevealed Hidden Achievement stays unread.
+    let kara = (await joeReads()).find((r) => r.id === "kara")!;
+    expect(kara.titles.map((t) => t.name).sort()).toEqual(["Friend of the Co-op", "Oathbroken", "Week One"]);
+    const bestowed = (await call("GET", `/campaigns/${campaignId}`, { token: player })).json.characters[0].titles.find((t: { name: string }) => t.name === "Friend of the Co-op");
+    await act(campaignId, player, { type: "title.wear", characterId: "kara", titleId: bestowed.id, worn: false });
+    kara = (await joeReads()).find((r) => r.id === "kara")!;
+    expect(kara.titles.map((t) => t.name).sort()).toEqual(["Oathbroken", "Week One"]);
+
+    await act(campaignId, gm, {
+      type: "combat.start",
+      encounterId: "e1",
+      name: "The causeway",
+      sides: [
+        { id: "party", name: "The party" },
+        { id: "hostiles", name: "Hostiles" },
+      ],
+      combatants: [
+        { combatantId: "joe", sideId: "party", characterId: "joe" },
+        { combatantId: "warden", sideId: "hostiles", name: "Something Above", grade: "E", maxHp: 300, momentumForce: 20, beats: 2 },
+      ],
+    });
+    expect((await joeReads()).find((r) => r.id === "warden")).toEqual({ id: "warden", name: "Something Above", resolves: false, titles: [] });
+  });
+});
+
 describe("the rules version", () => {
   it("moves every campaign to the current rules when the server starts, replaying its log under them", async () => {
     const { campaignId, gm } = await table();

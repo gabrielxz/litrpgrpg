@@ -1,6 +1,15 @@
 # Titles: the System's achievement layer.
 # source: 40-titles.md
 
+# What Can Be Seen, "What You See of Others": which of a target's titles inspection reads, by the
+# gap between the inspector's Grade and the target's (the inspector's Grade order less the target's).
+# Achievement, HVE-Resonant, worn Bestowed, revealed Hidden Achievement, and negative titles read from
+# resolves_from_gap; the two rows below add what a wider gap reads.
+inspection:
+  resolves_from_gap: 0              # a lower-Grade inspector reads nothing: "you look, and it does not resolve"
+  hidden_bestowed_from_gap: 2       # two Grades higher reads hidden Bestowed titles
+  hidden_achievement_from_gap: 3    # three or more reads Hidden Achievement titles not yet revealed
+
 categories:
   - {name: Achievement,        shape: "A count the GM tracks (the System AI in assisted modes). Common, flat bonus only."}
   - {name: Hidden Achievement, shape: "Statistically improbable accomplishment. Rare, meaningfully buffed, may be conditional."}

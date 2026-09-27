@@ -547,6 +547,27 @@ export class Engine {
     return out;
   }
 
+  // -------------------------------------------------------- inspection ---
+
+  /** A lower-Grade inspector reads nothing: the target does not resolve (What Can Be Seen). */
+  inspectionResolves(inspectorGrade: string, targetGrade: string): boolean {
+    return this.gradeOrder(inspectorGrade) - this.gradeOrder(targetGrade) >= this.load("titles").inspection.resolves_from_gap;
+  }
+
+  /**
+   * Whether inspection reads one title, by the Grade gap (What Can Be Seen, "What You See of Others").
+   * Negative titles cannot be hidden; a revealed Hidden Achievement reads like a worn Bestowed title.
+   */
+  titleReadable(inspectorGrade: string, targetGrade: string, category: string, negative = false, worn = false, revealed = false): boolean {
+    if (!this.inspectionResolves(inspectorGrade, targetGrade)) return false;
+    const rules = this.load("titles").inspection;
+    const gap = this.gradeOrder(inspectorGrade) - this.gradeOrder(targetGrade);
+    if (negative || category === "Achievement" || category === "HVE-Resonant") return true;
+    if (category === "Bestowed") return worn || gap >= rules.hidden_bestowed_from_gap;
+    if (category === "Hidden Achievement") return revealed || gap >= rules.hidden_achievement_from_gap;
+    throw new KeyError(`no title category ${category}`);
+  }
+
   // ------------------------------------------------------------- items ---
 
   /** Only a pill of the body's own Grade works; it heals the listed amount ×10 per Grade. */

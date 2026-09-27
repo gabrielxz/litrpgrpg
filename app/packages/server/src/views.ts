@@ -19,6 +19,8 @@ import {
   type PlayerQuest,
   type ClassPackage,
   type PlayerClass,
+  type InspectRead,
+  titlesRead,
   MINUTES_PER_DAY,
   SPOILS,
   questForHolder,
@@ -181,6 +183,32 @@ export function questLog(record: CampaignRecord, characterId: string): PlayerQue
   return out;
 }
 
+/**
+ * What a character reads by inspection of the beings it may look at: every other living character a
+ * player holds, and everyone still in the running fight. Only the Grade gap filters what is read.
+ */
+function inspectionFor(record: CampaignRecord, s: Sheet): InspectRead[] {
+  const st = record.state;
+  const out: InspectRead[] = [];
+  const seen = new Set<string>([s.id]);
+  const read = (id: string, name: string, grade: string, titles: Sheet["titles"]) => {
+    const r = titlesRead(record.engine, s.grade, grade, titles);
+    out.push({ id, name, resolves: r !== null, titles: r ?? [] });
+  };
+  for (const c of st.characters.values()) {
+    if (seen.has(c.id) || c.dead || c.playerId === undefined) continue;
+    seen.add(c.id);
+    read(c.id, c.name, c.grade, record.sheet(c.id)!.titles);
+  }
+  const e = st.encounter && !st.encounter.ended ? st.encounter : null;
+  for (const c of e?.combatants ?? []) {
+    if (c.out || seen.has(c.characterId ?? c.id)) continue;
+    seen.add(c.characterId ?? c.id);
+    read(c.characterId ?? c.id, c.name, c.grade, c.characterId ? record.sheet(c.characterId)!.titles : []);
+  }
+  return out;
+}
+
 /** A class without what only the GM knows of it. */
 function playerClass(p: ClassPackage): PlayerClass {
   const { guarded: _g, book: _b, bonus: _n, lost: _l, ...rest } = p as ClassPackage & { bonus?: number; lost?: number };
@@ -241,6 +269,7 @@ export function interfaceSheet(s: Sheet, record: CampaignRecord): InterfaceSheet
     quests: questLog(record, s.id),
     class: s.class ? { ...playerClass(s.class), bonus: s.class.bonus, ...(s.class.permission.onceADay ? { usedSinceDawn: classUsed(record, s) } : {}) } : null,
     classOffers: s.classOffers.map(playerClass),
+    inspection: inspectionFor(record, s),
   };
 }
 

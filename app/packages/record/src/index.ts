@@ -27,6 +27,7 @@ export type {
   PlayerCombat,
   PlayerQuest,
   PlayerClass,
+  InspectRead,
   PlayerClash,
   GmView,
   InterfaceSheet,
@@ -85,7 +86,7 @@ export { type Clock, type ClockAction, MINUTES_PER_DAY, clockLine, dayOf, toNext
 export { type CampaignSession, type SessionAction, sessionName } from "./sessions.ts";
 export { type CampaignEvent, type EventAction, type HveEntry, type LogEvent, intensities, sweepWeight } from "./events.ts";
 export { type CopyDeep, type HveAction, type Moment, type SweepEntry, type SweepHve, type Weight, axes, currentOf, weights } from "./hve.ts";
-export { DERIVED_COUNTERS, type Title, type TitleAction, type TitleCategory, type TitleSpec, catalogSpec, counted, tickedCounters } from "./titles.ts";
+export { DERIVED_COUNTERS, type Title, type TitleAction, type TitleCategory, type TitleRead, type TitleSpec, catalogSpec, counted, tickedCounters, titlesRead } from "./titles.ts";
 export {
   type ClashResult,
   type ClashSide,

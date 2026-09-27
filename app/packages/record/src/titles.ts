@@ -330,3 +330,22 @@ export function titleStats(c: CharacterState): Stats {
   }
   return out;
 }
+
+/** A title as an inspector reads it. */
+export interface TitleRead {
+  name: string;
+  category: TitleCategory;
+  negative?: boolean;
+}
+
+/**
+ * What inspection reads of a target's titles (What Can Be Seen, "What You See of Others"): null
+ * when the target does not resolve (it is a Grade or more above the inspector), otherwise the
+ * active titles the Grade gap reads. Echoed and released titles are history and read as nothing.
+ */
+export function titlesRead(engine: Engine, inspectorGrade: string, targetGrade: string, titles: readonly Title[]): TitleRead[] | null {
+  if (!engine.inspectionResolves(inspectorGrade, targetGrade)) return null;
+  return titles
+    .filter((t) => t.status === "active" && engine.titleReadable(inspectorGrade, targetGrade, t.category, Boolean(t.negative), Boolean(t.worn), Boolean(t.revealed)))
+    .map((t) => ({ name: t.name, category: t.category, ...(t.negative ? { negative: true } : {}) }));
+}
