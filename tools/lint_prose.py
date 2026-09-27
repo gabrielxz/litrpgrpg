@@ -18,6 +18,8 @@ Two checks over the chapter sources, the kit, and the pipeline, and two warning 
    app shows the data's copy, so the two cannot drift.
 6. Encounter sizing: each row's `mix` and `force` in rules/bestiary.yaml must say
    what its rendered text cells say.
+7. The tutorial pack: every notice paragraph in rules/tutorial.yaml appears in the
+   tutorial chapter as System text, and every quest's title and objective appear there.
 
     python3 tools/lint_prose.py
 """
@@ -89,6 +91,25 @@ def cited(section: str, heads: set[str]) -> bool:
     if section in heads:
         return True
     return any(h.startswith(section + " (") for h in heads)
+
+
+def tutorial_pack_drift() -> list[str]:
+    with open(os.path.join(BOOK, "70-tutorial.md"), encoding="utf-8") as fh:
+        book = fh.read()
+    flat = " ".join(re.sub(r"^>\s?", "", line).strip() for line in book.splitlines())
+    flat = re.sub(r"\s+", " ", flat)
+    with open(os.path.join(ROOT, "rules", "tutorial.yaml"), encoding="utf-8") as fh:
+        pack = yaml.safe_load(fh)
+    out = []
+    for n in pack["notices"]:
+        for para in n["text"]:
+            if f"*{para}*" not in book:
+                out.append(f"rules/tutorial.yaml: notice {n['id']}: \"{para}\" is not System text in the tutorial")
+    for q in pack["quests"]:
+        for field in ("title", "objective"):
+            if q["quest"][field] not in flat:
+                out.append(f"rules/tutorial.yaml: quest {q['quest']['id']}: its {field} is not in the tutorial")
+    return out
 
 
 def sizing_drift() -> list[str]:
@@ -169,6 +190,7 @@ def main() -> int:
     # 5. class notices match the book's boxes
     problems.extend(class_notice_drift())
     problems.extend(sizing_drift())
+    problems.extend(tutorial_pack_drift())
 
     # 3. voice warnings (never fail)
     warnings = []

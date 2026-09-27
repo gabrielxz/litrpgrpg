@@ -38,6 +38,7 @@ import { type CampaignSession, applySessions, cloneSession } from "./sessions.ts
 import { type Clock, applyClock } from "./clock.ts";
 import { type PrincipleState, applyPrinciples, clonePrinciples, collectDue } from "./principles.ts";
 import { type ClassState, applyClasses, cloneClass, placeByProfile } from "./classes.ts";
+import { type PrepItem, applyPrep, clonePrep } from "./prep.ts";
 import { type Quest, type QuestNoticeKind, applyQuests, authorizeQuestPlayer, cloneQuest, questsOnJoin, questsOnLeave } from "./quests.ts";
 
 export interface CharacterState {
@@ -108,6 +109,7 @@ export interface HeldMessage {
 
 export type Effect =
   /** The Level 10 notice: the opening line, then each offer's heading and notice, in order. */
+  | { kind: "prepared"; count: number; pack?: string }
   | { kind: "classification"; characterId: string; text: string; offers: { name: string; heading: string; notice: string }[] }
   | { kind: "class-accepted"; characterId: string; name: string; lead: string; bonus: number }
   | { kind: "class-used"; characterId: string; name: string }
@@ -271,6 +273,8 @@ export interface FoldResult {
   sessions: Map<string, CampaignSession>;
   /** The in-game clock, once the GM sets it. */
   clock: Clock | null;
+  /** Fights, quests, and notices the GM has prepared, by id, in the order saved. */
+  prep: Map<string, PrepItem>;
   /** Effects keyed by the id of the action that produced them. */
   effects: Map<string, Effect[]>;
   rejected: Rejection[];
@@ -331,6 +335,7 @@ export interface World {
   events: Map<string, CampaignEvent>;
   sessions: Map<string, CampaignSession>;
   clock: Clock | null;
+  prep: Map<string, PrepItem>;
 }
 
 function cloneWorld(w: World): World {
@@ -345,11 +350,12 @@ function cloneWorld(w: World): World {
     events: new Map([...w.events].map(([k, v]) => [k, cloneEvent(v)])),
     sessions: new Map([...w.sessions].map(([k, v]) => [k, cloneSession(v)])),
     clock: w.clock && { ...w.clock },
+    prep: new Map([...w.prep].map(([k, v]) => [k, clonePrep(v)])),
   };
 }
 
 export function emptyWorld(): World {
-  return { characters: new Map(), parties: new Map(), invites: [], held: new Map(), encounter: null, inventory: new Map(), quests: new Map(), events: new Map(), sessions: new Map(), clock: null };
+  return { characters: new Map(), parties: new Map(), invites: [], held: new Map(), encounter: null, inventory: new Map(), quests: new Map(), events: new Map(), sessions: new Map(), clock: null, prep: new Map() };
 }
 
 /** The world as the fold leaves it: what `rollFor` rolls against. */
@@ -365,6 +371,7 @@ export function worldOf(r: FoldResult): World {
     events: r.events,
     sessions: r.sessions,
     clock: r.clock,
+    prep: r.prep,
   };
 }
 
@@ -405,6 +412,7 @@ export function fold(engine: Engine, log: readonly Envelope[]): FoldResult {
     events: world.events,
     sessions: world.sessions,
     clock: world.clock,
+    prep: world.prep,
     effects,
     rejected,
     voided: voided.ids,
@@ -577,6 +585,9 @@ function apply(engine: Engine, world: World, env: Envelope): Effect[] {
     case "class.accept":
     case "class.use":
       return applyClasses(engine, world, a);
+    case "prep.save":
+    case "prep.remove":
+      return applyPrep(world, a);
     case "void":
       throw new Error("voids are handled before apply");
   }

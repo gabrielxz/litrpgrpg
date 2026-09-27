@@ -255,6 +255,10 @@ export function describe(
       return `${name(a.characterId)} accepts ${a.name}`;
     case "class.use":
       return `${name(a.characterId)} uses the class's once-a-day permission`;
+    case "prep.save":
+      return a.pack ? `Loaded the ${a.pack} pack into Prep (${a.items.length} items)` : `Prepared: ${a.items.map((i) => i.title).join(", ")}`;
+    case "prep.remove":
+      return `Removed from Prep: ${a.prepIds.join(", ")}`;
     case "clock.set":
       return `Clock set to ${clockLine((a.day - 1) * MINUTES_PER_DAY + a.hour * 60 + (a.minute ?? 0))}${a.dawnHour !== undefined ? `, dawn at ${String(a.dawnHour).padStart(2, "0")}:00` : ""}`;
     case "clock.advance":
@@ -292,6 +296,8 @@ export function effectLine(e: Effect, name: Names): string | null {
       return `${name(e.characterId)} holds ${e.name}: ${e.lead} +${e.bonus}`;
     case "class-used":
       return `${name(e.characterId)} uses ${e.name}`;
+    case "prepared":
+      return `${e.count} item${e.count === 1 ? "" : "s"} in Prep${e.pack ? ` from the ${e.pack} pack` : ""}`;
     case "memory-granted":
       return `${name(e.characterId)} receives a Battle Memory Card`;
     case "vision":

@@ -18,6 +18,8 @@ export interface CommitProps {
   /** The button: the action in words ("Create Kara", "Award 130 VE"). */
   label: string;
   onRecorded?: (envelope: Envelope) => void;
+  /** What caused it: a prepared item fired from Prep. */
+  cause?: string;
 }
 
 export function PreviewView({ pv, names }: { pv: Preview; names: Names }) {
@@ -66,7 +68,7 @@ export function PreviewView({ pv, names }: { pv: Preview; names: Names }) {
   );
 }
 
-export function Commit({ campaignId, action, problem, names, label, onRecorded }: CommitProps) {
+export function Commit({ campaignId, action, problem, names, label, onRecorded, cause }: CommitProps) {
   const [id, setId] = useState(newActionId);
   const [pv, setPv] = useState<Preview | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -95,7 +97,7 @@ export function Commit({ campaignId, action, problem, names, label, onRecorded }
     if (!action) return;
     setBusy(true);
     try {
-      const r = await submit(campaignId, id, action);
+      const r = await submit(campaignId, id, action, cause);
       setId(newActionId());
       setPv(null);
       onRecorded?.(r.envelope);

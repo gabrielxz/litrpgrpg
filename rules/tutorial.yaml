@@ -1,0 +1,189 @@
+# The tutorial (70-tutorial.md) as a content pack: the System notices the GM delivers by hand, the
+# quests the System issues, and the fights by phase. The companion app loads it into Prep. The book
+# is the truth: every notice paragraph and every quest's title and objective appear in the chapter
+# word for word (the prose lint checks), and a change there is copied here. Notices the record
+# emits itself (a kill confirmed, a technique acquired, a title conferred) are left out.
+# source: 70-tutorial.md
+
+pack: tutorial
+title: "The Tutorial: Integration Protocol"
+
+notices:
+  - id: void
+    group: "Phase 1: The Threshold"
+    title: "The Void"
+    note: "Read Aloud: The Void. If a player asks the System a question, nothing answers."
+    text:
+      - "Consciousness anchored."
+      - "Native world: Earth. Status: Integrated."
+      - "Population: 7,916,442,203. Integration stability: provisional."
+      - "Tutorial: provisioned."
+      - "Prior exemptions: expired. Observation: begun."
+  - id: integration
+    group: "Phase 1: The Threshold"
+    title: "The Fall"
+    text:
+      - "Integration complete. Vitals: nominal."
+  - id: cache
+    group: "Phase 2: The Violent Arrival"
+    title: "The Locked Cache"
+    note: "Encounter 3, when the character tries the cache."
+    text:
+      - "Thermal input required. Threshold: 40 degrees."
+      - "Current reading: 36.6. Insufficient."
+  - id: first-engagement
+    group: "Phase 2: The Violent Arrival"
+    title: "After the arrival"
+    note: "Watch For. Fill in the minutes from play."
+    text:
+      - "Survival duration: 7 minutes. First engagement: resolved. Behavioral telemetry: registered."
+  - id: party-formation
+    group: "Phase 3: The Recycling Node"
+    title: "Party formation"
+    note: "The moment Q-001 completes, with two other Initiates in sight."
+    text:
+      - "Compatible units detected. Party formation: available. Accept?"
+  - id: resonance-shard
+    group: "Phase 3: The Recycling Node"
+    title: "The Resonance Shard"
+    note: "The Scarcity Test, when a character looks at the shard."
+    text:
+      - "Resonance Shard. Insight: +1 on meditation. Principle: undetermined."
+  - id: first-status
+    group: "Phase 3: The Recycling Node"
+    title: "The first status notice"
+    note: "After the scramble, to each player privately, with the elapsed time and the counts filled in from play."
+    text:
+      - "Survival duration: 1 hour 50 minutes."
+      - "Hostile engagements: 1."
+      - "Resource acquisition: moderate."
+      - "Behavioral integration: processing."
+  - id: making-camp
+    group: "Phase 3: The Recycling Node"
+    title: "Making camp"
+    note: "Introduces Consolidation."
+    text:
+      - "Unrefined Volatile Energy detected. Accumulation: within tolerance."
+      - "Process available: Consolidation."
+      - "Advisory: subject is defenseless for the duration."
+  - id: offering
+    group: "Phase 4: The Field of Ruins"
+    title: "The Offering"
+    note: "Personal Opportunity card, when the character is in front of the construct."
+    text:
+      - "Compatibility event. Select one. The unselected item will be unmade."
+  - id: mirror
+    group: "Phase 4: The Field of Ruins"
+    title: "The Mirror"
+    note: "Personal Opportunity card."
+    text:
+      - "Confirm orientation?"
+  - id: threshold
+    group: "Phase 4: The Field of Ruins"
+    title: "The Threshold"
+    note: "Personal Opportunity card."
+    text:
+      - "Threshold detected. Compatibility: marginal. Crossing: not recommended. Residual pressure: persistent."
+  - id: selection-logged
+    group: "Phase 4: The Field of Ruins"
+    title: "Selection logged"
+    note: "After a Personal Opportunity card comes back, one private line."
+    text:
+      - "Selection logged. Trajectory adjusted."
+  - id: salvaged
+    group: "Phase 5: The Convergence Crisis"
+    title: "Salvaged"
+    note: "On a natural 01 to 05 at the gate. Send this, then confer Salvaged from Titles, which brings its own notice."
+    text:
+      - "Initiate recovery: executed."
+      - "Cause: administrative overrun. Fault: sector."
+      - "Integration integrity: degraded. Provisional status assigned."
+  - id: other-side
+    group: "Phase 6: First Recognition"
+    title: "The other side"
+    note: "After the party's thirty minutes. Fill in the number of Initiates registered."
+    text:
+      - "Integration tutorial: survived."
+      - "Initiates registered: [number]."
+      - "Behavioral integration: complete."
+      - "Grade: F. Confirmed."
+      - "Interpretation: granted."
+      - "Native world: Earth. Elapsed: 3 days. Accession: in progress."
+
+quests:
+  - group: "Phase 3: The Recycling Node"
+    note: "Deliver to each character separately, while they are still walking and still alone. Fire it once per character; a code is used once in a campaign, so add a letter from the second on (Q-001B)."
+    quest: {id: Q-001, category: Routine, title: First Contact, issuer: System, grade: F, difficulty: Trivial,
+            objective: "Stand within sight of two other Initiates.", count: 2, ve: 10,
+            rewardText: "Party formation unlocked.", time: Open.}
+  - group: "Phase 3: The Recycling Node"
+    note: "After Looking Outward. Repeats for each marked sector: fire it again with the sector in the code (Q-002A) and complete one per sector surveyed."
+    quest: {id: Q-002, category: Routine, title: Sector Survey, issuer: System, grade: F, difficulty: Easy,
+            objective: "Enter and survey a marked sector.", count: 1, ve: 40,
+            rewardText: "A third of a level (40 VE) per sector surveyed.", time: Open until the sector closes.}
+  - group: "Phase 4: The Field of Ruins"
+    note: "One card per player, handed face down. Give each its own code (Q-PO-1, Q-PO-2) and flavor."
+    quest: {id: "Q-PO-???", category: Personal Opportunity, title: Localized Compatibility Event Detected, issuer: System, grade: F,
+            difficulty: Moderate, objective: "Solo claim window: active. Duration: limited.", scaled: true,
+            rewardText: "[unknown; calibrated to outcome]", flavor: exploration}
+  - group: "Phase 5: The Convergence Crisis"
+    note: "Read it aloud and show the timer. Failure: behavioral termination; an Initiate still inside the sector when the Purge reaches the gate is gone."
+    quest: {id: M-00, category: Mandate, title: "Tutorial Sector 7-Alpha: Controlled Dissolution", issuer: System, grade: F, difficulty: Hard,
+            objective: "Reach the transit gate at coordinates [0.0, 0.0] before structural coherence reaches zero.",
+            rewardText: "Survival. Continued Integration. Sector access.", time: "Approximately 30 minutes in-fiction."}
+
+encounters:
+  - id: arrival-rubble
+    group: "Phase 2: The Violent Arrival"
+    title: "The arrival: rubble, slopes, ruins"
+    note: "One player at a time, taught in five steps. No player character dies in the arrival fight."
+    zones: [Here]
+    creatures: [{creature: Husk Crawler}]
+  - id: arrival-treeline
+    group: "Phase 2: The Violent Arrival"
+    title: "The arrival: near the treeline"
+    note: "One player at a time, taught in five steps. No player character dies in the arrival fight."
+    zones: [Here]
+    creatures: [{creature: Frenzy Rat}]
+  - id: arrival-open
+    group: "Phase 2: The Violent Arrival"
+    title: "The arrival: open ground"
+    note: "One player at a time, taught in five steps. No player character dies in the arrival fight."
+    zones: [Here]
+    creatures: [{creature: Glow-Mote Swarm}]
+  - id: sector-a
+    group: "Phase 4: The Field of Ruins"
+    title: "Sector A: the Training Sentries"
+    note: "3 to 4 Sentries, each waking as a character enters its Zone. After 3 rounds a Sentry's Forces rise by 5. Off the tier is a Zone."
+    zones: [The tiers, The arena floor, The armory door]
+    creatures: [{creature: Training Sentry, count: 3}]
+  - id: sector-b-pack
+    group: "Phase 4: The Field of Ruins"
+    title: "Sector B: the Snarljaw pack"
+    note: "Beyond a tutorial party in open ground; telegraph it hard. A single Snarljaw pulled onto isolated ground is the easier fight."
+    zones: [The tree line, The den]
+    creatures: [{creature: Snarljaw, count: 3}, {creature: Alpha Snarljaw}]
+  - id: sector-b-stalker
+    group: "Phase 4: The Field of Ruins"
+    title: "Sector B: the Glow-Stalker"
+    note: "Takes a Surprise Beat before Initial Momentum if its ambush succeeds, then hits and runs."
+    zones: [Here]
+    creatures: [{creature: Glow-Stalker}]
+  - id: sector-c
+    group: "Phase 4: The Field of Ruins"
+    title: "Sector C: the Fragment Wraith"
+    note: "It does not pursue beyond the tower, and the exit is always clear."
+    zones: [The lower halls, The exit]
+    creatures: [{creature: Fragment Wraith}]
+  - id: sector-d
+    group: "Phase 4: The Field of Ruins"
+    title: "Sector D: the Husk Sentinel"
+    note: "A fresh party cannot beat it head-on: the command terminal or the Kith are the way."
+    zones: [The medical bay entrance]
+    creatures: [{creature: Husk Sentinel}]
+  - id: crossing
+    group: "Phase 5: The Convergence Crisis"
+    title: "The Crossing: the Warden"
+    note: "Nowhere to be driven on the span: Yield gives up one Beat at most. The Warden reaches the span in round 4; the Purge reaches the gate mouth in round 12."
+    zones: [The span, The gate mouth]
+    creatures: [{creature: Corrupted System Warden}]

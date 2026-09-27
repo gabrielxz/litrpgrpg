@@ -798,6 +798,24 @@ describe("inspection", () => {
   });
 });
 
+describe("Prep", () => {
+  it("keeps prepared items on the GM's side, and a fired notice carries its cause", async () => {
+    const { campaignId, gm, player, playerId } = await table();
+    await act(campaignId, gm, { type: "character.pregen", characterId: "kara", pregen: "Kara", playerId });
+    await act(campaignId, gm, { type: "prep.save", items: [{ id: "tutorial-void", kind: "notice", title: "The Void", text: "Consciousness anchored." }] });
+    const fired = await call("POST", `/campaigns/${campaignId}/actions`, {
+      token: gm,
+      body: { id: "fire-1", cause: "prep:tutorial-void", action: { type: "message.send", to: ["kara"], text: "Consciousness anchored." } },
+    });
+    expect(fired.json.envelope.cause).toBe("prep:tutorial-void");
+    const gmView = (await call("GET", `/campaigns/${campaignId}`, { token: gm })).json;
+    expect(gmView.prep.map((p: { id: string }) => p.id)).toEqual(["tutorial-void"]);
+    const theirs = (await call("GET", `/campaigns/${campaignId}`, { token: player })).json;
+    expect(theirs.prep).toBeUndefined();
+    expect(theirs.feed.map((f: { effect: { kind: string } }) => f.effect.kind)).toEqual(["message"]);
+  });
+});
+
 describe("the rules version", () => {
   it("moves every campaign to the current rules when the server starts, replaying its log under them", async () => {
     const { campaignId, gm } = await table();

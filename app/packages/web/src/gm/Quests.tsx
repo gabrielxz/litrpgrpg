@@ -5,11 +5,12 @@
  * a player away from their screen. Personal Opportunity refusals show by flavor.
  */
 import type { Engine } from "@gradebreaker/engine";
-import { type Action, type Envelope, type GmView, QUEST_CATEGORIES, type Quest, type QuestCategory, type QuestSpec, clockLine, questTableVe } from "@gradebreaker/record";
+import { type Action, type Envelope, type GmView, QUEST_CATEGORIES, type Quest, type QuestCategory, type QuestSpec, clockLine, prepCause, questTableVe } from "@gradebreaker/record";
 import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
 import { catalogNames } from "../items.ts";
 import { type Names, duration } from "../text.ts";
+import type { Firing } from "./Prep.tsx";
 import { Commit } from "./Commit.tsx";
 
 const OFFERED: QuestCategory[] = ["Routine", "Faction", "Personal Opportunity"];
@@ -46,30 +47,45 @@ function nextCode(quests: Quest[], category: QuestCategory): string {
 
 // ------------------------------------------------------------ issue ---
 
-function IssueForm({ view, engine, names, onRecorded }: { view: GmView; engine: Engine; names: Names; onRecorded: (env: Envelope) => void }) {
+function IssueForm({
+  view,
+  engine,
+  names,
+  onRecorded,
+  firing,
+  onFired,
+}: {
+  view: GmView;
+  engine: Engine;
+  names: Names;
+  onRecorded: (env: Envelope) => void;
+  firing?: Extract<Firing, { kind: "quest" }>;
+  onFired?: () => void;
+}) {
+  const from = firing?.quest;
   const living = view.characters.filter((c) => !c.dead);
   const difficulties: string[] = engine.rules.resolution.resistance_card.map((r: { difficulty: string }) => r.difficulty);
   const grades: string[] = engine.rules.grades.grades.map((g: { code: string }) => g.code);
   const [f, setF] = useState({
-    id: "",
-    category: "Routine" as QuestCategory,
-    title: "",
-    issuer: "",
-    grade: "F",
-    difficulty: "Moderate",
-    objective: "",
-    count: "",
-    ve: "",
-    scaled: false,
-    rewardText: "",
-    time: "",
-    hours: "",
-    flavor: "combat" as "combat" | "social" | "exploration",
-    hidden: "obscured" as "obscured" | "partial" | "post-completion",
-    hiddenName: "",
+    id: from?.id ?? "",
+    category: (from?.category ?? "Routine") as QuestCategory,
+    title: from?.title ?? "",
+    issuer: from?.issuer && from.issuer !== "System" ? from.issuer : "",
+    grade: from?.grade ?? "F",
+    difficulty: from?.difficulty ?? "Moderate",
+    objective: from?.objective ?? "",
+    count: from?.count ? String(from.count) : "",
+    ve: from?.ve !== undefined ? String(from.ve) : "",
+    scaled: from?.scaled ?? false,
+    rewardText: from?.rewardText ?? "",
+    time: from?.time ?? "",
+    hours: from?.hours ? String(from.hours) : "",
+    flavor: (from?.flavor ?? "combat") as "combat" | "social" | "exploration",
+    hidden: (from?.hidden ?? "obscured") as "obscured" | "partial" | "post-completion",
+    hiddenName: from?.hiddenName ?? "",
   });
   const [to, setTo] = useState<string[]>(living[0] ? [living[0].id] : []);
-  const [items, setItems] = useState<{ name: string; count: string }[]>([]);
+  const [items, setItems] = useState<{ name: string; count: string }[]>(() => (from?.items ?? []).map((i) => ({ name: i.name, count: String(i.count) })));
   const single = OFFERED.includes(f.category);
   const code = f.id.trim() || nextCode(view.quests, f.category);
   const table = questTableVe(engine, f.category, f.difficulty, f.grade);
@@ -98,6 +114,7 @@ function IssueForm({ view, engine, names, onRecorded }: { view: GmView; engine: 
   return (
     <section className="card">
       <h2>Issue a quest</h2>
+      {firing && <p className="muted small">From Prep. Check the code, pick who receives it, and issue it.</p>}
       <div className="form">
         <div className="row">
           <label>
@@ -235,7 +252,30 @@ function IssueForm({ view, engine, names, onRecorded }: { view: GmView; engine: 
             ),
           )}
         </div>
-        <Commit campaignId={view.campaign.id} action={action} problem={problem} names={names} label={`Issue [${code}]`} onRecorded={onRecorded} />
+        <Commit
+          campaignId={view.campaign.id}
+          action={action}
+          problem={problem}
+          names={names}
+          label={`Issue [${code}]`}
+          {...(firing ? { cause: prepCause(firing.prepId) } : {})}
+          onRecorded={(env) => {
+            onRecorded(env);
+            onFired?.();
+          }}
+        />
+        {!firing && f.title.trim() && (
+          <details>
+            <summary>Save this quest to Prep instead</summary>
+            <Commit
+              campaignId={view.campaign.id}
+              action={{ type: "prep.save", items: [{ id: `quest-${code.toLowerCase()}`, kind: "quest", title: `[${code}] ${spec.title}`, quest: spec }] }}
+              names={names}
+              label="Save to Prep"
+              onRecorded={onRecorded}
+            />
+          </details>
+        )}
       </div>
     </section>
   );
@@ -401,13 +441,27 @@ function Refusals({ view }: { view: GmView }) {
   );
 }
 
-export function QuestsSection({ view, engine, names, onRecorded }: { view: GmView; engine: Engine | null; names: Names; onRecorded: (env: Envelope) => void }) {
+export function QuestsSection({
+  view,
+  engine,
+  names,
+  onRecorded,
+  firing,
+  onFired,
+}: {
+  view: GmView;
+  engine: Engine | null;
+  names: Names;
+  onRecorded: (env: Envelope) => void;
+  firing?: Extract<Firing, { kind: "quest" }>;
+  onFired?: () => void;
+}) {
   if (!engine) return <p className="muted pad">Loading rules…</p>;
   const open = view.quests.filter((q) => q.status === "offered" || q.status === "active");
   const closed = view.quests.filter((q) => q.status !== "offered" && q.status !== "active");
   return (
     <main className="page quests">
-      <IssueForm view={view} engine={engine} names={names} onRecorded={onRecorded} />
+      <IssueForm key={firing?.prepId ?? "new"} view={view} engine={engine} names={names} onRecorded={onRecorded} {...(firing ? { firing } : {})} {...(onFired ? { onFired } : {})} />
       <Refusals view={view} />
       <h2>Open quests</h2>
       {open.length === 0 && <p className="muted">None.</p>}

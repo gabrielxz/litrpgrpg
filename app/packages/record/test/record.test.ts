@@ -1849,3 +1849,28 @@ describe("encounter sizing", () => {
     expect(partyLevelOf([9, 10, 10, 12])).toBe(10);
   });
 });
+
+describe("Prep", () => {
+  const pack = (engine.rules.tutorial as { notices: { id: string; title: string; text: string[] }[] }).notices;
+
+  it("saves, replaces, and removes the GM's prepared items, and changes nothing at the table", () => {
+    gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" });
+    const before = rec.sheet("kara");
+    const load = gm({
+      type: "prep.save",
+      pack: "tutorial",
+      items: pack.map((n) => ({ id: `tutorial-${n.id}`, kind: "notice" as const, title: n.title, text: n.text.join("\n\n") })),
+    });
+    expect(load.effects).toEqual([{ kind: "prepared", count: pack.length, pack: "tutorial" }]);
+    expect(rec.state.prep.get("tutorial-void")).toMatchObject({ kind: "notice", title: "The Void" });
+    expect(rec.sheet("kara")).toEqual(before);
+    gm({ type: "prep.save", items: [{ id: "tutorial-void", kind: "notice", title: "The Void", text: "Consciousness anchored." }] });
+    expect(rec.state.prep.size).toBe(pack.length);
+    expect(() => gm({ type: "prep.save", items: [{ id: "x", kind: "encounter", title: "Nothing", encounter: { name: "Nothing", zones: [], creatures: [] } }] })).toThrow(/at least one creature/);
+    expect(() => rec.append(draft({ type: "prep.save", items: [{ id: "y", kind: "notice", title: "Y", text: "Y." }] }, P1))).toThrow(/only the GM/);
+    gm({ type: "prep.remove", prepIds: ["tutorial-void"] });
+    expect(rec.state.prep.has("tutorial-void")).toBe(false);
+    gm({ type: "void", targetId: load.envelope.id, reason: "undo" });
+    expect(rec.state.prep.size).toBe(0);
+  });
+});

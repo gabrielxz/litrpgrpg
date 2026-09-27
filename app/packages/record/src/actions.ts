@@ -20,6 +20,7 @@ import type { SessionAction } from "./sessions.ts";
 import type { ClockAction } from "./clock.ts";
 import type { PrincipleAction } from "./principles.ts";
 import type { ClassAction } from "./classes.ts";
+import type { PrepAction } from "./prep.ts";
 
 export type { CombatAction, CombatantSpec } from "./combat.ts";
 
@@ -304,6 +305,7 @@ export type Action =
   | ClockAction
   | PrincipleAction
   | ClassAction
+  | PrepAction
   | VoidAction;
 
 export type ActionType = Action["type"];

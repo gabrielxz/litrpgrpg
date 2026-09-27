@@ -1486,3 +1486,16 @@ tr.current-row td {
   background: var(--sys-ground, #eee);
   color: var(--cyan-light, inherit);
 }
+
+/* Prep: prepared items grouped by phase or session. */
+.prep-item {
+  border-top: 1px solid var(--stone);
+  padding: 0.5rem 0;
+}
+.prep-item .grow {
+  flex: 1;
+}
+.sys-sample-line {
+  white-space: pre-wrap;
+  font-style: italic;
+}

@@ -457,6 +457,7 @@ export function viewFor(
       events: [...st.events.values()].reverse(),
       sessions: [...st.sessions.values()].reverse(),
       clock: st.clock,
+      prep: [...st.prep.values()],
     };
   }
   const own = sheets.filter((s) => s.playerId === who.userId);

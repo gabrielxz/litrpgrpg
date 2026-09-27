@@ -24,7 +24,8 @@ The tabular rules of Gradebreaker as structured data, one file per domain. The b
 | `quests.yaml` | Categories, the Party, reward tables, refusal consequences, Hidden Quest modes. |
 | `system-ai.yaml` | The three run modes, the generative functions, the loot table. |
 | `items.yaml` | Pills, treasures, weapons, shards, artifacts, field gear. |
-| `bestiary.yaml` | The twelve F-Grade stat blocks and the encounter sizing table. |
+| `bestiary.yaml` | The F-Grade stat blocks and the encounter sizing table. |
+| `tutorial.yaml` | The tutorial as a content pack for the app's Prep: its System notices, quests, and fights by phase, held to the chapter. |
 | `templates/` | The prompt templates and System-message shapes, verbatim. |
 | `fixtures/` | The book's worked examples as test cases, each naming the chapter it came from. |
 

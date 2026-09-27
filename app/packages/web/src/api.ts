@@ -74,8 +74,8 @@ export async function api<T>(method: string, path: string, body?: unknown): Prom
 /** A fresh idempotency key: one per action the person means to record. */
 export const newActionId = () => crypto.randomUUID();
 
-export const submit = (campaignId: string, id: string, action: Action) =>
-  api<Appended>("POST", `/campaigns/${campaignId}/actions`, { id, action });
+export const submit = (campaignId: string, id: string, action: Action, cause?: string) =>
+  api<Appended>("POST", `/campaigns/${campaignId}/actions`, { id, action, ...(cause ? { cause } : {}) });
 
 export const preview = (campaignId: string, id: string, action: Action) =>
   api<Preview>("POST", `/campaigns/${campaignId}/preview`, { id, action });

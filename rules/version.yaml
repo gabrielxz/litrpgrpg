@@ -1,7 +1,7 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.26"
+version: "0.1.27"
 dated: "2026-09-27"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
@@ -91,3 +91,6 @@ notes: >
   the rendered text by the prose lint, and the engine sizes a fight: creature_sizing_force (the higher of Offense and
   Defense), encounter_force (a second creature counts as 20; a third is a RulesGap), encounter_column_force and
   encounter_column_mix (one column per character from four). No number moved.
+  0.1.27: tutorial.yaml holds the tutorial as a content pack (the System notices the GM delivers by hand, the four quest
+  boxes, and the fights by phase), each notice paragraph and quest held to the chapter by the prose lint. The companion
+  app loads it into Prep. No number moved.

@@ -20,6 +20,7 @@ import { ClockControls } from "./Clock.tsx";
 import { PrinciplesSection, principlesWaiting } from "./Principles.tsx";
 import { ClassesSection, classesWaiting } from "./Classes.tsx";
 import { BestiarySection } from "./Bestiary.tsx";
+import { type Firing, PrepSection } from "./Prep.tsx";
 import { TitlesDueCard } from "./Titles.tsx";
 import { stackLine } from "../items.ts";
 import { ATTRIBUTES } from "../text.ts";
@@ -203,9 +204,10 @@ function ViewAs({ view }: { view: GmView }) {
   );
 }
 
-type Section = "party" | "combat" | "bestiary" | "quests" | "principles" | "classes" | "events" | "hve" | "log" | "table" | "player";
+type Section = "party" | "prep" | "combat" | "bestiary" | "quests" | "principles" | "classes" | "events" | "hve" | "log" | "table" | "player";
 const SECTIONS: [Section, string][] = [
   ["party", "Party"],
+  ["prep", "Prep"],
   ["combat", "Combat"],
   ["bestiary", "Bestiary"],
   ["quests", "Quests"],
@@ -248,6 +250,8 @@ function RulesCard({ view }: { view: GmView }) {
 export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<typeof useCampaign> }) {
   const engine = useEngine(view.campaign.rulesVersion);
   const [section, setSection] = useSection();
+  // A prepared fight or quest handed to Combat or Quests to fire there.
+  const [firing, setFiring] = useState<Firing | null>(null);
   // Characters by id, and every creature or NPC a fight has named, for the log's lines.
   const byId = new Map(view.characters.map((c) => [c.id, c.name]));
   for (const env of live.log) {
@@ -298,9 +302,34 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
           </aside>
         </main>
       )}
-      {section === "combat" && <CombatSection view={view} engine={engine} names={names} log={live.log} onRecorded={live.addToLog} />}
+      {section === "prep" && (
+        <PrepSection
+          view={view}
+          engine={engine}
+          names={names}
+          log={live.log}
+          onRecorded={live.addToLog}
+          onFire={(f) => {
+            setFiring(f);
+            setSection(f.kind === "encounter" ? "combat" : "quests");
+          }}
+        />
+      )}
+      {section === "combat" && (
+        <CombatSection
+          view={view}
+          engine={engine}
+          names={names}
+          log={live.log}
+          onRecorded={live.addToLog}
+          {...(firing?.kind === "encounter" ? { firing } : {})}
+          onFired={() => setFiring(null)}
+        />
+      )}
       {section === "bestiary" && <BestiarySection view={view} engine={engine} />}
-      {section === "quests" && <QuestsSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
+      {section === "quests" && (
+        <QuestsSection view={view} engine={engine} names={names} onRecorded={live.addToLog} {...(firing?.kind === "quest" ? { firing } : {})} onFired={() => setFiring(null)} />
+      )}
       {section === "principles" && <PrinciplesSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
       {section === "classes" && <ClassesSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
       {section === "events" && <EventsSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}

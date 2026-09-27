@@ -32,6 +32,9 @@ import type { Names } from "../text.ts";
 import { AftermathPanel } from "./Aftermath.tsx";
 import { RollList } from "../Dice.tsx";
 import { SizingPanel, sizedOf } from "./Sizing.tsx";
+import { type Firing, expandCreatures, prepCreaturesOf } from "./Prep.tsx";
+import { prepCause } from "@gradebreaker/record";
+import { Commit } from "./Commit.tsx";
 
 interface Creature {
   name: string;
@@ -57,11 +60,11 @@ const slug = (s: string) =>
 function useRecord(campaignId: string, onRecorded: (env: Envelope) => void) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const run = async (action: Action) => {
+  const run = async (action: Action, cause?: string) => {
     setBusy(true);
     setError(null);
     try {
-      const r = await submit(campaignId, newActionId(), action);
+      const r = await submit(campaignId, newActionId(), action, cause);
       onRecorded(r.envelope);
       return true;
     } catch (e) {
@@ -211,9 +214,9 @@ function CreaturePicker({
 
 // ------------------------------------------------------------- setup ---
 
-function Setup({ view, engine, onRecorded }: { view: GmView; engine: Engine; onRecorded: (env: Envelope) => void }) {
+function Setup({ view, engine, onRecorded, firing, onFired }: { view: GmView; engine: Engine; onRecorded: (env: Envelope) => void; firing?: Extract<Firing, { kind: "encounter" }>; onFired?: () => void }) {
   const { run, busy, error } = useRecord(view.campaign.id, onRecorded);
-  const [name, setName] = useState("");
+  const [name, setName] = useState(firing?.encounter.name ?? "");
   const [sides, setSides] = useState([
     { id: "party", name: "The party" },
     { id: "hostiles", name: "Hostiles" },
@@ -222,8 +225,9 @@ function Setup({ view, engine, onRecorded }: { view: GmView; engine: Engine; onR
   const [placed, setPlaced] = useState<Record<string, string>>(() =>
     Object.fromEntries(view.characters.map((c) => [c.id, c.playerId ? "party" : ""])),
   );
-  const [others, setOthers] = useState<CombatantSpec[]>([]);
-  const [zoneText, setZoneText] = useState("Here");
+  const [others, setOthers] = useState<CombatantSpec[]>(() => (firing ? expandCreatures(engine, firing.encounter.creatures, "hostiles") : []));
+  const [zoneText, setZoneText] = useState(firing?.encounter.zones.join(", ") || "Here");
+  const [prepTitle, setPrepTitle] = useState("");
   const zones = zoneText
     .split(",")
     .map((z) => z.trim())
@@ -240,6 +244,7 @@ function Setup({ view, engine, onRecorded }: { view: GmView; engine: Engine; onR
   return (
     <section className="card combat-setup">
       <h2>A new fight</h2>
+      {firing && <p className="muted small">From Prep. Place the characters, then start it.</p>}
       <div className="row">
         <label>
           Name
@@ -317,19 +322,51 @@ function Setup({ view, engine, onRecorded }: { view: GmView; engine: Engine; onR
       <button
         className="primary"
         disabled={Boolean(problem) || busy}
-        onClick={() =>
-          run({
-            type: "combat.start",
-            encounterId: `fight-${rid()}`,
-            name: name.trim() || "Fight",
-            sides: sides.filter((s) => combatants.some((c) => c.sideId === s.id)),
-            zones,
-            combatants,
-          })
-        }
+        onClick={async () => {
+          const ok = await run(
+            {
+              type: "combat.start",
+              encounterId: `fight-${rid()}`,
+              name: name.trim() || "Fight",
+              sides: sides.filter((s) => combatants.some((c) => c.sideId === s.id)),
+              zones,
+              combatants,
+            },
+            firing && prepCause(firing.prepId),
+          );
+          if (ok) onFired?.();
+        }}
       >
         Start the fight
       </button>
+      {others.length > 0 && (
+        <details>
+          <summary>Save this fight to Prep</summary>
+          <div className="row">
+            <label>
+              Title
+              <input value={prepTitle} onChange={(e) => setPrepTitle(e.target.value)} placeholder={name.trim() || "The treeline"} />
+            </label>
+          </div>
+          <Commit
+            campaignId={view.campaign.id}
+            action={{
+              type: "prep.save",
+              items: [
+                {
+                  id: `fight-${slug(prepTitle.trim() || name.trim() || "fight")}`,
+                  kind: "encounter",
+                  title: prepTitle.trim() || name.trim() || "Fight",
+                  encounter: { name: name.trim() || prepTitle.trim() || "Fight", zones: zones.map((z) => z.name), creatures: prepCreaturesOf(others.filter((o) => !view.characters.some((c) => c.id === o.characterId))) },
+                },
+              ],
+            }}
+            names={(id) => id}
+            label="Save to Prep"
+            onRecorded={onRecorded}
+          />
+        </details>
+      )}
     </section>
   );
 }
@@ -984,12 +1021,16 @@ export function CombatSection({
   names,
   log,
   onRecorded,
+  firing,
+  onFired,
 }: {
   view: GmView;
   engine: Engine | null;
   names: Names;
   log: Envelope[];
   onRecorded: (env: Envelope) => void;
+  firing?: Extract<Firing, { kind: "encounter" }>;
+  onFired?: () => void;
 }) {
   if (!engine) return <p className="muted pad">Loading rules…</p>;
   return (
@@ -1000,7 +1041,7 @@ export function CombatSection({
         // Keyed by the fight, so a new aftermath starts from its own defaults.
         <AftermathPanel key={view.aftermath.id} view={view} engine={engine} names={names} onRecorded={onRecorded} />
       ) : (
-        <Setup view={view} engine={engine} onRecorded={onRecorded} />
+        <Setup key={firing?.prepId ?? "new"} view={view} engine={engine} onRecorded={onRecorded} {...(firing ? { firing } : {})} {...(onFired ? { onFired } : {})} />
       )}
     </main>
   );

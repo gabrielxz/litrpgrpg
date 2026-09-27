@@ -11,6 +11,7 @@ import type { Clock } from "./clock.ts";
 import type { InterfacePrinciples } from "./principles.ts";
 import type { ClassPackage } from "./classes.ts";
 import type { TitleRead } from "./titles.ts";
+import type { PrepItem } from "./prep.ts";
 import type { Combatant, Encounter } from "./combat.ts";
 import type { Envelope } from "./actions.ts";
 import type { Sheet } from "./sheet.ts";
@@ -248,6 +249,8 @@ export interface GmView {
   sessions: CampaignSession[];
   /** The in-game clock, once set. */
   clock: Clock | null;
+  /** Fights, quests, and notices prepared to fire, in the order saved. */
+  prep: PrepItem[];
 }
 
 /** A quest on one character's log: hidden content obscured, and their own answer as its status. */
