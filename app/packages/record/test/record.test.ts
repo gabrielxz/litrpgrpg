@@ -1485,3 +1485,39 @@ describe("events", () => {
     expect(rec.state.events.get("ev1")!.entries[0]!.sweptIn).toBeUndefined();
   });
 });
+
+describe("sessions", () => {
+  beforeEach(() => {
+    gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" });
+    gm({ type: "character.pregen", characterId: "joe", pregen: "Joe" });
+  });
+  const sessions = () => [...rec.state.sessions.values()];
+
+  it("runs one session at a time, numbered, with attendance and a summary", () => {
+    const s1 = gm({ type: "session.start", present: ["kara"] }, "s1");
+    expect(s1.effects).toEqual([{ kind: "session-started", sessionId: "s1", name: "Session 1" }]);
+    expect(() => gm({ type: "session.start", present: [] })).toThrow(/Session 1 is still running/);
+    gm({ type: "session.attend", characterId: "joe", present: true });
+    gm({ type: "session.attend", characterId: "kara", present: false });
+    expect(() => gm({ type: "session.attend", characterId: "kara", present: false })).toThrow(/already away/);
+    gm({ type: "session.end", summary: "The party reached the Node. Kara took the pill. Joe noticed." });
+    expect(sessions()[0]).toMatchObject({ number: 1, present: ["kara", "joe"], left: ["kara"], summary: "The party reached the Node. Kara took the pill. Joe noticed." });
+    expect(sessions()[0]!.endedAt).toBeDefined();
+    expect(() => gm({ type: "session.end" })).toThrow(/no session is running/);
+    gm({ type: "session.start", label: "The causeway", present: ["kara", "joe"] }, "s2");
+    expect(sessions()[1]).toMatchObject({ number: 2, label: "The causeway" });
+    gm({ type: "session.summary", sessionId: "s1", summary: "Rewritten." });
+    expect(sessions()[0]!.summary).toBe("Rewritten.");
+    expect(() => rec.append(draft({ type: "session.start", present: [] }, P1))).toThrow(/only the GM/);
+  });
+
+  it("gives events and the sweep the running session", () => {
+    gm({ type: "event.log", summary: "Before any session", participants: [] }, "e0");
+    gm({ type: "session.start", present: ["kara", "joe"] }, "s1");
+    gm({ type: "event.log", summary: "Took the pill", participants: ["kara"], entries: [{ characterId: "kara", pole: "Hunger", intensity: 1 }] }, "e1");
+    gm({ type: "hve.sweep", sheets: [{ characterId: "kara", moments: [{ pole: "Hunger", weight: 1, eventId: "e1" }] }] });
+    expect(rec.state.events.get("e0")!.sessionId).toBeUndefined();
+    expect(rec.state.events.get("e1")!.sessionId).toBe("s1");
+    expect(rec.sheet("kara")!.hve.sweeps[0]).toMatchObject({ label: "Session 1", sessionId: "s1" });
+  });
+});

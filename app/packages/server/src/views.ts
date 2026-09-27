@@ -393,6 +393,7 @@ export function viewFor(
       inventory: Object.fromEntries([...st.inventory].map(([k, v]) => [k, v.map((x) => ({ ...x }))])),
       quests: [...st.quests.values()].reverse(),
       events: [...st.events.values()].reverse(),
+      sessions: [...st.sessions.values()].reverse(),
     };
   }
   const own = sheets.filter((s) => s.playerId === who.userId);

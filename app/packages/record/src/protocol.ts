@@ -6,6 +6,7 @@ import type { Effect, HeldMessage, Party, PartyInvite } from "./fold.ts";
 import type { Stack } from "./inventory.ts";
 import type { Quest } from "./quests.ts";
 import type { CampaignEvent } from "./events.ts";
+import type { CampaignSession } from "./sessions.ts";
 import type { Combatant, Encounter } from "./combat.ts";
 import type { Envelope } from "./actions.ts";
 import type { Sheet } from "./sheet.ts";
@@ -214,6 +215,8 @@ export interface GmView {
   quests: Quest[];
   /** Every event logged, newest first. */
   events: CampaignEvent[];
+  /** Every session, newest first; a running session has no end. */
+  sessions: CampaignSession[];
 }
 
 /** A quest on one character's log: hidden content obscured, and their own answer as its status. */

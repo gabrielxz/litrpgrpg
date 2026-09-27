@@ -14,6 +14,7 @@ import type { Engine } from "@gradebreaker/engine";
 import type { Envelope } from "./actions.ts";
 import { type CharacterState, type Effect, Rejected, type World } from "./fold.ts";
 import { checkSides, weights } from "./hve.ts";
+import { runningSession } from "./sessions.ts";
 
 /** One character's HVE entry on an event. */
 export interface HveEntry {
@@ -52,6 +53,8 @@ export interface CampaignEvent {
   participants: string[];
   notes?: string;
   entries: (HveEntry & { sweptIn?: string })[];
+  /** The session running when it was logged. */
+  sessionId?: string;
 }
 
 export function cloneEvent(e: CampaignEvent): CampaignEvent {
@@ -92,6 +95,8 @@ export function applyEvents(engine: Engine, world: World, a: EventAction, env: E
   const e: CampaignEvent = { id: env.id, at: env.at, summary, participants, entries: entries.map((x) => ({ ...x })) };
   if (a.context?.trim()) e.context = a.context.trim();
   if (a.notes?.trim()) e.notes = a.notes.trim();
+  const session = runningSession(world);
+  if (session) e.sessionId = session.id;
   world.events.set(e.id, e);
   return [{ kind: "event-logged", eventId: e.id, summary }];
 }

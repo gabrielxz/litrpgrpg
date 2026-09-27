@@ -645,6 +645,8 @@ describe("the Hidden Vector Engine", () => {
     const { campaignId, gm, player, playerId } = await table();
     await act(campaignId, gm, { type: "character.pregen", characterId: "kara", pregen: "Kara", playerId });
     const before = await call("GET", `/campaigns/${campaignId}`, { token: player });
+    expect((await act(campaignId, gm, { type: "session.start", label: "The Node", present: ["kara"] })).status).toBe(201);
+    expect((await act(campaignId, player, { type: "session.end" })).status).toBe(422);
     const swept = await act(campaignId, gm, {
       type: "hve.sweep",
       label: "Session 1",
@@ -660,14 +662,17 @@ describe("the Hidden Vector Engine", () => {
     });
     expect(logged.status).toBe(201);
     expect((await act(campaignId, player, { type: "event.log", summary: "x", participants: ["kara"] })).status).toBe(422);
+    expect((await act(campaignId, gm, { type: "session.end", summary: "Kara bargained her way past the warden." })).status).toBe(201);
     expect((await act(campaignId, player, { type: "hve.deep", characterId: "kara", deep: { Force: 9 } })).status).toBe(422);
     const view = await call("GET", `/campaigns/${campaignId}`, { token: player });
     expect(view.json.feed).toEqual(before.json.feed);
     const text = JSON.stringify(view.json);
-    for (const leak of ["hve", "Hunger", "argued", "Scattered", "Session 1", "events", "warden", "grinned"]) expect(text).not.toContain(leak);
+    for (const leak of ["hve", "Hunger", "argued", "Scattered", "Session 1", "events", "warden", "grinned", "sessions", "The Node", "bargained"]) expect(text).not.toContain(leak);
     const gmView = await call("GET", `/campaigns/${campaignId}`, { token: gm });
     expect(gmView.json.characters[0].hve.deep.Hunger).toBe(1);
     expect(gmView.json.events[0]).toMatchObject({ summary: "Bribed the warden in front of the others", notes: "Ana grinned." });
+    expect(gmView.json.sessions[0]).toMatchObject({ label: "The Node", summary: "Kara bargained her way past the warden." });
+    expect(gmView.json.events[0].sessionId).toBe(gmView.json.sessions[0].id);
   });
 });
 

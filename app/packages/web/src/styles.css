@@ -1337,3 +1337,27 @@ ul.events li.event {
   padding: 0.45rem 0;
   font-size: 0.9rem;
 }
+
+/* ---- sessions ---- */
+
+.session-bar {
+  padding: 0.4rem 1rem;
+  border-bottom: 1px solid var(--stone);
+  font-size: 0.9rem;
+}
+.session-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.8rem;
+  align-items: center;
+}
+.session-bar .form,
+.session-bar .attendance {
+  max-width: 36rem;
+  margin: 0.5rem 0;
+}
+.attendance {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+}

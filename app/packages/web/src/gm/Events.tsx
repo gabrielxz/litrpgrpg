@@ -5,7 +5,7 @@
  * player.
  */
 import type { Engine } from "@gradebreaker/engine";
-import { type CampaignEvent, type Envelope, type GmView, type HveEntry, axes, intensities, weights } from "@gradebreaker/record";
+import { type CampaignEvent, type Envelope, type GmView, type HveEntry, axes, intensities, sessionName, weights } from "@gradebreaker/record";
 import { useState } from "react";
 import type { Names } from "../text.ts";
 import { Commit } from "./Commit.tsx";
@@ -179,7 +179,7 @@ function LogForm({ view, engine, names, onRecorded }: { view: GmView; engine: En
   );
 }
 
-function EventCard({ e, names }: { e: CampaignEvent; names: Names }) {
+function EventCard({ e, names, session }: { e: CampaignEvent; names: Names; session?: string }) {
   return (
     <li className="event">
       <div>
@@ -187,6 +187,7 @@ function EventCard({ e, names }: { e: CampaignEvent; names: Names }) {
         {e.context && <span className="muted"> · {e.context}</span>}
       </div>
       <div className="muted small">
+        {session ? `${session} · ` : ""}
         {new Date(e.at).toLocaleString([], { dateStyle: "medium", timeStyle: "short" })}
         {e.participants.length > 0 && ` · ${e.participants.map(names).join(", ")}`}
       </div>
@@ -210,6 +211,10 @@ export function EventsSection({ view, engine, names, onRecorded }: { view: GmVie
   const [who, setWho] = useState("");
   if (!engine) return <p className="muted pad">Loading rules…</p>;
   const shown = who ? view.events.filter((e) => e.participants.includes(who)) : view.events;
+  const sessionOf = (e: CampaignEvent) => {
+    const s = view.sessions.find((x) => x.id === e.sessionId);
+    return s && sessionName(s);
+  };
   return (
     <main className="gm">
       <div>
@@ -234,7 +239,7 @@ export function EventsSection({ view, engine, names, onRecorded }: { view: GmVie
           ) : (
             <ul className="events">
               {shown.map((e) => (
-                <EventCard key={e.id} e={e} names={names} />
+                <EventCard key={e.id} e={e} names={names} session={sessionOf(e)} />
               ))}
             </ul>
           )}

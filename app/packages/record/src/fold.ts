@@ -34,6 +34,7 @@ import { type Title, applyTitles, count, titleStats } from "./titles.ts";
 import { authorizePillPlayer, takePillOutside } from "./pills.ts";
 import { type HveState, applyHve, cloneHve } from "./hve.ts";
 import { type CampaignEvent, applyEvents, cloneEvent } from "./events.ts";
+import { type CampaignSession, applySessions, cloneSession } from "./sessions.ts";
 import { type Quest, type QuestNoticeKind, applyQuests, authorizeQuestPlayer, cloneQuest, questsOnJoin, questsOnLeave } from "./quests.ts";
 
 export interface CharacterState {
@@ -99,6 +100,8 @@ export interface HeldMessage {
 }
 
 export type Effect =
+  | { kind: "session-started"; sessionId: string; name: string }
+  | { kind: "session-ended"; sessionId: string; name: string }
   | { kind: "event-logged"; eventId: string; summary: string }
   | { kind: "hve-swept"; characterId: string; current: Record<string, number>; added: string[] }
   | { kind: "hve-copied"; characterId: string }
@@ -242,6 +245,8 @@ export interface FoldResult {
   quests: Map<string, Quest>;
   /** Every event logged, by id, oldest first. */
   events: Map<string, CampaignEvent>;
+  /** Every session, by id, oldest first; the last one runs until it ends. */
+  sessions: Map<string, CampaignSession>;
   /** Effects keyed by the id of the action that produced them. */
   effects: Map<string, Effect[]>;
   rejected: Rejection[];
@@ -298,6 +303,7 @@ export interface World {
   inventory: Map<string, Stack[]>;
   quests: Map<string, Quest>;
   events: Map<string, CampaignEvent>;
+  sessions: Map<string, CampaignSession>;
 }
 
 function cloneWorld(w: World): World {
@@ -310,11 +316,12 @@ function cloneWorld(w: World): World {
     inventory: new Map([...w.inventory].map(([k, v]) => [k, v.map((s) => ({ ...s }))])),
     quests: new Map([...w.quests].map(([k, v]) => [k, cloneQuest(v)])),
     events: new Map([...w.events].map(([k, v]) => [k, cloneEvent(v)])),
+    sessions: new Map([...w.sessions].map(([k, v]) => [k, cloneSession(v)])),
   };
 }
 
 export function emptyWorld(): World {
-  return { characters: new Map(), parties: new Map(), invites: [], held: new Map(), encounter: null, inventory: new Map(), quests: new Map(), events: new Map() };
+  return { characters: new Map(), parties: new Map(), invites: [], held: new Map(), encounter: null, inventory: new Map(), quests: new Map(), events: new Map(), sessions: new Map() };
 }
 
 /** The world as the fold leaves it: what `rollFor` rolls against. */
@@ -328,6 +335,7 @@ export function worldOf(r: FoldResult): World {
     inventory: r.inventory,
     quests: r.quests,
     events: r.events,
+    sessions: r.sessions,
   };
 }
 
@@ -365,6 +373,7 @@ export function fold(engine: Engine, log: readonly Envelope[]): FoldResult {
     inventory: world.inventory,
     quests: world.quests,
     events: world.events,
+    sessions: world.sessions,
     effects,
     rejected,
     voided: voided.ids,
@@ -512,6 +521,11 @@ function apply(engine: Engine, world: World, env: Envelope): Effect[] {
       return applyHve(engine, world, a, env.id);
     case "event.log":
       return applyEvents(engine, world, a, env);
+    case "session.start":
+    case "session.attend":
+    case "session.end":
+    case "session.summary":
+      return applySessions(world, a, env);
     case "void":
       throw new Error("voids are handled before apply");
   }

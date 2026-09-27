@@ -15,6 +15,7 @@ import { SpoilsCard } from "./Items.tsx";
 import { QuestsSection } from "./Quests.tsx";
 import { HveSection } from "./Hve.tsx";
 import { EventsSection } from "./Events.tsx";
+import { SessionBar, SessionsCard } from "./Sessions.tsx";
 import { TitlesDueCard } from "./Titles.tsx";
 import { stackLine } from "../items.ts";
 import { ATTRIBUTES } from "../text.ts";
@@ -266,6 +267,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
           </button>
         ))}
       </nav>
+      <SessionBar view={view} names={names} onRecorded={live.addToLog} onSweep={() => setSection("hve")} />
       {section === "party" && (
         <main className="gm">
           <section className="sheets">
@@ -288,6 +290,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
       {section === "hve" && <HveSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
       {section === "log" && (
         <main className="page">
+          <SessionsCard view={view} names={names} onRecorded={live.addToLog} />
           <Log view={view} log={live.log} names={names} onRecorded={live.addToLog} />
         </main>
       )}

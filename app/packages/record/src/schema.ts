@@ -295,6 +295,10 @@ export const actionSchema = z.discriminatedUnion("type", [
       .max(20)
       .optional(),
   }),
+  z.object({ type: z.literal("session.start"), label: z.string().max(80).optional(), present: z.array(id).max(20) }),
+  z.object({ type: z.literal("session.attend"), characterId: id, present: z.boolean() }),
+  z.object({ type: z.literal("session.end"), summary: z.string().max(2000).optional() }),
+  z.object({ type: z.literal("session.summary"), sessionId: id, summary: z.string().max(2000) }),
   z.object({ type: z.literal("hve.deep"), characterId: id, deep: z.record(z.string().max(20), whole) }),
   z.object({ type: z.literal("pill.take"), characterId: id, targetId: id, pill: z.string().max(60) }),
   z.object({ type: z.literal("item.move"), from: id, to: id, name: z.string().max(80), count: whole }),

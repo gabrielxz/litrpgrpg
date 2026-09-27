@@ -225,6 +225,14 @@ export function describe(
     }
     case "hve.deep":
       return `${name(a.characterId)}: Deep tallies copied across`;
+    case "session.start":
+      return `Session started${a.label ? `: ${a.label}` : ""}${a.present.length ? ` (${a.present.map(name).join(", ")})` : ""}`;
+    case "session.attend":
+      return `${name(a.characterId)} ${a.present ? "joins" : "leaves"} the session`;
+    case "session.end":
+      return `Session ended${a.summary ? `: ${a.summary}` : ""}`;
+    case "session.summary":
+      return a.summary.trim() ? `Session summary: ${a.summary}` : "Session summary cleared";
     case "event.log":
       return `Event: ${a.summary}${a.participants.length ? ` (${a.participants.map(name).join(", ")})` : ""}${a.entries?.length ? `, ${a.entries.length} HVE ${a.entries.length === 1 ? "entry" : "entries"}` : ""}`;
     case "void": {
@@ -244,6 +252,10 @@ export function effectLine(e: Effect, name: Names): string | null {
     }
     case "hve-copied":
       return `${name(e.characterId)}: Deep tallies set from the copied sheet`;
+    case "session-started":
+      return `${e.name} starts`;
+    case "session-ended":
+      return `${e.name} ends`;
     case "event-logged":
       return `Event logged: ${e.summary}`;
     case "created":

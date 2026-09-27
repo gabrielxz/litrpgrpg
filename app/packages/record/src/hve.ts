@@ -15,6 +15,7 @@
  */
 import type { Engine } from "@gradebreaker/engine";
 import { type CharacterState, type Effect, Rejected, type World } from "./fold.ts";
+import { runningSession, sessionName } from "./sessions.ts";
 
 /** One remembered moment on one character's sheet. */
 export interface Moment {
@@ -51,7 +52,9 @@ export type HveAction = SweepHve | CopyDeep;
 /** One sweep as the character's history keeps it: Current before it was erased, and what Deep gained. */
 export interface SweepEntry {
   id: string;
+  /** The GM's name for the sweep, or the running session's. */
   label?: string;
+  sessionId?: string;
   moments: Moment[];
   current: Record<string, number>;
   added: string[];
@@ -168,6 +171,7 @@ export function applyHve(engine: Engine, world: World, a: HveAction, id: string)
     return [{ kind: "hve-copied", characterId: c.id }];
   }
   if (!a.sheets.length) throw new Rejected("a sweep covers at least one character");
+  const session = runningSession(world);
   const seen = new Set<string>();
   const out: Effect[] = [];
   for (const s of a.sheets) {
@@ -194,6 +198,8 @@ export function applyHve(engine: Engine, world: World, a: HveAction, id: string)
     }
     const entry: SweepEntry = { id, moments: s.moments.map((m) => ({ ...m })), current, added };
     if (a.label?.trim()) entry.label = a.label.trim();
+    else if (session) entry.label = sessionName(session);
+    if (session) entry.sessionId = session.id;
     h.sweeps.push(entry);
     out.push({ kind: "hve-swept", characterId: c.id, current, added });
   }

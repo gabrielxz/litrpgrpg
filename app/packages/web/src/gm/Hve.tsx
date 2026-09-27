@@ -15,6 +15,7 @@ import {
   type Weight,
   axes,
   currentOf,
+  sessionName,
   sweepWeight,
   weights,
 } from "@gradebreaker/record";
@@ -176,6 +177,7 @@ function SheetRows({ engine, current, deep }: { engine: Engine; current: Record<
 function SweepForm({ view, engine, names, onRecorded }: { view: GmView; engine: Engine; names: Names; onRecorded: (env: Envelope) => void }) {
   const [drafts, setDrafts] = useDrafts(view.campaign.id);
   const [label, setLabel] = useState("");
+  const running = view.sessions[0] && !view.sessions[0].endedAt ? view.sessions[0] : undefined;
   const ws = weights(engine);
   const sweep = engine.rules.hve.sweep;
   const [low, high] = sweep.expected_tallies_per_session_party as [number, number];
@@ -237,8 +239,9 @@ function SweepForm({ view, engine, names, onRecorded }: { view: GmView; engine: 
       </details>
       <label>
         Session
-        <input value={label} maxLength={80} onChange={(e) => setLabel(e.target.value)} placeholder="Session 3" />
+        <input value={label} maxLength={80} onChange={(e) => setLabel(e.target.value)} placeholder={running ? sessionName(running) : "Session 3"} />
       </label>
+      {!running && <p className="muted small">No session is running; name the session this sweep closes.</p>}
       {living.length === 0 && <p className="muted">No characters yet.</p>}
       {living.map((c) => (
         <div key={c.id} className="sweep-sheet">
