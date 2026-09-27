@@ -1340,7 +1340,11 @@ ul.events li.event {
 
 /* ---- sessions ---- */
 
-.session-bar {
+.table-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.4rem 1.5rem;
   padding: 0.4rem 1rem;
   border-bottom: 1px solid var(--stone);
   font-size: 0.9rem;
@@ -1351,8 +1355,8 @@ ul.events li.event {
   gap: 0.4rem 0.8rem;
   align-items: center;
 }
-.session-bar .form,
-.session-bar .attendance {
+.table-bar .form,
+.table-bar .attendance {
   max-width: 36rem;
   margin: 0.5rem 0;
 }
@@ -1360,4 +1364,10 @@ ul.events li.event {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem 1rem;
+}
+
+/* ---- the in-game clock ---- */
+
+.clock input[type="number"] {
+  width: 5rem;
 }

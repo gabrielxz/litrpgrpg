@@ -4,7 +4,7 @@
  * the campaign's sessions, newest first, each summary editable afterward. Nothing here reaches
  * a player.
  */
-import { type Action, type CampaignSession, type Envelope, type GmView, sessionName } from "@gradebreaker/record";
+import { type Action, type CampaignSession, type Envelope, type GmView, clockLine, sessionName } from "@gradebreaker/record";
 import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
 import type { Names } from "../text.ts";
@@ -204,6 +204,7 @@ export function SessionsCard({ view, names, onRecorded }: { view: GmView; names:
                   {" "}
                   · {day(s.startedAt)}, {time(s.startedAt)}
                   {s.endedAt ? ` to ${time(s.endedAt)}` : ", running"}
+                  {s.clockStart !== undefined && ` · in the game, ${clockLine(s.clockStart)}${s.clockEnd !== undefined ? ` to ${clockLine(s.clockEnd)}` : ""}`}
                 </span>
               </div>
               <div className="muted small">

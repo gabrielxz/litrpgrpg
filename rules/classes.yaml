@@ -39,6 +39,7 @@ permission:
   action_economy_effects_max: 1  # across the technique and the permission together
   reactions_per_encounter: 1     # a reaction paid in Beats (a shared Yield) is limited by the Beats instead
   once_a_day_resets: dawn        # a day runs from one dawn to the next where the character is
+  dawn_hour: 6                   # the table's clock reads dawn at 06:00; the GM may set another hour where the party is
   death_clock_hold_rounds: 1     # the one thing a class may do to the countdown, for a Beat
 
 guarded:

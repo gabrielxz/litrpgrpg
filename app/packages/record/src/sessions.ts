@@ -48,6 +48,9 @@ export interface CampaignSession {
   label?: string;
   startedAt: string;
   endedAt?: string;
+  /** The in-game clock at the start and the end. */
+  clockStart?: number;
+  clockEnd?: number;
   /** Everyone present at any point, in the order they arrived. */
   present: string[];
   /** Characters who left before the end. */
@@ -82,6 +85,7 @@ export function applySessions(world: World, a: SessionAction, env: Envelope): Ef
       present.forEach(living);
       const s: CampaignSession = { id: env.id, number: world.sessions.size + 1, startedAt: env.at, present, left: [] };
       if (a.label?.trim()) s.label = a.label.trim();
+      if (world.clock) s.clockStart = world.clock.at;
       world.sessions.set(s.id, s);
       return [{ kind: "session-started", sessionId: s.id, name: sessionName(s) }];
     }
@@ -101,6 +105,7 @@ export function applySessions(world: World, a: SessionAction, env: Envelope): Ef
     case "session.end": {
       if (!running) throw new Rejected("no session is running");
       running.endedAt = env.at;
+      if (world.clock) running.clockEnd = world.clock.at;
       if (a.summary?.trim()) running.summary = a.summary.trim();
       return [{ kind: "session-ended", sessionId: running.id, name: sessionName(running) }];
     }

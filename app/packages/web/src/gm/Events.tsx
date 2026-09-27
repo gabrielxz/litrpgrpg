@@ -5,7 +5,7 @@
  * player.
  */
 import type { Engine } from "@gradebreaker/engine";
-import { type CampaignEvent, type Envelope, type GmView, type HveEntry, axes, intensities, sessionName, weights } from "@gradebreaker/record";
+import { type CampaignEvent, type Envelope, type GmView, type HveEntry, axes, clockLine, intensities, sessionName, weights } from "@gradebreaker/record";
 import { useState } from "react";
 import type { Names } from "../text.ts";
 import { Commit } from "./Commit.tsx";
@@ -188,6 +188,7 @@ function EventCard({ e, names, session }: { e: CampaignEvent; names: Names; sess
       </div>
       <div className="muted small">
         {session ? `${session} · ` : ""}
+        {e.clock !== undefined ? `${clockLine(e.clock)} · ` : ""}
         {new Date(e.at).toLocaleString([], { dateStyle: "medium", timeStyle: "short" })}
         {e.participants.length > 0 && ` · ${e.participants.map(names).join(", ")}`}
       </div>

@@ -45,6 +45,8 @@ export interface QuestSpec {
   /** Titles, standing, access: the reward in words. */
   rewardText?: string;
   time?: string;
+  /** A time limit in hours on the in-game clock, from the moment it is issued. */
+  hours?: number;
   /** A Personal Opportunity's flavor, for refusal counts. */
   flavor?: Flavor;
   hidden?: HiddenMode;
@@ -53,6 +55,8 @@ export interface QuestSpec {
 }
 
 export interface Quest extends Omit<QuestSpec, "count" | "ve"> {
+  /** When the time limit runs out, in the clock's minutes since Day 1, 00:00. */
+  due?: number;
   issuer: string;
   grade: string;
   count?: { done: number; of: number };
@@ -192,6 +196,13 @@ function issue(engine: Engine, world: World, a: IssueQuest): Effect[] {
     refusedBy: [],
   };
   if (s.count !== undefined) q.count = { done: 0, of: s.count };
+  if (s.hours !== undefined) {
+    if (!Number.isInteger(s.hours) || s.hours < 1) throw new Rejected("a time limit is a whole number of hours");
+    if (!world.clock) throw new Rejected("set the in-game clock before giving a quest a time limit in hours");
+    q.hours = s.hours;
+    q.due = world.clock.at + s.hours * 60;
+    if (!s.time?.trim()) q.time = `${s.hours} hours`;
+  }
   if (s.scaled) q.scaled = true;
   for (const k of ["rewardText", "time", "flavor", "hidden"] as const) if (s[k]) (q as unknown as Record<string, unknown>)[k] = typeof s[k] === "string" ? (s[k] as string).trim() : s[k];
   if (s.hidden === "partial") q.hiddenName = s.hiddenName!.trim();
@@ -355,7 +366,7 @@ export function cloneQuest(q: Quest): Quest {
 export function questForHolder(q: Quest): Quest | null {
   if (q.hidden === "post-completion" && q.status !== "completed") return null;
   if (q.hidden === "obscured" && q.status !== "completed") {
-    const { rewardText: _r, items: _i, count: _c, time: _t, ...rest } = q;
+    const { rewardText: _r, items: _i, count: _c, time: _t, hours: _h, due: _d, ...rest } = q;
     return { ...rest, id: "Q-???", title: "Hidden Objective: ???", objective: "", ve: null };
   }
   if (q.hidden === "partial" && q.status !== "completed") {

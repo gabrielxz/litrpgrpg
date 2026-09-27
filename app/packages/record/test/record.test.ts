@@ -1521,3 +1521,61 @@ describe("sessions", () => {
     expect(rec.sheet("kara")!.hve.sweeps[0]).toMatchObject({ label: "Session 1", sessionId: "s1" });
   });
 });
+
+describe("the in-game clock", () => {
+  beforeEach(() => {
+    gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" });
+  });
+  const clock = () => rec.state.clock;
+  const issue = (hours?: number) =>
+    gm({
+      type: "quest.issue",
+      to: ["kara"],
+      quest: { id: "M-04", category: "Mandate", title: "Report", difficulty: "Moderate", objective: "Report to the coordinates", ...(hours ? { hours } : {}) },
+    });
+
+  it("sets and advances the clock from Day 1, counting dawns at the rules' hour", () => {
+    expect(() => gm({ type: "clock.advance", minutes: 60 })).toThrow(/set the clock first/);
+    gm({ type: "clock.set", day: 1, hour: 14 });
+    expect(clock()).toEqual({ at: 14 * 60, dawn: engine.rules.classes.permission.dawn_hour });
+    // Day 1, 14:00 to Day 2, 07:00 crosses one dawn at 06:00.
+    const out = gm({ type: "clock.advance", minutes: 17 * 60 });
+    expect(out.effects).toContainEqual({ kind: "dawn", count: 1 });
+    expect(clock()!.at).toBe(24 * 60 + 7 * 60);
+    expect(gm({ type: "clock.advance", minutes: 60 }).effects.some((e) => e.kind === "dawn")).toBe(false);
+    expect(() => gm({ type: "clock.advance", minutes: 0 })).toThrow(/forward/);
+    expect(() => gm({ type: "clock.set", day: 0, hour: 1 })).toThrow(/day/);
+    gm({ type: "clock.set", day: 3, hour: 4, minute: 59, dawnHour: 5 });
+    expect(gm({ type: "clock.advance", minutes: 1 }).effects).toContainEqual({ kind: "dawn", count: 1 });
+    expect(() => rec.append(draft({ type: "clock.advance", minutes: 5 }, P1))).toThrow(/only the GM/);
+  });
+
+  it("counts the days every living character has survived, toward Week One", () => {
+    gm({ type: "clock.set", day: 1, hour: 8 });
+    expect(rec.sheet("kara")!.counters["days-survived"] ?? 0).toBe(0);
+    gm({ type: "clock.set", day: 8, hour: 0 });
+    expect(rec.sheet("kara")!.counters["days-survived"]).toBe(7);
+    expect(rec.sheet("kara")!.titlesDue).toContain("Week One");
+  });
+
+  it("gives a quest a time limit in hours and tells the GM when it runs out, leaving it open", () => {
+    expect(() => issue(72)).toThrow(/set the in-game clock/);
+    gm({ type: "clock.set", day: 1, hour: 10 });
+    issue(72);
+    const q = rec.state.quests.get("M-04")!;
+    expect(q).toMatchObject({ hours: 72, due: 10 * 60 + 72 * 60, time: "72 hours" });
+    expect(gm({ type: "clock.advance", minutes: 71 * 60 }).effects.some((e) => e.kind === "quest-due")).toBe(false);
+    expect(gm({ type: "clock.advance", minutes: 60 }).effects).toContainEqual({ kind: "quest-due", questId: "M-04" });
+    expect(rec.state.quests.get("M-04")!.status).toBe("active");
+  });
+
+  it("stamps events and sessions with the clock", () => {
+    gm({ type: "clock.set", day: 2, hour: 9 });
+    gm({ type: "session.start", present: ["kara"] }, "s1");
+    gm({ type: "event.log", summary: "Crossed the causeway", participants: ["kara"] }, "e1");
+    gm({ type: "clock.advance", minutes: 180 });
+    gm({ type: "session.end" });
+    expect(rec.state.events.get("e1")!.clock).toBe(24 * 60 + 9 * 60);
+    expect(rec.state.sessions.get("s1")).toMatchObject({ clockStart: 33 * 60, clockEnd: 36 * 60 });
+  });
+});

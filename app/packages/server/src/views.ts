@@ -162,9 +162,13 @@ export function questLog(record: CampaignRecord, characterId: string): PlayerQue
     if (!refused && !q.holders.includes(characterId)) continue;
     const shown = questForHolder(q);
     if (!shown) continue;
-    const { holders: _h, refusedBy: _r, sharedIn, ...rest } = shown;
+    const { holders: _h, refusedBy: _r, sharedIn, due, ...rest } = shown;
+    const open = shown.status === "active" || shown.status === "offered";
+    // The log shows a time limit as whole hours left, never the clock itself.
+    const hoursLeft = open && due !== undefined && st.clock ? Math.max(0, Math.ceil((due - st.clock.at) / 60)) : undefined;
     out.push({
       ...rest,
+      ...(hoursLeft === undefined ? {} : { hoursLeft }),
       status: refused ? "refused" : shown.status,
       shared: Boolean(sharedIn),
       sharable: !refused && inParty && !sharedIn && shown.status === "active" && (q.category === "Routine" || q.category === "Faction"),
@@ -394,6 +398,7 @@ export function viewFor(
       quests: [...st.quests.values()].reverse(),
       events: [...st.events.values()].reverse(),
       sessions: [...st.sessions.values()].reverse(),
+      clock: st.clock,
     };
   }
   const own = sheets.filter((s) => s.playerId === who.userId);

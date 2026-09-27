@@ -676,6 +676,26 @@ describe("the Hidden Vector Engine", () => {
   });
 });
 
+describe("the in-game clock", () => {
+  it("shows a quest's holder the hours left and nothing of the clock itself", async () => {
+    const { campaignId, gm, player, playerId } = await table();
+    await act(campaignId, gm, { type: "character.pregen", characterId: "kara", pregen: "Kara", playerId });
+    await act(campaignId, gm, { type: "clock.set", day: 2, hour: 9 });
+    await act(campaignId, gm, {
+      type: "quest.issue",
+      to: ["kara"],
+      quest: { id: "M-04", category: "Mandate", title: "Report", difficulty: "Moderate", objective: "Report to the coordinates", hours: 72 },
+    });
+    await act(campaignId, gm, { type: "clock.advance", minutes: 70 * 60 + 30 });
+    const view = await call("GET", `/campaigns/${campaignId}`, { token: player });
+    expect(view.json.characters[0].quests[0]).toMatchObject({ id: "M-04", time: "72 hours", hoursLeft: 2 });
+    const text = JSON.stringify(view.json);
+    for (const leak of ['"clock"', '"due"', "Day 2"]) expect(text).not.toContain(leak);
+    expect((await act(campaignId, player, { type: "clock.advance", minutes: 60 })).status).toBe(422);
+    expect((await call("GET", `/campaigns/${campaignId}`, { token: gm })).json.clock.at).toBe(24 * 60 + 9 * 60 + 70 * 60 + 30);
+  });
+});
+
 describe("the rules version", () => {
   it("moves every campaign to the current rules when the server starts, replaying its log under them", async () => {
     const { campaignId, gm } = await table();

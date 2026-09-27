@@ -17,6 +17,7 @@ import type { TakePillOutside } from "./pills.ts";
 import type { HveAction } from "./hve.ts";
 import type { EventAction } from "./events.ts";
 import type { SessionAction } from "./sessions.ts";
+import type { ClockAction } from "./clock.ts";
 
 export type { CombatAction, CombatantSpec } from "./combat.ts";
 
@@ -298,6 +299,7 @@ export type Action =
   | HveAction
   | EventAction
   | SessionAction
+  | ClockAction
   | VoidAction;
 
 export type ActionType = Action["type"];

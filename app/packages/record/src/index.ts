@@ -52,6 +52,7 @@ export {
   questTableVe,
 } from "./quests.ts";
 export { type TakePillOutside, pillLimit } from "./pills.ts";
+export { type Clock, type ClockAction, MINUTES_PER_DAY, clockLine, dayOf, toNextDawn } from "./clock.ts";
 export { type CampaignSession, type SessionAction, sessionName } from "./sessions.ts";
 export { type CampaignEvent, type EventAction, type HveEntry, type LogEvent, intensities, sweepWeight } from "./events.ts";
 export { type CopyDeep, type HveAction, type Moment, type SweepEntry, type SweepHve, type Weight, axes, currentOf, weights } from "./hve.ts";

@@ -1,8 +1,8 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.22"
-dated: "2026-09-26"
+version: "0.1.23"
+dated: "2026-09-27"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
   flat-value VE (Tolerance 80, level 120, 20 per hour), the Grade Gap Rule,
@@ -79,3 +79,5 @@ notes: >
   loot rows carry their chances as fields, a boss's 1.5× rounds down, the interface lists what the character carries, the
   Achievement catalog carries counter and threshold fields, and a quest pays its stated award to every holder, nothing to one
   above the quest's Grade.
+  0.1.23: the table's clock reads dawn at 06:00 (classes.yaml dawn_hour), which the GM may move where the party is; the
+  companion app's in-game clock reads it. The book sentence is queued.

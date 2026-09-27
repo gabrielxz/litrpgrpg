@@ -4,7 +4,7 @@
  * only (never round, roll, or check), set in bare italics by the caller. The notice wording
  * is a first draft for Gabriel's voice pass (The System AI, "The Voice of the System").
  */
-import type { Action, Change, Effect } from "@gradebreaker/record";
+import { type Action, type Change, type Effect, MINUTES_PER_DAY, clockLine } from "@gradebreaker/record";
 
 export const ATTRIBUTES = ["STR", "DEX", "FOR", "HRT", "POW", "PER", "CHA"] as const;
 
@@ -52,6 +52,14 @@ const placement = (p: Record<string, number>) =>
     .filter(([, v]) => v)
     .map(([k, v]) => `${k} ${signed(v)}`)
     .join(", ");
+
+/** "3 hours 20 minutes". */
+export function duration(minutes: number): string {
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+  const part = (n: number, unit: string) => `${n} ${unit}${n === 1 ? "" : "s"}`;
+  return [h ? part(h, "hour") : "", m ? part(m, "minute") : ""].filter(Boolean).join(" ") || "0 minutes";
+}
 
 /** One line for the GM's log. */
 export function describe(
@@ -225,6 +233,10 @@ export function describe(
     }
     case "hve.deep":
       return `${name(a.characterId)}: Deep tallies copied across`;
+    case "clock.set":
+      return `Clock set to ${clockLine((a.day - 1) * MINUTES_PER_DAY + a.hour * 60 + (a.minute ?? 0))}${a.dawnHour !== undefined ? `, dawn at ${String(a.dawnHour).padStart(2, "0")}:00` : ""}`;
+    case "clock.advance":
+      return `Clock forward ${duration(a.minutes)}`;
     case "session.start":
       return `Session started${a.label ? `: ${a.label}` : ""}${a.present.length ? ` (${a.present.map(name).join(", ")})` : ""}`;
     case "session.attend":
@@ -252,6 +264,12 @@ export function effectLine(e: Effect, name: Names): string | null {
     }
     case "hve-copied":
       return `${name(e.characterId)}: Deep tallies set from the copied sheet`;
+    case "clock":
+      return `The clock reads ${clockLine(e.to)}`;
+    case "dawn":
+      return e.count === 1 ? "Dawn passes: once-a-day uses return" : `${e.count} dawns pass: once-a-day uses return`;
+    case "quest-due":
+      return `[${e.questId}] reaches its time limit (fail or expire it from Quests)`;
     case "session-started":
       return `${e.name} starts`;
     case "session-ended":

@@ -35,6 +35,7 @@ import { authorizePillPlayer, takePillOutside } from "./pills.ts";
 import { type HveState, applyHve, cloneHve } from "./hve.ts";
 import { type CampaignEvent, applyEvents, cloneEvent } from "./events.ts";
 import { type CampaignSession, applySessions, cloneSession } from "./sessions.ts";
+import { type Clock, applyClock } from "./clock.ts";
 import { type Quest, type QuestNoticeKind, applyQuests, authorizeQuestPlayer, cloneQuest, questsOnJoin, questsOnLeave } from "./quests.ts";
 
 export interface CharacterState {
@@ -100,6 +101,9 @@ export interface HeldMessage {
 }
 
 export type Effect =
+  | { kind: "clock"; from: number | null; to: number }
+  | { kind: "dawn"; count: number }
+  | { kind: "quest-due"; questId: string }
   | { kind: "session-started"; sessionId: string; name: string }
   | { kind: "session-ended"; sessionId: string; name: string }
   | { kind: "event-logged"; eventId: string; summary: string }
@@ -247,6 +251,8 @@ export interface FoldResult {
   events: Map<string, CampaignEvent>;
   /** Every session, by id, oldest first; the last one runs until it ends. */
   sessions: Map<string, CampaignSession>;
+  /** The in-game clock, once the GM sets it. */
+  clock: Clock | null;
   /** Effects keyed by the id of the action that produced them. */
   effects: Map<string, Effect[]>;
   rejected: Rejection[];
@@ -304,6 +310,7 @@ export interface World {
   quests: Map<string, Quest>;
   events: Map<string, CampaignEvent>;
   sessions: Map<string, CampaignSession>;
+  clock: Clock | null;
 }
 
 function cloneWorld(w: World): World {
@@ -317,11 +324,12 @@ function cloneWorld(w: World): World {
     quests: new Map([...w.quests].map(([k, v]) => [k, cloneQuest(v)])),
     events: new Map([...w.events].map(([k, v]) => [k, cloneEvent(v)])),
     sessions: new Map([...w.sessions].map(([k, v]) => [k, cloneSession(v)])),
+    clock: w.clock && { ...w.clock },
   };
 }
 
 export function emptyWorld(): World {
-  return { characters: new Map(), parties: new Map(), invites: [], held: new Map(), encounter: null, inventory: new Map(), quests: new Map(), events: new Map(), sessions: new Map() };
+  return { characters: new Map(), parties: new Map(), invites: [], held: new Map(), encounter: null, inventory: new Map(), quests: new Map(), events: new Map(), sessions: new Map(), clock: null };
 }
 
 /** The world as the fold leaves it: what `rollFor` rolls against. */
@@ -336,6 +344,7 @@ export function worldOf(r: FoldResult): World {
     quests: r.quests,
     events: r.events,
     sessions: r.sessions,
+    clock: r.clock,
   };
 }
 
@@ -374,6 +383,7 @@ export function fold(engine: Engine, log: readonly Envelope[]): FoldResult {
     quests: world.quests,
     events: world.events,
     sessions: world.sessions,
+    clock: world.clock,
     effects,
     rejected,
     voided: voided.ids,
@@ -526,6 +536,9 @@ function apply(engine: Engine, world: World, env: Envelope): Effect[] {
     case "session.end":
     case "session.summary":
       return applySessions(world, a, env);
+    case "clock.set":
+    case "clock.advance":
+      return applyClock(engine, world, a);
     case "void":
       throw new Error("voids are handled before apply");
   }

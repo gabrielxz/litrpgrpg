@@ -5,11 +5,11 @@
  * a player away from their screen. Personal Opportunity refusals show by flavor.
  */
 import type { Engine } from "@gradebreaker/engine";
-import { type Action, type Envelope, type GmView, QUEST_CATEGORIES, type Quest, type QuestCategory, type QuestSpec, questTableVe } from "@gradebreaker/record";
+import { type Action, type Envelope, type GmView, QUEST_CATEGORIES, type Quest, type QuestCategory, type QuestSpec, clockLine, questTableVe } from "@gradebreaker/record";
 import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
 import { catalogNames } from "../items.ts";
-import type { Names } from "../text.ts";
+import { type Names, duration } from "../text.ts";
 import { Commit } from "./Commit.tsx";
 
 const OFFERED: QuestCategory[] = ["Routine", "Faction", "Personal Opportunity"];
@@ -63,6 +63,7 @@ function IssueForm({ view, engine, names, onRecorded }: { view: GmView; engine: 
     scaled: false,
     rewardText: "",
     time: "",
+    hours: "",
     flavor: "combat" as "combat" | "social" | "exploration",
     hidden: "obscured" as "obscured" | "partial" | "post-completion",
     hiddenName: "",
@@ -84,6 +85,7 @@ function IssueForm({ view, engine, names, onRecorded }: { view: GmView; engine: 
   if (stacks.length) spec.items = stacks;
   if (f.rewardText.trim()) spec.rewardText = f.rewardText.trim();
   if (f.time.trim()) spec.time = f.time.trim();
+  if (int(f.hours)) spec.hours = int(f.hours)!;
   if (f.category === "Personal Opportunity") spec.flavor = f.flavor;
   if (f.category === "Hidden") {
     spec.hidden = f.hidden;
@@ -195,6 +197,10 @@ function IssueForm({ view, engine, names, onRecorded }: { view: GmView; engine: 
             Time
             <input value={f.time} onChange={(e) => set("time", e.target.value)} placeholder="within 6 hours" />
           </label>
+          <label title={view.clock ? "Counted on the in-game clock from the moment the quest is issued" : "Set the in-game clock to give a limit in hours"}>
+            Limit (hours)
+            <input type="number" min={1} disabled={!view.clock} value={f.hours} onChange={(e) => set("hours", e.target.value)} />
+          </label>
         </div>
         <datalist id="quest-items">
           {catalogNames(engine).map((n) => (
@@ -266,7 +272,7 @@ function QuestCard({ q, view, engine, names, onRecorded }: { q: Quest; view: GmV
 Issuer:     ${q.issuer}${q.category === "Faction" ? "" : ` · ${q.category}`}
 Grade:      ${q.grade} · Difficulty: ${q.difficulty}
 Objective:  ${q.objective}${q.count ? ` (${q.count.done}/${q.count.of})` : ""}
-Reward:     ${reward || "none"}${q.time ? `\nTime:       ${q.time}` : ""}
+Reward:     ${reward || "none"}${q.time ? `\nTime:       ${q.time}` : ""}${q.due !== undefined ? `\nDue:        ${clockLine(q.due)}${open && view.clock ? (view.clock.at >= q.due ? " · time limit reached" : ` · ${duration(q.due - view.clock.at)} left`) : ""}` : ""}
 Status:     ${q.status[0]!.toUpperCase() + q.status.slice(1)}${q.flavor ? ` · ${q.flavor}` : ""}`}
       </pre>
       <p className="small">

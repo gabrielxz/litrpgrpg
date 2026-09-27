@@ -55,6 +55,8 @@ export interface CampaignEvent {
   entries: (HveEntry & { sweptIn?: string })[];
   /** The session running when it was logged. */
   sessionId?: string;
+  /** The in-game clock when it was logged. */
+  clock?: number;
 }
 
 export function cloneEvent(e: CampaignEvent): CampaignEvent {
@@ -97,6 +99,7 @@ export function applyEvents(engine: Engine, world: World, a: EventAction, env: E
   if (a.notes?.trim()) e.notes = a.notes.trim();
   const session = runningSession(world);
   if (session) e.sessionId = session.id;
+  if (world.clock) e.clock = world.clock.at;
   world.events.set(e.id, e);
   return [{ kind: "event-logged", eventId: e.id, summary }];
 }

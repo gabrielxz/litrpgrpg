@@ -16,6 +16,7 @@ import { QuestsSection } from "./Quests.tsx";
 import { HveSection } from "./Hve.tsx";
 import { EventsSection } from "./Events.tsx";
 import { SessionBar, SessionsCard } from "./Sessions.tsx";
+import { ClockControls } from "./Clock.tsx";
 import { TitlesDueCard } from "./Titles.tsx";
 import { stackLine } from "../items.ts";
 import { ATTRIBUTES } from "../text.ts";
@@ -267,7 +268,10 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
           </button>
         ))}
       </nav>
-      <SessionBar view={view} names={names} onRecorded={live.addToLog} onSweep={() => setSection("hve")} />
+      <div className="table-bar">
+        <SessionBar view={view} names={names} onRecorded={live.addToLog} onSweep={() => setSection("hve")} />
+        <ClockControls view={view} engine={engine} names={names} onRecorded={live.addToLog} />
+      </div>
       {section === "party" && (
         <main className="gm">
           <section className="sheets">

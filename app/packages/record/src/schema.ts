@@ -239,6 +239,7 @@ export const actionSchema = z.discriminatedUnion("type", [
       items: z.array(stack).max(20).optional(),
       rewardText: z.string().max(500).optional(),
       time: z.string().max(120).optional(),
+      hours: whole.optional(),
       flavor: z.enum(["combat", "social", "exploration"]).optional(),
       hidden: z.enum(["obscured", "partial", "post-completion"]).optional(),
       hiddenName: z.string().max(120).optional(),
@@ -295,6 +296,8 @@ export const actionSchema = z.discriminatedUnion("type", [
       .max(20)
       .optional(),
   }),
+  z.object({ type: z.literal("clock.set"), day: whole, hour: whole, minute: whole.optional(), dawnHour: whole.optional() }),
+  z.object({ type: z.literal("clock.advance"), minutes: whole }),
   z.object({ type: z.literal("session.start"), label: z.string().max(80).optional(), present: z.array(id).max(20) }),
   z.object({ type: z.literal("session.attend"), characterId: id, present: z.boolean() }),
   z.object({ type: z.literal("session.end"), summary: z.string().max(2000).optional() }),

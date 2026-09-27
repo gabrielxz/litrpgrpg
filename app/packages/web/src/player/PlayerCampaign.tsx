@@ -390,6 +390,7 @@ function QuestLog({ campaignId, c, readOnly }: { campaignId: string; c: Interfac
       if (q.objective) lines.push(`Objective:  ${q.objective}${q.count ? ` (${q.count.done}/${q.count.of})` : ""}`);
       if (reward) lines.push(`Reward:     ${reward}`);
       if (q.time) lines.push(`Time:       ${q.time}`);
+      if (q.hoursLeft !== undefined) lines.push(`Remaining:  ${q.hoursLeft === 1 ? "1 hour" : `${q.hoursLeft} hours`}`);
     } else if (q.objective) lines.push(q.objective);
     lines.push(`Status:     ${q.status === "offered" ? "Offered" : q.status[0]!.toUpperCase() + q.status.slice(1)}${q.shared ? " · Shared" : ""}`);
     return lines.join("\n");
