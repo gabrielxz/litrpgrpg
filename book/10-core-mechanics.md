@@ -28,6 +28,8 @@ The game's numbers come in two sizes: the huge ones the story is about, and the 
 
 **Rounding:** all fractions round down.
 
+**Exceptions:** where the text of a class, Principle, title, item, or stat block contradicts a general rule, that text governs.
+
 ---
 
 ## Raw Power, Grade, and Force
@@ -455,7 +457,7 @@ Multi-target capability is a property of specific abilities, spells, and effects
 
 **The countdown.** Vital coherence is 3 at the moment of Downing and falls by one at the end of each round, the round of Downing included as the first. At the end of the third round it reaches 0, and the character dies unless stabilized before then. The System reads the number out to the Downed character as it falls.
 
-**Stabilizing.** Two paths, each taken by an ally in the Downed character's Zone; a healing technique that states a longer reach, such as Triage (Classes, "Battle Medic"), reaches as far as it states:
+**Stabilizing.** Two paths, each taken by an ally in the Downed character's Zone:
 
 - **Any HP restoration.** A pill, medkit, or healing skill (1 Beat) returns them to consciousness at the restored HP.
 - **Bare hands.** 1 Beat and a Moderate (90) DEX check; a medical Background rolls it with Advantage. Success stops the countdown; the character stays Downed at 0 HP and wakes at 1 HP when the scene ends.
