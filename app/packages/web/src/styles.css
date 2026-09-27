@@ -1248,3 +1248,68 @@ pre.quest-entry {
 .quest-log .quest {
   margin-bottom: 0.5rem;
 }
+
+/* ---- the Hidden Vector Engine ---- */
+
+.sweep-sheet {
+  border-top: 1px solid var(--stone);
+  padding-top: 0.6rem;
+  margin-top: 0.8rem;
+}
+.sweep-sheet h3 {
+  margin: 0 0 0.4rem;
+}
+.moment-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.6rem;
+  align-items: flex-end;
+  margin: 0.4rem 0;
+  font-size: 0.85rem;
+}
+.moment-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.moment-form label.check {
+  flex-direction: row;
+  align-items: center;
+}
+.moment-form .grow {
+  flex: 1 1 12rem;
+}
+.moment-form .grow input {
+  width: 100%;
+}
+.moment-form p {
+  flex-basis: 100%;
+  margin: 0;
+}
+ul.moments {
+  margin: 0.2rem 0 0.4rem;
+  padding-left: 1.1rem;
+  font-size: 0.85rem;
+}
+.circled {
+  border: 1.5px solid var(--ink);
+  border-radius: 1em;
+  padding: 0 0.35em;
+}
+table.hve-rows {
+  margin: 0.4rem 0;
+}
+.deep-inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
+  gap: 0.3rem;
+  margin: 0.4rem 0;
+  font-size: 0.85rem;
+}
+.deep-inputs label {
+  display: flex;
+  flex-direction: column;
+}
+.deep-inputs input {
+  width: 100%;
+}

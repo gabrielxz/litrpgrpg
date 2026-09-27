@@ -32,6 +32,7 @@ import { type Stack, applyItems, authorizeItemsPlayer } from "./inventory.ts";
 import { addMark, checkShape, proficiencyOf } from "./proficiency.ts";
 import { type Title, applyTitles, count, titleStats } from "./titles.ts";
 import { authorizePillPlayer, takePillOutside } from "./pills.ts";
+import { type HveState, applyHve, cloneHve } from "./hve.ts";
 import { type Quest, type QuestNoticeKind, applyQuests, authorizeQuestPlayer, cloneQuest, questsOnJoin, questsOnLeave } from "./quests.ts";
 
 export interface CharacterState {
@@ -72,6 +73,8 @@ export interface CharacterState {
   refusals?: Record<string, number>;
   /** Pills taken since the last Consolidation's first full hour, by kind. */
   pillsTaken?: { healing: number; aether: number };
+  /** The Hidden Vector Engine's sheet: Deep, and every sweep's moments. */
+  hve?: HveState;
 }
 
 /** A formal party: its members' character ids in the order they joined. */
@@ -95,6 +98,8 @@ export interface HeldMessage {
 }
 
 export type Effect =
+  | { kind: "hve-swept"; characterId: string; current: Record<string, number>; added: string[] }
+  | { kind: "hve-copied"; characterId: string }
   | { kind: "created"; characterId: string }
   | { kind: "reassigned"; characterId: string; playerId: string | null }
   | { kind: "ve-acquired"; characterId: string; ve: number }
@@ -371,6 +376,7 @@ function cloneState(c: CharacterState): CharacterState {
     ...(c.dismissedTitles ? { dismissedTitles: [...c.dismissedTitles] } : {}),
     ...(c.refusals ? { refusals: { ...c.refusals } } : {}),
     ...(c.pillsTaken ? { pillsTaken: { ...c.pillsTaken } } : {}),
+    ...(c.hve ? { hve: cloneHve(c.hve) } : {}),
   };
 }
 
@@ -493,6 +499,9 @@ function apply(engine: Engine, world: World, env: Envelope): Effect[] {
       return applyQuests(engine, world, a);
     case "pill.take":
       return takePillOutside(engine, world, a);
+    case "hve.sweep":
+    case "hve.deep":
+      return applyHve(engine, chars, a, env.id);
     case "void":
       throw new Error("voids are handled before apply");
   }
@@ -714,7 +723,7 @@ function runHours(engine: Engine, c: CharacterState, hours: number, highDensity:
     }
     if (h === cons.aether_refills_at_full_hour) {
       c.aether = maxAetherOf(engine, c);
-      // The pill count starts over when Aether refills (Items; backlog edit 7).
+      // The pill count starts over when Aether refills (Items).
       delete c.pillsTaken;
       out.push({ kind: "aether-refilled", characterId: c.id, hour: h });
     }

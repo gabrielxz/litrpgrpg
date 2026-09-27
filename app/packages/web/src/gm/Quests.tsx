@@ -247,7 +247,7 @@ function QuestCard({ q, view, engine, names, onRecorded }: { q: Quest; view: GmV
   const reward = [q.scaled ? "proportional" : q.ve === null ? "" : `${q.ve} VE`, ...(q.items ?? []).map((i) => (i.count === 1 ? i.name : `${i.count} ${i.name}`)), q.rewardText ?? ""].filter(Boolean).join(", ");
   const open = q.status === "offered" || q.status === "active";
   const holders = q.holders.filter((h) => took.has(h));
-  // Every participating holder collects the stated award; a holder above the quest's Grade collects nothing (book edit 16).
+  // Every participating holder collects the stated award; a holder above the quest's Grade collects nothing (Quests; Gabriel, 2026-09-26).
   const stated = (h: string) => {
     const grade = view.characters.find((c) => c.id === h)?.grade ?? q.grade;
     return engine.gradeOrder(grade) > engine.gradeOrder(q.grade) ? 0 : (q.ve ?? 0);

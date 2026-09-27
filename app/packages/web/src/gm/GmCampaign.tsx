@@ -3,7 +3,7 @@
  * campaign log, the table (members, invite links, who plays whom), and any player's screen as
  * that player sees it.
  */
-import type { Envelope, GmView, PlayerView, Sheet, Stack } from "@gradebreaker/record";
+import type { Envelope, GmView, PlayerView, RulesMove, Sheet, Stack } from "@gradebreaker/record";
 import { useEffect, useState } from "react";
 import { api } from "../api.ts";
 import type { useCampaign } from "../live.ts";
@@ -13,8 +13,10 @@ import { CombatSection } from "./Combat.tsx";
 import { Commit } from "./Commit.tsx";
 import { SpoilsCard } from "./Items.tsx";
 import { QuestsSection } from "./Quests.tsx";
+import { HveSection } from "./Hve.tsx";
 import { TitlesDueCard } from "./Titles.tsx";
 import { stackLine } from "../items.ts";
+import { changeLine } from "../text.ts";
 import { ATTRIBUTES } from "../text.ts";
 import { Table } from "./Invites.tsx";
 import { Log } from "./Log.tsx";
@@ -194,11 +196,12 @@ function ViewAs({ view }: { view: GmView }) {
   );
 }
 
-type Section = "party" | "combat" | "quests" | "log" | "table" | "player";
+type Section = "party" | "combat" | "quests" | "hve" | "log" | "table" | "player";
 const SECTIONS: [Section, string][] = [
   ["party", "Party"],
   ["combat", "Combat"],
   ["quests", "Quests"],
+  ["hve", "HVE"],
   ["log", "Campaign log"],
   ["table", "Table"],
   ["player", "Player view"],
@@ -216,6 +219,84 @@ function useSection(): [Section, (s: Section) => void] {
     return () => window.removeEventListener("hashchange", on);
   }, []);
   return [section, (s) => (window.location.hash = s)];
+}
+
+/**
+ * The campaign's pinned rules and the move to the current ones (app/DESIGN.md, "Campaigns pin a
+ * rules version"): the whole log replays under the new rules, so the card shows every sheet that
+ * changes and every action that would stop applying before the GM moves it.
+ */
+function RulesCard({ view, names }: { view: GmView; names: (id: string) => string }) {
+  const behind = view.campaign.rulesVersion !== view.currentRules;
+  const [move, setMove] = useState<RulesMove | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  useEffect(() => {
+    if (!behind) return setMove(null);
+    api<RulesMove>("GET", `/campaigns/${view.campaign.id}/rules`)
+      .then(setMove)
+      .catch((e) => setError((e as Error).message));
+  }, [behind, view.campaign.id, view.seq]);
+  const go = async () => {
+    setBusy(true);
+    try {
+      await api("POST", `/campaigns/${view.campaign.id}/rules`);
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <section className="card">
+      <h2>Rules</h2>
+      {!behind ? (
+        <p>This campaign runs on rules {view.campaign.rulesVersion}, the current version.</p>
+      ) : (
+        <>
+          <p>
+            This campaign runs on rules {view.campaign.rulesVersion}. Rules {view.currentRules} are current, and parts of the app read numbers
+            only the current rules carry.
+          </p>
+          {move && (
+            <div className="preview">
+              <h4>If you move it, the whole log replays under rules {move.to}:</h4>
+              {move.changes.length === 0 && <p className="muted">No sheet changes.</p>}
+              {move.changes.map((d) => {
+                const lines = d.changes.map(changeLine).filter((l): l is string => Boolean(l));
+                return lines.length ? (
+                  <div key={d.characterId} className="change">
+                    <strong>{names(d.characterId)}</strong>
+                    <ul>
+                      {lines.map((l, i) => (
+                        <li key={i}>{l}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null;
+              })}
+              {move.newlyRejected.length > 0 && (
+                <div className="stranded">
+                  <strong>Recorded actions that would stop applying:</strong>
+                  <ul>
+                    {move.newlyRejected.map((r) => (
+                      <li key={r.id}>
+                        #{r.seq + 1}: {r.reason}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
+          <button className="primary" disabled={busy || !move} onClick={go}>
+            Move to rules {view.currentRules}
+          </button>
+        </>
+      )}
+      {error && <p className="error">{error}</p>}
+    </section>
+  );
 }
 
 export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<typeof useCampaign> }) {
@@ -243,6 +324,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
         {SECTIONS.map(([s, label]) => (
           <button key={s} className={s === section ? "active" : ""} onClick={() => setSection(s)}>
             {label}
+            {s === "table" && view.campaign.rulesVersion !== view.currentRules && <span className="tag attention">Rules {view.campaign.rulesVersion}</span>}
             {s === "log" && view.rejected.length > 0 && <span className="tag attention">{view.rejected.length}</span>}
             {s === "combat" && view.encounter && <span className="tag attention">{view.encounter.round ? `Round ${view.encounter.round}` : "Set"}</span>}
             {s === "combat" && !view.encounter && view.aftermath && <span className="tag attention">To settle</span>}
@@ -267,6 +349,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
       )}
       {section === "combat" && <CombatSection view={view} engine={engine} names={names} log={live.log} onRecorded={live.addToLog} />}
       {section === "quests" && <QuestsSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
+      {section === "hve" && <HveSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
       {section === "log" && (
         <main className="page">
           <Log view={view} log={live.log} names={names} onRecorded={live.addToLog} />
@@ -275,6 +358,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
       {section === "table" && (
         <main className="page narrow">
           <Table view={view} />
+          <RulesCard view={view} names={names} />
           <Holders view={view} names={names} onRecorded={live.addToLog} />
         </main>
       )}

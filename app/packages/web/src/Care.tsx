@@ -52,7 +52,7 @@ export function CareActions({
   people,
   pills,
   pillLimit,
-  stabilizeWith,
+  stabilize,
   beats,
   busy,
   run,
@@ -61,8 +61,8 @@ export function CareActions({
   people: Mate[];
   pills: Pill[];
   pillLimit: number;
-  /** The Attribute a character rolls to stabilize by bare hands. */
-  stabilizeWith: string;
+  /** The bare-hands stabilizing check from the rules data. */
+  stabilize: { attribute: string; difficulty: string; resistance: number };
   beats: number;
   busy: boolean;
   run: (a: Action) => Promise<boolean>;
@@ -116,7 +116,7 @@ export function CareActions({
             Pill…
           </button>
         )}
-        <button disabled={noBeat || dying.length === 0} onClick={() => toggle("stabilize")} title={`Bare hands: a Moderate (90) ${stabilizeWith} check in the Downed character's Zone`}>
+        <button disabled={noBeat || dying.length === 0} onClick={() => toggle("stabilize")} title={`Bare hands: a ${stabilize.difficulty} (${stabilize.resistance}) ${stabilize.attribute} check in the Downed character's Zone`}>
           Stabilize…
         </button>
         <button disabled={noBeat || downed.length === 0} onClick={() => toggle("execute")} title="A deliberate attack on a Downed combatant kills them: 1 Beat, no roll">
@@ -154,7 +154,7 @@ export function CareActions({
           {targetSelect}
           {me.force ? (
             <span className="small">
-              {stabilizeWith} {me.force[stabilizeWith]}
+              {stabilize.attribute} {me.force[stabilize.attribute]}
             </span>
           ) : (
             <input type="number" className="narrow-input" value={force} onChange={(e) => setForce(e.target.value)} placeholder="Force" aria-label="Force" />

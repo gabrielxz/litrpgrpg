@@ -372,6 +372,7 @@ export function viewFor(
   campaign: CampaignInfo,
   members: Member[],
   who: { userId: string; role: Role },
+  currentRules: string = campaign.rulesVersion,
 ): View {
   const seq = record.log.length;
   const sheets = [...record.sheets().values()];
@@ -380,6 +381,7 @@ export function viewFor(
     return {
       role: "gm",
       campaign,
+      currentRules,
       members,
       seq,
       characters: sheets,

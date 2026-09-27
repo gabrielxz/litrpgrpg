@@ -22,7 +22,7 @@ import {
   flankingSuggested,
   pillLimit,
   shapes,
-  stabilizeAttribute,
+  stabilizeCheck,
 } from "@gradebreaker/record";
 import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
@@ -588,7 +588,7 @@ function CombatantRow({
           people={e.combatants.map(mateOf)}
           pills={pillsOf(engine)}
           pillLimit={pillLimit(engine)}
-          stabilizeWith={stabilizeAttribute(engine)}
+          stabilize={stabilizeCheck(engine)}
           beats={c.beats}
           busy={busy}
           run={run}

@@ -251,6 +251,29 @@ export const actionSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("quest.complete"), questId: id, awards: z.array(z.object({ characterId: id, ve: whole })).max(20), itemsTo: id.optional() }),
   z.object({ type: z.literal("quest.fail"), questId: id }),
   z.object({ type: z.literal("quest.withdraw"), questId: id }),
+  z.object({
+    type: z.literal("hve.sweep"),
+    label: z.string().max(80).optional(),
+    sheets: z
+      .array(
+        z.object({
+          characterId: id,
+          moments: z
+            .array(
+              z.object({
+                pole: z.string().max(20),
+                weight: whole,
+                note: z.string().max(300).optional(),
+                secondary: z.string().max(20).optional(),
+                coercion: z.boolean().optional(),
+              }),
+            )
+            .max(40),
+        }),
+      )
+      .max(20),
+  }),
+  z.object({ type: z.literal("hve.deep"), characterId: id, deep: z.record(z.string().max(20), whole) }),
   z.object({ type: z.literal("pill.take"), characterId: id, targetId: id, pill: z.string().max(60) }),
   z.object({ type: z.literal("item.move"), from: id, to: id, name: z.string().max(80), count: whole }),
   z.object({ type: z.literal("item.remove"), from: id, name: z.string().max(80), count: whole, note: z.string().max(200).optional() }),

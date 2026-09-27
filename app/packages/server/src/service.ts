@@ -17,7 +17,9 @@ import {
   IdConflict,
   type Preview,
   RecordError,
+  type RulesMove,
   type Submission,
+  diffSheets,
   pointBuyProblems,
   rollFor,
 } from "@gradebreaker/record";
@@ -459,7 +461,45 @@ export class Service {
 
   async view(campaignId: string, who: { userId: string; role: Role }): Promise<View> {
     const [record, campaign, members] = await Promise.all([this.record(campaignId), this.campaign(campaignId), this.members(campaignId)]);
-    return viewFor(record, campaign, members, who);
+    return viewFor(record, campaign, members, who, this.rulesVersion);
+  }
+
+  // ------------------------------------------------------ rules version ---
+
+  /** The campaign's log replayed under the current rules, beside the record it has now. */
+  private async moved(campaignId: string) {
+    const [record, campaign] = await Promise.all([this.record(campaignId), this.campaign(campaignId)]);
+    const moved = new CampaignRecord(await this.engine(this.rulesVersion), record.log);
+    const before = new Set(record.rejected.map((r) => r.envelope.id));
+    const move: RulesMove = {
+      from: campaign.rulesVersion,
+      to: this.rulesVersion,
+      changes: diffSheets(record.sheets(), moved.sheets()),
+      newlyRejected: moved.rejected
+        .filter((r) => !before.has(r.envelope.id))
+        .map((r) => ({ id: r.envelope.id, seq: r.envelope.seq, reason: r.reason })),
+    };
+    return { moved, move };
+  }
+
+  /** What moving the campaign to the current rules would change. GM only. */
+  async previewRulesMove(campaignId: string, user: User | null): Promise<RulesMove> {
+    await this.requireGm(campaignId, user);
+    return (await this.moved(campaignId)).move;
+  }
+
+  /** Pins the campaign to the current rules; its log replays under them from now on. GM only. */
+  async moveRules(campaignId: string, user: User | null): Promise<RulesMove> {
+    await this.requireGm(campaignId, user);
+    const move = await this.locked(campaignId, async () => {
+      const { moved, move } = await this.moved(campaignId);
+      if (move.from === move.to) throw new HttpError(409, `the campaign is already on rules ${move.to}`);
+      await this.db.query("update campaigns set rules_version = $2 where id = $1", [campaignId, move.to]);
+      this.records.set(campaignId, moved);
+      return move;
+    });
+    this.emit({ kind: "members", campaignId });
+    return move;
   }
 }
 

@@ -219,6 +219,12 @@ export function describe(
       return `[${a.questId}] expires`;
     case "pill.take":
       return a.characterId === a.targetId ? `${name(a.characterId)} takes a ${a.pill}` : `${name(a.characterId)} gives ${name(a.targetId)} a ${a.pill}`;
+    case "hve.sweep": {
+      const tallies = a.sheets.reduce((n, s) => n + s.moments.reduce((m, x) => m + x.weight + (x.secondary ? x.weight - 1 : 0), 0), 0);
+      return `HVE sweep${a.label ? ` (${a.label})` : ""}: ${a.sheets.map((s) => name(s.characterId)).join(", ")}, ${tallies} ${tallies === 1 ? "tally" : "tallies"}`;
+    }
+    case "hve.deep":
+      return `${name(a.characterId)}: Deep tallies copied across`;
     case "void": {
       const seq = seqOf(a.targetId);
       const target = seq === undefined ? "an action" : `#${seq + 1}`;
@@ -230,6 +236,12 @@ export function describe(
 /** One line for a preview or the GM's feed. */
 export function effectLine(e: Effect, name: Names): string | null {
   switch (e.kind) {
+    case "hve-swept": {
+      const cur = Object.entries(e.current).filter(([, n]) => n > 0).map(([p, n]) => `${p} ${n}`);
+      return `${name(e.characterId)}: Current ${cur.join(", ") || "empty"}${e.added.length ? `; Deep ${e.added.map((p) => `${p} +1`).join(", ")}` : "; Deep unchanged"}`;
+    }
+    case "hve-copied":
+      return `${name(e.characterId)}: Deep tallies set from the copied sheet`;
     case "created":
       return null; // the preview's sheet changes already show the new character
     case "reassigned":
@@ -461,11 +473,12 @@ const FIELD_LABELS: Record<string, string> = {
   freePoints: "Free points",
   temporary: "Temporary loss",
   downed: "Downed",
+  "hve.coherence.profile": "Coherence",
 };
 
 /** A sheet change as the GM reads it, or null for derived fields that repeat another. */
 export function changeLine(c: Change): string | null {
-  const label = c.field.startsWith("raw.") ? c.field.slice(4) : FIELD_LABELS[c.field];
+  const label = c.field.startsWith("raw.") ? c.field.slice(4) : c.field.startsWith("hve.deep.") ? `Deep ${c.field.slice(9)}` : FIELD_LABELS[c.field];
   if (!label) return null;
   const show = (v: unknown) =>
     Array.isArray(v) ? (v.length ? v.join(", ") : "none") : v === null || v === undefined ? "none" : String(v);

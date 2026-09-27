@@ -6,7 +6,7 @@
  * the Will Save again. The GM records anything a player does not.
  */
 import type { Engine } from "@gradebreaker/engine";
-import { type Action, type InterfaceSheet, type PlayerView, pillLimit, shapes, stabilizeAttribute } from "@gradebreaker/record";
+import { type Action, type InterfaceSheet, type PlayerView, pillLimit, shapes, stabilizeCheck } from "@gradebreaker/record";
 import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
 import { CareActions, type Mate, pillsOf } from "../Care.tsx";
@@ -132,13 +132,13 @@ function MyTurn({
           </button>
         </div>
       )}
-      {!attacking && (
+      {!attacking && engine && (
         <CareActions
           me={{ ...mateOf(me), force: c.force, items: c.items }}
           people={combat.combatants.map(mateOf)}
           pills={pillsOf(engine)}
-          pillLimit={engine ? pillLimit(engine) : 5}
-          stabilizeWith={engine ? stabilizeAttribute(engine) : "DEX"}
+          pillLimit={pillLimit(engine)}
+          stabilize={stabilizeCheck(engine)}
           beats={beats}
           busy={busy}
           run={run}

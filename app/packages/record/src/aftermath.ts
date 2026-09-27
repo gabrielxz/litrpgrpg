@@ -58,20 +58,19 @@ export interface LootResult {
   drop: string;
 }
 
-// The loot table's chances live in its drop text (rules/system-ai.yaml `loot_table`); backlog
-// edit 12 gives them their own fields. A chance succeeds on a d100 at or under it.
-const LOOT: Record<string, { chance?: number; hit: string; miss?: string }> = {
-  Trivial: { hit: "Nothing, or salvage on a memorable kill" },
-  Easy: { chance: 50, hit: "One minor consumable", miss: "Nothing" },
-  Moderate: { hit: "One consumable" },
-  Hard: { chance: 25, hit: "One consumable, plus a skill shard or equipment", miss: "One consumable" },
-  Severe: { hit: "One meaningful item" },
-  Peak: { hit: "One meaningful item plus one bespoke drop" },
-};
-const PEAK_BOSS = "One meaningful item plus two bespoke drops";
+interface LootRow {
+  tier: string;
+  chance?: number;
+  on_hit: string;
+  on_miss?: string;
+}
+
+function lootTable(engine: Engine): LootRow[] {
+  return engine.rules["system-ai"].loot_table;
+}
 
 function tiers(engine: Engine): string[] {
-  return engine.rules["system-ai"].loot_table.map((r: { tier: string }) => r.tier);
+  return lootTable(engine).map((r) => r.tier);
 }
 
 /** The row a kill reads and whether it rolls: a boss reads one row higher; a Peak boss has its own drop. */
@@ -81,15 +80,16 @@ export function lootRow(engine: Engine, tier: string, boss: boolean): { row: str
   if (i < 0) throw new Rejected(`no tier ${tier}`);
   if (boss && i === order.length - 1) return { row: "Peak boss" };
   const row = order[boss ? i + 1 : i]!;
-  const chance = LOOT[row]?.chance;
+  const chance = lootTable(engine).find((r) => r.tier === row)!.chance;
   return chance === undefined ? { row } : { row, chance };
 }
 
-function lootDrop(row: string, die: number | null): string {
-  if (row === "Peak boss") return PEAK_BOSS;
-  const l = LOOT[row]!;
-  if (l.chance === undefined || die === null) return l.hit;
-  return die <= l.chance ? l.hit : l.miss!;
+/** A row with a chance drops `on_hit` on a d100 at or under it and `on_miss` otherwise. */
+function lootDrop(engine: Engine, row: string, die: number | null): string {
+  if (row === "Peak boss") return engine.rules["system-ai"].loot_peak_boss_drop;
+  const l = lootTable(engine).find((r) => r.tier === row)!;
+  if (l.chance === undefined || die === null) return l.on_hit;
+  return die <= l.chance ? l.on_hit : l.on_miss!;
 }
 
 function ended(world: World, encounterId: string): Encounter {
@@ -121,7 +121,7 @@ function rollLoot(engine: Engine, world: World, a: RollLoot): Effect[] {
     const die = a.dice![i] ?? null;
     if (chance === undefined && die !== null) throw new Rejected(`${row} has no chance to roll`);
     if (chance !== undefined && (die === null || !Number.isInteger(die) || die < 1 || die > 100)) throw new Rejected("a loot roll is a d100");
-    return { combatantId: k.combatantId, row, die, drop: lootDrop(row, die) };
+    return { combatantId: k.combatantId, row, die, drop: lootDrop(engine, row, die) };
   });
   return [{ kind: "loot", encounterId: e.id, results: e.loot.map((r) => ({ ...r })) }];
 }

@@ -40,7 +40,7 @@ sweep:
     - tally the decision rather than the outcome
     - when unsure which of two axes a moment belongs to, tally only the one that drove the choice
     - when torn between two weights, take the lower
-    - a moment that clearly reads on two axes: primary at full weight, secondary one weight lower
+    - "a moment that clearly reads on two axes: primary at full weight, secondary one weight lower"
   pvp_coercion_min_will_tallies: 2
 
 # The machine format, where an AI maintains the vectors.

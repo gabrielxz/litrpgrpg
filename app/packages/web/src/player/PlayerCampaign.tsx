@@ -212,7 +212,7 @@ function PartySection({
 
 /**
  * What the character carries, on their own interface after Proficiencies (Gabriel, 2026-09-26:
- * the System shows the owner their items; nobody else sees them; book edit 14). Hand an item to
+ * the System shows the owner their items; nobody else sees them). Hand an item to
  * someone in the campaign or the spoils, or mark one used.
  */
 function Carried({ campaignId, c, roster, readOnly, pills }: { campaignId: string; c: InterfaceSheet; roster: PlayerView["roster"]; readOnly?: boolean; pills: string[] }) {

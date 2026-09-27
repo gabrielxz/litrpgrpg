@@ -115,32 +115,12 @@ export type TitleAction = GrantTitle | ChooseTitleStat | WearTitle | RevealTitle
 
 // ------------------------------------------------------------- counters ---
 
-/**
- * Each catalog title's count and threshold. The catalog's triggers are prose in
- * `rules/titles.yaml`; backlog edit 15 gives them structured counts, and then this reads them.
- */
-export const COUNTED: Record<string, { counter: string; at: number }> = {
-  "Ten-Slayer": { counter: "confirmed-kills", at: 10 },
-  "Hundred-Slayer": { counter: "confirmed-kills", at: 100 },
-  "First Blood": { counter: "first-blood", at: 10 },
-  "Pack-Breaker": { counter: "most-kills-in-a-fight", at: 3 },
-  "Giant-Feller": { counter: "severe-or-peak-kills", at: 1 },
-  Stand: { counter: "fights-ended-below-half", at: 5 },
-  "First Down, First Up": { counter: "survived-downed", at: 1 },
-  "Week One": { counter: "days-survived", at: 7 },
-  "Empty-Handed": { counter: "empty-handed-wins", at: 1 },
-  Hundredfoot: { counter: "hundred-foot-climbs-or-falls", at: 1 },
-  Pillwright: { counter: "consumables-crafted", at: 10 },
-  Forager: { counter: "days-fed-the-party", at: 3 },
-  Tinker: { counter: "mid-crisis-repairs", at: 5 },
-  "First Through the Gate": { counter: "first-into-a-hostile-site", at: 10 },
-  Pathfinder: { counter: "led-through-unmapped-ground", at: 5 },
-  "Vow-Keeper": { counter: "oaths-fulfilled", at: 3 },
-  Lockbreaker: { counter: "locks-picked", at: 5 },
-  Unseen: { counter: "guarded-thresholds-crossed-unseen", at: 10 },
-  Peacemaker: { counter: "fights-ended-with-words", at: 3 },
-  "Deep Breather": { counter: "consolidations", at: 20 },
-};
+/** Each counted catalog title's count and threshold, from `achievement_catalog`'s `counter` and `at`. */
+export function counted(engine: Engine): Record<string, { counter: string; at: number }> {
+  const out: Record<string, { counter: string; at: number }> = {};
+  for (const r of catalogRows(engine)) if (r.counter !== undefined && r.at !== undefined) out[r.title] = { counter: r.counter, at: r.at };
+  return out;
+}
 
 /** Counts the record keeps from what it already knows; the GM ticks every other count. */
 export const DERIVED_COUNTERS: ReadonlySet<string> = new Set([
@@ -153,7 +133,10 @@ export const DERIVED_COUNTERS: ReadonlySet<string> = new Set([
   "consolidations",
 ]);
 
-export const TICKED_COUNTERS: string[] = [...new Set(Object.values(COUNTED).map((c) => c.counter))].filter((c) => !DERIVED_COUNTERS.has(c));
+/** Counts the GM ticks: every catalog count the record does not keep itself. */
+export function tickedCounters(engine: Engine): string[] {
+  return [...new Set(Object.values(counted(engine)).map((c) => c.counter))].filter((c) => !DERIVED_COUNTERS.has(c));
+}
 
 export function count(c: CharacterState, counter: string, n = 1) {
   c.counters = { ...(c.counters ?? {}), [counter]: (c.counters?.[counter] ?? 0) + n };
@@ -165,10 +148,10 @@ export function countMax(c: CharacterState, counter: string, n: number) {
 }
 
 /** Catalog titles whose count is met, not yet held, and not passed on. */
-export function titlesDue(c: CharacterState): string[] {
+export function titlesDue(engine: Engine, c: CharacterState): string[] {
   if (c.dead) return [];
   const held = new Set((c.titles ?? []).map((t) => t.catalog ?? t.name));
-  return Object.entries(COUNTED)
+  return Object.entries(counted(engine))
     .filter(([name, { counter, at }]) => (c.counters?.[counter] ?? 0) >= at && !held.has(name) && !c.dismissedTitles?.includes(name))
     .map(([name]) => name);
 }
@@ -182,6 +165,8 @@ interface CatalogRow {
   category?: string;
   earned_by?: string;
   effect?: string;
+  counter?: string;
+  at?: number;
 }
 
 function catalogRows(engine: Engine): CatalogRow[] {
@@ -325,11 +310,11 @@ export function applyTitles(engine: Engine, c: CharacterState, a: TitleAction, i
       return out;
     }
     case "title.dismiss":
-      if (!COUNTED[a.catalog]) throw new Rejected(`${a.catalog} is not a counted catalog title`);
+      if (!counted(engine)[a.catalog]) throw new Rejected(`${a.catalog} is not a counted catalog title`);
       c.dismissedTitles = [...(c.dismissedTitles ?? []), a.catalog];
       return [];
     case "counter.tick":
-      if (!TICKED_COUNTERS.includes(a.counter)) throw new Rejected(DERIVED_COUNTERS.has(a.counter) ? "the record counts that itself" : `no count ${a.counter}`);
+      if (!tickedCounters(engine).includes(a.counter)) throw new Rejected(DERIVED_COUNTERS.has(a.counter) ? "the record counts that itself" : `no count ${a.counter}`);
       if (!Number.isInteger(a.count) || a.count < 1) throw new Rejected("a tick is a whole number from 1");
       count(c, a.counter, a.count);
       return [];

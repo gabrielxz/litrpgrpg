@@ -7,7 +7,7 @@ import type { Stack } from "./inventory.ts";
 import type { Quest } from "./quests.ts";
 import type { Combatant, Encounter } from "./combat.ts";
 import type { Envelope } from "./actions.ts";
-import type { Sheet } from "./sheet.ts";
+import type { Sheet, SheetDiff } from "./sheet.ts";
 
 export type Role = "gm" | "player";
 
@@ -193,6 +193,8 @@ export interface InterfaceSheet {
 export interface GmView {
   role: "gm";
   campaign: CampaignInfo;
+  /** The rules version new campaigns start on; this campaign moves to it when the GM says so. */
+  currentRules: string;
   members: Member[];
   /** The log's length: where a client's copy of the log stands. Players do not receive it. */
   seq: number;
@@ -237,6 +239,15 @@ export interface PlayerView {
 }
 
 export type View = GmView | PlayerView;
+
+/** What moving a campaign to the current rules would do: the whole log replayed under them. */
+export interface RulesMove {
+  from: string;
+  to: string;
+  changes: SheetDiff[];
+  /** Actions that apply under the pinned rules and would stop applying. */
+  newlyRejected: { id: string; seq: number; reason: string }[];
+}
 
 /** What the live channel sends after an append. */
 export type LiveMessage =

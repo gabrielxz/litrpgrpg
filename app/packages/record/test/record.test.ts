@@ -1366,3 +1366,70 @@ describe("planning helpers", () => {
     expect(killAwards(engine, "E", [{ characterId: "kara", grade: "F", tier: "Moderate" }])[0]!.ve).toBe(100);
   });
 });
+
+describe("the Hidden Vector Engine sweep", () => {
+  beforeEach(() => {
+    gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" });
+    gm({ type: "character.pregen", characterId: "joe", pregen: "Joe" });
+  });
+  const hve = (id: string) => rec.sheet(id)!.hve;
+
+  it("runs Kara's sheet at the end of session three", () => {
+    // Deep going into session three, copied across from paper.
+    gm({ type: "hve.deep", characterId: "kara", deep: { Force: 2, Hunger: 2, Accord: 1 } });
+    expect(hve("kara").coherence).toEqual({ profile: "Scattered", bonus: 0 });
+    const out = gm({
+      type: "hve.sweep",
+      label: "Session 3",
+      sheets: [
+        { characterId: "kara", moments: [{ pole: "Force", weight: 2 }, { pole: "Hunger", weight: 1 }, { pole: "Freedom", weight: 1 }] },
+        { characterId: "joe", moments: [] },
+      ],
+    });
+    // Force leads Current by 2 and gains a Deep tally; Hunger leads by 1 and Freedom's axis by 1, so neither does.
+    expect(out.effects[0]).toMatchObject({ kind: "hve-swept", characterId: "kara", added: ["Force"] });
+    expect(hve("kara").deep).toMatchObject({ Force: 3, Method: 0, Hunger: 2, Accord: 1, Freedom: 0 });
+    expect(hve("kara").coherence).toEqual({ profile: "Leaning", bonus: 5 });
+    expect(hve("kara").sweeps[0]).toMatchObject({ label: "Session 3", current: { Force: 2, Hunger: 1, Freedom: 1 }, added: ["Force"] });
+    expect(hve("joe").deep.Force).toBe(0);
+    expect(hve("joe").sweeps).toHaveLength(1);
+  });
+
+  it("circles a Defining moment only with its margin note, and tallies a secondary one weight lower", () => {
+    expect(() => gm({ type: "hve.sweep", sheets: [{ characterId: "joe", moments: [{ pole: "Force", weight: 3 }] }] })).toThrow(/margin note/);
+    gm({
+      type: "hve.sweep",
+      sheets: [{ characterId: "joe", moments: [{ pole: "Force", weight: 3, note: "Charged the pack alone.", secondary: "Restraint" }] }],
+    });
+    expect(hve("joe").sweeps[0]!.current).toMatchObject({ Force: 3, Restraint: 2 });
+    expect(hve("joe").deep).toMatchObject({ Force: 1, Restraint: 1 });
+    expect(() => gm({ type: "hve.sweep", sheets: [{ characterId: "joe", moments: [{ pole: "Force", weight: 2, secondary: "Method" }] }] })).toThrow(/another axis/);
+    expect(() => gm({ type: "hve.sweep", sheets: [{ characterId: "joe", moments: [{ pole: "Force", weight: 1, secondary: "Hunger" }] }] })).toThrow(/tally only the primary/);
+    expect(() => gm({ type: "hve.sweep", sheets: [{ characterId: "joe", moments: [{ pole: "Force", weight: 4 }] }] })).toThrow(/carries 1, 2, 3/);
+  });
+
+  it("holds coercion of a player character to at least two tallies of Will", () => {
+    expect(() => gm({ type: "hve.sweep", sheets: [{ characterId: "kara", moments: [{ pole: "Will", weight: 1, coercion: true }] }] })).toThrow(/at least 2 tallies of Will/);
+    expect(() => gm({ type: "hve.sweep", sheets: [{ characterId: "kara", moments: [{ pole: "Control", weight: 2, coercion: true }] }] })).toThrow(/of Will/);
+    gm({ type: "hve.sweep", sheets: [{ characterId: "kara", moments: [{ pole: "Will", weight: 2, coercion: true }] }] });
+    expect(hve("kara").deep.Will).toBe(1);
+  });
+
+  it("reads Coherence and the whole-sheet profile from Deep, and undoes as one sweep", () => {
+    gm({ type: "hve.deep", characterId: "joe", deep: { Force: 3, Restraint: 3, Will: 1, Control: 1 } });
+    expect(hve("joe").coherence).toEqual({ profile: "Defined", bonus: 10 });
+    expect(hve("joe").archetype).toBe("The Iron Adjudicator");
+    const s = gm({ type: "hve.sweep", sheets: [{ characterId: "joe", moments: [{ pole: "Force", weight: 2 }, { pole: "Freedom", weight: 2 }, { pole: "Freedom", weight: 1 }] }] });
+    expect(hve("joe").deep).toMatchObject({ Force: 4, Control: 1, Freedom: 1 });
+    expect(hve("joe").archetype).toBeNull();
+    gm({ type: "void", targetId: s.envelope.id, reason: "undo" });
+    expect(hve("joe").deep).toMatchObject({ Force: 3, Freedom: 0 });
+    expect(hve("joe").sweeps).toEqual([]);
+  });
+
+  it("is the GM's alone", () => {
+    expect(() => rec.append(draft({ type: "hve.sweep", sheets: [{ characterId: "kara", moments: [] }] }, P1))).toThrow(/only the GM/);
+    expect(() => rec.append(draft({ type: "hve.deep", characterId: "kara", deep: { Hunger: 5 } }, P1))).toThrow(/only the GM/);
+    expect(() => gm({ type: "hve.sweep", sheets: [{ characterId: "kara", moments: [] }, { characterId: "kara", moments: [] }] })).toThrow(/one sheet per character/);
+  });
+});

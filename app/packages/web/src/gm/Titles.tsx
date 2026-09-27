@@ -4,7 +4,7 @@
  * counts only the fiction knows; and grant or pass on each catalog title whose count is met.
  */
 import type { Engine } from "@gradebreaker/engine";
-import { type Action, COUNTED, DERIVED_COUNTERS, type Envelope, type GmView, type Sheet, TICKED_COUNTERS, type TitleCategory, type TitleSpec, catalogSpec } from "@gradebreaker/record";
+import { type Action, DERIVED_COUNTERS, type Envelope, type GmView, type Sheet, type TitleCategory, type TitleSpec, catalogSpec, counted, tickedCounters } from "@gradebreaker/record";
 import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
 import { ATTRIBUTES, counterLabel, type Names } from "../text.ts";
@@ -247,15 +247,15 @@ function HeldTitles({ view, engine, c, onRecorded }: { view: GmView; engine: Eng
 // ------------------------------------------------------------- counts ---
 
 /** Every count toward a catalog title: the record's own, and the ones the GM ticks. */
-export function CountersForm({ view, onRecorded }: { view: GmView; onRecorded: (env: Envelope) => void }) {
+export function CountersForm({ view, engine, onRecorded }: { view: GmView; engine: Engine; onRecorded: (env: Envelope) => void }) {
   const { run, busy, error } = useRun(view.campaign.id, onRecorded);
   const living = view.characters.filter((c) => !c.dead);
   const [characterId, setCharacterId] = useState(living[0]?.id ?? "");
   const c = living.find((x) => x.id === characterId) ?? living[0];
   if (!c) return <p className="muted">No characters yet.</p>;
-  const counters = [...DERIVED_COUNTERS, ...TICKED_COUNTERS];
+  const counters = [...DERIVED_COUNTERS, ...tickedCounters(engine)];
   const titlesFor = (counter: string) =>
-    Object.entries(COUNTED)
+    Object.entries(counted(engine))
       .filter(([, v]) => v.counter === counter)
       .map(([name, v]) => `${name} at ${v.at}`)
       .join(", ");

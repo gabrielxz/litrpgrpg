@@ -19,7 +19,7 @@
  * dies, and the GM may rule either way. Vital coherence starts at 3 and falls by one at the
  * end of each round, the round of Downing included; at 0 the character dies (Gabriel,
  * 2026-09-26). Stabilizing by bare hands needs the same Zone, like HP restoration (Gabriel,
- * 2026-09-26) and rolls DEX (Gabriel, 2026-09-26; backlog edit 11). A character's pills count
+ * 2026-09-26) and rolls `downed.stabilize_check.attribute`. A character's pills count
  * per Consolidation, in a fight or out of one (pills.ts). Aura Pressure's Will Save, Suppression, and the Surprise
  * Beat follow Core Mechanics; a defender may Yield against a Surprise Beat (Gabriel, 2026-09-26).
  */
@@ -1024,9 +1024,14 @@ function helperForce(engine: Engine, world: World, c: Combatant, attribute: stri
   return force;
 }
 
-/** Bare-hands stabilizing is a DEX check; the rules data names it once backlog edit 11 lands there. */
+/** The bare-hands stabilizing check: the Attribute it rolls and the Resistance it meets. */
+export function stabilizeCheck(engine: Engine): { attribute: string; difficulty: string; resistance: number } {
+  const s = engine.rules.combat.downed.stabilize_check;
+  return { attribute: s.attribute, difficulty: s.difficulty, resistance: s.resistance };
+}
+
 export function stabilizeAttribute(engine: Engine): string {
-  return engine.rules.combat.downed.stabilize_check.attribute ?? "DEX";
+  return stabilizeCheck(engine).attribute;
 }
 
 function stabilize(engine: Engine, world: World, a: Stabilize): Effect[] {

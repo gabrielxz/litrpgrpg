@@ -6,6 +6,7 @@ import { ATTRIBUTES, type Engine, type Stats } from "@gradebreaker/engine";
 import { type CharacterState, capLevel, maxAetherOf, maxHpOf, rawStats } from "./fold.ts";
 import { type Proficiency, proficienciesOf } from "./proficiency.ts";
 import { type Title, titlesDue } from "./titles.ts";
+import { type SweepEntry, archetypeOf, leadsOf, poles } from "./hve.ts";
 
 export interface Sheet {
   id: string;
@@ -47,6 +48,15 @@ export interface Sheet {
   refusals: Record<string, number>;
   /** Pills taken since the last Consolidation, by kind. */
   pillsTaken: { healing: number; aether: number };
+  /** The Hidden Vector Engine's sheet: the GM's side of the screen only. */
+  hve: {
+    /** Every side of every axis, 0 included. */
+    deep: Record<string, number>;
+    leads: { axis: string; pole: string | null; by: number }[];
+    coherence: { profile: string; bonus: number };
+    archetype: string | null;
+    sweeps: SweepEntry[];
+  };
 }
 
 export function sheetOf(engine: Engine, c: CharacterState): Sheet {
@@ -83,13 +93,26 @@ export function sheetOf(engine: Engine, c: CharacterState): Sheet {
     proficiencies: proficienciesOf(engine, c),
     titles: (c.titles ?? []).map((t) => ({ ...t })),
     counters: { ...(c.counters ?? {}) },
-    titlesDue: titlesDue(c),
+    titlesDue: titlesDue(engine, c),
     refusals: { ...(c.refusals ?? {}) },
     pillsTaken: { healing: 0, aether: 0, ...(c.pillsTaken ?? {}) },
+    hve: hveOf(engine, c),
   };
   if (c.playerId !== undefined) sheet.playerId = c.playerId;
   if (c.pregen !== undefined) sheet.pregen = c.pregen;
   return sheet;
+}
+
+function hveOf(engine: Engine, c: CharacterState): Sheet["hve"] {
+  const deep = Object.fromEntries(poles(engine).map((p) => [p, c.hve?.deep[p] ?? 0]));
+  const leads = leadsOf(engine, deep);
+  return {
+    deep,
+    leads,
+    coherence: engine.coherence(leads.map((l) => l.by)),
+    archetype: archetypeOf(engine, deep),
+    sweeps: (c.hve?.sweeps ?? []).map((s) => ({ ...s, moments: s.moments.map((m) => ({ ...m })), current: { ...s.current }, added: [...s.added] })),
+  };
 }
 
 export interface Change {

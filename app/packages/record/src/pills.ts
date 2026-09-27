@@ -1,9 +1,9 @@
 /**
  * Healing and Aether Pills (Items). A pill works only in a body of its own Grade. A character's
- * first 5 pills of each kind work in full; from the sixth, pills of that kind do nothing until a
- * Consolidation's first full hour completes, the moment Aether refills. Every pill counts, in a
- * fight or out of one, and the recipient's count is the one that fills (Gabriel, 2026-09-26;
- * backlog edit 7, which moves the number into `rules/items.yaml`). In a fight a pill costs a Beat
+ * first pills of each kind, up to `pill_use.per_consolidation_limit_per_kind`, work in full; past
+ * it, pills of that kind do nothing until a Consolidation's first full hour completes, the moment
+ * Aether refills. Every pill counts, in a fight or out of one, and the recipient's count is the
+ * one that fills (Gabriel, 2026-09-26). In a fight a pill costs a Beat
  * through the tracker (`combat.pill`); outside one, `pill.take` records it.
  */
 import type { Engine } from "@gradebreaker/engine";
@@ -22,7 +22,7 @@ export interface TakePillOutside {
 
 /** Pills of one kind that work between Consolidations. */
 export function pillLimit(engine: Engine): number {
-  return engine.rules.items.pill_use.per_consolidation_limit_per_kind ?? 5;
+  return engine.rules.items.pill_use.per_consolidation_limit_per_kind;
 }
 
 export function findPill(engine: Engine, name: string): { name: string; grade: string; kind: PillKind; amount: number } {

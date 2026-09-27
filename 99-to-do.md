@@ -107,17 +107,15 @@ Edits an app session forces, each with Gabriel's ruling or Claude's recommendati
 
 ### Next app session
 
-**State (2026-09-26).** Production healthy at https://gradebreaker.fly.dev (deploy of 3256d11 succeeded). M1 progress is the table in `app/DESIGN.md` (Built notes on each row); the decisions are under Decisions there.
+**State (2026-09-27).** Production healthy at https://gradebreaker.fly.dev (last deploy c7ed9e3); this session's commit is local until Gabriel says to push. The queue is cleared: loot reads `loot_table`, title counts read `achievement_catalog`, and the pill limit and the stabilizing check read the data with no fallbacks. Because campaigns pin a rules snapshot, a campaign created before 0.1.22 lacks those fields, so the GM now moves a campaign to the current rules from the Table section after a preview (any such campaign in production shows "Rules 0.1.21" on its Table tab and needs the move). **The HVE sweep by hand landed** (the GM's HVE section; Claude's calls in `app/DESIGN.md` Decisions, open to Gabriel's cut), verified in the browser pane with Kara's session-three sheet from the book and a player tab that shows nothing of it. `rules/hve.yaml`'s fourth calibration line was quoted (it parsed as a mapping); no number moved.
 
-**Next.** First the two items queued below, then the rest of M1 in Gabriel's order (Claude recommends the HVE sweep by hand: design priority 4 and a small piece). Unbuilt M1 rows: Battle Memories and Principles, Events, the HVE sweep, Sessions, the Bestiary library and encounter builder, Prep, the in-game clock, Inspection, class offers by hand. The loose plan for testing the listening is `app/DESIGN.md`, "Testing the listening" (Gabriel, 2026-09-27); its script format and expected-record schema come before M2's prompts.
+**Next.** The rest of M1 in Gabriel's order. Claude recommends Events next: the record M2 and M3 write into, and the place the sweep's moments can later point at. Unbuilt M1 rows: Battle Memories and Principles, Events, Sessions, the Bestiary library and encounter builder, Prep, the in-game clock, Inspection, class offers by hand. The loose plan for testing the listening is `app/DESIGN.md`, "Testing the listening"; its script format and expected-record schema come before M2's prompts.
 
 ### Queued for the app
 
 Book changes the app must follow. An app session applies them and clears the list.
 
-- `aftermath.ts` `LOOT` reads `loot_table`'s `chance`, `on_hit`, `on_miss` and `loot_peak_boss_drop` (rules 0.1.22) in place of its own table.
-- `titles.ts` `COUNTED` reads `achievement_catalog`'s `counter` and `at` (rules 0.1.22) in place of its own map.
-- Drop the comments that wait on backlog edits 7, 11, 12, and 15 (`combat.ts`, `pills.ts`, `aftermath.ts`, `titles.ts`); the data carries them now.
+*(empty)*
 
 ## Design Items Referenced by the Checklist
 
