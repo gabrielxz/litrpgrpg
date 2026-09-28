@@ -99,6 +99,7 @@ expected:
       also:
         - {characterId: joe, pole: Restraint, intensity: 1}
 
+    # Who bears the risk drove the choice, so Restraint; Will for overriding Joe is the form read over the content (Gabriel, 2026-09-28).
     - id: x-ev-last
       lines: [l07, l08, l09]
       action:

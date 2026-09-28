@@ -151,3 +151,33 @@ describe("the four Kith tables", () => {
     }
   });
 });
+
+describe("the gate", () => {
+  const script = scripts.find((s) => s.id === "gate-crossing")!;
+  const event = (lines: string[], entries: { characterId: string; pole: string; intensity: number }[]): Drafted => ({
+    lines,
+    action: { type: "event.log", summary: "The queue", participants: entries.map((e) => e.characterId), entries },
+  });
+
+  it("matches a draft that merges the two queue moments to both, each on its own character", () => {
+    const merged = event(["l03", "l06", "l07", "l09"], [
+      { characterId: "joe", pole: "Control", intensity: 1 },
+      { characterId: "kara", pole: "Restraint", intensity: 1 },
+    ]);
+    const r = score(script, [merged], { categories: ["event.log"] });
+    expect(r.byCategory["event.log"]).toMatchObject({ tp: 2, fp: 0 });
+    expect(r.missed).toEqual(["x-ev-sacrifice"]);
+    expect(r.entries).toMatchObject({ tp: 2, fp: 0, exact: 2 });
+  });
+
+  it("counts an entry no matched moment wanted as false once, and does not stretch one character across two moments", () => {
+    const joeOnly = event(["l03", "l07"], [
+      { characterId: "joe", pole: "Control", intensity: 1 },
+      { characterId: "andre", pole: "Force", intensity: 1 },
+    ]);
+    const r = score(script, [joeOnly], { categories: ["event.log"] });
+    expect(r.byCategory["event.log"]).toMatchObject({ tp: 1, fp: 0 });
+    expect(r.missed).toContain("x-ev-last");
+    expect(r.entries).toMatchObject({ tp: 1, fp: 1 });
+  });
+});
