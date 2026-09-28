@@ -8,7 +8,7 @@
  * restored; drafting the same talk again raises nothing the GM has already seen.
  */
 import type { Engine } from "@gradebreaker/engine";
-import { type Action, type Envelope, type GmView, catalogSpec } from "@gradebreaker/record";
+import { type Action, type Envelope, type GmView, catalogSpec, questTableVe } from "@gradebreaker/record";
 import { useState } from "react";
 import { type DraftItem, type DraftRun, acceptDraft } from "../api.ts";
 import { ATTRIBUTES, ATTRIBUTE_NAMES, type Names } from "../text.ts";
@@ -18,9 +18,10 @@ import { CueCard } from "./DraftActions.tsx";
 import { Cited, type DraftRuns, isSuggestion, settled, waitingOn } from "./Drafts.tsx";
 import { MemoriesDueCard } from "./Principles.tsx";
 import { TableWords } from "./TableWords.tsx";
+import type { Firing } from "./Prep.tsx";
 import { TitlesDueCard, bonusLine } from "./Titles.tsx";
 
-type Props = { view: GmView; engine: Engine | null; names: Names; onRecorded: (env: Envelope) => void; drafts: DraftRuns };
+type Props = { view: GmView; engine: Engine | null; names: Names; onRecorded: (env: Envelope) => void; drafts: DraftRuns; onFire: (f: Firing) => void };
 
 /** Pointers to what is due elsewhere, each with the section that settles it. */
 function elsewhere(view: GmView, engine: Engine | null, names: Names): { line: string; section: string; label: string }[] {
@@ -50,10 +51,75 @@ export function suggestionsWaiting(view: GmView, engine: Engine | null, names: N
   return record + drafted + elsewhere(view, engine, names).length;
 }
 
-const HEADING = { title: "Title", "battle-memory": "Battle Memory Card", "hidden-achievement": "Hidden Achievement" } as const;
+const HEADING = { title: "Title", "battle-memory": "Battle Memory Card", "hidden-achievement": "Hidden Achievement", "personal-opportunity": "Personal Opportunity" } as const;
+
+/**
+ * A drafted Personal Opportunity: the offer as its log entry, the System's words, and the GM's note.
+ * It opens in the Quests form to edit and issue; issuing there accepts the draft. The System's
+ * words go to the player only when the GM sends them.
+ */
+function OpportunityCard({ view, engine, names, item, drafts, onRecorded, onFire }: Omit<Props, "engine"> & { engine: Engine; item: DraftItem }) {
+  const s = item.suggestion!;
+  const issue = item.action as Extract<Action, { type: "quest.issue" }>;
+  const q = issue.quest;
+  const who = names(s.characterId);
+  const ve = q.scaled ? "proportional" : `${q.ve ?? questTableVe(engine, q.category, q.difficulty, q.grade ?? "F")} VE`;
+  return (
+    <li className="draft">
+      <h4 className="draft-kind">
+        Personal Opportunity for {who}
+        <span className="muted">
+          : {q.title} ({q.flavor}, drafted to {s.stance})
+        </span>
+      </h4>
+      {item.why && <p className="muted small">Drafted because: {item.why}</p>}
+      {item.undone && <p className="small warning">Issued, and the offer was undone in the log. Issue it again or dismiss it.</p>}
+      <pre className="quest-entry">
+        {`[${q.id}] ${q.title}
+Grade:      ${q.grade} · Difficulty: ${q.difficulty}
+Objective:  ${q.objective}${q.count ? ` (0/${q.count})` : ""}
+Reward:     ${[ve, q.rewardText ?? ""].filter(Boolean).join(", ")}${q.time ? `\nTime:       ${q.time}` : q.hours ? `\nTime:       ${q.hours} hours` : ""}`}
+      </pre>
+      {s.notice && (
+        <div className="systemvoice small">
+          <em>{s.notice}</em>
+        </div>
+      )}
+      {q.note && <p className="small muted">GM note: {q.note}</p>}
+      <TableWords text={[q.title, q.objective, q.rewardText ?? "", s.notice ?? ""].join(" ")} />
+      <div className="row">
+        <button
+          className="primary"
+          onClick={() =>
+            onFire({
+              kind: "quest",
+              draftId: `${item.runId}/${item.itemId}`,
+              quest: q,
+              to: issue.to,
+              submitWith: async (id, a) => {
+                const out = await acceptDraft(view.campaign.id, item, id, a);
+                drafts.replace(out.item);
+                return out.appended;
+              },
+            })
+          }
+        >
+          Open in Quests to issue
+        </button>
+        <button onClick={() => drafts.mark(item, "dismiss")}>Dismiss</button>
+      </div>
+      {s.notice && (
+        <details>
+          <summary className="small">Send the System's words to {who}</summary>
+          <Commit campaignId={view.campaign.id} action={{ type: "message.send", to: [s.characterId], text: s.notice }} names={names} label={`Send to ${who}`} onRecorded={onRecorded} />
+        </details>
+      )}
+    </li>
+  );
+}
 
 /** A drafted suggestion: its grant, editable, with the lines it cites and the drafter's reason. */
-function SuggestionCard({ view, engine, names, run, item, drafts, onRecorded }: Omit<Props, "engine"> & { engine: Engine; run: DraftRun; item: DraftItem }) {
+function SuggestionCard({ view, engine, names, run, item, drafts, onRecorded }: Omit<Props, "engine" | "onFire"> & { engine: Engine; run: DraftRun; item: DraftItem }) {
   const s = item.suggestion!;
   const drafted = item.action as Extract<Action, { type: "title.grant" | "memory.grant" }>;
   const [text, setText] = useState(drafted.type === "memory.grant" ? drafted.text : "");
@@ -151,7 +217,7 @@ const summaryOf = (view: GmView, names: Names, i: DraftItem) =>
     ? `Prep cue: ${view.prep.find((p) => p.id === i.prepId)?.title ?? i.prepId}${i.fired ? " (fired)" : ""}`
     : `${HEADING[i.suggestion!.kind]} for ${names(i.suggestion!.characterId)}: ${i.suggestion!.key}`;
 
-export function SuggestionsSection({ view, engine, names, onRecorded, drafts }: Props) {
+export function SuggestionsSection({ view, engine, names, onRecorded, drafts, onFire }: Props) {
   if (!engine) return <p className="muted pad">Loading rules…</p>;
   const { runs } = drafts;
   const waiting = runs.flatMap((run) => run.items.filter((i) => isSuggestion(i) && waitingOn(i)).map((item) => ({ run, item })));
@@ -175,6 +241,8 @@ export function SuggestionsSection({ view, engine, names, onRecorded, drafts }: 
                 const key = `${item.runId}/${item.itemId}/${item.status}`;
                 if (item.kind === "cue")
                   return <CueCard key={key} view={view} item={item} cited={<Cited view={view} run={run} item={item} names={names} />} onDismiss={() => drafts.mark(item, "dismiss")} />;
+                if (item.suggestion?.kind === "personal-opportunity")
+                  return <OpportunityCard key={key} view={view} engine={engine} names={names} item={item} drafts={drafts} onRecorded={onRecorded} onFire={onFire} />;
                 return <SuggestionCard key={key} view={view} engine={engine} names={names} run={run} item={item} drafts={drafts} onRecorded={onRecorded} />;
               })}
             </ul>

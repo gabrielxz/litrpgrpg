@@ -55,6 +55,7 @@ const questSpec = z.object({
   flavor: z.enum(["combat", "social", "exploration"]).optional(),
   hidden: z.enum(["obscured", "partial", "post-completion"]).optional(),
   hiddenName: z.string().max(120).optional(),
+  note: z.string().max(1000).optional(),
 });
 const prepCreature = z.object({
   creature: z.string().max(80).optional(),

@@ -51,6 +51,7 @@ export {
   type QuestCategory,
   type QuestSpec,
   questForHolder,
+  nextQuestCode,
   questTableVe,
 } from "./quests.ts";
 export { type TakePillOutside, pillLimit } from "./pills.ts";

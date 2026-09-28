@@ -6,7 +6,7 @@
  * prepared item as its cause, so Prep shows what has gone out. The tutorial loads as a pack.
  */
 import type { Engine } from "@gradebreaker/engine";
-import { type CombatantSpec, type Envelope, type GmView, type PrepCreature, type PrepItem, type QuestSpec, prepCause, tutorialPack } from "@gradebreaker/record";
+import { type Action, type Appended, type CombatantSpec, type Envelope, type GmView, type PrepCreature, type PrepItem, type QuestSpec, prepCause, tutorialPack } from "@gradebreaker/record";
 import { useState } from "react";
 import { type Names } from "../text.ts";
 import { TableWords } from "./TableWords.tsx";
@@ -15,7 +15,11 @@ import { Commit } from "./Commit.tsx";
 type Props = { view: GmView; engine: Engine | null; names: Names; log: Envelope[]; onRecorded: (env: Envelope) => void };
 
 /** A prepared item handed to Combat or Quests to fire. */
-export type Firing = { prepId: string; kind: "encounter"; encounter: Extract<PrepItem, { kind: "encounter" }>["encounter"] } | { prepId: string; kind: "quest"; quest: QuestSpec };
+export type Firing =
+  | { prepId: string; kind: "encounter"; encounter: Extract<PrepItem, { kind: "encounter" }>["encounter"] }
+  | { prepId: string; kind: "quest"; quest: QuestSpec }
+  /** A drafted quest (a Personal Opportunity), opened in the form to edit and issue as the draft's acceptance. */
+  | { draftId: string; kind: "quest"; quest: QuestSpec; to: string[]; submitWith: (id: string, action: Action) => Promise<Appended> };
 
 const rid = () => Math.random().toString(36).slice(2, 6);
 const slug = (s: string) =>

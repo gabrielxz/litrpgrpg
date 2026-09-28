@@ -92,7 +92,14 @@ export interface DraftItem {
   /** What accepting records; a suggestion's is the grant it proposes. */
   action?: Action;
   prepId?: string;
-  suggestion?: { kind: "title" | "battle-memory" | "hidden-achievement"; key: string; characterId: string };
+  suggestion?: {
+    kind: "title" | "battle-memory" | "hidden-achievement" | "personal-opportunity";
+    key: string;
+    characterId: string;
+    /** A Personal Opportunity: whether it affirms or tests the pattern, and the System's words with the offer. */
+    stance?: "affirm" | "test";
+    notice?: string;
+  };
   /** An event's reason per character. */
   reasons: { characterId: string; why: string }[];
   /** An action's or a cue's reason. */
@@ -107,6 +114,8 @@ export interface DraftItem {
 
 export interface DraftRun {
   id: string;
+  /** What drafted it: "draft-events,draft-actions,draft-suggestions" from talk, or "draft-opportunity" at the sweep. */
+  feature: string;
   createdAt: string;
   finishedAt?: string;
   status: "drafting" | "done" | "failed";
@@ -119,6 +128,9 @@ export interface DraftRun {
 }
 
 export const draftRuns = (campaignId: string) => api<{ runs: DraftRun[] }>("GET", `/campaigns/${campaignId}/drafts`);
+
+export const startOpportunity = (campaignId: string, characterId: string, situation: string) =>
+  api<{ run: DraftRun }>("POST", `/campaigns/${campaignId}/opportunities`, { characterId, situation });
 
 export const startDraft = (campaignId: string, text: string) => api<{ run: DraftRun }>("POST", `/campaigns/${campaignId}/drafts`, { text });
 

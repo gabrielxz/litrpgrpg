@@ -5,7 +5,7 @@
  * a player away from their screen. Personal Opportunity refusals show by flavor.
  */
 import type { Engine } from "@gradebreaker/engine";
-import { type Action, type Envelope, type GmView, QUEST_CATEGORIES, type Quest, type QuestCategory, type QuestSpec, clockLine, prepCause, questTableVe } from "@gradebreaker/record";
+import { type Action, type Envelope, type GmView, QUEST_CATEGORIES, type Quest, type QuestCategory, type QuestSpec, clockLine, nextQuestCode, prepCause, questTableVe } from "@gradebreaker/record";
 import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
 import { catalogNames } from "../items.ts";
@@ -37,14 +37,7 @@ function useRun(campaignId: string, onRecorded: (env: Envelope) => void) {
 }
 
 /** The next free code: Q-101 onward, M-01 onward for Mandates. */
-function nextCode(quests: Quest[], category: QuestCategory): string {
-  const taken = new Set(quests.map((q) => q.code));
-  const mandate = category === "Mandate";
-  for (let n = 1; ; n++) {
-    const id = mandate ? `M-${String(n).padStart(2, "0")}` : `Q-${100 + n}`;
-    if (!taken.has(id)) return id;
-  }
-}
+const nextCode = (quests: Quest[], category: QuestCategory) => nextQuestCode(quests, category);
 
 // ------------------------------------------------------------ issue ---
 
@@ -85,8 +78,9 @@ function IssueForm({
     flavor: (from?.flavor ?? "combat") as "combat" | "social" | "exploration",
     hidden: (from?.hidden ?? "obscured") as "obscured" | "partial" | "post-completion",
     hiddenName: from?.hiddenName ?? "",
+    note: from?.note ?? "",
   });
-  const [to, setTo] = useState<string[]>(living[0] ? [living[0].id] : []);
+  const [to, setTo] = useState<string[]>(firing && "to" in firing ? firing.to : living[0] ? [living[0].id] : []);
   const [items, setItems] = useState<{ name: string; count: string }[]>(() => (from?.items ?? []).map((i) => ({ name: i.name, count: String(i.count) })));
   const single = OFFERED.includes(f.category);
   const code = f.id.trim() || nextCode(view.quests, f.category);
@@ -106,6 +100,7 @@ function IssueForm({
   if (f.time.trim()) spec.time = f.time.trim();
   if (int(f.hours)) spec.hours = int(f.hours)!;
   if (f.category === "Personal Opportunity") spec.flavor = f.flavor;
+  if (f.note.trim()) spec.note = f.note.trim();
   if (f.category === "Hidden") {
     spec.hidden = f.hidden;
     if (f.hidden === "partial") spec.hiddenName = f.hiddenName.trim();
@@ -117,7 +112,11 @@ function IssueForm({
   return (
     <section className="card">
       <h2>Issue a quest</h2>
-      {firing && <p className="muted small">From Prep. Check the code, pick who receives it, and issue it.</p>}
+      {firing && (
+        <p className="muted small">
+          {"draftId" in firing ? "Drafted from the sweep. Edit what you like, check who receives it, and issue it." : "From Prep. Check the code, pick who receives it, and issue it."}
+        </p>
+      )}
       <div className="form">
         <div className="row">
           <label>
@@ -248,6 +247,10 @@ function IssueForm({
           </label>
         </div>
         <TableWords text={[f.title, f.issuer, f.objective, f.rewardText, f.hiddenName].join(" ")} />
+        <label>
+          GM note (never on their log)
+          <textarea rows={2} maxLength={1000} value={f.note} onChange={(e) => set("note", e.target.value)} placeholder="A hidden alternative outcome; what a refusal closes" />
+        </label>
         <div className="row tight">
           <span className="small">{single ? "Offered to:" : "Binds:"}</span>
           {living.map((c) =>
@@ -268,7 +271,8 @@ function IssueForm({
           problem={problem}
           names={names}
           label={`Issue [${code}]`}
-          {...(firing ? { cause: prepCause(firing.prepId) } : {})}
+          {...(firing && "prepId" in firing ? { cause: prepCause(firing.prepId) } : {})}
+          {...(firing && "draftId" in firing ? { submitWith: firing.submitWith } : {})}
           onRecorded={(env) => {
             onRecorded(env);
             onFired?.();
@@ -325,6 +329,7 @@ Objective:  ${q.objective}${q.count ? ` (${q.count.done}/${q.count.of})` : ""}
 Reward:     ${reward || "none"}${q.time ? `\nTime:       ${q.time}` : ""}${q.due !== undefined ? `\nDue:        ${clockLine(q.due)}${open && view.clock ? (view.clock.at >= q.due ? " · time limit reached" : ` · ${duration(q.due - view.clock.at)} left`) : ""}` : ""}
 Status:     ${q.status[0]!.toUpperCase() + q.status.slice(1)}${q.flavor ? ` · ${q.flavor}` : ""}`}
       </pre>
+      {q.note && <p className="small muted">GM note: {q.note}</p>}
       <p className="small">
         {q.status === "offered" ? "Offered to" : "Held by"} {q.holders.map(names).join(", ") || "nobody"}
         {q.sharedIn ? " (shared with the party)" : ""}
@@ -472,7 +477,7 @@ export function QuestsSection({
   const closed = view.quests.filter((q) => q.status !== "offered" && q.status !== "active");
   return (
     <main className="page quests">
-      <IssueForm key={firing?.prepId ?? "new"} view={view} engine={engine} names={names} onRecorded={onRecorded} {...(firing ? { firing } : {})} {...(onFired ? { onFired } : {})} />
+      <IssueForm key={firing ? ("prepId" in firing ? firing.prepId : firing.draftId) : "new"} view={view} engine={engine} names={names} onRecorded={onRecorded} {...(firing ? { firing } : {})} {...(onFired ? { onFired } : {})} />
       <Refusals view={view} />
       <h2>Open quests</h2>
       {open.length === 0 && <p className="muted">None.</p>}

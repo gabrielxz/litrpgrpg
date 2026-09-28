@@ -23,6 +23,8 @@ import { useEffect, useState } from "react";
 import type { Names } from "../text.ts";
 import { Commit } from "./Commit.tsx";
 import { entryLine } from "./Events.tsx";
+import { startOpportunity } from "../api.ts";
+import type { DraftRuns } from "./Drafts.tsx";
 
 type Drafts = Record<string, Moment[]>;
 
@@ -379,12 +381,81 @@ function StandingSheet({ view, engine, c, names, onRecorded }: { view: GmView; e
   );
 }
 
-export function HveSection({ view, engine, names, onRecorded }: { view: GmView; engine: Engine | null; names: Names; onRecorded: (env: Envelope) => void }) {
+/**
+ * A Personal Opportunity drafted at the sweep (Quests, "Personal Opportunities"; The Hidden Vector
+ * Engine: the offer is drafted at the sweep). The draft lands in Suggestions, where the GM opens it
+ * in the Quests form to edit and issue; writing one by hand in Quests makes the same record.
+ */
+function OpportunityCard({ view, drafts }: { view: GmView; drafts: DraftRuns }) {
+  const living = view.characters.filter((c) => !c.dead);
+  const [who, setWho] = useState(living[0]?.id ?? "");
+  const [situation, setSituation] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [started, setStarted] = useState<string | null>(null);
+  const run = drafts.runs.find((r) => r.id === started);
+  const draft = async () => {
+    setBusy(true);
+    setError(null);
+    try {
+      const out = await startOpportunity(view.campaign.id, who, situation);
+      drafts.setRuns((rs) => [out.run, ...rs]);
+      setStarted(out.run.id);
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  };
+  if (!living.length) return null;
+  return (
+    <section className="card">
+      <h2>Personal Opportunities</h2>
+      <p className="muted small">
+        Drafted after the sweep, from the character's sheet, the sweep's moments, and the situation. The draft waits in Suggestions for you to edit and issue; a
+        Personal Opportunity written in the <a href="#quests">Quests</a> section makes the same record.
+      </p>
+      <div className="row">
+        <label>
+          For
+          <select value={who} onChange={(e) => setWho(e.target.value)}>
+            {living.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+      <label>
+        The situation (optional)
+        <textarea rows={2} maxLength={2000} value={situation} onChange={(e) => setSituation(e.target.value)} placeholder="Where they are, who is near, what presses on them" />
+      </label>
+      <div className="row">
+        <button className="primary" disabled={busy || !who || drafts.drafting} onClick={draft}>
+          Draft an offer
+        </button>
+        {run?.status === "drafting" && <span className="muted small">Drafting…</span>}
+        {run?.status === "done" && run.items.length > 0 && (
+          <span className="small">
+            Drafted: waiting in <a href="#suggestions">Suggestions</a>.
+          </span>
+        )}
+        {run?.status === "done" && !run.items.length && <span className="error small">{run.dropped[0]?.why ?? "Nothing came back."}</span>}
+        {run?.status === "failed" && <span className="error small">{run.message}</span>}
+      </div>
+      {error && <p className="error">{error}</p>}
+    </section>
+  );
+}
+
+export function HveSection({ view, engine, names, onRecorded, drafts }: { view: GmView; engine: Engine | null; names: Names; onRecorded: (env: Envelope) => void; drafts: DraftRuns }) {
   if (!engine) return <p className="muted pad">Loading rules…</p>;
   return (
     <main className="gm">
       <div>
         <SweepForm view={view} engine={engine} names={names} onRecorded={onRecorded} />
+        <OpportunityCard view={view} drafts={drafts} />
       </div>
       <aside className="side">
         <p className="muted small">Players never see these sheets. Undo a sweep from the campaign log.</p>

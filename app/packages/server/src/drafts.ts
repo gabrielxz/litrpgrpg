@@ -15,6 +15,7 @@ import { type Action, type Appended, CampaignRecord } from "@gradebreaker/record
 import {
   DRAFT_ACTIONS_FEATURE,
   DRAFT_EVENTS_FEATURE,
+  DRAFT_OPPORTUNITY_FEATURE,
   DRAFT_SUGGESTIONS_FEATURE,
   type Drafter,
   type Scene,
@@ -22,7 +23,9 @@ import {
   type TypedTalk,
   draftActions,
   draftEvents,
+  draftOpportunity,
   draftSuggestions,
+  flavorsFor,
   readTypedTalk,
 } from "@gradebreaker/listening";
 import { type CampaignAi, ModelError, problemOf } from "./ai.ts";
@@ -45,7 +48,7 @@ const ACCEPTS: Record<ItemKind, readonly Action["type"][]> = {
   event: ["event.log"],
   action: ["item.give", "item.move", "item.remove", "quest.progress", "quest.complete", "quest.fail", "ve.award", "party.invite", "party.answer", "counter.tick"],
   cue: [],
-  suggestion: ["title.grant", "memory.grant"],
+  suggestion: ["title.grant", "memory.grant", "quest.issue"],
 };
 
 /** A suggestion as the panel names it: a title, a Battle Memory Card, or a Hidden Achievement for a character. */
@@ -53,6 +56,9 @@ export interface Suggested {
   kind: string;
   key: string;
   characterId?: string;
+  /** A Personal Opportunity: whether it affirms or tests the pattern, and the System's words with the offer. */
+  stance?: "affirm" | "test";
+  notice?: string;
 }
 
 export interface DraftItem {
@@ -154,6 +160,55 @@ export class Drafts {
     const work = this.draft(campaignId, id, scene).finally(() => this.running.delete(id));
     this.running.set(id, work);
     return (await this.run(campaignId, id))!;
+  }
+
+  /**
+   * Drafts a Personal Opportunity for one character at the sweep, in the background, as a run
+   * with one suggestion: the offer as the quest the GM issues. The situation is the GM's words.
+   */
+  async opportunity(campaignId: string, user: User | null, characterId: string, situation: string): Promise<DraftRun> {
+    await this.service.requireGm(campaignId, user);
+    const status = await this.ai.status(campaignId);
+    if (!status.configured) throw new ModelError("key", "no key is set for this campaign");
+    const record = await this.service.record(campaignId);
+    const c = record.sheets().get(characterId);
+    if (!c) throw new HttpError(404, `no character ${characterId}`);
+    if (c.dead) throw new HttpError(422, `${c.name} is dead`);
+    if (!flavorsFor(record.engine, c).open.length) throw new HttpError(422, `${c.name} has refused every flavor of offer six times; the System offers nothing more`);
+    const [busy] = await this.db.query("select id from draft_runs where campaign_id = $1 and status = 'drafting'", [campaignId]);
+    if (busy) throw new HttpError(409, "a draft is still running; wait for it to finish");
+
+    const id = newId();
+    const talk: TypedTalk = { speakers: [], lines: [], readings: [] };
+    await this.db.query("insert into draft_runs (id, campaign_id, feature, created_by, status, talk) values ($1, $2, $3, $4, 'drafting', $5::jsonb)", [
+      id,
+      campaignId,
+      DRAFT_OPPORTUNITY_FEATURE,
+      user!.id,
+      JSON.stringify(talk),
+    ]);
+    const work = this.draftOpportunity(campaignId, id, new CampaignRecord(record.engine, record.log), characterId, situation).finally(() => this.running.delete(id));
+    this.running.set(id, work);
+    return (await this.run(campaignId, id))!;
+  }
+
+  private async draftOpportunity(campaignId: string, runId: string, record: CampaignRecord, characterId: string, situation: string): Promise<void> {
+    try {
+      const out = await draftOpportunity(record.engine, (req) => this.ai.draft(campaignId, DRAFT_OPPORTUNITY_FEATURE, req), record, characterId, { situation });
+      await this.db.tx(async (q) => {
+        if ("accept" in out) {
+          const suggestion: Suggested = { kind: "personal-opportunity", key: out.quest.title, characterId, stance: out.stance, notice: out.notice };
+          await q.query(
+            "insert into draft_items (run_id, item_id, campaign_id, kind, lines, action, reasons, why, suggestion) values ($1, 'opportunity-1', $2, 'suggestion', '[]'::jsonb, $3::jsonb, '[]'::jsonb, $4, $5::jsonb)",
+            [runId, campaignId, JSON.stringify(out.accept), out.why, JSON.stringify(suggestion)],
+          );
+        }
+        await q.query("update draft_runs set status = 'done', finished_at = now(), dropped = $2::jsonb where id = $1", [runId, JSON.stringify("accept" in out ? [] : [{ why: out.refused }])]);
+      });
+    } catch (err) {
+      const p = problemOf(err);
+      await this.db.query("update draft_runs set status = 'failed', finished_at = now(), problem = $2, message = $3 where id = $1", [runId, p.problem, p.message]);
+    }
   }
 
   /** Resolves when a run started in this process has finished drafting. */
@@ -334,7 +389,8 @@ export class Drafts {
       const before = await this.item(campaignId, runId, itemId);
       if (!ACCEPTS[before.kind].includes(s.action.type))
         throw new HttpError(422, before.kind === "cue" ? "a Prep cue is fired from Prep" : `this draft is accepted as ${ACCEPTS[before.kind].join(" or ")}`);
-      if (before.kind === "suggestion" && "characterId" in s.action && s.action.characterId !== before.suggestion?.characterId)
+      const forWhom = "characterId" in s.action ? [s.action.characterId] : s.action.type === "quest.issue" ? s.action.to : [];
+      if (before.kind === "suggestion" && (forWhom.length !== 1 || forWhom[0] !== before.suggestion?.characterId))
         throw new HttpError(422, "a suggestion is accepted for the character it names");
       if (before.status === "dismissed") throw new HttpError(409, "this draft was dismissed; restore it first");
       if (before.status === "accepted" && !before.undone && before.actionId !== s.id) throw new HttpError(409, "this draft was already accepted");

@@ -33,6 +33,7 @@ const characterSpec = z.discriminatedUnion("kind", [
 const joinBody = z.object({ campaignId: z.string().min(1) });
 const aiKey = z.object({ key: z.string().min(1).max(500), model: z.string().optional() });
 const aiModel = z.object({ model: z.string() });
+const draftOpportunityBody = z.object({ characterId: z.string().max(80), situation: z.string().max(2000).optional() });
 const draftTalk = z.object({ text: z.string().max(MAX_TALK_CHARS * 2) });
 const acceptDraft = submissionSchema.pick({ id: true, action: true });
 const createInvite = z.object({
@@ -221,6 +222,10 @@ export function createApp(service: Service, opts: AppOptions = {}) {
   app.post("/campaigns/:id/drafts", async (c) => {
     const b = await body(c, draftTalk);
     return c.json({ run: await drafts().start(c.req.param("id"), c.get("user"), b.text) }, 202);
+  });
+  app.post("/campaigns/:id/opportunities", async (c) => {
+    const b = await body(c, draftOpportunityBody);
+    return c.json({ run: await drafts().opportunity(c.req.param("id"), c.get("user"), b.characterId, b.situation ?? "") }, 202);
   });
   app.post("/campaigns/:id/drafts/:run/:item/accept", async (c) => {
     const b = await body(c, acceptDraft);

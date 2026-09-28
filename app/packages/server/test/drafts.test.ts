@@ -34,6 +34,7 @@ const signIn = (name: string) =>
 let outputs: ({ output: unknown } | { problem: Problem })[] = [];
 let bookkeeping: ({ output: unknown } | { problem: Problem })[] = [];
 let suggested: ({ output: unknown } | { problem: Problem })[] = [];
+let opportunities: ({ output: unknown } | { problem: Problem })[] = [];
 let prompts: string[] = [];
 const noActions = { items: [], quests: [], ve: [], parties: [], counters: [], cues: [] };
 const noSuggestions = { titles: [], memories: [], hidden: [] };
@@ -41,9 +42,15 @@ const scripted = (_key: string, model: string): LanguageModel => ({
   model,
   async check() {},
   async draft<T>(req: { system: string; prompt: string; schema: z.ZodType<T> }) {
-    const which = req.system.includes("point the Game Master (GM) to rewards") ? "suggestions" : req.system.includes("draft the bookkeeping") ? "actions" : "events";
-    if (which === "events") prompts.push(req.prompt);
-    const queue = which === "actions" ? bookkeeping : which === "suggestions" ? suggested : outputs;
+    const which = req.system.includes("drafting a Personal Opportunity")
+      ? "opportunity"
+      : req.system.includes("point the Game Master (GM) to rewards")
+        ? "suggestions"
+        : req.system.includes("draft the bookkeeping")
+          ? "actions"
+          : "events";
+    if (which === "events" || which === "opportunity") prompts.push(req.prompt);
+    const queue = which === "actions" ? bookkeeping : which === "suggestions" ? suggested : which === "opportunity" ? opportunities : outputs;
     const empty = which === "actions" ? noActions : which === "suggestions" ? noSuggestions : { events: [] };
     const next = queue.shift() ?? { output: empty };
     if ("problem" in next) throw new ModelError(next.problem, `scripted ${next.problem}`);
@@ -102,6 +109,7 @@ beforeEach(async () => {
   outputs = [];
   bookkeeping = [];
   suggested = [];
+  opportunities = [];
   prompts = [];
   db = await pgliteDb(new PGlite());
   await migrate(db);
@@ -289,6 +297,55 @@ describe("drafting from typed table talk", () => {
       "a Battle Memory Card for Kara was suggested before (dismissed)",
       "First to the Pill for Kara was suggested before (accepted)",
     ]);
+  });
+
+  it("drafts a Personal Opportunity at the sweep, issued from the draft, its note kept off the player's log", async () => {
+    const { gm, player, campaignId } = await table();
+    opportunities = [
+      {
+        output: {
+          stance: "test",
+          flavor: "social",
+          title: "Shared Ration",
+          difficulty: "Easy",
+          objective: "Divide the next cache evenly among everyone present.",
+          count: null,
+          countFixed: false,
+          hours: 12,
+          scaled: false,
+          rewardHint: null,
+          hiddenOutcome: "Keep the best piece and say so: the System notes it.",
+          refusal: "Noted against social.",
+          notice: "Cache located. Division: pending.",
+          why: "She took the pill; this tests her against it.",
+        },
+      },
+    ];
+    expect((await call("POST", `/campaigns/${campaignId}/opportunities`, player, { characterId: "kara" })).status).toBe(403);
+    expect((await call("POST", `/campaigns/${campaignId}/opportunities`, gm, { characterId: "nobody" })).status).toBe(404);
+    const started = await call("POST", `/campaigns/${campaignId}/opportunities`, gm, { characterId: "kara", situation: "Camp, after the Node." });
+    expect(started.status).toBe(202);
+    await drafts.settled(started.json.run.id);
+    expect(prompts.at(-1)).toContain("Camp, after the Node.");
+    const run = (await call("GET", `/campaigns/${campaignId}/drafts`, gm)).json.runs[0];
+    expect(run).toMatchObject({ status: "done", feature: "draft-opportunity" });
+    const [item] = run.items;
+    expect(item).toMatchObject({
+      kind: "suggestion",
+      why: "She took the pill; this tests her against it.",
+      suggestion: { kind: "personal-opportunity", key: "Shared Ration", characterId: "kara", stance: "test", notice: "Cache located. Division: pending." },
+      action: { type: "quest.issue", to: ["kara"], quest: { id: "Q-101", category: "Personal Opportunity", flavor: "social", time: "within 12 hours" } },
+    });
+    const accept = (action: unknown) => call("POST", `/campaigns/${campaignId}/drafts/${run.id}/${item.itemId}/accept`, gm, { id: randomUUID(), action });
+    expect((await accept({ ...item.action, to: ["joe"] })).json.error).toMatch(/character it names/);
+    const ok = await accept({ ...item.action, quest: { ...item.action.quest, title: "Even Shares" } });
+    expect(ok.status).toBe(201);
+    expect(ok.json.appended.envelope).toMatchObject({ source: "suggestion", action: { type: "quest.issue", quest: { title: "Even Shares" } } });
+    const gmView = (await call("GET", `/campaigns/${campaignId}`, gm)).json;
+    expect(gmView.quests[0].note).toMatch(/^Hidden outcome: Keep the best piece/);
+    const playerView = JSON.stringify((await call("GET", `/campaigns/${campaignId}`, player)).json);
+    expect(playerView).toContain("Even Shares");
+    expect(playerView).not.toContain("Hidden outcome");
   });
 
   it("answers a drafted invitation once the GM accepts it, and grants VE aloud", async () => {

@@ -272,12 +272,15 @@ export function DraftsCard({ view, engine, names, onRecorded, drafts }: { view: 
         </>
       )}
       {error && <p className="error">{error}</p>}
-      {runs.slice(0, 3).map((r) => (
-        <RunLine key={r.id} run={r} />
-      ))}
+      {runs
+        .filter((r) => r.feature !== "draft-opportunity")
+        .slice(0, 3)
+        .map((r) => (
+          <RunLine key={r.id} run={r} />
+        ))}
       {suggestions > 0 && (
         <p className="small">
-          {suggestions} suggestion{suggestions === 1 ? "" : "s"} (titles, cards, Prep cues) wait in <a href="#suggestions">Suggestions</a>.
+          {suggestions} suggestion{suggestions === 1 ? "" : "s"} (titles, cards, offers, Prep cues) wait in <a href="#suggestions">Suggestions</a>.
         </p>
       )}
       {waiting.length > 0 && (

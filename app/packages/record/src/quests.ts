@@ -57,6 +57,8 @@ export interface QuestSpec {
   hidden?: HiddenMode;
   /** A partial reveal's suggestive name. */
   hiddenName?: string;
+  /** The GM's note (an alternative outcome, what a refusal closes); never on the holder's log. */
+  note?: string;
 }
 
 /**
@@ -219,7 +221,7 @@ function issue(engine: Engine, world: World, a: IssueQuest, key: string): Effect
     if (!s.time?.trim()) q.time = `${s.hours} hours`;
   }
   if (s.scaled) q.scaled = true;
-  for (const k of ["rewardText", "time", "flavor", "hidden"] as const) if (s[k]) (q as unknown as Record<string, unknown>)[k] = typeof s[k] === "string" ? (s[k] as string).trim() : s[k];
+  for (const k of ["rewardText", "time", "flavor", "hidden", "note"] as const) if (s[k]) (q as unknown as Record<string, unknown>)[k] = typeof s[k] === "string" ? (s[k] as string).trim() : s[k];
   if (s.hidden === "partial") q.hiddenName = s.hiddenName!.trim();
   if (s.items?.length) q.items = s.items.map((x) => ({ name: x.name.trim(), count: x.count }));
   // A post-completion Hidden quest appears only once it is complete.
@@ -378,7 +380,8 @@ export function cloneQuest(q: Quest): Quest {
  * obscured Hidden quest shows no content, a partial reveal its suggestive name, and a
  * post-completion one appears only once complete. Null when the log shows nothing.
  */
-export function questForHolder(q: Quest): Quest | null {
+export function questForHolder(full: Quest): Quest | null {
+  const { note: _note, ...q } = full;
   if (q.hidden === "post-completion" && q.status !== "completed") return null;
   if (q.hidden === "obscured" && q.status !== "completed") {
     const { rewardText: _r, items: _i, count: _c, time: _t, hours: _h, due: _d, ...rest } = q;
@@ -389,4 +392,14 @@ export function questForHolder(q: Quest): Quest | null {
     return { ...rest, code: "Q-???", title: `Hidden Objective: "${q.hiddenName}"`, objective: "Conditions: Unclear.", ve: null };
   }
   return q;
+}
+
+/** The next free code in the log: M-01 for a Mandate, Q-101 onward for every other quest. */
+export function nextQuestCode(quests: Iterable<{ code: string }>, category: QuestCategory): string {
+  const taken = new Set([...quests].map((q) => q.code));
+  const mandate = category === "Mandate";
+  for (let n = 1; ; n++) {
+    const id = mandate ? `M-${String(n).padStart(2, "0")}` : `Q-${100 + n}`;
+    if (!taken.has(id)) return id;
+  }
 }
