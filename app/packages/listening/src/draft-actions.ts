@@ -1,7 +1,8 @@
 /**
  * Drafting the table's bookkeeping from table talk (app/DESIGN.md, M2): items found, handed over,
- * claimed, used up, or lost; quests advanced, completed, or failed; the counts only the fiction
- * knows, toward Achievement titles; and the GM's prepared items whose cue the table has reached.
+ * claimed, used up, or lost; quests advanced, completed, or failed; VE the GM grants aloud that
+ * no other record pays; party invitations and their answers; the counts only the fiction knows,
+ * toward Achievement titles; and the GM's prepared items whose cue the table has reached.
  * A separate request from the events drafter, so each set of instructions is judged on its own.
  *
  * Each draft is a record action (or, for a Prep cue, a suggestion naming the prepared item) that
@@ -18,7 +19,19 @@ import type { Drafted } from "./script.ts";
 export const DRAFT_ACTIONS_FEATURE = "draft-actions";
 
 /** The categories this drafter drafts, as the scorer names them. */
-export const ACTION_CATEGORIES = ["item.give", "item.move", "item.remove", "quest.progress", "quest.complete", "quest.fail", "counter.tick", "suggestion:prep-cue"];
+export const ACTION_CATEGORIES = [
+  "item.give",
+  "item.move",
+  "item.remove",
+  "quest.progress",
+  "quest.complete",
+  "quest.fail",
+  "ve.award",
+  "party.invite",
+  "party.answer",
+  "counter.tick",
+  "suggestion:prep-cue",
+];
 
 /** A drafted action or Prep cue, with the model's reason for the GM. */
 export type ActionDraft = Drafted & { id: string; why: string };
@@ -71,6 +84,26 @@ export function draftActionsSchema(engine: Engine) {
         why,
       }),
     ),
+    ve: z.array(
+      z.object({
+        lines,
+        kind: z.enum(["core", "other"]),
+        core: z.string().nullable().describe("core: the Core's name."),
+        note: z.string().nullable().describe("other: what the VE is for, in a few words."),
+        awards: z.array(z.object({ characterId: z.string(), ve: z.number().int().min(1) })),
+        why,
+      }),
+    ),
+    parties: z.array(
+      z.object({
+        lines,
+        kind: z.enum(["invite", "answer"]),
+        fromId: z.string().describe("The character who invites."),
+        toId: z.string().describe("The character invited."),
+        accept: z.boolean().nullable().describe("answer: whether the invited character joins."),
+        why,
+      }),
+    ),
     counters: z.array(z.object({ lines, characterId: z.string(), counter: z.enum(counters), why })),
     cues: z.array(z.object({ lines, prepId: z.string().describe("The prepared item's id from the Prep list."), why })),
   });
@@ -110,11 +143,26 @@ Use the quest ids from the Quests list; only an active quest moves.
 - complete: the objective is met. The GM saying so, or the lines plainly showing it done, is enough. A counted objective that reaches its count completes; draft the completion, not the progress to it.
 - fail: the objective can no longer be met, or the GM says it failed.
 
+# Volatile Energy
+
+Draft an award when the GM grants VE aloud that nothing else in the record pays: a Core absorbed (core, with its name), or VE for something the fiction achieved (other, with a note saying what for). Use the amount the GM states, for each character it goes to; "sixty each" is each character the grant covers, and a character who left the scene is not one of them.
+
+Never draft VE for a kill (the fight's aftermath pays it), a quest's completion (its reward pays it), or a rest.
+
+# Party invitations
+
+- invite: one character asks another, in the fiction, to join them or group up.
+- answer: the invited character accepts or declines. It answers an invitation drafted before it in these lines or one in the "Invitations waiting" list.
+
+Players agreeing out of character to play together is not an invitation.
+
 # Counts toward titles
 
 The app counts kills, Downed survivals, and rests itself. These counts only the fiction knows; draft one each time the deed happens, for the character who did it:
 
 ${counters}
+
+Each line gives the whole title's trigger; one occurrence of the deed is one count ("ten times" is where the title comes, not what one count needs). The combat tracker records a fight's blows, not these deeds, so a fight the app recorded still brings the count its deed earns: the first into a den or an arena, a fight won with no weapon and no Aether spent. A standoff inside the party is not a fight: weapons drawn between party members and put away again count toward nothing.
 
 # Prepared material
 
@@ -152,9 +200,11 @@ export function draftActionsPrompt(scene: Scene): string {
     .map(([holder, stacks]) => `- ${holder}: ${stacks.map((x) => `${x.name} ×${x.count}`).join(", ")}`);
   const quests = [...state.quests.values()].filter((q) => q.status === "active").map(questLine);
   const prep = [...state.prep.values()].map(prepLine);
+  const invites = state.invites.map((i) => `- ${i.fromId} invited ${i.toId}`);
   return [
     section("Roster", rosterOf(scene)),
     section("Parties", parties),
+    section("Invitations waiting", invites),
     section("Items held", items),
     section("Quests", quests),
     section("Prep", prep),
@@ -165,7 +215,13 @@ export function draftActionsPrompt(scene: Scene): string {
 // ----------------------------------------------------------- drafts ---
 
 type Out = DraftActionsOutput;
-type Raw = (Out["items"][number] & { cat: "items" }) | (Out["quests"][number] & { cat: "quests" }) | (Out["counters"][number] & { cat: "counters" }) | (Out["cues"][number] & { cat: "cues" });
+type Raw =
+  | (Out["items"][number] & { cat: "items" })
+  | (Out["quests"][number] & { cat: "quests" })
+  | (Out["ve"][number] & { cat: "ve" })
+  | (Out["parties"][number] & { cat: "parties" })
+  | (Out["counters"][number] & { cat: "counters" })
+  | (Out["cues"][number] & { cat: "cues" });
 
 function actionOf(r: Raw, record: CampaignRecord): Action | string {
   switch (r.cat) {
@@ -185,6 +241,19 @@ function actionOf(r: Raw, record: CampaignRecord): Action | string {
       // The quest's stated VE for each holder; the GM sets a scaled quest's payout on the card.
       return { type: "quest.complete", questId: q.id, awards: q.holders.map((h) => ({ characterId: h, ve: q.ve ?? 0 })) };
     }
+    case "ve": {
+      const awards = r.awards.filter((w) => w.ve > 0);
+      if (!awards.length) return "an award names who receives VE";
+      const basis = r.kind === "core" && r.core?.trim() ? { kind: "core" as const, core: r.core.trim() } : { kind: "other" as const, note: (r.note ?? r.core ?? "").trim() || "Granted at the table" };
+      return { type: "ve.award", basis, awards };
+    }
+    case "parties": {
+      if (r.kind === "invite") return { type: "party.invite", fromId: r.fromId, toId: r.toId };
+      // The invitation it answers: one waiting in the record, or one drafted before it.
+      const invite = record.state.invites.find((i) => i.fromId === r.fromId && i.toId === r.toId);
+      if (!invite) return `no invitation from ${r.fromId} to ${r.toId} waits`;
+      return { type: "party.answer", inviteId: invite.id, accept: r.accept ?? true };
+    }
     case "counters":
       return { type: "counter.tick", characterId: r.characterId, counter: r.counter, count: 1 };
     case "cues":
@@ -203,6 +272,8 @@ export function actionDraftsOf(engine: Engine, scene: Scene, out: DraftActionsOu
   const raws: Raw[] = [
     ...out.items.map((x) => ({ ...x, cat: "items" as const })),
     ...out.quests.map((x) => ({ ...x, cat: "quests" as const })),
+    ...out.ve.map((x) => ({ ...x, cat: "ve" as const })),
+    ...out.parties.map((x) => ({ ...x, cat: "parties" as const })),
     ...out.counters.map((x) => ({ ...x, cat: "counters" as const })),
     ...out.cues.map((x) => ({ ...x, cat: "cues" as const })),
   ];

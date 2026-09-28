@@ -1,12 +1,13 @@
 /**
  * Reviewing the drafted bookkeeping: an item given, moved, or used up, a quest advanced,
- * completed, or failed, or a count ticked, each in a small form the GM can edit before
- * accepting; and a Prep cue, which points at a prepared item the GM fires from Prep.
+ * completed, or failed, VE granted aloud, a party invitation or its answer, or a count ticked,
+ * each in a small form the GM can edit before accepting; and a Prep cue, which points at a
+ * prepared item the GM fires from Prep.
  */
 import type { Engine } from "@gradebreaker/engine";
 import { type Action, type GmView, tickedCounters } from "@gradebreaker/record";
 import { useState } from "react";
-import { type DraftItem, acceptDraft } from "../api.ts";
+import { type DraftItem, type DraftRun, acceptDraft } from "../api.ts";
 import { type Names, counterLabel, describe } from "../text.ts";
 import { Commit } from "./Commit.tsx";
 
@@ -100,6 +101,64 @@ function ActionFields({ view, engine, names, action, onChange }: { view: GmView;
           ))}
         </div>
       );
+    case "ve.award": {
+      const b = action.basis;
+      return (
+        <div className="row">
+          {b.kind === "core" ? (
+            <label>
+              Core
+              <input value={b.core} onChange={(e) => onChange({ ...action, basis: { kind: "core", core: e.target.value } })} />
+            </label>
+          ) : b.kind === "other" ? (
+            <label className="grow">
+              For
+              <input value={b.note} onChange={(e) => onChange({ ...action, basis: { kind: "other", note: e.target.value } })} />
+            </label>
+          ) : null}
+          {action.awards.map((w, i) => (
+            <label key={w.characterId}>
+              VE to {names(w.characterId)}
+              <input
+                type="number"
+                className="narrow-input"
+                min={0}
+                value={w.ve}
+                onChange={(e) => onChange({ ...action, awards: action.awards.map((x, j) => (j === i ? { ...x, ve: whole(e.target.value) } : x)) })}
+              />
+            </label>
+          ))}
+        </div>
+      );
+    }
+    case "party.invite":
+      return (
+        <div className="row">
+          {(["fromId", "toId"] as const).map((k) => (
+            <label key={k}>
+              {k === "fromId" ? "Who invites" : "Who is invited"}
+              <select value={action[k]} onChange={(e) => onChange({ ...action, [k]: e.target.value })}>
+                {view.characters.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          ))}
+        </div>
+      );
+    case "party.answer":
+      return (
+        <div className="row">
+          <label className="check">
+            <input type="radio" checked={action.accept} onChange={() => onChange({ ...action, accept: true })} /> Joins
+          </label>
+          <label className="check">
+            <input type="radio" checked={!action.accept} onChange={() => onChange({ ...action, accept: false })} /> Declines
+          </label>
+        </div>
+      );
     case "counter.tick":
       return (
         <div className="row">
@@ -138,6 +197,9 @@ const KIND_LABEL: Partial<Record<Action["type"], string>> = {
   "quest.progress": "Quest progress",
   "quest.complete": "Quest complete",
   "quest.fail": "Quest failed",
+  "ve.award": "VE granted",
+  "party.invite": "Party invitation",
+  "party.answer": "Answer to an invitation",
   "counter.tick": "A count toward a title",
 };
 
@@ -145,6 +207,7 @@ export function ActionDraftCard({
   view,
   engine,
   names,
+  run,
   item,
   cited,
   onChanged,
@@ -154,6 +217,7 @@ export function ActionDraftCard({
   view: GmView;
   engine: Engine;
   names: Names;
+  run: DraftRun;
   item: DraftItem;
   cited: React.ReactNode;
   onChanged: (item: DraftItem) => void;
@@ -163,16 +227,39 @@ export function ActionDraftCard({
   const [action, setAction] = useState<Action>(item.action!);
   const quest = "questId" in action ? view.quests.find((q) => q.id === action.questId) : undefined;
   const questNames: Names = (id) => (id === quest?.id ? `[${quest.code}] ${quest.title}` : names(id));
+  // An answer names its invitation: one drafted in the same run (recorded once the GM accepts
+  // it, and named then by its recorded id), or one waiting in the record.
+  const drafted = action.type === "party.answer" ? run.items.find((i) => i.itemId === action.inviteId) : undefined;
+  const invitation = action.type === "party.answer" ? ((drafted?.action as { fromId: string; toId: string } | undefined) ?? view.invites.find((i) => i.id === action.inviteId)) : undefined;
+  const waiting = drafted !== undefined && !(drafted.status === "accepted" && drafted.actionId && !drafted.undone);
+  const recordable: Action =
+    action.type === "party.answer" && drafted?.actionId && !waiting
+      ? { ...action, inviteId: drafted.actionId }
+      : action.type === "ve.award"
+        ? { ...action, awards: action.awards.filter((w) => w.ve > 0) }
+        : action;
+  const heading =
+    action.type === "party.answer" && invitation
+      ? `${names(invitation.toId)} ${action.accept ? "joins" : "declines"} ${names(invitation.fromId)}'s invitation`
+      : action.type === "party.invite"
+        ? `${names(action.fromId)} invites ${names(action.toId)}`
+        : describe(action, questNames, () => undefined);
   const problem =
     (action.type === "item.give" && action.items.some((s) => !s.name.trim() || s.count < 1)) ||
     ((action.type === "item.move" || action.type === "item.remove") && (!action.name.trim() || action.count < 1)) ||
     (action.type === "item.move" && action.from === action.to)
       ? "Name the item, a count from 1, and two different holders."
-      : null;
+      : action.type === "party.invite" && action.fromId === action.toId
+        ? "An invitation goes from one character to another."
+        : action.type === "ve.award" && !action.awards.some((w) => w.ve > 0)
+          ? "Give someone VE, or dismiss the draft."
+          : waiting
+            ? "Accept the invitation it answers first."
+            : null;
   return (
     <li className="draft">
       <h4 className="draft-kind">
-        {KIND_LABEL[action.type] ?? action.type}: <span className="muted">{describe(action, questNames, () => undefined)}</span>
+        {KIND_LABEL[action.type] ?? action.type}: <span className="muted">{heading}</span>
       </h4>
       {cited}
       {item.undone && <p className="small warning">Accepted, and it was undone in the log. Accept it again or dismiss it.</p>}
@@ -180,7 +267,7 @@ export function ActionDraftCard({
       <ActionFields view={view} engine={engine} names={names} action={action} onChange={setAction} />
       <Commit
         campaignId={view.campaign.id}
-        action={problem ? null : action}
+        action={problem ? null : recordable}
         problem={problem}
         names={names}
         label="Accept"

@@ -281,6 +281,7 @@ export function DraftsCard({ view, engine, names, onRecorded }: { view: GmView; 
                     view={view}
                     engine={engine}
                     names={names}
+                    run={run}
                     item={item}
                     cited={cited}
                     onChanged={replace}

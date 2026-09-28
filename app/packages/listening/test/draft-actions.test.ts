@@ -27,7 +27,7 @@ const engine = new Engine(loadRules());
 const scripts = loadScripts();
 const byId = (id: string) => scripts.find((s) => s.id === id)!;
 
-const empty = (): DraftActionsOutput => ({ items: [], quests: [], counters: [], cues: [] });
+const empty = (): DraftActionsOutput => ({ items: [], quests: [], ve: [], parties: [], counters: [], cues: [] });
 
 /** The script's expected bookkeeping, as the model would return it: one entry per item given. */
 function perfectOutput(script: Script): DraftActionsOutput {
@@ -43,6 +43,14 @@ function perfectOutput(script: Script): DraftActionsOutput {
     else if (a.type === "quest.complete") out.quests.push({ lines, kind: "complete", questId: a.questId, by: null, why });
     else if (a.type === "quest.fail") out.quests.push({ lines, kind: "fail", questId: a.questId, by: null, why });
     else if (a.type === "counter.tick") out.counters.push({ lines, characterId: a.characterId, counter: a.counter as never, why });
+    else if (a.type === "ve.award") {
+      const b = a.basis;
+      out.ve.push({ lines, kind: b.kind === "core" ? "core" : "other", core: b.kind === "core" ? b.core : null, note: b.kind === "other" ? b.note : null, awards: a.awards, why });
+    } else if (a.type === "party.invite") out.parties.push({ lines, kind: "invite", fromId: a.fromId, toId: a.toId, accept: null, why });
+    else if (a.type === "party.answer") {
+      const invite = script.expected.actions.find((y) => y.id === a.inviteId)!.action as Extract<Action, { type: "party.invite" }>;
+      out.parties.push({ lines, kind: "answer", fromId: invite.fromId, toId: invite.toId, accept: a.accept, why });
+    }
   }
   for (const x of script.expected.suggestions) if (x.kind === "prep-cue") out.cues.push({ lines: x.lines, prepId: x.key, why });
   return out;
@@ -60,6 +68,7 @@ describe("the actions drafter", () => {
     expect(system).not.toContain("confirmed-kills");
     const prompt = draftActionsPrompt(sceneOfScript(engine, byId("tutorial-node-scarcity")));
     expect(prompt).toMatch(/# Prep\n\n- tutorial-/);
+    expect(prompt).toContain("# Invitations waiting\n\n(none)");
     expect(prompt).toContain("tutorial-party-formation: Party formation (Phase 3: The Recycling Node). Cue: The moment Q-001 completes");
     expect(prompt).toMatch(/- q-kara: .*\(Q-001\), active, held by kara/);
     expect(prompt).not.toMatch(/HVE|\bDeep\b/);
@@ -117,6 +126,36 @@ describe("the actions drafter", () => {
       { type: "item.move", from: "andre", to: "joe", name: "Anchor Shard", count: 1 },
       { type: "item.move", from: "joe", to: "spoils", name: "Anchor Shard", count: 1 },
     ]);
+  });
+
+  it("answers the invitation drafted before it, or one waiting in the record", () => {
+    const node = byId("tutorial-node-scarcity");
+    const out = actionDraftsOf(engine, sceneOfScript(engine, node), {
+      ...empty(),
+      parties: [
+        { lines: ["l06"], kind: "invite", fromId: "kara", toId: "joe", accept: null, why: "Group up?" },
+        { lines: ["l07"], kind: "answer", fromId: "kara", toId: "joe", accept: true, why: "Yes." },
+        { lines: ["l31"], kind: "answer", fromId: "joe", toId: "andre", accept: true, why: "For now." },
+      ],
+    });
+    expect(out.drafts.map((d) => [d.id, d.action])).toEqual([
+      ["action-1", { type: "party.invite", fromId: "kara", toId: "joe" }],
+      ["action-2", { type: "party.answer", inviteId: "action-1", accept: true }],
+    ]);
+    expect(out.dropped.map((d) => d.why)).toEqual(["no invitation from joe to andre waits"]);
+  });
+
+  it("names a Core or what the VE is for, and pays only who the GM names", () => {
+    const den = byId("wild-den");
+    const out = actionDraftsOf(engine, sceneOfScript(engine, den), {
+      ...empty(),
+      ve: [
+        { lines: ["l36", "l37"], kind: "core", core: "predator core", note: null, awards: [{ characterId: "andre", ve: 20 }], why: "absorbed" },
+        { lines: ["l37"], kind: "other", core: null, note: null, awards: [], why: "nobody" },
+      ],
+    });
+    expect(out.drafts.map((d) => d.action)).toEqual([{ type: "ve.award", basis: { kind: "core", core: "predator core" }, awards: [{ characterId: "andre", ve: 20 }] }]);
+    expect(out.dropped.map((d) => d.why)).toEqual(["an award names who receives VE"]);
   });
 
   it("reads progress that fills a quest's count as its completion", () => {

@@ -39,7 +39,7 @@ export type ItemKind = "event" | "action" | "cue";
 /** What each kind of draft may record on accepting. A cue records nothing: the GM fires it from Prep. */
 const ACCEPTS: Record<ItemKind, readonly Action["type"][]> = {
   event: ["event.log"],
-  action: ["item.give", "item.move", "item.remove", "quest.progress", "quest.complete", "quest.fail", "counter.tick"],
+  action: ["item.give", "item.move", "item.remove", "quest.progress", "quest.complete", "quest.fail", "ve.award", "party.invite", "party.answer", "counter.tick"],
   cue: [],
 };
 
@@ -268,7 +268,8 @@ export class Drafts {
         throw new HttpError(422, before.kind === "cue" ? "a Prep cue is fired from Prep" : `this draft is accepted as ${ACCEPTS[before.kind].join(" or ")}`);
       if (before.status === "dismissed") throw new HttpError(409, "this draft was dismissed; restore it first");
       if (before.status === "accepted" && !before.undone && before.actionId !== s.id) throw new HttpError(409, "this draft was already accepted");
-      const appended = await this.service.submit(campaignId, user, { id: s.id, source: "suggestion", cause: `draft:${runId}/${itemId}`, action: s.action });
+      const action = await this.resolved(campaignId, runId, s.action);
+      const appended = await this.service.submit(campaignId, user, { id: s.id, source: "suggestion", cause: `draft:${runId}/${itemId}`, action });
       await this.db.query(
         "update draft_items set status = 'accepted', action_id = $4, resolved_by = $5, resolved_at = now() where campaign_id = $1 and run_id = $2 and item_id = $3",
         [campaignId, runId, itemId, s.id, user!.id],
@@ -277,6 +278,24 @@ export class Drafts {
     } finally {
       this.accepting.delete(key);
     }
+  }
+
+  /**
+   * An answer drafted to an invitation drafted in the same run names the invitation's draft id;
+   * once the GM has accepted that invitation, the answer names the invitation as recorded.
+   */
+  private async resolved(campaignId: string, runId: string, action: Action): Promise<Action> {
+    if (action.type !== "party.answer") return action;
+    const record = await this.service.record(campaignId);
+    if (record.state.invites.some((i) => i.id === action.inviteId)) return action;
+    const [invite] = await this.db.query("select status, action_id from draft_items where campaign_id = $1 and run_id = $2 and item_id = $3", [
+      campaignId,
+      runId,
+      action.inviteId,
+    ]);
+    if (!invite) return action;
+    if (invite.status !== "accepted" || !invite.action_id) throw new HttpError(409, "accept the invitation it answers first");
+    return { ...action, inviteId: invite.action_id };
   }
 
   /** Dismisses an open draft (or an accepted one whose event was undone), or restores a dismissed one to open. */

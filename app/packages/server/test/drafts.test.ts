@@ -34,7 +34,7 @@ const signIn = (name: string) =>
 let outputs: ({ output: unknown } | { problem: Problem })[] = [];
 let bookkeeping: ({ output: unknown } | { problem: Problem })[] = [];
 let prompts: string[] = [];
-const noActions = { items: [], quests: [], counters: [], cues: [] };
+const noActions = { items: [], quests: [], ve: [], parties: [], counters: [], cues: [] };
 const scripted = (_key: string, model: string): LanguageModel => ({
   model,
   async check() {},
@@ -213,6 +213,8 @@ describe("drafting from typed table talk", () => {
         output: {
           items: [{ lines: ["L2"], kind: "move", from: "spoils", to: "kara", name: "Lesser Healing Pill", count: 1, why: "Kara takes a pill from the pile." }],
           quests: [],
+          ve: [],
+          parties: [],
           counters: [],
           cues: [{ lines: ["L1"], prepId: "cache", why: "The cache is open." }],
         },
@@ -251,5 +253,37 @@ describe("drafting from typed table talk", () => {
     const run = await drafted(campaignId, gm);
     expect(run).toMatchObject({ status: "done", problem: "rate", message: "drafting the bookkeeping failed: scripted rate" });
     expect(run.items).toHaveLength(1);
+  });
+
+  it("answers a drafted invitation once the GM accepts it, and grants VE aloud", async () => {
+    const { gm, campaignId } = await table();
+    bookkeeping = [
+      {
+        output: {
+          ...noActions,
+          ve: [{ lines: ["L4"], kind: "other", core: null, note: "Talked the Kith down", awards: [{ characterId: "kara", ve: 60 }], why: "The GM grants sixty." }],
+          parties: [
+            { lines: ["L2"], kind: "invite", fromId: "kara", toId: "joe", accept: null, why: "Kara asks Joe to group up." },
+            { lines: ["L4"], kind: "answer", fromId: "kara", toId: "joe", accept: true, why: "Joe agrees." },
+          ],
+        },
+      },
+    ];
+    const run = await drafted(campaignId, gm);
+    const byType = (t: string) => run.items.find((i: { action?: { type: string } }) => i.action?.type === t);
+    const [invite, answer, award] = [byType("party.invite"), byType("party.answer"), byType("ve.award")];
+    expect(answer.action.inviteId).toBe(invite.itemId);
+    const accept = (item: { itemId: string; action: unknown }, id = randomUUID()) =>
+      call("POST", `/campaigns/${campaignId}/drafts/${run.id}/${item.itemId}/accept`, gm, { id, action: item.action });
+    expect((await accept(answer)).json.error).toMatch(/accept the invitation it answers first/);
+    const inviteId = randomUUID();
+    expect((await accept(invite, inviteId)).status).toBe(201);
+    const joined = await accept(answer);
+    expect(joined.status).toBe(201);
+    expect(joined.json.appended.envelope.action).toEqual({ type: "party.answer", inviteId, accept: true });
+    expect((await accept(award)).status).toBe(201);
+    const view = (await call("GET", `/campaigns/${campaignId}`, gm)).json;
+    expect(view.parties.map((p: { members: string[] }) => p.members)).toEqual([["kara", "joe"]]);
+    expect(view.characters.find((c: { id: string }) => c.id === "kara").storedVe).toBe(60);
   });
 });
