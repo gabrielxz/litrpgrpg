@@ -99,9 +99,9 @@ describe("the GM's key", () => {
     expect((await call("GET", `/campaigns/${campaignId}/ai`, gm)).json).toMatchObject({ available: true, configured: false });
     const set = await call("PUT", `/campaigns/${campaignId}/ai/key`, gm, { key: `  ${KEY}  ` });
     expect(set.status).toBe(200);
-    expect(set.json).toMatchObject({ configured: true, model: "claude-opus-5", keyHint: "abcd", check: { ok: true } });
+    expect(set.json).toMatchObject({ configured: true, model: "claude-opus-5-5", keyHint: "abcd", check: { ok: true } });
     expect(set.text).not.toContain(KEY);
-    expect(seen.at(-1)).toEqual({ key: KEY, model: "claude-opus-5" });
+    expect(seen.at(-1)).toEqual({ key: KEY, model: "claude-opus-5-5" });
     const [row] = await db.query("select sealed_key from campaign_ai");
     expect(row!.sealed_key).not.toContain(KEY);
     expect(unseal(SECRET, row!.sealed_key)).toBe(KEY);

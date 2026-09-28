@@ -15,13 +15,14 @@ import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
 import type { z } from "zod";
 import type { Db } from "./db.ts";
 
-/** The models a GM can choose. Claude Opus 5 unless the GM picks another. */
+/** The models a GM can choose. Claude Opus 5.5 unless the GM picks another (Gabriel, 2026-09-28). */
 export const MODELS = [
+  { id: "claude-opus-5-5", name: "Claude Opus 5.5" },
   { id: "claude-opus-5", name: "Claude Opus 5" },
   { id: "claude-sonnet-5", name: "Claude Sonnet 5" },
   { id: "claude-haiku-4-5", name: "Claude Haiku 4.5" },
 ] as const;
-export const DEFAULT_MODEL = "claude-opus-5";
+export const DEFAULT_MODEL = "claude-opus-5-5";
 
 /** Why a request or a check failed, in terms the GM can act on. */
 export type Problem = "key" | "permission" | "billing" | "model" | "rate" | "unreachable" | "refused" | "cut-off" | "unparsed" | "other";
@@ -49,6 +50,7 @@ export interface DraftRequest<T> {
   prompt: string;
   schema: z.ZodType<T>;
   maxTokens?: number;
+  /** How hard the model thinks, and so its latency and cost. Absent, the model's default (Claude Opus 5.5: medium). */
   effort?: "low" | "medium" | "high" | "xhigh" | "max";
 }
 
@@ -76,8 +78,8 @@ export function problemOf(err: unknown): ModelError {
 
 export function anthropicModel(apiKey: string, model: string): LanguageModel {
   const client = new Anthropic({ apiKey });
-  // A declined request is re-run on a model the API picks by the decline's category.
-  const fallback = model === "claude-opus-5" ? { betas: ["server-side-fallback-2026-07-01"], fallbacks: "default" as const } : {};
+  // A request the safety classifiers decline is re-run on a model the API picks by the decline's category.
+  const fallback = model.startsWith("claude-opus-5") ? { betas: ["server-side-fallback-2026-07-01"], fallbacks: "default" as const } : {};
   return {
     model,
     async check() {
