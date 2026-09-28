@@ -530,6 +530,7 @@ function Interface({
   const toNext = c.veToNextLevel;
   return (
     <article className="interface">
+      {/* The paper sheet's order (Table Kit): what the interface shows the character, then what the party shares and inspection. */}
       <header>
         <img src="/clave.svg" alt="" className="clave-mark" />
         <div>
@@ -537,10 +538,19 @@ function Interface({
           <div className="sys-dim">
             Level {c.level} · {c.grade}-Grade{c.class ? ` · ${c.class.name}` : ""}
           </div>
+          <div className="sys-dim">{c.background}</div>
         </div>
+
       </header>
 
-      <ClassOffers campaignId={campaignId} engine={engine} c={c} readOnly={readOnly} />
+      <div className="sys-section">
+        <div className="sys-vital">
+          <span>Level {c.level + 1}</span>
+          <Bar value={c.refinedVe} max={c.refinedVe + (toNext ?? 0)} />
+          <span className="num">{toNext === null ? "Grade limit" : `${c.refinedVe} / ${c.refinedVe + toNext}`}</span>
+        </div>
+
+      </div>
 
       <div className="sys-section">
         <table className="sys-stats">
@@ -561,7 +571,17 @@ function Interface({
             ))}
           </tbody>
         </table>
+
       </div>
+
+      {c.freePoints > 0 &&
+        (readOnly ? (
+          <div className="sys-section">
+            <h3>Unallocated points: {c.freePoints}</h3>
+          </div>
+        ) : (
+          <SpendPoints campaignId={campaignId} c={c} />
+        ))}
 
       <div className="sys-section vitals">
         {c.dead ? (
@@ -596,19 +616,8 @@ function Interface({
             {c.storedVe} / {c.tolerance}
           </span>
         </div>
+
       </div>
-
-      <PartySection campaignId={campaignId} c={c} roster={roster} readOnly={readOnly} />
-
-      <div className="sys-section">
-        <div className="sys-vital">
-          <span>Level {c.level + 1}</span>
-          <Bar value={c.refinedVe} max={c.refinedVe + (toNext ?? 0)} />
-          <span className="num">{toNext === null ? "Grade limit" : `${c.refinedVe} / ${c.refinedVe + toNext}`}</span>
-        </div>
-      </div>
-
-      <ClassHeld campaignId={campaignId} engine={engine} c={c} readOnly={readOnly} inFight={inFight} />
 
       {c.proficiencies.length > 0 && (
         <div className="sys-section">
@@ -626,7 +635,9 @@ function Interface({
         </div>
       )}
 
-      <Carried campaignId={campaignId} c={c} roster={roster} readOnly={readOnly} pills={pills} />
+      <ClassOffers campaignId={campaignId} engine={engine} c={c} readOnly={readOnly} />
+
+      <ClassHeld campaignId={campaignId} engine={engine} c={c} readOnly={readOnly} inFight={inFight} />
 
       <PrincipleSection campaignId={campaignId} c={c} readOnly={readOnly} />
 
@@ -634,16 +645,11 @@ function Interface({
 
       <QuestLog campaignId={campaignId} c={c} readOnly={readOnly} />
 
-      <Inspect c={c} />
+      <Carried campaignId={campaignId} c={c} roster={roster} readOnly={readOnly} pills={pills} />
 
-      {c.freePoints > 0 &&
-        (readOnly ? (
-          <div className="sys-section">
-            <h3>Unallocated points: {c.freePoints}</h3>
-          </div>
-        ) : (
-          <SpendPoints campaignId={campaignId} c={c} />
-        ))}
+      <PartySection campaignId={campaignId} c={c} roster={roster} readOnly={readOnly} />
+
+      <Inspect c={c} />
     </article>
   );
 }
