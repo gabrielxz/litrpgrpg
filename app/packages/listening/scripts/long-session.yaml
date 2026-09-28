@@ -232,6 +232,11 @@ expected:
       also:
         - {characterId: kara, pole: Hunger, intensity: 2}
 
+  # Sector C's Personal Opportunity: helping the staged Initiate at the cost of the prize earns The
+  # Hand That Reached (Phase 6). Joe answered it on the card and tells it at the fire.
+  suggestions:
+    - {id: s-hand-that-reached, lines: [l81, l82], kind: title, key: The Hand That Reached, characterId: joe}
+
   quiet:
     - {lines: [l01, l02, l05, l33, l43, l63], why: away}
     - {lines: [l03, l04, l76, l77, l93], why: off-topic}

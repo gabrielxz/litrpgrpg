@@ -13,7 +13,7 @@ import { useEffect, useMemo, useState } from "react";
 import { type DraftItem, type DraftRun, acceptDraft, api, draftRuns, markDraft, startDraft } from "../api.ts";
 import { type Names, describe } from "../text.ts";
 import { Commit } from "./Commit.tsx";
-import { ActionDraftCard, CueCard } from "./DraftActions.tsx";
+import { ActionDraftCard } from "./DraftActions.tsx";
 import { EventFields, eventActionOf, eventValueOf } from "./EventFields.tsx";
 
 const POLL_MS = 3000;
@@ -49,7 +49,7 @@ function Readings({ talk, view, names }: { talk: TypedTalk; view: GmView; names:
 }
 
 /** The lines a draft cites, as spoken. */
-function Cited({ view, run, item, names }: { view: GmView; run: DraftRun; item: DraftItem; names: Names }) {
+export function Cited({ view, run, item, names }: { view: GmView; run: DraftRun; item: DraftItem; names: Names }) {
   const speakers = new Map(run.talk.speakers.map((s) => [s.id, s.name]));
   const byId = new Map(run.talk.lines.map((l) => [l.id, l]));
   const characterIds = new Set(view.characters.map((c) => c.id));
@@ -152,12 +152,10 @@ function RunLine({ run }: { run: DraftRun }) {
   );
 }
 
-export function DraftsCard({ view, engine, names, onRecorded }: { view: GmView; engine: Engine; names: Names; onRecorded: (env: Envelope) => void }) {
+/** The campaign's draft runs, kept for the Events and Suggestions sections alike. */
+export function useDraftRuns(view: GmView) {
   const id = view.campaign.id;
-  const [configured, setConfigured] = useState<boolean | null>(null);
   const [runs, setRuns] = useState<DraftRun[]>([]);
-  const [text, setText] = useState("");
-  const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const refresh = () =>
@@ -166,9 +164,6 @@ export function DraftsCard({ view, engine, names, onRecorded }: { view: GmView; 
       .catch((e) => setError(e.message));
 
   useEffect(() => {
-    void api<{ configured: boolean }>("GET", `/campaigns/${id}/ai`)
-      .then((a) => setConfigured(a.configured))
-      .catch(() => setConfigured(false));
     void refresh();
   }, [id]);
 
@@ -179,10 +174,45 @@ export function DraftsCard({ view, engine, names, onRecorded }: { view: GmView; 
     return () => clearInterval(t);
   }, [drafting, id]);
 
-  // An accepted event that is undone comes back to review, so the list follows the log.
+  // An accepted draft that is undone comes back to review, and a cue fired from Prep settles, so the list follows the log.
   useEffect(() => {
-    if (runs.some((r) => r.items.some((i) => i.status === "accepted"))) void refresh();
+    if (runs.some((r) => r.items.some((i) => i.status === "accepted" || i.kind === "cue"))) void refresh();
   }, [view.seq]);
+
+  const replace = (item: DraftItem) =>
+    setRuns((rs) => rs.map((r) => (r.id === item.runId ? { ...r, items: r.items.map((i) => (i.itemId === item.itemId ? item : i)) } : r)));
+  const mark = async (item: DraftItem, to: "dismiss" | "restore") => {
+    setError(null);
+    try {
+      replace((await markDraft(id, item, to)).item);
+    } catch (e) {
+      setError((e as Error).message);
+    }
+  };
+  return { runs, setRuns, drafting, replace, mark, error, setError };
+}
+
+export type DraftRuns = ReturnType<typeof useDraftRuns>;
+
+/** A draft settled: accepted and standing, or a cue whose item has fired. */
+export const settled = (i: DraftItem) => (i.status === "accepted" && !i.undone) || (i.kind === "cue" && i.fired && i.status === "open");
+/** A draft waiting on the GM. */
+export const waitingOn = (i: DraftItem) => (i.status === "open" || Boolean(i.undone)) && !settled(i);
+/** Drafts reviewed in the Suggestions section rather than beside the events. */
+export const isSuggestion = (i: DraftItem) => i.kind === "cue" || i.kind === "suggestion";
+
+export function DraftsCard({ view, engine, names, onRecorded, drafts }: { view: GmView; engine: Engine; names: Names; onRecorded: (env: Envelope) => void; drafts: DraftRuns }) {
+  const id = view.campaign.id;
+  const [configured, setConfigured] = useState<boolean | null>(null);
+  const { runs, setRuns, drafting, replace, error, setError } = drafts;
+  const [text, setText] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    void api<{ configured: boolean }>("GET", `/campaigns/${id}/ai`)
+      .then((a) => setConfigured(a.configured))
+      .catch(() => setConfigured(false));
+  }, [id]);
 
   const roster = useMemo(
     () => ({
@@ -207,35 +237,14 @@ export function DraftsCard({ view, engine, names, onRecorded }: { view: GmView; 
     }
   };
 
-  const replace = (item: DraftItem) =>
-    setRuns((rs) => rs.map((r) => (r.id === item.runId ? { ...r, items: r.items.map((i) => (i.itemId === item.itemId ? item : i)) } : r)));
-
-  const settled = (i: DraftItem) => (i.status === "accepted" && !i.undone) || (i.kind === "cue" && i.fired && i.status === "open");
-  const waiting = runs.flatMap((run) => run.items.filter((i) => (i.status === "open" || i.undone) && !settled(i)).map((item) => ({ run, item })));
-  const dismissed = runs.flatMap((run) => run.items.filter((i) => i.status === "dismissed").map((item) => ({ run, item })));
-  const accepted = runs.flatMap((run) => run.items.filter(settled).map((item) => ({ run, item })));
-  const summary = (i: DraftItem) =>
-    i.kind === "cue"
-      ? `Prep cue: ${view.prep.find((p) => p.id === i.prepId)?.title ?? i.prepId}${i.fired ? " (fired)" : ""}`
-      : i.action!.type === "event.log"
-        ? i.action!.summary
-        : describe(i.action!, names, () => undefined);
-  const dismiss = async (item: DraftItem) => {
-    setError(null);
-    try {
-      replace((await markDraft(id, item, "dismiss")).item);
-    } catch (e) {
-      setError((e as Error).message);
-    }
-  };
-  const restore = async (item: DraftItem) => {
-    setError(null);
-    try {
-      replace((await markDraft(id, item, "restore")).item);
-    } catch (e) {
-      setError((e as Error).message);
-    }
-  };
+  const here = (i: DraftItem) => !isSuggestion(i);
+  const waiting = runs.flatMap((run) => run.items.filter((i) => here(i) && waitingOn(i)).map((item) => ({ run, item })));
+  const dismissed = runs.flatMap((run) => run.items.filter((i) => here(i) && i.status === "dismissed").map((item) => ({ run, item })));
+  const accepted = runs.flatMap((run) => run.items.filter((i) => here(i) && settled(i)).map((item) => ({ run, item })));
+  const suggestions = runs.reduce((n, run) => n + run.items.filter((i) => isSuggestion(i) && waitingOn(i)).length, 0);
+  const summary = (i: DraftItem) => (i.action!.type === "event.log" ? i.action!.summary : describe(i.action!, names, () => undefined));
+  const dismiss = (item: DraftItem) => drafts.mark(item, "dismiss");
+  const restore = (item: DraftItem) => drafts.mark(item, "restore");
 
   return (
     <section className="card drafts">
@@ -266,6 +275,11 @@ export function DraftsCard({ view, engine, names, onRecorded }: { view: GmView; 
       {runs.slice(0, 3).map((r) => (
         <RunLine key={r.id} run={r} />
       ))}
+      {suggestions > 0 && (
+        <p className="small">
+          {suggestions} suggestion{suggestions === 1 ? "" : "s"} (titles, cards, Prep cues) wait in <a href="#suggestions">Suggestions</a>.
+        </p>
+      )}
       {waiting.length > 0 && (
         <>
           <h3>To review</h3>
@@ -273,7 +287,6 @@ export function DraftsCard({ view, engine, names, onRecorded }: { view: GmView; 
             {waiting.map(({ run, item }) => {
               const key = `${item.runId}/${item.itemId}/${item.status}`;
               const cited = <Cited view={view} run={run} item={item} names={names} />;
-              if (item.kind === "cue") return <CueCard key={key} view={view} item={item} cited={cited} onDismiss={() => dismiss(item)} />;
               if (item.kind === "action")
                 return (
                   <ActionDraftCard

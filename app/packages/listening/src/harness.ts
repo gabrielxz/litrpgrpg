@@ -11,6 +11,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { Engine } from "@gradebreaker/engine";
 import { ACTION_CATEGORIES, type ActionDrafts, draftActions } from "./draft-actions.ts";
+import { SUGGESTION_CATEGORIES, draftSuggestions } from "./draft-suggestions.ts";
 import { type Drafter, type Effort, type EventDrafts, draftEvents, sceneOfScript } from "./draft-events.ts";
 import { type Report, type Tally, score } from "./score.ts";
 import { type Script, loadScript } from "./script.ts";
@@ -148,13 +149,28 @@ export interface ActionEvaluation {
 const countOf = (keys: string[]) => keys.reduce<Record<string, number>>((m, k) => ((m[k] = (m[k] ?? 0) + 1), m), {});
 
 /** Runs one script through the actions drafter `runs` times, scoring the categories it drafts. */
-export async function evaluateActions(engine: Engine, script: Script, drafter: Drafter, runs: number, opts: { effort?: Effort } = {}): Promise<ActionEvaluation> {
+export function evaluateActions(engine: Engine, script: Script, drafter: Drafter, runs: number, opts: { effort?: Effort } = {}): Promise<ActionEvaluation> {
+  return evaluateDrafted(engine, script, runs, (scene) => draftActions(engine, drafter, scene, opts), ACTION_CATEGORIES);
+}
+
+/** Runs one script through the suggestions drafter `runs` times, scoring the kinds it drafts. */
+export function evaluateSuggestions(engine: Engine, script: Script, drafter: Drafter, runs: number, opts: { effort?: Effort } = {}): Promise<ActionEvaluation> {
+  return evaluateDrafted(engine, script, runs, (scene) => draftSuggestions(engine, drafter, scene, opts), SUGGESTION_CATEGORIES);
+}
+
+async function evaluateDrafted(
+  engine: Engine,
+  script: Script,
+  runs: number,
+  draft: (scene: ReturnType<typeof sceneOfScript>) => Promise<ActionDrafts>,
+  categories: string[],
+): Promise<ActionEvaluation> {
   const scene = sceneOfScript(engine, script);
   const out: ActionRun[] = [];
   for (let run = 1; run <= runs; run++) {
     try {
-      const drafts = await draftActions(engine, drafter, scene, opts);
-      out.push({ run, drafts, report: score(script, drafts.drafts, { categories: ACTION_CATEGORIES }) });
+      const drafts = await draft(scene);
+      out.push({ run, drafts, report: score(script, drafts.drafts, { categories }) });
     } catch (err) {
       out.push({ run, drafts: null, report: null, error: err instanceof Error ? err.message : String(err) });
     }

@@ -33,15 +33,19 @@ const signIn = (name: string) =>
 /** What the scripted model answers next, for each drafter: an output, or a problem. */
 let outputs: ({ output: unknown } | { problem: Problem })[] = [];
 let bookkeeping: ({ output: unknown } | { problem: Problem })[] = [];
+let suggested: ({ output: unknown } | { problem: Problem })[] = [];
 let prompts: string[] = [];
 const noActions = { items: [], quests: [], ve: [], parties: [], counters: [], cues: [] };
+const noSuggestions = { titles: [], memories: [], hidden: [] };
 const scripted = (_key: string, model: string): LanguageModel => ({
   model,
   async check() {},
   async draft<T>(req: { system: string; prompt: string; schema: z.ZodType<T> }) {
-    const actions = req.system.includes("bookkeeping");
-    if (!actions) prompts.push(req.prompt);
-    const next = (actions ? bookkeeping.shift() : outputs.shift()) ?? { output: actions ? noActions : { events: [] } };
+    const which = req.system.includes("point the Game Master (GM) to rewards") ? "suggestions" : req.system.includes("draft the bookkeeping") ? "actions" : "events";
+    if (which === "events") prompts.push(req.prompt);
+    const queue = which === "actions" ? bookkeeping : which === "suggestions" ? suggested : outputs;
+    const empty = which === "actions" ? noActions : which === "suggestions" ? noSuggestions : { events: [] };
+    const next = queue.shift() ?? { output: empty };
     if ("problem" in next) throw new ModelError(next.problem, `scripted ${next.problem}`);
     return { output: req.schema.parse(next.output), usage: { model, inputTokens: 1000, outputTokens: 200, cacheReadTokens: 0, cacheWriteTokens: 0 } };
   },
@@ -97,6 +101,7 @@ async function drafted(campaignId: string, gm: string, output: unknown = { event
 beforeEach(async () => {
   outputs = [];
   bookkeeping = [];
+  suggested = [];
   prompts = [];
   db = await pgliteDb(new PGlite());
   await migrate(db);
@@ -111,7 +116,7 @@ describe("drafting from typed table talk", () => {
     const { gm, campaignId } = await table();
     const before = (await call("GET", `/campaigns/${campaignId}/log`, gm)).json.log.length;
     const run = await drafted(campaignId, gm);
-    expect(run).toMatchObject({ status: "done", feature: "draft-events,draft-actions", repaired: ["draft-1: dropped line ids the scene lacks (L9)"] });
+    expect(run).toMatchObject({ status: "done", feature: "draft-events,draft-actions,draft-suggestions", repaired: ["draft-1: dropped line ids the scene lacks (L9)"] });
     expect(run.talk.lines.map((l: { as?: string }) => l.as ?? null)).toEqual([null, "kara", null, "joe"]);
     expect(run.talk.readings.map((r: { kind: string }) => r.kind)).toEqual(["gm", "character", "member", "character"]);
     expect(run.items).toEqual([
@@ -122,7 +127,7 @@ describe("drafting from typed table talk", () => {
     expect(prompts[0]).toContain("[L2] Ana as Kara: Mine.");
     expect(prompts[0]).toContain("[L4] Gabriel (GM) as Joe: Fine.");
     expect((await call("GET", `/campaigns/${campaignId}/log`, gm)).json.log.length).toBe(before);
-    expect((await db.query("select feature from ai_usage order by feature")).map((u) => u.feature)).toEqual(["draft-actions", "draft-events"]);
+    expect((await db.query("select feature from ai_usage order by feature")).map((u) => u.feature)).toEqual(["draft-actions", "draft-events", "draft-suggestions"]);
   });
 
   it("records an accepted draft, edited, as the GM's event with the source suggestion, once", async () => {
@@ -180,6 +185,7 @@ describe("drafting from typed table talk", () => {
     const { gm, campaignId } = await table();
     outputs = [{ problem: "billing" }];
     bookkeeping = [{ problem: "billing" }];
+    suggested = [{ problem: "billing" }];
     const started = (await call("POST", `/campaigns/${campaignId}/drafts`, gm, { text: TALK })).json.run;
     await drafts.settled(started.id);
     const failed = (await call("GET", `/campaigns/${campaignId}/drafts`, gm)).json.runs[0];
@@ -253,6 +259,36 @@ describe("drafting from typed table talk", () => {
     const run = await drafted(campaignId, gm);
     expect(run).toMatchObject({ status: "done", problem: "rate", message: "drafting the bookkeeping failed: scripted rate" });
     expect(run.items).toHaveLength(1);
+  });
+
+  it("drafts suggestions beside them, accepted as the grant each names, and raises none the GM has seen", async () => {
+    const { gm, campaignId } = await table();
+    const hidden = { lines: ["L2"], characterId: "kara", name: "First to the Pill", deed: "Triggered by taking the only pill first.", attribute: "DEX", bonus: 3, why: "Nobody saw it coming." };
+    const card = { lines: ["L2", "L4"], characterId: "kara", moment: "The pill, gone before anyone spoke", why: "A moment she will keep." };
+    suggested = [{ output: { titles: [], memories: [card], hidden: [hidden] } }];
+    const run = await drafted(campaignId, gm);
+    const byKind = (k: string) => run.items.find((i: { kind: string; suggestion?: { kind: string } }) => i.kind === "suggestion" && i.suggestion!.kind === k);
+    const [memory, achievement] = [byKind("battle-memory"), byKind("hidden-achievement")];
+    expect(memory).toMatchObject({ suggestion: { kind: "battle-memory", key: "The pill, gone before anyone spoke", characterId: "kara" }, action: { type: "memory.grant", characterId: "kara" } });
+    expect(achievement).toMatchObject({ why: "Nobody saw it coming.", action: { type: "title.grant", title: { name: "First to the Pill", category: "Hidden Achievement", bonus: { DEX: 3 } } } });
+
+    const accept = (item: { itemId: string }, action: unknown) => call("POST", `/campaigns/${campaignId}/drafts/${run.id}/${item.itemId}/accept`, gm, { id: randomUUID(), action });
+    // A suggestion records a grant, edited or not, and only for the character it names.
+    expect((await accept(achievement, { type: "item.give", to: "kara", items: [{ name: "Pill", count: 1 }] })).status).toBe(422);
+    expect((await accept(achievement, { ...achievement.action, characterId: "joe" })).json.error).toMatch(/character it names/);
+    const ok = await accept(achievement, { ...achievement.action, title: { ...achievement.action.title, name: "Quickest Hand" } });
+    expect(ok.status).toBe(201);
+    expect(ok.json.appended.envelope).toMatchObject({ source: "suggestion", action: { type: "title.grant", title: { name: "Quickest Hand" } } });
+    expect((await call("POST", `/campaigns/${campaignId}/drafts/${run.id}/${memory.itemId}/dismiss`, gm)).status).toBe(200);
+
+    // The same talk drafted again: the dismissed card and the accepted title stay as the GM left them.
+    suggested = [{ output: { titles: [], memories: [{ ...card, moment: "Kara's pill" }], hidden: [hidden] } }];
+    const again = await drafted(campaignId, gm);
+    expect(again.items.filter((i: { kind: string }) => i.kind === "suggestion")).toEqual([]);
+    expect(again.dropped.map((d: { why: string }) => d.why)).toEqual([
+      "a Battle Memory Card for Kara was suggested before (dismissed)",
+      "First to the Pill for Kara was suggested before (accepted)",
+    ]);
   });
 
   it("answers a drafted invitation once the GM accepts it, and grants VE aloud", async () => {

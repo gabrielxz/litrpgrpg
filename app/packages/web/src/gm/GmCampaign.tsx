@@ -16,6 +16,8 @@ import { SpoilsCard } from "./Items.tsx";
 import { QuestsSection } from "./Quests.tsx";
 import { HveSection } from "./Hve.tsx";
 import { EventsSection } from "./Events.tsx";
+import { useDraftRuns } from "./Drafts.tsx";
+import { SuggestionsSection, suggestionsWaiting } from "./Suggestions.tsx";
 import { SessionBar, SessionsCard } from "./Sessions.tsx";
 import { ClockControls } from "./Clock.tsx";
 import { PrinciplesSection, principlesWaiting } from "./Principles.tsx";
@@ -205,9 +207,10 @@ function ViewAs({ view }: { view: GmView }) {
   );
 }
 
-type Section = "party" | "prep" | "combat" | "bestiary" | "quests" | "principles" | "classes" | "events" | "hve" | "log" | "table" | "player";
+type Section = "party" | "suggestions" | "prep" | "combat" | "bestiary" | "quests" | "principles" | "classes" | "events" | "hve" | "log" | "table" | "player";
 const SECTIONS: [Section, string][] = [
   ["party", "Party"],
+  ["suggestions", "Suggestions"],
   ["prep", "Prep"],
   ["combat", "Combat"],
   ["bestiary", "Bestiary"],
@@ -253,6 +256,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
   const [section, setSection] = useSection();
   // A prepared fight or quest handed to Combat or Quests to fire there.
   const [firing, setFiring] = useState<Firing | null>(null);
+  const drafts = useDraftRuns(view);
   // Characters by id, and every creature or NPC a fight has named, for the log's lines.
   const byId = new Map(view.characters.map((c) => [c.id, c.name]));
   for (const env of live.log) {
@@ -277,6 +281,9 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
         {SECTIONS.map(([s, label]) => (
           <button key={s} className={s === section ? "active" : ""} onClick={() => setSection(s)}>
             {label}
+            {s === "suggestions" && suggestionsWaiting(view, engine, names, drafts.runs) > 0 && (
+              <span className="tag attention">{suggestionsWaiting(view, engine, names, drafts.runs)}</span>
+            )}
             {s === "principles" && principlesWaiting(view) > 0 && <span className="tag attention">{principlesWaiting(view)}</span>}
             {s === "classes" && classesWaiting(view, engine) > 0 && <span className="tag attention">{classesWaiting(view, engine)}</span>}
             {s === "log" && view.rejected.length > 0 && <span className="tag attention">{view.rejected.length}</span>}
@@ -335,7 +342,8 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
       )}
       {section === "principles" && <PrinciplesSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
       {section === "classes" && <ClassesSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
-      {section === "events" && <EventsSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
+      {section === "events" && <EventsSection view={view} engine={engine} names={names} onRecorded={live.addToLog} drafts={drafts} />}
+      {section === "suggestions" && <SuggestionsSection view={view} engine={engine} names={names} onRecorded={live.addToLog} drafts={drafts} />}
       {section === "hve" && <HveSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
       {section === "log" && (
         <main className="page">

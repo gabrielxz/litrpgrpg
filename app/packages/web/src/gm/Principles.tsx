@@ -36,7 +36,8 @@ function FamilySelect({ engine, value, onChange }: { engine: Engine; value: stri
   );
 }
 
-function DueCard({ view, names, onRecorded }: Omit<Props, "engine">) {
+/** The cards the rules make due, granted with the card's words or withheld. */
+export function MemoriesDueCard({ view, names, onRecorded }: Omit<Props, "engine">) {
   const due = view.characters.flatMap((c) => c.principles.due.map((d) => ({ c, d })));
   const [text, setText] = useState<Record<string, string>>({});
   if (!due.length) return null;
@@ -399,7 +400,7 @@ export function PrinciplesSection({ view, engine, names, onRecorded }: { view: G
   return (
     <main className="gm">
       <div>
-        <DueCard view={view} names={names} onRecorded={onRecorded} />
+        <MemoriesDueCard view={view} names={names} onRecorded={onRecorded} />
         {view.characters.map((c) => (
           <CharacterCard key={c.id} {...props} c={c} />
         ))}

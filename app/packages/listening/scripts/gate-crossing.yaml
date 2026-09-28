@@ -123,6 +123,14 @@ expected:
       also:
         - {characterId: andre, pole: Force, intensity: 3}
 
+  # Tutorial, Phase 5: the Sacrifice earns The One Who Stood (delivered in Phase 6; the drafter points
+  # to it where the deed happens). Nobody earns Gate-Runner: Joe set Ray, an NPC, through first, and
+  # "sending an NPC first earns nobody the title", so a Gate-Runner suggestion is a false positive.
+  # Kara through at 1 HP is survival at near-zero Health, a card the GM may grant.
+  suggestions:
+    - {id: s-one-who-stood, lines: [l14, l16, l17, l18], kind: title, key: The One Who Stood, characterId: andre}
+    - {id: s-kara-one-hp, lines: [l29, l30], kind: battle-memory, key: through the gate at 1 HP, characterId: kara, optional: true}
+
   quiet:
     - {lines: [l04], why: retracted}
     - {lines: [l10, l26], why: npc-speech}

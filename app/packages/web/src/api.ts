@@ -86,11 +86,13 @@ export const preview = (campaignId: string, id: string, action: Action) =>
 export interface DraftItem {
   runId: string;
   itemId: string;
-  /** An event (the moment), an action (an item, quest, or count), or a Prep cue. */
-  kind: "event" | "action" | "cue";
+  /** An event (the moment), an action (an item, quest, or count), a Prep cue, or a suggestion (a title, a Battle Memory Card, a Hidden Achievement). */
+  kind: "event" | "action" | "cue" | "suggestion";
   lines: string[];
+  /** What accepting records; a suggestion's is the grant it proposes. */
   action?: Action;
   prepId?: string;
+  suggestion?: { kind: "title" | "battle-memory" | "hidden-achievement"; key: string; characterId: string };
   /** An event's reason per character. */
   reasons: { characterId: string; why: string }[];
   /** An action's or a cue's reason. */

@@ -53,9 +53,13 @@ export function categoryOf(x: Item): string {
 
 const lower = (s: string) => s.trim().toLowerCase();
 
+/** Suggestion kinds whose key is written by the drafter, so it is not compared. */
+const FREE_KEYS = new Set(["battle-memory", "hidden-achievement"]);
+
 /** What an item is about, for matching. Events match on lines and characters instead. */
 function keyOf(x: Item, invites: Map<string, string>): string {
-  if (x.suggestion) return [x.suggestion.kind, lower(x.suggestion.key), x.suggestion.characterId ?? ""].join("|");
+  // A card's moment and a Hidden Achievement's name are the drafter's own words: those match on the kind, the character, and the lines.
+  if (x.suggestion) return [x.suggestion.kind, FREE_KEYS.has(x.suggestion.kind) ? "" : lower(x.suggestion.key), x.suggestion.characterId ?? ""].join("|");
   const a = x.action!;
   switch (a.type) {
     case "event.log":

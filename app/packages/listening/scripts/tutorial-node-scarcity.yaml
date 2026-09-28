@@ -181,6 +181,9 @@ expected:
 
   suggestions:
     - {id: s-formation, lines: [l02, l03], kind: prep-cue, key: tutorial-party-formation}
+    # Voice of Decision is for breaking the deadlock at the pile (Phase 6). Joe sets the rule the
+    # group follows before any deadlock shows, so it is a fair reading and not a required one.
+    - {id: s-voice-of-decision, lines: [l13], kind: title, key: Voice of Decision, characterId: joe, optional: true}
     - {id: s-shard-line, lines: [l22, l23], kind: prep-cue, key: tutorial-resonance-shard}
     - {id: s-status, lines: [l28, l29, l31, l32], kind: prep-cue, key: tutorial-first-status}
 

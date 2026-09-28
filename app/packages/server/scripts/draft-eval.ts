@@ -2,12 +2,12 @@
  * Runs the scripted sessions through a drafter and reports precision and recall (app/DESIGN.md,
  * "Testing the listening", text evaluation). Each run spends real tokens.
  *
- *   pnpm draft-eval [--drafter events|actions] [--runs 3] [--script id] [--effort medium] [--campaign name]
+ *   pnpm draft-eval [--drafter events|actions|suggestions] [--runs 3] [--script id] [--effort medium] [--campaign name]
  *
  * The key comes from one of two places:
  *   ANTHROPIC_API_KEY (app/.env)   used directly, with the model from --model; tokens are tallied here
  *   --campaign name                a campaign's sealed key, through `CampaignAi.draft` under the
- *                                  drafter's feature ("draft-events", "draft-actions"), so the requests
+ *                                  drafter's feature ("draft-events", "draft-actions", "draft-suggestions"), so the requests
  *                                  show in its AI card. The database is DATABASE_URL (the development one
  *                                  by default), and AI_KEY_SECRET must be the secret that database's keys
  *                                  were sealed with.
@@ -20,7 +20,19 @@ import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import { Engine } from "@gradebreaker/engine";
 import { loadRules } from "@gradebreaker/engine/node";
-import { DRAFT_ACTIONS_FEATURE, DRAFT_EVENTS_FEATURE, type Drafter, type Effort, evaluateActions, evaluateEvents, formatActionSummary, formatSummary, loadScripts } from "@gradebreaker/listening";
+import {
+  DRAFT_ACTIONS_FEATURE,
+  DRAFT_EVENTS_FEATURE,
+  DRAFT_SUGGESTIONS_FEATURE,
+  type Drafter,
+  type Effort,
+  evaluateActions,
+  evaluateEvents,
+  evaluateSuggestions,
+  formatActionSummary,
+  formatSummary,
+  loadScripts,
+} from "@gradebreaker/listening";
 import { CampaignAi, DEFAULT_MODEL, type Usage, anthropicModel } from "../src/ai.ts";
 import { postgresDb } from "../src/db.ts";
 
@@ -34,8 +46,9 @@ const { values } = parseArgs({
     drafter: { type: "string", default: "events" },
   },
 });
-if (values.drafter !== "events" && values.drafter !== "actions") throw new Error("--drafter is events or actions");
-const FEATURE = values.drafter === "actions" ? DRAFT_ACTIONS_FEATURE : DRAFT_EVENTS_FEATURE;
+const FEATURES: Record<string, string> = { events: DRAFT_EVENTS_FEATURE, actions: DRAFT_ACTIONS_FEATURE, suggestions: DRAFT_SUGGESTIONS_FEATURE };
+const FEATURE = FEATURES[values.drafter!];
+if (!FEATURE) throw new Error("--drafter is events, actions, or suggestions");
 const DEV_DATABASE = "postgres://gradebreaker:gradebreaker@localhost:54340/gradebreaker";
 
 /** The drafter and where its spending is read back from. */
@@ -101,7 +114,9 @@ try {
     const e =
       values.drafter === "actions"
         ? await evaluateActions(engine, script, source.drafter, Number(values.runs), opts)
-        : await evaluateEvents(engine, script, source.drafter, Number(values.runs), opts);
+        : values.drafter === "suggestions"
+          ? await evaluateSuggestions(engine, script, source.drafter, Number(values.runs), opts)
+          : await evaluateEvents(engine, script, source.drafter, Number(values.runs), opts);
     console.log("byCategory" in e.summary ? formatActionSummary(e.summary) : formatSummary(e.summary));
     for (const r of e.runs) if (r.error) console.log(`  run ${r.run} failed: ${r.error}`);
     console.log();

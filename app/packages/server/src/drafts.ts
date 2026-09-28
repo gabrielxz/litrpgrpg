@@ -1,8 +1,9 @@
 /**
  * Drafting from typed table talk (app/DESIGN.md, M2, "Event drafting"). The GM pastes or types
  * what was said; the server reads the names into speakers and lines, and drafts through the
- * campaign's model in the background: the moments (events and their HVE entries) and the
- * bookkeeping (items, quests, counts, Prep cues), two requests side by side. The drafts wait
+ * campaign's model in the background: the moments (events and their HVE entries), the
+ * bookkeeping (items, quests, counts, Prep cues), and the suggestions (titles the fiction earns,
+ * Battle Memory Cards, Hidden Achievements), three requests side by side. The drafts wait
  * apart from the action log. The GM accepts each (as drafted or edited), which records the GM's
  * own action with the source `suggestion`, or dismisses it; a Prep cue is fired from Prep.
  * Recording by hand makes the same record.
@@ -14,11 +15,14 @@ import { type Action, type Appended, CampaignRecord } from "@gradebreaker/record
 import {
   DRAFT_ACTIONS_FEATURE,
   DRAFT_EVENTS_FEATURE,
+  DRAFT_SUGGESTIONS_FEATURE,
   type Drafter,
   type Scene,
+  type SuggestionDraft,
   type TypedTalk,
   draftActions,
   draftEvents,
+  draftSuggestions,
   readTypedTalk,
 } from "@gradebreaker/listening";
 import { type CampaignAi, ModelError, problemOf } from "./ai.ts";
@@ -34,14 +38,22 @@ export const RUNS_LISTED = 10;
 
 export type RunStatus = "drafting" | "done" | "failed";
 export type ItemStatus = "open" | "accepted" | "dismissed";
-export type ItemKind = "event" | "action" | "cue";
+export type ItemKind = "event" | "action" | "cue" | "suggestion";
 
 /** What each kind of draft may record on accepting. A cue records nothing: the GM fires it from Prep. */
 const ACCEPTS: Record<ItemKind, readonly Action["type"][]> = {
   event: ["event.log"],
   action: ["item.give", "item.move", "item.remove", "quest.progress", "quest.complete", "quest.fail", "ve.award", "party.invite", "party.answer", "counter.tick"],
   cue: [],
+  suggestion: ["title.grant", "memory.grant"],
 };
+
+/** A suggestion as the panel names it: a title, a Battle Memory Card, or a Hidden Achievement for a character. */
+export interface Suggested {
+  kind: string;
+  key: string;
+  characterId?: string;
+}
 
 export interface DraftItem {
   runId: string;
@@ -52,6 +64,8 @@ export interface DraftItem {
   action?: Action;
   /** A cue's prepared item. */
   prepId?: string;
+  /** A suggestion's kind and subject; its `action` is what accepting records. */
+  suggestion?: Suggested;
   /** An event's reason per character. */
   reasons: { characterId: string; why: string }[];
   /** An action's or a cue's reason. */
@@ -127,7 +141,7 @@ export class Drafts {
     const id = newId();
     await this.db.query(
       "insert into draft_runs (id, campaign_id, feature, created_by, status, talk) values ($1, $2, $3, $4, 'drafting', $5::jsonb)",
-      [id, campaignId, `${DRAFT_EVENTS_FEATURE},${DRAFT_ACTIONS_FEATURE}`, user!.id, JSON.stringify(talk)],
+      [id, campaignId, `${DRAFT_EVENTS_FEATURE},${DRAFT_ACTIONS_FEATURE},${DRAFT_SUGGESTIONS_FEATURE}`, user!.id, JSON.stringify(talk)],
     );
     // The record as it stands: typed talk carries no timing, so what the table recorded in the
     // app during these lines is already in it, and the events logged are listed to the model.
@@ -153,22 +167,43 @@ export class Drafts {
       (feature: string): Drafter =>
       (req) =>
         this.ai.draft(campaignId, feature, req);
-    const [events, actions] = await Promise.allSettled([draftEvents(engine, drafter(DRAFT_EVENTS_FEATURE), scene), draftActions(engine, drafter(DRAFT_ACTIONS_FEATURE), scene)]);
-    if (events.status === "rejected" && actions.status === "rejected") {
-      const p = problemOf(events.reason);
+    const [events, actions, suggestions] = await Promise.allSettled([
+      draftEvents(engine, drafter(DRAFT_EVENTS_FEATURE), scene),
+      draftActions(engine, drafter(DRAFT_ACTIONS_FEATURE), scene),
+      draftSuggestions(engine, drafter(DRAFT_SUGGESTIONS_FEATURE), scene),
+    ]);
+    const all = [
+      { what: "the moments", out: events },
+      { what: "the bookkeeping", out: actions },
+      { what: "the suggestions", out: suggestions },
+    ];
+    const failures = all.filter((x) => x.out.status === "rejected") as { what: string; out: PromiseRejectedResult }[];
+    if (failures.length === all.length) {
+      const p = problemOf(failures[0]!.out.reason);
       await this.db.query("update draft_runs set status = 'failed', finished_at = now(), problem = $2, message = $3 where id = $1", [runId, p.problem, p.message]);
       return;
     }
-    // One drafter failing leaves the other's drafts, with the failure said on the run.
-    const failed = events.status === "rejected" ? ["the moments", events.reason] : actions.status === "rejected" ? ["the bookkeeping", actions.reason] : null;
-    const problem = failed ? problemOf(failed[1]) : null;
+    // One drafter failing leaves the others' drafts, with the failure said on the run.
+    const problem = failures.length ? problemOf(failures[0]!.out.reason) : null;
     const rows: unknown[][] = [];
     if (events.status === "fulfilled")
       for (const d of events.value.drafts) rows.push([d.id, "event", d.lines, d.action, d.reasons, null, null]);
     if (actions.status === "fulfilled")
       for (const d of actions.value.drafts) rows.push([d.id, d.suggestion ? "cue" : "action", d.lines, d.action ?? null, [], d.why, d.suggestion ?? null]);
-    const repaired = [...(events.status === "fulfilled" ? events.value.repaired : []), ...(actions.status === "fulfilled" ? actions.value.repaired : [])];
-    const dropped = [...(events.status === "fulfilled" ? events.value.dropped : []), ...(actions.status === "fulfilled" ? actions.value.dropped : [])];
+    const seen: { why: string }[] = [];
+    if (suggestions.status === "fulfilled") {
+      const before = await this.suggestedBefore(campaignId);
+      const texts = new Map(scene.lines.map((l) => [l.id, l.text.trim()]));
+      const nameOf = new Map([...scene.record.sheets().values()].map((c) => [c.id, c.name]));
+      for (const d of suggestions.value.drafts) {
+        const again = this.again(d, texts, before, nameOf);
+        if (again) seen.push({ why: again });
+        else rows.push([d.id, "suggestion", d.lines, d.accept, [], d.why, d.suggestion]);
+      }
+    }
+    const fulfilled = all.flatMap((x) => (x.out.status === "fulfilled" ? [x.out.value] : []));
+    const repaired = fulfilled.flatMap((x) => x.repaired);
+    const dropped = [...fulfilled.flatMap((x) => x.dropped), ...seen];
     await this.db.tx(async (q) => {
       for (const [id, kind, lines, action, reasons, why, suggestion] of rows) {
         await q.query(
@@ -178,9 +213,41 @@ export class Drafts {
       }
       await q.query(
         "update draft_runs set status = 'done', finished_at = now(), repaired = $2::jsonb, dropped = $3::jsonb, problem = $4, message = $5 where id = $1",
-        [runId, JSON.stringify(repaired), JSON.stringify(dropped.map((d) => ({ why: d.why }))), problem?.problem ?? null, problem ? `drafting ${failed![0]} failed: ${problem.message}` : null],
+        [runId, JSON.stringify(repaired), JSON.stringify(dropped.map((d) => ({ why: d.why }))), problem?.problem ?? null, problem ? `drafting ${failures.map((f) => f.what).join(" and ")} failed: ${problem.message}` : null],
       );
     });
+  }
+
+  /** Every suggestion drafted for the campaign before, with the text of the lines it cited. */
+  private async suggestedBefore(campaignId: string): Promise<{ s: Suggested; texts: Set<string>; status: ItemStatus }[]> {
+    const rows = await this.db.query(
+      "select i.suggestion, i.lines, i.status, r.talk from draft_items i join draft_runs r on r.id = i.run_id where i.campaign_id = $1 and i.kind = 'suggestion'",
+      [campaignId],
+    );
+    return rows.map((r) => {
+      const byId = new Map((r.talk as TypedTalk).lines.map((l) => [l.id, l.text.trim()]));
+      return { s: r.suggestion, texts: new Set((r.lines as string[]).map((l) => byId.get(l)).filter((t): t is string => Boolean(t))), status: r.status };
+    });
+  }
+
+  /**
+   * Why a suggestion is not raised again, or null. A suggestion the GM has seen stays as the GM
+   * left it (dismissed, accepted, or waiting): the same title for the same character, or the same
+   * kind for the same character drawn from a line already cited, as when talk is drafted twice.
+   */
+  private again(d: SuggestionDraft, texts: Map<string, string>, before: Awaited<ReturnType<Drafts["suggestedBefore"]>>, nameOf: Map<string, string>): string | null {
+    const s = d.suggestion;
+    const cited = d.lines.map((l) => texts.get(l)).filter(Boolean);
+    const earlier = before.find(
+      (b) =>
+        b.s.kind === s.kind &&
+        b.s.characterId === s.characterId &&
+        ((s.kind !== "battle-memory" && b.s.key.trim().toLowerCase() === s.key.trim().toLowerCase()) || cited.some((t) => b.texts.has(t!))),
+    );
+    if (!earlier) return null;
+    const how = earlier.status === "dismissed" ? "dismissed" : earlier.status === "accepted" ? "accepted" : "waiting";
+    const who = nameOf.get(s.characterId ?? "") ?? s.characterId;
+    return `${s.kind === "battle-memory" ? "a Battle Memory Card" : s.key} for ${who} was suggested before (${how})`;
   }
 
   /** The newest runs with their drafts. */
@@ -203,7 +270,7 @@ export class Drafts {
   private runOf(r: Record<string, any>, items: Record<string, any>[], record: CampaignRecord): DraftRun {
     const at = new Map((r.talk as TypedTalk).lines.map((l, i) => [l.id, i]));
     const first = (x: DraftItem) => Math.min(...x.lines.map((l) => at.get(l) ?? Infinity));
-    const rank = { event: 0, action: 1, cue: 2 };
+    const rank = { event: 0, action: 1, cue: 2, suggestion: 3 };
     return {
       id: r.id,
       feature: r.feature,
@@ -222,7 +289,7 @@ export class Drafts {
   private itemOf(i: Record<string, any>, record: CampaignRecord, since: string): DraftItem {
     const state = record.state;
     const standing = (id: string) => record.log.some((e) => e.id === id) && !state.voided.has(id) && !state.rejected.some((x) => x.envelope.id === id);
-    const prepId: string | undefined = i.suggestion?.key;
+    const prepId: string | undefined = i.kind === "cue" ? i.suggestion?.key : undefined;
     const fired =
       i.kind === "cue" && record.log.some((e) => e.cause === `prep:${prepId}` && e.at >= since && standing(e.id));
     return {
@@ -232,6 +299,7 @@ export class Drafts {
       lines: i.lines,
       ...(i.action ? { action: i.action } : {}),
       ...(prepId ? { prepId } : {}),
+      ...(i.kind === "suggestion" ? { suggestion: i.suggestion } : {}),
       reasons: i.reasons,
       ...(i.why ? { why: i.why } : {}),
       status: i.status,
@@ -266,6 +334,8 @@ export class Drafts {
       const before = await this.item(campaignId, runId, itemId);
       if (!ACCEPTS[before.kind].includes(s.action.type))
         throw new HttpError(422, before.kind === "cue" ? "a Prep cue is fired from Prep" : `this draft is accepted as ${ACCEPTS[before.kind].join(" or ")}`);
+      if (before.kind === "suggestion" && "characterId" in s.action && s.action.characterId !== before.suggestion?.characterId)
+        throw new HttpError(422, "a suggestion is accepted for the character it names");
       if (before.status === "dismissed") throw new HttpError(409, "this draft was dismissed; restore it first");
       if (before.status === "accepted" && !before.undone && before.actionId !== s.id) throw new HttpError(409, "this draft was already accepted");
       const action = await this.resolved(campaignId, runId, s.action);

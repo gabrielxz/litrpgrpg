@@ -9,7 +9,7 @@ import { type CampaignEvent, type Envelope, type GmView, type HveEntry, clockLin
 import { useState } from "react";
 import type { Names } from "../text.ts";
 import { Commit } from "./Commit.tsx";
-import { DraftsCard } from "./Drafts.tsx";
+import { type DraftRuns, DraftsCard } from "./Drafts.tsx";
 import { EventFields, emptyEvent, eventActionOf } from "./EventFields.tsx";
 
 export function entryLine(x: HveEntry): string {
@@ -67,7 +67,7 @@ function EventCard({ e, names, session }: { e: CampaignEvent; names: Names; sess
   );
 }
 
-export function EventsSection({ view, engine, names, onRecorded }: { view: GmView; engine: Engine | null; names: Names; onRecorded: (env: Envelope) => void }) {
+export function EventsSection({ view, engine, names, onRecorded, drafts }: { view: GmView; engine: Engine | null; names: Names; onRecorded: (env: Envelope) => void; drafts: DraftRuns }) {
   const [who, setWho] = useState("");
   if (!engine) return <p className="muted pad">Loading rules…</p>;
   const shown = who ? view.events.filter((e) => e.participants.includes(who)) : view.events;
@@ -78,7 +78,7 @@ export function EventsSection({ view, engine, names, onRecorded }: { view: GmVie
   return (
     <main className="gm">
       <div>
-        <DraftsCard view={view} engine={engine} names={names} onRecorded={onRecorded} />
+        <DraftsCard view={view} engine={engine} names={names} onRecorded={onRecorded} drafts={drafts} />
         <LogForm view={view} engine={engine} names={names} onRecorded={onRecorded} />
       </div>
       <aside className="side">
