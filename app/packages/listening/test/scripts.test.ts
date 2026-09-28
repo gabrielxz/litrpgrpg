@@ -106,6 +106,8 @@ describe("the Node scene", () => {
     const r = score(script, [{ lines: ["l22"], action: { type: "event.log", summary: "Andre takes the shard", participants: ["andre"], entries: [{ characterId: "andre", pole: "Method", intensity: 1 }] } }], { categories: ["event.log"] });
     expect(r.byCategory["event.log"]!.tp).toBe(1);
     expect(r.entries).toMatchObject({ tp: 0, fp: 1 });
+    // The side is arguable; whose moment it was is not. The two required events the draft misses count against it.
+    expect(r.entries.onCharacter).toEqual({ found: 1, of: 3 });
   });
 
   it("matches an answer to the drafter's own invite by who invited whom", () => {

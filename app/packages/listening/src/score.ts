@@ -28,6 +28,12 @@ export interface EntryTally extends Tally {
   accepted: number;
   /** Matched on the pole, at another intensity or a pole only `also` allows at another intensity. */
   off: { expected: string; characterId: string; wanted: Entry; drafted: Entry }[];
+  /**
+   * Whose moment it was, whatever the side: expected entries (on the events a draft found, and on
+   * the required events it missed) with a drafted entry for the same character. Placement on the
+   * axes is arguable; putting a moment on the wrong character, or missing it, is not.
+   */
+  onCharacter: { found: number; of: number };
 }
 
 export interface Report {
@@ -214,7 +220,9 @@ function scoreEntries(
     fp = 0,
     fn = 0,
     exact = 0,
-    accepted = 0;
+    accepted = 0,
+    found = 0,
+    of = 0;
   const off: EntryTally["off"] = [];
   const draftedEntries = (d: Drafted) => (d.action?.type === "event.log" ? (d.action.entries ?? []) : []);
   const wanted = new Map<number, Set<string>>();
@@ -223,12 +231,17 @@ function scoreEntries(
     const { entries, also } = entriesOf(x.source as ExpectedAction);
     const i = match.get(x.id);
     if (i === undefined) {
-      if (!x.optional) fn += entries.length;
+      if (!x.optional) {
+        fn += entries.length;
+        of += entries.length;
+      }
       continue;
     }
     const theirs = draftedEntries(drafted[i]!);
     for (const want of entries) {
       const got = theirs.find((e) => e.characterId === want.characterId);
+      of++;
+      if (got) found++;
       const readings = [want, ...also.filter((a) => a.characterId === want.characterId)];
       if (!got || !readings.some((r) => r.pole === got.pole)) {
         fn++;
@@ -248,5 +261,5 @@ function scoreEntries(
     if (!used.has(i)) fp += draftedEntries(d).length;
     else if (want) fp += draftedEntries(d).filter((e) => !want.has(e.characterId)).length;
   });
-  return { ...tally(tp, fp, fn), exact, accepted, off };
+  return { ...tally(tp, fp, fn), exact, accepted, off, onCharacter: { found, of } };
 }

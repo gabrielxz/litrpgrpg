@@ -41,6 +41,8 @@ export interface Summary {
   /** Means over the runs that returned. */
   events: { precision: number; recall: number };
   entries: { precision: number; recall: number; exact: number; accepted: number; off: number };
+  /** Expected entries whose moment went to the right character, whatever the side, summed over the runs. */
+  onCharacter: { found: number; of: number };
   /** How often each expected item was missed, over the runs that returned. */
   missed: Record<string, number>;
   /** False positives by why, summed over the runs. */
@@ -72,6 +74,10 @@ export function summarize(scriptId: string, runs: Run[]): Summary {
       accepted: ok.reduce((n, r) => n + r.report.entries.accepted, 0),
       off: ok.reduce((n, r) => n + r.report.entries.off.length, 0),
     },
+    onCharacter: {
+      found: ok.reduce((n, r) => n + r.report.entries.onCharacter.found, 0),
+      of: ok.reduce((n, r) => n + r.report.entries.onCharacter.of, 0),
+    },
     missed: count(ok.flatMap((r) => r.report.missed)),
     falsePositives: count(ok.flatMap((r) => r.report.falsePositives.map((f) => f.why))),
     dropped: ok.reduce((n, r) => n + r.drafts.dropped.length, 0),
@@ -97,15 +103,17 @@ const pct = (x: number) => `${Math.round(x * 100)}%`;
 
 /** A few lines per script for the terminal. */
 export function formatSummary(s: Summary): string {
+  // The failures that cost the GM most come first: moments missed or invented, and whose they were.
   const rows = [
     `${s.scriptId}: ${s.runs - s.failed} of ${s.runs} runs returned`,
     `  events   precision ${pct(s.events.precision)}, recall ${pct(s.events.recall)}`,
-    `  entries  precision ${pct(s.entries.precision)}, recall ${pct(s.entries.recall)}; intensity exact ${s.entries.exact}, accepted ${s.entries.accepted}, off ${s.entries.off}`,
   ];
   const missed = Object.entries(s.missed);
   if (missed.length) rows.push(`  missed   ${missed.map(([k, n]) => `${k} ×${n}`).join(", ")}`);
   const fps = Object.entries(s.falsePositives);
   if (fps.length) rows.push(`  false    ${fps.map(([k, n]) => `${k} ×${n}`).join(", ")}`);
+  rows.push(`  whose    ${s.onCharacter.found} of ${s.onCharacter.of} entries on the right character`);
+  rows.push(`  sides    precision ${pct(s.entries.precision)}, recall ${pct(s.entries.recall)}; intensity exact ${s.entries.exact}, accepted ${s.entries.accepted}, off ${s.entries.off}`);
   if (s.dropped) rows.push(`  dropped  ${s.dropped} drafts the record refused`);
   return rows.join("\n");
 }

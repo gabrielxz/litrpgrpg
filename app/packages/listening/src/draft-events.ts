@@ -151,6 +151,8 @@ Tally what the character did in these lines. The roster gives each character's n
 
 The transcript marks who speaks and when a player speaks as their character or the GM speaks as someone in the world. A player also narrates what their character does in the third person ("Andre picks up the shard"); that is the character acting.
 
+Read an act by what it does, not by how it is carried out. A plan drawn in the dirt or signed with the hands is a plan: weigh what the plan would do. Taking the dangerous place for someone else is about who bears the risk, even when it means overruling a friend. A physical act the app has not recorded (knocking down an attacker, lifting a bag off someone, walking off alone into the dark) is a choice like any other, and two acts by one character on neighboring lines can be two moments.
+
 Lines that produce nothing:
 - Players talking about the game as themselves: rules questions, jokes, hypotheticals ("what if he just ran with it?"), plans for later, notes to look something up.
 - Life around the table: food, sports, work, a phone call, a player stepping away and coming back, side conversations.
