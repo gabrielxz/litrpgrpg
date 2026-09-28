@@ -1,0 +1,24 @@
+# An offer that tests: recent behavior and long-term identity disagree. The format is in src/offers.ts.
+id: drifting-divergent
+title: Kara against her own grain, an offer that tests
+source: 'book/55-quests.md, "Personal Opportunities" ("An offer typically tests against the pattern when recent behavior and long-term identity disagree")'
+notes: >
+  Kara's Deep leads Hunger and Force; the last sweep went the other way on Hunger: she pressed
+  the only pill on Joe and went without. Current leans Restraint, Deep Hunger, so the offer
+  tests. A test may take any flavor.
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe}}
+  - {id: deep, action: {type: hve.deep, characterId: kara, deep: {Hunger: 4, Force: 3, Will: 1}}}
+  - {id: pill, action: {type: event.log, summary: Kara presses the Node's only healing pill on the wounded Joe and goes without., participants: [kara, joe], entries: [{characterId: kara, pole: Restraint, intensity: 3, intent: Get Joe on his feet}]}}
+  - id: sweep
+    action:
+      type: hve.sweep
+      label: Session 3
+      sheets: [{characterId: kara, moments: [{pole: Restraint, weight: 3, note: "the pill, pressed on Joe", eventId: pill}]}]
+characterId: kara
+situation: The Recycling Node, the next morning. Scavengers from another group are picking through the far end of the pile.
+expected:
+  stance: test
+  flavors: [combat, social, exploration]
+  why: Current leans Restraint and Deep Hunger on one axis.

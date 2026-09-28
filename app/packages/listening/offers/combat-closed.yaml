@@ -1,0 +1,35 @@
+# A hunter who has refused six combat offers. The format is in src/offers.ts.
+id: combat-closed
+title: Joe after six refused hunts, an offer in another flavor
+source: 'book/55-quests.md, "Repeated refusal of one flavor" (after 6 refusals, that flavor stops appearing)'
+notes: >
+  Joe's pattern is the hunt, and he has refused six combat offers, so combat stops appearing.
+  The offer still affirms (Current and Deep agree) in a flavor that remains.
+setup:
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe}}
+  - {id: deep, action: {type: hve.deep, characterId: joe, deep: {Force: 4, Hunger: 2, Freedom: 2}}}
+  - {id: q1, action: {type: quest.issue, quest: {id: Q-101, category: Personal Opportunity, title: Hunt One, difficulty: Moderate, objective: Kill it., flavor: combat}, to: [joe]}}
+  - {id: r1, action: {type: quest.answer, questId: q1, characterId: joe, accept: false}}
+  - {id: q2, action: {type: quest.issue, quest: {id: Q-102, category: Personal Opportunity, title: Hunt Two, difficulty: Moderate, objective: Kill it., flavor: combat}, to: [joe]}}
+  - {id: r2, action: {type: quest.answer, questId: q2, characterId: joe, accept: false}}
+  - {id: q3, action: {type: quest.issue, quest: {id: Q-103, category: Personal Opportunity, title: Hunt Three, difficulty: Moderate, objective: Kill it., flavor: combat}, to: [joe]}}
+  - {id: r3, action: {type: quest.answer, questId: q3, characterId: joe, accept: false}}
+  - {id: q4, action: {type: quest.issue, quest: {id: Q-104, category: Personal Opportunity, title: Hunt Four, difficulty: Moderate, objective: Kill it., flavor: combat}, to: [joe]}}
+  - {id: r4, action: {type: quest.answer, questId: q4, characterId: joe, accept: false}}
+  - {id: q5, action: {type: quest.issue, quest: {id: Q-105, category: Personal Opportunity, title: Hunt Five, difficulty: Moderate, objective: Kill it., flavor: combat}, to: [joe]}}
+  - {id: r5, action: {type: quest.answer, questId: q5, characterId: joe, accept: false}}
+  - {id: q6, action: {type: quest.issue, quest: {id: Q-106, category: Personal Opportunity, title: Hunt Six, difficulty: Moderate, objective: Kill it., flavor: combat}, to: [joe]}}
+  - {id: r6, action: {type: quest.answer, questId: q6, characterId: joe, accept: false}}
+  - {id: roamed, action: {type: event.log, summary: Joe leaves camp alone before dawn to see what is past the ridge., participants: [joe], entries: [{characterId: joe, pole: Freedom, intensity: 1, intent: See it himself}]}}
+  - {id: took, action: {type: event.log, summary: Joe walks into the Snarljaw's path to turn it from the camp., participants: [joe], entries: [{characterId: joe, pole: Force, intensity: 1, intent: Meet it head-on}]}}
+  - id: sweep
+    action:
+      type: hve.sweep
+      label: Session 7
+      sheets: [{characterId: joe, moments: [{pole: Freedom, weight: 1, eventId: roamed}, {pole: Force, weight: 1, eventId: took}]}]
+characterId: joe
+situation: The Wild Fragment's edge, a day's walk from camp. Tracks lead into ground nobody has mapped.
+expected:
+  stance: affirm
+  flavors: [social, exploration]
+  why: Combat is closed after six refusals; Current and Deep agree, so the offer affirms in another flavor.

@@ -1,0 +1,15 @@
+# A character with no sweep yet. The format is in src/offers.ts.
+id: fresh-no-sweep
+title: Andre before any sweep, an offer that affirms by default
+source: 'book/55-quests.md, "Personal Opportunities" ("a GM in doubt affirms")'
+notes: >
+  No sweep has run and Deep is empty: nothing to test against, so the offer affirms, in any
+  flavor that fits what little the situation shows.
+setup:
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre}}
+characterId: andre
+situation: The landing slopes, the first hour after Integration. People are still arriving through the light.
+expected:
+  stance: affirm
+  flavors: [combat, social, exploration]
+  why: Nothing recent to compare, and a GM in doubt affirms.

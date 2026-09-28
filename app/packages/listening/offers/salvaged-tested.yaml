@@ -1,0 +1,23 @@
+# An offer that tests because a title says so. The format is in src/offers.ts.
+id: salvaged-tested
+title: Joe, Salvaged, whose offers arrive as tests
+source: 'book/70-tutorial.md, The Tutorial''s Titles ("Salvaged": Personal Opportunities arrive as tests)'
+notes: >
+  Joe was taken by the Purge at the gate and pulled back, and holds Salvaged. His Current and
+  Deep agree (Force), so only the title makes this a test.
+setup:
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe}}
+  - {id: deep, action: {type: hve.deep, characterId: joe, deep: {Force: 3, Will: 2}}}
+  - {id: salvaged, action: {type: title.grant, characterId: joe, title: {catalog: Salvaged, release: "Last out of a collapsing, closing, or pursued situation, under his own power"}}}
+  - {id: charge, action: {type: event.log, summary: Joe charges the Warden's flank to draw it off the queue., participants: [joe], entries: [{characterId: joe, pole: Force, intensity: 1, intent: Draw it off}]}}
+  - id: sweep
+    action:
+      type: hve.sweep
+      label: Session 6
+      sheets: [{characterId: joe, moments: [{pole: Force, weight: 1, eventId: charge}]}]
+characterId: joe
+situation: Earth, the first day back through the gate. The town is quiet and the power is out.
+expected:
+  stance: test
+  flavors: [combat, social, exploration]
+  why: Salvaged is held; its offers arrive as tests until it is released.

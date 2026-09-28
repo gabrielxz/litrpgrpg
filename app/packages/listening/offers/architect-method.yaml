@@ -1,0 +1,24 @@
+# An offer that affirms a method-first pattern. The format is in src/offers.ts.
+id: architect-method
+title: Andre the watcher, an exploration offer that affirms
+source: 'book/55-quests.md, "Personal Opportunities" (a Method-aligned character: "Unstable formation detected. Stabilize before collapse")'
+notes: >
+  Andre's Deep leads Method, Restraint, and Control; the last sweep was him watching the
+  constructs before engaging and mapping the Node's power runs. The book's Method example
+  is a formation to stabilize, which is exploration.
+setup:
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre}}
+  - {id: deep, action: {type: hve.deep, characterId: andre, deep: {Method: 4, Restraint: 2, Control: 2, Accord: 1}}}
+  - {id: watched, action: {type: event.log, summary: Andre stays on the platform and learns how the constructs pivot before anyone engages., participants: [andre], entries: [{characterId: andre, pole: Method, intensity: 1, intent: Learn how they move first}]}}
+  - {id: runs, action: {type: event.log, summary: Andre traces the Node's power runs and marks which panels are live., participants: [andre], entries: [{characterId: andre, pole: Method, intensity: 2, intent: Map it before touching it}]}}
+  - id: sweep
+    action:
+      type: hve.sweep
+      label: Session 4
+      sheets: [{characterId: andre, moments: [{pole: Method, weight: 1, eventId: watched}, {pole: Method, weight: 2, eventId: runs}]}]
+characterId: andre
+situation: Camp near Sector D. The Sentinel's records hall is sealed, and its door panel flickers.
+expected:
+  stance: affirm
+  flavors: [exploration]
+  why: Current and Deep lean the same way; method and mapping read as exploration.

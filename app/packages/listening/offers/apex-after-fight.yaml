@@ -1,0 +1,24 @@
+# An offer that affirms a settled pattern. The format is in src/offers.ts.
+id: apex-after-fight
+title: Joe after the den, hunting and taking, a combat offer that affirms
+source: 'book/55-quests.md, "Personal Opportunities" and the generation template''s sample (a Force/Hunger character after a fight)'
+notes: >
+  Joe's Deep leads Force and Hunger, and the last sweep leaned the same way: he finished the
+  young Snarljaw and took the Heart before anyone asked. The book's own sample is this offer:
+  a wounded predator to finish, affirmed.
+setup:
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe}}
+  - {id: deep, action: {type: hve.deep, characterId: joe, deep: {Force: 4, Hunger: 3, Will: 2, Freedom: 1}}}
+  - {id: kill, action: {type: event.log, summary: Joe runs down the young Snarljaw and finishes it., participants: [joe], entries: [{characterId: joe, pole: Force, intensity: 2, intent: Finish it before it reaches the den}]}}
+  - {id: heart, action: {type: event.log, summary: Joe cuts out the Heart and keeps it before anyone speaks., participants: [joe], entries: [{characterId: joe, pole: Hunger, intensity: 1, intent: Have the Heart}]}}
+  - id: sweep
+    action:
+      type: hve.sweep
+      label: Session 4
+      sheets: [{characterId: joe, moments: [{pole: Force, weight: 2, eventId: kill}, {pole: Hunger, weight: 1, eventId: heart}]}]
+characterId: joe
+situation: The Wild Fragment, the morning after the den. A Glow-Stalker took a wound in the fight and fled north toward the ridge.
+expected:
+  stance: affirm
+  flavors: [combat]
+  why: Current and Deep lean the same way; the pattern is the hunt, so the offer is combat.

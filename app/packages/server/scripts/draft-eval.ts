@@ -2,12 +2,12 @@
  * Runs the scripted sessions through a drafter and reports precision and recall (app/DESIGN.md,
  * "Testing the listening", text evaluation). Each run spends real tokens.
  *
- *   pnpm draft-eval [--drafter events|actions|suggestions] [--runs 3] [--script id] [--effort medium] [--campaign name]
+ *   pnpm draft-eval [--drafter events|actions|suggestions|offers] [--runs 3] [--script id] [--effort medium] [--campaign name]
  *
  * The key comes from one of two places:
  *   ANTHROPIC_API_KEY (app/.env)   used directly, with the model from --model; tokens are tallied here
  *   --campaign name                a campaign's sealed key, through `CampaignAi.draft` under the
- *                                  drafter's feature ("draft-events", "draft-actions", "draft-suggestions"), so the requests
+ *                                  drafter's feature ("draft-events", "draft-actions", "draft-suggestions", "draft-opportunity"), so the requests
  *                                  show in its AI card. The database is DATABASE_URL (the development one
  *                                  by default), and AI_KEY_SECRET must be the secret that database's keys
  *                                  were sealed with.
@@ -23,14 +23,18 @@ import { loadRules } from "@gradebreaker/engine/node";
 import {
   DRAFT_ACTIONS_FEATURE,
   DRAFT_EVENTS_FEATURE,
+  DRAFT_OPPORTUNITY_FEATURE,
   DRAFT_SUGGESTIONS_FEATURE,
   type Drafter,
   type Effort,
   evaluateActions,
   evaluateEvents,
+  evaluateOffer,
   evaluateSuggestions,
   formatActionSummary,
+  formatOffer,
   formatSummary,
+  loadOffers,
   loadScripts,
 } from "@gradebreaker/listening";
 import { CampaignAi, DEFAULT_MODEL, type Usage, anthropicModel } from "../src/ai.ts";
@@ -46,9 +50,9 @@ const { values } = parseArgs({
     drafter: { type: "string", default: "events" },
   },
 });
-const FEATURES: Record<string, string> = { events: DRAFT_EVENTS_FEATURE, actions: DRAFT_ACTIONS_FEATURE, suggestions: DRAFT_SUGGESTIONS_FEATURE };
+const FEATURES: Record<string, string> = { events: DRAFT_EVENTS_FEATURE, actions: DRAFT_ACTIONS_FEATURE, suggestions: DRAFT_SUGGESTIONS_FEATURE, offers: DRAFT_OPPORTUNITY_FEATURE };
 const FEATURE = FEATURES[values.drafter!];
-if (!FEATURE) throw new Error("--drafter is events, actions, or suggestions");
+if (!FEATURE) throw new Error("--drafter is events, actions, suggestions, or offers");
 const DEV_DATABASE = "postgres://gradebreaker:gradebreaker@localhost:54340/gradebreaker";
 
 /** The drafter and where its spending is read back from. */
@@ -103,12 +107,19 @@ async function drafterFor(): Promise<{ drafter: Drafter; model: string; spent: (
 const source = await drafterFor();
 try {
   const engine = new Engine(loadRules());
-  const scripts = loadScripts().filter((s) => !values.script || s.id === values.script);
-  if (!scripts.length) throw new Error(`no script ${values.script}`);
+  const offers = values.drafter === "offers";
+  const scripts = offers ? [] : loadScripts().filter((s) => !values.script || s.id === values.script);
+  const fixtures = offers ? loadOffers().filter((o) => !values.script || o.id === values.script) : [];
+  if (!scripts.length && !fixtures.length) throw new Error(`no script ${values.script}`);
   const started = new Date().toISOString();
-  console.log(`${values.drafter}: ${scripts.length} scripts × ${values.runs} runs on ${source.model}, effort ${values.effort}\n`);
+  console.log(`${values.drafter}: ${scripts.length || fixtures.length} ${offers ? "fixtures" : "scripts"} × ${values.runs} runs on ${source.model}, effort ${values.effort}\n`);
 
   const evaluations = [];
+  for (const fixture of fixtures) {
+    const e = await evaluateOffer(engine, fixture, source.drafter, Number(values.runs), { effort: values.effort as Effort });
+    console.log(`${formatOffer(e)}\n`);
+    evaluations.push(e);
+  }
   for (const script of scripts) {
     const opts = { effort: values.effort as Effort };
     const e =

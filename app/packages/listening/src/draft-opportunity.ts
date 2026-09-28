@@ -10,7 +10,7 @@
  * GM fills the same template by hand in the same form.
  */
 import type { Engine } from "@gradebreaker/engine";
-import { type Action, type CampaignRecord, type Draft, type QuestSpec, type Sheet, nextQuestCode } from "@gradebreaker/record";
+import { type Action, type CampaignRecord, type Draft, type QuestSpec, type Sheet, leadsOf, nextQuestCode } from "@gradebreaker/record";
 import { z } from "zod";
 import { type Drafter, type Effort, section } from "./draft-events.ts";
 
@@ -42,6 +42,25 @@ export function flavorsFor(engine: Engine, sheet: Sheet): { open: Flavor[]; halv
   const r = engine.rules.quests.refusal.repeated_personal_opportunity as { half_frequency_after: number; stops_after: number };
   const n = (f: Flavor) => sheet.refusals[f] ?? 0;
   return { open: FLAVORS.filter((f) => n(f) < r.stops_after), halved: FLAVORS.filter((f) => n(f) >= r.half_frequency_after && n(f) < r.stops_after) };
+}
+
+/**
+ * What the book's rule reads for affirm or test (Quests, "Personal Opportunities"): the axes where
+ * the last sweep's Current leans one way and Deep the other, and whether the character holds a
+ * title whose effect says offers arrive as tests (Salvaged).
+ */
+export function stanceSignals(engine: Engine, sheet: Sheet): { diverging: { axis: string; current: string; deep: string }[]; testedBy: string[] } {
+  const last = sheet.hve.sweeps.at(-1);
+  const deep = new Map(sheet.hve.leads.map((l) => [l.axis, l.pole]));
+  const diverging = last
+    ? leadsOf(engine, last.current).flatMap((c) => {
+        const d = deep.get(c.axis);
+        return c.pole && d && d !== c.pole ? [{ axis: c.axis, current: c.pole, deep: d }] : [];
+      })
+    : [];
+  const tests = new Set((engine.rules.titles.tutorial_titles as { title: string; effect: string }[]).filter((t) => /arrive as tests/i.test(t.effect)).map((t) => t.title));
+  const testedBy = sheet.titles.filter((t) => t.status === "active" && tests.has(t.catalog ?? t.name)).map((t) => t.name);
+  return { diverging, testedBy };
 }
 
 // ----------------------------------------------------------- schema ---
@@ -125,6 +144,15 @@ export function draftOpportunityPrompt(engine: Engine, record: CampaignRecord, c
   const circled = c.hve.sweeps.flatMap((s) => s.moments.filter((m) => m.weight >= 3 && m.note).map((m) => `- "${m.note}"`));
   const titles = c.titles.filter((t) => t.status === "active").map((t) => `- ${t.name} (${t.category}${t.negative ? ", negative" : ""})`);
   const { open, halved } = flavorsFor(engine, c);
+  const { diverging, testedBy } = stanceSignals(engine, c);
+  const stance = [
+    ...(last
+      ? diverging.length
+        ? diverging.map((d) => `- Current and Deep lean different ways on ${d.axis}: Current ${d.current}, Deep ${d.deep}.`)
+        : ["- Current and Deep lean the same way on every axis Current touches."]
+      : ["- No sweep yet: nothing recent to compare."]),
+    ...testedBy.map((t) => `- Holds ${t}: offers arrive as tests until it is released.`),
+  ];
   const refusals = FLAVORS.map((f) => `- ${f}: ${c.refusals[f] ?? 0} refused${open.includes(f) ? (halved.includes(f) ? ", offered half as often" : "") : ", no longer offered"}`);
   const party = [...state.parties.values()].find((p) => p.members.includes(characterId));
   const sessions = [...state.sessions.values()].filter((s) => s.summary);
@@ -139,6 +167,7 @@ export function draftOpportunityPrompt(engine: Engine, record: CampaignRecord, c
     section(`Current at the last sweep${last?.label ? ` (${last.label})` : ""}, before it was erased`, current),
     section("The last sweep's biggest moments", biggest),
     section("Defining moments (the circled margin notes)", circled),
+    section("Affirm or test", stance),
     section("Active titles", titles),
     section("Personal Opportunities refused, by flavor", refusals),
     section("Party", party ? [`- ${party.members.map(nameOf).join(", ")}`] : []),
@@ -166,7 +195,8 @@ export function opportunityOf(record: CampaignRecord, characterId: string, out: 
   if (out.count) quest.count = out.count;
   if (out.count && out.countFixed) quest.countFixed = true;
   if (out.scaled) quest.scaled = true;
-  if (out.rewardHint?.trim()) quest.rewardText = out.rewardHint.trim();
+  const hint = out.rewardHint?.trim().replace(/\.$/, "");
+  if (hint) quest.rewardText = hint;
   // A limit in hours runs on the in-game clock; without one, the limit is said in words.
   if (out.hours && record.state.clock) quest.hours = out.hours;
   else if (out.hours) quest.time = `within ${out.hours} hours`;

@@ -1,0 +1,22 @@
+# An offer that affirms a settled pattern of talking things down. The format is in src/offers.ts.
+id: diplomat-accord
+title: Kara the go-between, a social offer that affirms
+source: 'book/55-quests.md, "Personal Opportunities"'
+notes: >
+  Kara's Deep leads Accord and Restraint; the last sweep was her talking the Kith down at the
+  fire and sharing food with them. The pattern is people, so the offer is social.
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara}}
+  - {id: deep, action: {type: hve.deep, characterId: kara, deep: {Accord: 4, Restraint: 2, Method: 1}}}
+  - {id: talked, action: {type: event.log, summary: Kara talks the Kith down at the fire with her hands open and food set between them., participants: [kara], entries: [{characterId: kara, pole: Accord, intensity: 2, intent: Nobody draws}]}}
+  - id: sweep
+    action:
+      type: hve.sweep
+      label: Session 5
+      sheets: [{characterId: kara, moments: [{pole: Accord, weight: 2, eventId: talked}]}]
+characterId: kara
+situation: The camp between sectors. The four Kith are camped thirty meters off, and two of them are arguing over a shard.
+expected:
+  stance: affirm
+  flavors: [social]
+  why: Current and Deep lean the same way; the pattern is people.
