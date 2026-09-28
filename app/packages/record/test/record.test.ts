@@ -5,7 +5,7 @@
 import { Engine } from "@gradebreaker/engine";
 import { loadRules } from "@gradebreaker/engine/node";
 import { beforeEach, describe, expect, it } from "vitest";
-import { type Action, type ClassPackage, CampaignRecord, partyLevelOf, sizeEncounter, bookClasses, packageWarnings, type Draft, RecordError, encounterAwards, hoursForGoal, flankingSuggested, killAwards, questForHolder, rollD100s, rollFor } from "../src/index.ts";
+import { type Action, type ClassPackage, CampaignRecord, partyLevelOf, sizeEncounter, bookClasses, packageWarnings, type Draft, RecordError, encounterAwards, hoursForGoal, flankingSuggested, killAwards, questForHolder, rollD100s, rollFor, treasurePoints } from "../src/index.ts";
 
 const engine = new Engine(loadRules());
 const GM = { role: "gm", userId: "gm-1" } as const;
@@ -2011,5 +2011,64 @@ describe("class techniques", () => {
     const declared = gm({ type: "combat.attack", attackerId: "ana", defenderId: "rat", attack: { attribute: "STR", modifier: 0, technique: true } });
     expect(declared.effects[0]).toEqual({ kind: "technique-used", characterId: "ana", name: "Pay in Blood" });
     expect(rec.sheet("ana")!.hp).toBe(hp - 10);
+  });
+});
+
+describe("Attribute Treasures", () => {
+  const as = (actor: Draft["actor"], action: Action) => rec.append(draft(action, actor));
+  const absorb = (extra: Partial<Extract<Action, { type: "treasure.absorb" }>> = {}) =>
+    gm({ type: "treasure.absorb", characterId: "kara", treasure: "Standard", grade: "F", attribute: "STR", ...extra });
+  beforeEach(() => {
+    gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" });
+  });
+
+  it("raises the chosen Raw Attribute by the treasure's points, out of the pack when carried (the Snarljaw Heart, +5)", () => {
+    gm({ type: "item.give", to: "kara", items: [{ name: "Snarljaw Heart", count: 1 }] });
+    const out = absorb({ item: "snarljaw heart" });
+    expect(out.effects).toEqual([{ kind: "treasure-absorbed", characterId: "kara", name: "Snarljaw Heart", attribute: "STR", points: 5 }]);
+    expect(rec.sheet("kara")!.raw.STR).toBe(13);
+    expect(rec.state.inventory.get("kara")?.find((s) => s.name === "Snarljaw Heart")?.count ?? 0).toBe(0);
+    expect(() => absorb({ item: "Snarljaw Heart" })).toThrow(/Kara holds 0/);
+    // A treasure the pack never held is recorded by its size; FOR raises Max HP with it.
+    absorb({ treasure: "Lesser", attribute: "FOR" });
+    expect(rec.sheet("kara")!.raw.FOR).toBe(9);
+    expect(rec.sheet("kara")!.maxHp).toBe(engine.maxHp(9));
+    expect(rec.sheet("kara")!.storedVe).toBe(0);
+  });
+
+  it("loses what passes the Grade cap, and does nothing in a body of another Grade", () => {
+    gm({ type: "title.grant", characterId: "kara", title: { name: "Test Weight", category: "Achievement", bonus: { STR: 88 } } });
+    expect(rec.sheet("kara")!.raw.STR).toBe(96);
+    expect(absorb().effects[0]).toMatchObject({ points: 3, lost: 2 });
+    expect(rec.sheet("kara")!.raw.STR).toBe(99);
+    expect(absorb().effects[0]).toMatchObject({ points: 0, lost: 5 });
+    const eGrade = absorb({ grade: "E", attribute: "DEX" });
+    expect(eGrade.effects[0]).toMatchObject({ points: 0, noEffect: "grade" });
+    expect(rec.sheet("kara")!.raw.DEX).toBe(5);
+  });
+
+  it("scales ×10 per Grade", () => {
+    expect(engine.scale("E")).toBe(10);
+    expect(treasurePoints(engine, "Greater", "E")).toBe(100);
+    expect(() => absorb({ treasure: "Enormous" })).toThrow(/Lesser, Standard, Greater/);
+  });
+
+  it("takes an hour spent defenseless: never in a running fight, never Downed, and the GM records it", () => {
+    expect(() => as(P1, { type: "treasure.absorb", characterId: "kara", treasure: "Standard", grade: "F", attribute: "STR" })).toThrow(/only the GM/);
+    gm({
+      type: "combat.start",
+      encounterId: "e1",
+      name: "Den",
+      sides: [
+        { id: "party", name: "The party" },
+        { id: "hostiles", name: "Hostiles" },
+      ],
+      zones: [{ id: "den", name: "Den" }],
+      combatants: [{ combatantId: "kara", sideId: "party", characterId: "kara" }, { combatantId: "sj", sideId: "hostiles", name: "Snarljaw", grade: "F", maxHp: 20, momentumForce: 8, beats: 2 }] as never,
+    });
+    expect(() => absorb()).toThrow(/running fight/);
+    gm({ type: "combat.end" });
+    gm({ type: "hp.change", characterId: "kara", delta: -14 });
+    expect(() => absorb()).toThrow(/Downed/);
   });
 });

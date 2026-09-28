@@ -32,6 +32,7 @@ import { type Stack, applyItems, authorizeItemsPlayer } from "./inventory.ts";
 import { addMark, checkShape, proficiencyOf } from "./proficiency.ts";
 import { type Title, applyTitles, count, titleStats } from "./titles.ts";
 import { authorizePillPlayer, takePillOutside } from "./pills.ts";
+import { type AbsorbedTreasure, absorbTreasure, treasureStats } from "./treasures.ts";
 import { type HveState, applyHve, cloneHve } from "./hve.ts";
 import { type CampaignEvent, applyEvents, cloneEvent } from "./events.ts";
 import { type CampaignSession, applySessions, cloneSession } from "./sessions.ts";
@@ -85,6 +86,8 @@ export interface CharacterState {
   principles?: PrincipleState;
   /** Class offers standing, or the class held. */
   classes?: ClassState;
+  /** Attribute Treasures absorbed, with the Raw points each landed. */
+  treasures?: AbsorbedTreasure[];
 }
 
 /** A formal party: its members' character ids in the order they joined. */
@@ -228,6 +231,19 @@ export type Effect =
       rolls: MomentumRollRecord[];
     }
   | {
+      kind: "treasure-absorbed";
+      characterId: string;
+      /** The stack it came from, or the treasure's size when the pack did not hold it. */
+      name: string;
+      attribute: string;
+      /** Raw points that landed. */
+      points: number;
+      /** Points past the Grade cap, lost. */
+      lost?: number;
+      /** A treasure of another Grade does nothing. */
+      noEffect?: "grade";
+    }
+  | {
       kind: "pill";
       /** Absent for a pill taken outside a fight. */
       encounterId?: string;
@@ -299,7 +315,7 @@ const sum = (s: Stats) => Object.values(s).reduce((a, b) => a + b, 0);
 
 // ------------------------------------------------------ derived values ---
 
-/** Raw Attributes as they stand: point buy, placed points, titles' flat bonuses, and any temporary collapse loss. */
+/** Raw Attributes as they stand: point buy, placed points, titles' flat bonuses, treasures, and any temporary collapse loss. */
 export function rawStats(c: CharacterState): Stats {
   const out = permanentStats(c);
   for (const t of c.temporary) out[t.attribute]! -= 1;
@@ -310,7 +326,8 @@ export function rawStats(c: CharacterState): Stats {
 export function permanentStats(c: CharacterState): Stats {
   const out: Stats = {};
   const titles = titleStats(c);
-  for (const a of ATTRIBUTES) out[a] = (c.base[a] ?? 0) + (c.placed[a] ?? 0) + (titles[a] ?? 0);
+  const treasures = treasureStats(c);
+  for (const a of ATTRIBUTES) out[a] = (c.base[a] ?? 0) + (c.placed[a] ?? 0) + (titles[a] ?? 0) + (treasures[a] ?? 0);
   const held = c.classes?.held;
   if (held?.bonus) out[held.profile.points[0]!.attribute]! += held.bonus;
   return out;
@@ -568,6 +585,8 @@ function apply(engine: Engine, world: World, env: Envelope): Effect[] {
       return applyQuests(engine, world, a, env.id);
     case "pill.take":
       return takePillOutside(engine, world, a);
+    case "treasure.absorb":
+      return absorbTreasure(engine, world, a, env.id);
     case "hve.sweep":
     case "hve.deep":
       return applyHve(engine, world, a, env.id);

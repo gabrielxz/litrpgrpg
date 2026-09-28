@@ -233,6 +233,8 @@ export function describe(
       return `${questName(a.questId, name)} expires`;
     case "pill.take":
       return a.characterId === a.targetId ? `${name(a.characterId)} takes a ${a.pill}` : `${name(a.characterId)} gives ${name(a.targetId)} a ${a.pill}`;
+    case "treasure.absorb":
+      return `${name(a.characterId)} absorbs ${a.item ?? `a ${a.treasure} Attribute Treasure`} (${a.treasure}, ${a.grade}-Grade) into ${ATTRIBUTE_NAMES[a.attribute] ?? a.attribute}`;
     case "hve.sweep": {
       const tallies = a.sheets.reduce((n, s) => n + s.moments.reduce((m, x) => m + x.weight + (x.secondary ? x.weight - 1 : 0), 0), 0);
       return `HVE sweep${a.label ? ` (${a.label})` : ""}: ${a.sheets.map((s) => name(s.characterId)).join(", ")}, ${tallies} ${tallies === 1 ? "tally" : "tallies"}`;
@@ -445,6 +447,10 @@ export function effectLine(e: Effect, name: Names): string | null {
       return `${e.label}: ${e.rolls.length ? `${e.total} against ${e.resistance}` : "the Force alone meets it"}, ${e.success ? "success" : "failure"}${
         e.aura ? ` (${e.aura === "steeled" ? "steeled for the encounter" : "Suppressed: 1 Beat"})` : ""
       }`;
+    case "treasure-absorbed":
+      return `${name(e.characterId)}: ${e.name}${
+        e.noEffect ? ", no effect (another Grade)" : `, ${ATTRIBUTE_NAMES[e.attribute] ?? e.attribute} +${e.points}${e.lost ? `; lost past the cap: ${e.lost}` : ""}`
+      }`;
     case "pill":
       return `${name(e.targetId)}: ${e.pill}${
         e.noEffect === "grade" ? ", no effect (another Grade)" : e.noEffect === "limit" ? ", no effect (past the limit since the last Consolidation)" : `, ${e.restored} ${e.pillKind === "healing" ? "HP" : "Aether"}`
@@ -515,6 +521,12 @@ export function noticeLine(e: Effect): string | null {
       return `Consciousness restored. Health: ${e.hp}.`;
     case "party-member-died":
       return `Party member deceased: ${e.memberName}.`;
+    case "treasure-absorbed": {
+      if (e.noEffect) return null;
+      const attr = ATTRIBUTE_NAMES[e.attribute] ?? e.attribute;
+      const gain = e.points ? `${attr} +${e.points}.` : `${attr} at the Grade cap.`;
+      return `Attribute Treasure absorbed. ${gain}${e.lost ? ` Excess lost: ${e.lost}.` : ""}`;
+    }
     case "pill":
       return e.pillKind === "healing" ? `Health restored: ${e.restored}.` : `Aether restored: ${e.restored}.`;
     case "kill-confirmed":

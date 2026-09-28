@@ -126,7 +126,9 @@ Edits an app session forces, each with Gabriel's ruling or Claude's recommendati
 
 **State (2026-09-28, eighth close).** Rules 0.1.29, `make app-check` green (engine 223, record 117, server 58, listening 106, web 5), pushed and deployed (run 36468859112; `004_drafts.sql` migrated at start). Drafting reaches the table: the Events section has a card where the GM pastes table talk (`Name: words` per line), sees how each name was read, drafts through the campaign's model, and reviews each draft in the manual form's editor with its cited lines and the drafter's reason, then accepts (as drafted or edited) or dismisses it. Accepting records the GM's `event.log` with the source `suggestion`; the log marks it "accepted from a draft". Drafts sit in their own tables (`migrations/004_drafts.sql`) apart from the log; the server now depends on `@gradebreaker/listening`, and the Dockerfile copies it. Checked in the browser with a GM tab and a player tab against Claude Opus 5.5: one right draft from a nine-line scene with a side conversation and an NPC, and accept, edit, undo, dismiss, and restore, with nothing reaching the player. Claude's calls are under Decisions ("drafting from typed talk"), open to Gabriel's cut.
 
-**Next.** The paste card is M2's bridge (Gabriel, 2026-09-28): its lasting part is the review, which listening feeds at M3. The Attribute Treasure action (an M1 gap); the drafter's next categories (counter ticks, item moves, quest completions, Prep cues), scored the same way and shown on the same card. The audit follow-up still stands: the in-world words test over every notice kind.
+The Attribute Treasure action followed (record 121, web 6): the Items tab records a treasure absorbed, Claude's calls under Decisions ("Attribute Treasures").
+
+**Next.** The paste card is M2's bridge (Gabriel, 2026-09-28): its lasting part is the review, which listening feeds at M3. Then the drafter's next categories (counter ticks, item moves, quest completions, Prep cues), scored the same way and shown on the same card. The audit follow-up still stands: the in-world words test over every notice kind.
 
 ### Queued for the app
 

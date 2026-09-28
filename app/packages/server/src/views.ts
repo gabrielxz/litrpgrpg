@@ -299,6 +299,7 @@ const ANNOUNCED: ReadonlySet<Effect["kind"]> = new Set([
   "stabilized",
   "revived",
   "pill",
+  "treasure-absorbed",
   "kill-confirmed",
   "mark",
   "item-received",
@@ -337,7 +338,9 @@ export function noticesFor(effects: Effect[], ownCharacterIds: ReadonlySet<strin
       e.characterId !== undefined &&
       ownCharacterIds.has(e.characterId) &&
       // A pill that did nothing brings no notice.
-      !(e.kind === "pill" && (e.restored === 0 || woken.has(e.characterId!))),
+      !(e.kind === "pill" && (e.restored === 0 || woken.has(e.characterId!))) &&
+      // Nor does a treasure of another Grade.
+      !(e.kind === "treasure-absorbed" && e.noEffect),
   );
 }
 

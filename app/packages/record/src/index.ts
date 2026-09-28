@@ -54,6 +54,7 @@ export {
   questTableVe,
 } from "./quests.ts";
 export { type TakePillOutside, pillLimit } from "./pills.ts";
+export { type AbsorbTreasure, type AbsorbedTreasure, type TreasureSize, treasurePoints, treasureSizes } from "./treasures.ts";
 export {
   type BattleMemory,
   type DistillOffer,

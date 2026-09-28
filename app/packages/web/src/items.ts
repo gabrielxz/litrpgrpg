@@ -13,6 +13,7 @@ export function catalogNames(engine: Engine | null): string[] {
     ...names(items.healing_pills),
     ...names(items.aether_pills),
     ...names(items.foundation_pills),
+    ...(items.attribute_treasures ?? []).map((t: { name: string }) => `${t.name} Attribute Treasure`),
     ...names(items.skill_shards?.types),
     ...names(items.field_gear),
     ...names(items.weapons),

@@ -39,6 +39,10 @@ const every: Effect[] = [
   { kind: "principle-refined", characterId: "k", from: "Fire", name: "Consuming Flame" },
   { kind: "classification", characterId: "k", text: "Level 10. Classification available. Three offers follow. One will be accepted; the others close.", offers: [] },
   { kind: "class-accepted", characterId: "k", name: "Battle Medic", lead: "POW", bonus: 10 },
+  { kind: "treasure-absorbed", characterId: "k", name: "Snarljaw Heart", attribute: "STR", points: 5 },
+  { kind: "treasure-absorbed", characterId: "k", name: "Snarljaw Heart", attribute: "STR", points: 3, lost: 2 },
+  { kind: "treasure-absorbed", characterId: "k", name: "Snarljaw Heart", attribute: "STR", points: 0, lost: 5 },
+  { kind: "treasure-absorbed", characterId: "k", name: "Snarljaw Heart", attribute: "STR", points: 0, noEffect: "grade" },
 ];
 
 describe("the System's notices", () => {
@@ -63,6 +67,13 @@ describe("the System's notices", () => {
   it("warn the composer about the table's words and pass in-world text", () => {
     expect(tableWordsIn("Roll for it next round, then check the DC.")).toEqual(["roll", "round", "check", "dc"]);
     expect(tableWordsIn("Volatile Energy absorbed: 40. Level 3 attained.")).toEqual([]);
+  });
+
+  it("announce a treasure's gain and what the cap took, and stay silent when it did nothing", () => {
+    expect(noticeLine({ kind: "treasure-absorbed", characterId: "k", name: "Snarljaw Heart", attribute: "STR", points: 3, lost: 2 })).toBe(
+      "Attribute Treasure absorbed. Strength +3. Excess lost: 2.",
+    );
+    expect(noticeLine({ kind: "treasure-absorbed", characterId: "k", name: "Snarljaw Heart", attribute: "STR", points: 0, noEffect: "grade" })).toBeNull();
   });
 
   it("name Attributes in full", () => {

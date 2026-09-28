@@ -14,6 +14,7 @@ import type { MarkByHand } from "./proficiency.ts";
 import type { TitleAction } from "./titles.ts";
 import type { QuestAction } from "./quests.ts";
 import type { TakePillOutside } from "./pills.ts";
+import type { AbsorbTreasure } from "./treasures.ts";
 import type { HveAction } from "./hve.ts";
 import type { EventAction } from "./events.ts";
 import type { SessionAction } from "./sessions.ts";
@@ -299,6 +300,7 @@ export type Action =
   | TitleAction
   | QuestAction
   | TakePillOutside
+  | AbsorbTreasure
   | HveAction
   | EventAction
   | SessionAction
