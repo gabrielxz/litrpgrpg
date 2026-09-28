@@ -1,15 +1,16 @@
 /**
- * Runs the scripted sessions through the events drafter and reports precision and recall
- * (app/DESIGN.md, "Testing the listening", text evaluation). Each run spends real tokens.
+ * Runs the scripted sessions through a drafter and reports precision and recall (app/DESIGN.md,
+ * "Testing the listening", text evaluation). Each run spends real tokens.
  *
- *   pnpm draft-eval [--runs 3] [--script id] [--effort medium] [--campaign name]
+ *   pnpm draft-eval [--drafter events|actions] [--runs 3] [--script id] [--effort medium] [--campaign name]
  *
  * The key comes from one of two places:
  *   ANTHROPIC_API_KEY (app/.env)   used directly, with the model from --model; tokens are tallied here
- *   --campaign name                a campaign's sealed key, through `CampaignAi.draft` under the feature
- *                                  "draft-events", so the requests show in its AI card. The database is
- *                                  DATABASE_URL (the development one by default), and AI_KEY_SECRET must
- *                                  be the secret that database's keys were sealed with.
+ *   --campaign name                a campaign's sealed key, through `CampaignAi.draft` under the
+ *                                  drafter's feature ("draft-events", "draft-actions"), so the requests
+ *                                  show in its AI card. The database is DATABASE_URL (the development one
+ *                                  by default), and AI_KEY_SECRET must be the secret that database's keys
+ *                                  were sealed with.
  *
  * Writes the full runs (every draft, the scorer's report, the tokens) to build/listening/.
  */
@@ -19,7 +20,7 @@ import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import { Engine } from "@gradebreaker/engine";
 import { loadRules } from "@gradebreaker/engine/node";
-import { DRAFT_EVENTS_FEATURE, type Drafter, type Effort, evaluateEvents, formatSummary, loadScripts } from "@gradebreaker/listening";
+import { DRAFT_ACTIONS_FEATURE, DRAFT_EVENTS_FEATURE, type Drafter, type Effort, evaluateActions, evaluateEvents, formatActionSummary, formatSummary, loadScripts } from "@gradebreaker/listening";
 import { CampaignAi, DEFAULT_MODEL, type Usage, anthropicModel } from "../src/ai.ts";
 import { postgresDb } from "../src/db.ts";
 
@@ -30,8 +31,11 @@ const { values } = parseArgs({
     runs: { type: "string", default: "3" },
     script: { type: "string" },
     effort: { type: "string", default: "medium" },
+    drafter: { type: "string", default: "events" },
   },
 });
+if (values.drafter !== "events" && values.drafter !== "actions") throw new Error("--drafter is events or actions");
+const FEATURE = values.drafter === "actions" ? DRAFT_ACTIONS_FEATURE : DRAFT_EVENTS_FEATURE;
 const DEV_DATABASE = "postgres://gradebreaker:gradebreaker@localhost:54340/gradebreaker";
 
 /** The drafter and where its spending is read back from. */
@@ -70,14 +74,14 @@ async function drafterFor(): Promise<{ drafter: Drafter; model: string; spent: (
   if (!status.configured) throw new Error(`${values.campaign} has no key`);
   return {
     model: status.model!,
-    drafter: (req) => ai.draft(campaignId, DRAFT_EVENTS_FEATURE, req),
+    drafter: (req) => ai.draft(campaignId, FEATURE, req),
     spent: (since) =>
       db.query(
         `select model, count(*)::int as requests, count(problem)::int as failed,
            sum(input_tokens)::int as input, sum(output_tokens)::int as output,
            sum(cache_read_tokens)::int as cache_read, sum(cache_write_tokens)::int as cache_write
          from ai_usage where campaign_id = $1 and feature = $2 and at >= $3 group by model`,
-        [campaignId, DRAFT_EVENTS_FEATURE, since],
+        [campaignId, FEATURE, since],
       ),
     close: () => db.close(),
   };
@@ -89,12 +93,16 @@ try {
   const scripts = loadScripts().filter((s) => !values.script || s.id === values.script);
   if (!scripts.length) throw new Error(`no script ${values.script}`);
   const started = new Date().toISOString();
-  console.log(`${scripts.length} scripts × ${values.runs} runs on ${source.model}, effort ${values.effort}\n`);
+  console.log(`${values.drafter}: ${scripts.length} scripts × ${values.runs} runs on ${source.model}, effort ${values.effort}\n`);
 
   const evaluations = [];
   for (const script of scripts) {
-    const e = await evaluateEvents(engine, script, source.drafter, Number(values.runs), { effort: values.effort as Effort });
-    console.log(formatSummary(e.summary));
+    const opts = { effort: values.effort as Effort };
+    const e =
+      values.drafter === "actions"
+        ? await evaluateActions(engine, script, source.drafter, Number(values.runs), opts)
+        : await evaluateEvents(engine, script, source.drafter, Number(values.runs), opts);
+    console.log("byCategory" in e.summary ? formatActionSummary(e.summary) : formatSummary(e.summary));
     for (const r of e.runs) if (r.error) console.log(`  run ${r.run} failed: ${r.error}`);
     console.log();
     evaluations.push(e);
@@ -106,8 +114,8 @@ try {
 
   const out = resolve(dirname(fileURLToPath(import.meta.url)), "../../../../build/listening");
   mkdirSync(out, { recursive: true });
-  const file = join(out, `draft-events-${started.replace(/[:.]/g, "-")}.json`);
-  writeFileSync(file, JSON.stringify({ started, model: source.model, effort: values.effort, usage, evaluations }, null, 2));
+  const file = join(out, `${FEATURE}-${started.replace(/[:.]/g, "-")}.json`);
+  writeFileSync(file, JSON.stringify({ started, drafter: values.drafter, model: source.model, effort: values.effort, usage, evaluations }, null, 2));
   console.log(`\nthe runs: ${file}`);
 } finally {
   await source.close();

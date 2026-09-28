@@ -19,6 +19,9 @@ speakers:
   - {id: tom, role: player, name: Tom, characters: [joe]}
   - {id: lena, role: player, name: Lena, characters: [andre]}
 
+# The tutorial pack is loaded in Prep, as a GM running the tutorial has it; its cues are suggestions.
+prep: [tutorial]
+
 # The record before the first line, appended in order as the GM.
 setup:
   - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara, playerId: priya}}
@@ -177,9 +180,9 @@ expected:
           - {characterId: andre, pole: Freedom, intensity: 0.5}
 
   suggestions:
-    - {id: s-formation, lines: [l02, l03], kind: prep-cue, key: party-formation}
-    - {id: s-shard-line, lines: [l22, l23], kind: prep-cue, key: resonance-shard}
-    - {id: s-status, lines: [l28, l29, l31, l32], kind: prep-cue, key: first-status}
+    - {id: s-formation, lines: [l02, l03], kind: prep-cue, key: tutorial-party-formation}
+    - {id: s-shard-line, lines: [l22, l23], kind: prep-cue, key: tutorial-resonance-shard}
+    - {id: s-status, lines: [l28, l29, l31, l32], kind: prep-cue, key: tutorial-first-status}
 
   quiet:
     - {lines: [l04, l05], why: rules-question}

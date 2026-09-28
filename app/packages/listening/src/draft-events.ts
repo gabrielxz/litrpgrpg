@@ -18,7 +18,7 @@ import type { Engine } from "@gradebreaker/engine";
 import { type Action, CampaignRecord, type Effect, type LogEvent } from "@gradebreaker/record";
 import { z } from "zod";
 import type { Script } from "./script.ts";
-import { replay } from "./script.ts";
+import { replay, setupOf } from "./script.ts";
 
 export const DRAFT_EVENTS_FEATURE = "draft-events";
 
@@ -171,29 +171,20 @@ Use the character ids from the roster and the line ids from the transcript. Cite
 
 const json = (x: unknown) => JSON.stringify(x);
 
-/** The request's material: the roster and record before the scene, then the transcript. */
-export function draftEventsPrompt(scene: Scene): string {
-  const { record } = scene;
-  const state = record.state;
+/** The roster: each character with their player, Grade, level, Health, and Background. */
+export function rosterOf(scene: Scene): string[] {
   const speakers = new Map(scene.speakers.map((s) => [s.id, s]));
-  const sheets = [...record.sheets().values()];
-  const nameOf = new Map(sheets.map((s) => [s.id, s.name]));
-
-  const roster = sheets.map((s) => {
+  return [...scene.record.sheets().values()].map((s) => {
     const player = s.playerId ? (speakers.get(s.playerId)?.name ?? s.playerId) : "the GM";
     const status = s.dead ? ", dead" : s.downed ? ", Downed" : "";
     return `- ${s.id}: ${s.name}, played by ${player}. ${s.grade}-Grade, Level ${s.level}. Health ${s.hp} of ${s.maxHp}${status}. Background: ${s.background.replace(/\.$/, "")}.`;
   });
+}
 
-  const parties = [...state.parties.values()].map((p) => `- ${p.members.map((m) => nameOf.get(m) ?? m).join(", ")}`);
-  const items = [...state.inventory]
-    .filter(([, stacks]) => stacks.length)
-    .map(([holder, stacks]) => `- ${holder === "spoils" ? "unclaimed (spoils)" : holder}: ${stacks.map((x) => `${x.name} ×${x.count}`).join(", ")}`);
-  const quests = [...state.quests.values()]
-    .filter((q) => q.status === "active" || q.status === "offered")
-    .map((q) => `- ${q.title} (${q.code}), ${q.status}, held by ${q.holders.join(", ")}: ${q.objective}${q.count ? ` ${q.count.done} of ${q.count.of}.` : ""}`);
-  const events = [...state.events.values()].map((e) => `- ${e.summary} (${e.participants.join(", ")})`);
-
+/** The lines with their ids and speakers, and after each what the app recorded and what it did. */
+export function transcriptOf(scene: Scene): string[] {
+  const speakers = new Map(scene.speakers.map((s) => [s.id, s]));
+  const nameOf = new Map([...scene.record.sheets().values()].map((s) => [s.id, s.name]));
   const who = (l: Scene["lines"][number]) => {
     const s = speakers.get(l.speaker);
     const name = s ? `${s.name}${s.role === "gm" ? " (GM)" : ""}` : l.speaker;
@@ -208,15 +199,30 @@ export function draftEventsPrompt(scene: Scene): string {
       transcript.push(`    app: ${json(r.action)}${effects}`);
     }
   }
+  return transcript;
+}
 
-  const section = (title: string, rows: string[]) => `# ${title}\n\n${rows.length ? rows.join("\n") : "(none)"}`;
+export const section = (title: string, rows: string[]) => `# ${title}\n\n${rows.length ? rows.join("\n") : "(none)"}`;
+
+/** The request's material: the roster and record before the scene, then the transcript. */
+export function draftEventsPrompt(scene: Scene): string {
+  const state = scene.record.state;
+  const nameOf = new Map([...scene.record.sheets().values()].map((s) => [s.id, s.name]));
+  const parties = [...state.parties.values()].map((p) => `- ${p.members.map((m) => nameOf.get(m) ?? m).join(", ")}`);
+  const items = [...state.inventory]
+    .filter(([, stacks]) => stacks.length)
+    .map(([holder, stacks]) => `- ${holder === "spoils" ? "unclaimed (spoils)" : holder}: ${stacks.map((x) => `${x.name} ×${x.count}`).join(", ")}`);
+  const quests = [...state.quests.values()]
+    .filter((q) => q.status === "active" || q.status === "offered")
+    .map((q) => `- ${q.title} (${q.code}), ${q.status}, held by ${q.holders.join(", ")}: ${q.objective}${q.count ? ` ${q.count.done} of ${q.count.of}.` : ""}`);
+  const events = [...state.events.values()].map((e) => `- ${e.summary} (${e.participants.join(", ")})`);
   return [
-    section("Roster", roster),
+    section("Roster", rosterOf(scene)),
     section("Parties", parties),
     section("Items held", items),
     section("Quests", quests),
     section("Events already in the record", events),
-    `# Transcript\n\n${transcript.join("\n")}`,
+    `# Transcript\n\n${transcriptOf(scene).join("\n")}`,
   ].join("\n\n");
 }
 
@@ -224,7 +230,7 @@ export function draftEventsPrompt(scene: Scene): string {
 export function sceneOfScript(engine: Engine, script: Script): Scene {
   const record = new CampaignRecord(engine);
   const gm = script.speakers.find((s) => s.role === "gm")!;
-  for (const s of script.setup) record.append({ id: s.id, at: "2026-01-01T00:00:00Z", actor: { role: "gm", userId: gm.id }, source: "manual", action: s.action as Action });
+  for (const s of setupOf(engine, script)) record.append({ id: s.id, at: "2026-01-01T00:00:00Z", actor: { role: "gm", userId: gm.id }, source: "manual", action: s.action });
   const full = replay(engine, script);
   return {
     record,

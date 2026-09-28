@@ -10,7 +10,7 @@
  */
 import type { Engine } from "@gradebreaker/engine";
 import { readYaml } from "@gradebreaker/engine/node";
-import { type Action, type Actor, CampaignRecord, type HveEntry, actionSchema, rollFor } from "@gradebreaker/record";
+import { type Action, type Actor, CampaignRecord, type HveEntry, actionSchema, rollFor, tutorialPack } from "@gradebreaker/record";
 import { z } from "zod";
 
 /**
@@ -95,6 +95,8 @@ export const scriptSchema = z.object({
       }),
     )
     .min(1),
+  /** Content packs loaded into Prep before the setup, as the GM loads them: `tutorial`. */
+  prep: z.array(z.enum(["tutorial"])).default([]),
   /** The record before the first line, appended in order by the GM. */
   setup: z.array(z.object({ id: z.string(), action: actionSchema })),
   /**
@@ -181,6 +183,12 @@ export function inLineOrder<T extends { lines: string[] }>(script: Script, items
   return [...items].sort((a, b) => first(a) - first(b));
 }
 
+/** The setup as the GM records it: each pack loaded into Prep, then the script's own actions. */
+export function setupOf(engine: Engine, script: Script): { id: string; action: Action }[] {
+  const packs = script.prep.map((pack) => ({ id: `prep-${pack}`, action: { type: "prep.save", pack, items: tutorialPack(engine) } as Action }));
+  return [...packs, ...script.setup.map((s) => ({ id: s.id, action: s.action as Action }))];
+}
+
 /**
  * Replays the script's record: setup, then for each line the expected actions it starts (in the
  * order written) and the actions recorded after it, each under its own id. Throws the record's
@@ -197,7 +205,7 @@ export function replay(engine: Engine, script: Script): CampaignRecord {
   const fail = (id: string, err: unknown): never => {
     throw new Error(`${script.id}: ${id} is refused: ${(err as Error).message}`);
   };
-  for (const s of script.setup) rec.append({ id: s.id, at, actor: actor(), source: "manual", action: s.action as Action });
+  for (const s of setupOf(engine, script)) rec.append({ id: s.id, at, actor: actor(), source: "manual", action: s.action });
   const at_ = order(script);
   const firstLine = (x: ExpectedAction) => x.lines.reduce((a, l) => ((at_.get(l) ?? Infinity) < (at_.get(a) ?? Infinity) ? l : a));
   for (const line of script.lines) {

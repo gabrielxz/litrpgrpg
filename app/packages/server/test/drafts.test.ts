@@ -30,15 +30,18 @@ const signIn = (name: string) =>
     .setExpirationTime("1h")
     .sign(privateKey);
 
-/** What the scripted model answers next: an output, or a problem. */
+/** What the scripted model answers next, for each drafter: an output, or a problem. */
 let outputs: ({ output: unknown } | { problem: Problem })[] = [];
+let bookkeeping: ({ output: unknown } | { problem: Problem })[] = [];
 let prompts: string[] = [];
+const noActions = { items: [], quests: [], counters: [], cues: [] };
 const scripted = (_key: string, model: string): LanguageModel => ({
   model,
   async check() {},
-  async draft<T>(req: { prompt: string; schema: z.ZodType<T> }) {
-    prompts.push(req.prompt);
-    const next = outputs.shift() ?? { output: { events: [] } };
+  async draft<T>(req: { system: string; prompt: string; schema: z.ZodType<T> }) {
+    const actions = req.system.includes("bookkeeping");
+    if (!actions) prompts.push(req.prompt);
+    const next = (actions ? bookkeeping.shift() : outputs.shift()) ?? { output: actions ? noActions : { events: [] } };
     if ("problem" in next) throw new ModelError(next.problem, `scripted ${next.problem}`);
     return { output: req.schema.parse(next.output), usage: { model, inputTokens: 1000, outputTokens: 200, cacheReadTokens: 0, cacheWriteTokens: 0 } };
   },
@@ -93,6 +96,7 @@ async function drafted(campaignId: string, gm: string, output: unknown = { event
 
 beforeEach(async () => {
   outputs = [];
+  bookkeeping = [];
   prompts = [];
   db = await pgliteDb(new PGlite());
   await migrate(db);
@@ -107,7 +111,7 @@ describe("drafting from typed table talk", () => {
     const { gm, campaignId } = await table();
     const before = (await call("GET", `/campaigns/${campaignId}/log`, gm)).json.log.length;
     const run = await drafted(campaignId, gm);
-    expect(run).toMatchObject({ status: "done", feature: "draft-events", repaired: ["draft-1: dropped line ids the scene lacks (L9)"] });
+    expect(run).toMatchObject({ status: "done", feature: "draft-events,draft-actions", repaired: ["draft-1: dropped line ids the scene lacks (L9)"] });
     expect(run.talk.lines.map((l: { as?: string }) => l.as ?? null)).toEqual([null, "kara", null, "joe"]);
     expect(run.talk.readings.map((r: { kind: string }) => r.kind)).toEqual(["gm", "character", "member", "character"]);
     expect(run.items).toEqual([
@@ -118,8 +122,7 @@ describe("drafting from typed table talk", () => {
     expect(prompts[0]).toContain("[L2] Ana as Kara: Mine.");
     expect(prompts[0]).toContain("[L4] Gabriel (GM) as Joe: Fine.");
     expect((await call("GET", `/campaigns/${campaignId}/log`, gm)).json.log.length).toBe(before);
-    const [usage] = await db.query("select feature from ai_usage");
-    expect(usage!.feature).toBe("draft-events");
+    expect((await db.query("select feature from ai_usage order by feature")).map((u) => u.feature)).toEqual(["draft-actions", "draft-events"]);
   });
 
   it("records an accepted draft, edited, as the GM's event with the source suggestion, once", async () => {
@@ -176,6 +179,7 @@ describe("drafting from typed table talk", () => {
   it("records the provider's problem on the run, and refuses with no key, no lines, or a run still drafting", async () => {
     const { gm, campaignId } = await table();
     outputs = [{ problem: "billing" }];
+    bookkeeping = [{ problem: "billing" }];
     const started = (await call("POST", `/campaigns/${campaignId}/drafts`, gm, { text: TALK })).json.run;
     await drafts.settled(started.id);
     const failed = (await call("GET", `/campaigns/${campaignId}/drafts`, gm)).json.runs[0];
@@ -197,5 +201,55 @@ describe("drafting from typed table talk", () => {
     await Drafts.open(db, await Service.open(db, rules, verifier), new CampaignAi(db, "x", scripted));
     const after = (await call("GET", `/campaigns/${campaignId}/drafts`, gm)).json.runs[0];
     expect(after).toMatchObject({ status: "failed", message: expect.stringContaining("restarted") });
+  });
+
+  it("drafts the bookkeeping beside the moments, accepted by kind", async () => {
+    const { gm, campaignId } = await table();
+    const act = (action: unknown, cause?: string) => call("POST", `/campaigns/${campaignId}/actions`, gm, { id: randomUUID(), action, ...(cause ? { cause } : {}) });
+    await act({ type: "item.give", to: "spoils", items: [{ name: "Lesser Healing Pill", count: 2 }] });
+    await act({ type: "prep.save", items: [{ id: "cache", kind: "notice", title: "The cache", note: "When they open the cache.", text: "Cache opened." }] });
+    bookkeeping = [
+      {
+        output: {
+          items: [{ lines: ["L2"], kind: "move", from: "spoils", to: "kara", name: "Lesser Healing Pill", count: 1, why: "Kara takes a pill from the pile." }],
+          quests: [],
+          counters: [],
+          cues: [{ lines: ["L1"], prepId: "cache", why: "The cache is open." }],
+        },
+      },
+    ];
+    const run = await drafted(campaignId, gm);
+    expect(run.items.map((i: { kind: string; itemId: string }) => [i.kind, i.itemId])).toEqual([
+      ["cue", "action-1"],
+      ["event", "draft-1"],
+      ["action", "action-2"],
+    ]);
+    const [cue, event, move] = run.items;
+    expect(move).toMatchObject({ why: "Kara takes a pill from the pile.", action: { type: "item.move", from: "spoils", to: "kara", count: 1 } });
+    expect(cue).toMatchObject({ prepId: "cache", why: "The cache is open." });
+    expect(cue.action).toBeUndefined();
+
+    const accept = (item: { itemId: string }, action: unknown) => call("POST", `/campaigns/${campaignId}/drafts/${run.id}/${item.itemId}/accept`, gm, { id: randomUUID(), action });
+    // Each kind records only its own kind of action; a cue is fired from Prep.
+    expect((await accept(move, event.action)).status).toBe(422);
+    expect((await accept(event, move.action)).status).toBe(422);
+    expect((await accept(cue, move.action)).json.error).toMatch(/fired from Prep/);
+    const ok = await accept(move, { ...move.action, count: 2 });
+    expect(ok.status).toBe(201);
+    expect(ok.json.appended.envelope).toMatchObject({ source: "suggestion", action: { type: "item.move", count: 2 } });
+    const view = (await call("GET", `/campaigns/${campaignId}`, gm)).json;
+    expect(view.inventory.kara).toEqual([{ name: "Lesser Healing Pill", count: 2 }]);
+
+    await act({ type: "message.send", to: ["kara"], text: "Cache opened." }, "prep:cache");
+    const after = (await call("GET", `/campaigns/${campaignId}/drafts`, gm)).json.runs[0].items;
+    expect(after[0]).toMatchObject({ kind: "cue", fired: true });
+  });
+
+  it("keeps one drafter's drafts when the other fails, and says which failed", async () => {
+    const { gm, campaignId } = await table();
+    bookkeeping = [{ problem: "rate" }];
+    const run = await drafted(campaignId, gm);
+    expect(run).toMatchObject({ status: "done", problem: "rate", message: "drafting the bookkeeping failed: scripted rate" });
+    expect(run.items).toHaveLength(1);
   });
 });

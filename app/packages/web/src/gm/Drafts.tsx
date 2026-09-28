@@ -1,17 +1,19 @@
 /**
- * Drafting events from table talk, in the GM's Events section. The GM pastes or types what was
- * said, one `Name: words` line each, and sees how each name was read before drafting. The
- * campaign's model drafts the moments on the server; each draft opens in the same editor as
- * logging by hand, with the lines it cites and the model's reason for each entry, and the GM
- * accepts it (as drafted or edited) or dismisses it. Nothing here reaches a player.
+ * Drafting from table talk, in the GM's Events section. The GM pastes or types what was said,
+ * one `Name: words` line each, and sees how each name was read before drafting. The campaign's
+ * model drafts the moments and the bookkeeping on the server. A moment opens in the same editor
+ * as logging by hand, with the lines it cites and the model's reason for each entry; an item,
+ * quest, or count opens in its own small form; a Prep cue points at the prepared item to fire.
+ * The GM accepts each (as drafted or edited) or dismisses it. Nothing here reaches a player.
  */
 import type { Engine } from "@gradebreaker/engine";
 import { type NameReading, type TypedTalk, readTypedTalk } from "@gradebreaker/listening/typed";
-import type { Envelope, GmView } from "@gradebreaker/record";
+import type { Envelope, GmView, LogEvent } from "@gradebreaker/record";
 import { useEffect, useMemo, useState } from "react";
 import { type DraftItem, type DraftRun, acceptDraft, api, draftRuns, markDraft, startDraft } from "../api.ts";
-import type { Names } from "../text.ts";
+import { type Names, describe } from "../text.ts";
 import { Commit } from "./Commit.tsx";
+import { ActionDraftCard, CueCard } from "./DraftActions.tsx";
 import { EventFields, eventActionOf, eventValueOf } from "./EventFields.tsx";
 
 const POLL_MS = 3000;
@@ -84,7 +86,7 @@ function DraftCard({
   onChanged: (item: DraftItem) => void;
   onRecorded: (env: Envelope) => void;
 }) {
-  const [value, setValue] = useState(() => eventValueOf(item.action));
+  const [value, setValue] = useState(() => eventValueOf(item.action as LogEvent));
   const [error, setError] = useState<string | null>(null);
   const action = eventActionOf(value);
   const why = Object.fromEntries(item.reasons.map((r) => [r.characterId, r.why]));
@@ -208,9 +210,24 @@ export function DraftsCard({ view, engine, names, onRecorded }: { view: GmView; 
   const replace = (item: DraftItem) =>
     setRuns((rs) => rs.map((r) => (r.id === item.runId ? { ...r, items: r.items.map((i) => (i.itemId === item.itemId ? item : i)) } : r)));
 
-  const waiting = runs.flatMap((run) => run.items.filter((i) => i.status === "open" || i.undone).map((item) => ({ run, item })));
+  const settled = (i: DraftItem) => (i.status === "accepted" && !i.undone) || (i.kind === "cue" && i.fired && i.status === "open");
+  const waiting = runs.flatMap((run) => run.items.filter((i) => (i.status === "open" || i.undone) && !settled(i)).map((item) => ({ run, item })));
   const dismissed = runs.flatMap((run) => run.items.filter((i) => i.status === "dismissed").map((item) => ({ run, item })));
-  const accepted = runs.flatMap((run) => run.items.filter((i) => i.status === "accepted" && !i.undone).map((item) => ({ run, item })));
+  const accepted = runs.flatMap((run) => run.items.filter(settled).map((item) => ({ run, item })));
+  const summary = (i: DraftItem) =>
+    i.kind === "cue"
+      ? `Prep cue: ${view.prep.find((p) => p.id === i.prepId)?.title ?? i.prepId}${i.fired ? " (fired)" : ""}`
+      : i.action!.type === "event.log"
+        ? i.action!.summary
+        : describe(i.action!, names, () => undefined);
+  const dismiss = async (item: DraftItem) => {
+    setError(null);
+    try {
+      replace((await markDraft(id, item, "dismiss")).item);
+    } catch (e) {
+      setError((e as Error).message);
+    }
+  };
   const restore = async (item: DraftItem) => {
     setError(null);
     try {
@@ -239,7 +256,7 @@ export function DraftsCard({ view, engine, names, onRecorded }: { view: GmView; 
           {talk.lines.length > 0 && <Readings talk={talk} view={view} names={names} />}
           <div className="row">
             <button className="primary" disabled={!talk.lines.length || busy || drafting || !configured} onClick={start}>
-              Draft events
+              Draft
             </button>
             <span className="muted small">Drafts wait here for you; nothing is logged until you accept one.</span>
           </div>
@@ -253,18 +270,26 @@ export function DraftsCard({ view, engine, names, onRecorded }: { view: GmView; 
         <>
           <h3>To review</h3>
           <ul className="drafts">
-            {waiting.map(({ run, item }) => (
-              <DraftCard
-                key={`${item.runId}/${item.itemId}/${item.status}`}
-                view={view}
-                engine={engine}
-                names={names}
-                run={run}
-                item={item}
-                onChanged={replace}
-                onRecorded={onRecorded}
-              />
-            ))}
+            {waiting.map(({ run, item }) => {
+              const key = `${item.runId}/${item.itemId}/${item.status}`;
+              const cited = <Cited view={view} run={run} item={item} names={names} />;
+              if (item.kind === "cue") return <CueCard key={key} view={view} item={item} cited={cited} onDismiss={() => dismiss(item)} />;
+              if (item.kind === "action")
+                return (
+                  <ActionDraftCard
+                    key={key}
+                    view={view}
+                    engine={engine}
+                    names={names}
+                    item={item}
+                    cited={cited}
+                    onChanged={replace}
+                    onRecorded={onRecorded}
+                    onDismiss={() => dismiss(item)}
+                  />
+                );
+              return <DraftCard key={key} view={view} engine={engine} names={names} run={run} item={item} onChanged={replace} onRecorded={onRecorded} />;
+            })}
           </ul>
         </>
       )}
@@ -273,7 +298,7 @@ export function DraftsCard({ view, engine, names, onRecorded }: { view: GmView; 
           <summary>Accepted ({accepted.length})</summary>
           <ul className="small">
             {accepted.map(({ item }) => (
-              <li key={`${item.runId}/${item.itemId}`}>{item.action.summary}</li>
+              <li key={`${item.runId}/${item.itemId}`}>{summary(item)}</li>
             ))}
           </ul>
         </details>
@@ -284,7 +309,7 @@ export function DraftsCard({ view, engine, names, onRecorded }: { view: GmView; 
           <ul className="small">
             {dismissed.map(({ item }) => (
               <li key={`${item.runId}/${item.itemId}`}>
-                {item.action.summary}{" "}
+                {summary(item)}{" "}
                 <button className="link" onClick={() => restore(item)}>
                   Restore
                 </button>

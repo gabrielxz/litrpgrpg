@@ -128,7 +128,9 @@ Edits an app session forces, each with Gabriel's ruling or Claude's recommendati
 
 The Attribute Treasure action followed (record 121, web 6; deployed in run 36470218386): the Items tab records a treasure absorbed, Claude's calls under Decisions ("Attribute Treasures").
 
-**Next.** The paste card is M2's bridge (Gabriel, 2026-09-28): its lasting part is the review, which listening feeds at M3. Then the drafter's next categories (counter ticks, item moves, quest completions, Prep cues), scored the same way and shown on the same card. The audit follow-up still stands: the in-world words test over every notice kind.
+Then the bookkeeping drafter (listening 114, server 60; committed, not yet pushed): every draft also asks for items, quests, counts, and Prep cues in a second request, reviewed on the same card (DESIGN.md, Event drafting and Text evaluation; Decisions, "drafting the bookkeeping"). On the scripts, rescored: items 52 found, none invented or missed; Prep cues 6 of 6; completions 6 of 8; counts 5 of 6 with one invented. Runs in `build/listening/draft-actions-*`.
+
+**Next.** Two script questions for Gabriel. Q-002A is shared by three holders, so its count is 0 of 3 and the arena reads as progress; the Martial Remnant script expects the completion. Kara talking down Joe's spear inside the party was drafted once as a fight ended with words, which the Camp script does not expect. Also his to rule: whether a predator den is a hostile site (the Wild Den's tick is optional until then). The paste card is M2's bridge (Gabriel, 2026-09-28): its lasting part is the review, which listening feeds at M3. Then VE awards and party invitations for the drafter, and the suggestion panel's kinds. The audit follow-up still stands: the in-world words test over every notice kind.
 
 ### Queued for the app
 

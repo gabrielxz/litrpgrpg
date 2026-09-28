@@ -1,6 +1,6 @@
 /** The server's HTTP API, with the signed-in person's token on every call. */
 import type { TypedTalk } from "@gradebreaker/listening/typed";
-import type { Action, Effect, Envelope, LogEvent, Preview } from "@gradebreaker/record";
+import type { Action, Effect, Envelope, Preview } from "@gradebreaker/record";
 
 export interface Config {
   supabaseUrl: string | null;
@@ -86,12 +86,20 @@ export const preview = (campaignId: string, id: string, action: Action) =>
 export interface DraftItem {
   runId: string;
   itemId: string;
+  /** An event (the moment), an action (an item, quest, or count), or a Prep cue. */
+  kind: "event" | "action" | "cue";
   lines: string[];
-  action: LogEvent;
+  action?: Action;
+  prepId?: string;
+  /** An event's reason per character. */
   reasons: { characterId: string; why: string }[];
+  /** An action's or a cue's reason. */
+  why?: string;
   status: "open" | "accepted" | "dismissed";
   actionId?: string;
   undone?: boolean;
+  /** A cue whose prepared item has been fired since the run. */
+  fired?: boolean;
   resolvedAt?: string;
 }
 

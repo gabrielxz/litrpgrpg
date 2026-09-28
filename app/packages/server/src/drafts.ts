@@ -1,15 +1,26 @@
 /**
  * Drafting from typed table talk (app/DESIGN.md, M2, "Event drafting"). The GM pastes or types
- * what was said; the server reads the names into speakers and lines, and drafts the moments
- * through the campaign's model in the background. The drafts wait apart from the action log.
- * The GM accepts each (as drafted or edited), which records the GM's own `event.log` with the
- * source `suggestion`, or dismisses it. Logging an event by hand makes the same record.
+ * what was said; the server reads the names into speakers and lines, and drafts through the
+ * campaign's model in the background: the moments (events and their HVE entries) and the
+ * bookkeeping (items, quests, counts, Prep cues), two requests side by side. The drafts wait
+ * apart from the action log. The GM accepts each (as drafted or edited), which records the GM's
+ * own action with the source `suggestion`, or dismisses it; a Prep cue is fired from Prep.
+ * Recording by hand makes the same record.
  *
  * Nothing here reaches a player: every operation is the GM's, and drafts are never in a view.
  * A campaign drafts one run at a time, so a double click does not pay twice.
  */
-import { type Appended, CampaignRecord, type LogEvent } from "@gradebreaker/record";
-import { DRAFT_EVENTS_FEATURE, type Drafter, type Scene, draftEvents, readTypedTalk, type TypedTalk } from "@gradebreaker/listening";
+import { type Action, type Appended, CampaignRecord } from "@gradebreaker/record";
+import {
+  DRAFT_ACTIONS_FEATURE,
+  DRAFT_EVENTS_FEATURE,
+  type Drafter,
+  type Scene,
+  type TypedTalk,
+  draftActions,
+  draftEvents,
+  readTypedTalk,
+} from "@gradebreaker/listening";
 import { type CampaignAi, ModelError, problemOf } from "./ai.ts";
 import type { Db } from "./db.ts";
 import { HttpError, type Service, type User } from "./service.ts";
@@ -23,17 +34,34 @@ export const RUNS_LISTED = 10;
 
 export type RunStatus = "drafting" | "done" | "failed";
 export type ItemStatus = "open" | "accepted" | "dismissed";
+export type ItemKind = "event" | "action" | "cue";
+
+/** What each kind of draft may record on accepting. A cue records nothing: the GM fires it from Prep. */
+const ACCEPTS: Record<ItemKind, readonly Action["type"][]> = {
+  event: ["event.log"],
+  action: ["item.give", "item.move", "item.remove", "quest.progress", "quest.complete", "quest.fail", "counter.tick"],
+  cue: [],
+};
 
 export interface DraftItem {
   runId: string;
   itemId: string;
+  kind: ItemKind;
   lines: string[];
-  action: LogEvent;
+  /** The drafted action; a cue has none. */
+  action?: Action;
+  /** A cue's prepared item. */
+  prepId?: string;
+  /** An event's reason per character. */
   reasons: { characterId: string; why: string }[];
+  /** An action's or a cue's reason. */
+  why?: string;
   status: ItemStatus;
   actionId?: string;
-  /** Accepted, and the event it recorded has since been undone or corrected away: it can be accepted again. */
+  /** Accepted, and the action it recorded has since been undone or corrected away: it can be accepted again. */
   undone?: boolean;
+  /** A cue whose prepared item has been fired since the run. */
+  fired?: boolean;
   resolvedAt?: string;
 }
 
@@ -99,7 +127,7 @@ export class Drafts {
     const id = newId();
     await this.db.query(
       "insert into draft_runs (id, campaign_id, feature, created_by, status, talk) values ($1, $2, $3, $4, 'drafting', $5::jsonb)",
-      [id, campaignId, DRAFT_EVENTS_FEATURE, user!.id, JSON.stringify(talk)],
+      [id, campaignId, `${DRAFT_EVENTS_FEATURE},${DRAFT_ACTIONS_FEATURE}`, user!.id, JSON.stringify(talk)],
     );
     // The record as it stands: typed talk carries no timing, so what the table recorded in the
     // app during these lines is already in it, and the events logged are listed to the model.
@@ -120,26 +148,39 @@ export class Drafts {
   }
 
   private async draft(campaignId: string, runId: string, scene: Scene): Promise<void> {
-    const drafter: Drafter = (req) => this.ai.draft(campaignId, DRAFT_EVENTS_FEATURE, req);
-    try {
-      const out = await draftEvents(scene.record.engine, drafter, scene);
-      await this.db.tx(async (q) => {
-        for (const d of out.drafts) {
-          await q.query(
-            "insert into draft_items (run_id, item_id, campaign_id, lines, action, reasons) values ($1, $2, $3, $4::jsonb, $5::jsonb, $6::jsonb)",
-            [runId, d.id, campaignId, JSON.stringify(d.lines), JSON.stringify(d.action), JSON.stringify(d.reasons)],
-          );
-        }
-        await q.query("update draft_runs set status = 'done', finished_at = now(), repaired = $2::jsonb, dropped = $3::jsonb where id = $1", [
-          runId,
-          JSON.stringify(out.repaired),
-          JSON.stringify(out.dropped.map((d) => ({ why: d.why }))),
-        ]);
-      });
-    } catch (err) {
-      const p = problemOf(err);
+    const engine = scene.record.engine;
+    const drafter =
+      (feature: string): Drafter =>
+      (req) =>
+        this.ai.draft(campaignId, feature, req);
+    const [events, actions] = await Promise.allSettled([draftEvents(engine, drafter(DRAFT_EVENTS_FEATURE), scene), draftActions(engine, drafter(DRAFT_ACTIONS_FEATURE), scene)]);
+    if (events.status === "rejected" && actions.status === "rejected") {
+      const p = problemOf(events.reason);
       await this.db.query("update draft_runs set status = 'failed', finished_at = now(), problem = $2, message = $3 where id = $1", [runId, p.problem, p.message]);
+      return;
     }
+    // One drafter failing leaves the other's drafts, with the failure said on the run.
+    const failed = events.status === "rejected" ? ["the moments", events.reason] : actions.status === "rejected" ? ["the bookkeeping", actions.reason] : null;
+    const problem = failed ? problemOf(failed[1]) : null;
+    const rows: unknown[][] = [];
+    if (events.status === "fulfilled")
+      for (const d of events.value.drafts) rows.push([d.id, "event", d.lines, d.action, d.reasons, null, null]);
+    if (actions.status === "fulfilled")
+      for (const d of actions.value.drafts) rows.push([d.id, d.suggestion ? "cue" : "action", d.lines, d.action ?? null, [], d.why, d.suggestion ?? null]);
+    const repaired = [...(events.status === "fulfilled" ? events.value.repaired : []), ...(actions.status === "fulfilled" ? actions.value.repaired : [])];
+    const dropped = [...(events.status === "fulfilled" ? events.value.dropped : []), ...(actions.status === "fulfilled" ? actions.value.dropped : [])];
+    await this.db.tx(async (q) => {
+      for (const [id, kind, lines, action, reasons, why, suggestion] of rows) {
+        await q.query(
+          "insert into draft_items (run_id, item_id, campaign_id, kind, lines, action, reasons, why, suggestion) values ($1, $2, $3, $4, $5::jsonb, $6::jsonb, $7::jsonb, $8, $9::jsonb)",
+          [runId, id, campaignId, kind, JSON.stringify(lines), action === null ? null : JSON.stringify(action), JSON.stringify(reasons), why, suggestion === null ? null : JSON.stringify(suggestion)],
+        );
+      }
+      await q.query(
+        "update draft_runs set status = 'done', finished_at = now(), repaired = $2::jsonb, dropped = $3::jsonb, problem = $4, message = $5 where id = $1",
+        [runId, JSON.stringify(repaired), JSON.stringify(dropped.map((d) => ({ why: d.why }))), problem?.problem ?? null, problem ? `drafting ${failed![0]} failed: ${problem.message}` : null],
+      );
+    });
   }
 
   /** The newest runs with their drafts. */
@@ -148,18 +189,21 @@ export class Drafts {
     const runs = await this.db.query("select * from draft_runs where campaign_id = $1 order by created_at desc, id desc limit $2", [campaignId, RUNS_LISTED]);
     if (!runs.length) return [];
     const items = await this.db.query("select * from draft_items where run_id = any($1::text[]) order by run_id, item_id", [runs.map((r) => r.id)]);
-    const events = (await this.service.record(campaignId)).state.events;
-    return runs.map((r) => this.runOf(r, items.filter((i) => i.run_id === r.id), events));
+    const record = await this.service.record(campaignId);
+    return runs.map((r) => this.runOf(r, items.filter((i) => i.run_id === r.id), record));
   }
 
   private async run(campaignId: string, runId: string): Promise<DraftRun | null> {
     const [r] = await this.db.query("select * from draft_runs where campaign_id = $1 and id = $2", [campaignId, runId]);
     if (!r) return null;
     const items = await this.db.query("select * from draft_items where run_id = $1 order by item_id", [runId]);
-    return this.runOf(r, items, (await this.service.record(campaignId)).state.events);
+    return this.runOf(r, items, await this.service.record(campaignId));
   }
 
-  private runOf(r: Record<string, any>, items: Record<string, any>[], events: ReadonlyMap<string, unknown>): DraftRun {
+  private runOf(r: Record<string, any>, items: Record<string, any>[], record: CampaignRecord): DraftRun {
+    const at = new Map((r.talk as TypedTalk).lines.map((l, i) => [l.id, i]));
+    const first = (x: DraftItem) => Math.min(...x.lines.map((l) => at.get(l) ?? Infinity));
+    const rank = { event: 0, action: 1, cue: 2 };
     return {
       id: r.id,
       feature: r.feature,
@@ -170,44 +214,58 @@ export class Drafts {
       talk: r.talk,
       repaired: r.repaired,
       dropped: r.dropped,
-      items: items
-        .map((i) => this.itemOf(i, events))
-        .sort((a, b) => Number(a.itemId.replace(/\D/g, "")) - Number(b.itemId.replace(/\D/g, ""))),
+      // In the order the table reached them; on one line, the moment first.
+      items: items.map((i) => this.itemOf(i, record, iso(r.created_at))).sort((a, b) => first(a) - first(b) || rank[a.kind] - rank[b.kind]),
     };
   }
 
-  private itemOf(i: Record<string, any>, events: ReadonlyMap<string, unknown>): DraftItem {
+  private itemOf(i: Record<string, any>, record: CampaignRecord, since: string): DraftItem {
+    const state = record.state;
+    const standing = (id: string) => record.log.some((e) => e.id === id) && !state.voided.has(id) && !state.rejected.some((x) => x.envelope.id === id);
+    const prepId: string | undefined = i.suggestion?.key;
+    const fired =
+      i.kind === "cue" && record.log.some((e) => e.cause === `prep:${prepId}` && e.at >= since && standing(e.id));
     return {
       runId: i.run_id,
       itemId: i.item_id,
+      kind: i.kind,
       lines: i.lines,
-      action: i.action,
+      ...(i.action ? { action: i.action } : {}),
+      ...(prepId ? { prepId } : {}),
       reasons: i.reasons,
+      ...(i.why ? { why: i.why } : {}),
       status: i.status,
       ...(i.action_id ? { actionId: i.action_id } : {}),
-      ...(i.status === "accepted" && !events.has(i.action_id) ? { undone: true } : {}),
+      ...(i.status === "accepted" && i.action_id && !standing(i.action_id) ? { undone: true } : {}),
+      ...(fired ? { fired: true } : {}),
       ...(i.resolved_at ? { resolvedAt: iso(i.resolved_at) } : {}),
     };
   }
 
   private async item(campaignId: string, runId: string, itemId: string): Promise<DraftItem> {
-    const [i] = await this.db.query("select * from draft_items where campaign_id = $1 and run_id = $2 and item_id = $3", [campaignId, runId, itemId]);
+    const [i] = await this.db.query(
+      "select i.*, r.created_at as run_created_at from draft_items i join draft_runs r on r.id = i.run_id where i.campaign_id = $1 and i.run_id = $2 and i.item_id = $3",
+      [campaignId, runId, itemId],
+    );
     if (!i) throw new HttpError(404, "no such draft");
-    return this.itemOf(i, (await this.service.record(campaignId)).state.events);
+    return this.itemOf(i, await this.service.record(campaignId), iso(i.run_created_at));
   }
 
   /**
-   * Records the GM's event for a draft, as drafted or edited, and marks the draft accepted. A
-   * retry with the same action id records it once. A draft already accepted takes another
-   * only when its event was undone.
+   * Records the GM's action for a draft, as drafted or edited, and marks the draft accepted. An
+   * event draft records an event, and an action draft an item, quest, or count action. A retry
+   * with the same action id records it once. A draft already accepted takes another only when
+   * its action was undone.
    */
-  async accept(campaignId: string, user: User | null, runId: string, itemId: string, s: { id: string; action: LogEvent }): Promise<{ appended: Appended; item: DraftItem }> {
+  async accept(campaignId: string, user: User | null, runId: string, itemId: string, s: { id: string; action: Action }): Promise<{ appended: Appended; item: DraftItem }> {
     await this.service.requireGm(campaignId, user);
     const key = `${campaignId}/${runId}/${itemId}`;
     if (this.accepting.has(key)) throw new HttpError(409, "this draft is being accepted");
     this.accepting.add(key);
     try {
       const before = await this.item(campaignId, runId, itemId);
+      if (!ACCEPTS[before.kind].includes(s.action.type))
+        throw new HttpError(422, before.kind === "cue" ? "a Prep cue is fired from Prep" : `this draft is accepted as ${ACCEPTS[before.kind].join(" or ")}`);
       if (before.status === "dismissed") throw new HttpError(409, "this draft was dismissed; restore it first");
       if (before.status === "accepted" && !before.undone && before.actionId !== s.id) throw new HttpError(409, "this draft was already accepted");
       const appended = await this.service.submit(campaignId, user, { id: s.id, source: "suggestion", cause: `draft:${runId}/${itemId}`, action: s.action });

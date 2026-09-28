@@ -162,6 +162,9 @@ expected:
         entries:
           - {characterId: joe, pole: Restraint, intensity: 0.5}
 
+    # Kara goes into the den first, as she goes first onto the sand in the Martial Remnant; optional
+    # until Gabriel rules whether a predator den is a hostile site (2026-09-28).
+    - {id: x-first-in, lines: [l04], optional: true, action: {type: counter.tick, characterId: kara, counter: first-into-a-hostile-site, count: 1}}
     - {id: x-core, lines: [l36, l37], action: {type: ve.award, basis: {kind: core, core: predator core}, awards: [{characterId: andre, ve: 20}]}}
 
   # The record makes both cards due by itself; suggesting them as well is not wrong.

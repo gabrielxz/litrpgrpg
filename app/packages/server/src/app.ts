@@ -7,7 +7,7 @@
 import { readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 import { serveStatic } from "@hono/node-server/serve-static";
-import { type LogEvent, submissionSchema } from "@gradebreaker/record";
+import { submissionSchema } from "@gradebreaker/record";
 import { Hono } from "hono";
 import type { ContentfulStatusCode } from "hono/utils/http-status";
 import { z } from "zod";
@@ -224,9 +224,8 @@ export function createApp(service: Service, opts: AppOptions = {}) {
   });
   app.post("/campaigns/:id/drafts/:run/:item/accept", async (c) => {
     const b = await body(c, acceptDraft);
-    if (b.action.type !== "event.log") throw new HttpError(422, "an event draft is accepted as an event");
     const { id, run, item } = c.req.param();
-    const out = await drafts().accept(id, c.get("user"), run, item, { id: b.id, action: b.action as LogEvent });
+    const out = await drafts().accept(id, c.get("user"), run, item, { id: b.id, action: b.action });
     return c.json(out, out.appended.duplicate ? 200 : 201);
   });
   app.post("/campaigns/:id/drafts/:run/:item/dismiss", async (c) => {

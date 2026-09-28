@@ -6,7 +6,7 @@
  * prepared item as its cause, so Prep shows what has gone out. The tutorial loads as a pack.
  */
 import type { Engine } from "@gradebreaker/engine";
-import { type CombatantSpec, type Envelope, type GmView, type PrepCreature, type PrepItem, type QuestSpec, prepCause } from "@gradebreaker/record";
+import { type CombatantSpec, type Envelope, type GmView, type PrepCreature, type PrepItem, type QuestSpec, prepCause, tutorialPack } from "@gradebreaker/record";
 import { useState } from "react";
 import { type Names, tableWordsIn } from "../text.ts";
 import { Commit } from "./Commit.tsx";
@@ -67,25 +67,6 @@ export function prepCreaturesOf(specs: CombatantSpec[]): PrepCreature[] {
     }
     return c;
   });
-}
-
-/** The tutorial pack (`rules/tutorial.yaml`) as prepared items. */
-export function tutorialPack(engine: Engine): PrepItem[] {
-  const t = engine.rules.tutorial as {
-    pack: string;
-    notices: { id: string; group: string; title: string; note?: string; text: string[] }[];
-    quests: { group: string; note?: string; quest: QuestSpec }[];
-    encounters: { id: string; group: string; title: string; note?: string; zones: string[]; creatures: PrepCreature[] }[];
-  };
-  const extra = (x: { group: string; note?: string }) => ({ group: x.group, ...(x.note ? { note: x.note } : {}) });
-  const items: PrepItem[] = [
-    ...t.notices.map((n): PrepItem => ({ id: `${t.pack}-${n.id}`, kind: "notice", title: n.title, ...extra(n), text: n.text.join("\n\n") })),
-    ...t.quests.map((q): PrepItem => ({ id: `${t.pack}-${q.quest.id.toLowerCase()}`, kind: "quest", title: `[${q.quest.id}] ${q.quest.title}`, ...extra(q), quest: q.quest })),
-    ...t.encounters.map((e): PrepItem => ({ id: `${t.pack}-${e.id}`, kind: "encounter", title: e.title, ...extra(e), encounter: { name: e.title, zones: e.zones, creatures: e.creatures } })),
-  ];
-  // The book's order: group by group as the chapter runs.
-  const order = [...new Set([...t.notices, ...t.quests, ...t.encounters].map((x) => x.group))].sort();
-  return items.sort((a, b) => order.indexOf(a.group!) - order.indexOf(b.group!));
 }
 
 // ------------------------------------------------------------- notices ---

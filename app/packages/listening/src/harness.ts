@@ -10,6 +10,7 @@ import { readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { Engine } from "@gradebreaker/engine";
+import { ACTION_CATEGORIES, type ActionDrafts, draftActions } from "./draft-actions.ts";
 import { type Drafter, type Effort, type EventDrafts, draftEvents, sceneOfScript } from "./draft-events.ts";
 import { type Report, type Tally, score } from "./score.ts";
 import { type Script, loadScript } from "./script.ts";
@@ -115,5 +116,83 @@ export function formatSummary(s: Summary): string {
   rows.push(`  whose    ${s.onCharacter.found} of ${s.onCharacter.of} entries on the right character`);
   rows.push(`  sides    precision ${pct(s.entries.precision)}, recall ${pct(s.entries.recall)}; intensity exact ${s.entries.exact}, accepted ${s.entries.accepted}, off ${s.entries.off}`);
   if (s.dropped) rows.push(`  dropped  ${s.dropped} drafts the record refused`);
+  return rows.join("\n");
+}
+
+// ------------------------------------------------------------ actions ---
+
+export interface ActionRun {
+  run: number;
+  drafts: ActionDrafts | null;
+  report: Report | null;
+  error?: string;
+}
+
+export interface ActionSummary {
+  scriptId: string;
+  runs: number;
+  failed: number;
+  /** Summed over the runs that returned, by category: found, invented, missed. */
+  byCategory: Record<string, { tp: number; fp: number; fn: number }>;
+  missed: Record<string, number>;
+  falsePositives: Record<string, number>;
+  dropped: Record<string, number>;
+}
+
+export interface ActionEvaluation {
+  scriptId: string;
+  runs: ActionRun[];
+  summary: ActionSummary;
+}
+
+const countOf = (keys: string[]) => keys.reduce<Record<string, number>>((m, k) => ((m[k] = (m[k] ?? 0) + 1), m), {});
+
+/** Runs one script through the actions drafter `runs` times, scoring the categories it drafts. */
+export async function evaluateActions(engine: Engine, script: Script, drafter: Drafter, runs: number, opts: { effort?: Effort } = {}): Promise<ActionEvaluation> {
+  const scene = sceneOfScript(engine, script);
+  const out: ActionRun[] = [];
+  for (let run = 1; run <= runs; run++) {
+    try {
+      const drafts = await draftActions(engine, drafter, scene, opts);
+      out.push({ run, drafts, report: score(script, drafts.drafts, { categories: ACTION_CATEGORIES }) });
+    } catch (err) {
+      out.push({ run, drafts: null, report: null, error: err instanceof Error ? err.message : String(err) });
+    }
+  }
+  const ok = out.filter((r) => r.report) as (ActionRun & { report: Report; drafts: ActionDrafts })[];
+  const byCategory: ActionSummary["byCategory"] = {};
+  for (const r of ok)
+    for (const [k, t] of Object.entries(r.report.byCategory)) {
+      const c = (byCategory[k] ??= { tp: 0, fp: 0, fn: 0 });
+      c.tp += t.tp;
+      c.fp += t.fp;
+      c.fn += t.fn;
+    }
+  const dropWhy = (d: { why: string }) => d.why.replace(/: .*$/, "");
+  return {
+    scriptId: script.id,
+    runs: out,
+    summary: {
+      scriptId: script.id,
+      runs: out.length,
+      failed: out.length - ok.length,
+      byCategory,
+      missed: countOf(ok.flatMap((r) => r.report.missed)),
+      falsePositives: countOf(ok.flatMap((r) => r.report.falsePositives.map((f) => `${f.draft.action?.type ?? `suggestion:${f.draft.suggestion?.kind}`} (${f.why})`))),
+      dropped: countOf(ok.flatMap((r) => r.drafts.dropped.map(dropWhy))),
+    },
+  };
+}
+
+export function formatActionSummary(s: ActionSummary): string {
+  const rows = [`${s.scriptId}: ${s.runs - s.failed} of ${s.runs} runs returned`];
+  for (const [k, t] of Object.entries(s.byCategory).sort()) rows.push(`  ${k.padEnd(22)} found ${t.tp}, invented ${t.fp}, missed ${t.fn}`);
+  if (!Object.keys(s.byCategory).length) rows.push("  nothing expected, nothing drafted");
+  const missed = Object.entries(s.missed);
+  if (missed.length) rows.push(`  missed   ${missed.map(([k, n]) => `${k} ×${n}`).join(", ")}`);
+  const fps = Object.entries(s.falsePositives);
+  if (fps.length) rows.push(`  false    ${fps.map(([k, n]) => `${k} ×${n}`).join(", ")}`);
+  const dropped = Object.entries(s.dropped);
+  if (dropped.length) rows.push(`  dropped  ${dropped.map(([k, n]) => `${k} ×${n}`).join(", ")}`);
   return rows.join("\n");
 }
