@@ -77,7 +77,8 @@ describe.each(scripts.map((s) => [s.id, s] as const))("drafting %s", (_, script)
   it("scores the expected events, returned by the model, as perfect", async () => {
     const [run] = (await evaluateEvents(engine, script, scripted([perfectOutput(script)]), 1)).runs;
     expect(run!.drafts!.dropped).toEqual([]);
-    expect(run!.report!.byCategory["event.log"]).toMatchObject({ precision: 1, recall: 1 });
+    // A script that expects no events (other-game) has no event.log category at all; the overall reads the same.
+    expect(run!.report!.overall).toMatchObject({ precision: 1, recall: 1 });
     expect(run!.report!.entries).toMatchObject({ precision: 1, recall: 1, off: [] });
   });
 });

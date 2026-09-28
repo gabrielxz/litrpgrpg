@@ -1,0 +1,244 @@
+# A full evening in Sector C, the Arcane Debris. The format is in app/DESIGN.md, "The script format".
+id: long-session
+title: The Arcane Debris, a whole evening at the table
+source: 'book/70-tutorial.md, Phase 4, "Sector C: The Arcane Debris" and "Personal Opportunities"'
+rules: 0.1.29
+notes: >
+  Shaped like live play, at length: a hundred lines, most of them not the game. Kara experiments
+  with the runes and keeps touching them after the first one hurts; Andre pulls a second shard
+  after failing the puzzle and eats the feedback; the party argues for twenty lines about the
+  Wraith and Joe settles it by taking them around by the climb, so the moment spans the argument;
+  Andre sees the spiral from the deck and keeps it to himself; fleeing the Wraith, Kara grabs a
+  shard and shoves Andre out ahead of her in one line, two moments; and at the fire two Personal
+  Opportunity answers, given on paper earlier, are told aloud. The GM recorded Kara's harvest when
+  the card came back. The rune rolls, the checks, and the feedback damage are in the app. Traps:
+  rules questions about the runes and the cards, Kara wanting to fight the Wraith (talk, not an
+  act), a hypothetical, a retracted rune, the GM speaking as the altar and the card, Health read
+  aloud, and table life: a work call, a friend who could sell anything, a cat, the playoffs, a
+  pizza order, and a player who arrives late.
+
+speakers:
+  - {id: gm, role: gm, name: Ike}
+  - {id: nora, role: player, name: Nora, characters: [kara]}
+  - {id: ben, role: player, name: Ben, characters: [joe]}
+  - {id: aisha, role: player, name: Aisha, characters: [andre]}
+
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara, playerId: nora}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe, playerId: ben}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre, playerId: aisha}}
+  - {id: invite-joe, action: {type: party.invite, fromId: kara, toId: joe}}
+  - {id: joe-joins, action: {type: party.answer, inviteId: invite-joe, accept: true}}
+  - {id: invite-andre, action: {type: party.invite, fromId: joe, toId: andre}}
+  - {id: andre-joins, action: {type: party.answer, inviteId: invite-andre, accept: true}}
+  - {id: kit-kara, action: {type: item.give, to: kara, items: [{name: Reactive Buckler, count: 1}, {name: Battle Axe, count: 1}]}}
+  - {id: kit-joe, action: {type: item.give, to: joe, items: [{name: Spear, count: 1}, {name: Low-Grade Armor Scraps, count: 1}, {name: Rope, count: 1}]}}
+  - {id: kit-andre, action: {type: item.give, to: andre, items: [{name: Veil Shard, count: 1}, {name: Resonance Glass, count: 1}]}}
+
+recorded:
+  - {id: rune-1, after: l16, by: nora, action: {type: dice.roll, roller: {kind: character, characterId: kara}, rollKind: table, label: Rune, modifier: 0}, dice: [22]}
+  - {id: rune-1-hurt, after: l17, action: {type: hp.change, characterId: kara, delta: -5}}
+  - {id: rune-2, after: l21, by: nora, action: {type: dice.roll, roller: {kind: character, characterId: kara}, rollKind: table, label: Rune, modifier: 0}, dice: [84]}
+  - {id: rune-3, after: l24, by: nora, action: {type: dice.roll, roller: {kind: character, characterId: kara}, rollKind: table, label: Rune, modifier: 0}, dice: [51]}
+  - {id: puzzle-1, after: l31, by: aisha, action: {type: dice.roll, roller: {kind: character, characterId: andre, attribute: PER}, rollKind: check, label: Shard matrix, modifier: 0, resistance: 90}, dice: [85]}
+  - {id: puzzle-2, after: l34, by: aisha, action: {type: dice.roll, roller: {kind: character, characterId: andre, attribute: PER}, rollKind: check, label: Shard matrix, modifier: 0, resistance: 90}, dice: [33]}
+  - {id: feedback, after: l37, action: {type: hp.change, characterId: andre, delta: -5}}
+  - {id: harvest, after: l62, action: {type: ve.award, basis: {kind: other, note: Harvested the trapped matrix}, awards: [{characterId: kara, ve: 120}]}}
+
+lines:
+  - {id: l01, speaker: gm, text: "Okay, everyone here? Aisha said she'd be a few minutes late."}
+  - {id: l02, speaker: ben, text: "She texted, she's parking."}
+  - {id: l03, speaker: nora, text: "Did anyone watch the game Sunday? Overtime, come on."}
+  - {id: l04, speaker: ben, text: "I had it on mute at my in-laws'. Worst place to watch overtime."}
+  - {id: l05, speaker: aisha, text: "I'm here, I'm here. Sorry. What did I miss?"}
+  - {id: l06, speaker: gm, text: "Nothing, we're starting. Sector C. The tower came apart and didn't fall. The pieces hang where they broke, and you can walk through the gaps."}
+  - {id: l07, speaker: gm, text: "Runes on the broken faces light as you pass and go out behind you. Your teeth ache. When you talk, the word comes out half a second late and slightly wrong."}
+  - {id: l08, speaker: gm, text: "And further in, down where the stairs were, something is making a sound that never stops for breath."}
+  - {id: l09, speaker: ben, text: "I hate that. I hate that a lot."}
+  - {id: l10, speaker: nora, text: "Can I touch the runes? What do they do?"}
+  - {id: l11, speaker: gm, text: "You can touch them. You don't know what they do. Some of them do things."}
+  - {id: l12, speaker: aisha, text: "Is it a roll every time?"}
+  - {id: l13, speaker: gm, text: "Every time. It's a table roll, it doesn't explode, it just says what happens."}
+  - {id: l14, speaker: ben, text: "Joe's staying back by the entrance. He's not touching anything."}
+  - {id: l15, speaker: nora, text: "Kara touches the nearest one. Flat hand on it."}
+  - {id: l16, speaker: gm, text: "Roll it."}
+  - {id: l17, speaker: gm, text: "Twenty-two. That's a bad one. It bites. Five damage, like grabbing a live wire."}
+  - {id: l18, speaker: nora, text: "Ow. Okay. Kara's at nine?"}
+  - {id: l19, speaker: gm, text: "Nine of fourteen."}
+  - {id: l20, speaker: ben, as: joe, text: "Kara. Maybe stop."}
+  - {id: l21, speaker: nora, text: "Kara shakes her hand out and touches the next one."}
+  - {id: l22, speaker: gm, text: "Eighty-four. It hums. You feel sharper, plus five on your next Clash."}
+  - {id: l23, speaker: nora, text: "See? And the next one."}
+  - {id: l24, speaker: nora, text: "Wait, no, not that one, the one next to it, the blue one."}
+  - {id: l25, speaker: gm, text: "Fifty-one. Your vision goes grainy for a second and every color swaps. Then it's back. Nothing else."}
+  - {id: l26, speaker: aisha, text: "She's going to touch every rune in this tower."}
+  - {id: l27, speaker: nora, text: "She's learning."}
+  - {id: l28, speaker: gm, text: "Up on the second level there are crystal matrices with shards set in them. Three of them. You'd have to work each one loose."}
+  - {id: l29, speaker: aisha, text: "Andre goes up. Is that a PER thing?"}
+  - {id: l30, speaker: gm, text: "PER, Moderate. If you blow it you can still pull it, it just bites back. Five damage."}
+  - {id: l31, speaker: aisha, text: "Andre works the first one. Slowly."}
+  - {id: l32, speaker: gm, text: "Eighty-five plus your PER, that's a success. It comes free clean. An Edge Shard."}
+  - {id: l33, speaker: ben, text: "Hang on, it's work. I have to take this. Two minutes. Sorry."}
+  - {id: l34, speaker: aisha, text: "Andre does the second one."}
+  - {id: l35, speaker: gm, text: "Thirty-three. That's a fail. You can feel it fighting you. You can stop, or you can pull and take the hit."}
+  - {id: l36, speaker: aisha, text: "He pulls."}
+  - {id: l37, speaker: gm, text: "It comes out and the feedback goes up your arm like a hammer. Five damage. It's a Pulse Shard."}
+  - {id: l38, speaker: nora, text: "Andre!"}
+  - {id: l39, speaker: aisha, text: "He's fine. He's got it. That's what matters."}
+  - {id: l40, speaker: nora, text: "Deshawn would've sold the tower back to them by now."}
+  - {id: l41, speaker: aisha, text: "Deshawn would have sold them the sound."}
+  - {id: l42, speaker: gm, text: "The third shard's on the lower level. Down where the sound is."}
+  - {id: l43, speaker: ben, text: "Okay, back. What happened?"}
+  - {id: l44, speaker: nora, text: "Andre got shards and hurt himself. I touched runes."}
+  - {id: l45, speaker: gm, text: "When you go down toward the third one, something comes up through the floor at you. It's there and not there. It looks like a person made of the air above a fire."}
+  - {id: l46, speaker: nora, text: "Kara swings at it."}
+  - {id: l47, speaker: gm, text: "The axe goes straight through. It skids, like cutting smoke. It turns and looks at you, and it isn't where it looks like it is."}
+  - {id: l48, speaker: nora, text: "Okay. Okay, let's just all hit it. Three of us."}
+  - {id: l49, speaker: aisha, text: "With what? The axe went through it."}
+  - {id: l50, speaker: nora, text: "The shards, then. Edge Shard's plus twenty."}
+  - {id: l51, speaker: ben, text: "What if it does the thing where it drains you? I don't want to find out at nine HP."}
+  - {id: l52, speaker: gm, text: "It's drifting between you and the stairs down. It isn't chasing. It's just there."}
+  - {id: l53, speaker: aisha, text: "There's a gap in the wall on the outside. We could climb around. Moderate?"}
+  - {id: l54, speaker: gm, text: "Moderate, and there's a drop."}
+  - {id: l55, speaker: nora, text: "Climbing is so much worse than fighting."}
+  - {id: l56, speaker: ben, text: "Okay. I've got rope."}
+  - {id: l57, speaker: ben, as: joe, text: "We go around. Outside, the climb. I go first, I tie off, you come up on the rope one at a time. Nobody fights that thing."}
+  - {id: l58, speaker: nora, as: kara, text: "Fine."}
+  - {id: l59, speaker: gm, text: "Okay, while you're setting the rope, the card thing. Nora, this is yours. Read it, answer on the card, give it back. Don't show anybody."}
+  - {id: l60, speaker: gm, text: "Everyone else keep going. Joe's first up the wall."}
+  - {id: l61, speaker: ben, text: "Joe climbs. Rope over his shoulder."}
+  - {id: l62, speaker: gm, text: "Nora, got it. Thanks. Joe, you're up and tied off. Kara, Andre, you're on the rope."}
+  - {id: l63, speaker: aisha, text: "My cat just knocked my water over. Hold on. Okay."}
+  - {id: l64, speaker: gm, text: "The climb puts you on the outside of the tower, and above you, there's a deck still hanging at the very top. Somebody could get up there."}
+  - {id: l65, speaker: aisha, text: "Andre goes up. Alone. Doesn't ask."}
+  - {id: l66, speaker: gm, text: "From up there you see the whole valley. And the debris isn't random. It's a spiral, tightening toward the gate. The sectors are cut exactly, like with a ruler."}
+  - {id: l67, speaker: aisha, text: "What does that mean, is that important?"}
+  - {id: l68, speaker: gm, text: "It's yours to make of it."}
+  - {id: l69, speaker: aisha, text: "Okay. Andre comes back down and doesn't say anything about it."}
+  - {id: l70, speaker: nora, as: kara, text: "What's up there?"}
+  - {id: l71, speaker: aisha, as: andre, text: "Wind."}
+  - {id: l72, speaker: ben, text: "Oh, he's hiding something. Look at her face."}
+  - {id: l73, speaker: gm, text: "Down in the lower hall you reach the third matrix from the outside, through the gap. There's the last shard. And the thing is coming up through the floor again, right at you."}
+  - {id: l74, speaker: nora, text: "Kara grabs the shard out of the matrix on her way past and shoves Andre out through the gap ahead of her, and she goes last."}
+  - {id: l75, speaker: gm, text: "The shard comes free in your hand. Andre's through, you're through, and it doesn't follow past the wall. It's a Resonance Shard."}
+  - {id: l76, speaker: ben, text: "Let's order pizza. Half pepperoni?"}
+  - {id: l77, speaker: aisha, text: "Half mushroom. I'll pay you back."}
+  - {id: l78, speaker: gm, text: "You make camp in the lee of the tower. Fire. Kara, you're at nine, Andre at five."}
+  - {id: l79, speaker: ben, text: "Can we talk about what the cards were? Are we allowed to?"}
+  - {id: l80, speaker: gm, text: "If you want to tell them, tell them. Nobody has to."}
+  - {id: l81, speaker: ben, as: joe, text: "I found somebody pinned under a slab back there. Another one of us. I got them out. And then they just weren't there anymore."}
+  - {id: l82, speaker: ben, text: "And there was a case with something in it I was going after, and it was gone when I got back. So. Yeah."}
+  - {id: l83, speaker: nora, text: "Joe, you absolute softie."}
+  - {id: l84, speaker: nora, text: "Okay. Mine."}
+  - {id: l85, speaker: nora, as: kara, text: "There was a voice in the wall. Somebody old, dying. It offered to teach me something. Or I could let it go. Or I could break it open for what was in it."}
+  - {id: l86, speaker: nora, as: kara, text: "I broke it open. It screamed. I'm a level up."}
+  - {id: l87, speaker: ben, text: "Oh no."}
+  - {id: l88, speaker: aisha, text: "Kara."}
+  - {id: l89, speaker: nora, text: "I didn't think I'd actually pick that. I just did it."}
+  - {id: l90, speaker: gm, text: "Andre?"}
+  - {id: l91, speaker: aisha, text: "Andre doesn't say anything. He's not telling."}
+  - {id: l92, speaker: gm, text: "Okay. Let's stop there for tonight. Same time next week?"}
+  - {id: l93, speaker: nora, text: "Next week works. Pizza's here, by the way."}
+
+expected:
+  actions:
+    - id: x-ev-runes
+      lines: [l17, l18, l20, l21, l23, l25, l26, l27]
+      action:
+        type: event.log
+        summary: Kara keeps touching the runes after the first one hurts her, one after another.
+        participants: [kara, joe]
+        entries:
+          - {characterId: kara, pole: Freedom, intensity: 1, intent: Find out what they do by trying them}
+      also:
+        - {characterId: kara, pole: Force, intensity: 1}
+        - {characterId: kara, pole: Hunger, intensity: 1}
+
+    - {id: x-edge, lines: [l32], action: {type: item.give, to: andre, items: [{name: Edge Shard, count: 1}]}}
+    - {id: x-pulse, lines: [l36, l37], action: {type: item.give, to: andre, items: [{name: Pulse Shard, count: 1}]}}
+    - id: x-ev-pull
+      lines: [l35, l36, l37, l38, l39]
+      action:
+        type: event.log
+        summary: Andre fails the second matrix and pulls the shard anyway, taking the feedback.
+        participants: [andre, kara]
+        entries:
+          - {characterId: andre, pole: Hunger, intensity: 1, intent: Have the shard whatever it costs, outcome: Five damage and a Pulse Shard}
+
+    - id: x-ev-climb
+      lines: [l48, l49, l50, l51, l52, l53, l56, l57, l58]
+      action:
+        type: event.log
+        summary: After the party argues over fighting the Wraith, Joe settles it by taking them around by the outside climb, first up and roped.
+        participants: [joe, kara, andre]
+        entries:
+          - {characterId: joe, pole: Method, intensity: 1, intent: Get past the Wraith without fighting it}
+      also:
+        - {characterId: joe, pole: Control, intensity: 1}
+        - {characterId: joe, pole: Restraint, intensity: 1}
+
+    - id: x-ev-spiral
+      lines: [l65, l66, l69, l70, l71, l72]
+      action:
+        type: event.log
+        summary: Andre climbs to the observation deck alone, sees the spiral, and keeps it from the others.
+        participants: [andre, kara]
+        entries:
+          - {characterId: andre, pole: Control, intensity: 1, intent: Keep what he learned to himself}
+      also:
+        - {characterId: andre, pole: Hunger, intensity: 1}
+        - {characterId: andre, pole: Freedom, intensity: 1}
+        - {characterId: andre, pole: Method, intensity: 1}
+
+    - {id: x-resonance, lines: [l74, l75], action: {type: item.give, to: kara, items: [{name: Resonance Shard, count: 1}]}}
+    - id: x-ev-grab
+      lines: [l74, l75]
+      action:
+        type: event.log
+        summary: Fleeing the Wraith, Kara grabs the last shard out of the matrix on her way past.
+        participants: [kara]
+        entries:
+          - {characterId: kara, pole: Hunger, intensity: 1, intent: Take the shard on the way out}
+      also:
+        - {characterId: kara, pole: Hunger, intensity: 0.5}
+    - id: x-ev-last-out
+      lines: [l74, l75]
+      action:
+        type: event.log
+        summary: Kara shoves Andre out through the gap ahead of her and goes last with the Wraith behind.
+        participants: [kara, andre]
+        entries:
+          - {characterId: kara, pole: Restraint, intensity: 1, intent: Get Andre out first}
+
+    - id: x-ev-helped
+      lines: [l81, l82, l83]
+      action:
+        type: event.log
+        summary: Joe tells the fire that his card showed him an Initiate pinned under a slab, and he freed them and lost the prize he was after.
+        context: A Personal Opportunity answered on the card earlier; the Initiate was the System's.
+        participants: [joe, kara]
+        entries:
+          - {characterId: joe, pole: Restraint, intensity: 1, intent: Get the pinned one out, outcome: The prize was gone}
+
+    - id: x-ev-harvest
+      lines: [l59, l62, l85, l86, l87, l88, l89]
+      action:
+        type: event.log
+        summary: Kara tells the fire that she broke the dying mind in the wall open for its energy, and it screamed.
+        context: A Personal Opportunity answered on the card earlier.
+        participants: [kara, joe, andre]
+        entries:
+          - {characterId: kara, pole: Hunger, intensity: 3, intent: Take the energy, outcome: A full level of VE}
+      also:
+        - {characterId: kara, pole: Hunger, intensity: 2}
+
+  quiet:
+    - {lines: [l01, l02, l05, l33, l43, l63], why: away}
+    - {lines: [l03, l04, l76, l77, l93], why: off-topic}
+    - {lines: [l10, l11, l12, l13, l29, l30, l54, l67, l68, l79, l80], why: rules-question}
+    - {lines: [l17, l22, l25, l35], why: already-recorded}
+    - {lines: [l19, l78], why: state-read-aloud}
+    - {lines: [l24], why: retracted}
+    - {lines: [l40, l41], why: inside-joke}
+    - {lines: [l51], why: hypothetical}
+    - {lines: [l92], why: planning}

@@ -1,0 +1,89 @@
+# A scramble on the way to the gate: everyone at once. The format is in app/DESIGN.md, "The script format".
+id: crowded-lines
+title: The approach to the gate, everyone at once
+source: 'book/70-tutorial.md, Phase 5, "What Happens" and "The Gate" (the queue: Ray, Marisol)'
+rules: 0.1.29
+notes: >
+  The street to the causeway comes down as the Purge closes. Marisol is pinned, Ray falls, and the
+  three players call their actions over each other in short lines, then the GM restates who is
+  doing what. Kara lifts the beam off Marisol, Joe carries Ray, and Andre runs ahead to see that the
+  causeway is clear. Priya calls an act for Andre (grabbing Marisol's bag) and Lena takes it back:
+  a player does not decide for another player's character. The GM's restatement repeats the three
+  moments; a draft may cite it or the players' own lines. The lift is a STR check in the app.
+  Traps: the call for Andre, "wait, who's doing what", NPC speech, the check read out, and a rules
+  question about carrying.
+
+speakers:
+  - {id: gm, role: gm, name: Ruth}
+  - {id: owen, role: player, name: Owen, characters: [kara]}
+  - {id: mei, role: player, name: Mei, characters: [joe]}
+  - {id: carlos, role: player, name: Carlos, characters: [andre]}
+
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara, playerId: owen}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe, playerId: mei}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre, playerId: carlos}}
+  - {id: invite-joe, action: {type: party.invite, fromId: kara, toId: joe}}
+  - {id: joe-joins, action: {type: party.answer, inviteId: invite-joe, accept: true}}
+  - {id: invite-andre, action: {type: party.invite, fromId: joe, toId: andre}}
+  - {id: andre-joins, action: {type: party.answer, inviteId: invite-andre, accept: true}}
+
+recorded:
+  - {id: lift, after: l14, by: owen, action: {type: dice.roll, roller: {kind: character, characterId: kara, attribute: STR}, rollKind: check, label: Lift the beam, modifier: 0, resistance: 90}, dice: [86]}
+
+lines:
+  - {id: l01, speaker: gm, text: "The street down to the causeway is coming apart. The wall of light is two blocks behind you. A facade comes down across the road and Marisol goes under a beam. Ray trips and doesn't get up."}
+  - {id: l02, speaker: owen, text: "Kara's on the beam!"}
+  - {id: l03, speaker: mei, text: "Joe's got Ray, Joe picks him up, fireman carry"}
+  - {id: l04, speaker: carlos, text: "Andre, Andre goes"}
+  - {id: l05, speaker: owen, text: "And Andre grabs Marisol's bag so she doesn't lose it"}
+  - {id: l06, speaker: carlos, text: "No. Andre doesn't do that. Stop. Andre runs ahead to the causeway to see if it's still there."}
+  - {id: l07, speaker: mei, text: "Wait, who's doing what? I'm lost."}
+  - {id: l08, speaker: gm, as: Ray, text: "Ray's saying leave me, leave me, over and over."}
+  - {id: l09, speaker: mei, as: joe, text: "Not happening."}
+  - {id: l10, speaker: mei, text: "Can Joe carry him and still move? Is that a Beat thing?"}
+  - {id: l11, speaker: gm, text: "Not a fight. You're slow, that's all. The light is getting closer."}
+  - {id: l12, speaker: gm, text: "Okay. So Kara's on the beam, Joe's carrying Ray, and Andre's running ahead alone. Right?"}
+  - {id: l13, speaker: carlos, text: "Right."}
+  - {id: l14, speaker: gm, text: "Kara, STR to get it up."}
+  - {id: l15, speaker: gm, text: "Eighty-six plus your STR, that's up. Marisol crawls out. She's got your arm and she's not letting go."}
+  - {id: l16, speaker: gm, as: Marisol, text: "Marisol says thank you in three languages."}
+  - {id: l17, speaker: gm, text: "Andre, you come around the last corner and the causeway's there, and the gate's lit. You can see the Warden getting up out of the wreck to the north."}
+  - {id: l18, speaker: carlos, as: andre, text: "It's clear! Go! Go now!"}
+
+expected:
+  actions:
+    - id: x-ev-beam
+      lines: [l02, l12, l15]
+      action:
+        type: event.log
+        summary: With the Purge two blocks behind, Kara stops to lift the beam off Marisol.
+        participants: [kara]
+        entries:
+          - {characterId: kara, pole: Restraint, intensity: 1, intent: Get Marisol out, outcome: She crawls free}
+      also:
+        - {characterId: kara, pole: Force, intensity: 1}
+    - id: x-ev-carry
+      lines: [l03, l08, l09, l12]
+      action:
+        type: event.log
+        summary: Joe carries Ray, who is begging to be left, and slows himself with the Purge closing.
+        participants: [joe]
+        entries:
+          - {characterId: joe, pole: Restraint, intensity: 1, intent: Nobody gets left, outcome: He is slow with Ray on his back}
+    - id: x-ev-scout
+      lines: [l06, l12, l17, l18]
+      action:
+        type: event.log
+        summary: Andre runs ahead alone to see that the causeway still stands and calls the others on.
+        participants: [andre]
+        entries:
+          - {characterId: andre, pole: Method, intensity: 1, intent: Know the way is open before the others commit}
+      also:
+        - {characterId: andre, pole: Freedom, intensity: 1}
+
+  quiet:
+    - {lines: [l05], why: retracted}
+    - {lines: [l07], why: crosstalk}
+    - {lines: [l08, l16], why: npc-speech}
+    - {lines: [l10, l11], why: rules-question}

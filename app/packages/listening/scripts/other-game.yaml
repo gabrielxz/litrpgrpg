@@ -1,0 +1,72 @@
+# Before the session: another campaign talked over, and last session recapped. The format is in app/DESIGN.md, "The script format".
+id: other-game
+title: Before the session, another game and a recap
+source: 'app/DESIGN.md, "Testing the listening" (other games actual play: the pass condition is almost nothing logged)'
+rules: 0.1.29
+notes: >
+  The table's other campaign, a fantasy game run by Lena on alternate weeks, told at length before
+  this one starts: an execution, a stolen crown, a betrayal, a character nicknamed Joe. All of it is
+  vivid, all of it is choices under cost, and none of it is this game. Then the GM recaps last
+  session, whose moments are already events in the record, and opens the scene with a description
+  and no choice made yet. The pass condition is logging nothing. This script stands in for the
+  actual-play transcripts DESIGN.md names, which are someone else's work and are never committed;
+  every line here is written for the app.
+
+speakers:
+  - {id: gm, role: gm, name: Dana}
+  - {id: priya, role: player, name: Priya, characters: [kara]}
+  - {id: tom, role: player, name: Tom, characters: [joe]}
+  - {id: lena, role: player, name: Lena, characters: [andre]}
+
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara, playerId: priya}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe, playerId: tom}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre, playerId: lena}}
+  - {id: invite-joe, action: {type: party.invite, fromId: kara, toId: joe}}
+  - {id: joe-joins, action: {type: party.answer, inviteId: invite-joe, accept: true}}
+  - {id: invite-andre, action: {type: party.invite, fromId: joe, toId: andre}}
+  - {id: andre-joins, action: {type: party.answer, inviteId: invite-andre, accept: true}}
+  - id: ev-pill
+    action:
+      type: event.log
+      summary: Kara, at 6 of 14 Health with the first pick, passes the only healing pill to Ray.
+      participants: [kara, joe]
+      entries: [{characterId: kara, pole: Restraint, intensity: 2}]
+  - id: ev-shard
+    action:
+      type: event.log
+      summary: Andre pockets the Resonance Shard while the others settle the pill, and says so only when asked.
+      participants: [andre, kara]
+      entries: [{characterId: andre, pole: Hunger, intensity: 1}]
+
+lines:
+  - {id: l01, speaker: tom, text: "Okay, before we start, I need to talk about Thursday. Lena, what you did to us on Thursday."}
+  - {id: l02, speaker: lena, text: "I didn't do anything. Your paladin did that."}
+  - {id: l03, speaker: priya, text: "For Dana, who wasn't there: Tom's paladin, Brother Joachim, we call him Joe, executes the prisoner. The one who surrendered. Just walks up and does it."}
+  - {id: l04, speaker: tom, text: "He had killed the whole village. Joachim took an oath. The oath says no mercy for that."}
+  - {id: l05, speaker: gm, text: "Oh no. In front of everybody?"}
+  - {id: l06, speaker: priya, text: "In front of the duke. Who had just promised the guy a trial."}
+  - {id: l07, speaker: lena, text: "And the whole table went dead quiet. It was great. That's the best thing that's happened in that campaign."}
+  - {id: l08, speaker: tom, text: "And then Priya's rogue steals the crown off the duke's head while everyone's staring at Joe."}
+  - {id: l09, speaker: priya, text: "It was right there. Nobody was looking at it. Mira takes what isn't nailed down."}
+  - {id: l10, speaker: gm, text: "So is the party wanted now?"}
+  - {id: l11, speaker: lena, text: "They're wanted in two kingdoms. And the wizard sold them out to the guard for a pardon. That's Sam's character, he wasn't even trying to hide it."}
+  - {id: l12, speaker: tom, text: "We're going to kill Sam's wizard. In character. Probably."}
+  - {id: l13, speaker: priya, text: "We are not killing Sam's wizard, we need the teleport."}
+  - {id: l14, speaker: lena, text: "Next Thursday, the trial. Joe's trial. Bring snacks."}
+  - {id: l15, speaker: gm, text: "Okay, I'm jealous. Anyway. Gradebreaker. Where were we."}
+  - {id: l16, speaker: gm, text: "Last time: the Recycling Node. Kara gave the only healing pill to Ray when she was hurt worst. Andre pocketed the Resonance Shard while everybody was busy with that."}
+  - {id: l17, speaker: lena, text: "Allegedly."}
+  - {id: l18, speaker: gm, text: "And you formed the party. The System gave each of you a status line, and you camped."}
+  - {id: l19, speaker: priya, text: "Can I check my sheet before we go? What's my HP?"}
+  - {id: l20, speaker: gm, text: "You slept, you're full. Fourteen."}
+  - {id: l21, speaker: gm, text: "Morning. The ruins spread out below the Node in every direction, four marked sectors, each one glowing a different color at the edges. Somewhere to the east something is hitting metal on metal, very regularly."}
+  - {id: l22, speaker: tom, text: "Where are the snacks. Did anyone bring snacks."}
+  - {id: l23, speaker: gm, text: "Which way do you go?"}
+
+expected:
+  quiet:
+    - {lines: [l01, l02, l03, l04, l05, l06, l07, l08, l09, l10, l11, l12, l13, l14], why: off-topic}
+    - {lines: [l16, l17, l18], why: already-recorded}
+    - {lines: [l19, l20], why: state-read-aloud}
+    - {lines: [l22], why: off-topic}
