@@ -1,0 +1,89 @@
+# A camp full of jokes phrased as actions, and two real acts among them. The format is in app/DESIGN.md, "The script format".
+id: sarcasm
+title: The camp with Ray and Marisol, jokes phrased as actions
+source: 'book/70-tutorial.md, Phase 4, "The Camp Between Sectors" (Ray and Marisol travel with the party)'
+rules: 0.1.29
+notes: >
+  Real acts have follow-up and are treated as having consequences; jokes go away (Gabriel,
+  2026-09-28). Every joke here is phrased exactly like a declaration: Joe eats the Anchor Shard,
+  Kara kills Ray, Andre pushes Joe into the fire, Joe challenges the moon, and the GM plays along
+  with the last for one line before steering back. None is taken up and none leaves a consequence.
+  The two real acts are said the same way: Kara gives Marisol her buckler in a huff, and the GM has
+  Marisol strap it on and Priya counts it later; Andre takes Marisol's water while she sleeps, the
+  GM asks if Lena is serious, she is, and Marisol finds the canteen empty in the morning. Traps: the
+  five jokes, a hypothetical, a rules question, and table life: a new puppy and a karaoke plan.
+
+speakers:
+  - {id: gm, role: gm, name: Dana}
+  - {id: priya, role: player, name: Priya, characters: [kara]}
+  - {id: tom, role: player, name: Tom, characters: [joe]}
+  - {id: lena, role: player, name: Lena, characters: [andre]}
+
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara, playerId: priya}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe, playerId: tom}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre, playerId: lena}}
+  - {id: invite-joe, action: {type: party.invite, fromId: kara, toId: joe}}
+  - {id: joe-joins, action: {type: party.answer, inviteId: invite-joe, accept: true}}
+  - {id: invite-andre, action: {type: party.invite, fromId: joe, toId: andre}}
+  - {id: andre-joins, action: {type: party.answer, inviteId: invite-andre, accept: true}}
+  - {id: kit-kara, action: {type: item.give, to: kara, items: [{name: Reactive Buckler, count: 1}, {name: Battle Axe, count: 1}]}}
+  - {id: kit-joe, action: {type: item.give, to: joe, items: [{name: Spear, count: 1}, {name: Anchor Shard, count: 1}]}}
+  - {id: kit-andre, action: {type: item.give, to: andre, items: [{name: Veil Shard, count: 1}, {name: Resonance Glass, count: 1}]}}
+
+lines:
+  - {id: l01, speaker: gm, text: "Camp. Ray and Marisol are with you now. Ray has been complaining about the cold for an hour."}
+  - {id: l02, speaker: gm, as: Ray, text: "Ray says his feet have never been this cold in his life, and he's from Minnesota."}
+  - {id: l03, speaker: priya, text: "Kara kills Ray."}
+  - {id: l04, speaker: gm, text: "Ray keeps talking about his feet. Marisol is trying to get her boots off. She's limping; the strap on her shield arm is cut through, she's got nothing to block with."}
+  - {id: l05, speaker: tom, text: "Joe eats the Anchor Shard. Whole. Like a vitamin."}
+  - {id: l06, speaker: lena, text: "Joe, no."}
+  - {id: l07, speaker: gm, text: "Joe does not eat the Anchor Shard."}
+  - {id: l08, speaker: priya, text: "Ugh, fine. Kara gives Marisol her buckler. Happy? Take it."}
+  - {id: l09, speaker: gm, text: "Marisol stares at it, and then takes it, and straps it on right there, and doesn't take it off."}
+  - {id: l10, speaker: lena, text: "Andre pushes Joe into the fire."}
+  - {id: l11, speaker: tom, text: "Rude."}
+  - {id: l12, speaker: gm, text: "Moving on. Who's on watch?"}
+  - {id: l13, speaker: tom, text: "Joe challenges the moon to single combat."}
+  - {id: l14, speaker: gm, text: "The moon declines. Okay, seriously. Watch."}
+  - {id: l15, speaker: tom, text: "Sorry, we got a puppy on Saturday and he's chewing the cable. Okay. Joe takes first watch."}
+  - {id: l16, speaker: lena, text: "What if Andre just didn't sleep at all? Is that a thing?"}
+  - {id: l17, speaker: gm, text: "You can stay up, you just don't Consolidate."}
+  - {id: l18, speaker: lena, text: "Okay. In the night, Andre takes the rest of Marisol's water while she's asleep. Her canteen."}
+  - {id: l19, speaker: gm, text: "Are you serious?"}
+  - {id: l20, speaker: lena, text: "Yes. He's going to need it tomorrow and she won't."}
+  - {id: l21, speaker: gm, text: "Okay. In the morning Marisol picks up her canteen and it's empty. She looks at each of you, one at a time, and doesn't say anything."}
+  - {id: l22, speaker: priya, text: "Kara's got no shield now, great. She's going to regret that."}
+  - {id: l23, speaker: tom, text: "Karaoke after this, yes? The place on Fifth?"}
+
+expected:
+  actions:
+    - {id: x-buckler, lines: [l08, l09], action: {type: item.remove, from: kara, name: Reactive Buckler, count: 1, note: Given to Marisol}}
+    - id: x-ev-buckler
+      lines: [l08, l09, l22]
+      action:
+        type: event.log
+        summary: Kara gives her buckler to Marisol, whose shield strap is cut, and goes without one.
+        participants: [kara]
+        entries:
+          - {characterId: kara, pole: Restraint, intensity: 1, intent: Marisol needs it more, outcome: Kara has no shield}
+      also:
+        - {characterId: kara, pole: Accord, intensity: 1}
+        - {characterId: kara, pole: Restraint, intensity: 0.5}
+
+    - id: x-ev-water
+      lines: [l18, l19, l20, l21]
+      action:
+        type: event.log
+        summary: Andre takes the rest of Marisol's water while she sleeps, and she finds the canteen empty in the morning.
+        participants: [andre]
+        entries:
+          - {characterId: andre, pole: Hunger, intensity: 1, intent: Keep the water for himself, outcome: Marisol finds it gone}
+      also:
+        - {characterId: andre, pole: Hunger, intensity: 2}
+
+  quiet:
+    - {lines: [l02], why: npc-speech}
+    - {lines: [l03, l05, l06, l07, l10, l11, l13, l14], why: joke}
+    - {lines: [l16, l17], why: hypothetical}
+    - {lines: [l23], why: planning}
