@@ -75,6 +75,7 @@ function IssueForm({
     difficulty: from?.difficulty ?? "Moderate",
     objective: from?.objective ?? "",
     count: from?.count ? String(from.count) : "",
+    countFixed: from?.countFixed ?? false,
     ve: from?.ve !== undefined ? String(from.ve) : "",
     scaled: from?.scaled ?? false,
     rewardText: from?.rewardText ?? "",
@@ -95,6 +96,7 @@ function IssueForm({
   if (f.category === "Faction" && f.issuer.trim()) spec.issuer = f.issuer.trim();
   const count = int(f.count);
   if (count) spec.count = count;
+  if (count && f.countFixed) spec.countFixed = true;
   if (f.scaled) spec.scaled = true;
   else if (int(f.ve) !== undefined) spec.ve = int(f.ve)!;
   const stacks = items.filter((i) => i.name.trim()).map((i) => ({ name: i.name.trim(), count: int(i.count) ?? 1 }));
@@ -191,10 +193,16 @@ function IssueForm({
           <input className="wide" value={f.objective} onChange={(e) => set("objective", e.target.value)} placeholder="Eliminate Glow-Mote swarms reported near the eastern perimeter." />
         </label>
         <div className="row">
-          <label title="A counted objective; sharing multiplies it by the holders">
+          <label title="A counted objective; sharing multiplies it by the holders unless it cannot scale">
             Count
             <input type="number" className="narrow-input" min={1} value={f.count} onChange={(e) => set("count", e.target.value)} placeholder="3" />
           </label>
+          {int(f.count) !== undefined && (
+            <label className="check" title="A place reached, a person protected, a thing recovered: sharing leaves the count as written">
+              <input type="checkbox" checked={f.countFixed} onChange={(e) => set("countFixed", e.target.checked)} />
+              Stays as written when shared
+            </label>
+          )}
           <label>
             VE
             <input

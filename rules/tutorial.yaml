@@ -119,7 +119,7 @@ quests:
   - group: "Phase 3: The Recycling Node"
     note: "After Looking Outward. Repeats for each marked sector: fire it again with the sector in the code (Q-002A) and complete one per sector surveyed."
     quest: {id: Q-002, category: Routine, title: Sector Survey, issuer: System, grade: F, difficulty: Easy,
-            objective: "Enter and survey a marked sector.", count: 1, ve: 40,
+            objective: "Enter and survey a marked sector.", count: 1, countFixed: true, ve: 40,
             rewardText: "A third of a level (40 VE) per sector surveyed.", time: Open until the sector closes.}
   - group: "Phase 4: The Field of Ruins"
     note: "One card per player, handed face down. Give each its own code (Q-PO-1, Q-PO-2) and flavor."

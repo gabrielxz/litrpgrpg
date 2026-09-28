@@ -45,6 +45,7 @@ const questSpec = z.object({
   difficulty: z.string().max(20),
   objective: z.string().max(1000),
   count: whole.optional(),
+  countFixed: z.boolean().optional(),
   ve: whole.optional(),
   scaled: z.boolean().optional(),
   items: z.array(stack).max(20).optional(),

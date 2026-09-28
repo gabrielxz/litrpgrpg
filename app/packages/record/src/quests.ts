@@ -37,6 +37,11 @@ export interface QuestSpec {
   objective: string;
   /** A counted objective: "Eliminate Glow-Mote swarms (0/3)". */
   count?: number;
+  /**
+   * A count that cannot scale (reach a place, protect a person, recover a thing): it stays as
+   * written when the quest is shared (Quests, "Quest sharing").
+   */
+  countFixed?: boolean;
   /** The completion VE; absent, the Reward Reference Table's value. */
   ve?: number;
   /** "Reward proportional to...": the GM sets the payout at completion. */
@@ -205,6 +210,7 @@ function issue(engine: Engine, world: World, a: IssueQuest, key: string): Effect
     refusedBy: [],
   };
   if (s.count !== undefined) q.count = { done: 0, of: s.count };
+  if (s.count !== undefined && s.countFixed) q.countFixed = true;
   if (s.hours !== undefined) {
     if (!Number.isInteger(s.hours) || s.hours < 1) throw new Rejected("a time limit is a whole number of hours");
     if (!world.clock) throw new Rejected("set the in-game clock before giving a quest a time limit in hours");
@@ -256,8 +262,8 @@ function share(world: World, a: ShareQuest): Effect[] {
   const joined = p.members.filter((m) => !q.holders.includes(m) && !world.characters.get(m)?.dead);
   q.holders = [...q.holders, ...joined];
   q.sharedIn = p.id;
-  // "Eliminate ten" held by three becomes thirty, and stays thirty.
-  if (q.count) q.count = { done: q.count.done, of: q.count.of * q.holders.length };
+  // "Eliminate ten" held by three becomes thirty, and stays thirty; a sector surveyed stays one.
+  if (q.count && !q.countFixed) q.count = { done: q.count.done, of: q.count.of * q.holders.length };
   return notices(q, "quest-shared", q.holders, q.count ? { done: q.count.done, of: q.count.of } : {});
 }
 

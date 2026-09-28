@@ -1,8 +1,8 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.29"
-dated: "2026-09-27"
+version: "0.1.30"
+dated: "2026-09-28"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
   flat-value VE (Tolerance 80, level 120, 20 per hour), the Grade Gap Rule,
@@ -98,3 +98,6 @@ notes: >
   nothing redirects them (Gabriel). Free points still go elsewhere. The Progression sentence is queued for the book.
   0.1.29: a class technique may carry a hook the companion app applies (a Clash bonus on a named side, or a heal with a
   reach) and names its drawback; Triage, Breach, Pay in Blood, and Sworn Blow carry theirs. No number moved.
+  0.1.30: a quest's count may be marked as one that cannot scale (Quests, "Quest sharing": reach a place, protect a
+  person, recover a thing), and sharing leaves it as written; the tutorial's Sector Survey (Q-002) is marked. No
+  number moved.

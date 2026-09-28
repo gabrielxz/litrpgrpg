@@ -3,7 +3,7 @@
 id: tutorial-martial-remnant
 title: The Martial Remnant, one Sentry, the armory, and the survey
 source: 'book/70-tutorial.md, Phase 4, "Sector A: The Martial Remnant"'
-rules: 0.1.29
+rules: 0.1.30
 notes: >
   The same table as the Node script, rested after the camp. The fight runs in the app: every roll,
   Clash, and forced move is under `recorded`, and the GM's lines reading them out are traps for a
@@ -31,7 +31,7 @@ setup:
       type: quest.issue
       to: [kara]
       quest: {id: Q-002A, category: Routine, title: Sector Survey, issuer: System, grade: F, difficulty: Easy,
-              objective: "Enter and survey a marked sector.", count: 1, ve: 40,
+              objective: "Enter and survey a marked sector.", count: 1, countFixed: true, ve: 40,
               rewardText: "A third of a level (40 VE) per sector surveyed.", time: Open until the sector closes.}
   - {id: q-002a-yes, action: {type: quest.answer, questId: q-002a, characterId: kara, accept: true}}
   - {id: q-002a-shared, action: {type: quest.share, questId: q-002a, characterId: kara}}

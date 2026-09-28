@@ -1272,6 +1272,19 @@ describe("System Quests", () => {
     expect(q("Q-181").sharedIn).toBeUndefined();
   });
 
+  it("leaves a count that cannot scale as written when shared (a sector surveyed stays one)", () => {
+    party("kara", "joe", "andre");
+    const survey = { id: "Q-002A", category: "Routine" as const, title: "Sector Survey", difficulty: "Easy", objective: "Enter and survey a marked sector.", count: 1, countFixed: true };
+    gm({ type: "quest.issue", quest: survey, to: ["kara"] });
+    as(P1, { type: "quest.answer", questId: "Q-002A", characterId: "kara", accept: true });
+    const out = as(P1, { type: "quest.share", questId: "Q-002A", characterId: "kara" });
+    expect(q("Q-002A")).toMatchObject({ holders: ["kara", "joe", "andre"], count: { done: 0, of: 1 }, countFixed: true });
+    expect(out.effects[0]).toMatchObject({ kind: "quest-shared", done: 0, of: 1 });
+    // A flag on a quest with no count means nothing.
+    gm({ type: "quest.issue", quest: { ...survey, id: "Q-002B", count: undefined }, to: ["kara"] });
+    expect(q("Q-002B").countFixed).toBeUndefined();
+  });
+
   it("pays every participating holder on completion and sends the items to the spoils or a holder", () => {
     party("kara", "joe");
     gm({ type: "quest.issue", quest: { ...q181, items: [...q181.items] }, to: ["kara"] });
