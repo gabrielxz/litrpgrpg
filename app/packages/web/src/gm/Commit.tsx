@@ -6,7 +6,7 @@
  */
 import type { Action, Envelope, Preview } from "@gradebreaker/record";
 import { useEffect, useState } from "react";
-import { newActionId, preview, submit } from "../api.ts";
+import { type Appended, newActionId, preview, submit } from "../api.ts";
 import { changeLine, effectLine, type Names } from "../text.ts";
 
 export interface CommitProps {
@@ -20,6 +20,8 @@ export interface CommitProps {
   onRecorded?: (envelope: Envelope) => void;
   /** What caused it: a prepared item fired from Prep. */
   cause?: string;
+  /** Records through another route than the log's (accepting a draft); the preview is the same. */
+  submitWith?: (id: string, action: Action) => Promise<Appended>;
 }
 
 export function PreviewView({ pv, names }: { pv: Preview; names: Names }) {
@@ -68,7 +70,7 @@ export function PreviewView({ pv, names }: { pv: Preview; names: Names }) {
   );
 }
 
-export function Commit({ campaignId, action, problem, names, label, onRecorded, cause }: CommitProps) {
+export function Commit({ campaignId, action, problem, names, label, onRecorded, cause, submitWith }: CommitProps) {
   const [id, setId] = useState(newActionId);
   const [pv, setPv] = useState<Preview | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -97,7 +99,7 @@ export function Commit({ campaignId, action, problem, names, label, onRecorded, 
     if (!action) return;
     setBusy(true);
     try {
-      const r = await submit(campaignId, id, action, cause);
+      const r = submitWith ? await submitWith(id, action) : await submit(campaignId, id, action, cause);
       setId(newActionId());
       setPv(null);
       onRecorded?.(r.envelope);

@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./typed": "./src/typed.ts"
   },
   "scripts": {
     "test": "vitest run",

@@ -9,10 +9,12 @@ WORKDIR /repo
 COPY app/package.json app/pnpm-lock.yaml app/pnpm-workspace.yaml app/tsconfig.base.json app/
 COPY app/packages/engine/package.json app/packages/engine/
 COPY app/packages/record/package.json app/packages/record/
+COPY app/packages/listening/package.json app/packages/listening/
 COPY app/packages/web/package.json app/packages/web/
 RUN cd app && pnpm install --frozen-lockfile --filter "@gradebreaker/web..."
 COPY app/packages/engine app/packages/engine
 COPY app/packages/record app/packages/record
+COPY app/packages/listening app/packages/listening
 COPY app/packages/web app/packages/web
 RUN cd app && pnpm --filter @gradebreaker/web build
 
@@ -23,12 +25,14 @@ WORKDIR /repo
 COPY app/package.json app/pnpm-lock.yaml app/pnpm-workspace.yaml app/tsconfig.base.json app/
 COPY app/packages/engine/package.json app/packages/engine/
 COPY app/packages/record/package.json app/packages/record/
+COPY app/packages/listening/package.json app/packages/listening/
 COPY app/packages/server/package.json app/packages/server/
 RUN cd app && pnpm install --frozen-lockfile --prod --filter "@gradebreaker/server..."
 
 COPY rules rules
 COPY app/packages/engine app/packages/engine
 COPY app/packages/record app/packages/record
+COPY app/packages/listening app/packages/listening
 COPY app/packages/server app/packages/server
 COPY --from=web /repo/app/packages/web/dist app/packages/web/dist
 

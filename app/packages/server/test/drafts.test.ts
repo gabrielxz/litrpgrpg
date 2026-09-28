@@ -1,0 +1,201 @@
+/**
+ * Drafting from typed table talk, end to end on PGlite with a scripted model: the GM pastes
+ * talk, the run drafts in the background, and each draft is accepted (as drafted or edited) into
+ * the log with the source `suggestion`, or dismissed and restored. Players reach none of it.
+ */
+import { randomUUID } from "node:crypto";
+import { PGlite } from "@electric-sql/pglite";
+import { loadRules } from "@gradebreaker/engine/node";
+import { SignJWT, createLocalJWKSet, exportJWK, generateKeyPair } from "jose";
+import { beforeEach, describe, expect, it } from "vitest";
+import type { z } from "zod";
+import { CampaignAi, type LanguageModel, ModelError, type Problem } from "../src/ai.ts";
+import { createApp } from "../src/app.ts";
+import { jwtVerifier } from "../src/auth.ts";
+import { type Db, migrate, pgliteDb } from "../src/db.ts";
+import { Drafts } from "../src/drafts.ts";
+import { Service } from "../src/service.ts";
+
+const rules = loadRules();
+const ISSUER = "https://test-project.supabase.co/auth/v1";
+const { privateKey, publicKey } = await generateKeyPair("ES256");
+const verifier = jwtVerifier(createLocalJWKSet({ keys: [{ ...(await exportJWK(publicKey)), alg: "ES256" }] }), ISSUER);
+const signIn = (name: string) =>
+  new SignJWT({ email: `${name.toLowerCase()}@example.com`, role: "authenticated", user_metadata: { full_name: name } })
+    .setProtectedHeader({ alg: "ES256" })
+    .setSubject(randomUUID())
+    .setIssuer(ISSUER)
+    .setAudience("authenticated")
+    .setIssuedAt()
+    .setExpirationTime("1h")
+    .sign(privateKey);
+
+/** What the scripted model answers next: an output, or a problem. */
+let outputs: ({ output: unknown } | { problem: Problem })[] = [];
+let prompts: string[] = [];
+const scripted = (_key: string, model: string): LanguageModel => ({
+  model,
+  async check() {},
+  async draft<T>(req: { prompt: string; schema: z.ZodType<T> }) {
+    prompts.push(req.prompt);
+    const next = outputs.shift() ?? { output: { events: [] } };
+    if ("problem" in next) throw new ModelError(next.problem, `scripted ${next.problem}`);
+    return { output: req.schema.parse(next.output), usage: { model, inputTokens: 1000, outputTokens: 200, cacheReadTokens: 0, cacheWriteTokens: 0 } };
+  },
+});
+
+let db: Db;
+let drafts: Drafts;
+let app: ReturnType<typeof createApp>;
+
+async function call(method: string, path: string, token: string, body?: unknown) {
+  const res = await app.request(`/api${path}`, {
+    method,
+    headers: { authorization: `Bearer ${token}`, ...(body === undefined ? {} : { "content-type": "application/json" }) },
+    ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+  });
+  const text = await res.text();
+  return { status: res.status, json: text ? JSON.parse(text) : null };
+}
+
+async function table() {
+  const gm = await signIn("Gabriel");
+  const campaignId = (await call("POST", "/campaigns", gm, { name: "The Valley" })).json.campaign.id as string;
+  const code = (await call("POST", `/campaigns/${campaignId}/invites`, gm, {})).json.code;
+  const player = await signIn("Ana");
+  await call("POST", `/invites/${code}/accept`, player);
+  const playerId = (await call("GET", "/me", player)).json.user.id as string;
+  const act = (action: unknown) => call("POST", `/campaigns/${campaignId}/actions`, gm, { id: randomUUID(), action });
+  await act({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId });
+  await act({ type: "character.pregen", characterId: "joe", pregen: "Joe" });
+  await call("PUT", `/campaigns/${campaignId}/ai/key`, gm, { key: "sk-ant-test-0123456789-abcd" });
+  return { gm, player, campaignId };
+}
+
+const TALK = ["GM: The pill sits between you.", "Kara: Mine. I swallow it before anyone argues.", "Ana: lol sorry Joe", "Joe: Fine. Take it."].join("\n");
+
+const pillEvent = {
+  lines: ["L2", "L4", "L9"],
+  summary: "Kara swallowed the only pill before the others could argue.",
+  context: null,
+  participants: ["kara", "joe"],
+  entries: [{ characterId: "kara", why: "She took the pill at the others' cost.", pole: "Hunger", intensity: 1, intent: "the pill", outcome: null, secondary: null, coercion: false }],
+};
+
+async function drafted(campaignId: string, gm: string, output: unknown = { events: [pillEvent] }) {
+  outputs = [{ output }];
+  const started = await call("POST", `/campaigns/${campaignId}/drafts`, gm, { text: TALK });
+  expect(started.status).toBe(202);
+  expect(started.json.run.status).toBe("drafting");
+  await drafts.settled(started.json.run.id);
+  return (await call("GET", `/campaigns/${campaignId}/drafts`, gm)).json.runs[0];
+}
+
+beforeEach(async () => {
+  outputs = [];
+  prompts = [];
+  db = await pgliteDb(new PGlite());
+  await migrate(db);
+  const service = await Service.open(db, rules, verifier);
+  const ai = new CampaignAi(db, "a server secret for the tests", scripted);
+  drafts = await Drafts.open(db, service, ai);
+  app = createApp(service, { ai, drafts });
+});
+
+describe("drafting from typed table talk", () => {
+  it("reads the talk, drafts in the background, and keeps the drafts apart from the log", async () => {
+    const { gm, campaignId } = await table();
+    const before = (await call("GET", `/campaigns/${campaignId}/log`, gm)).json.log.length;
+    const run = await drafted(campaignId, gm);
+    expect(run).toMatchObject({ status: "done", feature: "draft-events", repaired: ["draft-1: dropped line ids the scene lacks (L9)"] });
+    expect(run.talk.lines.map((l: { as?: string }) => l.as ?? null)).toEqual([null, "kara", null, "joe"]);
+    expect(run.talk.readings.map((r: { kind: string }) => r.kind)).toEqual(["gm", "character", "member", "character"]);
+    expect(run.items).toEqual([
+      expect.objectContaining({ itemId: "draft-1", status: "open", lines: ["L2", "L4"], reasons: [{ characterId: "kara", why: "She took the pill at the others' cost." }] }),
+    ]);
+    expect(run.items[0].action).toMatchObject({ type: "event.log", participants: ["kara", "joe"], entries: [{ characterId: "kara", pole: "Hunger", intensity: 1, intent: "the pill" }] });
+    // The model saw the roster by character and the lines as spoken.
+    expect(prompts[0]).toContain("[L2] Ana as Kara: Mine.");
+    expect(prompts[0]).toContain("[L4] Gabriel (GM) as Joe: Fine.");
+    expect((await call("GET", `/campaigns/${campaignId}/log`, gm)).json.log.length).toBe(before);
+    const [usage] = await db.query("select feature from ai_usage");
+    expect(usage!.feature).toBe("draft-events");
+  });
+
+  it("records an accepted draft, edited, as the GM's event with the source suggestion, once", async () => {
+    const { gm, campaignId } = await table();
+    const run = await drafted(campaignId, gm);
+    const action = { ...run.items[0].action, summary: "Kara took the pill.", entries: [{ ...run.items[0].action.entries[0], intensity: 2 }] };
+    const id = randomUUID();
+    const path = `/campaigns/${campaignId}/drafts/${run.id}/draft-1/accept`;
+    const ok = await call("POST", path, gm, { id, action });
+    expect(ok.status).toBe(201);
+    expect(ok.json.item).toMatchObject({ status: "accepted", actionId: id });
+    expect(ok.json.appended.envelope).toMatchObject({ id, source: "suggestion", cause: `draft:${run.id}/draft-1`, actor: { role: "gm" } });
+    expect((await call("POST", path, gm, { id, action })).status).toBe(200);
+    expect((await call("POST", path, gm, { id: randomUUID(), action })).status).toBe(409);
+    const view = (await call("GET", `/campaigns/${campaignId}`, gm)).json;
+    expect(view.events).toEqual([expect.objectContaining({ id, summary: "Kara took the pill." })]);
+    expect(view.events[0].entries[0].intensity).toBe(2);
+  });
+
+  it("offers an accepted draft again once its event is undone", async () => {
+    const { gm, campaignId } = await table();
+    const run = await drafted(campaignId, gm);
+    const path = `/campaigns/${campaignId}/drafts/${run.id}/draft-1/accept`;
+    const id = randomUUID();
+    await call("POST", path, gm, { id, action: run.items[0].action });
+    await call("POST", `/campaigns/${campaignId}/actions`, gm, { id: randomUUID(), action: { type: "void", targetId: id, reason: "undo" } });
+    const again = (await call("GET", `/campaigns/${campaignId}/drafts`, gm)).json.runs[0].items[0];
+    expect(again).toMatchObject({ status: "accepted", undone: true });
+    expect((await call("POST", path, gm, { id: randomUUID(), action: run.items[0].action })).status).toBe(201);
+  });
+
+  it("dismisses and restores a draft, and accepts only an event", async () => {
+    const { gm, campaignId } = await table();
+    const run = await drafted(campaignId, gm);
+    const base = `/campaigns/${campaignId}/drafts/${run.id}/draft-1`;
+    expect((await call("POST", `${base}/dismiss`, gm)).json.item.status).toBe("dismissed");
+    expect((await call("POST", `${base}/dismiss`, gm)).status).toBe(409);
+    expect((await call("POST", `${base}/accept`, gm, { id: randomUUID(), action: run.items[0].action })).status).toBe(409);
+    expect((await call("POST", `${base}/restore`, gm)).json.item.status).toBe("open");
+    const notEvent = await call("POST", `${base}/accept`, gm, { id: randomUUID(), action: { type: "item.remove", from: "kara", name: "Rations", count: 1 } });
+    expect(notEvent.status).toBe(422);
+  });
+
+  it("is the GM's alone", async () => {
+    const { gm, player, campaignId } = await table();
+    const run = await drafted(campaignId, gm);
+    expect((await call("GET", `/campaigns/${campaignId}/drafts`, player)).status).toBe(403);
+    expect((await call("POST", `/campaigns/${campaignId}/drafts`, player, { text: TALK })).status).toBe(403);
+    expect((await call("POST", `/campaigns/${campaignId}/drafts/${run.id}/draft-1/dismiss`, player)).status).toBe(403);
+    const view = (await call("GET", `/campaigns/${campaignId}`, player)).json;
+    expect(JSON.stringify(view)).not.toContain("swallowed");
+  });
+
+  it("records the provider's problem on the run, and refuses with no key, no lines, or a run still drafting", async () => {
+    const { gm, campaignId } = await table();
+    outputs = [{ problem: "billing" }];
+    const started = (await call("POST", `/campaigns/${campaignId}/drafts`, gm, { text: TALK })).json.run;
+    await drafts.settled(started.id);
+    const failed = (await call("GET", `/campaigns/${campaignId}/drafts`, gm)).json.runs[0];
+    expect(failed).toMatchObject({ status: "failed", problem: "billing", items: [] });
+
+    expect((await call("POST", `/campaigns/${campaignId}/drafts`, gm, { text: " \n " })).status).toBe(422);
+    await db.query("update draft_runs set status = 'drafting' where id = $1", [started.id]);
+    expect((await call("POST", `/campaigns/${campaignId}/drafts`, gm, { text: TALK })).status).toBe(409);
+    await db.query("update draft_runs set status = 'failed' where id = $1", [started.id]);
+
+    await call("DELETE", `/campaigns/${campaignId}/ai/key`, gm);
+    expect((await call("POST", `/campaigns/${campaignId}/drafts`, gm, { text: TALK })).json).toMatchObject({ problem: "key" });
+  });
+
+  it("marks a run left drafting by a stopped server as failed", async () => {
+    const { gm, campaignId } = await table();
+    const run = await drafted(campaignId, gm);
+    await db.query("update draft_runs set status = 'drafting' where id = $1", [run.id]);
+    await Drafts.open(db, await Service.open(db, rules, verifier), new CampaignAi(db, "x", scripted));
+    const after = (await call("GET", `/campaigns/${campaignId}/drafts`, gm)).json.runs[0];
+    expect(after).toMatchObject({ status: "failed", message: expect.stringContaining("restarted") });
+  });
+});

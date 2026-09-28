@@ -21,6 +21,7 @@ import { CampaignAi } from "./ai.ts";
 import { createApp } from "./app.ts";
 import { supabaseVerifier } from "./auth.ts";
 import { devSignIn, eitherVerifier } from "./devauth.ts";
+import { Drafts } from "./drafts.ts";
 import { migrate, postgresDb } from "./db.ts";
 import { LiveHub } from "./live.ts";
 import { Service } from "./service.ts";
@@ -55,9 +56,11 @@ for (const name of await migrate(db)) log(`migrated ${name}`);
 const service = await Service.open(db, loadRules(process.env.RULES_DIR), verifier, log);
 const hub = new LiveHub(service, log);
 if (!process.env.AI_KEY_SECRET) log("AI_KEY_SECRET is not set: GMs cannot store a language-model key");
+const ai = new CampaignAi(db, process.env.AI_KEY_SECRET);
 const app = createApp(service, {
   connected: () => hub.connected,
-  ai: new CampaignAi(db, process.env.AI_KEY_SECRET),
+  ai,
+  drafts: await Drafts.open(db, service, ai),
   ...(publishableKey ? { supabase: { url: supabaseUrl, publishableKey } } : {}),
   ...(dev ? { dev } : {}),
   ...(existsSync(resolve(webDist, "index.html")) ? { webDist } : {}),

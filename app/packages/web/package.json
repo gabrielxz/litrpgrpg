@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@gradebreaker/engine": "workspace:*",
+    "@gradebreaker/listening": "workspace:*",
     "@gradebreaker/record": "workspace:*",
     "@supabase/supabase-js": "^2.117.2",
     "react": "^19.3.0",

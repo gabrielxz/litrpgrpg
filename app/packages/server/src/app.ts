@@ -7,12 +7,13 @@
 import { readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 import { serveStatic } from "@hono/node-server/serve-static";
-import { submissionSchema } from "@gradebreaker/record";
+import { type LogEvent, submissionSchema } from "@gradebreaker/record";
 import { Hono } from "hono";
 import type { ContentfulStatusCode } from "hono/utils/http-status";
 import { z } from "zod";
 import { type CampaignAi, ModelError } from "./ai.ts";
 import type { DevSignIn } from "./devauth.ts";
+import { type Drafts, MAX_TALK_CHARS } from "./drafts.ts";
 import { HttpError, type Service, type User } from "./service.ts";
 
 type Env = { Variables: { user: User | null } };
@@ -32,6 +33,8 @@ const characterSpec = z.discriminatedUnion("kind", [
 const joinBody = z.object({ campaignId: z.string().min(1) });
 const aiKey = z.object({ key: z.string().min(1).max(500), model: z.string().optional() });
 const aiModel = z.object({ model: z.string() });
+const draftTalk = z.object({ text: z.string().max(MAX_TALK_CHARS * 2) });
+const acceptDraft = submissionSchema.pick({ id: true, action: true });
 const createInvite = z.object({
   maxUses: z.number().int().positive().optional(),
   expiresInHours: z.number().positive().optional(),
@@ -60,6 +63,8 @@ export interface AppOptions {
   webDist?: string;
   /** The campaigns' language-model keys and usage (ai.ts). */
   ai?: CampaignAi;
+  /** Drafts from typed table talk (drafts.ts). */
+  drafts?: Drafts;
 }
 
 export function createApp(service: Service, opts: AppOptions = {}) {
@@ -205,6 +210,32 @@ export function createApp(service: Service, opts: AppOptions = {}) {
     await service.requireGm(id, c.get("user"));
     await ai().removeKey(id);
     return c.json(await aiView(id));
+  });
+
+  // Drafts from typed table talk: the GM's alone, apart from the log until accepted.
+  const drafts = () => {
+    if (!opts.drafts) throw new HttpError(404, "not found");
+    return opts.drafts;
+  };
+  app.get("/campaigns/:id/drafts", async (c) => c.json({ runs: await drafts().list(c.req.param("id"), c.get("user")) }));
+  app.post("/campaigns/:id/drafts", async (c) => {
+    const b = await body(c, draftTalk);
+    return c.json({ run: await drafts().start(c.req.param("id"), c.get("user"), b.text) }, 202);
+  });
+  app.post("/campaigns/:id/drafts/:run/:item/accept", async (c) => {
+    const b = await body(c, acceptDraft);
+    if (b.action.type !== "event.log") throw new HttpError(422, "an event draft is accepted as an event");
+    const { id, run, item } = c.req.param();
+    const out = await drafts().accept(id, c.get("user"), run, item, { id: b.id, action: b.action as LogEvent });
+    return c.json(out, out.appended.duplicate ? 200 : 201);
+  });
+  app.post("/campaigns/:id/drafts/:run/:item/dismiss", async (c) => {
+    const { id, run, item } = c.req.param();
+    return c.json({ item: await drafts().mark(id, c.get("user"), run, item, "dismissed") });
+  });
+  app.post("/campaigns/:id/drafts/:run/:item/restore", async (c) => {
+    const { id, run, item } = c.req.param();
+    return c.json({ item: await drafts().mark(id, c.get("user"), run, item, "open") });
   });
 
   app.get("/campaigns/:id/invites", async (c) => {

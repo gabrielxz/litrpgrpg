@@ -1,6 +1,6 @@
 /** The server's HTTP API, with the signed-in person's token on every call. */
-import type { Action, Envelope, Preview } from "@gradebreaker/record";
-import type { Effect } from "@gradebreaker/record";
+import type { TypedTalk } from "@gradebreaker/listening/typed";
+import type { Action, Effect, Envelope, LogEvent, Preview } from "@gradebreaker/record";
 
 export interface Config {
   supabaseUrl: string | null;
@@ -79,3 +79,41 @@ export const submit = (campaignId: string, id: string, action: Action, cause?: s
 
 export const preview = (campaignId: string, id: string, action: Action) =>
   api<Preview>("POST", `/campaigns/${campaignId}/preview`, { id, action });
+
+// ------------------------------------------------ drafts from table talk ---
+
+/** One draft the model made, waiting for the GM (server/src/drafts.ts). */
+export interface DraftItem {
+  runId: string;
+  itemId: string;
+  lines: string[];
+  action: LogEvent;
+  reasons: { characterId: string; why: string }[];
+  status: "open" | "accepted" | "dismissed";
+  actionId?: string;
+  undone?: boolean;
+  resolvedAt?: string;
+}
+
+export interface DraftRun {
+  id: string;
+  createdAt: string;
+  finishedAt?: string;
+  status: "drafting" | "done" | "failed";
+  problem?: string;
+  message?: string;
+  talk: TypedTalk;
+  repaired: string[];
+  dropped: { why: string }[];
+  items: DraftItem[];
+}
+
+export const draftRuns = (campaignId: string) => api<{ runs: DraftRun[] }>("GET", `/campaigns/${campaignId}/drafts`);
+
+export const startDraft = (campaignId: string, text: string) => api<{ run: DraftRun }>("POST", `/campaigns/${campaignId}/drafts`, { text });
+
+export const acceptDraft = (campaignId: string, item: DraftItem, id: string, action: Action) =>
+  api<{ appended: Appended; item: DraftItem }>("POST", `/campaigns/${campaignId}/drafts/${item.runId}/${item.itemId}/accept`, { id, action });
+
+export const markDraft = (campaignId: string, item: DraftItem, to: "dismiss" | "restore") =>
+  api<{ item: DraftItem }>("POST", `/campaigns/${campaignId}/drafts/${item.runId}/${item.itemId}/${to}`);

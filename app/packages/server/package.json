@@ -13,6 +13,7 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.128.0",
     "@gradebreaker/engine": "workspace:*",
+    "@gradebreaker/listening": "workspace:*",
     "@gradebreaker/record": "workspace:*",
     "@hono/node-server": "^2.1.1",
     "hono": "^4.13.9",
@@ -23,7 +24,6 @@
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.8",
-    "@gradebreaker/listening": "workspace:*",
     "@types/pg": "^8.23.1",
     "@types/ws": "^8.18.1"
   }

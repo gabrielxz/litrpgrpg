@@ -71,6 +71,7 @@ export function Log({
                 <span className="what">{describe(e.action, names, seqOf, who)}</span>
                 <span className="meta">
                   {who(e.actor.userId)} · {new Date(e.at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                  {e.source === "suggestion" && e.cause?.startsWith("draft:") ? " · accepted from a draft" : ""}
                 </span>
                 {canVoid && (
                   <span className="entry-actions">
