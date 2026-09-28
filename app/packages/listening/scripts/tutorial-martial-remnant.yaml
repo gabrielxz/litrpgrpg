@@ -133,6 +133,9 @@ expected:
         participants: [andre]
         entries:
           - {characterId: andre, pole: Method, intensity: 1, intent: Learn how they wake before going near one}
+      # Watching from safety cost him only time: the lower weight is also a right reading.
+      also:
+        - {characterId: andre, pole: Method, intensity: 0.5}
 
     - {id: x-first-in, lines: [l04], action: {type: counter.tick, characterId: kara, counter: first-into-a-hostile-site, count: 1}}
     - id: x-ev-charge
@@ -144,14 +147,16 @@ expected:
         entries:
           - {characterId: kara, pole: Force, intensity: 1, intent: Engage at once, outcome: The Sentry wakes on her}
 
+    # The drive comes free with the Clash, and positioning at no cost is no tally: a reminder at most.
     - id: x-ev-drive
+      optional: true
       lines: [l16]
       action:
         type: event.log
         summary: Joe spends his Driven Back shoving the Sentry into the racks, away from Kara.
         participants: [joe, kara]
         entries:
-          - {characterId: joe, pole: Method, intensity: 1, intent: Put the construct where it cannot reach Kara}
+          - {characterId: joe, pole: Method, intensity: 0.5, intent: Put the construct where it cannot reach Kara}
 
     - {id: x-empty-handed, lines: [l24, l25, l27, l28], action: {type: counter.tick, characterId: andre, counter: empty-handed-wins, count: 1}}
 
