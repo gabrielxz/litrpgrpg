@@ -72,6 +72,10 @@ function keyOf(x: Item, invites: Map<string, string>): string {
     case "quest.reveal":
     case "quest.withdraw":
       return [a.type, a.questId].join("|");
+    case "combat.move":
+      return [a.type, a.combatantId, a.zoneId].join("|");
+    case "proficiency.mark":
+      return [a.type, a.characterId, a.shape].join("|");
     case "counter.tick":
       return [a.type, a.characterId, a.counter].join("|");
     case "hp.change":
@@ -152,12 +156,14 @@ export function score(script: Script, drafts: Drafted[], opts: { categories?: st
   }
   const quiet = new Map<string, string>();
   for (const q of script.expected.quiet) for (const l of q.lines) quiet.set(l, q.why);
+  const recorded = new Set(script.recorded.map((r) => keyOf({ lines: [], action: r.action as Action }, setupInvites)));
   const falsePositives: Report["falsePositives"] = [];
   drafted.forEach((d, i) => {
     if (used.has(i)) return;
     cat(categoryOf(d)).fp++;
     const reasons = [...new Set(d.lines.map((l) => quiet.get(l)))];
-    falsePositives.push({ draft: d, why: reasons.every((r) => r) ? reasons.join(", ") : "unexpected" });
+    const why = d.action && recorded.has(keyOf(d, draftedKeys)) ? "already-recorded" : reasons.every((r) => r) ? reasons.join(", ") : "unexpected";
+    falsePositives.push({ draft: d, why });
   });
 
   const entries = scoreEntries(expected, drafted, match, used);

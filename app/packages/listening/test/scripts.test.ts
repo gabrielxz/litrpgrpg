@@ -40,6 +40,29 @@ describe.each(scripts.map((s) => [s.id, s] as const))("script %s", (_, script) =
   });
 });
 
+describe("the Martial Remnant", () => {
+  const script = scripts.find((s) => s.id === "tutorial-martial-remnant")!;
+
+  it("replays the fight the GM reads out: Joe's Mark, the drive, Andre's bare-handed kill", () => {
+    const rec = replay(engine, script);
+    const clashes = rec.log.filter((e) => e.action.type === "combat.defend").map((e) => rec.state.effects.get(e.id)!.find((x) => x.kind === "clash") as { margin: number });
+    expect(clashes.map((c) => c.margin)).toEqual([8, 41, -27, 44]);
+    expect(rec.sheet("joe")!.proficiencies).toEqual([expect.objectContaining({ shape: "spears and staves", tier: "Trained", marks: 1 })]);
+    expect(rec.character("kara")!.counters).toEqual({ "first-into-a-hostile-site": 1 });
+    expect(rec.character("andre")!.counters).toMatchObject({ "empty-handed-wins": 1, "confirmed-kills": 1 });
+    for (const id of ["kara", "joe", "andre"]) expect(rec.sheet(id)!.storedVe).toBe(50);
+    expect(rec.state.inventory.get("kara")?.map((x) => x.name)).toContain("Battle Axe");
+  });
+
+  it("names a draft of what the tracker holds as already recorded", () => {
+    const drafts: Drafted[] = [
+      { lines: ["l16"], action: { type: "combat.move", combatantId: "sentry", zoneId: "racks", forced: true } },
+      { lines: ["l10"], action: { type: "proficiency.mark", characterId: "joe", shape: "spears and staves" } },
+    ];
+    expect(score(script, drafts).falsePositives.map((f) => f.why)).toEqual(["already-recorded", "already-recorded"]);
+  });
+});
+
 describe("the Node scene", () => {
   const script = scripts.find((s) => s.id === "tutorial-node-scarcity")!;
 

@@ -1,0 +1,192 @@
+# Sector A, the Martial Remnant: one Training Sentry fought in the combat tracker, the counts only
+# the fiction knows, and the armory. The format is in app/DESIGN.md, "The script format".
+id: tutorial-martial-remnant
+title: The Martial Remnant, one Sentry, the armory, and the survey
+source: 'book/70-tutorial.md, Phase 4, "Sector A: The Martial Remnant"'
+rules: 0.1.29
+notes: >
+  The same table as the Node script, rested after the camp. The fight runs in the app: every roll,
+  Clash, and forced move is under `recorded`, and the GM's lines reading them out are traps for a
+  drafter that logs what the tracker already holds. What the listener owns here is what the tracker
+  cannot see: who went in first, who fought with nothing in their hands, who watched before
+  engaging, the armory's contents, the axe, and the survey. Kara carries a length of rebar, an
+  improvised weapon with no shape, so only Andre's win is empty-handed.
+
+speakers:
+  - {id: gm, role: gm, name: Dana}
+  - {id: priya, role: player, name: Priya, characters: [kara]}
+  - {id: tom, role: player, name: Tom, characters: [joe]}
+  - {id: lena, role: player, name: Lena, characters: [andre]}
+
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara, playerId: priya}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe, playerId: tom}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre, playerId: lena}}
+  - {id: invite-joe, action: {type: party.invite, fromId: kara, toId: joe}}
+  - {id: joe-joins, action: {type: party.answer, inviteId: invite-joe, accept: true}}
+  - {id: invite-andre, action: {type: party.invite, fromId: joe, toId: andre}}
+  - {id: andre-joins, action: {type: party.answer, inviteId: invite-andre, accept: true}}
+  - id: q-002a
+    action:
+      type: quest.issue
+      to: [kara]
+      quest: {id: Q-002A, category: Routine, title: Sector Survey, issuer: System, grade: F, difficulty: Easy,
+              objective: "Enter and survey a marked sector.", count: 1, ve: 40,
+              rewardText: "A third of a level (40 VE) per sector surveyed.", time: Open until the sector closes.}
+  - {id: q-002a-yes, action: {type: quest.answer, questId: q-002a, characterId: kara, accept: true}}
+  - {id: q-002a-shared, action: {type: quest.share, questId: q-002a, characterId: kara}}
+  - {id: kit-kara, action: {type: item.give, to: kara, items: [{name: Reactive Buckler, count: 1}, {name: Edge Shard, count: 1}]}}
+  - {id: kit-joe, action: {type: item.give, to: joe, items: [{name: Spear, count: 1}, {name: Low-Grade Armor Scraps, count: 1}]}}
+  - {id: kit-andre, action: {type: item.give, to: andre, items: [{name: Veil Shard, count: 1}, {name: Resonance Glass, count: 1}, {name: Resonance Shard, count: 1}]}}
+
+lines:
+  - {id: l01, speaker: gm, text: "The rain line ends and the ground turns to worked stone. Tiers step down in a ring to a floor of gray sand, and between the empty racks there are figures cut from the same stone. One on the far side is hitting a post, over and over."}
+  - {id: l02, speaker: lena, text: "Andre doesn't go down. He finds the platform at the top of the tiers and just watches them for a minute. What are they doing?"}
+  - {id: l03, speaker: gm, text: "The one at the post keeps hitting it. The others don't move until something comes near. There's one standing in front of a door at the back."}
+  - {id: l04, speaker: priya, text: "Kara's not waiting. She drops down onto the sand and walks straight at the nearest one."}
+  - {id: l05, speaker: tom, text: "Kara, wait. Ugh. Okay, Joe goes down after her."}
+  - {id: l06, speaker: gm, text: "Its head turns. It steps off its plinth. Kara, you woke it. Roll Momentum."}
+  - {id: l07, speaker: gm, text: "Seventy-nine against forty-five, you have it. Who goes first?"}
+  - {id: l08, speaker: tom, text: "Joe. Spear, at the thing."}
+  - {id: l09, speaker: gm, text: "It defends with its plating."}
+  - {id: l10, speaker: gm, text: "Ninety-seven, that explodes. Joe, that's your first Mark: spears and staves, Trained. You get the line."}
+  - {id: l11, speaker: gm, text: "Only eight gets through, though. The plating takes most of it."}
+  - {id: l12, speaker: tom, text: "Again. Second Beat."}
+  - {id: l13, speaker: gm, text: "Forty-one. It's at one HP, and you can drive it a Zone."}
+  - {id: l14, speaker: tom, text: "Wait, if I drive it, do I get to follow it?"}
+  - {id: l15, speaker: gm, text: "Not for free. Moving costs a Beat, and you've spent both."}
+  - {id: l16, speaker: tom, as: joe, text: "Then I shove it back into the racks. Away from Kara."}
+  - {id: l17, speaker: priya, text: "I'm at full, Joe, we rested."}
+  - {id: l18, speaker: tom, text: "Biscuit, no. Sorry, the dog wants out. One sec."}
+  - {id: l19, speaker: priya, text: "Rebar time. Kara walks over to the racks and swings the rebar at it."}
+  - {id: l20, speaker: gm, text: "Fifty-eight with it Exposed, against eighty-five. It turns the rebar aside."}
+  - {id: l21, speaker: priya, text: "Rebar supremacy."}
+  - {id: l22, speaker: lena, text: "Rebar is life."}
+  - {id: l23, speaker: priya, text: "If I'd had a real weapon that thing would be dead already."}
+  - {id: l24, speaker: lena, text: "Andre comes down off the platform. He doesn't have anything to hit it with, so he just punches it."}
+  - {id: l25, speaker: gm, text: "Eighty-nine against forty-five. It stops. It comes apart on the sand."}
+  - {id: l26, speaker: tom, text: "Okay, I'm back. Did we win?"}
+  - {id: l27, speaker: priya, text: "Andre punched it to death."}
+  - {id: l28, speaker: tom, text: "With his hands? Andre!"}
+  - {id: l29, speaker: gm, text: "The door at the back grinds open. Inside: a battle axe, a buckler like Kara's, two lesser healing pills, and a small dull gray shard. Anchor Shard."}
+  - {id: l30, speaker: priya, as: kara, text: "The axe is mine. I've been swinging a pipe for two days."}
+  - {id: l31, speaker: tom, as: joe, text: "All yours."}
+  - {id: l32, speaker: gm, text: "You've been down on the floor and inside the armory. That's the arena surveyed."}
+  - {id: l33, speaker: lena, text: "What about the vault door?"}
+  - {id: l34, speaker: gm, text: "It hums. It doesn't open. Nothing you have touches it."}
+  - {id: l35, speaker: gm, text: "Pizza's here, by the way. Ten minutes?"}
+
+# The fight as the tracker records it. Dice are d100s in the order the server rolls them: the
+# attacker's, then the defender's, an explosion's extra die straight after its 96+.
+recorded:
+  - id: fight
+    after: l06
+    action:
+      type: combat.start
+      encounterId: arena
+      name: The Martial Remnant
+      sides: [{id: party, name: The party}, {id: hostiles, name: Constructs}]
+      zones: [{id: floor, name: Arena floor}, {id: racks, name: The racks}, {id: tiers, name: The tiers}]
+      combatants:
+        - {combatantId: kara, sideId: party, characterId: kara, zoneId: floor}
+        - {combatantId: joe, sideId: party, characterId: joe, zoneId: floor}
+        - {combatantId: andre, sideId: party, characterId: andre, zoneId: tiers}
+        - {combatantId: sentry, sideId: hostiles, name: Training Sentry, creature: Training Sentry, grade: F, maxHp: 50,
+           momentumForce: 25, beats: 2, yields: false, zoneId: floor,
+           offense: [{force: 18, stat: STR, means: hammerblow}], defense: [{force: 25, stat: FOR, means: plating}]}
+  - {id: momentum, after: l06, action: {type: combat.momentum}, dice: [70, 20]}
+  - {id: joe-act, after: l08, by: tom, action: {type: combat.act, combatantId: joe}}
+  - {id: joe-hit-1, after: l08, by: tom, action: {type: combat.attack, attackerId: joe, defenderId: sentry, attack: {attribute: STR, modifier: 0, shape: spears and staves}, label: Spear}}
+  - {id: sentry-def-1, after: l09, action: {type: combat.defend, defense: {force: 25, means: plating, modifier: 0}}, dice: [97, 4, 76]}
+  - {id: joe-hit-2, after: l12, by: tom, action: {type: combat.attack, attackerId: joe, defenderId: sentry, attack: {attribute: STR, modifier: 0, shape: spears and staves}, label: Spear}}
+  - {id: sentry-def-2, after: l12, action: {type: combat.defend, defense: {force: 25, means: plating, modifier: 0}}, dice: [78, 25]}
+  - {id: driven, after: l16, action: {type: combat.move, combatantId: sentry, zoneId: racks, forced: true}}
+  - {id: joe-done, after: l16, by: tom, action: {type: combat.done, combatantId: joe}}
+  - {id: kara-act, after: l19, by: priya, action: {type: combat.act, combatantId: kara}}
+  - {id: kara-move, after: l19, by: priya, action: {type: combat.move, combatantId: kara, zoneId: racks}}
+  - {id: kara-hit, after: l19, by: priya, action: {type: combat.attack, attackerId: kara, defenderId: sentry, attack: {attribute: STR, modifier: 0}, label: Rebar}}
+  - {id: sentry-def-3, after: l19, action: {type: combat.defend, defense: {force: 25, means: plating, modifier: 0}}, dice: [40, 60]}
+  - {id: kara-done, after: l20, by: priya, action: {type: combat.done, combatantId: kara}}
+  - {id: andre-act, after: l24, by: lena, action: {type: combat.act, combatantId: andre}}
+  - {id: andre-move, after: l24, by: lena, action: {type: combat.move, combatantId: andre, zoneId: racks}}
+  - {id: andre-hit, after: l24, by: lena, action: {type: combat.attack, attackerId: andre, defenderId: sentry, attack: {attribute: STR, modifier: 0}, label: Fists}}
+  - {id: sentry-def-4, after: l24, action: {type: combat.defend, defense: {force: 25, means: plating, modifier: 0}}, dice: [75, 20]}
+  - {id: fight-over, after: l25, action: {type: combat.end}}
+  - {id: loot, after: l25, action: {type: encounter.loot, encounterId: arena, kills: [{combatantId: sentry, tier: Moderate}]}}
+  - id: settle
+    after: l25
+    action:
+      type: encounter.settle
+      encounterId: arena
+      participants: [kara, joe, andre]
+      kills: [{combatantId: sentry, tier: Moderate, byId: andre}]
+      awards: [{characterId: kara, ve: 10}, {characterId: joe, ve: 10}, {characterId: andre, ve: 10}]
+      spoils: []
+
+expected:
+  actions:
+    - id: x-ev-watch
+      lines: [l02, l03]
+      action:
+        type: event.log
+        summary: Andre stays on the viewing platform and studies the constructs before anyone engages.
+        participants: [andre]
+        entries:
+          - {characterId: andre, pole: Method, intensity: 1, intent: Learn how they wake before going near one}
+
+    - {id: x-first-in, lines: [l04], action: {type: counter.tick, characterId: kara, counter: first-into-a-hostile-site, count: 1}}
+    - id: x-ev-charge
+      lines: [l04, l05, l06]
+      action:
+        type: event.log
+        summary: Kara walks onto the sand and straight at the nearest construct, waking it before the others are ready.
+        participants: [kara, joe]
+        entries:
+          - {characterId: kara, pole: Force, intensity: 1, intent: Engage at once, outcome: The Sentry wakes on her}
+
+    - id: x-ev-drive
+      lines: [l16]
+      action:
+        type: event.log
+        summary: Joe spends his Driven Back shoving the Sentry into the racks, away from Kara.
+        participants: [joe, kara]
+        entries:
+          - {characterId: joe, pole: Method, intensity: 1, intent: Put the construct where it cannot reach Kara}
+
+    - {id: x-empty-handed, lines: [l24, l25, l27, l28], action: {type: counter.tick, characterId: andre, counter: empty-handed-wins, count: 1}}
+
+    - id: x-armory
+      lines: [l29]
+      action:
+        type: item.give
+        to: spoils
+        items:
+          - {name: Battle Axe, count: 1}
+          - {name: Reactive Buckler, count: 1}
+          - {name: Lesser Healing Pill, count: 2}
+          - {name: Anchor Shard, count: 1}
+    - {id: x-axe, lines: [l30, l31], action: {type: item.move, from: spoils, to: kara, name: Battle Axe, count: 1}}
+    - id: x-ev-axe
+      lines: [l30, l31]
+      action:
+        type: event.log
+        summary: Kara claims the axe out loud, first.
+        participants: [kara, joe]
+        entries:
+          - {characterId: kara, pole: Hunger, intensity: 0.5}
+
+    - {id: x-survey, lines: [l32], action: {type: quest.complete, questId: q-002a, awards: [{characterId: kara, ve: 40}, {characterId: joe, ve: 40}, {characterId: andre, ve: 40}]}}
+
+  suggestions:
+    - {id: s-watched-first, lines: [l02, l03], kind: title, key: Watched First, characterId: andre}
+    # The tick puts Empty-Handed on the GM's due list by itself; suggesting it as well is not wrong.
+    - {id: s-empty-handed, lines: [l24, l25, l27, l28], kind: title, key: Empty-Handed, characterId: andre, optional: true}
+
+  quiet:
+    - {lines: [l07, l10, l11, l13, l20], why: already-recorded}
+    - {lines: [l14, l15], why: rules-question}
+    - {lines: [l17], why: state-read-aloud}
+    - {lines: [l18, l26], why: away}
+    - {lines: [l21, l22], why: inside-joke}
+    - {lines: [l23], why: hypothetical}
+    - {lines: [l35], why: planning}

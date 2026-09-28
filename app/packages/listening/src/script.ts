@@ -4,12 +4,13 @@
  * suggestions it should raise, and the lines that must produce nothing.
  *
  * The expected actions are the record's own actions, so a script is checked by replaying it:
- * `setup` and then every expected action, in the order of the first line each cites, through a
- * real `CampaignRecord`. An expected record the rules refuse is a broken script.
+ * `setup`, then line by line the expected actions each line starts and the actions the table
+ * recorded in the app after it (the combat tracker, the dice), through a real `CampaignRecord`.
+ * An expected record the rules refuse is a broken script.
  */
 import type { Engine } from "@gradebreaker/engine";
 import { readYaml } from "@gradebreaker/engine/node";
-import { type Action, CampaignRecord, type HveEntry, actionSchema } from "@gradebreaker/record";
+import { type Action, type Actor, CampaignRecord, type HveEntry, actionSchema, rollFor } from "@gradebreaker/record";
 import { z } from "zod";
 
 /**
@@ -37,6 +38,8 @@ export const QUIET_REASONS = [
   "crosstalk",
   /** The table's own logistics: scheduling, a note to look something up. */
   "planning",
+  /** Said aloud about something the app already recorded: a roll, a Clash, a forced move, a Mark. */
+  "already-recorded",
 ] as const;
 
 const lineId = z.string().regex(/^[A-Za-z0-9_-]+$/);
@@ -94,6 +97,15 @@ export const scriptSchema = z.object({
     .min(1),
   /** The record before the first line, appended in order by the GM. */
   setup: z.array(z.object({ id: z.string(), action: actionSchema })),
+  /**
+   * What the table records in the app during the scene (the combat tracker, the dice), each after
+   * the line it follows. The drafter sees these in the record; proposing one again is a false
+   * positive. `dice` are the d100s in the order the server would roll them; `by` is the speaker
+   * who recorded it, the GM when absent.
+   */
+  recorded: z
+    .array(z.object({ id: z.string(), after: lineId, action: actionSchema, dice: z.array(z.number().int().min(1).max(100)).optional(), by: z.string().optional() }))
+    .default([]),
   lines: z
     .array(
       z.object({
@@ -142,13 +154,17 @@ export function scriptProblems(script: Script): string[] {
   }
   if (script.speakers.filter((s) => s.role === "gm").length !== 1) out.push("a script has one GM");
   const ids = new Set<string>();
-  const items = [...script.setup, ...script.expected.actions, ...script.expected.suggestions];
+  const items = [...script.setup, ...script.recorded, ...script.expected.actions, ...script.expected.suggestions];
   for (const x of items) {
     if (ids.has(x.id)) out.push(`id ${x.id} is repeated`);
     ids.add(x.id);
   }
   const cited = [...script.expected.actions, ...script.expected.suggestions, ...script.expected.quiet];
   for (const x of cited) for (const l of x.lines) if (!lines.has(l)) out.push(`${"id" in x ? x.id : "quiet"}: no line ${l}`);
+  for (const r of script.recorded) {
+    if (!lines.has(r.after)) out.push(`${r.id}: no line ${r.after}`);
+    if (r.by && !speakers.has(r.by)) out.push(`${r.id}: no speaker ${r.by}`);
+  }
   const quiet = new Set(script.expected.quiet.flatMap((q) => q.lines));
   for (const x of [...script.expected.actions, ...script.expected.suggestions]) {
     if (x.lines.every((l) => quiet.has(l))) out.push(`${x.id} cites only quiet lines`);
@@ -166,19 +182,44 @@ export function inLineOrder<T extends { lines: string[] }>(script: Script, items
 }
 
 /**
- * Replays the script's record: setup, then every expected action in line order, each under its
- * own id, as the GM. Throws the record's reason at the first action the rules refuse.
+ * Replays the script's record: setup, then for each line the expected actions it starts (in the
+ * order written) and the actions recorded after it, each under its own id. Throws the record's
+ * reason at the first action the rules refuse, or when recorded dice run short or are left over.
  */
 export function replay(engine: Engine, script: Script): CampaignRecord {
   const rec = new CampaignRecord(engine);
-  const gm = { role: "gm" as const, userId: script.speakers.find((s) => s.role === "gm")!.id };
+  const speakers = new Map(script.speakers.map((s) => [s.id, s]));
+  const actor = (id?: string): Actor => {
+    const s = id ? speakers.get(id)! : script.speakers.find((x) => x.role === "gm")!;
+    return { role: s.role, userId: s.id };
+  };
   const at = "2026-01-01T00:00:00Z";
-  for (const s of script.setup) rec.append({ id: s.id, at, actor: gm, source: "manual", action: s.action as Action });
-  for (const x of inLineOrder(script, script.expected.actions)) {
-    try {
-      rec.append({ id: x.id, at, actor: gm, source: "voice", cause: x.lines.join(","), action: x.action as Action });
-    } catch (err) {
-      throw new Error(`${script.id}: expected action ${x.id} is refused: ${(err as Error).message}`);
+  const fail = (id: string, err: unknown): never => {
+    throw new Error(`${script.id}: ${id} is refused: ${(err as Error).message}`);
+  };
+  for (const s of script.setup) rec.append({ id: s.id, at, actor: actor(), source: "manual", action: s.action as Action });
+  const at_ = order(script);
+  const firstLine = (x: ExpectedAction) => x.lines.reduce((a, l) => ((at_.get(l) ?? Infinity) < (at_.get(a) ?? Infinity) ? l : a));
+  for (const line of script.lines) {
+    for (const x of script.expected.actions.filter((x) => firstLine(x) === line.id)) {
+      try {
+        rec.append({ id: x.id, at, actor: actor(), source: "voice", cause: x.lines.join(","), action: x.action as Action });
+      } catch (err) {
+        fail(`expected action ${x.id}`, err);
+      }
+    }
+    for (const r of script.recorded.filter((r) => r.after === line.id)) {
+      const dice = [...(r.dice ?? [])];
+      try {
+        rec.append(rollFor(rec, { id: r.id, at, actor: actor(r.by), source: "manual", action: r.action as Action }, () => {
+          const d = dice.shift();
+          if (d === undefined) throw new Error("the recorded dice ran out");
+          return d;
+        }));
+      } catch (err) {
+        fail(`recorded action ${r.id}`, err);
+      }
+      if (dice.length) fail(`recorded action ${r.id}`, new Error(`${dice.length} recorded dice left over`));
     }
   }
   return rec;
