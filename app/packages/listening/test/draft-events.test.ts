@@ -65,7 +65,8 @@ describe.each(scripts.map((s) => [s.id, s] as const))("drafting %s", (_, script)
   it("gives the model every line and nothing of the expected record", () => {
     for (const l of script.lines) expect(prompt).toContain(`[${l.id}] `);
     for (const x of script.expected.actions) if (x.action.type === "event.log") expect(prompt).not.toContain((x.action as LogEvent).summary);
-    for (const q of script.expected.quiet) expect(prompt).not.toContain(q.why);
+    // The hyphenated reason labels; plain words such as "away" occur in table talk.
+    for (const q of script.expected.quiet) if (q.why.includes("-")) expect(prompt).not.toContain(q.why);
     if (script.notes) expect(prompt).not.toContain(script.notes.slice(0, 40));
   });
 

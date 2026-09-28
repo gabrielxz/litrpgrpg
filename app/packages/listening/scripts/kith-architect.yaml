@@ -1,0 +1,129 @@
+# The Arriving Initiates at a System Architect table. The format is in app/DESIGN.md, "The script format".
+id: kith-architect
+title: The Arriving Initiates, a System Architect table
+source: 'book/70-tutorial.md, Phase 4, "The Arriving Initiates"'
+rules: 0.1.29
+notes: >
+  One of four tables playing the same scene (see kith-apex). This table plays Method, Restraint,
+  Accord, and Control: Andre takes charge of the approach (weapons down, food set out halfway),
+  Kara draws the plan to go back for the building together, Joe holds Tovan to "not tonight" and
+  gives the party's two Lesser Healing Pills to the Kith's wounded. Communication is established, so
+  all three take the award. Joe and Kara lay their weapons down on Andre's word: complying is not
+  their decision. Traps: the GM's pill count, a rules question about the award, a retracted axe, a
+  speculation about the Kith lying, Nemi showing her pill, and table life: a kid who wants water,
+  a map-drawing friend only this table knows, and the stop time.
+
+speakers:
+  - {id: gm, role: gm, name: Ruth}
+  - {id: owen, role: player, name: Owen, characters: [kara]}
+  - {id: mei, role: player, name: Mei, characters: [joe]}
+  - {id: carlos, role: player, name: Carlos, characters: [andre]}
+
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara, playerId: owen}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe, playerId: mei}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre, playerId: carlos}}
+  - {id: invite-joe, action: {type: party.invite, fromId: kara, toId: joe}}
+  - {id: joe-joins, action: {type: party.answer, inviteId: invite-joe, accept: true}}
+  - {id: invite-andre, action: {type: party.invite, fromId: joe, toId: andre}}
+  - {id: andre-joins, action: {type: party.answer, inviteId: invite-andre, accept: true}}
+  - {id: kit-kara, action: {type: item.give, to: kara, items: [{name: Reactive Buckler, count: 1}, {name: Edge Shard, count: 1}, {name: Battle Axe, count: 1}]}}
+  - {id: kit-joe, action: {type: item.give, to: joe, items: [{name: Spear, count: 1}, {name: Low-Grade Armor Scraps, count: 1}]}}
+  - {id: kit-andre, action: {type: item.give, to: andre, items: [{name: Veil Shard, count: 1}, {name: Resonance Glass, count: 1}, {name: Resonance Shard, count: 1}]}}
+  - {id: joe-hurt, action: {type: hp.change, characterId: joe, delta: -3}}
+  - {id: camp, action: {type: item.give, to: spoils, items: [{name: Trail Rations, count: 6}, {name: Lesser Healing Pill, count: 2}, {name: Reactive Buckler, count: 1}]}}
+
+lines:
+  - {id: l01, speaker: gm, text: "You've made camp between sectors. The fire's up. Four shapes come over the northern rise, moving fast, checking behind them."}
+  - {id: l02, speaker: gm, text: "Not human. Tall, narrow, a pair of long arms and a smaller pair folded under the ribs. Two are carrying a third. One has a club. When they see you they freeze, and the folds down their necks flare."}
+  - {id: l03, speaker: carlos, text: "Andre puts his hands up, open, and sits down right where he is."}
+  - {id: l04, speaker: carlos, as: andre, text: "Joe, spear on the ground. Kara, the axe too. Sit down. Slowly."}
+  - {id: l05, speaker: mei, text: "Joe puts the spear down."}
+  - {id: l06, speaker: owen, text: "Kara picks up the axe to put it by her feet."}
+  - {id: l07, speaker: owen, text: "Actually no, she doesn't touch it at all. Leaves it where it is, behind her."}
+  - {id: l08, speaker: gm, as: Tovan, text: "The club one doesn't lower anything. He makes a coughing sound at you, twice."}
+  - {id: l09, speaker: carlos, text: "Andre takes two of the rations and slides them out on the ground, halfway between the fire and them, and backs off."}
+  - {id: l10, speaker: gm, text: "Nothing for a long moment. Then the one with the pouch at her hip comes forward, picks one up, sniffs it, breaks it, and gives half to the wounded one."}
+  - {id: l11, speaker: mei, text: "Honey, one sec. Yes, there's water in the fridge. The blue cup. Okay. Sorry."}
+  - {id: l12, speaker: owen, text: "Can Kara draw? In the dirt, with a stick."}
+  - {id: l13, speaker: gm, text: "Sure."}
+  - {id: l14, speaker: owen, text: "She draws the building with the lights, a big square in front of the door, and four stick figures walking away from it. Then a question mark."}
+  - {id: l15, speaker: gm, text: "The one with the shard bag crouches, rubs out the question mark, and draws the square again, bigger, with lines coming off it. Her neck folds are wide open."}
+  - {id: l16, speaker: carlos, text: "Bartholomew would've drawn it with perspective."}
+  - {id: l17, speaker: owen, text: "Bartholomew drew a horse once and it had six legs."}
+  - {id: l18, speaker: owen, text: "Okay. Kara draws all seven of us, us and them, going back to the building together, around the side, not the front. Then she points at them, at us, and at the building."}
+  - {id: l19, speaker: gm, text: "The shard one looks at the drawing a long time, then at Kara, and taps the side of the building twice."}
+  - {id: l20, speaker: mei, text: "What if they're lying about the big thing, though? What if they just want the building?"}
+  - {id: l21, speaker: gm, as: Tovan, text: "The club one slaps the ground, points at the building, then at his own chest. He wants to go now."}
+  - {id: l22, speaker: mei, text: "Joe gets up, slow, both hands open. He points at the wounded one, then up at the sky going dark. Then shakes his head. Not tonight."}
+  - {id: l23, speaker: gm, text: "The club one stares at Joe for a long time. Then he sits down."}
+  - {id: l24, speaker: gm, text: "Kara, you're at full. Joe, you're still down three from the arena."}
+  - {id: l25, speaker: mei, text: "Joe looks at the wounded one's leg. That's bad, that's really bad. He takes both of our Lesser Healing Pills and gives them to the pouch one for her friend."}
+  - {id: l26, speaker: owen, text: "Both? We only have two."}
+  - {id: l27, speaker: mei, as: joe, text: "He needs them more than we do tonight."}
+  - {id: l28, speaker: gm, text: "She takes them with both small hands, gives them to the wounded one, then opens her own pouch and shows Joe what's in it: one big pill, gold at the center. She closes it again."}
+  - {id: l29, speaker: carlos, text: "She's showing him she had one and didn't use it."}
+  - {id: l30, speaker: mei, text: "Does this count as talking to them? For the half a level?"}
+  - {id: l31, speaker: gm, text: "You have a working language of pictures and hands now. Rough, but real. That's half a level, sixty VE, for all three of you."}
+  - {id: l32, speaker: owen, text: "Let's stop at ten tonight, I've got an early one."}
+
+expected:
+  actions:
+    - {id: x-rations, lines: [l09, l10], action: {type: item.remove, from: spoils, name: Trail Rations, count: 2, note: Set out for the Kith}}
+    - id: x-ev-approach
+      lines: [l03, l04, l09, l10]
+      action:
+        type: event.log
+        summary: Andre takes charge of the approach, has the party put its weapons down and sit, and sets food out halfway.
+        participants: [andre, joe, kara]
+        entries:
+          - {characterId: andre, pole: Accord, intensity: 1, intent: Show them the party means no harm, outcome: Nemi comes forward and takes the food}
+      also:
+        - {characterId: andre, pole: Control, intensity: 1}
+
+    - id: x-ev-plan
+      lines: [l14, l15, l18, l19]
+      action:
+        type: event.log
+        summary: Kara draws a plan in the dirt to go back for the building together, around the side, and Sava agrees.
+        participants: [kara]
+        entries:
+          - {characterId: kara, pole: Method, intensity: 1, intent: Retake the building with the Kith by the side way}
+      also:
+        - {characterId: kara, pole: Accord, intensity: 1}
+
+    - id: x-ev-not-tonight
+      lines: [l21, l22, l23]
+      optional: true
+      action:
+        type: event.log
+        summary: Joe holds Tovan back from going for the building tonight, with the wounded and the dark as reasons.
+        participants: [joe]
+        entries:
+          - {characterId: joe, pole: Control, intensity: 1}
+      also:
+        - {characterId: joe, pole: Accord, intensity: 1}
+
+    - {id: x-pills, lines: [l25, l28], action: {type: item.remove, from: spoils, name: Lesser Healing Pill, count: 2, note: Given to the Kith's wounded}}
+    - id: x-ev-pills
+      lines: [l25, l26, l27, l28, l29]
+      action:
+        type: event.log
+        summary: Joe gives the party's only two Lesser Healing Pills to the Kith's wounded, though he is down three himself.
+        participants: [joe, kara]
+        entries:
+          - {characterId: joe, pole: Restraint, intensity: 1, intent: Treat the worst wound first, outcome: Nemi shows him the pill she did not spend}
+      also:
+        - {characterId: joe, pole: Restraint, intensity: 2}
+
+    - {id: x-award, lines: [l31], action: {type: ve.award, basis: {kind: other, note: Communication with the Kith}, awards: [{characterId: kara, ve: 60}, {characterId: joe, ve: 60}, {characterId: andre, ve: 60}]}}
+
+  quiet:
+    - {lines: [l06], why: retracted}
+    - {lines: [l08, l21], why: npc-speech}
+    - {lines: [l11], why: away}
+    - {lines: [l12, l13, l30], why: rules-question}
+    - {lines: [l16, l17], why: inside-joke}
+    - {lines: [l20], why: hypothetical}
+    - {lines: [l24], why: state-read-aloud}
+    - {lines: [l32], why: planning}

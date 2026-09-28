@@ -1,0 +1,119 @@
+# The Arriving Initiates at a Phantom Thief table. The format is in app/DESIGN.md, "The script format".
+id: kith-thief
+title: The Arriving Initiates, a Phantom Thief table
+source: 'book/70-tutorial.md, Phase 4, "The Arriving Initiates"'
+rules: 0.1.29
+notes: >
+  One of four tables playing the same scene (see kith-apex). This table plays Method, Hunger,
+  Accord, and Freedom: Kara opens with shared food and mirrored posture, Andre haggles the Resonance
+  Glass into both of Sava's shards and then draws the side way in past the Sentinel, and Joe says
+  nothing all scene, reads Kes's map, and goes alone once the camp sleeps. Joe sat out the talking,
+  so the award is Kara's and Andre's only. Traps: a rules question about the Glass, a hypothetical
+  sale of the axe, the wrong item offered and taken back, Sava's counteroffer, and table life: a
+  roommate's cooking, a friend who could sell anything, and what to play next session.
+
+speakers:
+  - {id: gm, role: gm, name: Ike}
+  - {id: nora, role: player, name: Nora, characters: [kara]}
+  - {id: ben, role: player, name: Ben, characters: [joe]}
+  - {id: aisha, role: player, name: Aisha, characters: [andre]}
+
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara, playerId: nora}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe, playerId: ben}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre, playerId: aisha}}
+  - {id: invite-joe, action: {type: party.invite, fromId: kara, toId: joe}}
+  - {id: joe-joins, action: {type: party.answer, inviteId: invite-joe, accept: true}}
+  - {id: invite-andre, action: {type: party.invite, fromId: joe, toId: andre}}
+  - {id: andre-joins, action: {type: party.answer, inviteId: invite-andre, accept: true}}
+  - {id: kit-kara, action: {type: item.give, to: kara, items: [{name: Reactive Buckler, count: 1}, {name: Edge Shard, count: 1}, {name: Battle Axe, count: 1}]}}
+  - {id: kit-joe, action: {type: item.give, to: joe, items: [{name: Spear, count: 1}, {name: Low-Grade Armor Scraps, count: 1}]}}
+  - {id: kit-andre, action: {type: item.give, to: andre, items: [{name: Veil Shard, count: 1}, {name: Resonance Glass, count: 1}, {name: Resonance Shard, count: 1}]}}
+  - {id: camp, action: {type: item.give, to: spoils, items: [{name: Trail Rations, count: 6}, {name: Lesser Healing Pill, count: 2}, {name: Reactive Buckler, count: 1}]}}
+
+lines:
+  - {id: l01, speaker: gm, text: "You're at camp between sectors, fire going. Four figures crest the rise to the north, moving fast, glancing back."}
+  - {id: l02, speaker: gm, text: "Tall, narrow, two long arms and two small ones under the ribs. Not human. Two carry a third. One has a club, one keeps a hand on a pouch, one has a bag slung over her shoulder. They see you and freeze, neck folds flaring."}
+  - {id: l03, speaker: nora, text: "Kara sits down cross-legged, facing them, and gets out a ration bar. Breaks it, eats half, and holds the other half out."}
+  - {id: l04, speaker: nora, text: "And she sits exactly like the pouch one is standing. Shoulders, head tilt, all of it."}
+  - {id: l05, speaker: gm, text: "The bag one comes forward first. She takes the half bar, turns it over, eats it. Then she does the head tilt back at Kara. The one with the club makes a sound that might be a laugh."}
+  - {id: l06, speaker: ben, text: "My roommate is making something that smells incredible and I'm not allowed any of it."}
+  - {id: l07, speaker: aisha, text: "Does the Resonance Glass actually do anything for us yet?"}
+  - {id: l08, speaker: gm, text: "Not until someone's got a Principle to look through it with."}
+  - {id: l09, speaker: gm, text: "The bag one keeps looking at your tools. Andre's glass especially. She can't stop looking at it."}
+  - {id: l10, speaker: aisha, text: "Andre offers her the Veil Shard."}
+  - {id: l11, speaker: aisha, text: "No, wait, the glass. He takes out the glass and makes a show of looking through it, then puts it away, slowly, like he doesn't really want to part with it. Then he points at her bag."}
+  - {id: l12, speaker: gm, as: Sava, text: "She opens the bag: two shards. She points at the glass and holds up one finger."}
+  - {id: l13, speaker: aisha, text: "Andre shakes his head, holds up two fingers, and starts putting the glass back in his coat."}
+  - {id: l14, speaker: gm, text: "She makes a sharp sound, then gives him both. An Edge Shard and an Anchor Shard. She takes the glass like it's made of water."}
+  - {id: l15, speaker: nora, text: "He's good."}
+  - {id: l16, speaker: ben, text: "That's robbery. That is actual robbery."}
+  - {id: l17, speaker: nora, text: "Deshawn could sell those people the fire."}
+  - {id: l18, speaker: aisha, text: "Deshawn sold me my own bike once."}
+  - {id: l19, speaker: ben, text: "What if we sold them the axe, too? They'd give us anything."}
+  - {id: l20, speaker: gm, text: "The scout, the one who came in first, is drawing in the dirt now: the building with the lights, a big square in the doorway, and the four of them running."}
+  - {id: l21, speaker: aisha, text: "Andre crouches next to her and adds to it. He draws a little box by the side door, the terminal from the survey, and a line from it to the big square. Then points at the bag one, and at himself."}
+  - {id: l22, speaker: gm, text: "The bag one looks at the line for a long time and nods, the way Kara nodded at her."}
+  - {id: l23, speaker: gm, text: "You've got a way to talk now, pictures and hands. Sixty VE each to Kara and Andre. Joe, you sat that one out."}
+  - {id: l24, speaker: ben, text: "Joe's been looking at the scout's map the whole time. The side door. He doesn't say anything."}
+  - {id: l25, speaker: ben, text: "Once everybody's asleep, Joe takes his spear and goes. The side door. Alone."}
+  - {id: l26, speaker: gm, text: "All right. Joe, the building's lights come on one at a time as you get close, and nobody at camp knows you've gone."}
+  - {id: l27, speaker: nora, text: "Can we do the arena thing again next week? Or pick a new one?"}
+
+expected:
+  actions:
+    - {id: x-ration, lines: [l03, l05], action: {type: item.remove, from: spoils, name: Trail Rations, count: 1, note: Shared with Sava}}
+    - id: x-ev-share
+      lines: [l03, l04, l05]
+      action:
+        type: event.log
+        summary: Kara sits down, shares a ration bar, and mirrors the Kith's posture until Sava comes forward.
+        participants: [kara]
+        entries:
+          - {characterId: kara, pole: Accord, intensity: 1, intent: Get them talking, outcome: Sava takes the food and mirrors her back}
+
+    - {id: x-glass, lines: [l11, l14], action: {type: item.remove, from: andre, name: Resonance Glass, count: 1, note: Traded to Sava}}
+    - {id: x-shards, lines: [l14], action: {type: item.give, to: andre, items: [{name: Edge Shard, count: 1}, {name: Anchor Shard, count: 1}]}}
+    - id: x-ev-trade
+      lines: [l11, l12, l13, l14, l15, l16]
+      action:
+        type: event.log
+        summary: Andre plays reluctant with the Resonance Glass and holds out until Sava gives both her shards for it.
+        participants: [andre]
+        entries:
+          - {characterId: andre, pole: Hunger, intensity: 1, intent: Get both shards for the glass, outcome: Sava gives both}
+      also:
+        - {characterId: andre, pole: Hunger, intensity: 2}
+        - {characterId: andre, pole: Accord, intensity: 1}
+
+    - id: x-ev-route
+      lines: [l20, l21, l22]
+      action:
+        type: event.log
+        summary: Andre adds the terminal by the side door to Kes's map and a line to the Sentinel, proposing the way in with Sava.
+        participants: [andre]
+        entries:
+          - {characterId: andre, pole: Method, intensity: 1, intent: Shut the Sentinel down from the terminal}
+
+    - {id: x-award, lines: [l23], action: {type: ve.award, basis: {kind: other, note: Communication with the Kith}, awards: [{characterId: kara, ve: 60}, {characterId: andre, ve: 60}]}}
+
+    - id: x-ev-joe
+      lines: [l24, l25, l26]
+      action:
+        type: event.log
+        summary: Joe studies Kes's map in silence and, once the camp sleeps, goes alone to the building's side door.
+        participants: [joe]
+        entries:
+          - {characterId: joe, pole: Freedom, intensity: 1, intent: See the side door for himself}
+      also:
+        - {characterId: joe, pole: Freedom, intensity: 2}
+        - {characterId: joe, pole: Method, intensity: 1}
+
+  quiet:
+    - {lines: [l06], why: off-topic}
+    - {lines: [l07, l08], why: rules-question}
+    - {lines: [l10], why: retracted}
+    - {lines: [l12], why: npc-speech}
+    - {lines: [l17, l18], why: inside-joke}
+    - {lines: [l19], why: hypothetical}
+    - {lines: [l27], why: planning}

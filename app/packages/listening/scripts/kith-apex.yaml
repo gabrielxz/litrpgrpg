@@ -1,0 +1,129 @@
+# The Arriving Initiates at an Apex Predator table. The format is in app/DESIGN.md, "The script format".
+id: kith-apex
+title: The Arriving Initiates, an Apex Predator table
+source: 'book/70-tutorial.md, Phase 4, "The Arriving Initiates"'
+rules: 0.1.29
+notes: >
+  One of four tables playing the same scene (kith-apex, kith-architect, kith-adjudicator,
+  kith-thief), each leaning into one archetype from Titles, "Sample F-Grade Titles by HVE
+  Archetype", so the four HVE records should differ where the scene is the same. This table plays
+  Force, Hunger, Will, and Freedom: Kara takes Nemi's pill at axe-point on Joe's word, Joe drops
+  Tovan and lifts Sava's shards, and Andre walks off alone toward the building the Kith fled. Nobody
+  tries to talk, so no communication award. Joe's "the pouch" is advocacy; the decision is Kara's.
+  Traps: a rules question about the Clash, a hypothetical massacre and the VE question after it, a
+  retracted pill, the GM naming the pill, and table life: an energy drink, a Waffle House only this
+  table remembers, crosstalk about work, a cat on a keyboard, and chips for next time.
+
+speakers:
+  - {id: gm, role: gm, name: Marcus}
+  - {id: jess, role: player, name: Jess, characters: [kara]}
+  - {id: dev, role: player, name: Dev, characters: [joe]}
+  - {id: sam, role: player, name: Sam, characters: [andre]}
+
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara, playerId: jess}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe, playerId: dev}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre, playerId: sam}}
+  - {id: invite-joe, action: {type: party.invite, fromId: kara, toId: joe}}
+  - {id: joe-joins, action: {type: party.answer, inviteId: invite-joe, accept: true}}
+  - {id: invite-andre, action: {type: party.invite, fromId: joe, toId: andre}}
+  - {id: andre-joins, action: {type: party.answer, inviteId: invite-andre, accept: true}}
+  - {id: kit-kara, action: {type: item.give, to: kara, items: [{name: Reactive Buckler, count: 1}, {name: Edge Shard, count: 1}, {name: Battle Axe, count: 1}]}}
+  - {id: kit-joe, action: {type: item.give, to: joe, items: [{name: Spear, count: 1}, {name: Low-Grade Armor Scraps, count: 1}]}}
+  - {id: kit-andre, action: {type: item.give, to: andre, items: [{name: Veil Shard, count: 1}, {name: Resonance Glass, count: 1}, {name: Resonance Shard, count: 1}]}}
+  - {id: camp, action: {type: item.give, to: spoils, items: [{name: Trail Rations, count: 6}, {name: Lesser Healing Pill, count: 2}, {name: Reactive Buckler, count: 1}]}}
+
+lines:
+  - {id: l01, speaker: gm, text: "So you're camped between sectors. Fire's going, rations are out. Four figures come over the rise from the north, fast, looking back over their shoulders."}
+  - {id: l02, speaker: gm, text: "They're not human. Tall and narrow, two long arms and a smaller pair held tight under the ribs. Two of them are carrying a third between them. One has a club."}
+  - {id: l03, speaker: gm, text: "They see you and stop dead. Folds down their necks flare open."}
+  - {id: l04, speaker: dev, text: "Hold on, energy drink. Okay. Okay, go."}
+  - {id: l05, speaker: jess, text: "Kara stands up and picks up the axe. Doesn't say anything. Just stands there with it."}
+  - {id: l06, speaker: gm, as: Tovan, text: "The one with the club steps out in front of the others and makes a sound like a cough, twice, and lifts the club."}
+  - {id: l07, speaker: sam, text: "Can Andre see what they're carrying?"}
+  - {id: l08, speaker: gm, text: "The one in back keeps a hand on a pouch at her hip the whole time. Another has a sling bag she keeps hitching up, and there's a glint of shard in the mouth of it."}
+  - {id: l08a, speaker: jess, text: "Did you ever send that thing to Priyanka?"}
+  - {id: l08b, speaker: dev, text: "Tomorrow. Don't."}
+  - {id: l09, speaker: dev, text: "Pouch lady's got something good. Nobody guards a pouch like that for nothing."}
+  - {id: l10, speaker: dev, as: joe, text: "Kara. The pouch."}
+  - {id: l11, speaker: jess, text: "Kara walks straight up to the one with the pouch, puts the axe blade under her chin, and holds out her other hand."}
+  - {id: l12, speaker: gm, text: "Everything goes quiet. The club one starts forward and the pouch one stops him with one of the small hands. Slowly she opens the pouch. There's one pill in it, bigger than yours, gold at the center. She puts it in Kara's palm."}
+  - {id: l13, speaker: sam, text: "Oh, wow. Kara."}
+  - {id: l14, speaker: dev, text: "Stone cold."}
+  - {id: l15, speaker: gm, text: "That's a Greater Healing Pill, by the way. You know it the moment it touches your hand."}
+  - {id: l16, speaker: jess, text: "Kara eats it right now."}
+  - {id: l17, speaker: jess, text: "No, wait. She's full. She keeps it."}
+  - {id: l18, speaker: gm, as: Tovan, text: "The club one shoves past her and comes at Joe, club up, making that cough."}
+  - {id: l19, speaker: dev, text: "Do I have to roll for this? We're not in a fight yet."}
+  - {id: l20, speaker: gm, text: "He's dead on his feet. If you want to put him down, just tell me how you do it."}
+  - {id: l21, speaker: dev, text: "Joe steps inside the swing and rams the butt of the spear into his chest. Doesn't even bother with the point."}
+  - {id: l22, speaker: gm, text: "He goes down in the dirt and stays there, wheezing. Two of the others drag him back by the arms."}
+  - {id: l23, speaker: dev, text: "And while they're dragging him, Joe lifts the bag right off the shard one's shoulder."}
+  - {id: l24, speaker: gm, text: "She lets it go. She doesn't even look at it. Two shards inside, an Edge Shard and an Anchor Shard."}
+  - {id: l25, speaker: sam, text: "What if we just killed all of them? Bet they drop something."}
+  - {id: l26, speaker: jess, text: "Do people even give VE? Like, do they count?"}
+  - {id: l27, speaker: gm, text: "Let's not find out tonight."}
+  - {id: l28, speaker: dev, text: "This is the Waffle House all over again."}
+  - {id: l29, speaker: jess, text: "We do not talk about the Waffle House."}
+  - {id: l30, speaker: gm, text: "The four of them back away north, two carrying the third, the club one limping. The pouch one watches Kara the whole way until the dark takes them."}
+  - {id: l31, speaker: sam, text: "Okay. So while all that was going on, Andre's not at the fire anymore. He took off south, alone, toward the building with the lights, the one they ran from. He didn't tell anybody."}
+  - {id: l32, speaker: jess, text: "Wait, where's Andre?"}
+  - {id: l33, speaker: sam, as: andre, text: "Something scared four of them that bad. I want to see it."}
+  - {id: l34, speaker: gm, text: "Okay. Andre, you're alone in the dark half a mile from camp, and the building's lights are coming on for you one at a time."}
+  - {id: l35, speaker: dev, text: "Sorry, cat. Cat's on the keyboard. Get off. Okay."}
+  - {id: l36, speaker: jess, text: "Next session I'm bringing the good chips, for the record."}
+
+expected:
+  actions:
+    - {id: x-pill, lines: [l11, l12, l15], action: {type: item.give, to: kara, items: [{name: Greater Healing Pill, count: 1}]}}
+    - id: x-ev-pill
+      lines: [l10, l11, l12, l13, l14]
+      action:
+        type: event.log
+        summary: At Joe's word, Kara puts her axe under Nemi's chin and takes the Greater Healing Pill from her pouch.
+        participants: [kara, joe]
+        entries:
+          - {characterId: kara, pole: Will, intensity: 2, secondary: Hunger, intent: Take the pill by threat, outcome: Nemi hands it over}
+      also:
+        - {characterId: kara, pole: Will, intensity: 1}
+        - {characterId: kara, pole: Hunger, intensity: 2}
+        - {characterId: kara, pole: Hunger, intensity: 1}
+
+    - id: x-ev-tovan
+      lines: [l18, l21, l22]
+      action:
+        type: event.log
+        summary: Joe drops the charging Tovan with the butt of his spear.
+        participants: [joe]
+        entries:
+          - {characterId: joe, pole: Force, intensity: 1, intent: Put him down, outcome: Tovan stays down}
+
+    - {id: x-shards, lines: [l23, l24], action: {type: item.give, to: joe, items: [{name: Edge Shard, count: 1}, {name: Anchor Shard, count: 1}]}}
+    - id: x-ev-shards
+      lines: [l23, l24]
+      action:
+        type: event.log
+        summary: While the Kith drag Tovan away, Joe lifts Sava's bag of shards off her shoulder.
+        participants: [joe]
+        entries:
+          - {characterId: joe, pole: Hunger, intensity: 1, intent: Take the shards while they are beaten}
+
+    - id: x-ev-andre
+      lines: [l31, l32, l33, l34]
+      action:
+        type: event.log
+        summary: Andre leaves camp alone without a word and heads for the building the Kith fled.
+        participants: [andre]
+        entries:
+          - {characterId: andre, pole: Freedom, intensity: 1, intent: See what scared them}
+      also:
+        - {characterId: andre, pole: Freedom, intensity: 2}
+
+  quiet:
+    - {lines: [l04, l35, l36], why: off-topic}
+    - {lines: [l08a, l08b], why: crosstalk}
+    - {lines: [l06, l18], why: npc-speech}
+    - {lines: [l19, l20, l26, l27], why: rules-question}
+    - {lines: [l25], why: hypothetical}
+    - {lines: [l28, l29], why: inside-joke}
+    - {lines: [l16], why: retracted}

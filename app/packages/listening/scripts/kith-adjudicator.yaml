@@ -1,0 +1,119 @@
+# The Arriving Initiates at an Iron Adjudicator table. The format is in app/DESIGN.md, "The script format".
+id: kith-adjudicator
+title: The Arriving Initiates, an Iron Adjudicator table
+source: 'book/70-tutorial.md, Phase 4, "The Arriving Initiates"'
+rules: 0.1.29
+notes: >
+  One of four tables playing the same scene (see kith-apex). This table plays Force, Restraint,
+  Will, and Control: Kara sets the terms at the fire, Joe meets Tovan's charge head-on, Andre
+  makes Tovan drop the club and holds his hand out until he does, and Kara refuses Nemi's Greater
+  Healing Pill when it is offered to her. Rough communication follows, so all three take the award.
+  The same group as the tutorial scripts, with Biscuit again. Traps: a Yield question, a
+  hypothetical kill, a retracted knife, Joe's Health read aloud, the GM speaking as Nemi, and table
+  life: the dog, a roommate's band, and crosstalk about a game.
+
+speakers:
+  - {id: gm, role: gm, name: Dana}
+  - {id: priya, role: player, name: Priya, characters: [kara]}
+  - {id: tom, role: player, name: Tom, characters: [joe]}
+  - {id: lena, role: player, name: Lena, characters: [andre]}
+
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara, playerId: priya}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe, playerId: tom}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre, playerId: lena}}
+  - {id: invite-joe, action: {type: party.invite, fromId: kara, toId: joe}}
+  - {id: joe-joins, action: {type: party.answer, inviteId: invite-joe, accept: true}}
+  - {id: invite-andre, action: {type: party.invite, fromId: joe, toId: andre}}
+  - {id: andre-joins, action: {type: party.answer, inviteId: invite-andre, accept: true}}
+  - {id: kit-kara, action: {type: item.give, to: kara, items: [{name: Reactive Buckler, count: 1}, {name: Edge Shard, count: 1}, {name: Battle Axe, count: 1}]}}
+  - {id: kit-joe, action: {type: item.give, to: joe, items: [{name: Spear, count: 1}, {name: Low-Grade Armor Scraps, count: 1}]}}
+  - {id: kit-andre, action: {type: item.give, to: andre, items: [{name: Veil Shard, count: 1}, {name: Resonance Glass, count: 1}, {name: Resonance Shard, count: 1}]}}
+  - {id: camp, action: {type: item.give, to: spoils, items: [{name: Trail Rations, count: 6}, {name: Lesser Healing Pill, count: 2}, {name: Reactive Buckler, count: 1}]}}
+
+lines:
+  - {id: l01, speaker: gm, text: "Camp between sectors, fire going. Four figures come over the northern rise, fast, looking back the way they came."}
+  - {id: l02, speaker: gm, text: "They're not people. Well. Not human. Tall and narrow, long arms and a second small pair tucked under the ribs. Two are carrying a third. One has a club. They see you and stop, and the folds down their necks flare."}
+  - {id: l03, speaker: priya, text: "Kara stands up with the axe and puts herself between them and the fire. Grounds the head of it. Doesn't raise it."}
+  - {id: l04, speaker: priya, as: kara, text: "Stop there. Weapons down, and you can come to the fire. Nobody on our side draws either. Joe. Andre."}
+  - {id: l05, speaker: gm, text: "They can't understand a word. But the one with the pouch looks at the axe on the ground, at Kara's empty hand, and says something short to the others."}
+  - {id: l06, speaker: tom, text: "Biscuit, no. Biscuit. Sorry. He heard the word fire."}
+  - {id: l07, speaker: gm, as: Tovan, text: "The club one doesn't wait for any of that. He comes straight at the fire, at the food, club up."}
+  - {id: l08, speaker: tom, text: "Can Joe Yield if he gets hit? Or is this not a fight?"}
+  - {id: l09, speaker: gm, text: "It's not a fight. He's exhausted. Tell me what Joe does."}
+  - {id: l10, speaker: tom, text: "Joe steps into him and drops him. Shoulder first, straight on. Then hauls him back up by the arm and walks him back to his people."}
+  - {id: l11, speaker: gm, text: "He goes down hard. When Joe lifts him he doesn't fight it. The others take him."}
+  - {id: l12, speaker: lena, text: "If he'd swung at Kara, Joe would've killed him, right?"}
+  - {id: l13, speaker: lena, text: "Andre draws his knife."}
+  - {id: l14, speaker: lena, text: "No. He doesn't. He just points at the club, then at the fire, and holds his hand there."}
+  - {id: l15, speaker: gm, text: "The club one looks at Andre's hand for a long time."}
+  - {id: l16, speaker: lena, text: "Andre doesn't lower it. He's not going to lower it."}
+  - {id: l17, speaker: gm, text: "He throws the club into the fire."}
+  - {id: l17a, speaker: priya, text: "Did you finish the last boss?"}
+  - {id: l17b, speaker: lena, text: "Third try. The second phase is nonsense."}
+  - {id: l18, speaker: gm, text: "Joe, you took nothing from that. You're at fourteen."}
+  - {id: l19, speaker: lena, text: "Andre puts three of the rations out on the ground in front of them."}
+  - {id: l20, speaker: gm, as: Nemi, text: "The one with the pouch comes forward. She opens it and holds it out to Kara with both small hands: one pill, big, gold at the center. She says a word and holds it there."}
+  - {id: l21, speaker: priya, text: "Is that for Kara? Like, as payment?"}
+  - {id: l22, speaker: gm, text: "She's offering it to Kara. That's a Greater Healing Pill."}
+  - {id: l23, speaker: priya, text: "Kara closes the woman's hand back over it."}
+  - {id: l24, speaker: priya, as: kara, text: "Keep it. Your guy's bleeding."}
+  - {id: l25, speaker: lena, text: "Kara!"}
+  - {id: l26, speaker: tom, text: "Who are you and what have you done with Kara."}
+  - {id: l27, speaker: gm, text: "She looks at Kara like she's trying to work out what just happened. Then she sits down at the fire, and after a while the rest of them do too. Pointing, drawing, food. You've got a way to talk now, rough as it is. Sixty VE each."}
+  - {id: l28, speaker: tom, text: "My roommate's band is playing Saturday if anyone wants to come. They're bad."}
+
+expected:
+  actions:
+    - id: x-ev-terms
+      lines: [l03, l04, l05]
+      action:
+        type: event.log
+        summary: Kara puts herself between the Kith and the fire and sets the terms, weapons down on both sides.
+        participants: [kara, joe, andre]
+        entries:
+          - {characterId: kara, pole: Control, intensity: 1, intent: Set the terms before anyone moves}
+      also:
+        - {characterId: kara, pole: Will, intensity: 1}
+
+    - id: x-ev-tovan
+      lines: [l07, l10, l11]
+      action:
+        type: event.log
+        summary: Joe meets Tovan's charge head-on and drops him, then walks him back to his people.
+        participants: [joe]
+        entries:
+          - {characterId: joe, pole: Force, intensity: 1, intent: Stop the charge, outcome: Tovan goes down and is handed back}
+
+    - id: x-ev-club
+      lines: [l14, l15, l16, l17]
+      action:
+        type: event.log
+        summary: Andre points at Tovan's club and holds his hand out until Tovan throws it into the fire.
+        participants: [andre]
+        entries:
+          - {characterId: andre, pole: Will, intensity: 1, intent: Disarm him without a fight, outcome: Tovan burns the club}
+
+    - {id: x-rations, lines: [l19], action: {type: item.remove, from: spoils, name: Trail Rations, count: 3, note: Shared with the Kith}}
+
+    - id: x-ev-refuse
+      lines: [l20, l22, l23, l24, l25, l26]
+      action:
+        type: event.log
+        summary: Kara refuses the Greater Healing Pill Nemi offers her and tells her to keep it for their wounded.
+        participants: [kara, joe, andre]
+        entries:
+          - {characterId: kara, pole: Restraint, intensity: 2, intent: Leave the pill with the one bleeding, outcome: Nemi and the Kith sit down at the fire}
+      also:
+        - {characterId: kara, pole: Restraint, intensity: 1}
+
+    - {id: x-award, lines: [l27], action: {type: ve.award, basis: {kind: other, note: Communication with the Kith}, awards: [{characterId: kara, ve: 60}, {characterId: joe, ve: 60}, {characterId: andre, ve: 60}]}}
+
+  quiet:
+    - {lines: [l06, l28], why: off-topic}
+    - {lines: [l07, l20], why: npc-speech}
+    - {lines: [l08, l09, l21], why: rules-question}
+    - {lines: [l12], why: hypothetical}
+    - {lines: [l13], why: retracted}
+    - {lines: [l17a, l17b], why: crosstalk}
+    - {lines: [l18], why: state-read-aloud}

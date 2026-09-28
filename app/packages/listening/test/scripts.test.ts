@@ -123,3 +123,31 @@ describe("the Node scene", () => {
     expect(r.overall).toMatchObject({ fn: 0, recall: 1 });
   });
 });
+
+describe("the four Kith tables", () => {
+  const tables = { "kith-apex": "The Apex Predator", "kith-architect": "The System Architect", "kith-adjudicator": "The Iron Adjudicator", "kith-thief": "The Phantom Thief" };
+  const archetypes = engine.rules.hve.archetypes as { name: string; poles: string[] }[];
+  const sides = (s: Script) =>
+    s.expected.actions.flatMap((x) => {
+      const a = x.action as Action;
+      return a.type === "event.log" ? (a.entries ?? []).flatMap((e) => [`${e.characterId}:${e.pole}`, ...(e.secondary ? [`${e.characterId}:${e.secondary}`] : [])]) : [];
+    });
+
+  it("each read on its own archetype's sides, every reading the script accepts included", () => {
+    for (const [id, name] of Object.entries(tables)) {
+      const script = scripts.find((s) => s.id === id)!;
+      const poles = archetypes.find((a) => a.name === name)!.poles;
+      const read = [...sides(script), ...script.expected.actions.flatMap((x) => (x.also ?? []).map((e) => `${e.characterId}:${e.pole}`))];
+      for (const side of read) expect(poles, `${id} ${side}`).toContain(side.split(":")[1]);
+    }
+  });
+
+  it("give each character a different record at every table", () => {
+    const records = Object.keys(tables).map((id) => sides(scripts.find((s) => s.id === id)!).sort().join(","));
+    expect(new Set(records).size).toBe(4);
+    for (const c of ["kara", "joe", "andre"]) {
+      const theirs = Object.keys(tables).map((id) => sides(scripts.find((s) => s.id === id)!).filter((x) => x.startsWith(`${c}:`)).sort().join(","));
+      expect(new Set(theirs).size, c).toBe(4);
+    }
+  });
+});
