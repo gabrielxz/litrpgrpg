@@ -73,8 +73,10 @@ expected:
         participants: [kara, joe, andre]
         entries:
           - {characterId: kara, pole: Control, intensity: 1, intent: Set the terms before anyone moves}
+      # The terms carry an invitation to the fire, so Accord is also a right reading (Gabriel, 2026-09-28).
       also:
         - {characterId: kara, pole: Will, intensity: 1}
+        - {characterId: kara, pole: Accord, intensity: 1}
 
     - id: x-ev-tovan
       lines: [l07, l10, l11]

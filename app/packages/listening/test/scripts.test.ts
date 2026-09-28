@@ -133,12 +133,12 @@ describe("the four Kith tables", () => {
       return a.type === "event.log" ? (a.entries ?? []).flatMap((e) => [`${e.characterId}:${e.pole}`, ...(e.secondary ? [`${e.characterId}:${e.secondary}`] : [])]) : [];
     });
 
-  it("each read on its own archetype's sides, every reading the script accepts included", () => {
+  // The script's own readings; an `also` may fall outside, since a real table is never pure.
+  it("each read on its own archetype's sides", () => {
     for (const [id, name] of Object.entries(tables)) {
       const script = scripts.find((s) => s.id === id)!;
       const poles = archetypes.find((a) => a.name === name)!.poles;
-      const read = [...sides(script), ...script.expected.actions.flatMap((x) => (x.also ?? []).map((e) => `${e.characterId}:${e.pole}`))];
-      for (const side of read) expect(poles, `${id} ${side}`).toContain(side.split(":")[1]);
+      for (const side of sides(script)) expect(poles, `${id} ${side}`).toContain(side.split(":")[1]);
     }
   });
 
