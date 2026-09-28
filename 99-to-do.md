@@ -134,7 +134,7 @@ A quest's count can be marked as one that cannot scale (rules 0.1.30; the Quests
 
 Then VE granted aloud and party invitations with their answers (listening 116, server 61), and three sentences on counts: on the last pass (14 scripts × 2 runs, `build/listening/draft-actions-2026-09-28T20-22-32-947Z.json`) every bookkeeping kind is at 100% precision and recall, and the quiet scripts drafted nothing.
 
-**Next.** The paste card is M2's bridge (Gabriel, 2026-09-28): its lasting part is the review, which listening feeds at M3. Next for the drafter: the suggestion panel's kinds (titles due, Hidden Achievements, Battle Memories, Personal Opportunities), scored the same way; scripts carry a few already. The audit follow-up still stands: the in-world words test over every notice kind.
+**Next.** The paste card is M2's bridge (Gabriel, 2026-09-28): its lasting part is the review, which listening feeds at M3. Next for the drafter: the suggestion panel's kinds (titles due, Hidden Achievements, Battle Memories, Personal Opportunities), scored the same way; scripts carry a few already. The audit follow-up still stands: the in-world words test over every notice kind. After M3: the in-app user guide (Gabriel, 2026-09-28; DESIGN.md, M4 table; in Todoist).
 
 ### Queued for the app
 
