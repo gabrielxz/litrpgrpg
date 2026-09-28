@@ -21,7 +21,23 @@ export const SUGGESTION_KINDS = ["prep-cue", "battle-memory", "title", "hidden-a
 export type SuggestionKind = (typeof SUGGESTION_KINDS)[number];
 
 /** Why a line must produce nothing. A draft that cites only such lines is a false positive of that kind. */
-export const QUIET_REASONS = ["rules-question", "joke", "hypothetical", "retracted", "npc-speech", "state-read-aloud", "off-topic", "crosstalk", "planning"] as const;
+export const QUIET_REASONS = [
+  "rules-question",
+  "joke",
+  /** A reference only the table shares: a name, an old session, a meme. */
+  "inside-joke",
+  "hypothetical",
+  "retracted",
+  "npc-speech",
+  "state-read-aloud",
+  /** Food, sports, work: the life around the table. */
+  "off-topic",
+  /** A player stepping away: a phone call, the door, and the return. */
+  "away",
+  "crosstalk",
+  /** The table's own logistics: scheduling, a note to look something up. */
+  "planning",
+] as const;
 
 const lineId = z.string().regex(/^[A-Za-z0-9_-]+$/);
 

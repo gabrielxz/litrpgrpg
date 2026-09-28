@@ -7,8 +7,9 @@ rules: 0.1.29
 notes: >
   Joe drew The Dying Scavenger in Phase 2 and kept Ray Okafor alive; Kara drew The High Ground
   and comes down hurt. The pile is the book's default list for four, less one Edge Shard for three.
-  The traps: a rules question, a joke, a hypothetical theft, a retracted pick, Wren's line, and
-  Kara's Health read aloud (a state, not a change). The players play against the pregens' notes
+  The traps: a rules question, a joke, a hypothetical theft, a retracted pick, Wren's line,
+  Kara's Health read aloud (a state, not a change), and table life: food, an inside joke about a
+  Gerald the AI has never heard of, a phone call, sports talk, and the GM's note to self. The players play against the pregens' notes
   (Kara's generosity is never first; Andre takes only what the plan needs), so a drafter that
   tallies from the character sheet instead of the decision loses the entries.
 
@@ -61,11 +62,17 @@ lines:
   - {id: l08, speaker: lena, text: "Andre doesn't say anything. He's already walking the edge of the pile, looking at stuff."}
   - {id: l09, speaker: priya, text: "Dibs on the boat."}
   - {id: l10, speaker: tom, text: "You can't carry a boat."}
+  - {id: l10a, speaker: priya, text: "Is anyone else starving? I haven't eaten since lunch."}
+  - {id: l10b, speaker: tom, text: "Pizza's coming at eight. I got the one with the peppers."}
+  - {id: l10c, speaker: priya, text: "Ugh, the peppers. Fine."}
   - {id: l11, speaker: gm, text: "Here's the pile, and all of you can see all of it: a Resonance Shard, an Edge Shard, a Veil Shard, a spear, some armor scraps, a reactive buckler, one healing pill, a resonance glass, and a lot of junk."}
   - {id: l12, speaker: gm, as: Wren, text: "The girl from before, Wren, calls from thirty feet off: You're just going to split it? Nobody's even going to fight over it?"}
   - {id: l13, speaker: tom, as: joe, text: "Nobody's fighting. Here's how it goes. One pick each, we go around, whoever's hurt worst picks first."}
   - {id: l14, speaker: lena, text: "What if Andre just grabs everything and runs for it?"}
   - {id: l15, speaker: priya, text: "Then Kara stabs Andre. Next question."}
+  - {id: l15a, speaker: tom, text: "That's such a Gerald move."}
+  - {id: l15b, speaker: priya, text: "Rest in peace, Gerald."}
+  - {id: l15c, speaker: lena, text: "Gerald did nothing wrong and I will die on that hill."}
   - {id: l16, speaker: gm, text: "Kara, you're the hurt one. You're at 6 out of 14."}
   - {id: l17, speaker: priya, as: kara, text: "I'm fine. Ray's worse. Give the pill to Ray."}
   - {id: l18, speaker: tom, text: "Whoa. Okay."}
@@ -80,6 +87,13 @@ lines:
   - {id: l27, speaker: gm, text: "Okay, let's close it out. Who has what?"}
   - {id: l28, speaker: tom, text: "Kara gets the buckler. I've got the spear and the armor scraps, Andre the Veil Shard and the glass, plus the rock. Kara, you want the Edge Shard too?"}
   - {id: l29, speaker: priya, text: "Yeah, give me the Edge Shard."}
+  - {id: l29a, speaker: lena, text: "Hang on, it's my mom. Two minutes, sorry."}
+  - {id: l29b, speaker: lena, text: "Hi Mom. No, I'm doing the game thing. Yes. No, I'll call you tomorrow. Love you."}
+  - {id: l29c, speaker: priya, text: "Did you watch the match last night?"}
+  - {id: l29d, speaker: tom, text: "Don't. I'm still not over the second half."}
+  - {id: l29e, speaker: gm, text: "Somebody remind me to look up the pill rules after, I think I got one wrong last week."}
+  - {id: l29f, speaker: lena, text: "Okay, I'm back. What did I miss?"}
+  - {id: l29g, speaker: gm, text: "Nothing, we waited for you."}
   - {id: l30, speaker: tom, as: joe, text: "Andre. You in? The group, I mean."}
   - {id: l31, speaker: lena, as: andre, text: "For now."}
   - {id: l32, speaker: gm, text: "Okay. The System has one more thing for each of you, privately."}
@@ -168,6 +182,11 @@ expected:
   quiet:
     - {lines: [l04, l05], why: rules-question}
     - {lines: [l09, l10], why: joke}
+    - {lines: [l10a, l10b, l10c], why: off-topic}
+    - {lines: [l15a, l15b, l15c], why: inside-joke}
+    - {lines: [l29a, l29b, l29f, l29g], why: away}
+    - {lines: [l29c, l29d], why: off-topic}
+    - {lines: [l29e], why: planning}
     - {lines: [l12], why: npc-speech}
     - {lines: [l14, l15], why: hypothetical}
     - {lines: [l16], why: state-read-aloud}
