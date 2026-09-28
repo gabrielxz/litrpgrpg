@@ -166,7 +166,9 @@ expected:
           - {name: Lesser Healing Pill, count: 2}
           - {name: Anchor Shard, count: 1}
     - {id: x-axe, lines: [l30, l31], action: {type: item.move, from: spoils, to: kara, name: Battle Axe, count: 1}}
+    # A 0.5 reminder: found, it counts; missed, it costs nothing.
     - id: x-ev-axe
+      optional: true
       lines: [l30, l31]
       action:
         type: event.log

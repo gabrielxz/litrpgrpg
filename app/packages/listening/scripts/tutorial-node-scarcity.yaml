@@ -111,7 +111,9 @@ expected:
 
     - {id: x-invite-joe, lines: [l06], action: {type: party.invite, fromId: kara, toId: joe}}
     - {id: x-joe-joins, lines: [l07], action: {type: party.answer, inviteId: x-invite-joe, accept: true}}
+    # A 0.5 reminder: found, it counts; missed, it costs nothing.
     - id: x-ev-invite
+      optional: true
       lines: [l06, l07]
       action:
         type: event.log
