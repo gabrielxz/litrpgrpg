@@ -1,0 +1,86 @@
+# The first camp: Consolidation, the watch, and a great deal of table talk. The format is in app/DESIGN.md, "The script format".
+id: camp-quiet
+title: The first camp, a scene with almost nothing to log
+source: 'book/70-tutorial.md, Phase 3, "Making Camp" and "First Consolidation"'
+rules: 0.1.29
+notes: >
+  The close of Session 1. The GM reads the Consolidation notice, the table works out hours, and the
+  rest goes in the app. The pass condition is silence: this scene is mechanics, rules questions,
+  and logistics, so a drafter that logs table talk shows it here. The one choice with a cost is Joe
+  taking the watch, which leaves his VE unrefined for the night; it is a reminder at most, and
+  optional. Traps: every kind of rules question, a hypothetical night attack, a retracted hour
+  count, the GM reading a sheet, the notice read aloud, and table life: dinner orders, a bathroom
+  break, a stretch, and next session's date.
+
+speakers:
+  - {id: gm, role: gm, name: Ike}
+  - {id: nora, role: player, name: Nora, characters: [kara]}
+  - {id: ben, role: player, name: Ben, characters: [joe]}
+  - {id: aisha, role: player, name: Aisha, characters: [andre]}
+
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara, playerId: nora}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe, playerId: ben}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre, playerId: aisha}}
+  - {id: invite-joe, action: {type: party.invite, fromId: kara, toId: joe}}
+  - {id: joe-joins, action: {type: party.answer, inviteId: invite-joe, accept: true}}
+  - {id: invite-andre, action: {type: party.invite, fromId: joe, toId: andre}}
+  - {id: andre-joins, action: {type: party.answer, inviteId: invite-andre, accept: true}}
+  - {id: session-ve, action: {type: ve.award, basis: {kind: other, note: Session 1}, awards: [{characterId: kara, ve: 22}, {characterId: joe, ve: 32}, {characterId: andre, ve: 12}]}}
+  - {id: kara-hurt, action: {type: hp.change, characterId: kara, delta: -8}}
+
+recorded:
+  - {id: notice, after: l02, action: {type: message.send, to: [kara, joe, andre], text: "Unrefined Volatile Energy detected. Accumulation: within tolerance. Process available: Consolidation. Advisory: subject is defenseless for the duration."}}
+  - {id: rest, after: l24, action: {type: consolidation.rest, highDensity: false, rests: [{characterId: kara, hours: 2}, {characterId: andre, hours: 1}]}}
+
+lines:
+  - {id: l01, speaker: gm, text: "Okay, you've made camp in the lee of the Node. Before anyone lies down, you each get a line."}
+  - {id: l02, speaker: gm, text: "Unrefined Volatile Energy detected. Accumulation within tolerance. Process available, Consolidation. Advisory, subject is defenseless for the duration."}
+  - {id: l03, speaker: nora, text: "Defenseless like, anything can walk up and eat us?"}
+  - {id: l04, speaker: gm, text: "Like that, yes. You're out for the whole of it."}
+  - {id: l05, speaker: aisha, text: "How long does it take?"}
+  - {id: l06, speaker: gm, text: "At least an hour. Every full hour refines twenty VE and heals a fifth of your Max HP. Aether comes back when the first hour's done."}
+  - {id: l07, speaker: ben, text: "Can we order food? I'm doing Thai. Who wants what?"}
+  - {id: l08, speaker: nora, text: "Pad see ew. Extra egg."}
+  - {id: l09, speaker: aisha, text: "Whatever's spicy. Thanks."}
+  - {id: l10, speaker: gm, text: "Kara, you're at 6 of 14, and you've got 22 unrefined."}
+  - {id: l11, speaker: nora, text: "So two hours gets me forty, and that's all of it?"}
+  - {id: l12, speaker: gm, text: "Two hours refines all twenty-two, and heals you two fifths."}
+  - {id: l13, speaker: nora, text: "Then Kara does three hours."}
+  - {id: l14, speaker: nora, text: "No, two. Two's enough, three is just sitting there."}
+  - {id: l15, speaker: aisha, text: "Andre's got twelve. One hour, then."}
+  - {id: l16, speaker: gm, text: "Someone should stay awake. A character on watch isn't consolidating."}
+  - {id: l17, speaker: ben, text: "What happens if something attacks while we're all out?"}
+  - {id: l18, speaker: gm, text: "Then you'd want someone on watch."}
+  - {id: l19, speaker: ben, text: "Joe takes the watch. His stuff can wait. He's used to nights."}
+  - {id: l20, speaker: aisha, text: "Does Joe lose anything by waiting?"}
+  - {id: l21, speaker: gm, text: "No, it keeps. He's well under tolerance."}
+  - {id: l22, speaker: nora, text: "Bathroom, two minutes."}
+  - {id: l23, speaker: aisha, text: "I'm going to stand up, my back is dying."}
+  - {id: l24, speaker: gm, text: "Okay, I'll put the rest in. Kara two hours, Andre one, Joe on watch."}
+  - {id: l25, speaker: gm, text: "Nothing comes in the night. The tank empties, the wounds close. Kara, you wake at ten."}
+  - {id: l26, speaker: nora, text: "Okay, I'm back. Did anything happen?"}
+  - {id: l27, speaker: gm, text: "You slept. That's where we stop tonight."}
+  - {id: l28, speaker: ben, text: "Same time in two weeks? Not the Friday, I'm away."}
+  - {id: l29, speaker: aisha, text: "The Saturday works for me."}
+
+expected:
+  actions:
+    - id: x-ev-watch
+      lines: [l19]
+      optional: true
+      action:
+        type: event.log
+        summary: Joe takes the watch and leaves his own VE unrefined for the night.
+        participants: [joe]
+        entries:
+          - {characterId: joe, pole: Restraint, intensity: 0.5}
+
+  quiet:
+    - {lines: [l02, l24, l25], why: already-recorded}
+    - {lines: [l03, l04, l05, l06, l11, l12, l20, l21], why: rules-question}
+    - {lines: [l07, l08, l09, l28, l29], why: planning}
+    - {lines: [l10], why: state-read-aloud}
+    - {lines: [l13], why: retracted}
+    - {lines: [l17, l18], why: hypothetical}
+    - {lines: [l22, l23, l26], why: away}

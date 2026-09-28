@@ -1,0 +1,102 @@
+# Coercion between player characters over a shard. The format is in app/DESIGN.md, "The script format".
+id: camp-coercion
+title: The camp between sectors, a spear at a friend's throat
+source: 'book/50-hidden-vector-engine.md, "Weighing a Moment" (the PvP note); book/70-tutorial.md, Phase 4, "The Camp Between Sectors"'
+rules: 0.1.29
+notes: >
+  The armory's leftovers are on the ground at camp. Andre pockets the Anchor Shard before anyone
+  speaks of it; Joe puts his spear to Andre's throat until he hands it over, which is coercion aimed
+  at another player character and so at least two tallies of Will with the coercion mark; Kara
+  takes the shard back to the pile and sets the rule that ends it, and the lot gives it to Andre.
+  Andre handing it over under the spear is not his decision to weigh. Traps: the players arguing as
+  themselves about who always gets the shards, a rules question about threatening a party member,
+  a hypothetical, and table life: rain on the skylight, a spilled drink, and a birthday.
+
+speakers:
+  - {id: gm, role: gm, name: Ruth}
+  - {id: owen, role: player, name: Owen, characters: [kara]}
+  - {id: mei, role: player, name: Mei, characters: [joe]}
+  - {id: carlos, role: player, name: Carlos, characters: [andre]}
+
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara, playerId: owen}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe, playerId: mei}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre, playerId: carlos}}
+  - {id: invite-joe, action: {type: party.invite, fromId: kara, toId: joe}}
+  - {id: joe-joins, action: {type: party.answer, inviteId: invite-joe, accept: true}}
+  - {id: invite-andre, action: {type: party.invite, fromId: joe, toId: andre}}
+  - {id: andre-joins, action: {type: party.answer, inviteId: invite-andre, accept: true}}
+  - {id: kit-kara, action: {type: item.give, to: kara, items: [{name: Reactive Buckler, count: 1}, {name: Edge Shard, count: 1}, {name: Battle Axe, count: 1}]}}
+  - {id: kit-joe, action: {type: item.give, to: joe, items: [{name: Spear, count: 1}, {name: Low-Grade Armor Scraps, count: 1}]}}
+  - {id: kit-andre, action: {type: item.give, to: andre, items: [{name: Veil Shard, count: 1}, {name: Resonance Glass, count: 1}, {name: Resonance Shard, count: 1}]}}
+  - {id: armory, action: {type: item.give, to: spoils, items: [{name: Anchor Shard, count: 1}, {name: Reactive Buckler, count: 1}, {name: Lesser Healing Pill, count: 2}]}}
+
+lines:
+  - {id: l01, speaker: gm, text: "Camp. The armory stuff's on a tarp by the fire: the other buckler, two lesser pills, and the little gray shard. The Anchor Shard."}
+  - {id: l02, speaker: carlos, text: "While everybody's getting the fire going, Andre picks up the Anchor Shard and puts it in his coat."}
+  - {id: l03, speaker: mei, text: "Wait. Joe saw that."}
+  - {id: l04, speaker: mei, text: "You always get the shards, Carlos. Every time."}
+  - {id: l05, speaker: carlos, text: "Because I'm the one who reads what they do."}
+  - {id: l06, speaker: mei, text: "Can I threaten him? Like, is that allowed, it's another player."}
+  - {id: l07, speaker: gm, text: "You can. It's your character. Say what Joe does."}
+  - {id: l08, speaker: mei, text: "Joe picks up the spear and puts the point right under Andre's jaw."}
+  - {id: l09, speaker: mei, as: joe, text: "Put it on the tarp. Now."}
+  - {id: l10, speaker: owen, text: "Whoa. Whoa, okay."}
+  - {id: l11, speaker: carlos, text: "Is Joe actually going to do it? If Andre says no?"}
+  - {id: l12, speaker: mei, text: "Don't find out."}
+  - {id: l13, speaker: carlos, text: "Andre takes it out and puts it in Joe's hand. Slowly."}
+  - {id: l14, speaker: gm, text: "Nobody's moving. The fire's popping. That's it."}
+  - {id: l15, speaker: owen, text: "Is that rain? That's rain on the skylight. Wow."}
+  - {id: l16, speaker: owen, text: "Okay. Kara gets up, walks over, takes the shard out of Joe's hand, and puts it back on the tarp."}
+  - {id: l17, speaker: owen, as: kara, text: "Nobody in this party points a weapon at anybody in this party. Not ever. Shards go by lot from now on. Straws."}
+  - {id: l18, speaker: mei, text: "Joe lowers the spear."}
+  - {id: l19, speaker: gm, text: "Kara breaks three twigs. Andre draws the long one."}
+  - {id: l20, speaker: carlos, text: "Andre picks the shard back up. He doesn't look at Joe."}
+  - {id: l21, speaker: mei, text: "Oh no, my drink. Paper towels, one sec."}
+  - {id: l22, speaker: gm, text: "Before we stop, it's Owen's birthday on Thursday, so cake next week."}
+
+expected:
+  actions:
+    - {id: x-grab, lines: [l02], action: {type: item.move, from: spoils, to: andre, name: Anchor Shard, count: 1}}
+    - id: x-ev-grab
+      lines: [l02, l03]
+      action:
+        type: event.log
+        summary: Andre pockets the Anchor Shard while the others are busy with the fire, before anyone speaks of it.
+        participants: [andre]
+        entries:
+          - {characterId: andre, pole: Hunger, intensity: 1, intent: Take the shard before it is shared out}
+      also:
+        - {characterId: andre, pole: Hunger, intensity: 0.5}
+
+    - {id: x-handover, lines: [l13], action: {type: item.move, from: andre, to: joe, name: Anchor Shard, count: 1}}
+    - id: x-ev-spear
+      lines: [l08, l09, l10, l12, l13, l14]
+      action:
+        type: event.log
+        summary: Joe puts his spear point under Andre's jaw and makes him hand the Anchor Shard over.
+        participants: [joe, andre, kara]
+        entries:
+          - {characterId: joe, pole: Will, intensity: 2, coercion: true, intent: Take the shard back from Andre, outcome: Andre hands it over}
+      also:
+        - {characterId: joe, pole: Will, intensity: 3}
+
+    - {id: x-back, lines: [l16], action: {type: item.move, from: joe, to: spoils, name: Anchor Shard, count: 1}}
+    - id: x-ev-rule
+      lines: [l16, l17, l18]
+      action:
+        type: event.log
+        summary: Kara takes the shard back to the pile and sets the rule that nobody in the party draws on another, and shards go by lot.
+        participants: [kara, joe, andre]
+        entries:
+          - {characterId: kara, pole: Control, intensity: 1, intent: End it with a rule that holds, outcome: Joe lowers the spear}
+      also:
+        - {characterId: kara, pole: Control, intensity: 2}
+        - {characterId: kara, pole: Accord, intensity: 1}
+    - {id: x-lot, lines: [l19, l20], action: {type: item.move, from: spoils, to: andre, name: Anchor Shard, count: 1}}
+
+  quiet:
+    - {lines: [l04, l05], why: crosstalk}
+    - {lines: [l06, l07], why: rules-question}
+    - {lines: [l11], why: hypothetical}
+    - {lines: [l15, l21, l22], why: off-topic}

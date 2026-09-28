@@ -1,0 +1,178 @@
+# The den in Sector B: a fight in the tracker where Joe goes Downed, and the Snarljaw Heart.
+# The format is in app/DESIGN.md, "The script format".
+id: wild-den
+title: The Wild Fragment's den, a Downing and the Heart
+source: 'book/70-tutorial.md, Phase 4, "Sector B: The Wild Fragment"'
+rules: 0.1.29
+notes: >
+  The party finds the den by day with one adult on guard. The fight runs in the tracker: the adult
+  wins Momentum and Downs Joe, Andre stabilizes him with bare hands while it is still up, and Kara's
+  axe cascades (two extra dice) and kills it. Joe survived Downed and Kara cascaded, so two Battle
+  Memory Cards are due; the drafter should raise them and log nothing the tracker holds. The moments
+  the tracker cannot see: Andre spends his turn on Joe instead of the fight, and Kara kills the
+  warm young one for the Heart while Joe walks out. The record has no action yet for eating an
+  Attribute Treasure, so the Heart's +5 is not in the expected record. Traps: the GM reading out the
+  Clashes and the stabilize check, a rules question about Advantage, a hypothetical, Joe's Health
+  read aloud, and table life: a delivery at the door, a group chat, and a podcast.
+
+speakers:
+  - {id: gm, role: gm, name: Dana}
+  - {id: priya, role: player, name: Priya, characters: [kara]}
+  - {id: tom, role: player, name: Tom, characters: [joe]}
+  - {id: lena, role: player, name: Lena, characters: [andre]}
+
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara, playerId: priya}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe, playerId: tom}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre, playerId: lena}}
+  - {id: invite-joe, action: {type: party.invite, fromId: kara, toId: joe}}
+  - {id: joe-joins, action: {type: party.answer, inviteId: invite-joe, accept: true}}
+  - {id: invite-andre, action: {type: party.invite, fromId: joe, toId: andre}}
+  - {id: andre-joins, action: {type: party.answer, inviteId: invite-andre, accept: true}}
+  - {id: kit-kara, action: {type: item.give, to: kara, items: [{name: Reactive Buckler, count: 1}, {name: Edge Shard, count: 1}, {name: Battle Axe, count: 1}]}}
+  - {id: kit-joe, action: {type: item.give, to: joe, items: [{name: Spear, count: 1}, {name: Low-Grade Armor Scraps, count: 1}]}}
+  - {id: kit-andre, action: {type: item.give, to: andre, items: [{name: Veil Shard, count: 1}, {name: Resonance Glass, count: 1}, {name: Resonance Shard, count: 1}]}}
+
+recorded:
+  - id: fight
+    after: l04
+    action:
+      type: combat.start
+      encounterId: den
+      name: The den
+      sides: [{id: party, name: The party}, {id: hostiles, name: The pack}]
+      zones: [{id: den, name: The den mouth}, {id: trees, name: The trees}]
+      combatants:
+        - {combatantId: kara, sideId: party, characterId: kara, zoneId: den}
+        - {combatantId: joe, sideId: party, characterId: joe, zoneId: den}
+        - {combatantId: andre, sideId: party, characterId: andre, zoneId: den}
+        - {combatantId: snarljaw, sideId: hostiles, name: Snarljaw, creature: Snarljaw, grade: F, maxHp: 24,
+           momentumForce: 18, beats: 2, yields: false, zoneId: den,
+           offense: [{force: 14, stat: STR, means: fang and claw}], defense: [{force: 18, stat: DEX}]}
+  - {id: momentum, after: l04, action: {type: combat.momentum}, dice: [22, 81]}
+  - {id: snarl-act, after: l06, action: {type: combat.act, combatantId: snarljaw}}
+  - {id: snarl-bite, after: l06, action: {type: combat.attack, attackerId: snarljaw, defenderId: joe, attack: {force: 14, means: fang and claw, modifier: 0}}}
+  - {id: joe-def, after: l06, by: tom, action: {type: combat.defend, defense: {attribute: DEX, modifier: 0}}, dice: [58, 11]}
+  - {id: joe-take, after: l09, by: tom, action: {type: combat.resolve, yield: 0}}
+  - {id: snarl-bite-2, after: l10, action: {type: combat.attack, attackerId: snarljaw, defenderId: kara, attack: {force: 14, means: fang and claw, modifier: 0}}}
+  - {id: kara-def, after: l10, by: priya, action: {type: combat.defend, defense: {attribute: DEX, modifier: 0}}, dice: [31, 64]}
+  - {id: snarl-done, after: l11, action: {type: combat.done, combatantId: snarljaw}}
+  - {id: andre-act, after: l15, by: lena, action: {type: combat.act, combatantId: andre}}
+  - {id: andre-stab, after: l15, by: lena, action: {type: combat.stabilize, combatantId: andre, targetId: joe}, dice: [93]}
+  - {id: andre-done, after: l17, by: lena, action: {type: combat.done, combatantId: andre}}
+  - {id: kara-act, after: l18, by: priya, action: {type: combat.act, combatantId: kara}}
+  - {id: kara-hit, after: l18, by: priya, action: {type: combat.attack, attackerId: kara, defenderId: snarljaw, attack: {attribute: STR, modifier: 0, shape: axes and hammers}, label: Battle Axe}}
+  - {id: snarl-def, after: l18, action: {type: combat.defend, defense: {force: 18, modifier: 0}}, dice: [97, 99, 12, 40]}
+  - {id: fight-over, after: l20, action: {type: combat.end}}
+  - id: settle
+    after: l20
+    action:
+      type: encounter.settle
+      encounterId: den
+      participants: [kara, joe, andre]
+      kills: [{combatantId: snarljaw, tier: Moderate, byId: kara}]
+      awards: [{characterId: kara, ve: 10}, {characterId: joe, ve: 10}, {characterId: andre, ve: 10}]
+      spoils: []
+
+lines:
+  - {id: l01, speaker: gm, text: "The drag marks lead you to a hollow under a fallen trunk. Bones outside it, stripped and stacked. Inside, small shapes moving. And one adult, lying across the mouth of it, awake, watching you."}
+  - {id: l02, speaker: lena, text: "Just one?"}
+  - {id: l03, speaker: gm, text: "Just one. The rest are out hunting."}
+  - {id: l04, speaker: priya, text: "Then we take it. Kara goes in."}
+  - {id: l05, speaker: gm, text: "It's up before you're halfway there. Momentum's theirs, eighty-one plus eighteen."}
+  - {id: l06, speaker: gm, text: "It goes for Joe. Fang and claw. Defend."}
+  - {id: l07, speaker: tom, text: "Eleven. Oh no. Oh no."}
+  - {id: l08, speaker: gm, text: "Seventy-two against sixteen. Fifty-six. Do you want to Yield?"}
+  - {id: l09, speaker: tom, text: "It doesn't matter, does it? One Beat's twenty, it's still way over. No. Joe takes it."}
+  - {id: l10, speaker: gm, text: "Joe's down. Zero, Downed. It turns on Kara."}
+  - {id: l11, speaker: gm, text: "Forty-five against sixty-nine. It misses Kara. Its turn's done."}
+  - {id: l12, speaker: tom, text: "Hang on, that's the door, it's my food. Thirty seconds."}
+  - {id: l13, speaker: lena, text: "Does Andre get Advantage to stabilize? He's not the medic, Joe's the medic."}
+  - {id: l14, speaker: gm, text: "No Advantage, that's Joe's Background. Straight DEX check, Moderate."}
+  - {id: l15, speaker: lena, text: "Then Andre drops his whole turn on Joe. He's not fighting it. He kneels down with his back to the thing and gets his hands on the wound."}
+  - {id: l16, speaker: priya, text: "Andre, it's right there!"}
+  - {id: l17, speaker: gm, text: "Ninety-three plus your DEX. That's a success. The bleeding stops. Joe's stable."}
+  - {id: l18, speaker: priya, text: "Kara swings the axe. Big overhead, both hands."}
+  - {id: l19, speaker: gm, text: "Ninety-seven, that explodes, ninety-nine, that explodes again, twelve. Two hundred and some. It's dead before it hits the ground."}
+  - {id: l20, speaker: gm, text: "Kara, a cascade like that, the System will want a word with you at the next Consolidation."}
+  - {id: l21, speaker: tom, text: "Okay, I'm back. Did I die?"}
+  - {id: l22, speaker: lena, text: "Andre saved you. You're welcome."}
+  - {id: l23, speaker: gm, text: "Joe, you come to at one HP once it's over."}
+  - {id: l24, speaker: priya, text: "Everyone in the group chat is going to lose it over that roll."}
+  - {id: l25, speaker: gm, text: "In the den there are five young, and in the bedding there's a predator core. You can just take the core."}
+  - {id: l26, speaker: lena, text: "Andre looks at them through the Resonance Glass."}
+  - {id: l27, speaker: gm, text: "One of the young shows up warm. Much warmer than the others. The smallest one. Whatever the heart is, it's in that one."}
+  - {id: l28, speaker: priya, text: "So to get it you'd have to kill the little one."}
+  - {id: l29, speaker: gm, text: "Yes."}
+  - {id: l30, speaker: lena, text: "What if we took the little one with us? Raised it or something?"}
+  - {id: l31, speaker: gm, text: "It won't survive away from the den."}
+  - {id: l32, speaker: priya, text: "Kara does it. Quick. She takes the heart and eats it."}
+  - {id: l33, speaker: tom, text: "Oh."}
+  - {id: l34, speaker: lena, text: "Yeah."}
+  - {id: l35, speaker: tom, text: "Joe doesn't watch. He gets up, on one HP, and walks out of the den, and doesn't say anything."}
+  - {id: l36, speaker: lena, text: "Andre takes the core."}
+  - {id: l37, speaker: gm, text: "It's a Hard kill's worth, twenty VE, the moment it's in your hand."}
+  - {id: l38, speaker: priya, text: "Have you heard the new episode? The one about the lighthouse?"}
+
+expected:
+  actions:
+    # The same act the Martial Remnant expects as Force: walking straight at a guarded threat.
+    - id: x-ev-attack
+      lines: [l04]
+      action:
+        type: event.log
+        summary: Kara decides to take the den while one adult guards it, and goes in first.
+        participants: [kara]
+        entries:
+          - {characterId: kara, pole: Force, intensity: 1, intent: Take the den while it is lightly held}
+      also:
+        - {characterId: kara, pole: Force, intensity: 0.5}
+
+    - id: x-ev-stabilize
+      lines: [l15, l16, l17]
+      action:
+        type: event.log
+        summary: Andre gives up his turn in the fight to kneel with his back to the Snarljaw and stop Joe's bleeding.
+        participants: [andre, joe, kara]
+        entries:
+          - {characterId: andre, pole: Restraint, intensity: 1, intent: Keep Joe alive before anything else, outcome: Joe is stable}
+      also:
+        - {characterId: andre, pole: Restraint, intensity: 2}
+        - {characterId: andre, pole: Accord, intensity: 1}
+
+    - id: x-ev-heart
+      lines: [l28, l29, l32, l33, l34]
+      action:
+        type: event.log
+        summary: Kara kills the smallest young Snarljaw for the Heart inside it and eats it.
+        participants: [kara, joe, andre]
+        entries:
+          - {characterId: kara, pole: Hunger, intensity: 2, intent: Take the Heart, outcome: The table goes quiet}
+      also:
+        - {characterId: kara, pole: Hunger, intensity: 1}
+        - {characterId: kara, pole: Hunger, intensity: 3}
+
+    - id: x-ev-walkout
+      lines: [l35]
+      optional: true
+      action:
+        type: event.log
+        summary: Joe, at 1 HP, gets up and walks out of the den rather than watch.
+        participants: [joe]
+        entries:
+          - {characterId: joe, pole: Restraint, intensity: 0.5}
+
+    - {id: x-core, lines: [l36, l37], action: {type: ve.award, basis: {kind: core, core: predator core}, awards: [{characterId: andre, ve: 20}]}}
+
+  # The record makes both cards due by itself; suggesting them as well is not wrong.
+  suggestions:
+    - {id: s-memory-joe, lines: [l10, l22, l23], kind: battle-memory, key: survived Downed, characterId: joe, optional: true}
+    - {id: s-memory-kara, lines: [l19, l20], kind: battle-memory, key: cascade, characterId: kara, optional: true}
+
+  quiet:
+    - {lines: [l05, l07, l08, l10, l11, l17, l19], why: already-recorded}
+    - {lines: [l09, l13, l14], why: rules-question}
+    - {lines: [l12, l21], why: away}
+    - {lines: [l23], why: state-read-aloud}
+    - {lines: [l24, l38], why: off-topic}
+    - {lines: [l30, l31], why: hypothetical}

@@ -1,0 +1,131 @@
+# The gate in Phase 5: the queue set out loud, and a Sacrifice. The format is in app/DESIGN.md, "The script format".
+id: gate-crossing
+title: The Convergence Crisis, the queue and the Sacrifice
+source: 'book/70-tutorial.md, Phase 5, "The Gate" and "The Sacrifice Option"'
+rules: 0.1.29
+notes: >
+  The party is on the causeway with Ray, Marisol, and the four Kith; the gate is open and takes one
+  person a round. Joe sets the order out loud and puts himself last, and Kara takes the last place
+  from him; the two are separate moments. When the Warden reaches the span with four still waiting, Andre turns back and attacks
+  it so it will stay on him; the GM confirms the player means it, as the book asks, and the table
+  goes quiet. The book tallies the Sacrifice as Defining; its side is the choice to trade his life
+  for the queue (Restraint), with the attack as a secondary. Gate checks and the attack are in the
+  tracker. Traps: a Cornered question, a hypothetical all-out fight, a retracted order, NPC speech,
+  the GM reading out the checks, and table life: a phone alarm, the time, and the last of the chips.
+
+speakers:
+  - {id: gm, role: gm, name: Dana}
+  - {id: priya, role: player, name: Priya, characters: [kara]}
+  - {id: tom, role: player, name: Tom, characters: [joe]}
+  - {id: lena, role: player, name: Lena, characters: [andre]}
+
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara, playerId: priya}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe, playerId: tom}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre, playerId: lena}}
+  - {id: invite-joe, action: {type: party.invite, fromId: kara, toId: joe}}
+  - {id: joe-joins, action: {type: party.answer, inviteId: invite-joe, accept: true}}
+  - {id: invite-andre, action: {type: party.invite, fromId: joe, toId: andre}}
+  - {id: andre-joins, action: {type: party.answer, inviteId: invite-andre, accept: true}}
+  - {id: kit-kara, action: {type: item.give, to: kara, items: [{name: Reactive Buckler, count: 1}, {name: Battle Axe, count: 1}]}}
+  - {id: kit-joe, action: {type: item.give, to: joe, items: [{name: Spear, count: 1}, {name: Low-Grade Armor Scraps, count: 1}]}}
+  - {id: kit-andre, action: {type: item.give, to: andre, items: [{name: Veil Shard, count: 1}, {name: Resonance Shard, count: 1}]}}
+
+recorded:
+  - id: fight
+    after: l14
+    action:
+      type: combat.start
+      encounterId: span
+      name: The causeway
+      sides: [{id: party, name: The party}, {id: warden, name: The Warden}]
+      zones: [{id: span, name: The span}, {id: mouth, name: The gate mouth}]
+      combatants:
+        - {combatantId: andre, sideId: party, characterId: andre, zoneId: span}
+        - {combatantId: warden, sideId: warden, name: Corrupted System Warden, creature: Corrupted System Warden, grade: F,
+           maxHp: 190, momentumForce: 70, beats: 3, yields: true, zoneId: span,
+           offense: [{force: 80, stat: STR, means: gauntlet smash}], defense: [{force: 95, stat: FOR, means: plating}]}
+  - {id: momentum, after: l14, action: {type: combat.momentum}, dice: [88, 12]}
+  - {id: andre-act, after: l17, by: lena, action: {type: combat.act, combatantId: andre}}
+  - {id: andre-hit, after: l17, by: lena, action: {type: combat.attack, attackerId: andre, defenderId: warden, attack: {attribute: STR, modifier: 0}, label: Fists}}
+  - {id: warden-def, after: l17, action: {type: combat.defend, defense: {force: 95, means: plating, modifier: 0}}, dice: [74, 30]}
+  - {id: joe-gate, after: l27, by: tom, action: {type: dice.roll, roller: {kind: character, characterId: joe, attribute: DEX}, rollKind: check, label: The gate, modifier: 0, resistance: 90}, dice: [91]}
+  - {id: kara-gate, after: l29, by: priya, action: {type: dice.roll, roller: {kind: character, characterId: kara, attribute: DEX}, rollKind: check, label: The gate, modifier: 0, resistance: 90}, dice: [52]}
+  - {id: kara-coat, after: l30, action: {type: hp.change, characterId: kara, delta: -13}}
+
+lines:
+  - {id: l01, speaker: gm, text: "You're on the span. Forty feet of road, white on your left and behind you, the drop on your right. The gate's open. It takes one person a round."}
+  - {id: l02, speaker: gm, text: "You've got Ray, Marisol, and the four Kith with you. That's ten, with you three. Someone has to call the order."}
+  - {id: l03, speaker: tom, as: joe, text: "Ray first, he's slowest. Then the Kith, the wounded one first. Then Marisol."}
+  - {id: l04, speaker: tom, text: "No wait, Marisol before the Kith, she's closer."}
+  - {id: l05, speaker: tom, text: "Actually no. Kith first, the wounded one's the priority. Keep it how I said."}
+  - {id: l06, speaker: tom, as: joe, text: "Then Andre, then Kara, then me. I go last."}
+  - {id: l07, speaker: priya, as: kara, text: "No. I go last. You're carrying Ray's pack, you go before me."}
+  - {id: l08, speaker: tom, as: joe, text: "Kara."}
+  - {id: l09, speaker: priya, as: kara, text: "Go."}
+  - {id: l10, speaker: gm, as: Ray, text: "Ray is already at the mouth, saying go, go, go, and then he's gone into the light."}
+  - {id: l11, speaker: lena, text: "Does Yield even work out here?"}
+  - {id: l12, speaker: gm, text: "One Beat, most. You're Cornered on the span, there's nowhere to be driven."}
+  - {id: l13, speaker: gm, text: "Round four. The Warden steps onto the far end of the span. It isn't looking at you. It's looking at the gate. Four still waiting."}
+  - {id: l14, speaker: lena, text: "Andre turns around and walks back toward it."}
+  - {id: l15, speaker: gm, text: "Lena. You know what that means? If he stands in its path, it turns on him, and he doesn't come back from that."}
+  - {id: l16, speaker: lena, text: "I know. Yes. He's buying them the rounds."}
+  - {id: l17, speaker: lena, text: "He hits it. Bare hands. He just needs it to look at him."}
+  - {id: l18, speaker: gm, text: "Seventy-eight against a hundred and twenty-five. Nothing gets through the plating. But it stops. And it looks down at him."}
+  - {id: l19, speaker: tom, text: "Lena."}
+  - {id: l20, speaker: priya, text: "Oh my god."}
+  - {id: l21, speaker: priya, text: "I didn't think anyone was actually going to do that."}
+  - {id: l22, speaker: tom, text: "What if we all turned around and fought it? Three of us?"}
+  - {id: l23, speaker: gm, text: "It's a hundred and ninety HP. You saw the numbers."}
+  - {id: l24, speaker: priya, text: "Sorry, that's my alarm. It's eleven. Keep going, keep going."}
+  - {id: l25, speaker: gm, text: "The Kith go through, one a round, the wounded one first. Marisol goes. The Warden's attention stays on Andre."}
+  - {id: l26, speaker: gm, as: Nemi, text: "The pouch one stops at the mouth and looks back at Andre, and says one word none of you know. Then she's through."}
+  - {id: l27, speaker: gm, text: "Joe, you're up. DEX check to get through."}
+  - {id: l28, speaker: gm, text: "Ninety-one plus five, clean. You're through."}
+  - {id: l29, speaker: gm, text: "Kara, last. Roll it."}
+  - {id: l30, speaker: gm, text: "Fifty-two plus five, fifty-seven against ninety. Soft failure. You're through, at one HP, and the Purge takes your coat."}
+  - {id: l31, speaker: tom, text: "Who ate the last of the chips?"}
+
+expected:
+  actions:
+    - id: x-ev-queue
+      lines: [l03, l05, l06]
+      action:
+        type: event.log
+        summary: Joe sets the queue out loud, the slowest and the wounded first and himself last.
+        participants: [joe]
+        entries:
+          - {characterId: joe, pole: Control, intensity: 1, intent: Get everyone through in the right order}
+      also:
+        - {characterId: joe, pole: Restraint, intensity: 1}
+
+    - id: x-ev-last
+      lines: [l07, l08, l09]
+      action:
+        type: event.log
+        summary: Kara takes the last place in the queue from Joe.
+        participants: [kara, joe]
+        entries:
+          - {characterId: kara, pole: Restraint, intensity: 1, intent: Take the most dangerous place, outcome: She comes through at 1 HP}
+      also:
+        - {characterId: kara, pole: Restraint, intensity: 2}
+
+    - id: x-ev-sacrifice
+      lines: [l14, l15, l16, l17, l18, l19, l20, l21]
+      action:
+        type: event.log
+        summary: With four still waiting, Andre turns back and attacks the Warden bare-handed so it stays on him while the queue goes through.
+        context: The Sacrifice Option; the GM confirmed the player meant it.
+        participants: [andre, joe, kara]
+        entries:
+          - {characterId: andre, pole: Restraint, intensity: 3, secondary: Force, intent: Buy the queue its rounds with his life, outcome: The Warden stays on him}
+      also:
+        - {characterId: andre, pole: Force, intensity: 3}
+
+  quiet:
+    - {lines: [l04], why: retracted}
+    - {lines: [l10, l26], why: npc-speech}
+    - {lines: [l11, l12], why: rules-question}
+    - {lines: [l18, l28, l30], why: already-recorded}
+    - {lines: [l22, l23], why: hypothetical}
+    - {lines: [l24, l31], why: off-topic}
