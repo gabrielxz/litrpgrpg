@@ -8,6 +8,7 @@ import { type Action, DERIVED_COUNTERS, type Envelope, type GmView, type Sheet, 
 import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
 import { ATTRIBUTES, counterLabel, type Names } from "../text.ts";
+import { TableWords } from "./TableWords.tsx";
 import { Commit } from "./Commit.tsx";
 
 const CATEGORIES: TitleCategory[] = ["Achievement", "Hidden Achievement", "HVE-Resonant", "Bestowed"];
@@ -164,6 +165,7 @@ export function TitlesForm({ view, engine, names, onRecorded }: { view: GmView; 
               </label>
             )}
           </div>
+          <TableWords text={custom.name} />
           <div className="row tight">
             {ATTRIBUTES.map((a) => (
               <label key={a}>

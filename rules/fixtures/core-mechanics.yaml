@@ -246,3 +246,18 @@ cases:
     fn: momentum_value
     args: {hrt_force: 14, per_force: 18}
     expect: 18
+  - name: The F-Grade stat cap is 99
+    source: 10-core-mechanics.md, "Stat cap"
+    fn: stat_cap
+    args: {code: F}
+    expect: 99
+  - name: The E-Grade stat cap is 999
+    source: 10-core-mechanics.md, "Stat cap"
+    fn: stat_cap
+    args: {code: E}
+    expect: 999
+  - name: The D-Grade stat cap is 9,999
+    source: 10-core-mechanics.md, "Stat cap"
+    fn: stat_cap
+    args: {code: D}
+    expect: 9999

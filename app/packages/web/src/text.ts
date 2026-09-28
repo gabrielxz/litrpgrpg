@@ -528,6 +528,7 @@ export function noticeLine(e: Effect): string | null {
       return `Attribute Treasure absorbed. ${gain}${e.lost ? ` Excess lost: ${e.lost}.` : ""}`;
     }
     case "pill":
+      if (e.noEffect) return null;
       return e.pillKind === "healing" ? `Health restored: ${e.restored}.` : `Aether restored: ${e.restored}.`;
     case "kill-confirmed":
       return `Kill confirmed. Grade ${e.victimGrade}, ${e.tier}.`;

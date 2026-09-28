@@ -1,7 +1,7 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.30"
+version: "0.1.31"
 dated: "2026-09-28"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
@@ -101,3 +101,6 @@ notes: >
   0.1.30: a quest's count may be marked as one that cannot scale (Quests, "Quest sharing": reach a place, protect a
   person, recover a thing), and sharing leaves it as written; the tutorial's Sector Survey (Q-002) is marked. No
   number moved.
+  0.1.31: the numbers both engines stated in code move into the data: Max HP per Raw FOR (character.yaml
+  derived.max_hp_per_raw_for: 2), the Surge cost's divisor and minimum (combat.yaml surge.cost_divisor: 2,
+  cost_minimum: 1), and the Anchor's bonus by Margin as rows (breakthrough.yaml anchor.bonus_by_margin). No number moved.

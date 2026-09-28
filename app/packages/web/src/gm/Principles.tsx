@@ -9,6 +9,7 @@ import type { Engine } from "@gradebreaker/engine";
 import { type Envelope, type GmView, type Sheet, families, ipSources, weights } from "@gradebreaker/record";
 import { useState } from "react";
 import type { Names } from "../text.ts";
+import { TableWords } from "./TableWords.tsx";
 import { Commit } from "./Commit.tsx";
 
 type Props = { view: GmView; engine: Engine; names: Names; onRecorded: (env: Envelope) => void };
@@ -139,6 +140,7 @@ function MeditateForm({ view, engine, names, onRecorded, c, memoryId }: Props & 
         The System's vision
         <textarea value={vision} maxLength={1000} rows={2} onChange={(e) => setVision(e.target.value)} placeholder="Three images: the moment with one detail changed, the Principle in a pure or alien form, one image that misleads" />
       </label>
+      <TableWords text={vision} />
       <Commit
         campaignId={view.campaign.id}
         action={{ type: "memory.meditate", characterId: c.id, memoryId, family, ip, ...(words.trim() ? { words: words.trim() } : {}), ...(vision.trim() ? { vision: vision.trim() } : {}) }}
@@ -215,6 +217,7 @@ function NameForm({ view, engine, names, onRecorded, c, family }: Props & { c: S
           Principle
           <input value={name} maxLength={60} onChange={(e) => setName(e.target.value)} placeholder="Weight" />
         </label>
+        <TableWords text={name} />
         <label>
           Minor passive
           <input value={passive} maxLength={300} onChange={(e) => setPassive(e.target.value)} placeholder={engine.rules.principles.initial_insight_passive_example} />
@@ -266,12 +269,14 @@ function DistillForm({ view, engine, names, onRecorded, c, x, refine }: Props & 
         {refine ? "New identity" : "Broadened name (optional)"}
         <input value={rename} maxLength={60} onChange={(e) => setRename(e.target.value)} placeholder={refine ? "Consuming Flame" : "Gravity"} />
       </label>
+      <TableWords text={rename} />
       {!refine && (
         <>
           <label>
             {tier === "Mid Fragment" ? "Infusion: what the Principle's force means" : tier === "Peak Fragment" ? "Domain" : "Application"}
             <input value={grant} maxLength={80} onChange={(e) => setGrant(e.target.value)} placeholder={tier === "Seed" ? "Searing Strike" : ""} />
           </label>
+          <TableWords text={grant} />
           <label>
             Effect
             <textarea value={text} maxLength={1000} rows={2} onChange={(e) => setText(e.target.value)} placeholder="Within the Modifier Budget: +5 minor, +10 standard, +15 to +20 peak" />

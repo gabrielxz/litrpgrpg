@@ -180,3 +180,9 @@ cases:
     fn: quest_ve
     args: {category: Mandate, difficulty: Trivial}
     expect: null
+  - name: Past Level 25 the cost runs through a Breakthrough, not Consolidation
+    source: 25-cultivation.md, "Grade Breakthrough"
+    fn: cumulative_ve_to_level
+    args: {level: 26}
+    expect: null
+    expect_error: RulesGap

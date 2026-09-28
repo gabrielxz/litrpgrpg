@@ -8,7 +8,8 @@
 import type { Engine } from "@gradebreaker/engine";
 import { type CombatantSpec, type Envelope, type GmView, type PrepCreature, type PrepItem, type QuestSpec, prepCause, tutorialPack } from "@gradebreaker/record";
 import { useState } from "react";
-import { type Names, tableWordsIn } from "../text.ts";
+import { type Names } from "../text.ts";
+import { TableWords } from "./TableWords.tsx";
 import { Commit } from "./Commit.tsx";
 
 type Props = { view: GmView; engine: Engine | null; names: Names; log: Envelope[]; onRecorded: (env: Envelope) => void };
@@ -75,14 +76,13 @@ function FireNotice({ view, names, item, onRecorded }: { view: GmView; names: Na
   const living = view.characters.filter((c) => !c.dead);
   const [text, setText] = useState(item.text);
   const [to, setTo] = useState<string[]>(living.filter((c) => c.playerId).map((c) => c.id));
-  const words = tableWordsIn(text);
   return (
     <div className="form">
       <label>
         The notice, as it will reach them
         <textarea rows={Math.min(8, text.split("\n").length + 1)} value={text} onChange={(e) => setText(e.target.value)} />
       </label>
-      {words.length > 0 && <p className="warning small">The table's words: {words.join(", ")}.</p>}
+      <TableWords text={text} />
       <div className="row tight">
         <span className="small">To:</span>
         {living.map((c) => (
@@ -127,7 +127,7 @@ function NewNotice({ view, names, onRecorded }: Omit<Props, "engine" | "log">) {
           The System's text
           <textarea rows={4} value={f.text} onChange={(e) => setF({ ...f, text: e.target.value })} />
         </label>
-        {tableWordsIn(f.text).length > 0 && <p className="warning small">The table's words: {tableWordsIn(f.text).join(", ")}.</p>}
+        <TableWords text={f.text} />
         {taken && <p className="warning small">A prepared notice already has this title; saving replaces it.</p>}
         <label>
           When to send it

@@ -98,7 +98,7 @@ def explode(natural_dice: list[int], code: str) -> dict:
 # ------------------------------------------------------------- character ---
 
 def max_hp(raw_for: int) -> int:
-    return raw_for * 2
+    return raw_for * load("character")["derived"]["max_hp_per_raw_for"]
 
 
 def max_aether(raw_pow: int) -> int:
@@ -106,7 +106,8 @@ def max_aether(raw_pow: int) -> int:
 
 
 def surge_cost(max_aether_value: int) -> int:
-    return max(1, max_aether_value // 2)
+    s = load("combat")["surge"]
+    return max(s["cost_minimum"], max_aether_value // s["cost_divisor"])
 
 
 def points_by_level(level: int) -> int:
@@ -458,14 +459,10 @@ def quality_tier(total: int, overcharge_ratio: int = 1, quality_enhancer: bool =
 
 
 def anchor_bonus(margin: int) -> int:
-    a = load("breakthrough")["anchor"]
-    if margin < 0:
-        return 0
-    if margin >= 40:
-        return a["bonus_at_margin_40"]
-    if margin >= 20:
-        return a["bonus_at_margin_20"]
-    return a["bonus_on_success"]
+    for row in load("breakthrough")["anchor"]["bonus_by_margin"]:
+        if margin >= row["margin"]:
+            return row["bonus"]
+    return 0
 
 
 def coherence(deep_leads: list[int]) -> dict:

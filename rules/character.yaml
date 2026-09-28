@@ -31,6 +31,7 @@ point_buy:
 
 derived:
   max_hp: Raw FOR × 2
+  max_hp_per_raw_for: 2
   max_aether: Raw POW
   ve_tolerance: cultivation.yaml tolerance (80 at F, ×10 per Grade)
   starting_level: 1

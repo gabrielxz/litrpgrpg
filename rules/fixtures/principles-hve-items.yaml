@@ -90,3 +90,9 @@ cases:
     fn: pill_effect
     args: {listed_amount: 15, pill_grade: F, body_grade: E}
     expect: 0
+  - name: Infusion costs no Aether, so it has no count of uses
+    source: 20-principles.md, "Infusion"
+    fn: application_uses
+    args: {max_aether_value: 18, granted_at: Infusion}
+    expect: null
+    expect_error: RulesGap

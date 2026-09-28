@@ -115,7 +115,7 @@ export class Engine {
   // --------------------------------------------------------- character ---
 
   maxHp(rawFor: number): number {
-    return rawFor * 2;
+    return rawFor * this.load("character").derived.max_hp_per_raw_for;
   }
 
   maxAether(rawPow: number): number {
@@ -123,7 +123,8 @@ export class Engine {
   }
 
   surgeCost(maxAetherValue: number): number {
-    return Math.max(1, floorDiv(maxAetherValue, 2));
+    const s = this.load("combat").surge;
+    return Math.max(s.cost_minimum, floorDiv(maxAetherValue, s.cost_divisor));
   }
 
   /** Total stat points from creation plus per-level budget at F-Grade (no class bonus, no titles or treasures). */
@@ -479,11 +480,10 @@ export class Engine {
   }
 
   anchorBonus(margin: number): number {
-    const a = this.load("breakthrough").anchor;
-    if (margin < 0) return 0;
-    if (margin >= 40) return a.bonus_at_margin_40;
-    if (margin >= 20) return a.bonus_at_margin_20;
-    return a.bonus_on_success;
+    for (const row of this.load("breakthrough").anchor.bonus_by_margin) {
+      if (margin >= row.margin) return row.bonus;
+    }
+    return 0;
   }
 
   /** deepLeads: for each axis, how far the leading side of Deep is ahead of the other. */

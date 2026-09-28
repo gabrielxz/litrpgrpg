@@ -70,3 +70,18 @@ cases:
     fn: tier_for_marks
     args: {marks: 2}
     expect: Trained
+  - name: A Seasoned soldier with a greatsword adds +10
+    source: 65-items.md, "Wielding without a Proficiency"
+    fn: weapon_bonus
+    args: {tier: Seasoned}
+    expect: 10
+  - name: A librarian swinging the same blade adds +0
+    source: 65-items.md, "Wielding without a Proficiency"
+    fn: weapon_bonus
+    args: {tier: untrained}
+    expect: 0
+  - name: A Trained wielder adds +5 to the Clash
+    source: 65-items.md, "Weapons (F-Grade Reference)"
+    fn: weapon_bonus
+    args: {tier: Trained}
+    expect: 5

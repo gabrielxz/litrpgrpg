@@ -30,9 +30,10 @@ phenomenon_penalty_per_breach: -10     # each external threat that reaches the c
 anchor:
   one_per_breakthrough: true
   roll: a check with HRT, POW, or FOR Force vs Moderate of the current Grade
-  bonus_on_success: 5
-  bonus_at_margin_20: 10
-  bonus_at_margin_40: 15
+  bonus_by_margin:                # the highest row whose Margin the Anchor's check meets; a miss adds nothing
+    - {margin: 40, bonus: 15}
+    - {margin: 20, bonus: 10}
+    - {margin: 0,  bonus: 5}
 
 # Coherence is read from the Deep rows of the HVE sheet (hve.yaml holds the band thresholds).
 coherence_bonus:

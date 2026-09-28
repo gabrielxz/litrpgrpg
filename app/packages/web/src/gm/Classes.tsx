@@ -22,7 +22,8 @@ import {
 } from "@gradebreaker/record";
 import { useEffect, useState } from "react";
 import { costLine, profileLine, returnedOf, selectionLine, techniqueOffer } from "../classes.ts";
-import { ATTRIBUTES, type Names, tableWordsIn } from "../text.ts";
+import { ATTRIBUTES, type Names } from "../text.ts";
+import { TableWords } from "./TableWords.tsx";
 import { Commit } from "./Commit.tsx";
 
 type Props = { view: GmView; engine: Engine | null; names: Names; onRecorded: (env: Envelope) => void };
@@ -111,7 +112,6 @@ function OfferEditor({ engine, c, value, onChange, index }: { engine: Engine; c:
   const setPoints = (next: ClassPackage["profile"]["points"]) => set({ profile: { ...value.profile, points: next } });
   const shape = shapes.find((s) => s.shape === value.profile.shape);
   const assigned = points.reduce((s, x) => s + (x.points || 0), 0);
-  const words = tableWordsIn(value.notice);
   return (
     <fieldset className="class-editor">
       <legend>Offer {index + 1}</legend>
@@ -141,7 +141,7 @@ function OfferEditor({ engine, c, value, onChange, index }: { engine: Engine; c:
         The System's notice
         <textarea rows={3} maxLength={1000} value={value.notice} onChange={(e) => set({ notice: e.target.value })} placeholder="In the System's units: Attributes, levels, Health, Aether, hours, meters." />
       </label>
-      {words.length > 0 && <p className="warning small">The notice uses the table's words: {words.join(", ")}. The System speaks in-world units.</p>}
+      <TableWords text={value.notice} />
 
       <div className="row">
         <label>

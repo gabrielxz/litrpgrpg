@@ -10,6 +10,7 @@ import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
 import { catalogNames } from "../items.ts";
 import { type Names, duration } from "../text.ts";
+import { TableWords } from "./TableWords.tsx";
 import type { Firing } from "./Prep.tsx";
 import { Commit } from "./Commit.tsx";
 
@@ -246,6 +247,7 @@ function IssueForm({
             <input className="wide" value={f.rewardText} onChange={(e) => set("rewardText", e.target.value)} placeholder="Standing with the co-op improves" />
           </label>
         </div>
+        <TableWords text={[f.title, f.issuer, f.objective, f.rewardText, f.hiddenName].join(" ")} />
         <div className="row tight">
           <span className="small">{single ? "Offered to:" : "Binds:"}</span>
           {living.map((c) =>
@@ -369,6 +371,7 @@ Status:     ${q.status[0]!.toUpperCase() + q.status.slice(1)}${q.flavor ? ` · $
               <button disabled={busy || !revealName.trim()} onClick={() => run({ type: "quest.reveal", questId: q.id, name: revealName })}>
                 Partial reveal
               </button>
+              <TableWords text={revealName} />
             </>
           )}
         </div>

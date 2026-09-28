@@ -75,6 +75,26 @@ cases:
     fn: anchor_bonus
     args: {margin: 44}
     expect: 15
+  - name: An Anchor who meets the check exactly grants +5
+    source: 30-breakthroughs.md, "Active Support"
+    fn: anchor_bonus
+    args: {margin: 0}
+    expect: 5
+  - name: Anchor Margin exactly 20 grants +10
+    source: 30-breakthroughs.md, "Active Support"
+    fn: anchor_bonus
+    args: {margin: 20}
+    expect: 10
+  - name: Anchor Margin exactly 40 grants +15
+    source: 30-breakthroughs.md, "Active Support"
+    fn: anchor_bonus
+    args: {margin: 40}
+    expect: 15
+  - name: An Anchor who misses the check adds nothing
+    source: 30-breakthroughs.md, "Active Support"
+    fn: anchor_bonus
+    args: {margin: -3}
+    expect: 0
   - name: Kara's Deep Force leading by 3 makes her Leaning, +5
     source: 50-hidden-vector-engine.md, "Kara's Sheet, End of Session Three"
     fn: coherence
