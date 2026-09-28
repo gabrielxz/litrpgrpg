@@ -11,6 +11,7 @@ import { submissionSchema } from "@gradebreaker/record";
 import { Hono } from "hono";
 import type { ContentfulStatusCode } from "hono/utils/http-status";
 import { z } from "zod";
+import { type CampaignAi, ModelError } from "./ai.ts";
 import type { DevSignIn } from "./devauth.ts";
 import { HttpError, type Service, type User } from "./service.ts";
 
@@ -29,6 +30,8 @@ const characterSpec = z.discriminatedUnion("kind", [
   z.object({ kind: z.literal("pregen"), pregen: z.string().max(100) }),
 ]);
 const joinBody = z.object({ campaignId: z.string().min(1) });
+const aiKey = z.object({ key: z.string().min(1).max(500), model: z.string().optional() });
+const aiModel = z.object({ model: z.string() });
 const createInvite = z.object({
   maxUses: z.number().int().positive().optional(),
   expiresInHours: z.number().positive().optional(),
@@ -55,6 +58,8 @@ export interface AppOptions {
   dev?: DevSignIn;
   /** The built web client's directory; absent in tests. */
   webDist?: string;
+  /** The campaigns' language-model keys and usage (ai.ts). */
+  ai?: CampaignAi;
 }
 
 export function createApp(service: Service, opts: AppOptions = {}) {
@@ -63,6 +68,9 @@ export function createApp(service: Service, opts: AppOptions = {}) {
 
   app.onError((err, c) => {
     if (err instanceof HttpError) return c.json({ error: err.message }, err.status as ContentfulStatusCode);
+    // A provider that cannot be reached or is limiting is a wait; every other problem is the GM's to fix.
+    if (err instanceof ModelError)
+      return c.json({ error: err.message, problem: err.problem }, err.problem === "rate" || err.problem === "unreachable" ? 503 : 422);
     console.error(err);
     return c.json({ error: "server error" }, 500);
   });
@@ -156,6 +164,47 @@ export function createApp(service: Service, opts: AppOptions = {}) {
   app.post("/campaigns/:id/preview", async (c) => {
     const s = await body(c, submissionSchema);
     return c.json(await service.preview(c.req.param("id"), c.get("user"), s));
+  });
+
+  // The GM's key and usage. The key goes in and never comes back out: status carries its last four characters.
+  const ai = () => {
+    if (!opts.ai) throw new HttpError(404, "not found");
+    return opts.ai;
+  };
+  const aiView = async (id: string) => {
+    const session = (await service.record(id)).state.sessions;
+    const running = [...session.values()].at(-1);
+    return { ...(await ai().status(id)), usage: await ai().usage(id, running && !running.endedAt ? running.startedAt : undefined) };
+  };
+  app.get("/campaigns/:id/ai", async (c) => {
+    const id = c.req.param("id");
+    await service.requireGm(id, c.get("user"));
+    return c.json(await aiView(id));
+  });
+  app.put("/campaigns/:id/ai/key", async (c) => {
+    const id = c.req.param("id");
+    await service.requireGm(id, c.get("user"));
+    const b = await body(c, aiKey);
+    await ai().setKey(id, c.get("user")!.id, b.key, b.model);
+    return c.json(await aiView(id));
+  });
+  app.put("/campaigns/:id/ai/model", async (c) => {
+    const id = c.req.param("id");
+    await service.requireGm(id, c.get("user"));
+    await ai().setModel(id, (await body(c, aiModel)).model);
+    return c.json(await aiView(id));
+  });
+  app.post("/campaigns/:id/ai/check", async (c) => {
+    const id = c.req.param("id");
+    await service.requireGm(id, c.get("user"));
+    await ai().check(id);
+    return c.json(await aiView(id));
+  });
+  app.delete("/campaigns/:id/ai/key", async (c) => {
+    const id = c.req.param("id");
+    await service.requireGm(id, c.get("user"));
+    await ai().removeKey(id);
+    return c.json(await aiView(id));
   });
 
   app.get("/campaigns/:id/invites", async (c) => {

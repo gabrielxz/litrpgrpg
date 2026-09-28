@@ -494,6 +494,25 @@ table.mapping tr.clickable:hover {
   word-break: break-all;
 }
 
+.ai-status {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin: 0.5rem 0;
+  font-size: 0.85rem;
+}
+.ai .row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0.4rem 0;
+}
+.ai .row input[type="password"] {
+  flex: 1;
+  min-width: 12rem;
+}
+
 /* ---- the player's System interface ---- */
 
 .player {

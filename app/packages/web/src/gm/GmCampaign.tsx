@@ -9,6 +9,7 @@ import { api } from "../api.ts";
 import type { useCampaign } from "../live.ts";
 import { useEngine } from "../live.ts";
 import { PlayerCampaign } from "../player/PlayerCampaign.tsx";
+import { AiCard } from "./Ai.tsx";
 import { CombatSection } from "./Combat.tsx";
 import { Commit } from "./Commit.tsx";
 import { SpoilsCard } from "./Items.tsx";
@@ -346,6 +347,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
         <main className="page narrow">
           <Table view={view} />
           <RulesCard view={view} />
+          <AiCard view={view} />
           <Holders view={view} names={names} onRecorded={live.addToLog} />
         </main>
       )}

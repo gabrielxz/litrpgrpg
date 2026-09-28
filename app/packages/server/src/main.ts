@@ -9,6 +9,7 @@
  *   RULES_DIR                 the rules data (default: the repository's rules/)
  *   WEB_DIST                  the built web client (default: packages/web/dist, when it exists)
  *   DEV_SIGNIN                1 enables development sign-in; refused in production
+ *   AI_KEY_SECRET             seals the GMs' language-model keys at rest; without it no key can be stored
  */
 import { serve } from "@hono/node-server";
 import { loadRules } from "@gradebreaker/engine/node";
@@ -16,6 +17,7 @@ import { existsSync } from "node:fs";
 import type { Server } from "node:http";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { CampaignAi } from "./ai.ts";
 import { createApp } from "./app.ts";
 import { supabaseVerifier } from "./auth.ts";
 import { devSignIn, eitherVerifier } from "./devauth.ts";
@@ -52,8 +54,10 @@ if (dev) log("development sign-in is on");
 for (const name of await migrate(db)) log(`migrated ${name}`);
 const service = await Service.open(db, loadRules(process.env.RULES_DIR), verifier, log);
 const hub = new LiveHub(service, log);
+if (!process.env.AI_KEY_SECRET) log("AI_KEY_SECRET is not set: GMs cannot store a language-model key");
 const app = createApp(service, {
   connected: () => hub.connected,
+  ai: new CampaignAi(db, process.env.AI_KEY_SECRET),
   ...(publishableKey ? { supabase: { url: supabaseUrl, publishableKey } } : {}),
   ...(dev ? { dev } : {}),
   ...(existsSync(resolve(webDist, "index.html")) ? { webDist } : {}),
