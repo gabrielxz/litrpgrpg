@@ -146,6 +146,7 @@ Each milestone is usable at a table and feeds the next. Items are marked **activ
 | Item | | Notes |
 |---|---|---|
 | User guide | **active** | Gabriel, 2026-09-28: after M3, a guide in the app to every feature and how to use it, reachable from every screen; the GM's side covers every section, a player's covers their own screen. Written once listening lands, since M3 changes how a session runs. From then, each feature lands with its guide page, and a feature is not done without it; the screenshots are Claude's, taken in the browser pane with the GM and player tabs that check each change, and retaken when a screen changes (Gabriel, 2026-09-28) |
+| Walkthrough video | **active** | Gabriel, 2026-09-28: after the user guide, a video showing how to use the app, with an animation Claude makes. The guide comes first; the video draws on its pages and screenshots |
 | GM command recognition | **active** | Only the GM's stream carries authority; quotations, hypotheticals, and NPC speech stay speech |
 | Execution rules | **active** | GM-only bookkeeping executes with undo; player-visible results become confirm taps; repeats are recognized and dropped |
 | Auto-apply awards | *deferred* | A campaign toggle once precision is measured |

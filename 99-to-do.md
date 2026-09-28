@@ -130,7 +130,7 @@ Edits an app session forces, each with Gabriel's ruling or Claude's recommendati
 - **Personal Opportunities at the sweep.** The HVE section drafts one character's offer from the book's template and the GM's situation; it waits in the panel and opens in the Quests form to issue. Quests carry a GM-only note (the hidden outcome, what a refusal closes) that the holder's log never shows. No script measures it; it was judged on one real draft.
 - Claude's calls are under Decisions ("the suggestion panel", "drafting Personal Opportunities"), open to Gabriel's cut.
 
-**Next.** Push the Personal Opportunity drafter (Gabriel's go). A way to measure offers: a few sweep fixtures with the offer's expected flavor and stance, since text quality needs Gabriel's read. A script with a Hidden Achievement to measure that kind's recall. Then M2's other rows: System voice drafting, stat allocation suggestions, class offers, sweep drafts, summaries. After M3: the in-app user guide (M4).
+**Next.** Push the Personal Opportunity drafter (Gabriel's go). A way to measure offers: a few sweep fixtures with the offer's expected flavor and stance, since text quality needs Gabriel's read. A script with a Hidden Achievement to measure that kind's recall. Then M2's other rows: System voice drafting, stat allocation suggestions, class offers, sweep drafts, summaries. After M3: the in-app user guide, then a walkthrough video with an animation Claude makes (M4; Gabriel, 2026-09-28).
 
 ### Queued for the app
 
