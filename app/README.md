@@ -40,6 +40,12 @@ Open http://localhost:5173 (Vite forwards `/api` to the server on 8787). The dev
 
 The server migrates on start and stores the repository's `rules/` under its version. `app/.env` (gitignored) holds `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY` (public; the browser needs it for Google sign-in), the production `DATABASE_URL`, `DATABASE_URL_POOLER`, the IPv4 route to the same database for a machine without IPv6, and `AI_KEY_SECRET`, which seals the GMs' language-model keys at rest (without it the server runs and no key can be stored; a changed secret makes every stored key unreadable, and each GM enters theirs again); the dev script points `DATABASE_URL` at the local database instead. The server tests need neither: they run on PGlite, Postgres compiled to WebAssembly, with sign-in tokens signed by a key made for the test.
 
+The scripted sessions in `packages/listening/scripts/` run through the events drafter against a real model with the command below. Each run spends real tokens; it reports precision and recall per script and the tokens spent, and writes every draft to `build/listening/`. The key is `ANTHROPIC_API_KEY` from `app/.env`, or with `--campaign <name>` a campaign's stored key through the server's AI adapter (the database is `DATABASE_URL`, the development one by default, and `AI_KEY_SECRET` must be the secret that database sealed its keys with).
+
+```bash
+pnpm --filter @gradebreaker/server draft-eval --runs 3
+```
+
 Every table lives in the Postgres schema `gradebreaker`. The Supabase project runs with its Data API off, the schema grants nothing to Supabase's `anon` and `authenticated` roles, and row-level security is on with no policies; the server connects as the tables' owner.
 
 ## Deploying

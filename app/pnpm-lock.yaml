@@ -81,6 +81,9 @@ importers:
       '@electric-sql/pglite':
         specifier: ^0.5.8
         version: 0.5.8
+      '@gradebreaker/listening':
+        specifier: workspace:*
+        version: link:../listening
       '@types/pg':
         specifier: ^8.23.1
         version: 8.23.1
