@@ -165,7 +165,7 @@ Three finished characters, built with this chapter's rules: 40 points, a Backgro
 
 - **Max HP** 14 &middot; **Max Aether** 6 &middot; **VE Tolerance** 80 (Mild past 80, Heavy past 160, Critical past 240)
 - **Background:** Warehouse shift lead, eight years of lifting and loading; grew up on the east side and still knows who sells what.
-- **Playing her:** Fight close and end it fast. Want things out loud: the better weapon, the bigger bounty, the pill nobody else has claimed. She can be generous, but usually considers her own reward first.
+- **Playing her:** Fight close and end it fast. Want things out loud: the better weapon, the bigger bounty, the pill nobody else has claimed. Her generosity is real, and it is never first.
 :::
 
 ::: statblock
@@ -193,5 +193,5 @@ Three finished characters, built with this chapter's rules: 40 points, a Backgro
 
 - **Max HP** 10 &middot; **Max Aether** 5 &middot; **VE Tolerance** 80 (Mild past 80, Heavy past 160, Critical past 240)
 - **Background:** Land surveyor, and a deer hunter every fall since he was twelve: maps, terrain, tracking.
-- **Playing him:** Look before anyone moves, plan the way out before the way in, and take only what the plan needs. When the others argue, he checks supplies and escape routes.
+- **Playing him:** Look before anyone moves, plan the way out before the way in, and take only what the plan needs. When the party gets loud, he is the one counting.
 :::

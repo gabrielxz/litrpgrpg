@@ -92,7 +92,7 @@ The Rill Closure is the case the wider world cites. A documented, inhabited sect
 
 The System notices something specific about a character and offers a tailored quest. Generated from current HVE state, recent behavior, and the immediate situation.
 
-**The same situation generates different Personal Opportunities for different characters at the same table.** A Force-aligned character might receive *"Hostile detected within 100 meters. Eliminate within 6 hours. Reward proportional to threat."* A Method-aligned character in the same situation receives *"Unstable formation detected. Stabilize before collapse: reward proportional to elegance of solution."*
+**The same situation generates different Personal Opportunities for different characters at the same table.** A Force-aligned character might receive *"Hostile detected within 100 meters. Eliminate within 6 hours. Reward: 30 VE."* A Method-aligned character in the same situation receives *"Unstable formation detected. Stabilize before collapse: reward proportional to elegance of solution."*
 
 Personal Opportunities are also the primary lever by which the System nudges or tests the character: the offer can affirm an existing pattern or quietly invite the character to step against it. By default the offer affirms, following the character's recent behavior. An offer typically tests against the pattern when recent behavior and long-term identity disagree (the Current and Deep columns of the HVE sheet lean different ways at the sweep, where the offer is drafted before Current wipes), and occasionally for no visible reason. The GM, or the System AI in assisted modes, makes the choice, and a GM in doubt affirms.
 
@@ -155,7 +155,7 @@ A quest's difficulty determines:
 
 ### Performance-Scaled Rewards
 
-Some quests state a reward as a proportionality clause instead of a fixed amount: *"reward proportional to threat,"* *"reward proportional to elegance of solution."* At completion the GM, or the System AI in assisted modes, sets the payout from the difficulty's number on the Reward Reference Table, weighing speed, thoroughness, collateral damage, and style (the System never publishes the criteria): exceptional performance pays up to half again, poor performance half.
+Some quests state a reward as a proportionality clause instead of a fixed amount: *"reward proportional to material recovered,"* *"reward proportional to elegance of solution."* At completion the GM, or the System AI in assisted modes, sets the payout from the difficulty's number on the Reward Reference Table, weighing speed, thoroughness, collateral damage, and style (the System never publishes the criteria): exceptional performance pays up to half again, poor performance half.
 
 Use these for quests where how the thing gets done matters as much as whether. They pair naturally with Personal Opportunities.
 
@@ -227,6 +227,8 @@ The following tables calibrate quest rewards for the GM and the System AI. They 
 <!-- /rules:table -->
 
 **Reading the table:** A Routine F-Grade Moderate quest awards 15 VE on completion (in addition to action VE earned during the quest). The same difficulty as a Personal Opportunity awards 30 VE, twice as much. Mandates pay the most.
+
+A Personal Opportunity pays the table's VE, and its objective is written to a fixed end where one fits (a place, a count, a distance). Its reward is proportional (see "Performance-Scaled Rewards") when no fixed end fits, as with how much is gathered or how far a route is charted, or when how well the thing is done is the reason for the offer, as with a formation stabilized cleanly.
 
 Hidden Quest VE rewards equal Personal Opportunity rewards at the same difficulty tier, and pay up to half again when the GM, or the System AI in assisted modes, judges the resolution elegant or improbable (see "Performance-Scaled Rewards").
 

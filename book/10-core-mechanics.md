@@ -151,7 +151,7 @@ Every character has a **Background**: one or two plain-language lines naming wha
 A Background never applies to an attack or a defense. Fighting skill is a Proficiency.
 
 ::: worked
-Joe's Background is "volunteer firefighter and EMT." His friend is Downed, and stabilizing her is a Moderate (90) check; the GM calls for PER. Joe rolls two d100, keeps the higher, and adds his PER Force of 6, so he needs 84 on the kept die.
+Joe's Background is "volunteer firefighter and EMT." His friend is Downed, and stabilizing her is a Moderate (90) check; the check is DEX. Joe rolls two d100, keeps the higher, and adds his DEX Force of 5, so he needs 85 on the kept die.
 :::
 
 ### Proficiencies

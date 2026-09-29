@@ -113,7 +113,7 @@ Each class carries one technique.
 
 ### One standing permission
 
-A permission costs no Aether and has no roll of its own; a permission that is a reaction or is paid in Beats follows those rules. It changes a decision the character already makes: where they stand, whom they reach, when they commit, what they can see. *Moving into a Zone holding a Downed ally costs no Beat. A creature whose stat block says Yields can be parleyed with. Once a day, a kill you name rolls its loot one step up.* A day runs from one dawn to the next where the character is: a permission used once a day is ready again at the next dawn.
+A permission costs no Aether and has no roll of its own; a permission that is a reaction or is paid in Beats follows those rules. It changes a decision the character already makes: where they stand, whom they reach, when they commit, what they can see. *Moving into a Zone holding a Downed ally costs no Beat. A creature whose stat block says Yields can be parleyed with. Once a day, a kill you name rolls its loot one step up.* A day runs from one dawn to the next where the character is: a permission used once a day is ready again at the next dawn. On the table's clock, dawn is 06:00; the GM may set another hour where the party is.
 
 - **At most one action-economy effect per class**, counting the technique and the permission together: a Rush, a free Disengage, a free move, or a reaction.
 - **A reaction is once per encounter.** A reaction is a permission or technique used on someone else's turn; the Iron Verdict title (Titles) is the model. A reaction paid in Beats, such as a Yield taken on an ally's behalf, is limited by the Beats instead.

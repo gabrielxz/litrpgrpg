@@ -30,9 +30,11 @@ advancement_requires_distillation: true   # after crystallization, meeting a thr
 ip_sources:
   - {source: Battle Memory meditation,                                  ip_min: 1, ip_max: 3, note: by the memory's intensity}
   - {source: Consuming an affinity treasure,                            ip_min: 1, ip_max: 2}
-  - {source: Consolidation vision,                                      ip_min: 1, ip_max: 1, note: at most once per session, only after Principle-aligned experience}
+  - {source: Consolidation vision,                                      ip_min: 1, ip_max: 1, note: at most once a day, dawn to dawn, only after Principle-aligned experience}
   - {source: Surviving a life-or-death situation through the Principle, ip_min: 2, ip_max: 2}
   - {source: "Any other Principle-aligned experience, GM's call",       ip_min: 1, ip_max: 3}
+
+consolidation_vision_per_day: 1   # a day runs dawn to dawn (classes.yaml dawn_hour); each Battle Memory meditation brings its own vision
 
 battle_memory_triggers:
   automatic:
@@ -73,5 +75,4 @@ families:
 axioms: [Time, Void, Luck, Truth, Distance]
 
 visions:
-  max_per_session: 1
   procedure: three images (the moment stripped of one load-bearing detail; the Principle in a pure or alien form; one image that overreaches or misleads)

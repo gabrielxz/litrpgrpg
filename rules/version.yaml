@@ -1,7 +1,7 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.33"
+version: "0.1.34"
 dated: "2026-09-29"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
@@ -109,3 +109,9 @@ notes: >
   split "never persuades, apologizes, or encourages" at its commas). No number moved.
   0.1.33: each Behavioral Stat Mapping row names its HVE side (character.yaml behavioral_stat_mapping side),
   the eight rows being the eight sides in the axes' order (Gabriel, 2026-09-29). No number moved.
+  0.1.34: the Consolidation vision comes at most once a day, dawn to dawn (principles.yaml
+  consolidation_vision_per_day: 1); visions.max_per_session is retired, and no rule counts sessions (Gabriel,
+  2026-09-27). The Behavioral Stat Mapping table renders a Side column, and What Can Be Seen's inspection table
+  renders from titles.yaml inspection. integration-summary.txt is the Tutorial's Summary Template verbatim, and the
+  prose lint holds it and the pregens' taglines, Backgrounds, and playing notes to the book. The System's quest
+  register sample pays a fixed 30 VE. The book takes the queued app rulings of 0.1.23 to 0.1.33.

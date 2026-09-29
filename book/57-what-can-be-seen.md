@@ -28,15 +28,17 @@ Nobody else can see your interface, and it cannot be shown or handed to anyone. 
 
 **The interface displays:**
 
-- Every Attribute, in both readings: the Raw value and the Force added to the roll.
-- Health, Aether, and stored Volatile Energy against Tolerance.
 - Level, Grade, and progress toward the next level.
+- The Background.
+- Every Attribute, in both readings: the Raw value and the Force added to the roll; and unallocated stat points, waiting until they are spent.
+- Health and Aether.
+- Stored Volatile Energy against Tolerance.
 - Proficiencies, their tiers, and the Marks accumulated in each.
-- What the character carries, with anything the System has identified about each item.
+- The class, once accepted: its notice, its technique, and its permission.
 - The Principle: its family while resonance is still accruing, its name once crystallized, its tier, and its Insight.
 - Every title held, including the ones being kept hidden from other people.
 - The quest log, active, completed, and failed.
-- Unallocated stat points, waiting until they are spent.
+- What the character carries, with anything the System has identified about each item.
 
 **The interface does not display:**
 
@@ -60,14 +62,16 @@ Nobody else can see your interface, and it cannot be shown or handed to anyone. 
 
 Inspecting another Integrated being can show some of their titles, and which ones depends on the Grade gap between you. Inspection is a glance within sight and costs no Beat.
 
+<!-- rules:table what-can-be-seen-inspection -->
 | **Inspector's Grade against the target** | **What they see** |
 |---|---|
 | Lower Grade | Nothing: inspection returns no readable titles. |
 | Same or one Grade higher | Achievement and HVE-Resonant titles, *worn* Bestowed titles, and negative titles. |
 | Two Grades higher | The above, plus *hidden* Bestowed titles. |
 | Three or more Grades higher | Everything, including Hidden Achievement titles. |
+<!-- /rules:table -->
 
-No inspection at any Grade shows another person's Attributes, Health, Aether, Insight, class, or quest log; a party frame shows Health and Aether (What a Party Shares, below). Titles are the only thing inspection shows, so they work as reputation. A class technique or permission may open a narrow exception (a Devourer reads Health in its Zone; a Still One holding still reads as dead), and the class states it (Classes).
+No inspection at any Grade shows another person's Attributes, Health, Aether, Insight, class, or quest log; a party frame shows Health and Aether (What a Party Shares, below). Titles are the only thing inspection shows, so they work as reputation. Echoed and released titles are history; inspection reads the titles a character holds now. A class technique or permission may open a narrow exception (a Devourer reads Health in its Zone; a Still One holding still reads as dead), and the class states it (Classes).
 
 ::: {.lore .quoted}
 OPEN MEASURE | Inspection across one Grade | Conditions: Latchwater repair yards; F-Grade subjects, E-Grade observers; sector version current | Sample: 14 subjects, 41 inspections, 0 failures | By: Ensa | Replication: two independent, one pending

@@ -290,7 +290,31 @@ def g_stat_anchors():
 
 
 def g_behavioral_mapping():
-    return table(["Behavior Pattern", "Primary Stat", "Secondary Stat"], [[m["behavior"], m["primary"], m["secondary"]] for m in E.load("character")["behavioral_stat_mapping"]], bold=False)
+    return table(["Side", "Behavior Pattern", "Primary Stat", "Secondary Stat"], [[m["side"], m["behavior"], m["primary"], m["secondary"]] for m in E.load("character")["behavioral_stat_mapping"]], bold=False)
+
+
+_GAP_WORDS = {0: "Same", 1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five"}
+
+
+def _gap_label(lo, hi):
+    """Name a range of Grade gaps (inspector above target), hi None for open-ended."""
+    if hi is None:
+        return f"{_GAP_WORDS[lo]} or more Grades higher" if lo else "Same Grade or higher"
+    if lo == hi:
+        return "Same Grade" if lo == 0 else f"{_GAP_WORDS[lo]} Grade{'s' if lo > 1 else ''} higher"
+    if lo == 0:
+        return f"Same or {_GAP_WORDS[hi].lower()} Grade{'s' if hi > 1 else ''} higher"
+    return f"{_GAP_WORDS[lo]} to {_GAP_WORDS[hi].lower()} Grades higher"
+
+
+def g_inspection():
+    i = E.load("titles")["inspection"]
+    r, b, a = i["resolves_from_gap"], i["hidden_bestowed_from_gap"], i["hidden_achievement_from_gap"]
+    rows = [["Lower Grade", "Nothing: inspection returns no readable titles."]] if r == 0 else []
+    rows.append([_gap_label(r, b - 1), "Achievement and HVE-Resonant titles, *worn* Bestowed titles, and negative titles."])
+    rows.append([_gap_label(b, a - 1), "The above, plus *hidden* Bestowed titles."])
+    rows.append([_gap_label(a, None), "Everything, including Hidden Achievement titles."])
+    return table(["Inspector's Grade against the target", "What they see"], rows)
 
 
 def g_nine_levels():
@@ -346,7 +370,8 @@ REGISTRY = {
     "stat-anchors":             ("15-character-creation.md", "| **Attribute** | **3 (deficiency)** | **5 (average)** | **7 (gifted)** | **9 (elite)** | **10 (peak human)** |", None, g_stat_anchors),
     "proficiencies-fighting":   ("15-character-creation.md", "| **Proficiency** | **Covers** |", "**Fighting**", _proficiency_group("Fighting")),
     "sample-backgrounds":       ("15-character-creation.md", "| **Background** | **Covers** |", None, g_sample_backgrounds),
-    "behavioral-mapping":       ("17-progression.md", "| Behavior Pattern | Primary Stat | Secondary Stat |", None, g_behavioral_mapping),
+    "behavioral-mapping":       ("17-progression.md", "| Side | Behavior Pattern | Primary Stat | Secondary Stat |", None, g_behavioral_mapping),
+    "what-can-be-seen-inspection": ("57-what-can-be-seen.md", "| **Inspector's Grade against the target** | **What they see** |", None, g_inspection),
     "nine-levels":              ("17-progression.md", "| Source | Points |", None, g_nine_levels),
     "class-profile-shapes":     ("18-classes.md", "| **Shape** | **Assigned points** | **Returned to the player** |", None, g_class_profile_shapes),
     "class-technique-costs":    ("18-classes.md", "| **Cost shape** | **Cost** | **For** |", None, g_class_technique_costs),

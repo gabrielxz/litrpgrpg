@@ -90,7 +90,7 @@ The rest of this chapter is the rules Kara just walked through, in the order she
 
 ### Battle Memories
 
-**Battle Memories** are the main source of IP. In moments of extreme stress (surviving at near-zero HP, witnessing something beyond comprehension, achieving an outcome the System deems statistically improbable), the GM grants a **Battle Memory Card**. Two triggers are automatic: a Volatility cascade of two or more extra dice on a player character's roll, and surviving being Downed in a fight, which the GM may withhold when the Downing taught nothing (see Core Mechanics, "Downed and Death").
+**Battle Memories** are the main source of IP. In moments of extreme stress (surviving at near-zero HP, witnessing something beyond comprehension, achieving an outcome the System deems statistically improbable), the GM grants a **Battle Memory Card**. Three triggers are automatic: a Volatility cascade of two or more extra dice on a player character's roll; surviving being Downed in a fight, which the GM may withhold when the Downing taught nothing (see Core Mechanics, "Downed and Death"); and a failed Breakthrough (see Grade Breakthroughs).
 
 At any later Consolidation, the player describes how their character meditates on the memory: what they felt, what they noticed, what pattern they think they glimpsed. A sentence is enough. The GM may ask one or two questions, the way Kara's GM did. The GM awards 1 to 3 IP, by the memory's intensity, toward the Principle the memory most closely expresses (before crystallization, toward the family), and the System answers the meditation with a cryptic vision. The vision procedure for every run mode is in The System AI chapter; the unplugged version is three images composed by the GM. A card converts to IP once, at that meditation. When a scenario event both grants a card and pays IP on the spot (the tutorial's Resonance Node pays +1 IP), the on-the-spot IP is a separate award. One memory feeds one Principle, and with two slots the player says which.
 
@@ -119,7 +119,7 @@ The next ability is defined at Distillation.
 | Any other Principle-aligned experience, GM's call | 1–3 |
 <!-- /rules:table -->
 
-**Consolidation visions are rationed.** A vision arrives only at a Consolidation that follows meaningful Principle-aligned experience, and never more than once per session.
+**Consolidation visions are rationed.** A vision arrives only at a Consolidation that follows meaningful Principle-aligned experience, and at most once a day, dawn to dawn.
 
 **Routine, risk-free activity does not normally earn Battle Memories or life-or-death IP.** Levels come from Volatile Energy, which kills at or above the character's Grade pay whatever the danger, so a cautious hunter who takes no real risks still levels while earning little IP.
 

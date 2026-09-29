@@ -165,7 +165,7 @@ One box per register, to write new messages beside.
 **Quest.**
 
 ::: systemvoice
-*Hostile detected within 100 meters. Eliminate within 6 hours. Reward proportional to threat.*
+*Hostile detected within 100 meters. Eliminate within 6 hours. Reward: 30 VE.*
 :::
 
 **Warning.**

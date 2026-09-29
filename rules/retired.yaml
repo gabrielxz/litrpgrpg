@@ -125,6 +125,10 @@ patterns:
   - {pattern: 'first two (Healing )?[Pp]ills',    replaced_by: "the first 5 of each kind per Consolidation",   since: 2026-09-26}
   - {pattern: 'Predator-tier opportunities offered less frequently', replaced_by: "the refusal table: half as often at 3, none at 6", since: 2026-09-26}
   - {pattern: 'award at their own level',         replaced_by: "the stated award; nothing above the quest's Grade", since: 2026-09-26}
+  - {pattern: 'more than once per session',      replaced_by: "the Consolidation vision: at most once a day, dawn to dawn", since: 2026-09-29}
+  - {pattern: 'next-best behavioral match',       replaced_by: "assigned points bound for a capped stat are lost", since: 2026-09-29}
+  - {pattern: 'Wraith, at Force 65',               replaced_by: "the Fragment Wraith counts at Force 70",         since: 2026-09-29}
+  - {pattern: '[Pp]roportional to threat',        replaced_by: "a done-or-not-done objective pays the table's VE", since: 2026-09-29}
 
 # Chapter names as the book cites them, for the cross-reference check.
 chapters:

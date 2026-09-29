@@ -158,6 +158,36 @@ def class_notice_drift() -> list[str]:
     return out
 
 
+def pregen_drift() -> list[str]:
+    """The pregens' taglines, Backgrounds, and playing notes in Character Creation match rules/character.yaml."""
+    with open(os.path.join(ROOT, "rules", "character.yaml"), encoding="utf-8") as fh:
+        pregens = yaml.safe_load(fh)["pregens"]
+    with open(os.path.join(BOOK, "15-character-creation.md"), encoding="utf-8") as fh:
+        text = fh.read()
+    out = []
+    for p in pregens:
+        m = re.search(rf"^\*\*{p['name'].upper()}\*\* &middot;.*?^:::$", text, re.M | re.S)
+        if not m:
+            out.append(f"rules/character.yaml: no stat block for {p['name']} in Character Creation")
+            continue
+        block = m.group(0)
+        for want, label in [(f"*{p['tagline']}*", "tagline"), (f"**Background:** {p['background']}", "Background"), (f"{p['playing']}", "playing note")]:
+            if want not in block:
+                out.append(f"rules/character.yaml: {p['name']}'s {label} differs from the stat block in Character Creation")
+    return out
+
+
+def summary_template_drift() -> list[str]:
+    """rules/templates/integration-summary.txt is the Tutorial's Summary Template, verbatim."""
+    with open(os.path.join(BOOK, "70-tutorial.md"), encoding="utf-8") as fh:
+        m = re.search(r"#### Summary Template\n\n```\n(.*?)```", fh.read(), re.S)
+    with open(os.path.join(ROOT, "rules", "templates", "integration-summary.txt"), encoding="utf-8") as fh:
+        data = fh.read()
+    if not m or m.group(1) != data:
+        return ["rules/templates/integration-summary.txt differs from the Tutorial's Summary Template; the book's block wins"]
+    return []
+
+
 def main() -> int:
     with open(os.path.join(ROOT, "rules", "retired.yaml"), encoding="utf-8") as fh:
         cfg = yaml.safe_load(fh)
@@ -191,6 +221,8 @@ def main() -> int:
     problems.extend(class_notice_drift())
     problems.extend(sizing_drift())
     problems.extend(tutorial_pack_drift())
+    problems.extend(pregen_drift())
+    problems.extend(summary_template_drift())
 
     # 3. voice warnings (never fail)
     warnings = []
