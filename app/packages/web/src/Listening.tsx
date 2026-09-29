@@ -7,10 +7,11 @@
  * not muted, and no newer tab of theirs has taken over. It tells the server what it is doing, so
  * the GM sees a muted microphone as muted and a refused one as refused.
  *
- * Only speech is sent: a frame goes out while its level is at VOICE_LEVEL or more and for HANG_MS
- * after, led by the PREROLL_FRAMES before it so the first word survives the vendor's connecting.
- * The vendor bills for the time a stream is open, and the server closes an idle one (listening.ts).
- * The level goes to the server four times a second regardless, for the GM's panel.
+ * Every frame is sent while the microphone is open. With SEND_ONLY_SPEECH a frame goes out only
+ * while its level is at VOICE_LEVEL or more and for HANG_MS after, led by the PREROLL_FRAMES before
+ * it, and the server closes the idle vendor stream (listening.ts), so the bill follows speaking
+ * time; it stays off until a measurement shows it loses no short line after a long silence. The
+ * level goes to the server four times a second regardless, for the GM's panel.
  */
 import type { ListeningStatus, StreamStatus } from "@gradebreaker/record";
 import { useEffect, useRef, useState } from "react";
@@ -24,6 +25,8 @@ interface Props {
   send: (data: string | ArrayBuffer) => void;
 }
 
+/** Off: a short reply after a silence must not lose its first words (Gabriel, 2026-09-29). */
+const SEND_ONLY_SPEECH = false;
 /** A frame's level (0 to 1, from capture.ts) at which it counts as speech. */
 const VOICE_LEVEL = 0.1;
 /** How long sending continues after the last voiced frame: the pauses inside a sentence. */
@@ -95,7 +98,7 @@ export function ListeningBar({ campaignId, role, status, send }: Props) {
         if (now >= sendingUntil) for (const f of held.splice(0)) send(f);
         sendingUntil = now + HANG_MS;
       }
-      if (now < sendingUntil) send(pcm);
+      if (!SEND_ONLY_SPEECH || now < sendingUntil) send(pcm);
       else {
         held.push(pcm);
         if (held.length > PREROLL_FRAMES) held.shift();
@@ -202,7 +205,7 @@ export function ListeningBar({ campaignId, role, status, send }: Props) {
       {asking && !status.consented && (
         <div className="listening-ask">
           <p>
-            While the GM has listening on during a session, this tab sends your speech to the Gradebreaker server, which passes it to
+            While the GM has listening on during a session, this tab sends your microphone to the Gradebreaker server, which passes it to
             Soniox to turn into text. Neither keeps the audio. The text appears on the GM's screen, where the app uses it to draft what
             happened, and is deleted 30 days after it was said. You can mute this tab at any time. The table listens only while everyone
             at it has consented, and withdrawing your consent stops it for everyone.
