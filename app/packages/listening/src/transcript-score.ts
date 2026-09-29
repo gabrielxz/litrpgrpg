@@ -5,15 +5,53 @@
  * are joined in order and aligned as one text.
  */
 
-/** Lowercase words with punctuation removed; hyphens split ("Gate-Runner" is "gate runner"). */
+/**
+ * Lowercase words with punctuation removed; hyphens split ("Gate-Runner" is "gate runner"), and
+ * number words read as digits ("seventy one" is "71"), since a model writes either.
+ */
 export function words(text: string): string[] {
-  return text
+  const raw = text
     .toLowerCase()
     .replace(/[’']/g, "")
     .replace(/[^a-z0-9]+/g, " ")
     .trim()
     .split(/\s+/)
     .filter(Boolean);
+  return numbersAsDigits(raw);
+}
+
+const UNITS: Record<string, number> = {
+  zero: 0, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10,
+  eleven: 11, twelve: 12, thirteen: 13, fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17, eighteen: 18, nineteen: 19,
+};
+const TENS: Record<string, number> = { twenty: 20, thirty: 30, forty: 40, fifty: 50, sixty: 60, seventy: 70, eighty: 80, ninety: 90 };
+
+/** "one hundred and twenty five" to "125": units, tens, and hundreds, which is what a table says. */
+function numbersAsDigits(list: string[]): string[] {
+  const out: string[] = [];
+  for (let i = 0; i < list.length; ) {
+    let value = 0;
+    let j = i;
+    let any = false;
+    for (;;) {
+      const w = list[j];
+      if (w === undefined) break;
+      if (w in UNITS && !(any && value % 10 !== 0)) value += UNITS[w]!;
+      else if (w in TENS && value % 100 === 0) value += TENS[w]!;
+      else if (w === "hundred" && any && value > 0 && value < 10) value *= 100;
+      else if (w === "and" && any && value % 100 === 0 && value >= 100 && list[j + 1] && (list[j + 1]! in UNITS || list[j + 1]! in TENS)) {
+        j++;
+        continue;
+      } else break;
+      any = true;
+      j++;
+    }
+    if (any) {
+      out.push(String(value));
+      i = j;
+    } else out.push(list[i++]!);
+  }
+  return out;
 }
 
 /** Word-level edit distance: substitutions, deletions, and insertions. */

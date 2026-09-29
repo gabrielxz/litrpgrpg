@@ -9,7 +9,8 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "draft-eval": "node --env-file-if-exists=../../.env scripts/draft-eval.ts",
-    "capture-check": "node scripts/capture-check.ts"
+    "capture-check": "node scripts/capture-check.ts",
+    "stt-eval": "node --env-file-if-exists=../../.env scripts/stt-eval.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.128.0",
@@ -27,6 +28,7 @@
     "@electric-sql/pglite": "^0.5.8",
     "@types/pg": "^8.23.1",
     "@types/ws": "^8.18.1",
-    "playwright-core": "^1.63.0"
+    "playwright-core": "^1.63.0",
+    "yaml": "^2.9.1"
   }
 }

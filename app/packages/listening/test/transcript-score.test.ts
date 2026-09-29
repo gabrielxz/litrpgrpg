@@ -10,6 +10,8 @@ describe("transcript scoring", () => {
   it("normalizes words and counts edits", () => {
     expect(words("Kara's Gate-Runner, 30 VE!")).toEqual(["karas", "gate", "runner", "30", "ve"]);
     expect(editDistance(["a", "b", "c"], ["a", "x", "c", "d"])).toBe(2);
+    expect(words("Seventy-one, and one hundred and twenty five; level three")).toEqual(["71", "and", "125", "level", "3"]);
+    expect(words("twenty twenty")).toEqual(["20", "20"]);
   });
 
   it("scores word error rate and the terms that came through", () => {

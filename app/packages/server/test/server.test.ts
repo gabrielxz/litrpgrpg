@@ -985,9 +985,10 @@ describe("listening", () => {
     heard = new Map();
     opened = 0;
     const transcriber: Transcriber = {
-      open: (_c, userId) => {
+      name: "counter",
+      open: ({ userId }) => {
         opened++;
-        return { write: (pcm) => heard.set(userId, (heard.get(userId) ?? 0) + pcm.length), close: () => {} };
+        return { write: (pcm) => heard.set(userId, (heard.get(userId) ?? 0) + pcm.length), close: async () => {} };
       },
     };
     const listening = new Listening(service, { transcriber });

@@ -1,0 +1,68 @@
+# A scene for measuring speech-to-text on the game's vocabulary: the table's names, the mechanics,
+# and the rules data's creatures, classes, titles, and items, said the way a table says them.
+# Transcription only: it carries no expected record. The speakers match the scripts' table.
+id: terms
+title: Vocabulary at the table
+speakers:
+  - {id: gm, role: gm, name: Ike}
+  - {id: nora, role: player, name: Nora, characters: [kara]}
+  - {id: ben, role: player, name: Ben, characters: [joe]}
+  - {id: aisha, role: player, name: Aisha, characters: [andre]}
+
+lines:
+  - {id: t1, speaker: gm, text: "Okay, where we left off. Kara, Joe, and Andre are at the edge of the Arcane Debris, and Kith is still arguing with Ray about the gate."}
+  - {id: t2, speaker: nora, text: "Before we start, Kara wants to check her Aether. I'm at six of six, and I've got forty VE stored."}
+  - {id: t3, speaker: gm, text: "Forty Volatile Energy puts you at Mild Saturation. You're under Tolerance, but you can feel it."}
+  - {id: t4, speaker: ben, text: "Joe's going to run a Consolidation tonight no matter what. I want to hit Level three before the Breakthrough stuff starts."}
+  - {id: t5, speaker: aisha, text: "Andre still has the Battle Memory from the Husk Crawler. I want to meditate on it and push Insight toward Preservation."}
+  - {id: t6, speaker: gm, text: "Noted. Nemi comes over and offers you a Lesser Healing Pill, and Tovan is holding the Battered Communicator."}
+  - {id: t7, speaker: ben, text: "Joe takes the Stuttering Tincture instead. He doesn't trust Tovan."}
+  - {id: t8, speaker: gm, text: "Fine. Then you hear it. Three Snarljaws come out of the rubble, and behind them something bigger. It's an Alpha Snarljaw."}
+  - {id: t9, speaker: nora, text: "Oh no. Is that the one that makes you Exposed when it drags you?"}
+  - {id: t10, speaker: gm, text: "That's the one. Everybody roll Momentum. Kara, you're first."}
+  - {id: t11, speaker: nora, text: "Kara moves into their Zone and attacks the Alpha with the Battle Axe. I'll Surge for three Aether."}
+  - {id: t12, speaker: gm, text: "It's a Clash. Your Strength Force against its Dexterity. Go ahead and roll."}
+  - {id: t13, speaker: nora, text: "Seventy-one, and it exploded. That's a cascade, right? Do I get a Mark for Axes and Hammers?"}
+  - {id: t14, speaker: gm, text: "You get the Mark, and a cascade that big means a Battle Memory Card. The Alpha takes the hit and it's down to half."}
+  - {id: t15, speaker: ben, text: "Joe spends his first Beat moving to Andre and his second Beat on a spear thrust at the nearest Snarljaw."}
+  - {id: t16, speaker: gm, text: "That one has Flanking with its packmate, so plus ten on its defense."}
+  - {id: t17, speaker: aisha, text: "Andre uses the Resonance Glass to read the Glow-Stalker I think is hiding in the dark."}
+  - {id: t18, speaker: gm, text: "Good call. There's a Glow-Stalker, and past it a Glow-Mote Swarm drifting toward the Frenzy Rats."}
+  - {id: t19, speaker: ben, text: "How many things are in this fight? Is this a Fragment Wraith situation?"}
+  - {id: t20, speaker: gm, text: "No Fragment Wraith. That comes later, next to the Husk Sentinel and the Training Sentry."}
+  - {id: t21, speaker: nora, text: "I'm going to take the hit on Kara's Reactive Buckler. Can I Yield instead of dropping?"}
+  - {id: t22, speaker: gm, text: "You can Yield. Or you take twenty and you're Downed with three vital coherence."}
+  - {id: t23, speaker: nora, text: "Yield. Kara isn't dying to a Pre-System Brigand's dog."}
+  - {id: t24, speaker: aisha, text: "Andre drinks the Healing Pill and stays on his feet. Does that count toward the pill limit?"}
+  - {id: t25, speaker: gm, text: "It does. The Battered Medkit doesn't, if you'd rather use that."}
+  - {id: t26, speaker: ben, text: "The Snarljaw is dead. That's Joe's first confirmed kill, so First Blood?"}
+  - {id: t27, speaker: gm, text: "First Blood, plus one Strength. And Kara's tally for Ten-Slayer goes up, not Joe's, because she finished the other one."}
+  - {id: t28, speaker: nora, text: "Ten-Slayer is a long way off. I'll take Empty-Handed and Watched First for now."}
+  - {id: t29, speaker: gm, text: "The System speaks. Kill confirmed. Moderate threat eliminated. Fifteen VE."}
+  - {id: t30, speaker: aisha, text: "Wait, is the VE shared? We all get fifteen?"}
+  - {id: t31, speaker: gm, text: "Shared. Everybody who fought collects it at their own tier."}
+  - {id: t32, speaker: ben, text: "So after this Joe is at fifty-five stored, and a Consolidation of six hours refines most of it."}
+  - {id: t33, speaker: nora, text: "When does the Hidden Vector Engine decide our classes? Level ten?"}
+  - {id: t34, speaker: gm, text: "Level ten, three offers. Andre's reads like a Witness or a Registrar to me, and Kara is pure Breaching Vanguard."}
+  - {id: t35, speaker: nora, text: "I'd rather be a Counterpuncher. Or a Vowbound. Swear on the Alpha."}
+  - {id: t36, speaker: ben, text: "Joe is a Battle Medic, obviously. Or an Underdog, since everything here is bigger than him."}
+  - {id: t37, speaker: aisha, text: "Adjudicator sounds fun. Or the Still One, if Andre keeps not talking."}
+  - {id: t38, speaker: gm, text: "The Alpha Snarljaw lunges. Andre, that's a defensive Clash. Dexterity, and you're Exposed from the drag."}
+  - {id: t39, speaker: aisha, text: "Thirty-four. That's a fail. How bad?"}
+  - {id: t40, speaker: gm, text: "Twelve damage, and the Alpha backs off to the Glow-Mote Swarm."}
+  - {id: t41, speaker: ben, text: "Joe grabs a Greater Healing Pill from the spoils for Andre. Hand it over."}
+  - {id: t42, speaker: gm, text: "Two Greater Healing Pills and one Pristine Recovery Pill in the spoils. You take one."}
+  - {id: t43, speaker: nora, text: "And the Sparkstone Tablet? Is that an Aether Pill?"}
+  - {id: t44, speaker: gm, text: "It's an Aether item. Lesser Aether Pill restores less. The Sparkstone Tablet is different, read the card."}
+  - {id: t45, speaker: aisha, text: "My Principle is still accruing. Resonance on Preservation, two of three."}
+  - {id: t46, speaker: gm, text: "Once it crystallizes you name it. Iron is the book's example for Preservation, and Weight for Impact."}
+  - {id: t47, speaker: nora, text: "Kara's Distillation is going to be Weight. Or Momentum. Something Impact."}
+  - {id: t48, speaker: ben, text: "Joe is Harmony all the way. Or Governance, the way he runs the pile."}
+  - {id: t49, speaker: aisha, text: "Andre could be Subversion. Or Architecture. He plans everything."}
+  - {id: t50, speaker: gm, text: "Architecture, Consumption, Imposition. You'll see. The Corrupted System Warden is the last thing between you and the gate."}
+  - {id: t51, speaker: ben, text: "Do we fight the Warden or run for the gate? Gate-Runner is a title, right?"}
+  - {id: t52, speaker: gm, text: "Gate-Runner goes to the first character through. And the Interceptor, the Bearer, the Cordon, and the Completion are all waiting past it."}
+  - {id: t53, speaker: nora, text: "Then Kara runs. Thin Margin, here we come."}
+  - {id: t54, speaker: gm, text: "Your Personal Opportunity is still open, by the way. Twelve hours left on it."}
+  - {id: t55, speaker: aisha, text: "And the Hidden Achievement? The System still hasn't said what Andre got."}
+  - {id: t56, speaker: gm, text: "You'll know when it knows. That's where we stop tonight."}

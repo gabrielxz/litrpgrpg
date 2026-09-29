@@ -24,17 +24,38 @@ export const MAX_FRAME_BYTES = SAMPLE_RATE * 2;
 /** A stream with no frame for this long reads as silent: the tab is open and nothing arrives. */
 const SILENT_AFTER_MS = 2000;
 
-/** Where a person's audio goes: the speech-to-text adapter once chosen, a meter until then. */
+/** A final stretch of one person's speech; times are milliseconds from the stream's first audio. */
+export interface Segment {
+  text: string;
+  startMs: number;
+  endMs: number;
+  words?: { text: string; startMs: number; endMs: number }[];
+}
+
+export interface TranscriberOptions {
+  campaignId: string;
+  userId: string;
+  /** The words a table says that a model has not heard, most important first (listening's `vocabulary`). */
+  terms: string[];
+  /** A sentence or two on what is being said, for a model that takes one. */
+  context?: string;
+  onSegment(segment: Segment): void;
+  onError(error: Error): void;
+}
+
+/** Where a person's audio goes: a speech-to-text adapter (stt/), or a meter until one is chosen. */
 export interface Transcriber {
-  open(campaignId: string, userId: string): TranscriberStream;
+  readonly name: string;
+  open(opts: TranscriberOptions): TranscriberStream;
 }
 export interface TranscriberStream {
   write(pcm: Buffer): void;
-  close(): void;
+  /** Ends the stream; resolves once the vendor has sent its last segment. */
+  close(): Promise<void>;
 }
 
 /** The transcriber before a vendor is chosen: audio is measured for the GM's panel and dropped. */
-export const meterOnly: Transcriber = { open: () => ({ write: () => {}, close: () => {} }) };
+export const meterOnly: Transcriber = { name: "meter", open: () => ({ write: () => {}, close: async () => {} }) };
 
 /** A socket that may capture: the live hub's subscriber, seen from here. */
 export interface Tab {
@@ -212,14 +233,20 @@ export class Listening {
     if (!t.present.has(tab.userId) || !t.consented.has(tab.userId)) return false;
     s.lastFrameAt = this.now();
     s.level = Math.max(level(pcm), s.level * 0.5);
-    s.sink ??= this.transcriber.open(tab.campaignId, tab.userId);
+    s.sink ??= this.transcriber.open({
+      campaignId: tab.campaignId,
+      userId: tab.userId,
+      terms: [],
+      onSegment: () => {},
+      onError: () => {},
+    });
     s.sink.write(pcm);
     return true;
   }
 
   private closeSink(t: Table, userId: string) {
     const s = t.streams.get(userId);
-    s?.sink?.close();
+    void s?.sink?.close();
     if (s) {
       delete s.sink;
       s.level = 0;
