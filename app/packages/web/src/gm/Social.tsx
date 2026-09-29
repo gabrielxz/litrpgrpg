@@ -5,9 +5,11 @@
  */
 import type { Action, GmView } from "@gradebreaker/record";
 import { useState } from "react";
+import { type MessageDraft, draftMessage } from "../api.ts";
 import { type Names, tableWordsIn } from "../text.ts";
 import { Commit } from "./Commit.tsx";
 import type { FormProps } from "./Record.tsx";
+import { useAiConfigured } from "./useAi.ts";
 
 // ---------------------------------------------------------------- party ---
 
@@ -145,6 +147,11 @@ export function MessageForm({ view, names, onRecorded }: FormProps) {
   const [text, setText] = useState("");
   const [hold, setHold] = useState(false);
   const [heldPick, setHeldPick] = useState<{ id: string; send: boolean } | null>(null);
+  const ai = useAiConfigured(view.campaign.id);
+  const [gist, setGist] = useState("");
+  const [drafted, setDrafted] = useState<MessageDraft | null>(null);
+  const [drafting, setDrafting] = useState(false);
+  const [draftError, setDraftError] = useState<string | null>(null);
   const player = (playerId?: string) =>
     playerId ? (view.members.find((m) => m.userId === playerId)?.displayName ?? "a former player") : "GM";
   const toggle = (id: string) => setTo(to.includes(id) ? to.filter((x) => x !== id) : [...to, id]);
@@ -157,6 +164,24 @@ export function MessageForm({ view, names, onRecorded }: FormProps) {
   else if (!text.trim()) problem = "Write the message.";
   const action: Action = { type: "message.send", to: recipients, text: text.trim(), ...(hold ? { hold: true } : {}) };
   const whom = recipients.map(names).join(", ");
+  // With nothing in the box, the draft puts the GM's own message in the voice.
+  const asked = gist.trim() || text.trim();
+  const draft = async () => {
+    setDrafting(true);
+    setDraftError(null);
+    try {
+      const { draft: d } = await draftMessage(view.campaign.id, recipients, asked);
+      setText(d.text);
+      setDrafted(d);
+    } catch (e) {
+      setDraftError((e as Error).message);
+    } finally {
+      setDrafting(false);
+    }
+  };
+  // What the drafter flagged holds for its text; once the GM edits, the table-words warning below still reads the edit.
+  const note = drafted && drafted.text === text.trim() ? drafted : null;
+  const voiceFlags = note?.flags.filter((f) => !f.startsWith("table word")) ?? [];
 
   const held = view.held.find((m) => m.id === heldPick?.id);
   const heldAction: Action | null = held
@@ -192,6 +217,22 @@ export function MessageForm({ view, names, onRecorded }: FormProps) {
           </label>
         ))}
       </div>
+      {ai && (
+        <details className="voice-draft">
+          <summary>Draft it in the System's voice</summary>
+          <label>
+            What the System conveys
+            <textarea rows={2} value={gist} maxLength={2000} onChange={(e) => setGist(e.target.value)} placeholder="In your words, or leave it empty to put the message below in the voice" />
+          </label>
+          <div className="row">
+            <button disabled={!recipients.length || !asked || drafting} onClick={draft}>
+              {drafting ? "Drafting…" : "Draft"}
+            </button>
+            <span className="muted small">The draft replaces the message below, for you to edit before sending.</span>
+          </div>
+          {draftError && <p className="error">{draftError}</p>}
+        </details>
+      )}
       <label>
         The System says
         <textarea rows={4} value={text} onChange={(e) => setText(e.target.value)} placeholder="Anomaly logged." />
@@ -202,6 +243,10 @@ export function MessageForm({ view, names, onRecorded }: FormProps) {
           (The System AI, “The Voice of the System”). Keep the word if it means something else here.
         </p>
       )}
+      {note && note.added.length > 0 && (
+        <p className="warning small">The draft adds what you did not give: {note.added.join("; ")}. Check each against what you hold.</p>
+      )}
+      {voiceFlags.length > 0 && <p className="warning small">The draft may break the voice: {voiceFlags.join(", ")}.</p>}
       {text.trim() && (
         <div className="system-sample">
           <img src="/clave.svg" alt="" className="clave-tiny" />
@@ -219,6 +264,8 @@ export function MessageForm({ view, names, onRecorded }: FormProps) {
         label={recipients.length ? `${hold ? "Hold for" : "Send to"} ${whom}` : "Send"}
         onRecorded={(env) => {
           setText("");
+          setGist("");
+          setDrafted(null);
           onRecorded(env);
         }}
       />

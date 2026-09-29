@@ -1,0 +1,19 @@
+# A crystallized Principle the vision must not name. The format is in src/voice.ts.
+id: v-weight-crystallized
+kind: vision
+title: Kara under the gantry, toward Weight
+source: 'book/20-principles.md, "Battle Memories" ("toward the Principle the memory most closely expresses")'
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara}}
+  - {id: i1, action: {type: insight.award, characterId: kara, source: "Any other Principle-aligned experience, GM's call", family: Impact, ip: 3}}
+  - {id: i2, action: {type: insight.award, characterId: kara, source: "Any other Principle-aligned experience, GM's call", family: Impact, ip: 3}}
+  - {id: i3, action: {type: insight.award, characterId: kara, source: "Any other Principle-aligned experience, GM's call", family: Impact, ip: 3}}
+  - {id: i4, action: {type: insight.award, characterId: kara, source: "Any other Principle-aligned experience, GM's call", family: Impact, ip: 1}}
+  - {id: named, action: {type: principle.name, characterId: kara, family: Impact, name: Weight}}
+  - {id: card, action: {type: memory.grant, characterId: kara, text: "Held the collapsing gantry on her back while Joe dragged Andre clear"}}
+characterId: kara
+memory: card
+family: Impact
+words: It wasn't heavy. It was waiting for me to tell it where to go.
+expected:
+  ip: [2, 3]

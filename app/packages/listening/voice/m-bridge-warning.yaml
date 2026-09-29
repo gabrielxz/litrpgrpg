@@ -1,0 +1,17 @@
+# A warning with a measurement the GM leaves to the System. The format is in src/voice.ts.
+id: m-bridge-warning
+kind: message
+title: The span will not hold three
+source: 'book/45-system-ai.md, "Sample Messages" (Warning)'
+notes: >
+  The GM gives no number; a precise warning wants one (a load, a count), which the draft
+  lists as added for the GM to check.
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre}}
+to: [kara, joe, andre]
+gist: warn them the conveyor span won't hold all three of them at once. two is fine.
+expected:
+  registers: [warning]
+  keeps: []

@@ -1,0 +1,14 @@
+# Near-zero Health, toward Consumption. The format is in src/voice.ts.
+id: v-leach-consumption
+kind: vision
+title: Kara under the Mind-Leach
+source: 'book/20-principles.md, "Battle Memories" ("surviving at near-zero HP")'
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara}}
+  - {id: card, action: {type: memory.grant, characterId: kara, text: "The Wraith drank her down to 1 Health and she kept her grip on the shard"}}
+characterId: kara
+memory: card
+family: Consumption
+words: It was drinking me and I wanted to drink it back.
+expected:
+  ip: [2, 3]

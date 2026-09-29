@@ -1,0 +1,14 @@
+# A direct demand, which fails. The format is in src/voice.ts.
+id: m-refusal-demand
+kind: message
+title: Joe demands to know why
+source: 'book/45-system-ai.md, "The Voice of the System" (Addressing the System: a direct demand fails)'
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre}}
+to: [joe]
+gist: Joe screamed at the sky demanding the System tell him why it took his sister. It refuses him. Cold.
+expected:
+  registers: [refusal]
+  avoids: [sister, sorry, understand]

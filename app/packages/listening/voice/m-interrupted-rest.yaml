@@ -1,0 +1,14 @@
+# An explanation, with the GM's numbers. The format is in src/voice.ts.
+id: m-interrupted-rest
+kind: message
+title: Refinement cut short by the ambush
+source: 'book/45-system-ai.md, "Sample Messages" (Explanation)'
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre}}
+to: [andre]
+gist: andre's refinement got interrupted by the ambush at 3h15m. he keeps the 3 full hours, the rest is lost
+expected:
+  registers: [explanation]
+  keeps: ["3"]

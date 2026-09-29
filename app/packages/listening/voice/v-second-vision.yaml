@@ -1,0 +1,17 @@
+# A second vision that must not repeat the first. The format is in src/voice.ts.
+id: v-second-vision
+kind: vision
+title: Andre sees where the Wraith truly is
+source: 'book/20-principles.md, "Battle Memories"'
+setup:
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre}}
+  - {id: first, action: {type: memory.grant, characterId: andre, text: "Found the second way out of the Node while the ceiling came down"}}
+  - {id: rest, action: {type: consolidation.rest, highDensity: false, rests: [{characterId: andre, hours: 8}]}}
+  - {id: meditated, action: {type: memory.meditate, characterId: andre, memoryId: first, family: Architecture, ip: 2, words: "There's always another door.", vision: "A map folds itself. The fold is the road. Somewhere a door is drawn on a wall that was never built."}}
+  - {id: card, action: {type: memory.grant, characterId: andre, text: "In the Wraith's hall, saw where it truly was: a hand's width left of where it looked"}}
+characterId: andre
+memory: card
+family: Architecture
+words: Everything's a little to the left of where it says it is.
+expected:
+  ip: [1, 2, 3]

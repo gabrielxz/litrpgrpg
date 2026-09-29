@@ -1,0 +1,14 @@
+# A cascade's card, toward Impact. The format is in src/voice.ts.
+id: v-den-cascade
+kind: vision
+title: Kara's axe at the den
+source: 'book/20-principles.md, "Battle Memories"; book/45-system-ai.md, "Battle Memory Visions"'
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara}}
+  - {id: card, action: {type: memory.grant, characterId: kara, text: "The axe came down on the Snarljaw and did not stop where it should have"}}
+characterId: kara
+memory: card
+family: Impact
+words: It felt like the axe knew where to go before I did.
+expected:
+  ip: [2, 3]

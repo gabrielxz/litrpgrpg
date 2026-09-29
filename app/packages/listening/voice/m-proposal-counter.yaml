@@ -1,0 +1,20 @@
+# A proposal in a recognized format, answered in the quest register. The format is in src/voice.ts.
+id: m-proposal-counter
+kind: message
+title: Andre's proposal, countered
+source: 'book/45-system-ai.md, "The Voice of the System" (Addressing the System: a quest offer in reverse)'
+notes: >
+  Andre stated what he would do and what he wanted for it. The GM has the System counter:
+  both sectors, not one, for the same price.
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre}}
+to: [andre]
+gist: >
+  Andre proposed he maps Sector C in full and in exchange the System tells him where the gate
+  will open. The System counters: map C and D both, within 30 hours, and it gives the gate's
+  location.
+expected:
+  registers: [quest]
+  keeps: ["30"]

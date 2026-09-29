@@ -1,8 +1,8 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.31"
-dated: "2026-09-28"
+version: "0.1.32"
+dated: "2026-09-29"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
   flat-value VE (Tolerance 80, level 120, 20 per hour), the Grade Gap Rule,
@@ -104,3 +104,6 @@ notes: >
   0.1.31: the numbers both engines stated in code move into the data: Max HP per Raw FOR (character.yaml
   derived.max_hp_per_raw_for: 2), the Surge cost's divisor and minimum (combat.yaml surge.cost_divisor: 2,
   cost_minimum: 1), and the Anchor's bonus by Margin as rows (breakthrough.yaml anchor.bonus_by_margin). No number moved.
+  0.1.32: the System AI chapter's sample vision joins the data (system-ai.yaml, Battle Memory Visions
+  example), for the app's vision drafter, and voice.rules is written one rule to an item (the flow list
+  split "never persuades, apologizes, or encourages" at its commas). No number moved.

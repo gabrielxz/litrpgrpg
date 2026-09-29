@@ -132,6 +132,27 @@ export const draftRuns = (campaignId: string) => api<{ runs: DraftRun[] }>("GET"
 export const startOpportunity = (campaignId: string, characterId: string, situation: string) =>
   api<{ run: DraftRun }>("POST", `/campaigns/${campaignId}/opportunities`, { characterId, situation });
 
+/** A message drafted in the System's voice: the register it took, what it adds that the GM did not give, and what breaks the voice. */
+export interface MessageDraft {
+  text: string;
+  register: string;
+  added: string[];
+  flags: string[];
+}
+
+/** A drafted vision, with the Insight it proposes and the reason, for the GM. */
+export interface VisionDraft {
+  vision: string;
+  ip: number;
+  why: string;
+  flags: string[];
+}
+
+export const draftMessage = (campaignId: string, to: string[], gist: string) => api<{ draft: MessageDraft }>("POST", `/campaigns/${campaignId}/voice/message`, { to, gist });
+
+export const draftVision = (campaignId: string, body: { characterId: string; memoryId: string; family: string; words: string }) =>
+  api<{ draft: VisionDraft }>("POST", `/campaigns/${campaignId}/voice/vision`, body);
+
 export const startDraft = (campaignId: string, text: string) => api<{ run: DraftRun }>("POST", `/campaigns/${campaignId}/drafts`, { text });
 
 export const acceptDraft = (campaignId: string, item: DraftItem, id: string, action: Action) =>

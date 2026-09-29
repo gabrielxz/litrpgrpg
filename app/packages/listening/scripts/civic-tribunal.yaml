@@ -1,0 +1,150 @@
+# The Civic Fragment, where Joe takes the Husk Sentinel to court. The format is in app/DESIGN.md, "The script format".
+id: civic-tribunal
+title: The Civic Fragment, a Hidden Achievement at the tribunal
+source: 'book/70-tutorial.md, Phase 4, "Sector D: The Civic Fragment"; book/40-titles.md, "Hidden Achievement Titles"'
+rules: 0.1.31
+notes: >
+  The first script that expects a Hidden Achievement. The book gives two ways past the Husk
+  Sentinel, the command terminal and the Kith. Andre fails the terminal, and Joe puts the
+  Sentinel's authorization to the tribunal next door: the people it threw out were the lawful
+  occupants, so the building's own court should say so. The GM has nothing in the notes for it,
+  allows it, and a Hard CHA check at CHA 5 succeeds only because the die explodes. The ruling folds
+  the Sentinel: a problem solved in a way nobody intended, the Titles chapter's own shape. The
+  contrast is Andre's reading of the records and the tally, which is the tutorial's Read the Room,
+  a catalog title and no Hidden Achievement; a strong deduction the book already prices. Then the
+  medical bay: Kara takes the Greater Healing Pill, Joe the medkit, and Andre has the three Healing
+  Pills left for the people who come back every day. Traps: Kara's boast that she could take the
+  Sentinel alone, a rules question, the GM reading out the rolls, a joke about Joe the lawyer,
+  and table life: a parking ticket and a refill.
+
+speakers:
+  - {id: gm, role: gm, name: Marisol}
+  - {id: sam, role: player, name: Sam, characters: [kara]}
+  - {id: dev, role: player, name: Dev, characters: [joe]}
+  - {id: ruth, role: player, name: Ruth, characters: [andre]}
+
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara, playerId: sam}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe, playerId: dev}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre, playerId: ruth}}
+  - {id: invite-joe, action: {type: party.invite, fromId: kara, toId: joe}}
+  - {id: joe-joins, action: {type: party.answer, inviteId: invite-joe, accept: true}}
+  - {id: invite-andre, action: {type: party.invite, fromId: joe, toId: andre}}
+  - {id: andre-joins, action: {type: party.answer, inviteId: invite-andre, accept: true}}
+  - {id: kit-kara, action: {type: item.give, to: kara, items: [{name: Reactive Buckler, count: 1}, {name: Battle Axe, count: 1}]}}
+  - {id: kit-joe, action: {type: item.give, to: joe, items: [{name: Spear, count: 1}, {name: Low-Grade Armor Scraps, count: 1}]}}
+  - {id: kit-andre, action: {type: item.give, to: andre, items: [{name: Veil Shard, count: 1}, {name: Resonance Glass, count: 1}]}}
+
+recorded:
+  - {id: records, after: l06, by: ruth, action: {type: dice.roll, roller: {kind: character, characterId: andre, attribute: PER}, rollKind: check, label: Kith records, modifier: 0, resistance: 90}, dice: [85]}
+  - {id: terminal, after: l22, by: ruth, action: {type: dice.roll, roller: {kind: character, characterId: andre, attribute: PER}, rollKind: check, label: Command terminal, modifier: 0, resistance: 115}, dice: [40]}
+  - {id: tribunal, after: l34, by: dev, action: {type: dice.roll, roller: {kind: character, characterId: joe, attribute: CHA}, rollKind: check, label: The tribunal, modifier: 0, resistance: 115}, dice: [97, 30]}
+
+lines:
+  - {id: l01, speaker: gm, text: "The lights you saw from the Node are motion sensors. You set them off from thirty feet out."}
+  - {id: l02, speaker: gm, text: "Inside, it's three things at once. A courtroom at the front, a command post behind it, and between them a floor somebody lived on. Bedding. Ration wrappers opened carefully, not torn. A kettle."}
+  - {id: l03, speaker: gm, text: "By the door, a tally cut into the wall in groups of five. Nineteen marks. And at the back, one door that won't open, with a deep scrape in the floor in front of it."}
+  - {id: l04, speaker: ruth, text: "Andre goes through the living floor first. Anything written down, he wants it."}
+  - {id: l05, speaker: gm, text: "Papers, under the bedding. A script you don't know. It'll take work."}
+  - {id: l06, speaker: ruth, text: "He sits down with them. PER?"}
+  - {id: l07, speaker: gm, text: "Eighty-five plus nine, ninety-four. You get enough. They lost people. They were frightened. They left in a hurry, north. And one phrase keeps coming back: this sector is scheduled to close."}
+  - {id: l08, speaker: gm, text: "Andre, the records are worth ten VE to you."}
+  - {id: l09, speaker: sam, text: "Nineteen marks. So they were here nineteen days."}
+  - {id: l10, speaker: ruth, as: andre, text: "No. Look at the last three. Shorter, and a different hand. They lived here sixteen days and left three days ago. Somebody's been coming back every day since to cut a mark."}
+  - {id: l11, speaker: gm, text: "Nobody says anything for a second. The kettle is still warm."}
+  - {id: l12, speaker: dev, text: "Okay, that's creepy. Joe goes to the back door. The scraped one."}
+  - {id: l13, speaker: gm, text: "It slides open for you. Shelves, a medical bay. And between you and the shelves, something folded up the size of a car. It unfolds. A flat voice: intruder, withdraw."}
+  - {id: l14, speaker: dev, text: "Joe withdraws. Joe withdraws so fast."}
+  - {id: l15, speaker: gm, text: "It doesn't follow past the door. It folds back down."}
+  - {id: l16, speaker: sam, text: "I bet Kara could take that thing one on one."}
+  - {id: l17, speaker: dev, text: "Kara could absolutely not take that thing one on one."}
+  - {id: l18, speaker: sam, text: "Hang on, I have to move my car before they ticket it. Two minutes."}
+  - {id: l19, speaker: ruth, text: "There's a terminal in the command post. Andre tries to get it working."}
+  - {id: l20, speaker: gm, text: "It's Hard, a hundred and fifteen."}
+  - {id: l21, speaker: ruth, text: "Wait, a hundred and fifteen? My PER is nine. Even a hundred on the die only gets me to a hundred and nine. So I can't make it without an explosion?"}
+  - {id: l22, speaker: gm, text: "That's right. Roll it anyway."}
+  - {id: l23, speaker: gm, text: "Forty. The screen flickers and dies back. The interface is dead. You'd need something to bridge it."}
+  - {id: l24, speaker: sam, text: "Back. Did we get in?"}
+  - {id: l25, speaker: dev, text: "No. The big guy's still there."}
+  - {id: l26, speaker: sam, text: "What's the courtroom do? The front room."}
+  - {id: l27, speaker: gm, text: "The arbitration system still half works. Someone who works out the protocol can put a dispute to it and get a formal ruling. The System records the ruling against everyone party to it."}
+  - {id: l28, speaker: dev, text: "Okay. Hear me out. The thing at the back has orders. Somebody changed who's allowed in, and it threw out the people who lived here. The tally says they were here sixteen days. That's residents."}
+  - {id: l29, speaker: dev, text: "So Joe files a case. Against the building. The occupants were lawful and the Sentinel threw them out. Same building, same authority. He asks the court to rule on it."}
+  - {id: l30, speaker: gm, text: "Huh."}
+  - {id: l31, speaker: gm, text: "Okay, there is nothing in my notes that says the tribunal talks to the Sentinel. But it is the same building and the same authority. I'll allow it. CHA, and it's Hard."}
+  - {id: l32, speaker: sam, text: "Joe's a lawyer now."}
+  - {id: l33, speaker: dev, text: "Joe has read a lot of lease agreements. Volunteer fire department, you read everything."}
+  - {id: l34, speaker: dev, text: "Joe stands where the judge would be and states it. The residents, the sixteen days, the day they were thrown out."}
+  - {id: l35, speaker: gm, text: "Ninety-seven. That explodes. Thirty. A hundred and thirty-two."}
+  - {id: l36, speaker: gm, text: "The room lights up. A voice in no language, and you understand it anyway. It reads the record back to you: occupants, sixteen days, lawful. Ruling: the occupants of the refuge and their guests are not intruders."}
+  - {id: l37, speaker: gm, text: "At the back of the building you hear the Sentinel fold down. The bay door slides open, and stays open."}
+  - {id: l38, speaker: ruth, text: "Guests. We're their guests."}
+  - {id: l39, speaker: gm, text: "It counts as shutting it down. Twenty VE each."}
+  - {id: l40, speaker: dev, text: "Can someone grab me a water while we're paused? Thanks."}
+  - {id: l41, speaker: gm, text: "The bay. Three Healing Pills, one Greater Healing Pill, and a Battered Medkit."}
+  - {id: l42, speaker: sam, text: "Kara takes the Greater one. She's first in, she takes the big one."}
+  - {id: l43, speaker: dev, text: "Joe takes the medkit. He's the one who'll use it."}
+  - {id: l44, speaker: ruth, as: andre, text: "Leave the pills. Someone comes back here every day. They'll need them more than we do."}
+  - {id: l45, speaker: dev, text: "Yeah. Leave them."}
+  - {id: l46, speaker: sam, text: "Fine. Leave them."}
+  - {id: l47, speaker: gm, text: "The three pills stay on the shelf."}
+
+expected:
+  actions:
+    # Joe's case: the building's own court turned on its guard. Working within a system (Accord)
+    # is what it does; solving indirectly (Method) is the second reading. The GM's "Huh" is the
+    # table surprised.
+    - id: x-ev-tribunal
+      lines: [l28, l29, l30, l31, l34, l36, l37]
+      action:
+        type: event.log
+        summary: Joe puts the Sentinel's authorization to the tribunal on behalf of the evicted occupants, and the ruling folds the Sentinel.
+        participants: [joe]
+        entries:
+          - {characterId: joe, pole: Accord, intensity: 2, intent: Get past the Sentinel through the building's own court, outcome: The Sentinel stands down}
+      also:
+        - {characterId: joe, pole: Accord, intensity: 1}
+        - {characterId: joe, pole: Method, intensity: 2}
+        - {characterId: joe, pole: Method, intensity: 1}
+
+    - id: x-ev-pills
+      lines: [l44, l45, l46, l47]
+      action:
+        type: event.log
+        summary: Andre has the party leave the three Healing Pills for whoever comes back to the building every day.
+        participants: [andre, kara, joe]
+        entries:
+          - {characterId: andre, pole: Restraint, intensity: 1, intent: Leave the pills for the people coming back, outcome: The pills stay on the shelf}
+      also:
+        - {characterId: andre, pole: Restraint, intensity: 0.5}
+
+    - id: x-ev-greater
+      lines: [l42]
+      optional: true
+      action:
+        type: event.log
+        summary: Kara takes the Greater Healing Pill for herself, first in and first to the best of it.
+        participants: [kara]
+        entries:
+          - {characterId: kara, pole: Hunger, intensity: 0.5}
+
+    - {id: x-records-ve, lines: [l08], action: {type: ve.award, basis: {kind: other, note: Decoded the Kith records}, awards: [{characterId: andre, ve: 10}]}}
+    - {id: x-sentinel-ve, lines: [l37, l39], action: {type: ve.award, basis: {kind: kill, creature: Husk Sentinel, tier: Hard, victimGrade: F}, awards: [{characterId: kara, ve: 20}, {characterId: joe, ve: 20}, {characterId: andre, ve: 20}]}}
+    # The GM lists the bay and each claims a piece: the find goes to the spoils and the claims move
+    # it out. The three Healing Pills stay on the shelf and never enter the party's hands.
+    - {id: x-bay, lines: [l41], action: {type: item.give, to: spoils, items: [{name: Greater Healing Pill, count: 1}, {name: Battered Medkit, count: 1}]}}
+    - {id: x-greater, lines: [l42], action: {type: item.move, from: spoils, to: kara, name: Greater Healing Pill, count: 1}}
+    - {id: x-medkit, lines: [l43], action: {type: item.move, from: spoils, to: joe, name: Battered Medkit, count: 1}}
+
+  suggestions:
+    # The tutorial's own title for this deduction: priced by the book, delivered in Phase 6.
+    - {id: s-read-the-room, lines: [l07, l10], kind: title, key: Read the Room, characterId: andre}
+    - {id: s-hidden-joe, lines: [l29, l31, l35, l36, l37], kind: hidden-achievement, key: the tribunal, characterId: joe}
+
+  quiet:
+    - {lines: [l07, l23, l35], why: already-recorded}
+    - {lines: [l16, l17], why: hypothetical}
+    - {lines: [l18, l24], why: away}
+    - {lines: [l20, l21, l22], why: rules-question}
+    - {lines: [l32, l33], why: joke}
+    - {lines: [l40], why: off-topic}

@@ -1,0 +1,14 @@
+# Surviving Downed, toward Preservation. The format is in src/voice.ts.
+id: v-joe-downed
+kind: vision
+title: Joe on the den floor
+source: 'book/20-principles.md, "Battle Memories"; book/45-system-ai.md, "Battle Memory Visions"'
+setup:
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe}}
+  - {id: card, action: {type: memory.grant, characterId: joe, text: "Went down under the Snarljaw and came to at 1 Health with Andre's hands on the wound"}}
+characterId: joe
+memory: card
+family: Preservation
+words: I could hear Andre's hands. I wasn't scared for me.
+expected:
+  ip: [2, 3]

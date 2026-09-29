@@ -1,0 +1,17 @@
+# A Quiet Path player says nothing. The format is in src/voice.ts.
+id: v-quiet-spiral
+kind: vision
+title: Andre sits with the spiral
+source: 'book/20-principles.md, "Battle Memories" and the Quiet Path ("he sits with it")'
+notes: >
+  A card the GM granted for witnessing something beyond comprehension. The player says
+  nothing, so the vision works from the card alone.
+setup:
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre}}
+  - {id: card, action: {type: memory.grant, characterId: andre, text: "From the observation deck, the whole valley: the ruins laid out in a spiral that tightens toward the gate"}}
+characterId: andre
+memory: card
+family: Architecture
+words: ""
+expected:
+  ip: [1, 2]

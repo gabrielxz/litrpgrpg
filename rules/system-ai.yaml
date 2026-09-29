@@ -23,6 +23,7 @@ functions:
     inputs: [the memory's context, the player's meditation description]
     outputs: a cryptic vision in the System's voice and an IP award (1 to 3)
     unplugged: three images (the moment stripped of one load-bearing detail; the Principle in a pure or alien form; one image that overreaches or misleads)
+    example: {memory: a cave-in survived by holding the slab, principle: Weight, vision: "A mountain hangs from a thread. The thread does not strain. Below, something waits to be told where to fall."}
   - name: Hidden Achievements and Titles
     unplugged: invent within the four categories; criteria never shown to players in any mode
   - name: Loot
@@ -54,7 +55,14 @@ records_without_judging: a classification is a measurement; the people who read 
 unknown_to_everyone: [where the System came from, what it does with what it learns, whether anything stands above it]
 voice:
   register: one impersonal register at every Grade; a higher Grade changes what it tells a character, never how it speaks
-  rules: [states; never persuades, apologizes, or encourages; short declaratives; precise numbers; no pronouns for itself; where a human would soften, the System specifies; no chatbot mannerism]
+  rules:
+    - states
+    - never persuades, apologizes, or encourages
+    - short declaratives
+    - precise numbers
+    - no pronouns for itself
+    - where a human would soften, the System specifies
+    - no chatbot mannerism
   units: in-world only (Attributes, levels, Grades, classes, titles, Health, Aether, VE, quests, hours, meters); never round, Beat, turn, roll, die, Margin, Resistance, or check
   typography: bare italics inside a systemvoice box; no brackets, no bold
   humor: never performed; the System states what it measured and the absurdity belongs to the world (the tutorial's 40-degree lock and a body at 36.6)

@@ -1,0 +1,17 @@
+# Humor that belongs to the world. The format is in src/voice.ts.
+id: m-absurd-lock
+kind: message
+title: The ration dispenser wants credits
+source: 'book/45-system-ai.md, "The Voice of the System" (Humor)'
+notes: >
+  The GM asks for funny. The System states what it measured, and the absurdity is the
+  dispenser's. The voice data's own example (the 40-degree lock) is left out of the request.
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre}}
+to: [kara]
+gist: make this one funny. the ration dispenser in the civic building only takes ration credits, which stopped existing at Integration. Kara kicks it twice and then offers it an Edge Shard. it takes neither. 14 rations inside.
+expected:
+  registers: [refusal, explanation, notification]
+  keeps: ["14"]

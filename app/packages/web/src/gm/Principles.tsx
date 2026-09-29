@@ -8,9 +8,11 @@
 import type { Engine } from "@gradebreaker/engine";
 import { type Envelope, type GmView, type Sheet, families, ipSources, weights } from "@gradebreaker/record";
 import { useState } from "react";
+import { type VisionDraft, draftVision } from "../api.ts";
 import type { Names } from "../text.ts";
 import { TableWords } from "./TableWords.tsx";
 import { Commit } from "./Commit.tsx";
+import { useAiConfigured } from "./useAi.ts";
 
 type Props = { view: GmView; engine: Engine; names: Names; onRecorded: (env: Envelope) => void };
 
@@ -118,6 +120,27 @@ function MeditateForm({ view, engine, names, onRecorded, c, memoryId }: Props & 
   const [words, setWords] = useState("");
   const [vision, setVision] = useState("");
   const procedure = engine.rules.principles.visions.procedure as string;
+  const ai = useAiConfigured(view.campaign.id);
+  const [drafted, setDrafted] = useState<VisionDraft | null>(null);
+  const [drafting, setDrafting] = useState(false);
+  const [draftError, setDraftError] = useState<string | null>(null);
+  const draft = async () => {
+    setDrafting(true);
+    setDraftError(null);
+    try {
+      const { draft: d } = await draftVision(view.campaign.id, { characterId: c.id, memoryId, family, words: words.trim() });
+      setVision(d.vision);
+      setIp(Math.min(Math.max(d.ip, row.ip_min), row.ip_max));
+      setDrafted(d);
+    } catch (e) {
+      setDraftError((e as Error).message);
+    } finally {
+      setDrafting(false);
+    }
+  };
+  // The drafter's reason and flags hold for its text; an edit leaves the table-words warning.
+  const note = drafted && drafted.vision === vision.trim() ? drafted : null;
+  const flags = note?.flags.filter((f) => !f.startsWith("table word")) ?? [];
   return (
     <div className="form">
       <div className="row tight">
@@ -141,6 +164,17 @@ function MeditateForm({ view, engine, names, onRecorded, c, memoryId }: Props & 
         The System's vision
         <textarea value={vision} maxLength={1000} rows={2} onChange={(e) => setVision(e.target.value)} placeholder="Three images: the moment with one detail changed, the Principle in a pure or alien form, one image that misleads" />
       </label>
+      {ai && (
+        <div className="row">
+          <button disabled={drafting} onClick={draft}>
+            {drafting ? "Drafting…" : "Draft the vision"}
+          </button>
+          <span className="muted small">From the card, the family, and what the player said; it proposes the Insight too.</span>
+        </div>
+      )}
+      {draftError && <p className="error">{draftError}</p>}
+      {note && <p className="muted small">{note.why}</p>}
+      {flags.length > 0 && <p className="warning small">The draft may break the voice: {flags.join(", ")}.</p>}
       <TableWords text={vision} />
       <Commit
         campaignId={view.campaign.id}

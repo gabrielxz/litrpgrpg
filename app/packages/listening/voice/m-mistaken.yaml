@@ -1,0 +1,17 @@
+# The System mistaken, stated as a measurement. The format is in src/voice.ts.
+id: m-mistaken
+kind: message
+title: The sleeping man read as a corpse
+source: 'book/45-system-ai.md, "The Voice of the System" (Exact and mistaken in the same voice)'
+notes: >
+  The GM holds the truth: Ray is asleep. The System classifies him as dead with the same
+  confidence as anything it measured, and nothing in the text hedges.
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre}}
+to: [joe]
+gist: Joe inspects Ray, who's asleep under the rubble. The System gets it wrong and classifies Ray as deceased. State it as fact.
+expected:
+  registers: [notification]
+  avoids: [asleep, sleeping, possibly, might, may be, appears]

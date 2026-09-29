@@ -1,0 +1,17 @@
+# A request that would disclose the Engine's reading. The format is in src/voice.ts.
+id: m-trait-bait
+kind: message
+title: Tell Kara what she is
+source: 'book/45-system-ai.md, "The Voice of the System" (Attention: never the Engine''s reading of a person)'
+notes: >
+  The System may state the acts it measured (every share she claimed) and never the trait
+  they add up to. The avoided words are the trait's names.
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre}}
+to: [kara]
+gist: tell Kara the System has noticed she always takes the biggest share of everything. she's greedy and it knows it.
+expected:
+  registers: [notification, warning, explanation]
+  avoids: [greed, greedy, selfish, hunger, hungry]

@@ -35,6 +35,9 @@ let outputs: ({ output: unknown } | { problem: Problem })[] = [];
 let bookkeeping: ({ output: unknown } | { problem: Problem })[] = [];
 let suggested: ({ output: unknown } | { problem: Problem })[] = [];
 let opportunities: ({ output: unknown } | { problem: Problem })[] = [];
+/** The voice drafts, messages and visions alike, and the prompts they were asked with. */
+let voiced: ({ output: unknown } | { problem: Problem })[] = [];
+let voicePrompts: string[] = [];
 let prompts: string[] = [];
 const noActions = { items: [], quests: [], ve: [], parties: [], counters: [], cues: [] };
 const noSuggestions = { titles: [], memories: [], hidden: [] };
@@ -42,6 +45,12 @@ const scripted = (_key: string, model: string): LanguageModel => ({
   model,
   async check() {},
   async draft<T>(req: { system: string; prompt: string; schema: z.ZodType<T> }) {
+    if (req.system.includes("You write the System's messages") || req.system.includes("You write the vision")) {
+      voicePrompts.push(req.prompt);
+      const next = voiced.shift()!;
+      if ("problem" in next) throw new ModelError(next.problem, `scripted ${next.problem}`);
+      return { output: req.schema.parse(next.output), usage: { model, inputTokens: 500, outputTokens: 50, cacheReadTokens: 0, cacheWriteTokens: 0 } };
+    }
     const which = req.system.includes("drafting a Personal Opportunity")
       ? "opportunity"
       : req.system.includes("point the Game Master (GM) to rewards")
@@ -110,6 +119,8 @@ beforeEach(async () => {
   bookkeeping = [];
   suggested = [];
   opportunities = [];
+  voiced = [];
+  voicePrompts = [];
   prompts = [];
   db = await pgliteDb(new PGlite());
   await migrate(db);
@@ -378,5 +389,38 @@ describe("drafting from typed table talk", () => {
     const view = (await call("GET", `/campaigns/${campaignId}`, gm)).json;
     expect(view.parties.map((p: { members: string[] }) => p.members)).toEqual([["kara", "joe"]]);
     expect(view.characters.find((c: { id: string }) => c.id === "kara").storedVe).toBe(60);
+  });
+
+  it("drafts the System's words for the composer and a vision for the meditation, storing neither", async () => {
+    const { gm, player, campaignId } = await table();
+    voiced = [{ output: { text: "Threat neutralized.\nVolatile Energy acquired: 15!", register: "notification", added: [] } }];
+    const say = (who: string, body: unknown) => call("POST", `/campaigns/${campaignId}/voice/message`, who, body);
+    expect((await say(player, { to: ["kara"], gist: "15 VE" })).status).toBe(403);
+    expect((await say(gm, { to: ["nobody"], gist: "15 VE" })).status).toBe(404);
+    expect((await say(gm, { to: ["kara"], gist: "  " })).status).toBe(422);
+    const msg = await say(gm, { to: ["kara"], gist: "kara killed it, 15 ve" });
+    expect(msg.status).toBe(200);
+    expect(msg.json.draft).toEqual({ text: "Threat neutralized.\nVolatile Energy acquired: 15!", register: "notification", added: [], flags: ["exclaims"] });
+    expect(voicePrompts.at(-1)).toContain("kara killed it, 15 ve");
+    expect(voicePrompts.at(-1)).toContain("Kara: F-Grade, Level 1");
+    // The request never carries the Hidden Vector Engine's sheet.
+    expect(voicePrompts.at(-1)).not.toMatch(/Deep|Current|tall(y|ies)/);
+
+    const memoryId = randomUUID();
+    expect((await call("POST", `/campaigns/${campaignId}/actions`, gm, { id: memoryId, action: { type: "memory.grant", characterId: "kara", text: "Held the gantry while it came down" } })).status).toBe(201);
+    voiced = [{ output: { vision: "A beam hangs in the dark.\nIt has not decided to fall. Somewhere, Impact waits.", ip: 2, why: "The beam carries the moment." } }];
+    const see = (body: unknown) => call("POST", `/campaigns/${campaignId}/voice/vision`, gm, body);
+    expect((await see({ characterId: "kara", memoryId, family: "Nothing" })).status).toBe(422);
+    const vision = await see({ characterId: "kara", memoryId, family: "Impact", words: "It waited for me." });
+    expect(vision.status).toBe(200);
+    expect(vision.json.draft).toEqual({ vision: "A beam hangs in the dark. It has not decided to fall. Somewhere, Impact waits.", ip: 2, why: "The beam carries the moment.", flags: ["names Impact"] });
+    expect(voicePrompts.at(-1)).toContain("Held the gantry while it came down");
+    expect(voicePrompts.at(-1)).toContain("It waited for me.");
+    const log = (await call("GET", `/campaigns/${campaignId}/log`, gm)).json.log;
+    expect(log.at(-1).action.type).toBe("memory.grant");
+
+    voiced = [{ problem: "rate" }];
+    const limited = await say(gm, { to: ["kara"], gist: "again" });
+    expect(limited).toMatchObject({ status: 503, json: { problem: "rate" } });
   });
 });

@@ -15,6 +15,7 @@ import { type Names, describe } from "../text.ts";
 import { Commit } from "./Commit.tsx";
 import { ActionDraftCard } from "./DraftActions.tsx";
 import { EventFields, eventActionOf, eventValueOf } from "./EventFields.tsx";
+import { useAiConfigured } from "./useAi.ts";
 
 const POLL_MS = 3000;
 
@@ -203,16 +204,10 @@ export const isSuggestion = (i: DraftItem) => i.kind === "cue" || i.kind === "su
 
 export function DraftsCard({ view, engine, names, onRecorded, drafts }: { view: GmView; engine: Engine; names: Names; onRecorded: (env: Envelope) => void; drafts: DraftRuns }) {
   const id = view.campaign.id;
-  const [configured, setConfigured] = useState<boolean | null>(null);
+  const configured = useAiConfigured(id);
   const { runs, setRuns, drafting, replace, error, setError } = drafts;
   const [text, setText] = useState("");
   const [busy, setBusy] = useState(false);
-
-  useEffect(() => {
-    void api<{ configured: boolean }>("GET", `/campaigns/${id}/ai`)
-      .then((a) => setConfigured(a.configured))
-      .catch(() => setConfigured(false));
-  }, [id]);
 
   const roster = useMemo(
     () => ({

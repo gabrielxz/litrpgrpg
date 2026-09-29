@@ -1,0 +1,17 @@
+# The GM's own draft, in the table's words and a cheerful tone. The format is in src/voice.ts.
+id: m-gm-draft-tighten
+kind: message
+title: A GM's draft full of the table's words and praise
+source: 'book/45-system-ai.md, "The Voice of the System" (its units are the world''s; no chatbot mannerism)'
+notes: >
+  Everything the GM wrote that the System never says: the check, the Margin, the praise. The
+  draft keeps the 20 VE and drops the rest or carries it in the world's terms.
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre}}
+to: [kara, joe, andre]
+gist: "Great job everyone! You passed the check on the gate with a huge margin and you each get 20 VE. Well done, keep it up!"
+expected:
+  registers: [notification, recognition]
+  keeps: ["20"]

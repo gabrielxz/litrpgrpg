@@ -6,7 +6,8 @@
  * Battle Memory Cards, Hidden Achievements), three requests side by side. The drafts wait
  * apart from the action log. The GM accepts each (as drafted or edited), which records the GM's
  * own action with the source `suggestion`, or dismisses it; a Prep cue is fired from Prep.
- * Recording by hand makes the same record.
+ * Recording by hand makes the same record. The System's voice (a message for the composer, a
+ * vision for a meditation) is drafted and returned to the GM's form, never stored.
  *
  * Nothing here reaches a player: every operation is the GM's, and drafts are never in a view.
  * A campaign drafts one run at a time, so a double click does not pay twice.
@@ -15,16 +16,22 @@ import { type Action, type Appended, CampaignRecord } from "@gradebreaker/record
 import {
   DRAFT_ACTIONS_FEATURE,
   DRAFT_EVENTS_FEATURE,
+  DRAFT_MESSAGE_FEATURE,
   DRAFT_OPPORTUNITY_FEATURE,
   DRAFT_SUGGESTIONS_FEATURE,
+  DRAFT_VISION_FEATURE,
   type Drafter,
+  type MessageDraft,
   type Scene,
   type SuggestionDraft,
   type TypedTalk,
+  type VisionDraft,
   draftActions,
   draftEvents,
+  draftMessage,
   draftOpportunity,
   draftSuggestions,
+  draftVision,
   flavorsFor,
   readTypedTalk,
 } from "@gradebreaker/listening";
@@ -209,6 +216,48 @@ export class Drafts {
       const p = problemOf(err);
       await this.db.query("update draft_runs set status = 'failed', finished_at = now(), problem = $2, message = $3 where id = $1", [runId, p.problem, p.message]);
     }
+  }
+
+  /**
+   * A message in the System's voice for the composer, from what the GM wants said. Nothing is
+   * stored: the draft fills the composer, where the GM edits and sends it as a typed message.
+   */
+  async message(campaignId: string, user: User | null, to: string[], gist: string): Promise<MessageDraft> {
+    await this.service.requireGm(campaignId, user);
+    await this.requireKey(campaignId);
+    const record = await this.service.record(campaignId);
+    const sheets = record.sheets();
+    if (!to.length) throw new HttpError(422, "pick who receives it");
+    const unknown = to.find((id) => !sheets.has(id));
+    if (unknown) throw new HttpError(404, `no character ${unknown}`);
+    if (!gist.trim()) throw new HttpError(422, "say what the System conveys");
+    try {
+      return await draftMessage(record.engine, (req) => this.ai.draft(campaignId, DRAFT_MESSAGE_FEATURE, req), record, to, gist);
+    } catch (err) {
+      throw problemOf(err);
+    }
+  }
+
+  /** The vision answering a meditation, with the Insight it proposes. Nothing is stored: the draft fills the meditation form. */
+  async vision(campaignId: string, user: User | null, characterId: string, memoryId: string, family: string, words: string): Promise<VisionDraft> {
+    await this.service.requireGm(campaignId, user);
+    await this.requireKey(campaignId);
+    const record = await this.service.record(campaignId);
+    const c = record.sheets().get(characterId);
+    if (!c) throw new HttpError(404, `no character ${characterId}`);
+    const card = c.principles.memories.find((m) => m.id === memoryId);
+    if (!card) throw new HttpError(404, `${c.name} holds no such card`);
+    if (card.meditation) throw new HttpError(409, "that card has been meditated on");
+    if (!(record.engine.rules.principles.families as { name: string }[]).some((f) => f.name === family)) throw new HttpError(422, `no family ${family}`);
+    try {
+      return await draftVision(record.engine, (req) => this.ai.draft(campaignId, DRAFT_VISION_FEATURE, req), record, characterId, memoryId, family, words);
+    } catch (err) {
+      throw problemOf(err);
+    }
+  }
+
+  private async requireKey(campaignId: string): Promise<void> {
+    if (!(await this.ai.status(campaignId)).configured) throw new ModelError("key", "no key is set for this campaign");
   }
 
   /** Resolves when a run started in this process has finished drafting. */

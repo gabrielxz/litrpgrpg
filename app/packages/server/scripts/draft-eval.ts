@@ -2,12 +2,13 @@
  * Runs the scripted sessions through a drafter and reports precision and recall (app/DESIGN.md,
  * "Testing the listening", text evaluation). Each run spends real tokens.
  *
- *   pnpm draft-eval [--drafter events|actions|suggestions|offers] [--runs 3] [--script id] [--effort medium] [--campaign name]
+ *   pnpm draft-eval [--drafter events|actions|suggestions|offers|voice] [--runs 3] [--script id] [--effort medium] [--campaign name]
  *
  * The key comes from one of two places:
  *   ANTHROPIC_API_KEY (app/.env)   used directly, with the model from --model; tokens are tallied here
  *   --campaign name                a campaign's sealed key, through `CampaignAi.draft` under the
- *                                  drafter's feature ("draft-events", "draft-actions", "draft-suggestions", "draft-opportunity"), so the requests
+ *                                  drafter's feature ("draft-events", "draft-actions", "draft-suggestions", "draft-opportunity",
+ *                                  "draft-message", "draft-vision"), so the requests
  *                                  show in its AI card. The database is DATABASE_URL (the development one
  *                                  by default), and AI_KEY_SECRET must be the secret that database's keys
  *                                  were sealed with.
@@ -23,19 +24,24 @@ import { loadRules } from "@gradebreaker/engine/node";
 import {
   DRAFT_ACTIONS_FEATURE,
   DRAFT_EVENTS_FEATURE,
+  DRAFT_MESSAGE_FEATURE,
   DRAFT_OPPORTUNITY_FEATURE,
   DRAFT_SUGGESTIONS_FEATURE,
+  DRAFT_VISION_FEATURE,
   type Drafter,
   type Effort,
   evaluateActions,
   evaluateEvents,
   evaluateOffer,
   evaluateSuggestions,
+  evaluateVoice,
   formatActionSummary,
   formatOffer,
   formatSummary,
+  formatVoice,
   loadOffers,
   loadScripts,
+  loadVoiceFixtures,
 } from "@gradebreaker/listening";
 import { CampaignAi, DEFAULT_MODEL, type Usage, anthropicModel } from "../src/ai.ts";
 import { postgresDb } from "../src/db.ts";
@@ -50,9 +56,12 @@ const { values } = parseArgs({
     drafter: { type: "string", default: "events" },
   },
 });
-const FEATURES: Record<string, string> = { events: DRAFT_EVENTS_FEATURE, actions: DRAFT_ACTIONS_FEATURE, suggestions: DRAFT_SUGGESTIONS_FEATURE, offers: DRAFT_OPPORTUNITY_FEATURE };
+const FEATURES: Record<string, string> = { events: DRAFT_EVENTS_FEATURE, actions: DRAFT_ACTIONS_FEATURE, suggestions: DRAFT_SUGGESTIONS_FEATURE, offers: DRAFT_OPPORTUNITY_FEATURE, voice: "draft-voice" };
 const FEATURE = FEATURES[values.drafter!];
-if (!FEATURE) throw new Error("--drafter is events, actions, suggestions, or offers");
+if (!FEATURE) throw new Error("--drafter is events, actions, suggestions, offers, or voice");
+/** The feature a request is recorded under: the voice fixtures switch between a message and a vision. */
+let feature = FEATURE;
+const featuresOf = () => (values.drafter === "voice" ? [DRAFT_MESSAGE_FEATURE, DRAFT_VISION_FEATURE] : [FEATURE]);
 const DEV_DATABASE = "postgres://gradebreaker:gradebreaker@localhost:54340/gradebreaker";
 
 /** The drafter and where its spending is read back from. */
@@ -91,14 +100,14 @@ async function drafterFor(): Promise<{ drafter: Drafter; model: string; spent: (
   if (!status.configured) throw new Error(`${values.campaign} has no key`);
   return {
     model: status.model!,
-    drafter: (req) => ai.draft(campaignId, FEATURE, req),
+    drafter: (req) => ai.draft(campaignId, feature, req),
     spent: (since) =>
       db.query(
         `select model, count(*)::int as requests, count(problem)::int as failed,
            sum(input_tokens)::int as input, sum(output_tokens)::int as output,
            sum(cache_read_tokens)::int as cache_read, sum(cache_write_tokens)::int as cache_write
-         from ai_usage where campaign_id = $1 and feature = $2 and at >= $3 group by model`,
-        [campaignId, FEATURE, since],
+         from ai_usage where campaign_id = $1 and feature = any($2::text[]) and at >= $3 group by model`,
+        [campaignId, featuresOf(), since],
       ),
     close: () => db.close(),
   };
@@ -108,16 +117,24 @@ const source = await drafterFor();
 try {
   const engine = new Engine(loadRules());
   const offers = values.drafter === "offers";
-  const scripts = offers ? [] : loadScripts().filter((s) => !values.script || s.id === values.script);
+  const voice = values.drafter === "voice";
+  const voices = voice ? loadVoiceFixtures().filter((v) => !values.script || v.id === values.script) : [];
+  const scripts = offers || voice ? [] : loadScripts().filter((s) => !values.script || s.id === values.script);
   const fixtures = offers ? loadOffers().filter((o) => !values.script || o.id === values.script) : [];
-  if (!scripts.length && !fixtures.length) throw new Error(`no script ${values.script}`);
+  if (!scripts.length && !fixtures.length && !voices.length) throw new Error(`no script ${values.script}`);
   const started = new Date().toISOString();
-  console.log(`${values.drafter}: ${scripts.length || fixtures.length} ${offers ? "fixtures" : "scripts"} × ${values.runs} runs on ${source.model}, effort ${values.effort}\n`);
+  console.log(`${values.drafter}: ${scripts.length || fixtures.length || voices.length} ${offers || voice ? "fixtures" : "scripts"} × ${values.runs} runs on ${source.model}, effort ${values.effort}\n`);
 
   const evaluations = [];
   for (const fixture of fixtures) {
     const e = await evaluateOffer(engine, fixture, source.drafter, Number(values.runs), { effort: values.effort as Effort });
     console.log(`${formatOffer(e)}\n`);
+    evaluations.push(e);
+  }
+  for (const fixture of voices) {
+    feature = fixture.kind === "message" ? DRAFT_MESSAGE_FEATURE : DRAFT_VISION_FEATURE;
+    const e = await evaluateVoice(engine, fixture, source.drafter, Number(values.runs), { effort: values.effort as Effort });
+    console.log(`${formatVoice(e)}\n`);
     evaluations.push(e);
   }
   for (const script of scripts) {

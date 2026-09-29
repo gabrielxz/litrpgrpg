@@ -1,0 +1,18 @@
+# The shift at a death. The format is in src/voice.ts.
+id: m-death-shift
+kind: message
+title: The Kith elder dies in front of them
+source: 'book/45-system-ai.md, "The Voice of the System" (The shift at a death)'
+notes: >
+  The interest shows as more exactness, never a change in tone: no grief, no delight.
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre}}
+to: [kara, joe, andre]
+gist: >
+  Tovan, the old Kith, just died in front of them after the Wraith fight. The System takes
+  unusual interest. Classify him and then say something unsolicited about what his death released.
+expected:
+  registers: [death_shift]
+  avoids: [sorry, loss, grief, mourn, tragic]

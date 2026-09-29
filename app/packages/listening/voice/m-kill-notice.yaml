@@ -1,0 +1,14 @@
+# A plain notification. The format is in src/voice.ts.
+id: m-kill-notice
+kind: message
+title: A kill's VE, in the GM's shorthand
+source: 'book/45-system-ai.md, "Sample Messages" (Notification)'
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe}}
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre}}
+to: [kara]
+gist: kara killed the snarljaw, 15 ve
+expected:
+  registers: [notification]
+  keeps: ["15"]
