@@ -143,7 +143,7 @@ No character chooses a Principle from a menu. The GM watches what the character 
 
 2. **Resonance accrues.** When the character begins earning IP, the System reports it at the family level only, in a **Resonance notice**: *Resonance accruing: IMPACT. 2/3.* The character knows a direction and nothing more. Each award goes to the family its memory expresses, so a character can hold IP in two families at once.
 3. **At 3 IP, the Principle crystallizes.** The first family to reach 3 IP crystallizes. The GM names one specific Principle, and the System announces it: *Initial Insight: Weight.* The slot fills for life, and the tier's minor passive arrives. IP already earned in any other family stays with that family and counts toward the second Principle when its slot opens at E-Grade.
-4. **The player steers by playing.** How the player describes their meditations shapes which Principle a memory feeds. If the Principle stops matching the character's behavior over time, Refinement (below) changes it.
+4. **The player steers by playing.** How the player describes their meditations shapes which Principle a memory feeds. If the Principle stops matching the character's behavior over time, Reshaping (below) changes it.
 
 **The second Principle.** The slot that opens at E-Grade fills the same way, with one difference: a veteran character can pursue a direction on purpose. The player may declare what they are seeking and pursue aligned experiences. The GM still names the Principle from what the character actually did, which may differ from what the player declared.
 
@@ -177,7 +177,7 @@ One sample Principle from each family, worked from its first passive to its Seed
 
 A character holds **one Principle** at F-Grade. Breaking through to E-Grade unlocks a **second slot**. Two is the lifetime maximum.
 
-A slot, once filled, holds its Principle for life. The Principle can change shape (Refinement), widen (Broadening), or merge with the other (Fusion); it never simply drops away. The only way a slot opens again is Fusion: two Principles become one, and the freed slot may later take a new Principle, which enters at the bottom like any other.
+A slot, once filled, holds its Principle for life. The Principle can change shape (Reshaping), widen (Broadening), or merge with the other (Fusion); it never simply drops away. The only way a slot opens again is Fusion: two Principles become one, and the freed slot may later take a new Principle, which enters at the bottom like any other.
 
 ### The Progression Ladder
 
@@ -270,7 +270,7 @@ A player who stalls gets moments to answer instead of meanings, then two reading
 
 Three different changes can happen to a Principle a character already holds.
 
-**Refinement changes the identity.** At any Distillation, the articulation can steer the Principle at its current tier instead of climbing. A character whose Fire has grown hungrier with every fight may Distill Fire into **Consuming Flame**: same slot, same tier, same IP, shifted identity. The GM (or the System AI in assisted modes) adjusts the Principle's Applications and Attunements to match the new identity.
+**Reshaping changes the identity.** At any Distillation, the articulation can steer the Principle at its current tier instead of climbing. A character whose Fire has grown hungrier with every fight may Distill Fire into **Consuming Flame**: same slot, same tier, same IP, shifted identity. The GM (or the System AI in assisted modes) adjusts the Principle's Applications and Attunements to match the new identity.
 
 **Broadening changes the scope.** At a tier-up, the re-articulation sometimes outgrows the Principle's name, and the GM may give the Principle the broader name. Weight, articulated again at Fragment depth ("everything falls toward something, and I choose the direction"), can become **Gravity**; Gravity, lifetimes deeper, might become **Dominion**. Broadening is a possibility inside a tier-up Distillation, never a separate procedure and never owed: most tier-ups deepen the Principle under its own name. Existing Applications keep their names, costs, and scales; the new tier's grant takes the broadened identity.
 
@@ -364,7 +364,7 @@ An answer like that one is rare; most who address the System get nothing back (T
 
 ## Design Intent
 
-Principles develop from a character's experiences. Limited slots make each Principle permanent, while Refinement, Broadening, and Fusion let it change over time. Principle advancement is separate from level advancement.
+Principles develop from a character's experiences. Limited slots make each Principle permanent, while Reshaping, Broadening, and Fusion let it change over time. Principle advancement is separate from level advancement.
 
 ## The System and Principles
 
