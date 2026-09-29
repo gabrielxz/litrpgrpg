@@ -15,23 +15,28 @@
 import { type Action, type Appended, CampaignRecord } from "@gradebreaker/record";
 import {
   DRAFT_ACTIONS_FEATURE,
+  DRAFT_CHARACTER_SUMMARY_FEATURE,
   DRAFT_CLASSES_FEATURE,
   DRAFT_EVENTS_FEATURE,
   DRAFT_MESSAGE_FEATURE,
   DRAFT_OPPORTUNITY_FEATURE,
+  DRAFT_SESSION_SUMMARY_FEATURE,
   DRAFT_SUGGESTIONS_FEATURE,
   DRAFT_VISION_FEATURE,
   type Drafter,
+  type CharacterSummaryDraft,
   type MessageDraft,
   type Scene,
   type SuggestionDraft,
   type TypedTalk,
   type VisionDraft,
   draftActions,
+  draftCharacterSummary,
   draftClasses,
   draftEvents,
   draftMessage,
   draftOpportunity,
+  draftSessionSummary,
   draftSuggestions,
   draftVision,
   dueOffers,
@@ -308,6 +313,32 @@ export class Drafts {
     if (!(record.engine.rules.principles.families as { name: string }[]).some((f) => f.name === family)) throw new HttpError(422, `no family ${family}`);
     try {
       return await draftVision(record.engine, (req) => this.ai.draft(campaignId, DRAFT_VISION_FEATURE, req), record, characterId, memoryId, family, words);
+    } catch (err) {
+      throw problemOf(err);
+    }
+  }
+
+  /** The session's three-sentence summary, from what the record holds for it. Returned to the GM's form, never stored here. */
+  async sessionSummary(campaignId: string, user: User | null, sessionId: string): Promise<{ summary: string }> {
+    await this.service.requireGm(campaignId, user);
+    await this.requireKey(campaignId);
+    const record = await this.service.record(campaignId);
+    if (!record.state.sessions.has(sessionId)) throw new HttpError(404, "no such session");
+    try {
+      return await draftSessionSummary((req) => this.ai.draft(campaignId, DRAFT_SESSION_SUMMARY_FEATURE, req), record, sessionId);
+    } catch (err) {
+      throw problemOf(err);
+    }
+  }
+
+  /** A character's System summary for the composer: the record's lines, and a drafted observation. */
+  async characterSummary(campaignId: string, user: User | null, characterId: string, integration: boolean): Promise<CharacterSummaryDraft> {
+    await this.service.requireGm(campaignId, user);
+    await this.requireKey(campaignId);
+    const record = await this.service.record(campaignId);
+    if (!record.sheets().has(characterId)) throw new HttpError(404, `no character ${characterId}`);
+    try {
+      return await draftCharacterSummary(record.engine, (req) => this.ai.draft(campaignId, DRAFT_CHARACTER_SUMMARY_FEATURE, req), record, characterId, { integration });
     } catch (err) {
       throw problemOf(err);
     }

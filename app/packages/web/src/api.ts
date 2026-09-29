@@ -153,6 +153,13 @@ export interface VisionDraft {
 
 export const draftMessage = (campaignId: string, to: string[], gist: string) => api<{ draft: MessageDraft }>("POST", `/campaigns/${campaignId}/voice/message`, { to, gist });
 
+export const draftSessionSummary = (campaignId: string, sessionId: string) =>
+  api<{ draft: { summary: string } }>("POST", `/campaigns/${campaignId}/sessions/${sessionId}/summary-draft`, {});
+
+/** A character's System summary: the whole message, and the flags on its drafted observation. */
+export const draftCharacterSummary = (campaignId: string, characterId: string, integration: boolean) =>
+  api<{ draft: { text: string; observation: string; flags: string[] } }>("POST", `/campaigns/${campaignId}/voice/summary`, { characterId, integration });
+
 export const draftVision = (campaignId: string, body: { characterId: string; memoryId: string; family: string; words: string }) =>
   api<{ draft: VisionDraft }>("POST", `/campaigns/${campaignId}/voice/vision`, body);
 

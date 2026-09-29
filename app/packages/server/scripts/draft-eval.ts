@@ -2,7 +2,7 @@
  * Runs the scripted sessions through a drafter and reports precision and recall (app/DESIGN.md,
  * "Testing the listening", text evaluation). Each run spends real tokens.
  *
- *   pnpm draft-eval [--drafter events|actions|suggestions|offers|voice|classes] [--runs 3] [--script id] [--effort medium] [--campaign name]
+ *   pnpm draft-eval [--drafter events|actions|suggestions|offers|voice|classes|summaries] [--runs 3] [--script id] [--effort medium] [--campaign name]
  *
  * The key comes from one of two places:
  *   ANTHROPIC_API_KEY (app/.env)   used directly, with the model from --model; tokens are tallied here
@@ -23,10 +23,12 @@ import { Engine } from "@gradebreaker/engine";
 import { loadRules } from "@gradebreaker/engine/node";
 import {
   DRAFT_ACTIONS_FEATURE,
+  DRAFT_CHARACTER_SUMMARY_FEATURE,
   DRAFT_CLASSES_FEATURE,
   DRAFT_EVENTS_FEATURE,
   DRAFT_MESSAGE_FEATURE,
   DRAFT_OPPORTUNITY_FEATURE,
+  DRAFT_SESSION_SUMMARY_FEATURE,
   DRAFT_SUGGESTIONS_FEATURE,
   DRAFT_VISION_FEATURE,
   type Drafter,
@@ -36,16 +38,19 @@ import {
   evaluateEvents,
   evaluateOffer,
   evaluateSuggestions,
+  evaluateSummaries,
   evaluateVoice,
   formatActionSummary,
   formatClasses,
   formatOffer,
+  formatSummaries,
   formatSummary,
   formatVoice,
   loadClassFixtures,
   loadOffers,
   loadScripts,
   loadVoiceFixtures,
+  SUMMARY_SCRIPTS,
 } from "@gradebreaker/listening";
 import { CampaignAi, DEFAULT_MODEL, type Usage, anthropicModel } from "../src/ai.ts";
 import { postgresDb } from "../src/db.ts";
@@ -60,12 +65,13 @@ const { values } = parseArgs({
     drafter: { type: "string", default: "events" },
   },
 });
-const FEATURES: Record<string, string> = { events: DRAFT_EVENTS_FEATURE, actions: DRAFT_ACTIONS_FEATURE, suggestions: DRAFT_SUGGESTIONS_FEATURE, offers: DRAFT_OPPORTUNITY_FEATURE, voice: "draft-voice", classes: DRAFT_CLASSES_FEATURE };
+const FEATURES: Record<string, string> = { events: DRAFT_EVENTS_FEATURE, actions: DRAFT_ACTIONS_FEATURE, suggestions: DRAFT_SUGGESTIONS_FEATURE, offers: DRAFT_OPPORTUNITY_FEATURE, voice: "draft-voice", classes: DRAFT_CLASSES_FEATURE, summaries: "draft-summaries" };
 const FEATURE = FEATURES[values.drafter!];
-if (!FEATURE) throw new Error("--drafter is events, actions, suggestions, offers, voice, or classes");
+if (!FEATURE) throw new Error("--drafter is events, actions, suggestions, offers, voice, classes, or summaries");
 /** The feature a request is recorded under: the voice fixtures switch between a message and a vision. */
 let feature = FEATURE;
-const featuresOf = () => (values.drafter === "voice" ? [DRAFT_MESSAGE_FEATURE, DRAFT_VISION_FEATURE] : [FEATURE]);
+const featuresOf = () =>
+  values.drafter === "voice" ? [DRAFT_MESSAGE_FEATURE, DRAFT_VISION_FEATURE] : values.drafter === "summaries" ? [DRAFT_SESSION_SUMMARY_FEATURE, DRAFT_CHARACTER_SUMMARY_FEATURE] : [FEATURE];
 const DEV_DATABASE = "postgres://gradebreaker:gradebreaker@localhost:54340/gradebreaker";
 
 /** The drafter and where its spending is read back from. */
@@ -124,16 +130,22 @@ try {
   const voice = values.drafter === "voice";
   const voices = voice ? loadVoiceFixtures().filter((v) => !values.script || v.id === values.script) : [];
   const classes = values.drafter === "classes" ? loadClassFixtures().filter((v) => !values.script || v.id === values.script) : [];
-  const scripts = offers || voice || classes.length || values.drafter === "classes" ? [] : loadScripts().filter((s) => !values.script || s.id === values.script);
+  const summaries = values.drafter === "summaries" ? loadScripts().filter((s) => (values.script ? s.id === values.script : SUMMARY_SCRIPTS.includes(s.id))) : [];
+  const scripts = offers || voice || classes.length || values.drafter === "classes" || values.drafter === "summaries" ? [] : loadScripts().filter((s) => !values.script || s.id === values.script);
   const fixtures = offers ? loadOffers().filter((o) => !values.script || o.id === values.script) : [];
-  if (!scripts.length && !fixtures.length && !voices.length && !classes.length) throw new Error(`no script ${values.script}`);
+  if (!scripts.length && !fixtures.length && !voices.length && !classes.length && !summaries.length) throw new Error(`no script ${values.script}`);
   const started = new Date().toISOString();
-  console.log(`${values.drafter}: ${scripts.length || fixtures.length || voices.length || classes.length} ${scripts.length ? "scripts" : "fixtures"} × ${values.runs} runs on ${source.model}, effort ${values.effort}\n`);
+  console.log(`${values.drafter}: ${scripts.length || fixtures.length || voices.length || classes.length || summaries.length} ${scripts.length || summaries.length ? "scripts" : "fixtures"} × ${values.runs} runs on ${source.model}, effort ${values.effort}\n`);
 
   const evaluations = [];
   for (const fixture of fixtures) {
     const e = await evaluateOffer(engine, fixture, source.drafter, Number(values.runs), { effort: values.effort as Effort });
     console.log(`${formatOffer(e)}\n`);
+    evaluations.push(e);
+  }
+  for (const script of summaries) {
+    const e = await evaluateSummaries(engine, script, source.drafter, Number(values.runs), { effort: values.effort as Effort });
+    console.log(`${formatSummaries(e)}\n`);
     evaluations.push(e);
   }
   for (const fixture of classes) {

@@ -1,14 +1,44 @@
 /**
  * Sessions on the GM's screen: a bar under the sections that starts a session, marks who
  * arrives or leaves, and ends it with the summary and a check that the sweep was recorded; and
- * the campaign's sessions, newest first, each summary editable afterward. Nothing here reaches
- * a player.
+ * the campaign's sessions, newest first, each summary editable afterward. With the campaign's
+ * key, the summary can be drafted from what the record holds for the session. Nothing here
+ * reaches a player.
  */
 import { type Action, type CampaignSession, type Envelope, type GmView, clockLine, sessionName } from "@gradebreaker/record";
 import { useState } from "react";
-import { newActionId, submit } from "../api.ts";
+import { draftSessionSummary, newActionId, submit } from "../api.ts";
 import type { Names } from "../text.ts";
 import { Commit } from "./Commit.tsx";
+import { useAiConfigured } from "./useAi.ts";
+
+/** Drafts the session's summary into the GM's field; the GM edits it before saving. */
+function DraftSummary({ view, s, onDraft }: { view: GmView; s: CampaignSession; onDraft: (text: string) => void }) {
+  const ai = useAiConfigured(view.campaign.id);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  if (!ai) return null;
+  const draft = async () => {
+    setBusy(true);
+    setError(null);
+    try {
+      onDraft((await draftSessionSummary(view.campaign.id, s.id)).draft.summary);
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <div className="row">
+      <button disabled={busy} onClick={draft}>
+        {busy ? "Drafting…" : "Draft it from the record"}
+      </button>
+      <span className="muted small">From the session's events, kills, quests, titles, and levels; it replaces the text above.</span>
+      {error && <span className="error">{error}</span>}
+    </div>
+  );
+}
 
 const time = (iso: string) => new Date(iso).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
 const day = (iso: string) => new Date(iso).toLocaleDateString([], { dateStyle: "medium" });
@@ -90,6 +120,7 @@ function EndForm({
           placeholder="Three sentences: what happened, what changed, what is left open."
         />
       </label>
+      <DraftSummary view={view} s={s} onDraft={setSummary} />
       <Commit
         campaignId={view.campaign.id}
         action={{ type: "session.end", ...(summary.trim() ? { summary: summary.trim() } : {}) }}
@@ -175,6 +206,7 @@ function SummaryEditor({ view, s, names, onRecorded }: { view: GmView; s: Campai
     <details>
       <summary>{s.summary ? "Edit the summary" : "Write a summary"}</summary>
       <textarea value={text} maxLength={2000} rows={3} onChange={(e) => setText(e.target.value)} />
+      <DraftSummary view={view} s={s} onDraft={setText} />
       <Commit
         campaignId={view.campaign.id}
         action={text.trim() === (s.summary ?? "") ? null : { type: "session.summary", sessionId: s.id, summary: text }}

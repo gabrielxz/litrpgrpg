@@ -5,7 +5,7 @@
  */
 import type { Action, GmView } from "@gradebreaker/record";
 import { useState } from "react";
-import { type MessageDraft, draftMessage } from "../api.ts";
+import { type MessageDraft, draftCharacterSummary, draftMessage } from "../api.ts";
 import { type Names, tableWordsIn } from "../text.ts";
 import { Commit } from "./Commit.tsx";
 import type { FormProps } from "./Record.tsx";
@@ -152,6 +152,7 @@ export function MessageForm({ view, names, onRecorded }: FormProps) {
   const [drafted, setDrafted] = useState<MessageDraft | null>(null);
   const [drafting, setDrafting] = useState(false);
   const [draftError, setDraftError] = useState<string | null>(null);
+  const [integration, setIntegration] = useState(false);
   const player = (playerId?: string) =>
     playerId ? (view.members.find((m) => m.userId === playerId)?.displayName ?? "a former player") : "GM";
   const toggle = (id: string) => setTo(to.includes(id) ? to.filter((x) => x !== id) : [...to, id]);
@@ -173,6 +174,20 @@ export function MessageForm({ view, names, onRecorded }: FormProps) {
       const { draft: d } = await draftMessage(view.campaign.id, recipients, asked);
       setText(d.text);
       setDrafted(d);
+    } catch (e) {
+      setDraftError((e as Error).message);
+    } finally {
+      setDrafting(false);
+    }
+  };
+  // One character: the System's summary of them, on the tutorial's template.
+  const summarize = async () => {
+    setDrafting(true);
+    setDraftError(null);
+    try {
+      const { draft: d } = await draftCharacterSummary(view.campaign.id, recipients[0]!, integration);
+      setText(d.text);
+      setDrafted({ text: d.text, register: "explanation", added: [], flags: d.flags });
     } catch (e) {
       setDraftError((e as Error).message);
     } finally {
@@ -230,6 +245,16 @@ export function MessageForm({ view, names, onRecorded }: FormProps) {
             </button>
             <span className="muted small">The draft replaces the message below, for you to edit before sending.</span>
           </div>
+          {recipients.length === 1 && (
+            <div className="row">
+              <button disabled={drafting} onClick={summarize}>
+                Draft a summary of {names(recipients[0]!)}
+              </button>
+              <label className="check small">
+                <input type="checkbox" checked={integration} onChange={(e) => setIntegration(e.target.checked)} /> As the Integration Complete summary
+              </label>
+            </div>
+          )}
           {draftError && <p className="error">{draftError}</p>}
         </details>
       )}

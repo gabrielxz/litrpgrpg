@@ -187,6 +187,7 @@ describe("the adapter's pieces", () => {
     expect(problemOf(new Anthropic.NotFoundError(404, undefined, "no", headers)).problem).toBe("model");
     expect(problemOf(new Anthropic.RateLimitError(429, undefined, "no", headers)).problem).toBe("rate");
     expect(problemOf(new Anthropic.APIConnectionError({ message: "down" })).problem).toBe("unreachable");
+    expect(problemOf(new Anthropic.InternalServerError(503, undefined, "overloaded", headers))).toMatchObject({ problem: "unreachable", message: "the provider is unavailable for the moment; try again shortly" });
     expect(problemOf(new Anthropic.APIError(402, undefined, "pay", headers)).problem).toBe("billing");
   });
 });

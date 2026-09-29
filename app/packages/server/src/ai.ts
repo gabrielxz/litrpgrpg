@@ -71,6 +71,8 @@ export function problemOf(err: unknown): ModelError {
   if (err instanceof Anthropic.APIConnectionError) return new ModelError("unreachable", "the provider could not be reached");
   if (err instanceof Anthropic.APIError) {
     if (err.status === 402) return new ModelError("billing", "the provider's account needs credit");
+    // Overloaded or down on the provider's side (500, 503, 529): a wait, like a limit.
+    if (err.status !== undefined && err.status >= 500) return new ModelError("unreachable", "the provider is unavailable for the moment; try again shortly");
     return new ModelError("other", `the provider answered ${err.status ?? "with an error"}`);
   }
   return new ModelError("other", err instanceof Error ? err.message : String(err));

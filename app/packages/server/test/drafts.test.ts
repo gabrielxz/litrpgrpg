@@ -39,6 +39,7 @@ let opportunities: ({ output: unknown } | { problem: Problem })[] = [];
 let voiced: ({ output: unknown } | { problem: Problem })[] = [];
 let voicePrompts: string[] = [];
 let classed: ({ output: unknown } | { problem: Problem })[] = [];
+let summarized: ({ output: unknown } | { problem: Problem })[] = [];
 let prompts: string[] = [];
 const noActions = { items: [], quests: [], ve: [], parties: [], counters: [], cues: [] };
 const noSuggestions = { titles: [], memories: [], hidden: [] };
@@ -46,6 +47,12 @@ const scripted = (_key: string, model: string): LanguageModel => ({
   model,
   async check() {},
   async draft<T>(req: { system: string; prompt: string; schema: z.ZodType<T> }) {
+    if (req.system.includes("You write the summary of one session") || req.system.includes("You write the observation that opens")) {
+      voicePrompts.push(req.prompt);
+      const next = summarized.shift()!;
+      if ("problem" in next) throw new ModelError(next.problem, `scripted ${next.problem}`);
+      return { output: req.schema.parse(next.output), usage: { model, inputTokens: 800, outputTokens: 120, cacheReadTokens: 0, cacheWriteTokens: 0 } };
+    }
     if (req.system.includes("You draft class offers")) {
       voicePrompts.push(req.prompt);
       const next = classed.shift()!;
@@ -128,6 +135,7 @@ beforeEach(async () => {
   opportunities = [];
   voiced = [];
   classed = [];
+  summarized = [];
   voicePrompts = [];
   prompts = [];
   db = await pgliteDb(new PGlite());
@@ -475,5 +483,27 @@ describe("drafting from typed table talk", () => {
     expect(JSON.stringify(playerView)).toContain("Breaker");
     expect(JSON.stringify(playerView)).not.toContain("Force lead");
     expect((await start(gm, { characterId: "kara" })).json.error).toMatch(/not due class offers/);
+  });
+
+  it("drafts a session's summary and a character's System summary into the GM's forms, storing neither", async () => {
+    const { gm, player, campaignId } = await table();
+    const act = (action: unknown) => call("POST", `/campaigns/${campaignId}/actions`, gm, { id: randomUUID(), action });
+    const started = await act({ type: "session.start", label: "The Node", present: ["kara", "joe"] });
+    const sessionId = started.json.envelope.id as string;
+    await act({ type: "event.log", summary: "Kara takes the only pill while Joe argues.", participants: ["kara", "joe"], entries: [{ characterId: "kara", pole: "Hunger", intensity: 1 }] });
+    summarized = [{ output: { summary: "The party reached the Node.\nKara took the pill. Joe let it go." } }, { output: { observation: "Resource prioritization: self-first." } }];
+    expect((await call("POST", `/campaigns/${campaignId}/sessions/${sessionId}/summary-draft`, player, {})).status).toBe(403);
+    expect((await call("POST", `/campaigns/${campaignId}/sessions/nope/summary-draft`, gm, {})).status).toBe(404);
+    const s = await call("POST", `/campaigns/${campaignId}/sessions/${sessionId}/summary-draft`, gm, {});
+    expect(s).toMatchObject({ status: 200, json: { draft: { summary: "The party reached the Node. Kara took the pill. Joe let it go." } } });
+    expect(voicePrompts.at(-1)).toContain("Kara takes the only pill while Joe argues.");
+    expect(voicePrompts.at(-1)).not.toContain("Hunger");
+    const c = await call("POST", `/campaigns/${campaignId}/voice/summary`, gm, { characterId: "kara", integration: true });
+    expect(c.status).toBe(200);
+    expect(c.json.draft.text).toContain("INTEGRATION COMPLETE: INITIATE KARA");
+    expect(c.json.draft.text).toContain("Resource prioritization: self-first.");
+    expect(c.json.draft.text).toContain("Level 1. VE awaiting refinement: 0.");
+    const view = (await call("GET", `/campaigns/${campaignId}`, gm)).json;
+    expect(view.sessions[0].summary).toBeUndefined();
   });
 });
