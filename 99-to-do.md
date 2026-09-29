@@ -112,7 +112,7 @@ Edits an app session forces, each with Gabriel's ruling or Claude's recommendati
 - **A form's preview follows the log.** An open form re-previews whenever anything is recorded (found when the Insight form still offered to crystallize a Principle already named).
 - **The summaries eval ran** on all six scripts × 3: 18 of 18 returned, 17 in three sentences, 2 of 54 observations flagged, both table words used in their ordinary sense. The behavioral sides are now flagged only capitalized ("acquisition method" is an ordinary word). Both summary drafts checked in the browser end to end.
 
-**Next.** M3, listening (Gabriel, 2026-09-29), in its table's order: consent and capture (per-participant consent, the capture indicator, mute and pause in every tab), then the speech-to-text adapter with the vendor chosen against synthetic audio (Testing the listening), then event and HVE drafting from the streams, shadow mode, test recordings, and the rehearsal. A small one first if Gabriel wants it: one session draft said "the record says nothing of what Joe did" for a character with no event; the session drafter could leave such a character out.
+**Next.** M3, listening (Gabriel, 2026-09-29), in its table's order: consent and capture (per-participant consent, the capture indicator, mute and pause in every tab), then the speech-to-text adapter with the vendor chosen against synthetic audio (Testing the listening), then event and HVE drafting from the streams, shadow mode, test recordings, and the rehearsal.
 
 ### Queued for the app
 
