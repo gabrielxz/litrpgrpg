@@ -138,7 +138,7 @@ Edits an app session forces, each with Gabriel's ruling or Claude's recommendati
 
 ### Next app session
 
-**State (2026-09-29, tenth close).** Rules 0.1.33, `make check` green (engine 235, record 128, server 66, listening 166, web 8). Everything pushed and deployed (last run 36581512504, health 200). Each screen change checked in the browser with a GM tab and a player tab. **M2's drafting rows are built**; only live listening's windows and the running recap remain:
+**State (2026-09-29, tenth close).** Rules 0.1.33, `make check` green (engine 235, record 128, server 66, listening 166, web 8). Everything pushed and deployed (last run 36581512504, health 200). Each screen change checked in the browser with a GM tab and a player tab. **M2's drafting rows are built**; the running recap is deferred (Gabriel: a backlog item, after everything else):
 - **A Hidden Achievement script.** `civic-tribunal`: the Hidden Achievement and Read the Room found every run; events and bookkeeping 100%.
 - **System voice drafting.** The composer drafts from the GM's words; the meditation form drafts the vision and the Insight. Gabriel read the drafts: they stand.
 - **Stat allocation proposals.** Gabriel ruled each Behavioral Stat Mapping row an HVE side (rules 0.1.33); the Assigned points form proposes from the entries since the last placement, no model call.
@@ -147,7 +147,7 @@ Edits an app session forces, each with Gabriel's ruling or Claude's recommendati
 - **Summaries.** The session's three sentences (session-end form, summary editor) and a character's System summary on the tutorial's template in the composer (the record fills the lines, the model the observation). Five of six scripts drafted cleanly before the provider went down (503s from about 14:10); the den and the success path in the browser wait on it.
 - Claude's calls are under Decisions ("drafting the System's voice", "assigned points proposed from the HVE entries", "drafting class offers", "class offers play at the table", "summaries"), open to Gabriel's cut.
 
-**Next.** When the provider answers: the summaries eval on all six scripts (`pnpm run draft-eval --drafter summaries`) and the browser's success path for both drafts; write the result into the Summaries row. Gabriel's call on the running recap (DESIGN.md, Open). Then M3: listening.
+**Next.** M3, listening (Gabriel, 2026-09-29), in its table's order: consent and capture (per-participant consent, the capture indicator, mute and pause in every tab), then the speech-to-text adapter with the vendor chosen against synthetic audio (Testing the listening: Piper or Kokoro renders per speaker, fed to headless Chromium as each tab's microphone), then event and HVE drafting from the streams, shadow mode, test recordings, and the rehearsal. First, when the provider answers again (Claude Status showed elevated errors at the close): the summaries eval on all six scripts (`pnpm run draft-eval --drafter summaries`) and the browser's success path for both summary drafts, written into the Summaries row.
 
 ### Queued for the app
 
