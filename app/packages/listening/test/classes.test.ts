@@ -41,6 +41,8 @@ describe("class offers", () => {
     expect(system).toContain("Breaching Vanguard (Fixed: 2 STR, 1 FOR)");
     expect(system).toContain("Burner (Guided");
     expect(system).toContain("No busywork.");
+    expect(system).not.toContain("Prefer powers that make the player");
+    expect(system).toContain("Nothing adds to what a rest restores");
     const f = fixtures.find((x) => x.id === "kara-apex")!;
     const prompt = draftClassesPrompt(engine, classRecordOf(engine, f), f.characterId, { keepsDoing: f.keepsDoing });
     expect(prompt).toContain("Hunger: The table went quiet when she ate it.");
@@ -63,7 +65,13 @@ describe("class offers", () => {
     expect(out.offers[1]!.problems).toEqual(["Breaker: a Fixed profile assigns 3 points, not 2"]);
     const gated = classOffersOf(engine, { offers: [offer("Counter", { technique: { ...offer("x").technique, effect: "+10 to a Clash, usable only if the supplies were counted at the last rest" } })] });
     expect(gated.offers[0]!.warnings).toEqual(['Counter\'s technique has a precondition: "usable only"']);
+    const allowed = classOffersOf(engine, { offers: [offer("Frame", { permission: { ...offer("x").permission, effect: "Effects that would Drive you Back move you only if you allow it" } })] });
+    expect(allowed.offers[0]!.warnings).toEqual([]);
+    const chore = classOffersOf(engine, { offers: [offer("Chore", { permission: { ...offer("x").permission, effect: "Heals an ally, only if the supplies were counted before the fight" } })] });
+    expect(chore.offers[0]!.warnings).toHaveLength(1);
     expect(classOffersOf(engine, { offers: [offer("Restraint")] }).offers[0]!.warnings).toEqual(["Restraint names Restraint, a side of the Hidden Vector Engine"]);
+    const rested = classOffersOf(engine, { offers: [offer("Nurse", { permission: { ...offer("x").permission, effect: "At a rest, the first ally you name recovers 10 additional Health from that rest" } })] });
+    expect(rested.offers[0]!.warnings).toEqual(["Nurse's permission adds Health to a rest"]);
     expect(out.offers[2]!.offer).toMatchObject({ name: "Witness", book: "Witness", profile: { shape: "Guided" } });
     expect(out.problems).toEqual(["two offers share a name", "Breaker carries a guarded power the GM did not ask for"]);
     expect(classOffersOf(engine, { offers: [offer("A"), offer("B")] }, { guarded: true }).problems).toEqual(["2 offers drafted; the System offers 3"]);

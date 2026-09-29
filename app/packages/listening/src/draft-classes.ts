@@ -31,7 +31,9 @@ const CALIBRATION = ["Battle Medic", "Breaching Vanguard", "Burner"];
 export const EVERY_FIGHT_OFFERS = 2;
 
 /** Words that mark a gate on an earlier chore or a setup a fight seldom offers (Gabriel, 2026-09-29: busywork). */
-const GATE = /\b(only if|usable only|at the last rest|since the last rest|write(s)? down|written down)\b/i;
+const GATE = /\b(only if\b[^.]*\b(rest|earlier|before the (fight|encounter)|counted|mapped)|usable only|at the last rest|since the last rest|write(s)? down|written down)\b/i;
+/** Health added to what a rest restores (Gabriel, 2026-09-29: healing is a power used in a fight or between rests). */
+const REST_HEALING = /\b(additional|extra|more)\s+Health\b[^.]*\brest\b|\brest\b[^.]*\b(additional|extra|more)\s+Health\b/i;
 
 export interface ClassOfferDraft {
   offer: ClassPackage;
@@ -54,10 +56,16 @@ export interface ClassOffersDraft {
 
 // ------------------------------------------------------------ rules ---
 
-/** The book's prompt for AI-Assisted class generation, read from `rules/`. */
+/**
+ * The book's prompt for AI-Assisted class generation, read from `rules/`, less the line Gabriel
+ * ruled out (2026-09-29): preferring powers the player must declare drew chores. The book session
+ * removes it from the template (queued), and this filter then finds nothing to remove.
+ */
 export function classTemplate(engine: Engine): string {
   const fn = (engine.rules["system-ai"].functions as { name: string; template?: string }[]).find((f) => f.name.startsWith("Class Generation"))!;
-  return readFileSync(join(RULES_DIR, fn.template!), "utf8").trim();
+  return readFileSync(join(RULES_DIR, fn.template!), "utf8")
+    .replace(/\s*Prefer powers that make the player\s+declare something\./, "")
+    .trim();
 }
 
 // ----------------------------------------------------------- schema ---
@@ -154,6 +162,7 @@ The offers differ in role and in which part of the record they weigh. One may am
 - Most of play is fighting. At least ${EVERY_FIGHT_OFFERS} of the three offers carry a technique or a permission the character can use in most fights with no setup beyond the fight itself: closing on an enemy or breaking away, a strike or a guard made stronger when declared with it, moving an enemy between Zones, taking Momentum, covering an ally. The other offer may serve support, a scene outside the fight, or an odd corner of the record.
 - No busywork. Nothing is usable "only if" the character did a chore earlier (counted the supplies at the last rest, mapped the room aloud, wrote a Zone down before the fight), and no trigger is so narrow it seldom comes up (an enemy that attacked a Downed ally). A declaration is welcome when it is a choice with stakes, made in the moment: a vow sworn as the fight starts, a target named. A ritual the player repeats to keep a power working is busywork.
 - A class grows by what it lets the character do. Its numbers stay in the Modifier Budget.
+- Healing is a power used in a fight or between rests, paid like any technique. Nothing adds to what a rest restores (a rest restores all Health by its fifth hour), and nothing raises Health above its maximum.
 - The name and the notice reach the player. Neither uses the Engine's names for the sides (${sides.join(", ")}), which would disclose how the System reads the character.
 
 ${voiceInstructions(engine)}
@@ -259,6 +268,8 @@ export function classOffersOf(engine: Engine, out: DraftClassesOutput, opts: { g
     for (const pole of poles) if (new RegExp(`\\b${pole}\\b`).test(`${offer.name} ${offer.notice}`)) warnings.push(`${offer.name} names ${pole}, a side of the Hidden Vector Engine`);
     for (const [part, text] of [["technique", offer.technique.effect], ["permission", offer.permission.effect]] as const)
       if (GATE.test(text)) warnings.push(`${offer.name}'s ${part} has a precondition: "${text.match(GATE)![0]}"`);
+    for (const [part, text] of [["technique", offer.technique.effect], ["permission", offer.permission.effect]] as const)
+      if (REST_HEALING.test(text)) warnings.push(`${offer.name}'s ${part} adds Health to a rest`);
     return { offer, role: o.role.trim(), weighs: o.weighs.trim(), problems: packageProblems(engine, offer), warnings, everyFight: asWritten ? true : o.everyFight };
   });
   const problems: string[] = [];
