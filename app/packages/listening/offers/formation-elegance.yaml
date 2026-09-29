@@ -1,0 +1,29 @@
+# An offer with a fixed end whose reward is how well it is done. The format is in src/offers.ts.
+id: formation-elegance
+title: Andre at the failing formation, an offer paid by how cleanly it is done
+source: 'book/55-quests.md, "Personal Opportunities" (the Method example: "Unstable formation detected. Stabilize before collapse: reward proportional to elegance of solution")'
+notes: >
+  The book's own Method example. Andre's Deep leads Method and Control, and the last sweep
+  leaned the same way: he mapped the Node's power runs before anyone touched a panel. A
+  resonance formation in the Arcane Debris is failing. Holding it is the fixed end, and how
+  cleanly it is stabilized is the reason the System offers it to him, so the reward is
+  proportional to the elegance of the solution (Gabriel, 2026-09-29).
+setup:
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre}}
+  - {id: deep, action: {type: hve.deep, characterId: andre, deep: {Method: 4, Control: 3, Restraint: 1}}}
+  - {id: runs, action: {type: event.log, summary: Andre traces the Node's power runs and marks which panels are live before anyone touches one., participants: [andre], entries: [{characterId: andre, pole: Method, intensity: 2, intent: Map it before touching it}]}}
+  - id: sweep
+    action:
+      type: hve.sweep
+      label: Session 5
+      sheets: [{characterId: andre, moments: [{pole: Method, weight: 2, eventId: runs}]}]
+characterId: andre
+situation: >
+  The Arcane Debris, Sector C. A ring of carved stones is losing its charge, and the light between
+  them is flickering out of step. When it fails it will scatter the script on the stones. Brute
+  force could hold it for a while; a clean stabilization would keep it running.
+expected:
+  stance: affirm
+  flavors: [exploration]
+  proportional: true
+  why: Current and Deep agree on Method; the end is fixed (the formation holds), and how cleanly is the point of the offer.

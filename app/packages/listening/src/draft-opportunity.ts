@@ -80,7 +80,7 @@ export function draftOpportunitySchema(engine: Engine, flavors: Flavor[]) {
     count: z.number().int().min(1).nullable().describe("A counted objective's count, or null."),
     countFixed: z.boolean().describe("True when the count cannot scale: reach a place, protect a person, recover a thing."),
     hours: z.number().int().min(1).nullable().describe("The time limit in hours, or null for none."),
-    scaled: z.boolean().describe("True only when the objective has no fixed end (how much, how far, how well) and the offer says what the reward is proportional to; the GM then sets the payout at completion. Otherwise false: the table's VE."),
+    scaled: z.boolean().describe("True only when the objective has no fixed end (how much, how far) or how well it is done is the reason for the offer, and the offer says what the reward is proportional to; the GM then sets the payout at completion. Otherwise false: the table's VE."),
     rewardHint: z.string().nullable().describe("The item or title hint beside the VE, in words, or null."),
     hiddenOutcome: z
       .string()
@@ -122,7 +122,7 @@ Each offer has one flavor: combat, social, or exploration. Only the flavors list
 - Item rewards by difficulty, as a hint beside the VE, weighted to the character's pattern (a character who meets things head-on leans toward weapons and kill-empowering consumables; one who works by method toward sensory tools and resonance items):
 ${items}
 - A time limit is usual and should be short enough to matter.
-- The reward is the table's VE by default, so write the objective with a fixed end where you can: a place, a count, a distance ("out to 2 kilometers", "the three residents on oxygen"). Make it proportional only when no fixed end fits the offer (how much is gathered, how many are brought out, how far a route is charted) and the System's message says what it is proportional to. An objective that is done or not done pays the table.
+- The reward is the table's VE by default, so write the objective with a fixed end where you can: a place, a count, a distance ("out to 2 kilometers", "the three residents on oxygen"). Make it proportional only when no fixed end fits the offer (how much is gathered, how many are brought out, how far a route is charted), or when how well it is done is the reason for the offer (a failing formation stabilized cleanly rather than merely held), and the System's message says what it is proportional to. An objective that is simply done or not done pays the table.
 
 # What the player sees
 
