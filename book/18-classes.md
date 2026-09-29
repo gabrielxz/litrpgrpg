@@ -163,7 +163,9 @@ The GM, or the System AI in assisted modes, builds three offers from the charact
 
 **Two of the three offers work in most fights.** Most of play is fighting. At least two offers carry a technique or a permission the character can use in most fights with no setup beyond the fight itself: closing on an enemy or breaking away, a strike or a guard declared with the Clash, moving an enemy between Zones, taking Momentum, covering an ally. The third may serve support, a scene outside the fight, or an odd corner of the record.
 
-**No busywork.** A power is not gated on an earlier chore ("usable only if the supplies were counted at the last rest"), and its trigger comes up in most fights or most scenes of the kind it serves. A choice with stakes made in the moment, such as the Vowbound's vow or a target named, gives the Engine signal. A ritual the player repeats to keep a power working is busywork.
+**No busywork.** A power is not gated on an earlier chore ("usable only if the supplies were counted at the last rest"). A choice with stakes made in the moment, such as the Vowbound's vow or a target named, gives the Engine signal. A ritual the player repeats to keep a power working is busywork.
+
+**A narrow power stands beside a broad one.** A power whose trigger seldom comes up can be the class's best moment when it does: the Lightfingers' Lift takes the weapon out of an Exposed enemy's hands. Pair it with a power that comes up in most fights, either the class's other power (the Lightfingers' Finder's Share) or a broader application of the narrow power itself. Reach for the pairing when a narrow power would leave the class idle in most fights, and leave a class alone when its other power already carries it.
 
 ### AI-Assisted
 
@@ -194,7 +196,8 @@ a rest restores, or raise Health above its maximum. Healing is a power
 used in a fight or between rests. Make the three offers differ in
 role. At least two of the three carry a technique or a permission
 usable in most fights with no setup beyond the fight. No power is
-gated on an earlier chore or waits on a trigger that seldom comes up.
+gated on an earlier chore. A power whose trigger seldom comes up
+stands beside one that comes up in most fights.
 
 Character: [stats, level, Background, Proficiencies, weapons, Principle, titles]
 Record: [Deep Vector reads, the circled Defining moments, what the
@@ -344,12 +347,12 @@ Each entry carries the person the class was built for, the System's notice, and 
 ::: systemvoice
 *Class offered: Adjudicator.*
 
-*Sanction: 5 Aether names an act. The next creature in sight that commits it is left open until it has acted again, unless its Heart withstands yours. One sanction stands at a time. Once per fight, an execution attempted within reach of you draws your blow first. Selection: Heart +10. Growth: Heart, Charisma, Perception.*
+*Sanction: 5 Aether names an act. The next creature in sight that commits it is left open until it has acted again, unless its Heart withstands yours. One sanction stands at a time. Once per fight, a creature within reach of you that commits the sanctioned act draws your blow. Selection: Heart +10. Growth: Heart, Charisma, Perception.*
 :::
 
 - **Profile:** Fixed. 1 HRT, 1 CHA, 1 PER. Lead HRT.
 - **Technique:** Sanction. 1 Beat, 5 Aether. Name an action. The next creature in sight that takes that action is Exposed until the end of its next turn, unless the creature wins one Clash, its HRT Force against yours. One Sanction stands at a time: naming a new one ends the old one, and every Sanction expires when the scene ends.
-- **Permission:** Contempt. Once per encounter, an execution attempted in your Zone provokes a free Clash from you before it lands. A reaction, and the class's one action-economy effect.
+- **Permission:** Contempt. Once per encounter, when a creature in your Zone takes the action your Sanction names, you Clash it at once for no Beat, after that action resolves. A reaction, and the class's one action-economy effect.
 - **Poles:** Will, Control.
 
 ### Peacemaker
@@ -404,12 +407,12 @@ Each entry carries the person the class was built for, the System's notice, and 
 ::: systemvoice
 *Class offered: Witness.*
 
-*Note the Pattern: once per fight, after watching a creature through one exchange, its next act is known to you. At an unusual death in your sight, the observation comes to you: Grade, danger, and one habit. Selection: Perception +10. Growth: Perception, Heart, one point yours.*
+*Note the Pattern: once per fight, after watching a creature through one exchange, its next act is known to you. Once per fight, at a death in your sight, the observation comes to you: Grade, danger, and one habit. Selection: Perception +10. Growth: Perception, Heart, one point yours.*
 :::
 
 - **Profile:** Guided. 1 PER, 1 HRT, 1 returned. Lead PER.
 - **Technique:** Note the Pattern. Frequency, 1 Beat, once per encounter: after one round watching a creature, the GM says what it does on its next turn.
-- **Permission:** The Observation. When a creature dies in your sight and the GM judges the death unusual, the GM tells you the creature's Grade, its tier, and one Tactics line; in the fiction, the System's observation comes to you (The System AI, "The Voice of the System").
+- **Permission:** The Observation. Once per encounter, when a creature dies in your sight, the GM tells you the creature's Grade, its tier, and one Tactics line; in the fiction, the System's observation comes to you (The System AI, "The Voice of the System").
 - **Poles:** Method, Restraint.
 
 ### Kindler

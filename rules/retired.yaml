@@ -130,6 +130,8 @@ patterns:
   - {pattern: 'Wraith, at Force 65',               replaced_by: "the Fragment Wraith counts at Force 70",         since: 2026-09-29}
   - {pattern: '[Pp]roportional to threat',        replaced_by: "a done-or-not-done objective pays the table's VE", since: 2026-09-29}
   - {pattern: 'Prefer powers that make the player', replaced_by: "two of three offers work in most fights; no busywork", since: 2026-09-29}
+  - {pattern: 'execution attempted in your Zone', replaced_by: "Contempt answers the sanctioned act",          since: 2026-09-29}
+  - {pattern: 'judges the death unusual',         replaced_by: "The Observation: once per encounter, any death in sight", since: 2026-09-29}
 
 # Chapter names as the book cites them, for the cross-reference check.
 chapters:

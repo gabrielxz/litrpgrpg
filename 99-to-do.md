@@ -104,7 +104,7 @@ Each track keeps one current handoff here, replaced at the close of a session; t
 
 Edits an app session forces, each with Gabriel's ruling or Claude's recommendation awaiting it. A book session applies them and clears the list. The finishing-blow definition of a confirmed kill stays as written (Titles), and VE stays shared.
 
-- **The sixteen classes against the class-offer rulings** (book session, 2026-09-29; the rulings are in Classes). Awaiting Gabriel's call on the proposals: Adjudicator's Contempt, Lightfingers' Lift, Witness's The Observation, and whether the Underdog stands.
+- **The Underdog's same-Grade application** (book session, 2026-09-29). Gabriel ruled the Underdog gets a use against same-Grade opponents while keeping its Grade-gap build; the Adjudicator and Witness fixes are applied and Lift stands. Awaiting his call on which power carries it (Claude recommends Find the Seam, since Above You's Surge discount does nothing at F-Grade).
 
 ### Next app session
 
@@ -126,6 +126,7 @@ Book changes the app must follow. An app session applies them and clears the lis
 - **The Force Personal Opportunity example pays the table** (book session, 2026-09-29; rules 0.1.34). Quests and The System AI's quest register now read "Hostile detected within 100 meters. Eliminate within 6 hours. Reward: 30 VE." (`system-ai.yaml` `voice.registers.quest` carries it). `draft-opportunity.ts` still quotes "Reward proportional to threat" in its prompt; it takes the book's line. Quests' Performance-Scaled Rewards example is now "reward proportional to material recovered".
 - **Three and four creatures size** (book session, 2026-09-29; rules 0.1.35). Each creature past the second counts as 10 Force (`further_creature_worth_force`). The book session ported `encounterForce` in the engine so the shared fixtures pass; `record/src/planning.ts` still returns early for three or more with "The table sizes one or two creatures", and can size them now.
 - **The class template carries the rulings** (rules 0.1.35). `class-generation.txt` no longer has the declare line, so the filter in `draft-classes.ts` finds nothing and can go; the template's new lines (two of three for most fights, no chore gates or rare triggers, healing in a fight or between rests, nothing added to a rest) overlap the drafter's "What plays well at the table".
+- **Contempt and The Observation** (rules 0.1.35, `classes.yaml`). The Adjudicator's Contempt answers the sanctioned act (once per encounter, a creature in the holder's Zone that takes the action the Sanction names draws a Clash for no Beat, after the action resolves), and the Witness's The Observation comes once per encounter at any death in sight. Any app surface that describes either follows the data.
 - **The vision template** (rules 0.1.35). `templates/battle-memory-vision.txt`, named in `system-ai.yaml` under Battle Memory Visions, is the book's AI-Assisted prompt. `draftVisionSystem` may read it or keep its own words; the book's lists a failed Breakthrough among the ways a card comes.
 
 ## Design Items Referenced by the Checklist

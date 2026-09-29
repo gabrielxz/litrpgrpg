@@ -22,7 +22,8 @@ a rest restores, or raise Health above its maximum. Healing is a power
 used in a fight or between rests. Make the three offers differ in
 role. At least two of the three carry a technique or a permission
 usable in most fights with no setup beyond the fight. No power is
-gated on an earlier chore or waits on a trigger that seldom comes up.
+gated on an earlier chore. A power whose trigger seldom comes up
+stands beside one that comes up in most fights.
 
 Character: [stats, level, Background, Proficiencies, weapons, Principle, titles]
 Record: [Deep Vector reads, the circled Defining moments, what the

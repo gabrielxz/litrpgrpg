@@ -124,11 +124,11 @@ classes:
     permission: {name: The Vow, effect: "Swear one thing aloud at the start of a fight, naming an act or an object: +5 to Clashes that serve it; act against it and you are Exposed for the rest of the fight", action_economy: false}
   - name: Adjudicator
     built_for: Ruth
-    notice: "Sanction: 5 Aether names an act. The next creature in sight that commits it is left open until it has acted again, unless its Heart withstands yours. One sanction stands at a time. Once per fight, an execution attempted within reach of you draws your blow first. Selection: Heart +10. Growth: Heart, Charisma, Perception."
+    notice: "Sanction: 5 Aether names an act. The next creature in sight that commits it is left open until it has acted again, unless its Heart withstands yours. One sanction stands at a time. Once per fight, a creature within reach of you that commits the sanctioned act draws your blow. Selection: Heart +10. Growth: Heart, Charisma, Perception."
     poles: [Will, Control]
     profile: {shape: Fixed, points: {HRT: 1, CHA: 1, PER: 1}}
     technique: {name: Sanction, cost: Aether, effect: "Name an action; the next creature in sight that takes it is Exposed until the end of its next turn unless it wins a Clash, HRT Force against yours; one Sanction at a time, expiring with the scene"}
-    permission: {name: Contempt, effect: "Once per encounter, an execution attempted in your Zone provokes a free Clash from you before it lands", action_economy: true, reaction: true}
+    permission: {name: Contempt, effect: "Once per encounter, when a creature in your Zone takes the action your Sanction names, you Clash it at once for no Beat, after that action resolves", action_economy: true, reaction: true}
   - name: Peacemaker
     built_for: Hal
     notice: "Open Hand: 5 Aether. One enemy within reach at half its Health or less leaves the fight, or stands still through its next acts, as it chooses, unless its Heart withstands yours. What has no mind does not hear it. Anything that will give ground will also talk. Selection: Charisma +10. Growth: Charisma, Heart, one point yours."
@@ -152,11 +152,11 @@ classes:
     permission: {name: No Life Here, effect: "On a turn you spend no Beats, the System reads you as dead until you act: inspection returns nothing, titles included; the party frame is unaffected", action_economy: false}
   - name: Witness
     built_for: Sabine
-    notice: "Note the Pattern: once per fight, after watching a creature through one exchange, its next act is known to you. At an unusual death in your sight, the observation comes to you: Grade, danger, and one habit. Selection: Perception +10. Growth: Perception, Heart, one point yours."
+    notice: "Note the Pattern: once per fight, after watching a creature through one exchange, its next act is known to you. Once per fight, at a death in your sight, the observation comes to you: Grade, danger, and one habit. Selection: Perception +10. Growth: Perception, Heart, one point yours."
     poles: [Method, Restraint]
     profile: {shape: Guided, points: {PER: 1, HRT: 1}}
     technique: {name: Note the Pattern, cost: Frequency, effect: "After one round watching a creature, the GM says what it does on its next turn"}
-    permission: {name: The Observation, effect: "At an unusual death in your sight, the System's observation comes to you: Grade, tier, one Tactics line", action_economy: false}
+    permission: {name: The Observation, effect: "Once per encounter, when a creature dies in your sight, the System's observation comes to you: Grade, tier, one Tactics line", action_economy: false}
   - name: Kindler
     built_for: Oona
     notice: "Fire at a word. Cast Fire: 5 Aether, and flame leaves your hand for one target within reach or on the ground beside you, striking with Power in place of Strength; what burns, burns. What you set alight stays alight, and its ground hinders everyone but you. Selection: Power +10. Growth: Power, Power, Perception."
