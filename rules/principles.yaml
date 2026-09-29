@@ -71,6 +71,44 @@ families:
   - {name: Governance,   axis: Control ↔ Freedom,  pole: Control,   affinities: [Gravity, Chains, Dominion, Logic, Suppression]}
   - {name: Subversion,   axis: Control ↔ Freedom,  pole: Freedom,   affinities: [Wind, Severance, Spatial Rupture, Entropy, Illusions]}
 
+# One sample Principle per family, worked to Seed: what the GM may offer as written or adapt.
+# Each Seed Application is 1 Beat and 10 Aether, priced in the Modifier Budget (+10, or a heal of 20);
+# a constraint offers the target one Clash, its HRT Force against yours, unless it rides a won attack.
+# source: 20-principles.md "A Principle from Each Family"
+family_samples:
+  - {family: Impact,       principle: Weight,    built_by: "charging in and ending fights head-on",
+     passive: "+5 to defensive Clashes against crushing force",
+     seed: {name: Sudden Weight, effect: "Part of an attack: +10 to the Clash, and the strike lands with the mass of something far larger."},
+     attunement: "Feels loads and balance points at a glance: which beam carries the roof, where a body will fall."}
+  - {family: Architecture, principle: Leverage,  built_by: "planning, positioning, and using the ground",
+     passive: "+5 to Clashes that move, lift, or topple something",
+     seed: {name: Fulcrum, effect: "Part of an attack: +10 to the Clash, and a win moves the target into an adjacent Zone whatever the Margin."},
+     attunement: "Sees where a structure will give and what one push would bring down."}
+  - {family: Consumption,  principle: Devouring, built_by: "taking what is there, first and most",
+     passive: "+5 to defensive Clashes against poison and disease",
+     seed: {name: Take the Strength, effect: "Part of an attack: if it deals damage, you regain Health equal to the damage dealt, up to 20."},
+     attunement: "Eats anything organic without sickness, and knows at a taste whether a food, pill, or core is spoiled."}
+  - {family: Preservation, principle: Iron,      built_by: "holding back, enduring, and holding the line",
+     passive: "+5 to defensive Clashes against cutting and piercing",
+     seed: {name: Iron Skin, effect: "Until your next turn, +10 to your defensive Clashes."},
+     attunement: "Knows at a touch whether a wall, a door, or a shelter will hold."}
+  - {family: Imposition,   principle: Pressure,  built_by: "dominating, intimidating, and commanding",
+     passive: "+5 to Will Saves against Aura Pressure",
+     seed: {name: Bear Down, effect: "One enemy in your Zone is Exposed until the end of its next turn, unless it wins one Clash, its HRT Force against yours."},
+     attunement: "Feels an aura's weight and where it comes from before it flares."}
+  - {family: Harmony,      principle: Life,      built_by: "cooperating, negotiating, and caring for others",
+     passive: "+5 to checks that treat or stabilize an ally",
+     seed: {name: Knit, effect: "Touch: one ally, or yourself, regains 20 Health."},
+     attunement: "Tells at a touch whether a wound will close clean, and whether a plant is food, medicine, or poison."}
+  - {family: Governance,   principle: Chains,    built_by: "imposing structure and controlling the variables",
+     passive: "+5 to Clashes to hold, grapple, or pin",
+     seed: {name: Bind, effect: "Part of an attack: +10 to the Clash, and a win holds the target in its Zone until the end of its next turn."},
+     attunement: "Sees the weak link in any lock, chain, or restraint."}
+  - {family: Subversion,   principle: Wind,      built_by: "breaking rules and improvising",
+     passive: "+5 to defensive Clashes against ranged attacks",
+     seed: {name: Gust, effect: "A ranged attack on POW Force against one target in your Zone or an adjacent one: +10 to the Clash, and a win pushes the target one Zone farther away."},
+     attunement: "Knows the wind's direction and strength without looking, and hears what it carries."}
+
 # Principles that belong to reality rather than temperament; earned by exposure, never by behavior. A rumor at F-Grade.
 axioms: [Time, Void, Luck, Truth, Distance]
 

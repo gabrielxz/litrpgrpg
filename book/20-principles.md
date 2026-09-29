@@ -18,15 +18,21 @@ the survivors' forum
 
 During play, your character survives dangerous situations and starts noticing patterns in how reality behaves. For the most extreme of those moments, the GM hands the player a Battle Memory Card. When the character meditates on a memory during rest, the GM awards Insight Points. Collect enough points, say what your character has learned, and you and the GM define a new power, which the System announces.
 
-This chapter runs on five terms:
+This chapter runs on these terms, listed in the order Kara's Story meets them:
 
 | **Term** | **Meaning** |
 |---|---|
-| Principle | The conceptual truth your character is learning: Weight, Fire, Edge. |
+| Principle | The conceptual truth your character is learning: Weight, Fire, Edge. Every power on this track grows from it. |
+| Family | One of eight broad directions a Principle comes from, read from how the character behaves under pressure: Impact, Architecture, Consumption, Preservation, Imposition, Harmony, Governance, Subversion. |
 | Insight Points (IP) | Accumulated understanding. A visible number. |
+| Resonance | The System's report while IP gathers in a family, before the Principle has a name: *Resonance accruing: IMPACT. 2/3.* |
 | Battle Memory | An extreme moment, recorded on a card the GM hands the player. Meditating on it earns IP. |
-| Distillation | The act that turns enough IP into an advancement: the player describes the character's understanding and defines the new ability with the GM, or takes the Quiet Path (below). |
+| Consolidation | The long rest that turns stored Volatile Energy into levels (Cultivation). Meditation and Distillation both happen during one. |
+| Crystallization | The moment the first family reaches 3 IP and the GM names the Principle. Its first tier is Initial Insight. |
+| Tier | A rung of the ladder: Initial Insight, Seed, then Early, Mid, and Peak Fragment. Each tier grants something (Slots and the Ladder). |
+| Distillation | The act that turns enough IP into the next tier: the player describes the character's understanding and defines the new ability with the GM, or takes the Quiet Path (below). |
 | Application | An active technique granted by a Principle. |
+| Attunement | What a Principle lets the character do with no roll, Beat, or Aether: sense it, handle it, stand in it. |
 
 The loop below runs on one example, a brawler named Kara whose Principle turns out to be **Weight**. Her story follows in full.
 
@@ -52,7 +58,7 @@ The whole track, from first resonance to first power, looks like this at the tab
 
 :::: example
 
-**GM:** You're cycling, and the slab comes back. The full weight of it, on you again. What do you notice this time that you didn't in the moment?
+**GM:** You're deep in the rest, and the slab comes back. The full weight of it, on you again. What do you notice this time that you didn't in the moment?
 
 **Kara:** I don't know. I keep thinking about how I couldn't have held it. It was way too heavy.
 
@@ -143,6 +149,28 @@ No character chooses a Principle from a menu. The GM watches what the character 
 
 **Pursuing a second Principle slows the first.** Each IP award feeds one Principle, so a character building a second Principle climbs the first more slowly. The reason to fill the slot is a lived pattern the first Principle cannot hold, and a character who never fills it is not behind.
 
+## A Principle from Each Family
+
+One sample Principle from each family, worked from its first passive to its Seed Application. A GM may offer one as written when a character's Principle matches it, or use it as the model for pricing a new one. Every Seed Application costs 1 Beat and 10 Aether. Its effect is +10 to a Clash, or something of that size: a heal of 20, an enemy held or left Exposed. The families are wider than their samples: Fire earned by a character who charges every line is Impact, with an Application that looks like Sudden Weight on fire.
+
+<!-- rules:table family-samples -->
+**Impact: Weight.** Built by charging in and ending fights head-on. *Initial Insight:* +5 to defensive Clashes against crushing force. *Seed:* **Sudden Weight** (1 Beat, 10 Aether). Part of an attack: +10 to the Clash, and the strike lands with the mass of something far larger. *Attunement:* Feels loads and balance points at a glance: which beam carries the roof, where a body will fall.
+
+**Architecture: Leverage.** Built by planning, positioning, and using the ground. *Initial Insight:* +5 to Clashes that move, lift, or topple something. *Seed:* **Fulcrum** (1 Beat, 10 Aether). Part of an attack: +10 to the Clash, and a win moves the target into an adjacent Zone whatever the Margin. *Attunement:* Sees where a structure will give and what one push would bring down.
+
+**Consumption: Devouring.** Built by taking what is there, first and most. *Initial Insight:* +5 to defensive Clashes against poison and disease. *Seed:* **Take the Strength** (1 Beat, 10 Aether). Part of an attack: if it deals damage, you regain Health equal to the damage dealt, up to 20. *Attunement:* Eats anything organic without sickness, and knows at a taste whether a food, pill, or core is spoiled.
+
+**Preservation: Iron.** Built by holding back, enduring, and holding the line. *Initial Insight:* +5 to defensive Clashes against cutting and piercing. *Seed:* **Iron Skin** (1 Beat, 10 Aether). Until your next turn, +10 to your defensive Clashes. *Attunement:* Knows at a touch whether a wall, a door, or a shelter will hold.
+
+**Imposition: Pressure.** Built by dominating, intimidating, and commanding. *Initial Insight:* +5 to Will Saves against Aura Pressure. *Seed:* **Bear Down** (1 Beat, 10 Aether). One enemy in your Zone is Exposed until the end of its next turn, unless it wins one Clash, its HRT Force against yours. *Attunement:* Feels an aura's weight and where it comes from before it flares.
+
+**Harmony: Life.** Built by cooperating, negotiating, and caring for others. *Initial Insight:* +5 to checks that treat or stabilize an ally. *Seed:* **Knit** (1 Beat, 10 Aether). Touch: one ally, or yourself, regains 20 Health. *Attunement:* Tells at a touch whether a wound will close clean, and whether a plant is food, medicine, or poison.
+
+**Governance: Chains.** Built by imposing structure and controlling the variables. *Initial Insight:* +5 to Clashes to hold, grapple, or pin. *Seed:* **Bind** (1 Beat, 10 Aether). Part of an attack: +10 to the Clash, and a win holds the target in its Zone until the end of its next turn. *Attunement:* Sees the weak link in any lock, chain, or restraint.
+
+**Subversion: Wind.** Built by breaking rules and improvising. *Initial Insight:* +5 to defensive Clashes against ranged attacks. *Seed:* **Gust** (1 Beat, 10 Aether). A ranged attack on POW Force against one target in your Zone or an adjacent one: +10 to the Clash, and a win pushes the target one Zone farther away. *Attunement:* Knows the wind's direction and strength without looking, and hears what it carries.
+<!-- /rules:table -->
+
 ## Slots and the Ladder
 
 ### Principle Slots
@@ -201,6 +229,42 @@ Distillation and Battle Memory meditation both happen during Consolidation and b
 | Looks back at | One experience | Your whole history with the Principle |
 | The question | "What did you notice?" | "What truth have you learned?" |
 | Gives | Insight Points | A new tier and its grant |
+
+### Joe's Distillation
+
+Kara's player found her answer in a few lines. Joe's player plays for the fights and has no speech ready. Joe's Principle crystallized as **Shielding** (Preservation) after the tutorial, and a Battle Memory from a Frenzy Rat swarm has just carried him to 10 IP. At the next Consolidation his player declares Distillation.
+
+:::: example
+
+**GM:** What pattern have you discovered, in how you act or in how the world behaves?
+
+**Joe:** Uh. I don't know. I hit stuff, and I stand in front of people?
+
+**GM:** That's a start. Give me the moment instead of the meaning. When did standing in front of someone matter most?
+
+**Joe:** The rats. Andre was down and I just stood over him.
+
+**GM:** What did the rats do while you stood there?
+
+**Joe:** Came at me. All of them.
+
+**GM:** Here are two ways the System could read that. One: a line you hold can't be crossed. Two: whatever comes for the people behind you comes to you instead. Which one is Joe?
+
+**Joe:** The second. Yeah. That one.
+
+::: systemvoice
+*Insight: Shielding 10/25.*
+
+*Application granted: Draw Fire. Aether: 10. What comes for those behind you comes to you.*
+:::
+
+::::
+
+The GM's two readings came from the record: the circled moment at the Session-End Sweep and the words the player had just used. The chosen one passes the test (Running the Track, below): it does something specific (an attack turns), it is bounded (Joe's Zone, until his next turn), and its use can be seen (the enemy turns or does not). The GM priced it as a constraint, and the player chose the name.
+
+> **Joe's sheet now.** Principle: Shielding. Insight: 10. Tier: Seed. Application: **Draw Fire** (1 Beat, 10 Aether): until your next turn, an enemy in your Zone that attacks an ally there must first win one Clash, its HRT Force against yours, or attack you instead. Attunements: he knows at a glance which of several people is in the most danger, and where to stand to cover them.
+
+A player who stalls gets moments to answer instead of meanings, then two readings to choose between. A player who does not want the conversation at all takes the Quiet Path.
 
 ## Changing an Existing Principle
 

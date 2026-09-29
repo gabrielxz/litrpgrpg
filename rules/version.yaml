@@ -1,7 +1,7 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.36"
+version: "0.1.37"
 dated: "2026-09-29"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
@@ -125,3 +125,6 @@ notes: >
   sanctioned act; the Witness's The Observation comes once per encounter at any death in sight; the Underdog's
   Find the Seam adds +10 against a same-Grade target whose Force exceeds the attack's (the Grade-gap
   application stays guarded), and Above You notes that it matters from E-Grade on.
+  0.1.37: principles.yaml family_samples: one sample Principle per family worked to Seed (passive, Seed
+  Application at 1 Beat and 10 Aether, an Attunement), rendered into The Principle System, "A Principle from
+  Each Family". No number moved.

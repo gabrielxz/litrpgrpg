@@ -201,6 +201,17 @@ def g_principle_ladder():
     return table(["Tier", "Cumulative IP", "Grants"], rows)
 
 
+def g_family_samples():
+    """Not a table: one paragraph per family, the sample Principle worked to Seed."""
+    out = []
+    for s in E.load("principles")["family_samples"]:
+        out += [f"**{s['family']}: {s['principle']}.** Built by {s['built_by']}. "
+                f"*Initial Insight:* {s['passive']}. "
+                f"*Seed:* **{s['seed']['name']}** (1 Beat, 10 Aether). {s['seed']['effect']} "
+                f"*Attunement:* {s['attunement']}", ""]
+    return out[:-1]
+
+
 def g_ip_sources():
     rows = []
     for r in E.load("principles")["ip_sources"]:
@@ -378,6 +389,7 @@ REGISTRY = {
     "class-guarded-list":       ("18-classes.md", "| **Guarded power** | **What it changes** |", None, g_class_guarded_list),
     "class-list":               ("18-classes.md", "| **Class** | **Built for** | **Poles** | **Profile** | **Technique cost** |", None, g_class_list),
     "principle-ladder":         ("20-principles.md", "| **Tier** | **Cumulative IP** | **Grants** |", None, g_principle_ladder),
+    "family-samples":           ("20-principles.md", None, None, g_family_samples),
     "ip-sources":               ("20-principles.md", "| **Source** | **IP Awarded** |", None, g_ip_sources),
     "application-costs":        ("20-principles.md", "| **Granted at** | **Aether Cost** |", None, g_application_costs_principles),
     "kill-tiers":               ("25-cultivation.md", "| **Difficulty** | **Award** | **F-Grade VE** |", None, g_kill_tiers),
@@ -437,7 +449,7 @@ def install():
         path = os.path.join(BOOK, f)
         lines = read(path)
         for tid, header, label in entries:
-            if OPEN.format(tid) in lines:
+            if OPEN.format(tid) in lines or header is None:   # a header-less block is placed by hand
                 continue
             start = 0
             if label:

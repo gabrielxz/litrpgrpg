@@ -42,6 +42,17 @@ Progression runs on three tracks:
 - **Principles.** Insight into reality's underlying patterns (Fire, Weight, Edge, Space) unlocks Applications, and eventually Domains. The track rewards talking through what a character has learned, and the Quiet Path plays it at full strength without a word of it (The Principle System, "The Quiet Path").
 - **Recognition.** Titles, a class at Level 10, and, at each Grade's cap, a Breakthrough: a ritual gamble that lifts every ceiling at once.
 
+### New to Cultivation Stories
+
+LitRPG readers know most of this book already: levels, stats, quests, titles, loot, and a System with opinions. The parts that read strangest come from cultivation fiction: xianxia, the Chinese web-novel genre of immortals and sword saints (*Coiling Dragon*, *I Shall Seal the Heavens*), and its Western descendants (*Cradle*, *Defiance of the Fall*, *Primal Hunter*). If that genre is new to you, here is the translation.
+
+- **Volatile Energy is XP you have to digest.** A xianxia cultivator absorbs raw energy (qi) and refines it before it becomes strength. Kills pay VE, and VE does nothing until the character rests and refines it. Carrying too much unrefined makes the character sick.
+- **Consolidation is the long rest that banks it.** It is the cultivator's closed-door meditation at table speed: rest, refine 20 VE an hour, heal, refill Aether, and level up mid-rest when the refined total reaches 120.
+- **A Principle is your character's signature power, and nobody picks it off a list.** Cultivators chase a dao: a truth about the world, such as fire, the sword, or space, understood so deeply that it becomes power. Here the GM watches how your character behaves under pressure and names the truth that behavior points to: Weight, for the brawler who ends fights by putting people on the ground. You and the GM write the powers that grow from it.
+- **A Battle Memory is an epiphany.** It is the moment in the story where the hero nearly dies and sees something. The GM hands you a card for it, and meditating on it at a later rest earns Insight.
+- **Distillation is the breakthrough in understanding.** When enough Insight gathers, your character says what they have learned and a new power follows. It is a short conversation at the table. A player who would rather not have it takes the Quiet Path and gets the same power.
+- **A Grade Breakthrough is the realm breakthrough.** At each Grade's cap, the character gambles on crossing to the next realm, and every ceiling lifts at once.
+
 ## What You Need
 
 - This book. The GM's copy is the only required one.

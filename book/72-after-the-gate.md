@@ -635,6 +635,16 @@ By each band, look for an opportunity to introduce the following. None of it is 
 - **Third wave:** the liaison's address (below); a section of the diagram completing where the party can see it.
 - **The Completion:** the site, seen before it can be used, by a party at 22 that clears the Completion.
 
+## The First Distillation
+
+A character who takes risks reaches 10 Insight in the first wave, around Level 6, and the first Distillation is the first time a player defines a power with the GM. It happens at a Consolidation after the character's Insight reaches 10 (The Principle System, "Distillation"). The tutorial never reaches one, so start preparing once the character's Insight reaches 5.
+
+- **Before the session.** Read the character's Battle Memory cards, the visions the System gave for them, the circled Defining moments on the HVE sheet, and the Principle's name. Write two readings of what the character has learned, each one sentence, and a Seed Application for each, priced like the samples in The Principle System, "A Principle from Each Family": 1 Beat, 10 Aether, and +10 to a Clash or an effect of that size.
+- **At the table.** Ask the Distillation question. If the player stalls, ask for moments instead of meaning, then offer your two readings and let the player choose (Joe's Distillation, in The Principle System, runs this). Test the chosen reading: it does something specific, it is bounded, and its use can be seen. Let the player name the Application, then give the System's announcement.
+- **After.** The player writes the Application on the sheet with its cost, and the three baseline Attunements plus one written for this Principle. A fight in the next session where the new Application matters lets the table see it.
+
+A Quiet Path player hears your two readings as a choice and picks one.
+
 ## Level 10
 
 At Level 10 the System offers three classes built from nine levels of recorded play, and the player accepts one. The scene, the package, and sixteen worked classes are in Classes; Progression owns the level itself.

@@ -19,7 +19,7 @@ Working rules that bite in this track:
 - A read-through runs `make notes` (never rebuild or refresh the reading copy over uncollected notes), sorts the notes into agreed / his call / pushback, applies the agreed batch, runs `make check`, commits, archives the annotated copy to `reading/archive/`, and runs `make reading-copy`.
 - Every edit under `rules/` updates the prose's worked examples, the fixtures, and `rules/retired.yaml`, bumps `rules/version.yaml` when a number or table changes, and runs `make check` before the commit.
 - Applying an item from "Queued for the book" clears it from that list. If a book change alters something the app implements, add a line under "Queued for the app".
-- A change to `book/kit/table-kit.html` gets `make kit` and a page count against the previous build (14 pages).
+- A change to `book/kit/table-kit.html` gets `make kit` and a page count against the previous build (15 pages).
 
 Close of session:
 
