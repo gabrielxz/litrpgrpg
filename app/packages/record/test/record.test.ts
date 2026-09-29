@@ -1939,7 +1939,12 @@ describe("encounter sizing", () => {
     const warden = sizeEncounter(engine, 25, 4, "F", [sized("Corrupted System Warden")]);
     expect(warden.column).toBe("above");
     expect(warden.notes[0]).toMatch(/two Beats; Corrupted System Warden takes 3/);
-    expect(sizeEncounter(engine, 10, 4, "F", [sized("Snarljaw"), sized("Snarljaw"), sized("Snarljaw")]).notes[0]).toMatch(/one or two creatures/);
+    const pack = (n: number) => Array.from({ length: n }, () => sized("Snarljaw"));
+    expect(sizeEncounter(engine, 10, 4, "F", pack(3))).toMatchObject({ force: 48, notes: [] });
+    expect(sizeEncounter(engine, 10, 4, "F", pack(4)).force).toBe(58);
+    const five = sizeEncounter(engine, 10, 4, "F", pack(5));
+    expect(five.force).toBe(68);
+    expect(five.notes[0]).toMatch(/tested to four/);
     expect(sizeEncounter(engine, 10, 4, "F", [{ ...sized("Snarljaw"), grade: "E" }]).notes[0]).toMatch(/Cross-Grade/);
     expect(partyLevelOf([9, 10, 10, 12])).toBe(10);
   });

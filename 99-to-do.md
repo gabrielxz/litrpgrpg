@@ -122,14 +122,7 @@ Edits an app session forces, each with Gabriel's ruling or Claude's recommendati
 
 Book changes the app must follow. An app session applies them and clears the list.
 
-- **The Force Personal Opportunity example pays the table** (book session, 2026-09-29; rules 0.1.34). Quests and The System AI's quest register now read "Hostile detected within 100 meters. Eliminate within 6 hours. Reward: 30 VE." (`system-ai.yaml` `voice.registers.quest` carries it). `draft-opportunity.ts` still quotes "Reward proportional to threat" in its prompt; it takes the book's line. Quests' Performance-Scaled Rewards example is now "reward proportional to material recovered".
-- **Three and four creatures size** (book session, 2026-09-29; rules 0.1.35). Each creature past the second counts as 10 Force (`further_creature_worth_force`). The book session ported `encounterForce` in the engine so the shared fixtures pass; `record/src/planning.ts` still returns early for three or more with "The table sizes one or two creatures", and can size them now.
-- **The class template carries the rulings** (rules 0.1.35). `class-generation.txt` no longer has the declare line, so the filter in `draft-classes.ts` finds nothing and can go; the template's new lines (two of three for most fights, no chore gates or rare triggers, healing in a fight or between rests, nothing added to a rest) overlap the drafter's "What plays well at the table".
-- **Contempt and The Observation** (rules 0.1.35, `classes.yaml`). The Adjudicator's Contempt answers the sanctioned act (once per encounter, a creature in the holder's Zone that takes the action the Sanction names draws a Clash for no Beat, after the action resolves), and the Witness's The Observation comes once per encounter at any death in sight. Any app surface that describes either follows the data.
-- **Find the Seam against the same Grade** (rules 0.1.36, `classes.yaml`). The Underdog's technique adds +10 against a target of the holder's Grade whose Force exceeds the attack's Force; the Grade-gap application stays guarded. If the app applies Clash hooks for it, the hook is conditional on the Forces.
-- **Refinement is Reshaping** (Gabriel, 2026-09-29). A Principle's identity change at its present tier is **Reshaping**, so "refine" means only processing VE (the System's own notices say "Refinement" for VE). The record's `kind: "refinement"` can keep its stored value or migrate; the GM and player screens (`web/src/text.ts`, `gm/Principles.tsx`) say Reshaping and "reshaped from".
-- **Sample Principles by family** (rules 0.1.37). `principles.yaml` `family_samples` holds one Principle per family worked to Seed, priced; the Distillation drafter can take them as calibration the way the class drafter takes three book classes.
-- **The vision template** (rules 0.1.35). `templates/battle-memory-vision.txt`, named in `system-ai.yaml` under Battle Memory Visions, is the book's AI-Assisted prompt. `draftVisionSystem` may read it or keep its own words; the book's lists a failed Breakthrough among the ways a card comes.
+*(empty)*
 
 ## Design Items Referenced by the Checklist
 

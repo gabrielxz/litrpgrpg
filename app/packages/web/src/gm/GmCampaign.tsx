@@ -11,7 +11,7 @@ import { useEngine } from "../live.ts";
 import { PlayerCampaign } from "../player/PlayerCampaign.tsx";
 import { AiCard } from "./Ai.tsx";
 import { CombatSection } from "./Combat.tsx";
-import { Commit } from "./Commit.tsx";
+import { Commit, LogSeq } from "./Commit.tsx";
 import { SpoilsCard } from "./Items.tsx";
 import { QuestsSection } from "./Quests.tsx";
 import { HveSection } from "./Hve.tsx";
@@ -276,7 +276,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
     c.playerId ? (view.members.find((m) => m.userId === c.playerId)?.displayName ?? "a former player") : "GM";
 
   return (
-    <>
+    <LogSeq.Provider value={view.seq}>
       <nav className="sections">
         {SECTIONS.map(([s, label]) => (
           <button key={s} className={s === section ? "active" : ""} onClick={() => setSection(s)}>
@@ -372,6 +372,6 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
         </main>
       )}
       {section === "player" && <ViewAs view={view} />}
-    </>
+    </LogSeq.Provider>
   );
 }

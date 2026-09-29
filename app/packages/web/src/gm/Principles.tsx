@@ -285,7 +285,7 @@ function DistillForm({ view, engine, names, onRecorded, c, x, refine }: Props & 
   return (
     <div className="form">
       <p className="small">
-        {refine ? `Refinement at ${x.tier}: same slot, same Insight, a shifted identity.` : `Distillation to ${tier}.`} The articulation must be {test}.
+        {refine ? `Reshaping at ${x.tier}: same slot, same Insight, a shifted identity.` : `Distillation to ${tier}.`} The articulation must be {test}.
       </p>
       <label className="check">
         <input type="checkbox" checked={quiet} onChange={(e) => setQuiet(e.target.checked)} /> The Quiet Path: offer it for the player to confirm
@@ -344,7 +344,7 @@ function DistillForm({ view, engine, names, onRecorded, c, x, refine }: Props & 
         }
         problem={problem}
         names={names}
-        label={quiet ? "Offer it" : refine ? "Refine" : `Distill to ${tier}`}
+        label={quiet ? "Offer it" : refine ? "Reshape" : `Distill to ${tier}`}
         onRecorded={onRecorded}
       />
     </div>
@@ -378,14 +378,14 @@ function CharacterCard(props: Props & { c: Sheet }) {
           {x.passive && <div className="small">{x.passive}</div>}
           {x.grants.map((g) => (
             <div key={g.id} className="small grant">
-              {g.tier}: {g.kind === "refinement" ? `refined from ${g.from}` : (g.name ?? g.kind)}
+              {g.tier}: {g.kind === "refinement" ? `reshaped from ${g.from}` : (g.name ?? g.kind)}
               {g.aether ? ` · ${g.aether} Aether` : ""} · <em>{g.articulation}</em>
             </div>
           ))}
           {!c.dead && !x.offer && (
             <div className="row tight">
               {x.distillable && <button onClick={() => toggle(`d:${x.family}`)}>Distill</button>}
-              <button onClick={() => toggle(`r:${x.family}`)}>Refine</button>
+              <button onClick={() => toggle(`r:${x.family}`)}>Reshape</button>
             </div>
           )}
           {open === `d:${x.family}` && x.distillable && !x.offer && <DistillForm {...props} x={x} refine={false} />}

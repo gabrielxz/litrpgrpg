@@ -16,7 +16,8 @@
  * nothing until a Distillation: the GM records the articulation and the grant (an Application at
  * Seed and Early Fragment, Infusion at Mid Fragment, a Domain at Peak Fragment, which needs a
  * D-Grade body). On the Quiet Path the GM offers the articulation, in one or two phrasings, and
- * the player accepts one or vetoes. Refinement renames a Principle at its present tier.
+ * the player accepts one or vetoes. Reshaping renames a Principle at its present tier (the book's word; the record keeps
+ * `refine` and the grant kind "refinement" as stored, so logs written before the rename replay).
  */
 import type { Engine } from "@gradebreaker/engine";
 import type { Envelope } from "./actions.ts";
@@ -57,7 +58,7 @@ export interface Grant {
   aether?: number;
   /** Seed's Attunements, in the GM's words. */
   attunements?: string;
-  /** Refinement or Broadening: the name before. */
+  /** Reshaping or Broadening: the name before. */
   from?: string;
   quiet?: boolean;
 }
@@ -168,7 +169,7 @@ export interface NamePrinciple {
 }
 
 /**
- * A Distillation: the next tier and its grant, or a Refinement (`rename` at the present tier).
+ * A Distillation: the next tier and its grant, or a Reshaping (`rename` at the present tier).
  * With `quiet`, the GM's articulations are offered to the player instead. GM only.
  */
 export interface Distill {
@@ -178,7 +179,7 @@ export interface Distill {
   articulations: string[];
   quiet?: boolean;
   refine?: boolean;
-  /** Refinement's new name, or Broadening's at a tier-up. */
+  /** Reshaping's new name, or Broadening's at a tier-up. */
   rename?: string;
   name?: string;
   text?: string;
@@ -400,7 +401,7 @@ export function applyPrinciples(engine: Engine, world: World, a: PrincipleAction
       if (!articulations.length) throw new Rejected("state the articulation");
       if (articulations.length > (a.quiet ? 2 : 1)) throw new Rejected(a.quiet ? "offer one or two phrasings" : "one articulation");
       if (a.refine) {
-        if (!a.rename?.trim()) throw new Rejected("a Refinement names the Principle's new identity");
+        if (!a.rename?.trim()) throw new Rejected("a Reshaping names the Principle's new identity");
       } else if (!distillable(engine, c, x)) {
         const next = nextRung(engine, x.tier);
         throw new Rejected(next ? `${x.name} needs ${next.cumulative_ip} Insight${next.tier === ladder(engine).at(-1)!.tier ? " and a D-Grade body" : ""} for ${next.tier}` : `${x.name} is at the top of the ladder`);

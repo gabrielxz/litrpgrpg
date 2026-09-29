@@ -77,7 +77,8 @@ export interface Sizing {
  * Where a fight sits in the Bestiary's sizing table for a party (Bestiary, "GM Reference:
  * Encounter Building"): at Levels 1 to 7 by the creatures' tiers, from Level 8 by creature Force,
  * each column shifted for a party other than four. The table sizes creatures of the party's own
- * Grade, and from Level 8 one or two of them with two Beats each; past that it says so.
+ * Grade with two Beats each; from Level 8 a second creature adds 20 Force and each one past it 10
+ * (tested to four). Past that it says so.
  */
 export function sizeEncounter(engine: Engine, partyLevel: number, partySize: number, partyGrade: string, creatures: SizedCreature[]): Sizing {
   const row = engine.sizingRow(partyLevel);
@@ -104,14 +105,11 @@ export function sizeEncounter(engine: Engine, partyLevel: number, partySize: num
     return out;
   }
   const forces = creatures.map((c) => engine.creatureSizingForce(c.offense, c.defense));
-  if (creatures.length > 2) {
-    out.notes.push("The table sizes one or two creatures. Every further body is two more attacks a round: extra bodies multiply danger.");
-    return out;
-  }
   out.force = engine.encounterForce(forces);
   out.column = engine.encounterColumnForce(partyLevel, partySize, out.force);
   const beats = creatures.filter((c) => c.beats !== undefined && c.beats !== 2);
   if (beats.length) out.notes.push(`The rows assume two Beats; ${beats.map((c) => `${c.name} takes ${c.beats}`).join(", ")}.`);
+  if (creatures.length > 4) out.notes.push("The step past the second creature is tested to four; five or more keep stepping at 10 Force each.");
   return out;
 }
 

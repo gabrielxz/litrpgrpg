@@ -254,7 +254,7 @@ export function describe(
     case "principle.name":
       return `${name(a.characterId)}: ${a.family} crystallizes as ${a.name}`;
     case "principle.distill":
-      return `${name(a.characterId)}: ${a.quiet ? "Distillation offered" : a.refine ? "Refinement" : "Distillation"} (${a.family})`;
+      return `${name(a.characterId)}: ${a.quiet ? "Distillation offered" : a.refine ? "Reshaping" : "Distillation"} (${a.family})`;
     case "principle.answer":
       return `${name(a.characterId)} ${a.accept ? "accepts" : "vetoes"} the offered articulation`;
     case "class.offer":
@@ -325,7 +325,7 @@ export function effectLine(e: Effect, name: Names): string | null {
     case "distilled":
       return `${name(e.characterId)}: ${e.name} reaches ${e.tier}${e.grant ? `; ${e.grant}` : ""}`;
     case "principle-refined":
-      return `${name(e.characterId)}: ${e.from} refined into ${e.name}`;
+      return `${name(e.characterId)}: ${e.from} reshaped into ${e.name}`;
     case "clock":
       return `The clock reads ${clockLine(e.to)}`;
     case "dawn":
@@ -555,7 +555,7 @@ export function noticeLine(e: Effect): string | null {
     case "distilled":
       return `Distillation complete: ${e.name}, ${e.tier}.${e.grant ? ` ${GRANT_NOTICE[e.grantKind]}: ${e.grant}.` : ""}`;
     case "principle-refined":
-      return `Principle refined: ${e.from} is now ${e.name}.`;
+      return `Principle reshaped: ${e.from} is now ${e.name}.`;
     case "quest-offered":
       return `Quest offered: ${e.line}.`;
     case "quest-issued":

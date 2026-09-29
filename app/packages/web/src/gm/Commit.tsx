@@ -1,13 +1,17 @@
 /**
  * The GM's preview-then-record step, shared by every form: while the draft changes, the server
- * previews it (what it does, which sheets change, what stops applying); Record appends it
- * under an idempotency key that is renewed only after it lands, so a double click or a retry
- * records it once.
+ * previews it (what it does, which sheets change, what stops applying), and previews it again
+ * whenever the log moves, so a form left open never shows what it would have done before; Record
+ * appends it under an idempotency key that is renewed only after it lands, so a double click or a
+ * retry records it once.
  */
 import type { Action, Envelope, Preview } from "@gradebreaker/record";
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { type Appended, newActionId, preview, submit } from "../api.ts";
 import { changeLine, effectLine, type Names } from "../text.ts";
+
+/** The GM view's log length; a preview is redone when it changes. */
+export const LogSeq = createContext(0);
 
 export interface CommitProps {
   campaignId: string;
@@ -76,6 +80,7 @@ export function Commit({ campaignId, action, problem, names, label, onRecorded, 
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const key = JSON.stringify(action);
+  const seq = useContext(LogSeq);
 
   useEffect(() => {
     setError(null);
@@ -93,7 +98,7 @@ export function Commit({ campaignId, action, problem, names, label, onRecorded, 
       live = false;
       clearTimeout(t);
     };
-  }, [key, problem, campaignId, id]);
+  }, [key, problem, campaignId, id, seq]);
 
   const record = async () => {
     if (!action) return;

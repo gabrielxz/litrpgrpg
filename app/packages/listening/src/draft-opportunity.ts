@@ -109,7 +109,7 @@ export function draftOpportunitySystem(engine: Engine): string {
 
 # What a Personal Opportunity is
 
-The System notices something specific about a character and offers a tailored quest, from their behavior (the sheet below), their recent moments, and the immediate situation. The same situation brings different offers to different characters: a character who meets things head-on might be offered "Hostile detected within 100 meters. Eliminate within 6 hours. Reward proportional to threat."; one who works by method, "Unstable formation detected. Stabilize before collapse: reward proportional to elegance of solution."
+The System notices something specific about a character and offers a tailored quest, from their behavior (the sheet below), their recent moments, and the immediate situation. The same situation brings different offers to different characters: a character who meets things head-on might be offered "Hostile detected within 100 meters. Eliminate within 6 hours. Reward: 30 VE."; one who works by method, "Unstable formation detected. Stabilize before collapse: reward proportional to elegance of solution."
 
 The offer is also how the System nudges or tests. By default it affirms, following the character's recent behavior. It tests against the pattern when recent behavior (Current, the last sweep) and long-term identity (Deep) lean different ways, and occasionally for no visible reason. A character holding Salvaged receives tests until it is released. When in doubt, affirm.
 

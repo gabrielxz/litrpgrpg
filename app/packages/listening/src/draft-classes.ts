@@ -57,15 +57,13 @@ export interface ClassOffersDraft {
 // ------------------------------------------------------------ rules ---
 
 /**
- * The book's prompt for AI-Assisted class generation, read from `rules/`, less the line Gabriel
- * ruled out (2026-09-29): preferring powers the player must declare drew chores. The book session
- * removes it from the template (queued), and this filter then finds nothing to remove.
+ * The book's prompt for AI-Assisted class generation, read from `rules/`. "What plays well at the
+ * table" below restates its rulings with the examples that steered the drafts (chores, triggers,
+ * declarations with stakes); the template stays the rule.
  */
 export function classTemplate(engine: Engine): string {
   const fn = (engine.rules["system-ai"].functions as { name: string; template?: string }[]).find((f) => f.name.startsWith("Class Generation"))!;
-  return readFileSync(join(RULES_DIR, fn.template!), "utf8")
-    .replace(/\s*Prefer powers that make the player\s+declare something\./, "")
-    .trim();
+  return readFileSync(join(RULES_DIR, fn.template!), "utf8").trim();
 }
 
 // ----------------------------------------------------------- schema ---
