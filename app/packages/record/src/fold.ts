@@ -33,6 +33,7 @@ import { addMark, checkShape, proficiencyOf } from "./proficiency.ts";
 import { type Title, applyTitles, count, titleStats } from "./titles.ts";
 import { authorizePillPlayer, takePillOutside } from "./pills.ts";
 import { type AbsorbedTreasure, absorbTreasure, treasureStats } from "./treasures.ts";
+import type { SinceAssigned } from "./assigned.ts";
 import { type HveState, applyHve, cloneHve } from "./hve.ts";
 import { type CampaignEvent, applyEvents, cloneEvent } from "./events.ts";
 import { type CampaignSession, applySessions, cloneSession } from "./sessions.ts";
@@ -88,6 +89,8 @@ export interface CharacterState {
   classes?: ClassState;
   /** Attribute Treasures absorbed, with the Raw points each landed. */
   treasures?: AbsorbedTreasure[];
+  /** HVE entries since the last assigned points were placed, before a class: what the next placement reads. */
+  sinceAssigned?: SinceAssigned[];
 }
 
 /** A formal party: its members' character ids in the order they joined. */
@@ -458,6 +461,7 @@ function cloneState(c: CharacterState): CharacterState {
     ...(c.refusals ? { refusals: { ...c.refusals } } : {}),
     ...(c.pillsTaken ? { pillsTaken: { ...c.pillsTaken } } : {}),
     ...(c.hve ? { hve: cloneHve(c.hve) } : {}),
+    ...(c.sinceAssigned ? { sinceAssigned: c.sinceAssigned.map((x) => ({ ...x })) } : {}),
     ...(c.principles ? { principles: clonePrinciples(c.principles) } : {}),
     ...(c.classes ? { classes: cloneClass(c.classes) } : {}),
   };
@@ -965,6 +969,8 @@ function placeSystem(engine: Engine, c: CharacterState, a: PlaceSystemPoints): E
   if (total !== due) throw new Rejected(`Level ${a.level} places exactly ${due} assigned points, not ${total}`);
   const { placed, lost } = landAssigned(engine, c, a.placement);
   c.pendingSystemLevels.splice(i, 1);
+  // The next placement reads what the character does from here.
+  delete c.sinceAssigned;
   return assignedEffect(c, placed, lost);
 }
 

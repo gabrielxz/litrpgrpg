@@ -544,7 +544,7 @@ function RestForm({ view, engine, names, onRecorded }: FormProps) {
 
 function PointsForm({ view, engine, names, onRecorded }: FormProps) {
   const lv = engine.rules.character.leveling;
-  const mapping: { behavior: string; primary: string; secondary: string }[] = engine.rules.character.behavioral_stat_mapping;
+  const mapping: { behavior: string; primary: string; secondary: string; side: string }[] = engine.rules.character.behavioral_stat_mapping;
   const waiting = view.characters.filter((c) => c.pendingSystemLevels.length);
   const [characterId, setCharacterId] = useState(waiting[0]?.id ?? "");
   const c = waiting.find((x) => x.id === characterId) ?? waiting[0];
@@ -595,6 +595,7 @@ function PointsForm({ view, engine, names, onRecorded }: FormProps) {
           </select>
         </label>
       </div>
+      <AssignedProposalLine c={c} onUse={(p) => setPlacement(Object.fromEntries(Object.entries(p).map(([a, v]) => [a, String(v)])))} />
       <div className="stat-inputs">
         {ATTRIBUTES.map((a) => (
           <label key={a}>
@@ -615,7 +616,7 @@ function PointsForm({ view, engine, names, onRecorded }: FormProps) {
           {mapping.map((m) => (
             <tr
               key={m.behavior}
-              className="clickable"
+              className={c.assignedProposal?.sides.includes(m.side) ? "clickable picked" : "clickable"}
               title="Place 2 in the primary and 1 in the secondary"
               onClick={() => setPlacement({ [m.primary]: String(2 * engine.scale(c.grade)), [m.secondary]: String(engine.scale(c.grade)) })}
             >
@@ -642,6 +643,31 @@ function PointsForm({ view, engine, names, onRecorded }: FormProps) {
         label={`Place ${c.name}'s Level ${lvl} points`}
         onRecorded={onRecorded}
       />
+    </div>
+  );
+}
+
+/** What the HVE entries since the last placement propose (Progression, "Behavioral Stat Mapping"), with the entries it read. */
+function AssignedProposalLine({ c, onUse }: { c: Sheet; onUse: (placement: Record<string, number>) => void }) {
+  const p = c.assignedProposal;
+  if (!p)
+    return <p className="muted small">No HVE entries for {c.name} since the last placement: place the points from the table.</p>;
+  const tally = p.tally.map((t) => `${t.side} ${t.total}`).join(", ");
+  const placement = Object.entries(p.placement)
+    .map(([a, v]) => `${a} ${v}`)
+    .join(", ");
+  const why = {
+    "all-in": `${p.sides[0]} alone, at the Defining weight or more`,
+    lead: `${p.sides[0]} leads`,
+    second: `${p.sides[0]} leads ${p.sides[1]} by less than 2`,
+    even: `${p.sides.join(", ")} level at the top`,
+  }[p.shape];
+  return (
+    <div className="proposal">
+      <p className="small">
+        Since the last placement ({p.events} {p.events === 1 ? "event" : "events"}): {tally}. Proposed: <strong>{placement}</strong> ({why}).
+      </p>
+      <button onClick={() => onUse(p.placement)}>Use the proposal</button>
     </div>
   );
 }

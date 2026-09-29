@@ -101,5 +101,11 @@ export function applyEvents(engine: Engine, world: World, a: EventAction, env: E
   if (session) e.sessionId = session.id;
   if (world.clock) e.clock = world.clock.at;
   world.events.set(e.id, e);
+  // Before a class, each entry counts toward the next assigned points (Progression, "Behavioral Stat Mapping").
+  for (const x of e.entries) {
+    const c = world.characters.get(x.characterId)!;
+    if (c.classes?.held) continue;
+    (c.sinceAssigned ??= []).push({ eventId: e.id, pole: x.pole, intensity: x.intensity, ...(x.secondary ? { secondary: x.secondary } : {}) });
+  }
   return [{ kind: "event-logged", eventId: e.id, summary }];
 }

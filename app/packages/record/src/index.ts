@@ -106,3 +106,4 @@ export {
   stabilizeAttribute,
   stabilizeCheck,
 } from "./combat.ts";
+export { type AssignedProposal, type SinceAssigned, assignedProposal, mappingRows } from "./assigned.ts";

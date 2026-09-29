@@ -73,16 +73,18 @@ leveling:
     free: 16                    # 2 × 8 levels
     total: 80
 
-# Pre-class stat assignment: the GM matches behavior since the last level.
+# Pre-class stat assignment: the GM matches behavior since the last level. Each row is one
+# side of the Hidden Vector Engine (`side`), in the axes' order; the app proposes the row of the
+# side the character's HVE entries lead since the last placement (queued for the book).
 behavioral_stat_mapping:
-  - {behavior: "Solves problems with direct force, charges in",              primary: STR, secondary: FOR}
-  - {behavior: "Plans ahead, positions carefully, uses finesse",             primary: DEX, secondary: PER}
-  - {behavior: "Pursues power aggressively, takes risks for gain",           primary: POW, secondary: STR}
-  - {behavior: "Shows restraint, endures hardship, holds the line",          primary: FOR, secondary: HRT}
-  - {behavior: "Dominates socially, intimidates, commands",                  primary: CHA, secondary: STR}
-  - {behavior: "Cooperates, negotiates, builds alliances",                   primary: CHA, secondary: HRT}
-  - {behavior: "Imposes structure, creates systems, controls variables",     primary: PER, secondary: POW}
-  - {behavior: "Breaks rules, improvises, embraces chaos",                   primary: DEX, secondary: POW}
+  - {behavior: "Solves problems with direct force, charges in",              primary: STR, secondary: FOR, side: Force}
+  - {behavior: "Plans ahead, positions carefully, uses finesse",             primary: DEX, secondary: PER, side: Method}
+  - {behavior: "Pursues power aggressively, takes risks for gain",           primary: POW, secondary: STR, side: Hunger}
+  - {behavior: "Shows restraint, endures hardship, holds the line",          primary: FOR, secondary: HRT, side: Restraint}
+  - {behavior: "Dominates socially, intimidates, commands",                  primary: CHA, secondary: STR, side: Will}
+  - {behavior: "Cooperates, negotiates, builds alliances",                   primary: CHA, secondary: HRT, side: Accord}
+  - {behavior: "Imposes structure, creates systems, controls variables",     primary: PER, secondary: POW, side: Control}
+  - {behavior: "Breaks rules, improvises, embraces chaos",                   primary: DEX, secondary: POW, side: Freedom}
 
 # A Background is what the character did before Integration: one or two plain-language
 # lines. No number, no Marks, no tiers. It never applies to an attack or a defense.

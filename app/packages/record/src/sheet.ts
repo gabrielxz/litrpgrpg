@@ -2,6 +2,7 @@
  * The character sheet as the record computes it, and the difference between two sets of
  * sheets (what a preview or a correction shows the GM before anything is applied).
  */
+import { type AssignedProposal, assignedProposal } from "./assigned.ts";
 import { ATTRIBUTES, type Engine, type Stats } from "@gradebreaker/engine";
 import { type CharacterState, capLevel, maxAetherOf, maxHpOf, rawStats } from "./fold.ts";
 import { type Proficiency, proficienciesOf } from "./proficiency.ts";
@@ -66,6 +67,8 @@ export interface Sheet {
     archetype: string | null;
     sweeps: SweepEntry[];
   };
+  /** Before a class: the assigned points the HVE entries since the last placement propose, or null. The GM's side of the screen. */
+  assignedProposal: AssignedProposal | null;
 }
 
 export function sheetOf(engine: Engine, c: CharacterState): Sheet {
@@ -106,6 +109,7 @@ export function sheetOf(engine: Engine, c: CharacterState): Sheet {
     refusals: { ...(c.refusals ?? {}) },
     pillsTaken: { healing: 0, aether: 0, ...(c.pillsTaken ?? {}) },
     hve: hveOf(engine, c),
+    assignedProposal: c.classes?.held ? null : assignedProposal(engine, c),
     principles: principlesSheet(engine, c),
     classOffers: (c.classes?.offers ?? []).map((o) => structuredClone(o)),
     class: c.classes?.held ? structuredClone(c.classes.held) : null,

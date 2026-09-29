@@ -669,9 +669,10 @@ describe("the Hidden Vector Engine", () => {
     const view = await call("GET", `/campaigns/${campaignId}`, { token: player });
     expect(view.json.feed).toEqual(before.json.feed);
     const text = JSON.stringify(view.json);
-    for (const leak of ["hve", "Hunger", "argued", "Scattered", "Session 1", "events", "warden", "grinned", "sessions", "The Node", "bargained"]) expect(text).not.toContain(leak);
+    for (const leak of ["hve", "Hunger", "argued", "Scattered", "Session 1", "events", "warden", "grinned", "sessions", "The Node", "bargained", "assignedProposal", "sinceAssigned"]) expect(text).not.toContain(leak);
     const gmView = await call("GET", `/campaigns/${campaignId}`, { token: gm });
     expect(gmView.json.characters[0].hve.deep.Hunger).toBe(1);
+    expect(gmView.json.characters[0].assignedProposal).toMatchObject({ tally: [{ side: "Hunger", total: 0.5 }], placement: { POW: 2, STR: 1 } });
     expect(gmView.json.events[0]).toMatchObject({ summary: "Bribed the warden in front of the others", notes: "Ana grinned." });
     expect(gmView.json.sessions[0]).toMatchObject({ label: "The Node", summary: "Kara bargained her way past the warden." });
     expect(gmView.json.events[0].sessionId).toBe(gmView.json.sessions[0].id);

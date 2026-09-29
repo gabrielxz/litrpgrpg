@@ -1,7 +1,7 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.32"
+version: "0.1.33"
 dated: "2026-09-29"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
@@ -107,3 +107,5 @@ notes: >
   0.1.32: the System AI chapter's sample vision joins the data (system-ai.yaml, Battle Memory Visions
   example), for the app's vision drafter, and voice.rules is written one rule to an item (the flow list
   split "never persuades, apologizes, or encourages" at its commas). No number moved.
+  0.1.33: each Behavioral Stat Mapping row names its HVE side (character.yaml behavioral_stat_mapping side),
+  the eight rows being the eight sides in the axes' order (Gabriel, 2026-09-29). No number moved.

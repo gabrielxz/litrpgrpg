@@ -1525,6 +1525,68 @@ describe("events", () => {
   });
 });
 
+describe("assigned points proposed from the HVE entries", () => {
+  beforeEach(() => {
+    gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" });
+    gm({ type: "character.pregen", characterId: "joe", pregen: "Joe" });
+  });
+  const act = (pole: string, intensity: number, secondary?: string) =>
+    gm({ type: "event.log", summary: `${pole} ${intensity}`, participants: ["kara"], entries: [{ characterId: "kara", pole, intensity, ...(secondary ? { secondary } : {}) }] });
+  const proposal = () => rec.sheet("kara")!.assignedProposal;
+
+  it("reads nothing before an entry, and each row of the table is one side", () => {
+    expect(proposal()).toBeNull();
+    expect(engine.rules.character.behavioral_stat_mapping.map((r: { side: string }) => r.side)).toEqual(["Force", "Method", "Hunger", "Restraint", "Will", "Accord", "Control", "Freedom"]);
+  });
+
+  it("puts all three on the primary for one side lived at the Defining weight, alone", () => {
+    act("Force", 2);
+    act("Force", 1);
+    expect(proposal()).toMatchObject({ shape: "all-in", sides: ["Force"], placement: { STR: 3 }, events: 2 });
+  });
+
+  it("puts two on the primary and one on the secondary for a side that leads by 2", () => {
+    act("Method", 2);
+    expect(proposal()).toMatchObject({ shape: "lead", placement: { DEX: 2, PER: 1 } });
+    act("Accord", 1);
+    act("Method", 1);
+    expect(proposal()).toMatchObject({ shape: "lead", tally: [{ side: "Method", total: 3 }, { side: "Accord", total: 1 }], placement: { DEX: 2, PER: 1 } });
+  });
+
+  it("gives a close second its own primary, a tie going to the side lived last, and three level sides one each", () => {
+    act("Hunger", 1);
+    act("Will", 1);
+    expect(proposal()).toMatchObject({ shape: "second", sides: ["Will", "Hunger"], placement: { CHA: 2, POW: 1 } });
+    act("Freedom", 1);
+    expect(proposal()).toMatchObject({ shape: "even", placement: { DEX: 1, CHA: 1, POW: 1 } });
+  });
+
+  it("counts a reminder at half and a secondary one weight lower", () => {
+    act("Force", 2, "Will");
+    act("Restraint", 0.5);
+    expect(proposal()!.tally).toEqual([
+      { side: "Force", total: 2 },
+      { side: "Will", total: 1 },
+      { side: "Restraint", total: 0.5 },
+    ]);
+    expect(proposal()).toMatchObject({ shape: "second", placement: { STR: 2, CHA: 1 } });
+  });
+
+  it("starts over at each placement, and an undone event leaves the count", () => {
+    act("Force", 3);
+    award("kara", 120);
+    rest("kara", 6);
+    gm({ type: "points.system", characterId: "kara", level: 2, placement: { STR: 3 } });
+    expect(proposal()).toBeNull();
+    act("Accord", 1, undefined);
+    const logged = rec.log.at(-1)!.id;
+    expect(proposal()).toMatchObject({ placement: { CHA: 2, HRT: 1 } });
+    gm({ type: "void", targetId: logged, reason: "undo" });
+    expect(proposal()).toBeNull();
+    expect(rec.sheet("joe")!.assignedProposal).toBeNull();
+  });
+});
+
 describe("sessions", () => {
   beforeEach(() => {
     gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" });

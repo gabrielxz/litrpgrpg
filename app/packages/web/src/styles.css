@@ -407,6 +407,19 @@ table.mapping tr.clickable:hover {
   background: color-mix(in srgb, var(--cyan) 10%, var(--bone));
   cursor: pointer;
 }
+table.mapping tr.picked td {
+  background: color-mix(in srgb, var(--cyan) 18%, var(--bone));
+}
+.proposal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.proposal p {
+  margin: 0;
+  flex: 1 1 18rem;
+}
 
 .commit {
   display: flex;
