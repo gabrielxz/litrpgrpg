@@ -24,8 +24,14 @@ import { voiceFlags, voiceInstructions } from "./draft-voice.ts";
 
 export const DRAFT_CLASSES_FEATURE = "draft-classes";
 
-/** The book classes shown to the model as calibration: one per cost shape. */
-const CALIBRATION = ["Battle Medic", "Breaching Vanguard", "Counterpuncher"];
+/** The book classes shown to the model as calibration: one per cost shape, each usable in most fights. */
+const CALIBRATION = ["Battle Medic", "Breaching Vanguard", "Burner"];
+
+/** How many of the three offers carry something usable in most fights (Gabriel, 2026-09-29). */
+export const EVERY_FIGHT_OFFERS = 2;
+
+/** Words that mark a gate on an earlier chore or a setup a fight seldom offers (Gabriel, 2026-09-29: busywork). */
+const GATE = /\b(only if|usable only|at the last rest|since the last rest|write(s)? down|written down)\b/i;
 
 export interface ClassOfferDraft {
   offer: ClassPackage;
@@ -36,6 +42,8 @@ export interface ClassOfferDraft {
   problems: string[];
   /** The book's advice it crosses, and the voice flags on its notice. */
   warnings: string[];
+  /** The drafter's mark: the technique or the permission is usable in most fights with no setup beyond the fight. */
+  everyFight: boolean;
 }
 
 export interface ClassOffersDraft {
@@ -87,6 +95,7 @@ export function draftClassesSchema(engine: Engine) {
       onceADay: z.boolean(),
     }),
     guarded: z.boolean().describe("Carries a power from the guarded list."),
+    everyFight: z.boolean().describe("True when the technique or the permission can be used in most fights with no setup beyond the fight itself."),
   });
   const n = engine.rules.classes.selection.offers as number;
   return z.object({ offers: z.array(offer).describe(`Exactly ${n} offers.`) });
@@ -115,6 +124,7 @@ export function draftClassesSystem(engine: Engine): string {
   const calibration = book.filter((c) => CALIBRATION.includes(c.name)).map(packageLines).join("\n\n");
   const poles = (rules.classes as { name: string; poles: string[] }[]).map((c) => `${c.name} (${c.poles.join(", ")})`).join("; ");
   const bonus = rules.selection.lead_attribute_bonus as number;
+  const sides = (engine.rules.hve.axes as { poles: { name: string }[] }[]).flatMap((a) => a.poles.map((p) => p.name));
   return `You draft class offers for the Game Master (GM) of Gradebreaker, a LitRPG tabletop roleplaying game. The GM reads your three offers, edits them, and sends them to the player, who accepts one.
 
 # The book's instructions
@@ -138,6 +148,13 @@ ${calibration}
 The book's other classes, with the two sides of the Hidden Vector Engine each was built for: ${poles}. One offer may be a book class the record plainly fits, offered as written by its name; the other offers are written for this character.
 
 The offers differ in role and in which part of the record they weigh. One may amplify the dominant pattern, one formalize the secondary pattern, one combine them; any three the record supports are right.
+
+# What plays well at the table
+
+- Most of play is fighting. At least ${EVERY_FIGHT_OFFERS} of the three offers carry a technique or a permission the character can use in most fights with no setup beyond the fight itself: closing on an enemy or breaking away, a strike or a guard made stronger when declared with it, moving an enemy between Zones, taking Momentum, covering an ally. The other offer may serve support, a scene outside the fight, or an odd corner of the record.
+- No busywork. Nothing is usable "only if" the character did a chore earlier (counted the supplies at the last rest, mapped the room aloud, wrote a Zone down before the fight), and no trigger is so narrow it seldom comes up (an enemy that attacked a Downed ally). A declaration is welcome when it is a choice with stakes, made in the moment: a vow sworn as the fight starts, a target named. A ritual the player repeats to keep a power working is busywork.
+- A class grows by what it lets the character do. Its numbers stay in the Modifier Budget.
+- The name and the notice reach the player. Neither uses the Engine's names for the sides (${sides.join(", ")}), which would disclose how the System reads the character.
 
 ${voiceInstructions(engine)}
 
@@ -214,6 +231,7 @@ function mergedPoints(points: { attribute: string; points: number }[]): { attrib
 /** The model's offers as packages, each checked as the GM's own would be. */
 export function classOffersOf(engine: Engine, out: DraftClassesOutput, opts: { guarded?: boolean } = {}): ClassOffersDraft {
   const book = new Map(bookClasses(engine).map((c) => [c.name, c]));
+  const poles = (engine.rules.hve.axes as { poles: { name: string }[] }[]).flatMap((a) => a.poles.map((p) => p.name));
   const offers = out.offers.map((o): ClassOfferDraft => {
     const asWritten = o.book ? book.get(o.book) : undefined;
     let offer: ClassPackage;
@@ -237,7 +255,11 @@ export function classOffersOf(engine: Engine, out: DraftClassesOutput, opts: { g
       if (o.guarded) offer.guarded = true;
     }
     const warnings = [...packageWarnings(engine, offer), ...voiceFlags(engine, offer.notice).map((f) => `${offer.name}'s notice: ${f}`)];
-    return { offer, role: o.role.trim(), weighs: o.weighs.trim(), problems: packageProblems(engine, offer), warnings };
+    // The class's name and notice reach the player: a side of the Engine named there discloses its reading.
+    for (const pole of poles) if (new RegExp(`\\b${pole}\\b`).test(`${offer.name} ${offer.notice}`)) warnings.push(`${offer.name} names ${pole}, a side of the Hidden Vector Engine`);
+    for (const [part, text] of [["technique", offer.technique.effect], ["permission", offer.permission.effect]] as const)
+      if (GATE.test(text)) warnings.push(`${offer.name}'s ${part} has a precondition: "${text.match(GATE)![0]}"`);
+    return { offer, role: o.role.trim(), weighs: o.weighs.trim(), problems: packageProblems(engine, offer), warnings, everyFight: asWritten ? true : o.everyFight };
   });
   const problems: string[] = [];
   const n = engine.rules.classes.selection.offers as number;

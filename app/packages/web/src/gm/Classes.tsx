@@ -389,7 +389,8 @@ function OfferDrafter({ view, c, drafts, onLoad }: { view: GmView; c: Sheet; dra
               <li key={o.name}>
                 <strong>{o.name}</strong>
                 {o.book ? " (the book's)" : ""}
-                {o.guarded ? " (guarded)" : ""}: {notes[i]?.role}. <span className="muted">Weighs: {notes[i]?.weighs}</span>
+                {o.guarded ? " (guarded)" : ""}
+                {notes[i]?.everyFight ? " · usable in most fights" : ""}: {notes[i]?.role}. <span className="muted">Weighs: {notes[i]?.weighs}</span>
                 {[...(notes[i]?.problems ?? []), ...(notes[i]?.warnings ?? [])].map((w) => (
                   <div key={w} className="warning">
                     {w}

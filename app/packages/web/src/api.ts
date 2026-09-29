@@ -100,7 +100,7 @@ export interface DraftItem {
     stance?: "affirm" | "test";
     notice?: string;
     /** Class offers: for the GM, each offer's role, what it weighs, and the book's rules and advice it crosses; and problems across the three. */
-    offers?: { role: string; weighs: string; problems: string[]; warnings: string[] }[];
+    offers?: { role: string; weighs: string; problems: string[]; warnings: string[]; everyFight?: boolean }[];
     problems?: string[];
   };
   /** An event's reason per character. */

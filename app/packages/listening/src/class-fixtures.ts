@@ -14,7 +14,7 @@ import { ATTRIBUTES, type Engine } from "@gradebreaker/engine";
 import { readYaml } from "@gradebreaker/engine/node";
 import { type Action, CampaignRecord, actionSchema, leadOf } from "@gradebreaker/record";
 import { z } from "zod";
-import { type ClassOffersDraft, draftClasses } from "./draft-classes.ts";
+import { type ClassOffersDraft, EVERY_FIGHT_OFFERS, draftClasses } from "./draft-classes.ts";
 import type { Drafter, Effort } from "./draft-events.ts";
 
 export const CLASSES_DIR = join(dirname(fileURLToPath(import.meta.url)), "../classes");
@@ -97,15 +97,17 @@ export interface ClassRun {
   /** Different leads among the three. */
   leads?: number;
   guardedOk?: boolean;
+  /** Offers the drafter marks usable in most fights. */
+  everyFight?: number;
 }
 
 export interface ClassEvaluation {
   fixtureId: string;
   runs: ClassRun[];
-  summary: { runs: number; returned: number; clean: number; lead: number; guarded: number; warned: number; ms: number };
+  summary: { runs: number; returned: number; clean: number; lead: number; guarded: number; warned: number; everyFight: number; ms: number };
 }
 
-export function scoreClasses(fixture: ClassFixture, d: ClassOffersDraft): Pick<ClassRun, "problems" | "warnings" | "leadOk" | "leads" | "guardedOk"> {
+export function scoreClasses(fixture: ClassFixture, d: ClassOffersDraft): Pick<ClassRun, "problems" | "warnings" | "leadOk" | "leads" | "guardedOk" | "everyFight"> {
   const leads = d.offers.map((o) => leadOf(o.offer));
   const guarded = d.offers.filter((o) => o.offer.guarded).length;
   return {
@@ -114,6 +116,7 @@ export function scoreClasses(fixture: ClassFixture, d: ClassOffersDraft): Pick<C
     leadOk: !fixture.expected.anyLead || leads.some((l) => fixture.expected.anyLead!.includes(l as (typeof ATTRIBUTES)[number])),
     leads: new Set(leads).size,
     guardedOk: fixture.guarded ? guarded === 1 : guarded === 0,
+    everyFight: d.offers.filter((o) => o.everyFight).length,
   };
 }
 
@@ -139,6 +142,7 @@ export async function evaluateClasses(engine: Engine, fixture: ClassFixture, dra
       lead: got.filter((r) => r.leadOk).length,
       guarded: got.filter((r) => r.guardedOk).length,
       warned: got.filter((r) => r.warnings!.length).length,
+      everyFight: got.filter((r) => r.everyFight! >= EVERY_FIGHT_OFFERS).length,
       ms: got.length ? Math.round(got.reduce((n, r) => n + r.ms!, 0) / got.length) : 0,
     },
   };
@@ -147,7 +151,7 @@ export async function evaluateClasses(engine: Engine, fixture: ClassFixture, dra
 /** The scores, then each offer as the GM would read it. */
 export function formatClasses(e: ClassEvaluation): string {
   const s = e.summary;
-  const rows = [`${e.fixtureId}: ${s.returned} of ${s.runs} returned; within the rules ${s.clean}/${s.returned}, lead ${s.lead}/${s.returned}, guarded as asked ${s.guarded}/${s.returned}, warned ${s.warned}/${s.returned}; ${(s.ms / 1000).toFixed(1)} s each`];
+  const rows = [`${e.fixtureId}: ${s.returned} of ${s.runs} returned; within the rules ${s.clean}/${s.returned}, lead ${s.lead}/${s.returned}, guarded as asked ${s.guarded}/${s.returned}, ${EVERY_FIGHT_OFFERS}+ for most fights ${s.everyFight}/${s.returned}, warned ${s.warned}/${s.returned}; ${(s.ms / 1000).toFixed(1)} s each`];
   for (const r of e.runs) {
     if (r.error) {
       rows.push(`  run ${r.run}: ${r.error}`);
@@ -156,7 +160,7 @@ export function formatClasses(e: ClassEvaluation): string {
     rows.push(`  run ${r.run}: ${r.leads} different leads${r.problems!.length ? `; problems: ${r.problems!.join("; ")}` : ""}${r.warnings!.length ? `; warnings: ${r.warnings!.join("; ")}` : ""}`);
     for (const o of r.draft!.offers) {
       const p = o.offer;
-      rows.push(`    ${p.name}${p.book ? " (the book's)" : ""}${p.guarded ? " [guarded]" : ""}: ${o.role}. Weighs: ${o.weighs}`);
+      rows.push(`    ${p.name}${p.book ? " (the book's)" : ""}${p.guarded ? " [guarded]" : ""}${o.everyFight ? " [most fights]" : ""}: ${o.role}. Weighs: ${o.weighs}`);
       rows.push(`      Notice: ${p.notice}`);
       rows.push(`      Profile: ${p.profile.shape}, ${p.profile.points.map((x) => `${x.points} ${x.attribute}`).join(", ")}`);
       rows.push(`      Technique: ${p.technique.name} (${p.technique.cost}${p.technique.hook ? `, ${p.technique.hook.kind === "clash" ? `+${p.technique.hook.bonus} ${p.technique.hook.side}` : `heal ${p.technique.hook.amount} ${p.technique.hook.reach}`}` : ""}): ${p.technique.effect}`);

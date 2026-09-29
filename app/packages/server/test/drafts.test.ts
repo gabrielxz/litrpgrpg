@@ -452,6 +452,7 @@ describe("drafting from typed table talk", () => {
       technique: { name: `${name} Blow`, cost: "Frequency", effect: "+10 to an attack Clash", drawback: null, reaction: false, noBeat: false, actionEconomy: false, clash: { bonus: 10, side: "attack" }, heal: null },
       permission: { name: `${name} Way`, effect: "Something the character already decides", actionEconomy: false, onceADay: false },
       guarded: false,
+      everyFight: true,
       ...extra,
     });
     classed = [{ output: { offers: [offer("Breaker"), offer("Taker", { guarded: true }), { ...offer("x"), book: "Battle Medic" }] } }];

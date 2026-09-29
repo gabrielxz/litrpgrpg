@@ -70,7 +70,7 @@ export interface Suggested {
   stance?: "affirm" | "test";
   notice?: string;
   /** Class offers: for the GM, each offer's role, what it weighs, and the book's rules and advice it crosses; and problems across the three. */
-  offers?: { role: string; weighs: string; problems: string[]; warnings: string[] }[];
+  offers?: { role: string; weighs: string; problems: string[]; warnings: string[]; everyFight?: boolean }[];
   problems?: string[];
 }
 
@@ -255,7 +255,7 @@ export class Drafts {
           kind: "class-offers",
           key: out.offers.map((o) => o.offer.name).join(", "),
           characterId,
-          offers: out.offers.map((o) => ({ role: o.role, weighs: o.weighs, problems: o.problems, warnings: o.warnings })),
+          offers: out.offers.map((o) => ({ role: o.role, weighs: o.weighs, problems: o.problems, warnings: o.warnings, everyFight: o.everyFight })),
           problems: out.problems,
         };
         const action: Action = { type: "class.offer", characterId, offers: out.offers.map((o) => o.offer) };
