@@ -132,6 +132,7 @@ A class never touches these, whatever its notice says:
 - **The Downed countdown.** A technique may pause a Downed ally's countdown for one round at the cost of a Beat (Core Mechanics, "Downed and Death"). Nothing else touches the countdown.
 - **Aether in combat.** No class restores Aether during a fight, except by the one guarded power below.
 - **The Cross-Grade Adjustment.** No class reduces it, except by the guarded powers below.
+- **Rest.** No class adds to what a rest restores. A class heal is a power used in a fight or between rests, and it never raises Health above its maximum.
 
 **A technique that constrains an enemy's choices** (holds it, forbids an act, turns it away) offers the enemy one Clash, its HRT Force against yours (Core Mechanics, "Clashes"), whatever the class's lead Attribute. A constraint that rides an attack the character already won needs no second roll.
 
@@ -160,7 +161,9 @@ The GM, or the System AI in assisted modes, builds three offers from the charact
 5. **Write the permission.** The decision the role makes differently. Check it against the limit of one action-economy effect per class and the rule that the same act is never free twice.
 6. **Name it, and write the notice.** The System's text in its units, then the mechanics beside it. Read the notice aloud; if it names a Beat, a roll, or a Margin, rewrite it.
 
-Powers that make the player declare something (a vow, a sanction, a kill named for its loot, a proposal to the System) are the best powers for the Engine, because the declaration is signal. Powers that only add a number give the Engine the least signal.
+**Two of the three offers work in most fights.** Most of play is fighting. At least two offers carry a technique or a permission the character can use in most fights with no setup beyond the fight itself: closing on an enemy or breaking away, a strike or a guard declared with the Clash, moving an enemy between Zones, taking Momentum, covering an ally. The third may serve support, a scene outside the fight, or an odd corner of the record.
+
+**No busywork.** A power is not gated on an earlier chore ("usable only if the supplies were counted at the last rest"), and its trigger comes up in most fights or most scenes of the kind it serves. A choice with stakes made in the moment, such as the Vowbound's vow or a target named, gives the Engine signal. A ritual the player repeats to keep a power working is busywork.
 
 ### AI-Assisted
 
@@ -186,9 +189,12 @@ Each offer is one package:
 At most one of the technique and the permission may change the
 action economy. Reactions are once per encounter. Never: touch
 Volatile Energy, move the Volatility Threshold, regenerate Aether in
-combat, reduce the Cross-Grade Adjustment, or grant a Beat. Make the
-three offers differ in role. Prefer powers that make the player
-declare something.
+combat, reduce the Cross-Grade Adjustment, grant a Beat, add to what
+a rest restores, or raise Health above its maximum. Healing is a power
+used in a fight or between rests. Make the three offers differ in
+role. At least two of the three carry a technique or a permission
+usable in most fights with no setup beyond the fight. No power is
+gated on an earlier chore or waits on a trigger that seldom comes up.
 
 Character: [stats, level, Background, Proficiencies, weapons, Principle, titles]
 Record: [Deep Vector reads, the circled Defining moments, what the

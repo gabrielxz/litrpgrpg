@@ -238,6 +238,8 @@ encounter_guidance:
   peer_fight: equal Force
   tougher: +10 enemy Force
   second_creature_worth_force: 20   # two creatures at Force 30 fight like one at Force 50
+  further_creature_worth_force: 10  # each creature past the second: three at 30 fight like one at 60, four like one at 70
+                                    # (tools/class_sim.py 2026-09-29, Levels 10-25, one to four creatures; five scatter)
   party_size_written_for: 4
   force_per_character: 10           # from Level 8: 10 Force less per character under four, 10 more per character over
   columns_per_character: 1          # every level: one column easier or harder per character; at Levels 1-7 in a group,

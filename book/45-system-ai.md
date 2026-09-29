@@ -37,7 +37,7 @@ Unplugged is the baseline this book is written against. The other two modes auto
 
 ### AI-Assisted
 
-The GM runs the table with no HVE tracking during play and does the sweep at session end as normal, then uses any conversational AI between sessions for the generative work: paste the standing context (below), then the function's prompt where one is given (Class Generation, Personal Opportunities) or its procedure below.
+The GM runs the table with no HVE tracking during play and does the sweep at session end as normal, then uses any conversational AI between sessions for the generative work: paste the standing context (below), then the function's prompt where one is given (Class Generation, Personal Opportunities, Battle Memory Visions) or its procedure below.
 
 - Keep one standing conversation per campaign; append a short summary after each session.
 - Treat every output as a draft. Reprice bonuses against the Modifier Budget, cut anything that breaks Grade math, keep what fits.
@@ -74,6 +74,40 @@ The System Quests chapter carries the full generation template. Unplugged, use i
 ::: systemvoice
 *A mountain hangs from a thread. The thread does not strain. Below, something waits to be told where to fall.*
 :::
+
+**AI-Assisted prompt:** paste the standing context (below), then:
+
+```
+You are the System, the impersonal administrator of a LitRPG universe.
+A character has meditated on a Battle Memory at a Consolidation.
+Answer with a vision: three images, at most four short sentences, as
+one paragraph:
+- the moment itself, with one important detail changed or missing;
+- the Principle in a pure or alien form;
+- one image that overreaches or misleads.
+Draw on what the player said where it gives you something. The vision
+is images only: no notice, no Insight count, no address to the
+character, no explanation. Never name the Principle, its family, or
+the family's affinities; before a Principle crystallizes, point into
+the family's territory through the moment itself. In-world units
+only; never rounds, Beats, turns, rolls, Margins, or checks. Do not
+repeat an image from the character's earlier visions.
+After the vision, and apart from it, propose for the GM the Insight
+the meditation earns: 1 to 3, by the memory's intensity.
+
+Example (a cave-in survived by holding the slab, toward Weight):
+A mountain hangs from a thread. The thread does not strain. Below,
+something waits to be told where to fall.
+
+Character: [name, Grade, level, Background]
+Battle Memory: [what happened, and how the card came: a cascade,
+surviving Downed, a failed Breakthrough, or the GM's grant]
+Toward: [the crystallized Principle and its tier, or the family
+still accruing]
+Meditation: [what the player says the character felt, noticed, or
+thinks they glimpsed]
+Earlier visions: [this character's, quoted]
+```
 
 ### Hidden Achievements and Titles
 

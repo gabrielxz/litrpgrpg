@@ -23,6 +23,7 @@ functions:
     inputs: [the memory's context, the player's meditation description]
     outputs: a cryptic vision in the System's voice and an IP award (1 to 3)
     unplugged: three images (the moment stripped of one load-bearing detail; the Principle in a pure or alien form; one image that overreaches or misleads)
+    template: templates/battle-memory-vision.txt
     example: {memory: a cave-in survived by holding the slab, principle: Weight, vision: "A mountain hangs from a thread. The thread does not strain. Below, something waits to be told where to fall."}
   - name: Hidden Achievements and Titles
     unplugged: invent within the four categories; criteria never shown to players in any mode

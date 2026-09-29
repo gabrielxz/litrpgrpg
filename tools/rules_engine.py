@@ -364,12 +364,12 @@ def creature_sizing_force(offense: list, defense: list) -> int:
 
 
 def encounter_force(forces: list) -> int:
-    """One creature fights at its Force; a second counts as 20 Force. The table sizes one or two."""
+    """One creature fights at its Force; a second counts as 20 Force, and each one past it as 10."""
     if not forces:
         raise ValueError("an encounter has at least one creature")
-    if len(forces) > 2:
-        raise RulesGap("the sizing table sizes one or two creatures; the Bestiary does not say what a third adds")
-    return max(forces) + load("bestiary")["encounter_guidance"]["second_creature_worth_force"] * (len(forces) - 1)
+    g = load("bestiary")["encounter_guidance"]
+    extra = g["second_creature_worth_force"] if len(forces) > 1 else 0
+    return max(forces) + extra + g["further_creature_worth_force"] * max(0, len(forces) - 2)
 
 
 def encounter_column_force(party_level: int, party_size: int, force: int) -> str:

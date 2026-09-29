@@ -23,3 +23,5 @@ The community will not level, will not take quests
 A town with no river has a highway
 # What Can Be Seen: the rule itself is an absence.
 No character can see the Hidden Vector Engine
+# The System AI, the vision prompt: a model needs the exclusions listed.
+is images only: no notice, no Insight count, no address to the

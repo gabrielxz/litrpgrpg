@@ -17,9 +17,12 @@ Each offer is one package:
 At most one of the technique and the permission may change the
 action economy. Reactions are once per encounter. Never: touch
 Volatile Energy, move the Volatility Threshold, regenerate Aether in
-combat, reduce the Cross-Grade Adjustment, or grant a Beat. Make the
-three offers differ in role. Prefer powers that make the player
-declare something.
+combat, reduce the Cross-Grade Adjustment, grant a Beat, add to what
+a rest restores, or raise Health above its maximum. Healing is a power
+used in a fight or between rests. Make the three offers differ in
+role. At least two of the three carry a technique or a permission
+usable in most fights with no setup beyond the fight. No power is
+gated on an earlier chore or waits on a trigger that seldom comes up.
 
 Character: [stats, level, Background, Proficiencies, weapons, Principle, titles]
 Record: [Deep Vector reads, the circled Defining moments, what the

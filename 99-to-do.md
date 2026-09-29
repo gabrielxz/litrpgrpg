@@ -104,15 +104,7 @@ Each track keeps one current handoff here, replaced at the close of a session; t
 
 Edits an app session forces, each with Gabriel's ruling or Claude's recommendation awaiting it. A book session applies them and clears the list. The finishing-blow definition of a confirmed kill stays as written (Titles), and VE stays shared.
 
-- **Three or more creatures from Level 8** (app session, 2026-09-27). The Bestiary says a second creature counts as 20 Force and that extra bodies multiply danger, and says nothing of a third; the reference engine raises RulesGap there (`encounter_force`). Gabriel accepted Claude's recommendation (2026-09-27): run three and four creatures through `tools/class_sim.py` and state the rule that holds (for instance, each creature past the second one column harder); until then the app says the table sizes one or two.
-
-- **Class offers play at the table** (Gabriel's rulings, 2026-09-29, from reading the app's class drafts). Three edits to Classes, "Building a Class for a Specific Human", its AI-Assisted prompt, and `rules/templates/class-generation.txt`, in the same words:
-  - **Drop "Prefer powers that make the player declare something"** (Gabriel: it drew chores). The paragraph after step 6 that calls declarations the Engine's best signal goes with it or narrows; Claude's recommendation: keep only that a choice with stakes made in the moment (the Vowbound's vow, a named target) is good signal, and say a ritual repeated to keep a power working is busywork.
-  - **No busywork, and more for every fight.** No gate on an earlier chore ("usable only if the supplies were counted at the last rest") and no trigger so narrow it seldom comes up; at least two of the three offers carry a technique or permission usable in most fights with no setup beyond the fight (closing or breaking distance, a strike or guard declared with the Clash, moving an enemy between Zones, taking Momentum, covering an ally), the third free for support or scenes outside the fight.
-  - **Healing is a power used in a fight or between rests.** Nothing adds to what a rest restores (a rest restores all Health by its fifth hour, so a bonus only counts on a short rest), and nothing raises Health above its maximum.
-  Then the book session checks the sixteen worked classes against it (the Adjudicator's Contempt, an execution attempted in the holder's Zone, and the Lightfingers' Lift, an Exposed enemy only, are the narrowest). The app runs all three now (`draft-classes`: the declare line filtered from the template until the book removes it).
-
-- **The vision prompt for AI-Assisted play** (app session, 2026-09-29). The book still owes the Battle Memory Visions function prompt (carried above). The app's vision drafter (`app/packages/listening/src/draft-voice.ts`, `draftVisionSystem`) states the three-image procedure, the voice from `rules/system-ai.yaml`, and the book's sample vision, and drafted all six vision fixtures in range. Claude's recommendation: the book session writes the template from it into `rules/templates/`, in the book's own words.
+- **The sixteen classes against the class-offer rulings** (book session, 2026-09-29; the rulings are in Classes). Awaiting Gabriel's call on the proposals: Adjudicator's Contempt, Lightfingers' Lift, Witness's The Observation, and whether the Underdog stands.
 
 ### Next app session
 
@@ -132,6 +124,9 @@ Edits an app session forces, each with Gabriel's ruling or Claude's recommendati
 Book changes the app must follow. An app session applies them and clears the list.
 
 - **The Force Personal Opportunity example pays the table** (book session, 2026-09-29; rules 0.1.34). Quests and The System AI's quest register now read "Hostile detected within 100 meters. Eliminate within 6 hours. Reward: 30 VE." (`system-ai.yaml` `voice.registers.quest` carries it). `draft-opportunity.ts` still quotes "Reward proportional to threat" in its prompt; it takes the book's line. Quests' Performance-Scaled Rewards example is now "reward proportional to material recovered".
+- **Three and four creatures size** (book session, 2026-09-29; rules 0.1.35). Each creature past the second counts as 10 Force (`further_creature_worth_force`). The book session ported `encounterForce` in the engine so the shared fixtures pass; `record/src/planning.ts` still returns early for three or more with "The table sizes one or two creatures", and can size them now.
+- **The class template carries the rulings** (rules 0.1.35). `class-generation.txt` no longer has the declare line, so the filter in `draft-classes.ts` finds nothing and can go; the template's new lines (two of three for most fights, no chore gates or rare triggers, healing in a fight or between rests, nothing added to a rest) overlap the drafter's "What plays well at the table".
+- **The vision template** (rules 0.1.35). `templates/battle-memory-vision.txt`, named in `system-ai.yaml` under Battle Memory Visions, is the book's AI-Assisted prompt. `draftVisionSystem` may read it or keep its own words; the book's lists a failed Breakthrough among the ways a card comes.
 
 ## Design Items Referenced by the Checklist
 

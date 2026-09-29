@@ -177,15 +177,27 @@ def pregen_drift() -> list[str]:
     return out
 
 
-def summary_template_drift() -> list[str]:
-    """rules/templates/integration-summary.txt is the Tutorial's Summary Template, verbatim."""
-    with open(os.path.join(BOOK, "70-tutorial.md"), encoding="utf-8") as fh:
-        m = re.search(r"#### Summary Template\n\n```\n(.*?)```", fh.read(), re.S)
-    with open(os.path.join(ROOT, "rules", "templates", "integration-summary.txt"), encoding="utf-8") as fh:
-        data = fh.read()
-    if not m or m.group(1) != data:
-        return ["rules/templates/integration-summary.txt differs from the Tutorial's Summary Template; the book's block wins"]
-    return []
+# Templates under rules/templates/ printed verbatim in the book: (file, chapter, heading the first code block follows).
+VERBATIM_TEMPLATES = [
+    ("integration-summary.txt", "70-tutorial.md", "#### Summary Template"),
+    ("class-generation.txt", "18-classes.md", "### AI-Assisted"),
+    ("battle-memory-vision.txt", "45-system-ai.md", "### Battle Memory Visions"),
+]
+
+
+def template_drift() -> list[str]:
+    """Each template in VERBATIM_TEMPLATES matches the first code block after its heading in the book."""
+    out = []
+    for name, chapter, heading in VERBATIM_TEMPLATES:
+        with open(os.path.join(BOOK, chapter), encoding="utf-8") as fh:
+            text = fh.read()
+        at = text.find(heading + "\n")
+        m = re.search(r"```\n(.*?)```", text[at:], re.S) if at >= 0 else None
+        with open(os.path.join(ROOT, "rules", "templates", name), encoding="utf-8") as fh:
+            data = fh.read()
+        if not m or m.group(1).strip("\n") != data.strip("\n"):
+            out.append(f"rules/templates/{name} differs from its block under \"{heading}\" in {chapter}; the book's block wins")
+    return out
 
 
 def main() -> int:
@@ -222,7 +234,7 @@ def main() -> int:
     problems.extend(sizing_drift())
     problems.extend(tutorial_pack_drift())
     problems.extend(pregen_drift())
-    problems.extend(summary_template_drift())
+    problems.extend(template_drift())
 
     # 3. voice warnings (never fail)
     warnings = []

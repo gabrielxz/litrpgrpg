@@ -1,7 +1,7 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.34"
+version: "0.1.35"
 dated: "2026-09-29"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
@@ -115,3 +115,9 @@ notes: >
   renders from titles.yaml inspection. integration-summary.txt is the Tutorial's Summary Template verbatim, and the
   prose lint holds it and the pregens' taglines, Backgrounds, and playing notes to the book. The System's quest
   register sample pays a fixed 30 VE. The book takes the queued app rulings of 0.1.23 to 0.1.33.
+  0.1.35: each creature past the second counts as 10 Force (bestiary.yaml encounter_guidance
+  further_creature_worth_force: 10; tools/class_sim.py, Levels 10 to 25, one to four creatures), and
+  encounter_force sizes any number. Class offers: the template drops "prefer powers that make the player
+  declare something" and carries the rulings (two of three offers work in most fights, no busywork,
+  healing in a fight or between rests); a class never adds to what a rest restores (Classes, Guardrails).
+  The Battle Memory Visions prompt joins the templates (templates/battle-memory-vision.txt).

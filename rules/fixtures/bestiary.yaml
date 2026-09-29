@@ -30,12 +30,16 @@ cases:
     fn: encounter_force
     args: {forces: [20, 20]}
     expect: 40
-  - name: The table sizes one or two creatures
+  - name: Three creatures at Force 30 fight like one at Force 60
     source: '60-bestiary.md, "GM Reference: Encounter Building"'
     fn: encounter_force
     args: {forces: [30, 30, 30]}
-    expect: null
-    expect_error: RulesGap
+    expect: 60
+  - name: Four creatures at Force 30 fight like one at Force 70
+    source: '60-bestiary.md, "GM Reference: Encounter Building"'
+    fn: encounter_force
+    args: {forces: [30, 30, 30, 30]}
+    expect: 70
   - name: One creature at Force 40 is a standard fight for four at Level 10
     source: '60-bestiary.md, "GM Reference: Encounter Building" (the sizing table)'
     fn: encounter_column_force
