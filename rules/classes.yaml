@@ -181,11 +181,11 @@ classes:
     permission: {name: What Is Left, effect: "You read the current Health of every creature in your Zone (an exception to What Can Be Seen)", action_economy: false}
   - name: Underdog
     built_for: Tess
-    notice: "Find the Seam: once per fight, a blow against what stands above your Grade finds the gap that Grade leaves, and the difference of Grade weighs 20 less. Against what stands above you, a Surge costs no more than 5 Aether. Selection: Strength +10. Growth: Strength, Strength, Heart."
+    notice: "Find the Seam: once per fight, a blow against what stands above you finds the gap. Against a greater Grade, the difference weighs 20 less; against greater strength of your own Grade, the blow lands harder. Against a greater Grade, a Surge costs no more than 5 Aether. Selection: Strength +10. Growth: Strength, Strength, Heart."
     guarded: true
     poles: [Force, Will]
     profile: {shape: Fixed, points: {STR: 2, HRT: 1}}
-    technique: {name: Find the Seam, cost: Frequency, effect: "An attack on a higher-Grade target ignores 20 of its Cross-Grade Adjustment"}
+    technique: {name: Find the Seam, cost: Frequency, effect: "An attack on a higher-Grade target ignores 20 of its Cross-Grade Adjustment (guarded); against a target of your own Grade whose Force exceeds your attack's Force, +10"}
     permission: {name: Above You, effect: "Against a higher-Grade target, Surge costs 5, or your ordinary Surge cost if lower", action_economy: false}
 
 # NPC classes print as a Tactics line: the class name and its one technique.

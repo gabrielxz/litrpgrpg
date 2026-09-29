@@ -4,6 +4,14 @@
 
 ---
 
+**Handoff (2026-09-26, book track: sixteen app edits applied; replaced 2026-09-29).** Rules 0.1.22, pushed (3256d11), `make check` green. The sixteen edits the app sessions queued are applied (`rules/version.yaml` lists them), and Core Mechanics carries an Exceptions line beside Rounding: where the text of a class, Principle, title, item, or stat block contradicts a general rule, that text governs. The reading copy is build 20260926-235744 (350 pages, rules 0.1.22, no notes); Gabriel's read resumes at **Progression**.
+
+**Next.** When he has annotated: `make notes`, read the chapters, work the notes (agreed / his call / pushback), apply, `make check`, commit, archive the annotated copy to `reading/archive/`, `make reading-copy`. If his notes generalize into patterns, sweep the unread chapters and apply before he reaches them. The release checklist above holds everything else.
+
+**Carried from earlier handoffs** (not recorded elsewhere):
+- The missing AI-Assisted function prompts: Battle Memory Visions, Hidden Achievements, Loot, Skill Synthesis, Identify (The System AI; also the app's M2 path).
+- The SVGs in `book/art/emblem/` carry a transform that pushes the clave out of frame.
+
 **Handoff (2026-09-29, app track: the suggestion panel and Personal Opportunities; replaced at the tenth close).** Rules 0.1.31, `make check` green (engine 235, record 122, server 63, listening 130, web 8). Everything pushed and deployed (run 36565962342). Each screen change checked in the browser with a GM tab and a player tab:
 - **M1 is closed.** Max HP per Raw FOR, the Surge cost's divisor and minimum, and the Anchor's bonus by Margin are read from `rules/` in both engines (0.1.31); fixtures for `stat_cap`, `weapon_bonus`, and the two RulesGaps. The notice test takes a sample of every effect kind (a new kind fails the typecheck until placed as announced or silent); a pill that does nothing stays silent. GM-written text a player sees warns on the table's words; the section bar wraps at narrow widths.
 - **The suggestion panel.** A Suggestions section, second in the bar with a count: what the record makes due and what drafting raised (titles the fiction earns, Battle Memory Cards, Hidden Achievements, Personal Opportunities, Prep cues). The `draft-suggestions` drafter finds every expected title and card with nothing invented over 14 scripts × 2 runs; its first pass exposed three script faults, fixed. A suggestion the GM has seen is not raised again.

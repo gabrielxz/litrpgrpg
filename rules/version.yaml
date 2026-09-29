@@ -1,7 +1,7 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.35"
+version: "0.1.36"
 dated: "2026-09-29"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
@@ -121,3 +121,7 @@ notes: >
   declare something" and carries the rulings (two of three offers work in most fights, no busywork,
   healing in a fight or between rests); a class never adds to what a rest restores (Classes, Guardrails).
   The Battle Memory Visions prompt joins the templates (templates/battle-memory-vision.txt).
+  0.1.36: classes by the class-offer rulings (Gabriel, 2026-09-29): the Adjudicator's Contempt answers the
+  sanctioned act; the Witness's The Observation comes once per encounter at any death in sight; the Underdog's
+  Find the Seam adds +10 against a same-Grade target whose Force exceeds the attack's (the Grade-gap
+  application stays guarded), and Above You notes that it matters from E-Grade on.

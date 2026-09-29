@@ -92,19 +92,20 @@ Each track keeps one current handoff here, replaced at the close of a session; t
 
 ### Next book session
 
-**State (2026-09-26).** Rules 0.1.22, pushed (3256d11), `make check` green. The sixteen edits the app sessions queued are applied (`rules/version.yaml` lists them), and Core Mechanics carries an Exceptions line beside Rounding: where the text of a class, Principle, title, item, or stat block contradicts a general rule, that text governs. The reading copy is build 20260926-235744 (350 pages, rules 0.1.22, no notes); Gabriel's read resumes at **Progression**.
+**State (2026-09-29).** Rules 0.1.36, pushed, `make check` green. The queue from the app sessions is cleared: the sixteen items and the class-offer rulings are in the book, with each class checked against them (the Adjudicator's Contempt answers the Sanction, the Witness's The Observation comes at any death, the Underdog's Find the Seam works against a stronger same-Grade foe, and Lift stands). Gabriel's rule from that pass is in Classes: a narrow power stands beside a broad one. Three or more creatures size at +10 Force each past the second (class_sim, Levels 10 to 25). The lint now holds the pregens and three prompt templates to the book. The reading copy is refreshed at rules 0.1.36; Gabriel's read resumes at **Progression**.
 
-**Next.** When he has annotated: `make notes`, read the chapters, work the notes (agreed / his call / pushback), apply, `make check`, commit, archive the annotated copy to `reading/archive/`, `make reading-copy`. If his notes generalize into patterns, sweep the unread chapters and apply before he reaches them. The release checklist above holds everything else.
+**Next.** When he has annotated: `make notes`, work the notes (agreed / his call / pushback), apply, `make check`, commit, archive the annotated copy to `reading/archive/`, `make reading-copy`. If his notes generalize into patterns, sweep the unread chapters before he reaches them.
 
-**Carried from earlier handoffs** (not recorded elsewhere):
-- The missing AI-Assisted function prompts: Battle Memory Visions, Hidden Achievements, Loot, Skill Synthesis, Identify (The System AI; also the app's M2 path).
+**Carried** (recorded nowhere else):
+- The missing AI-Assisted function prompts: Hidden Achievements, Loot, Skill Synthesis, Identify (The System AI). Battle Memory Visions is written.
 - The SVGs in `book/art/emblem/` carry a transform that pushes the clave out of frame.
+- Quests' Personal Opportunity template (step 5, Visible Reward) does not mention when a reward is proportional; the rule sits under the Reward Reference Table.
 
 ### Queued for the book
 
 Edits an app session forces, each with Gabriel's ruling or Claude's recommendation awaiting it. A book session applies them and clears the list. The finishing-blow definition of a confirmed kill stays as written (Titles), and VE stays shared.
 
-- **The Underdog's same-Grade application** (book session, 2026-09-29). Gabriel ruled the Underdog gets a use against same-Grade opponents while keeping its Grade-gap build; the Adjudicator and Witness fixes are applied and Lift stands. Awaiting his call on which power carries it (Claude recommends Find the Seam, since Above You's Surge discount does nothing at F-Grade).
+*(empty)*
 
 ### Next app session
 
@@ -127,6 +128,7 @@ Book changes the app must follow. An app session applies them and clears the lis
 - **Three and four creatures size** (book session, 2026-09-29; rules 0.1.35). Each creature past the second counts as 10 Force (`further_creature_worth_force`). The book session ported `encounterForce` in the engine so the shared fixtures pass; `record/src/planning.ts` still returns early for three or more with "The table sizes one or two creatures", and can size them now.
 - **The class template carries the rulings** (rules 0.1.35). `class-generation.txt` no longer has the declare line, so the filter in `draft-classes.ts` finds nothing and can go; the template's new lines (two of three for most fights, no chore gates or rare triggers, healing in a fight or between rests, nothing added to a rest) overlap the drafter's "What plays well at the table".
 - **Contempt and The Observation** (rules 0.1.35, `classes.yaml`). The Adjudicator's Contempt answers the sanctioned act (once per encounter, a creature in the holder's Zone that takes the action the Sanction names draws a Clash for no Beat, after the action resolves), and the Witness's The Observation comes once per encounter at any death in sight. Any app surface that describes either follows the data.
+- **Find the Seam against the same Grade** (rules 0.1.36, `classes.yaml`). The Underdog's technique adds +10 against a target of the holder's Grade whose Force exceeds the attack's Force; the Grade-gap application stays guarded. If the app applies Clash hooks for it, the hook is conditional on the Forces.
 - **The vision template** (rules 0.1.35). `templates/battle-memory-vision.txt`, named in `system-ai.yaml` under Battle Memory Visions, is the book's AI-Assisted prompt. `draftVisionSystem` may read it or keep its own words; the book's lists a failed Breakthrough among the ways a card comes.
 
 ## Design Items Referenced by the Checklist

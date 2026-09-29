@@ -471,12 +471,12 @@ Each entry carries the person the class was built for, the System's notice, and 
 ::: systemvoice
 *Class offered: Underdog.*
 
-*Find the Seam: once per fight, a blow against what stands above your Grade finds the gap that Grade leaves, and the difference of Grade weighs 20 less. Against what stands above you, a Surge costs no more than 5 Aether. Selection: Strength +10. Growth: Strength, Strength, Heart.*
+*Find the Seam: once per fight, a blow against what stands above you finds the gap. Against a greater Grade, the difference weighs 20 less; against greater strength of your own Grade, the blow lands harder. Against a greater Grade, a Surge costs no more than 5 Aether. Selection: Strength +10. Growth: Strength, Strength, Heart.*
 :::
 
 - **Profile:** Fixed. 2 STR, 1 HRT. Lead STR.
-- **Technique:** Find the Seam. Frequency, part of an attack, once per encounter: an attack on a higher-Grade target ignores 20 of its Cross-Grade Adjustment (Core Mechanics, "Fighting Across a Grade"). Guarded.
-- **Permission:** Above You. Against a higher-Grade target, Surge costs 5, or your ordinary Surge cost if that is lower. Guarded.
+- **Technique:** Find the Seam. Frequency, part of an attack, once per encounter. Against a higher-Grade target, the attack ignores 20 of its Cross-Grade Adjustment (Core Mechanics, "Fighting Across a Grade"); this application is guarded. Against a target of your own Grade whose Force exceeds your attack's Force, the attack is +10.
+- **Permission:** Above You. Against a higher-Grade target, Surge costs 5, or your ordinary Surge cost if that is lower. Guarded. A Surge costs more than 5 only at a Maximum Aether of 12 or more, so at F-Grade Above You matters to a high-POW build alone; from E-Grade on, where pools are ten times larger, it matters to every build.
 - **Poles:** Force, Will.
 
 ## NPC Classes
