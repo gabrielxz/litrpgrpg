@@ -46,6 +46,12 @@ The scripted sessions in `packages/listening/scripts/` run through the events dr
 pnpm --filter @gradebreaker/server draft-eval --runs 3
 ```
 
+The microphone path runs in a real browser with the command below, against the development servers: headless Chrome (`/usr/bin/google-chrome`, or `--chrome <path>`) gives a player's tab a tone file as its microphone in a campaign of its own, and the GM's live socket must see the stream arrive, mute, fall silent at a pause, and stop at a withdrawal. The desktop app's browser pane blocks microphones, so screen checks there see the refused path.
+
+```bash
+pnpm --filter @gradebreaker/server capture-check
+```
+
 Every table lives in the Postgres schema `gradebreaker`. The Supabase project runs with its Data API off, the schema grants nothing to Supabase's `anon` and `authenticated` roles, and row-level security is on with no policies; the server connects as the tables' owner.
 
 ## Deploying

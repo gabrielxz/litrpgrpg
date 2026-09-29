@@ -31,10 +31,14 @@ export type {
   PlayerClash,
   GmView,
   InterfaceSheet,
+  ListeningMode,
+  ListeningStatus,
   LiveMessage,
   Member,
   PlayerView,
   Role,
+  StreamState,
+  StreamStatus,
   View,
 } from "./protocol.ts";
 export { type D100, type Dice, rollD100s } from "./dice.ts";
@@ -87,7 +91,7 @@ export {
 } from "./classes.ts";
 export { type PrepAction, type PrepCreature, type PrepItem, prepCause, tutorialPack } from "./prep.ts";
 export { type Clock, type ClockAction, MINUTES_PER_DAY, clockLine, dayOf, toNextDawn } from "./clock.ts";
-export { type CampaignSession, type SessionAction, sessionName } from "./sessions.ts";
+export { type CampaignSession, type SessionAction, runningSession, sessionName } from "./sessions.ts";
 export { type CampaignEvent, type EventAction, type HveEntry, type LogEvent, intensities, sweepWeight } from "./events.ts";
 export { type CopyDeep, type HveAction, type Moment, type SweepEntry, type SweepHve, type Weight, axes, currentOf, leadsOf, weights } from "./hve.ts";
 export { DERIVED_COUNTERS, type Title, type TitleAction, type TitleCategory, type TitleRead, type TitleSpec, catalogSpec, counted, tickedCounters, titlesRead } from "./titles.ts";

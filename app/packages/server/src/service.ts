@@ -214,6 +214,23 @@ export class Service {
     return rows.map((r) => ({ userId: r.user_id, displayName: r.display_name, role: r.role }));
   }
 
+  /** The people in a campaign who have consented to listening. */
+  async listeningConsents(campaignId: string): Promise<Set<string>> {
+    const rows = await this.db.query<{ user_id: string }>(
+      "select user_id from memberships where campaign_id = $1 and listening_consent_at is not null",
+      [campaignId],
+    );
+    return new Set(rows.map((r) => r.user_id));
+  }
+
+  /** Gives or withdraws one's own consent to listening; nobody sets it for another. */
+  async setListeningConsent(campaignId: string, userId: string, give: boolean): Promise<void> {
+    await this.db.query(
+      `update memberships set listening_consent_at = ${give ? "coalesce(listening_consent_at, now())" : "null"} where campaign_id = $1 and user_id = $2`,
+      [campaignId, userId],
+    );
+  }
+
   // ---------------------------------------------------------- invites ---
 
   async createInvite(campaignId: string, creator: User, opts: { maxUses?: number; expiresInHours?: number } = {}): Promise<Invite> {

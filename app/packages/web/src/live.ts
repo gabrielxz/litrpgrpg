@@ -1,12 +1,14 @@
 /**
  * One campaign, kept current. Opens the live channel, authenticates with the current token,
  * and applies what arrives: the view on every message (a player's carries their notices), and
- * the log for the GM. A dropped connection reconnects with backoff and resynchronizes from the state the
+ * the log for the GM. After the first view it asks for the listening status, which arrives with
+ * every change and carries each stream to the GM; `send` puts a capture report or a frame of audio
+ * on the same socket. A dropped connection reconnects with backoff and resynchronizes from the state the
  * server sends on connect.
  */
 import { Engine } from "@gradebreaker/engine";
-import type { Envelope, LiveMessage, View } from "@gradebreaker/record";
-import { useCallback, useEffect, useState } from "react";
+import type { Envelope, ListeningStatus, LiveMessage, View } from "@gradebreaker/record";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { api, currentToken } from "./api.ts";
 
 export type LiveStatus = "connecting" | "live" | "reconnecting";
@@ -16,6 +18,14 @@ export function useCampaign(campaignId: string) {
   const [log, setLog] = useState<Envelope[]>([]);
   const [status, setStatus] = useState<LiveStatus>("connecting");
   const [error, setError] = useState<string | null>(null);
+  const [listening, setListening] = useState<ListeningStatus | null>(null);
+  const socketRef = useRef<WebSocket | null>(null);
+
+  /** Sends on the live socket if it is open; a frame sent while reconnecting is dropped. */
+  const send = useCallback((data: string | ArrayBuffer) => {
+    const ws = socketRef.current;
+    if (ws?.readyState === WebSocket.OPEN) ws.send(data);
+  }, []);
 
   /** Adds envelopes the page learned of directly (a POST's response) ahead of the live echo. */
   const addToLog = useCallback((env: Envelope) => {
@@ -34,13 +44,21 @@ export function useCampaign(campaignId: string) {
       const url = `${window.location.protocol === "https:" ? "wss" : "ws"}://${window.location.host}/api/campaigns/${campaignId}/live`;
       const ws = new WebSocket(url);
       socket = ws;
+      socketRef.current = ws;
+      let asked = false;
       ws.onopen = () => ws.send(JSON.stringify({ type: "auth", token }));
       ws.onmessage = (event) => {
         const msg = JSON.parse(String(event.data)) as LiveMessage;
         delay = 1000;
         setStatus("live");
-        if (msg.type === "state") {
+        if (msg.type === "listening") {
+          setListening(msg.status);
+        } else if (msg.type === "state") {
           setView(msg.view);
+          if (!asked) {
+            asked = true;
+            ws.send(JSON.stringify({ type: "listen" }));
+          }
           if (msg.view.role === "gm") {
             void api<{ log: Envelope[] }>("GET", `/campaigns/${campaignId}/log`).then((r) => setLog(r.log));
           }
@@ -58,6 +76,7 @@ export function useCampaign(campaignId: string) {
           return;
         }
         setStatus("reconnecting");
+        setListening(null);
         timer = setTimeout(connect, delay);
         delay = Math.min(delay * 2, 15000);
       };
@@ -71,7 +90,7 @@ export function useCampaign(campaignId: string) {
     };
   }, [campaignId, addToLog]);
 
-  return { view, log, status, error, addToLog };
+  return { view, log, status, error, addToLog, listening, send };
 }
 
 const engines = new Map<string, Promise<Engine>>();

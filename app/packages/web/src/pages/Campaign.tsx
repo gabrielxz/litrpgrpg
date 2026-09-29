@@ -1,4 +1,5 @@
 import { GmCampaign } from "../gm/GmCampaign.tsx";
+import { ListeningBar } from "../Listening.tsx";
 import { useCampaign } from "../live.ts";
 import { PlayerCampaign } from "../player/PlayerCampaign.tsx";
 import { TopBar } from "./Home.tsx";
@@ -33,6 +34,7 @@ export function Campaign({ id }: { id: string }) {
   return (
     <>
       <TopBar>{statusLine}</TopBar>
+      <ListeningBar campaignId={id} role={view.role} status={live.listening} send={live.send} />
       {view.role === "gm" ? <GmCampaign view={view} live={live} /> : <PlayerCampaign view={view} />}
     </>
   );

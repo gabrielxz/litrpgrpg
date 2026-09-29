@@ -6,6 +6,10 @@
  * after every append: the GM receives each envelope, its effects, and the new view; a player
  * receives their new view, notices included, and only when something of theirs changed.
  *
+ * A tab that sends `{"type":"listen"}` also receives its listening status, and while the table
+ * listens it reports its capture (`{"type":"capture", ...}`) and sends its microphone as binary
+ * frames, which go to listening (listening.ts).
+ *
  * Every socket is pinged on a heartbeat and closed if it missed the last one: a peer that
  * vanished without closing (a laptop asleep, a dropped network) would otherwise count as
  * connected forever, and the deploy waits for nobody to be connected.
@@ -13,12 +17,15 @@
 import type { IncomingMessage, Server } from "node:http";
 import type { Duplex } from "node:stream";
 import { type WebSocket, WebSocketServer } from "ws";
+import type { Listening, Tab } from "./listening.ts";
 import type { Service, ServiceEvent } from "./service.ts";
 import type { LiveMessage, PlayerView, Role } from "./views.ts";
 
 const PATH = /^\/api\/campaigns\/([^/]+)\/live$/;
 const AUTH_TIMEOUT_MS = 5000;
 const HEARTBEAT_MS = 30_000;
+/** How often the GM's panel is sent each stream's level while a table listens. */
+const LEVELS_MS = 250;
 
 interface Subscriber {
   campaignId: string;
@@ -29,6 +36,8 @@ interface Subscriber {
   lastSent?: string;
   /** Answered the last heartbeat ping. */
   alive: boolean;
+  /** Set once the tab asks for listening status. */
+  tab?: Tab;
 }
 
 export class LiveHub {
@@ -38,13 +47,20 @@ export class LiveHub {
   private readonly log: (msg: string) => void;
   private readonly unsubscribe: () => void;
   private readonly heartbeat: NodeJS.Timeout;
+  private readonly listening?: Listening;
+  private readonly levels?: NodeJS.Timeout;
 
-  constructor(service: Service, log: (msg: string) => void = () => {}, heartbeatMs = HEARTBEAT_MS) {
+  constructor(service: Service, log: (msg: string) => void = () => {}, heartbeatMs = HEARTBEAT_MS, listening?: Listening) {
     this.service = service;
     this.log = log;
     this.unsubscribe = service.on((e) => void this.dispatch(e).catch((err) => this.log(`live: ${err}`)));
     this.heartbeat = setInterval(() => this.beat(), heartbeatMs);
     this.heartbeat.unref();
+    if (listening) {
+      this.listening = listening;
+      this.levels = setInterval(() => listening.tick(), LEVELS_MS);
+      this.levels.unref();
+    }
   }
 
   private beat() {
@@ -78,6 +94,7 @@ export class LiveHub {
 
   close() {
     clearInterval(this.heartbeat);
+    clearInterval(this.levels);
     this.unsubscribe();
     for (const s of this.subs) s.socket.close(1001, "server closing");
     this.wss.close();
@@ -96,13 +113,39 @@ export class LiveHub {
         const sub: Subscriber = { campaignId, userId: user.id, role, socket: ws, alive: true };
         this.subs.add(sub);
         ws.on("pong", () => (sub.alive = true));
-        ws.on("close", () => this.subs.delete(sub));
+        ws.on("close", () => {
+          this.subs.delete(sub);
+          if (sub.tab) void this.listening?.leave(sub.tab).catch((err) => this.log(`listening: ${err}`));
+        });
+        ws.on("message", (data, binary) => this.fromTab(sub, data as Buffer, binary));
         await this.sendState(sub);
       } catch (err) {
         this.log(`live: ${err}`);
         ws.close(1011, "server error");
       }
     });
+  }
+
+  /** A message after authentication: the listening subscription, a capture report, or audio. */
+  private fromTab(sub: Subscriber, data: Buffer, binary: boolean) {
+    const listening = this.listening;
+    if (!listening) return;
+    if (binary) {
+      if (sub.tab) listening.frame(sub.tab, data);
+      return;
+    }
+    let msg: { type?: string; capture?: unknown; muted?: unknown; noMicrophone?: unknown };
+    try {
+      msg = JSON.parse(String(data));
+    } catch {
+      return;
+    }
+    if (msg.type === "listen" && !sub.tab) {
+      sub.tab = { campaignId: sub.campaignId, userId: sub.userId, role: sub.role, sendListening: (status) => this.send(sub, { type: "listening", status }) };
+      void listening.join(sub.tab).catch((err) => this.log(`listening: ${err}`));
+    } else if (msg.type === "capture" && sub.tab) {
+      listening.control(sub.tab, { capture: msg.capture === true, muted: msg.muted === true, noMicrophone: msg.noMicrophone === true });
+    }
   }
 
   private send(sub: Subscriber, msg: LiveMessage) {

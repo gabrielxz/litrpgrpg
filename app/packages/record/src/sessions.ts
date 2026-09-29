@@ -66,7 +66,7 @@ export function cloneSession(s: CampaignSession): CampaignSession {
 export const sessionName = (s: CampaignSession) => s.label ?? `Session ${s.number}`;
 
 /** The session running now, if any. */
-export function runningSession(world: World): CampaignSession | undefined {
+export function runningSession(world: Pick<World, "sessions">): CampaignSession | undefined {
   const last = [...world.sessions.values()].at(-1);
   return last && !last.endedAt ? last : undefined;
 }

@@ -284,8 +284,42 @@ export interface PlayerView {
 
 export type View = GmView | PlayerView;
 
-/** What the live channel sends after an append. */
+// ------------------------------------------------------- listening ---
+
+export type ListeningMode = "off" | "listening" | "paused";
+
+/** What one person's microphone is doing, as the GM's panel shows it. */
+export type StreamState = "live" | "muted" | "silent" | "no-microphone" | "not-connected";
+
+export interface StreamStatus {
+  userId: string;
+  displayName: string;
+  role: Role;
+  consented: boolean;
+  state: StreamState;
+  /** The last half second's loudness, 0 to 1. */
+  level: number;
+}
+
+/** What each tab is told. `stopped`, `streams`, and `missing` go to the GM only. */
+export interface ListeningStatus {
+  mode: ListeningMode;
+  /** Why listening stopped last, while it is off. The GM's only. */
+  stopped?: string;
+  /** Whether this person has consented. */
+  consented: boolean;
+  /** Whether this socket is the one this person captures with. */
+  capturing: boolean;
+  /** Whether this person is present, so their tab is asked to capture. */
+  present: boolean;
+  streams?: StreamStatus[];
+  /** Present people who have not consented: listening cannot start until they do. */
+  missing?: string[];
+}
+
+/** What the live channel sends after an append, and the listening status to a tab that asked for it. */
 export type LiveMessage =
+  | { type: "listening"; status: ListeningStatus }
   | { type: "state"; view: View }
   | { type: "appended"; envelope: Envelope; effects: Effect[]; view: GmView }
   | { type: "update"; view: PlayerView }

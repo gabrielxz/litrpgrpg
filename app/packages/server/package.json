@@ -8,7 +8,8 @@
     "dev": "DATABASE_URL=postgres://gradebreaker:gradebreaker@localhost:54340/gradebreaker DEV_SIGNIN=1 node --env-file-if-exists=../../.env --watch src/main.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "draft-eval": "node --env-file-if-exists=../../.env scripts/draft-eval.ts"
+    "draft-eval": "node --env-file-if-exists=../../.env scripts/draft-eval.ts",
+    "capture-check": "node scripts/capture-check.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.128.0",
@@ -25,6 +26,7 @@
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.8",
     "@types/pg": "^8.23.1",
-    "@types/ws": "^8.18.1"
+    "@types/ws": "^8.18.1",
+    "playwright-core": "^1.63.0"
   }
 }

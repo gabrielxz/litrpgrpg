@@ -14,6 +14,7 @@ import { z } from "zod";
 import { type CampaignAi, ModelError } from "./ai.ts";
 import type { DevSignIn } from "./devauth.ts";
 import { type Drafts, MAX_TALK_CHARS } from "./drafts.ts";
+import { type Listening, ListeningRefused } from "./listening.ts";
 import { HttpError, type Service, type User } from "./service.ts";
 
 type Env = { Variables: { user: User | null } };
@@ -39,6 +40,8 @@ const draftClassesBody = z.object({ characterId: z.string().max(80), keepsDoing:
 const draftSummaryBody = z.object({ characterId: z.string().max(80), integration: z.boolean().optional() });
 const draftMessageBody = z.object({ to: z.array(z.string().max(80)).max(50), gist: z.string().max(2000) });
 const draftVisionBody = z.object({ characterId: z.string().max(80), memoryId: z.string().max(80), family: z.string().max(40), words: z.string().max(500).optional() });
+const consentBody = z.object({ give: z.boolean() });
+const listeningBody = z.object({ mode: z.enum(["off", "listening", "paused"]) });
 const acceptDraft = submissionSchema.pick({ id: true, action: true });
 const createInvite = z.object({
   maxUses: z.number().int().positive().optional(),
@@ -70,6 +73,8 @@ export interface AppOptions {
   ai?: CampaignAi;
   /** Drafts from typed table talk (drafts.ts). */
   drafts?: Drafts;
+  /** Consent and the table's listening (listening.ts). */
+  listening?: Listening;
 }
 
 export function createApp(service: Service, opts: AppOptions = {}) {
@@ -174,6 +179,31 @@ export function createApp(service: Service, opts: AppOptions = {}) {
   app.post("/campaigns/:id/preview", async (c) => {
     const s = await body(c, submissionSchema);
     return c.json(await service.preview(c.req.param("id"), c.get("user"), s));
+  });
+
+  // Listening: each person's own consent, and the GM's start, pause, and stop.
+  const listening = () => {
+    if (!opts.listening) throw new HttpError(404, "not found");
+    return opts.listening;
+  };
+  app.post("/campaigns/:id/listening/consent", async (c) => {
+    const id = c.req.param("id");
+    await service.requireMember(id, c.get("user"));
+    const b = await body(c, consentBody);
+    await listening().consent(id, c.get("user")!.id, b.give);
+    return c.json({ consented: b.give });
+  });
+  app.post("/campaigns/:id/listening", async (c) => {
+    const id = c.req.param("id");
+    await service.requireGm(id, c.get("user"));
+    const b = await body(c, listeningBody);
+    try {
+      await listening().set(id, b.mode);
+    } catch (e) {
+      if (e instanceof ListeningRefused) throw new HttpError(409, e.message);
+      throw e;
+    }
+    return c.json({ mode: b.mode });
   });
 
   // The GM's key and usage. The key goes in and never comes back out: status carries its last four characters.

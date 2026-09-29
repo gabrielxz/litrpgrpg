@@ -1577,3 +1577,101 @@ ul.cited {
 .participant p.why {
   margin: 0.1rem 0 0.2rem;
 }
+
+/* The capture bar under the top bar (Listening.tsx). */
+.listening-bar {
+  padding: 0.35rem 1rem;
+  border-bottom: 1px solid var(--stone);
+  background: var(--bone-deep);
+  font-size: 0.9rem;
+}
+.listening-bar.listening {
+  background: #e4f3f4;
+  border-bottom-color: var(--cyan);
+}
+.listening-bar.paused {
+  background: #f3ead6;
+  border-bottom-color: var(--warn);
+}
+.listening-line,
+.listening-streams {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.75rem;
+}
+.listening-streams {
+  margin-top: 0.25rem;
+}
+.listening-mode {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.listening-mode .dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--stone);
+}
+.listening-bar.listening .listening-mode .dot {
+  background: var(--danger);
+  animation: listening-pulse 1.6s ease-in-out infinite;
+}
+.listening-bar.paused .listening-mode .dot {
+  background: var(--warn);
+}
+@keyframes listening-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .listening-bar.listening .listening-mode .dot {
+    animation: none;
+  }
+}
+.listening-controls,
+.listening-consent {
+  display: inline-flex;
+  gap: 0.4rem;
+}
+.listening-consent {
+  margin-left: auto;
+}
+.listening-ask {
+  max-width: 42rem;
+  margin: 0.4rem 0 0.2rem;
+}
+.listening-ask p {
+  margin: 0 0 0.4rem;
+}
+.listening-streams .stream {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.listening-streams .stream.muted,
+.listening-streams .stream.not-connected {
+  color: var(--slate);
+}
+.listening-streams .stream.silent,
+.listening-streams .stream.no-microphone,
+.warn-text {
+  color: var(--warn);
+}
+.level {
+  display: inline-block;
+  width: 4rem;
+  height: 0.45rem;
+  border-radius: 0.25rem;
+  background: rgba(19, 27, 32, 0.12);
+  overflow: hidden;
+  vertical-align: middle;
+}
+.level > span {
+  display: block;
+  height: 100%;
+  background: var(--cyan);
+  transition: width 90ms linear;
+}

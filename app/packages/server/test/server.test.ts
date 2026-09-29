@@ -19,6 +19,7 @@ import { jwtVerifier } from "../src/auth.ts";
 import { devSignIn, eitherVerifier } from "../src/devauth.ts";
 import { type Db, migrate, pgliteDb } from "../src/db.ts";
 import { LiveHub } from "../src/live.ts";
+import { Listening, type Transcriber } from "../src/listening.ts";
 import { Service } from "../src/service.ts";
 
 const rules = loadRules();
@@ -968,5 +969,184 @@ describe("the live channel", () => {
     await dead.closed;
     await new Promise((r) => setTimeout(r, 100));
     expect((await health()).connected).toBe(1);
+  });
+});
+
+describe("listening", () => {
+  let server: Server;
+  let hub: LiveHub;
+  let port: number;
+  const sockets: WebSocket[] = [];
+  /** Bytes each person's stream delivered to the transcriber. */
+  let heard: Map<string, number>;
+  let opened: number;
+
+  async function listen() {
+    heard = new Map();
+    opened = 0;
+    const transcriber: Transcriber = {
+      open: (_c, userId) => {
+        opened++;
+        return { write: (pcm) => heard.set(userId, (heard.get(userId) ?? 0) + pcm.length), close: () => {} };
+      },
+    };
+    const listening = new Listening(service, { transcriber });
+    hub = new LiveHub(service, undefined, undefined, listening);
+    app = createApp(service, { connected: () => hub.connected, listening });
+    server = await new Promise<Server>((resolve) => {
+      const s = serve({ fetch: app.fetch, port: 0 }, () => resolve(s as Server)) as Server;
+    });
+    hub.attach(server);
+    port = (server.address() as AddressInfo).port;
+  }
+
+  /** A tab that has asked for listening status; `status()` waits for the latest to settle. */
+  async function tab(campaignId: string, token: string) {
+    const ws = new WebSocket(`ws://127.0.0.1:${port}/api/campaigns/${campaignId}/live`);
+    sockets.push(ws);
+    const statuses: any[] = [];
+    let state = false;
+    ws.on("message", (d) => {
+      const m = JSON.parse(String(d));
+      if (m.type === "state") state = true;
+      if (m.type === "listening") statuses.push(m.status);
+    });
+    await new Promise((resolve) => ws.on("open", resolve));
+    ws.send(JSON.stringify({ type: "auth", token }));
+    for (let i = 0; i < 100 && !state; i++) await new Promise((r) => setTimeout(r, 10));
+    ws.send(JSON.stringify({ type: "listen" }));
+    const settle = async () => {
+      await new Promise((r) => setTimeout(r, 80));
+      return statuses.at(-1);
+    };
+    const capture = (muted = false) => ws.send(JSON.stringify({ type: "capture", capture: true, muted, noMicrophone: false }));
+    /** 100 ms of a tone at the given amplitude, 0 to 1. */
+    const speak = (amp = 0.3) => {
+      const pcm = Buffer.alloc(3200);
+      for (let i = 0; i < 1600; i++) pcm.writeInt16LE(Math.round(Math.sin(i / 5) * amp * 32767), i * 2);
+      ws.send(pcm);
+    };
+    return { ws, statuses, settle, capture, speak };
+  }
+
+  const setMode = (campaignId: string, token: string, mode: string) => call("POST", `/campaigns/${campaignId}/listening`, { token, body: { mode } });
+  const consent = (campaignId: string, token: string, give = true) => call("POST", `/campaigns/${campaignId}/listening/consent`, { token, body: { give } });
+
+  afterAll(() => {
+    for (const s of sockets) s.close();
+    hub?.close();
+    server?.close();
+  });
+
+  /** A table with Kara (the player's) and Joe (the GM's) at a running session. */
+  async function seated() {
+    const t = await table();
+    await act(t.campaignId, t.gm, { type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: t.playerId });
+    await act(t.campaignId, t.gm, { type: "character.pregen", characterId: "joe", pregen: "Joe" });
+    await act(t.campaignId, t.gm, { type: "session.start", present: ["kara", "joe"] });
+    await listen();
+    return t;
+  }
+
+  it("starts only during a session, and only once everyone present has consented", async () => {
+    const { campaignId, gm, player } = await table();
+    await act(campaignId, gm, { type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: (await call("GET", "/me", { token: player })).json.user.id });
+    await listen();
+    expect((await setMode(campaignId, gm, "listening")).json.error).toMatch(/Start a session first/);
+    await act(campaignId, gm, { type: "session.start", present: ["kara"] });
+    const refused = await setMode(campaignId, gm, "listening");
+    expect(refused.status).toBe(409);
+    expect(refused.json.error).toBe("Waiting on consent from Gabriel and Ana.");
+    await consent(campaignId, gm);
+    expect((await setMode(campaignId, gm, "listening")).json.error).toBe("Waiting on consent from Ana.");
+    // Only the GM starts it; consent is one's own.
+    expect((await setMode(campaignId, player, "listening")).status).toBe(403);
+    await consent(campaignId, player);
+    expect((await setMode(campaignId, gm, "listening")).status).toBe(200);
+  });
+
+  it("tells each tab where it stands, and only the GM's tab who is streaming", async () => {
+    const { campaignId, gm, player } = await seated();
+    const g = await tab(campaignId, gm);
+    const p = await tab(campaignId, player);
+    expect(await p.settle()).toEqual({ mode: "off", consented: false, capturing: false, present: true });
+    expect((await g.settle()).missing).toEqual(["Gabriel", "Ana"]);
+    await consent(campaignId, gm);
+    await consent(campaignId, player);
+    await setMode(campaignId, gm, "listening");
+    p.capture();
+    p.speak(0.5);
+    const ps = await p.settle();
+    expect(ps).toEqual({ mode: "listening", consented: true, capturing: true, present: true });
+    const gs = await g.settle();
+    expect(gs.missing).toEqual([]);
+    expect(gs.streams.map((s: { displayName: string; state: string }) => [s.displayName, s.state])).toEqual([
+      ["Gabriel", "not-connected"],
+      ["Ana", "live"],
+    ]);
+    expect(gs.streams[1].level).toBeGreaterThan(0.5);
+  });
+
+  it("takes audio only while listening, unmuted, from the newest tab a person captures with", async () => {
+    const { campaignId, gm, player, playerId } = await seated();
+    await consent(campaignId, gm);
+    await consent(campaignId, player);
+    const p = await tab(campaignId, player);
+    p.capture();
+    p.speak();
+    await p.settle();
+    expect(heard.get(playerId)).toBeUndefined();
+
+    await setMode(campaignId, gm, "listening");
+    p.speak();
+    p.speak();
+    await p.settle();
+    expect(heard.get(playerId)).toBe(6400);
+
+    await setMode(campaignId, gm, "paused");
+    expect((await p.settle()).mode).toBe("paused");
+    p.speak();
+    await setMode(campaignId, gm, "listening");
+    p.capture(true);
+    p.speak();
+    await p.settle();
+    expect(heard.get(playerId)).toBe(6400);
+
+    // A second tab takes the stream; the first one's frames are dropped.
+    const p2 = await tab(campaignId, player);
+    p2.capture();
+    await p2.settle();
+    expect((await p.settle()).capturing).toBe(false);
+    p.speak();
+    p2.speak();
+    p2.ws.send(Buffer.alloc(40_000));
+    await p2.settle();
+    expect(heard.get(playerId)).toBe(9600);
+  });
+
+  it("stops for everyone at a withdrawal, an arrival without consent, and the session's end", async () => {
+    const { campaignId, gm, player } = await seated();
+    const g = await tab(campaignId, gm);
+    await consent(campaignId, gm);
+    await consent(campaignId, player);
+    await setMode(campaignId, gm, "listening");
+    await consent(campaignId, player, false);
+    expect(await g.settle()).toMatchObject({ mode: "off", stopped: "Ana withdrew consent", missing: ["Ana"] });
+
+    await consent(campaignId, player);
+    await setMode(campaignId, gm, "listening");
+    const bo = await signIn("Bo");
+    await call("POST", `/invites/${(await call("POST", `/campaigns/${campaignId}/invites`, { token: gm, body: {} })).json.code}/accept`, { token: bo });
+    // Bo joining the campaign changes nothing until Bo's character is at the table.
+    expect((await g.settle()).mode).toBe("listening");
+    const boId = (await call("GET", "/me", { token: bo })).json.user.id;
+    await act(campaignId, gm, { type: "character.pregen", characterId: "andre", pregen: "Andre", playerId: boId });
+    await act(campaignId, gm, { type: "session.attend", characterId: "andre", present: true });
+    expect(await g.settle()).toMatchObject({ mode: "off", stopped: "Bo is at the table without consent" });
+
+    await act(campaignId, gm, { type: "session.attend", characterId: "andre", present: false });
+    await setMode(campaignId, gm, "listening");
+    await act(campaignId, gm, { type: "session.end" });
+    expect(await g.settle()).toMatchObject({ mode: "off", stopped: "the session ended" });
   });
 });
