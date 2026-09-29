@@ -4,6 +4,13 @@
 
 ---
 
+**Handoff (2026-09-29, app track: the queue cleared, the summaries eval; replaced at the twelfth close).** Rules 0.1.37, `make check` green (engine 236, record 128, server 66, listening 166, web 8). Committed (d6c74c2, 466cea9); the push waits on Gabriel. Each screen change checked in the browser with a GM tab and a player tab.
+- **The queue is cleared.** The encounter planner sizes any number of creatures from Level 8 (10 Force each past the second; five or more carry a note that the book tested the step to four). The Force Personal Opportunity example pays 30 VE. The class template's dead filter is gone. The Principle screens and the player's notice say Reshaping ("reshaped from", "Principle reshaped: Fire is now Consuming Flame."); the record keeps `refine` and the grant kind "refinement" as stored. Contempt, The Observation, and Find the Seam needed nothing: the app shows the data's text, and none of them has a hook. The vision drafter keeps its own instructions (Breakthroughs stay out of the app, so a failed Breakthrough's card is a GM grant). A deferred M2 row, Distillation drafts, would take `family_samples` as calibration.
+- **A form's preview follows the log.** An open form re-previews whenever anything is recorded (found when the Insight form still offered to crystallize a Principle already named).
+- **The summaries eval ran** on all six scripts × 3: 18 of 18 returned, 17 in three sentences, 2 of 54 observations flagged, both table words used in their ordinary sense. The behavioral sides are now flagged only capitalized ("acquisition method" is an ordinary word). Both summary drafts checked in the browser end to end.
+
+**Next.** M3, listening (Gabriel, 2026-09-29), in its table's order: consent and capture (per-participant consent, the capture indicator, mute and pause in every tab), then the speech-to-text adapter with the vendor chosen against synthetic audio (Testing the listening), then event and HVE drafting from the streams, shadow mode, test recordings, and the rehearsal.
+
 **Handoff (2026-09-29, app track: M2 drafting built; replaced at the eleventh close).** Rules 0.1.33, `make check` green (engine 235, record 128, server 66, listening 166, web 8). Everything pushed and deployed (last run 36581512504, health 200). Each screen change checked in the browser with a GM tab and a player tab. **M2's drafting rows are built**; the running recap is deferred (Gabriel: a backlog item, after everything else):
 - **A Hidden Achievement script.** `civic-tribunal`: the Hidden Achievement and Read the Room found every run; events and bookkeeping 100%.
 - **System voice drafting.** The composer drafts from the GM's words; the meditation form drafts the vision and the Insight. Gabriel read the drafts: they stand.
