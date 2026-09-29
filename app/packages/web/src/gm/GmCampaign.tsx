@@ -342,7 +342,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
       )}
       {section === "principles" && <PrinciplesSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
       {section === "classes" && <ClassesSection view={view} engine={engine} names={names} onRecorded={live.addToLog} drafts={drafts} />}
-      {section === "events" && <EventsSection view={view} engine={engine} names={names} onRecorded={live.addToLog} drafts={drafts} />}
+      {section === "events" && <EventsSection view={view} engine={engine} names={names} onRecorded={live.addToLog} drafts={drafts} heard={live.heard} />}
       {section === "suggestions" && (
         <SuggestionsSection
           view={view}

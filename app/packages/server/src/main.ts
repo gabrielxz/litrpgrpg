@@ -25,6 +25,7 @@ import { Drafts } from "./drafts.ts";
 import { migrate, postgresDb } from "./db.ts";
 import { LiveHub } from "./live.ts";
 import { Listening } from "./listening.ts";
+import { transcribers } from "./stt/index.ts";
 import { Service } from "./service.ts";
 
 const log = (msg: string) => console.log(`[gradebreaker] ${msg}`);
@@ -55,7 +56,12 @@ if (dev) log("development sign-in is on");
 
 for (const name of await migrate(db)) log(`migrated ${name}`);
 const service = await Service.open(db, loadRules(process.env.RULES_DIR), verifier, log);
-const listening = new Listening(service);
+const transcriber = transcribers.soniox;
+if (!transcriber) log("SONIOX_API_KEY is not set: listening measures the microphones and transcribes nothing");
+const listening = new Listening(service, { ...(transcriber ? { transcriber } : {}), log });
+const purge = () => void listening.purge().then((n) => n && log(`listening: deleted ${n} heard line(s) past keeping`)).catch((e) => log(`listening: ${e}`));
+purge();
+setInterval(purge, 86_400_000).unref();
 const hub = new LiveHub(service, log, undefined, listening);
 if (!process.env.AI_KEY_SECRET) log("AI_KEY_SECRET is not set: GMs cannot store a language-model key");
 const ai = new CampaignAi(db, process.env.AI_KEY_SECRET);

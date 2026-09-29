@@ -30,6 +30,7 @@ export type {
   InspectRead,
   PlayerClash,
   GmView,
+  HeardLine,
   InterfaceSheet,
   ListeningMode,
   ListeningStatus,

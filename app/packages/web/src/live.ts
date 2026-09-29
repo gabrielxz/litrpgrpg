@@ -7,7 +7,7 @@
  * server sends on connect.
  */
 import { Engine } from "@gradebreaker/engine";
-import type { Envelope, ListeningStatus, LiveMessage, View } from "@gradebreaker/record";
+import type { Envelope, HeardLine, ListeningStatus, LiveMessage, View } from "@gradebreaker/record";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { api, currentToken } from "./api.ts";
 
@@ -19,6 +19,7 @@ export function useCampaign(campaignId: string) {
   const [status, setStatus] = useState<LiveStatus>("connecting");
   const [error, setError] = useState<string | null>(null);
   const [listening, setListening] = useState<ListeningStatus | null>(null);
+  const [heard, setHeard] = useState<HeardLine[]>([]);
   const socketRef = useRef<WebSocket | null>(null);
 
   /** Sends on the live socket if it is open; a frame sent while reconnecting is dropped. */
@@ -53,6 +54,12 @@ export function useCampaign(campaignId: string) {
         setStatus("live");
         if (msg.type === "listening") {
           setListening(msg.status);
+        } else if (msg.type === "heard") {
+          setHeard((h) => {
+            const known = new Set(h.map((x) => x.id));
+            const added = msg.lines.filter((x) => !known.has(x.id));
+            return added.length ? [...h, ...added].sort((a, b) => a.startedAt.localeCompare(b.startedAt)) : h;
+          });
         } else if (msg.type === "state") {
           setView(msg.view);
           if (!asked) {
@@ -90,7 +97,7 @@ export function useCampaign(campaignId: string) {
     };
   }, [campaignId, addToLog]);
 
-  return { view, log, status, error, addToLog, listening, send };
+  return { view, log, status, error, addToLog, listening, send, heard };
 }
 
 const engines = new Map<string, Promise<Engine>>();

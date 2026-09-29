@@ -12,7 +12,8 @@
  * the table listens, from a person present who has consented, through the one socket that person
  * captures with (the newest tab to ask). Frames go to the transcriber and are not kept here.
  */
-import { type ListeningMode, type ListeningStatus, type StreamState, type StreamStatus, runningSession } from "@gradebreaker/record";
+import { vocabulary } from "@gradebreaker/listening/stt";
+import { type HeardLine, type ListeningMode, type ListeningStatus, type StreamState, type StreamStatus, runningSession } from "@gradebreaker/record";
 import type { Service } from "./service.ts";
 import type { Member, Role } from "./views.ts";
 
@@ -21,8 +22,15 @@ export type { ListeningMode, ListeningStatus, StreamState, StreamStatus };
 export const SAMPLE_RATE = 16_000;
 /** The largest frame taken: one second of audio. Tabs send 100 ms. */
 export const MAX_FRAME_BYTES = SAMPLE_RATE * 2;
-/** A stream with no frame for this long reads as silent: the tab is open and nothing arrives. */
+/** A stream with no frame or level report for this long reads as silent: the tab is open and nothing arrives. */
 const SILENT_AFTER_MS = 2000;
+/**
+ * The vendor stream closes after this long without a frame, and the next frame opens a new one.
+ * Tabs send audio only while their person speaks, and vendors bill for the time a stream is open.
+ */
+export const IDLE_CLOSE_MS = 4000;
+/** How long a heard line is kept after it was said; the consent text states it. */
+export const HEARD_KEEP_DAYS = 30;
 
 /** A final stretch of one person's speech; times are milliseconds from the stream's first audio. */
 export interface Segment {
@@ -64,6 +72,8 @@ export interface Tab {
   role: Role;
   /** Sends this tab its listening status. */
   sendListening(status: ListeningStatus): void;
+  /** Sends the GM's tab what was heard. */
+  sendHeard(lines: HeardLine[]): void;
 }
 
 interface Stream {
@@ -72,8 +82,18 @@ interface Stream {
   /** The tab could not open a microphone (permission refused, no device). */
   noMicrophone: boolean;
   lastFrameAt: number;
+  /** The tab reports its microphone's level while it is open, speaking or not. */
+  lastLevelAt: number;
   level: number;
   sink?: TranscriberStream;
+  /** The open vendor stream's clock, which its segments are dated by, even when they arrive after it closes. */
+  clock?: StreamClock;
+}
+
+/** Wall time of a vendor stream's first audio, and how much audio it has been sent. */
+interface StreamClock {
+  origin: number;
+  writtenMs: number;
 }
 
 interface Table {
@@ -86,6 +106,9 @@ interface Table {
   present: Set<string>;
   consented: Set<string>;
   members: Member[];
+  sessionId: string | null;
+  /** The vocabulary a vendor stream opens with: the characters' names, then the game's words. */
+  terms: string[];
 }
 
 export class Listening {
@@ -95,17 +118,19 @@ export class Listening {
   /** Tabs that asked for listening status, by campaign. */
   private readonly tabs = new Map<string, Set<Tab>>();
   private readonly now: () => number;
+  private readonly log: (msg: string) => void;
 
-  constructor(service: Service, opts: { transcriber?: Transcriber; now?: () => number } = {}) {
+  constructor(service: Service, opts: { transcriber?: Transcriber; now?: () => number; log?: (msg: string) => void } = {}) {
     this.service = service;
     this.transcriber = opts.transcriber ?? meterOnly;
     this.now = opts.now ?? Date.now;
+    this.log = opts.log ?? (() => {});
     service.on((e) => void this.recheck(e.campaignId).catch(() => {}));
   }
 
   private table(campaignId: string): Table {
     let t = this.tables.get(campaignId);
-    if (!t) this.tables.set(campaignId, (t = { mode: "off", streams: new Map(), running: false, present: new Set(), consented: new Set(), members: [] }));
+    if (!t) this.tables.set(campaignId, (t = { mode: "off", streams: new Map(), running: false, present: new Set(), consented: new Set(), members: [], sessionId: null, terms: [] }));
     return t;
   }
 
@@ -119,6 +144,8 @@ export class Listening {
     ]);
     const session = runningSession(rec.state);
     t.running = Boolean(session);
+    t.sessionId = session?.id ?? null;
+    t.terms = vocabulary(rec.engine, [...rec.state.characters.values()].map((c) => c.name));
     t.members = members;
     t.consented = consented;
     t.present = new Set();
@@ -192,8 +219,9 @@ export class Listening {
     let set = this.tabs.get(tab.campaignId);
     if (!set) this.tabs.set(tab.campaignId, (set = new Set()));
     set.add(tab);
-    await this.refresh(tab.campaignId);
+    const t = await this.refresh(tab.campaignId);
     this.broadcast(tab.campaignId);
+    if (tab.role === "gm" && t.sessionId) tab.sendHeard(await this.service.heard(tab.campaignId, t.sessionId));
   }
 
   async leave(tab: Tab): Promise<void> {
@@ -218,7 +246,7 @@ export class Listening {
       if (msg.muted) this.closeSink(t, tab.userId);
     } else {
       if (current) this.closeStream(t, tab.userId);
-      t.streams.set(tab.userId, { tab, muted: msg.muted, noMicrophone: msg.noMicrophone, lastFrameAt: 0, level: 0 });
+      t.streams.set(tab.userId, { tab, muted: msg.muted, noMicrophone: msg.noMicrophone, lastFrameAt: 0, lastLevelAt: 0, level: 0 });
     }
     this.broadcast(tab.campaignId);
   }
@@ -231,25 +259,63 @@ export class Listening {
     if (!s || s.tab !== tab || s.muted) return false;
     if (pcm.length === 0 || pcm.length > MAX_FRAME_BYTES || pcm.length % 2) return false;
     if (!t.present.has(tab.userId) || !t.consented.has(tab.userId)) return false;
-    s.lastFrameAt = this.now();
+    const now = this.now();
+    s.lastFrameAt = now;
     s.level = Math.max(level(pcm), s.level * 0.5);
-    s.sink ??= this.transcriber.open({
-      campaignId: tab.campaignId,
-      userId: tab.userId,
-      terms: [],
-      onSegment: () => {},
-      onError: () => {},
-    });
+    if (!s.sink || !s.clock) {
+      const clock: StreamClock = { origin: now, writtenMs: 0 };
+      const sessionId = t.sessionId;
+      s.clock = clock;
+      s.sink = this.transcriber.open({
+        campaignId: tab.campaignId,
+        userId: tab.userId,
+        terms: t.terms,
+        context: CONTEXT,
+        onSegment: (seg) => void this.heard(tab.campaignId, tab.userId, sessionId, clock.origin, seg).catch((e) => this.log(`listening: ${e}`)),
+        onError: (e) => this.log(`listening: ${e.message}`),
+      });
+    }
+    // A tab's held-back first frames arrive in a burst: the earliest arrival less the audio sent before it dates the stream.
+    s.clock.origin = Math.min(s.clock.origin, now - s.clock.writtenMs);
+    s.clock.writtenMs += (pcm.length / 2 / SAMPLE_RATE) * 1000;
     s.sink.write(pcm);
     return true;
   }
 
-  private closeSink(t: Table, userId: string) {
+  /** The tab's microphone level while it is open, so the GM sees a quiet microphone as live. */
+  reportLevel(tab: Tab, value: number): void {
+    const s = this.tables.get(tab.campaignId)?.streams.get(tab.userId);
+    if (!s || s.tab !== tab || !Number.isFinite(value)) return;
+    s.lastLevelAt = this.now();
+    s.level = Math.max(0, Math.min(1, value));
+  }
+
+  /** Stores a segment as a heard line and sends it to the GM's tabs. */
+  private async heard(campaignId: string, userId: string, sessionId: string | null, origin: number, seg: Segment) {
+    const line = await this.service.addHeard(campaignId, {
+      userId,
+      sessionId,
+      startedAt: new Date(origin + seg.startMs).toISOString(),
+      endedAt: new Date(origin + seg.endMs).toISOString(),
+      text: seg.text,
+      ...(seg.words ? { words: seg.words.map((w) => ({ text: w.text, startMs: w.startMs - seg.startMs, endMs: w.endMs - seg.startMs })) } : {}),
+    });
+    for (const tab of this.tabs.get(campaignId) ?? []) if (tab.role === "gm") tab.sendHeard([line]);
+  }
+
+  /** Deletes heard lines past their keeping; main runs it at start and daily. */
+  purge(): Promise<number> {
+    return this.service.purgeHeard(HEARD_KEEP_DAYS);
+  }
+
+  /** Closes the vendor stream; an idle close keeps the level the tab still reports. */
+  private closeSink(t: Table, userId: string, idle = false) {
     const s = t.streams.get(userId);
-    void s?.sink?.close();
+    void s?.sink?.close().catch((e) => this.log(`listening: ${e}`));
     if (s) {
       delete s.sink;
-      s.level = 0;
+      delete s.clock;
+      if (!idle) s.level = 0;
     }
   }
 
@@ -272,6 +338,7 @@ export class Listening {
   tick(): void {
     for (const [campaignId, t] of this.tables) {
       if (t.mode === "off" && !t.streams.size) continue;
+      for (const [userId, s] of t.streams) if (s.sink && this.now() - s.lastFrameAt > IDLE_CLOSE_MS) this.closeSink(t, userId, true);
       for (const s of t.streams.values()) if (this.now() - s.lastFrameAt > SILENT_AFTER_MS / 4) s.level *= 0.5;
       const tabs = [...(this.tabs.get(campaignId) ?? [])].filter((x) => x.role === "gm");
       if (!tabs.length) continue;
@@ -296,7 +363,7 @@ export class Listening {
             ? "no-microphone"
             : s.muted
               ? "muted"
-              : t.mode === "listening" && this.now() - s.lastFrameAt > SILENT_AFTER_MS
+              : t.mode === "listening" && this.now() - Math.max(s.lastFrameAt, s.lastLevelAt) > SILENT_AFTER_MS
                 ? "silent"
                 : "live";
         return { userId: m.userId, displayName: m.displayName, role: m.role, consented: t.consented.has(m.userId), state, level: s && state === "live" ? round(s.level) : 0 };
@@ -322,6 +389,8 @@ export class Listening {
 }
 
 export class ListeningRefused extends Error {}
+
+const CONTEXT = "A tabletop roleplaying game played online: a game master and players talking at the table, in and out of character, about a LitRPG world with a System, levels, Grades, and invented creatures and items.";
 
 /** Root-mean-square loudness of PCM16, scaled so ordinary speech reads around 0.3 to 0.8. */
 export function level(pcm: Buffer): number {

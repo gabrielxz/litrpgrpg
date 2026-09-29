@@ -193,6 +193,11 @@ export function createApp(service: Service, opts: AppOptions = {}) {
     await listening().consent(id, c.get("user")!.id, b.give);
     return c.json({ consented: b.give });
   });
+  app.get("/campaigns/:id/heard", async (c) => {
+    const id = c.req.param("id");
+    await service.requireGm(id, c.get("user"));
+    return c.json({ lines: await service.heard(id, c.req.query("session") || undefined) });
+  });
   app.post("/campaigns/:id/listening", async (c) => {
     const id = c.req.param("id");
     await service.requireGm(id, c.get("user"));

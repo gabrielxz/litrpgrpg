@@ -202,11 +202,29 @@ export const waitingOn = (i: DraftItem) => (i.status === "open" || Boolean(i.und
 /** Drafts reviewed in the Suggestions section rather than beside the events. */
 export const isSuggestion = (i: DraftItem) => i.kind === "cue" || i.kind === "suggestion";
 
-export function DraftsCard({ view, engine, names, onRecorded, drafts }: { view: GmView; engine: Engine; names: Names; onRecorded: (env: Envelope) => void; drafts: DraftRuns }) {
+export function DraftsCard({
+  view,
+  engine,
+  names,
+  onRecorded,
+  drafts,
+  seed,
+}: {
+  view: GmView;
+  engine: Engine;
+  names: Names;
+  onRecorded: (env: Envelope) => void;
+  drafts: DraftRuns;
+  /** Lines put in from elsewhere (what the listening heard), added below what is already here. */
+  seed?: { text: string; n: number };
+}) {
   const id = view.campaign.id;
   const configured = useAiConfigured(id);
   const { runs, setRuns, drafting, replace, error, setError } = drafts;
   const [text, setText] = useState("");
+  useEffect(() => {
+    if (seed?.text) setText((t) => (t.trim() ? `${t.trimEnd()}\n${seed.text}` : seed.text));
+  }, [seed?.n]);
   const [busy, setBusy] = useState(false);
 
   const roster = useMemo(

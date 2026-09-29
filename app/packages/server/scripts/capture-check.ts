@@ -4,7 +4,11 @@
  * stop at a pause. Runs against the development servers (`.claude/launch.json`: app-api on 8787,
  * app-web on 5173), in a campaign of its own.
  *
- *   node scripts/capture-check.ts [--chrome /usr/bin/google-chrome] [--headed]
+ * With `--speech <wav>` the microphone plays that file instead (a rendered script's track), and the
+ * check waits for the server's transcriber to send the GM what it heard; the dev server needs its
+ * vendor key for that.
+ *
+ *   node scripts/capture-check.ts [--chrome /usr/bin/google-chrome] [--headed] [--speech <wav> --seconds 60]
  */
 import { writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -70,12 +74,14 @@ await call("POST", `/campaigns/${campaignId}/listening`, gm, { mode: "listening"
 
 // The GM's socket, watching the player's stream.
 const statuses: any[] = [];
+const heard: { text: string; startedAt: string }[] = [];
 const ws = new WebSocket(`ws://localhost:8787/api/campaigns/${campaignId}/live`);
 await new Promise((r) => ws.on("open", r));
 ws.on("message", (d) => {
   const m = JSON.parse(String(d));
   if (m.type === "state" && !statuses.length) ws.send(JSON.stringify({ type: "listen" }));
   if (m.type === "listening") statuses.push(m.status);
+  if (m.type === "heard") heard.push(...m.lines);
 });
 ws.send(JSON.stringify({ type: "auth", token: gm }));
 const stream = () => statuses.at(-1)?.streams?.find((s: { userId: string }) => s.userId === playerId);
@@ -88,13 +94,22 @@ async function until(what: string, ok: () => boolean, ms = 8000) {
 const browser = await chromium.launch({
   executablePath: arg("--chrome") ?? "/usr/bin/google-chrome",
   headless: !process.argv.includes("--headed"),
-  args: ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream", `--use-file-for-fake-audio-capture=${toneWav()}`, "--autoplay-policy=no-user-gesture-required"],
+  args: ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream", `--use-file-for-fake-audio-capture=${arg("--speech") ?? toneWav()}`, "--autoplay-policy=no-user-gesture-required"],
 });
 try {
   const page = await (await browser.newContext()).newPage();
   page.on("console", (m) => m.type() === "error" && console.log(`    page: ${m.text()}`));
   await page.addInitScript((token) => sessionStorage.setItem("gradebreaker.devToken", token), player);
   await page.goto(`${WEB}/c/${campaignId}`);
+  if (arg("--speech")) {
+    const seconds = Number(arg("--seconds") ?? 60);
+    await until("the player's microphone is live", () => stream()?.state === "live");
+    await new Promise((r) => setTimeout(r, seconds * 1000));
+    if (!heard.length) throw new Error(`nothing heard in ${seconds} s`);
+    for (const l of heard) console.log(`    heard ${l.startedAt.slice(11, 19)}: ${l.text}`);
+    console.log(`speech check passed: ${heard.length} line(s)`);
+    process.exit(0);
+  }
   await until("the player's stream arrives with sound", () => stream()?.state === "live" && stream()?.level > 0.3);
   console.log(`    player's bar: ${(await page.locator(".listening-bar").innerText()).replace(/\n/g, " | ")}`);
 

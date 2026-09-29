@@ -6,9 +6,10 @@
  * after every append: the GM receives each envelope, its effects, and the new view; a player
  * receives their new view, notices included, and only when something of theirs changed.
  *
- * A tab that sends `{"type":"listen"}` also receives its listening status, and while the table
- * listens it reports its capture (`{"type":"capture", ...}`) and sends its microphone as binary
- * frames, which go to listening (listening.ts).
+ * A tab that sends `{"type":"listen"}` also receives its listening status (and the GM's, what was
+ * heard), and while the table listens it reports its capture (`{"type":"capture", ...}`) and its
+ * microphone's level (`{"type":"level", ...}`), and sends its speech as binary frames, which go to
+ * listening (listening.ts).
  *
  * Every socket is pinged on a heartbeat and closed if it missed the last one: a peer that
  * vanished without closing (a laptop asleep, a dropped network) would otherwise count as
@@ -134,15 +135,23 @@ export class LiveHub {
       if (sub.tab) listening.frame(sub.tab, data);
       return;
     }
-    let msg: { type?: string; capture?: unknown; muted?: unknown; noMicrophone?: unknown };
+    let msg: { type?: string; capture?: unknown; muted?: unknown; noMicrophone?: unknown; level?: unknown };
     try {
       msg = JSON.parse(String(data));
     } catch {
       return;
     }
     if (msg.type === "listen" && !sub.tab) {
-      sub.tab = { campaignId: sub.campaignId, userId: sub.userId, role: sub.role, sendListening: (status) => this.send(sub, { type: "listening", status }) };
+      sub.tab = {
+        campaignId: sub.campaignId,
+        userId: sub.userId,
+        role: sub.role,
+        sendListening: (status) => this.send(sub, { type: "listening", status }),
+        sendHeard: (lines) => this.send(sub, { type: "heard", lines }),
+      };
       void listening.join(sub.tab).catch((err) => this.log(`listening: ${err}`));
+    } else if (msg.type === "level" && sub.tab) {
+      listening.reportLevel(sub.tab, Number(msg.level));
     } else if (msg.type === "capture" && sub.tab) {
       listening.control(sub.tab, { capture: msg.capture === true, muted: msg.muted === true, noMicrophone: msg.noMicrophone === true });
     }

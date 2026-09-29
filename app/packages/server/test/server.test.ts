@@ -1125,6 +1125,90 @@ describe("listening", () => {
     expect(heard.get(playerId)).toBe(9600);
   });
 
+  it("keeps what a vendor stream heard, dated from its audio, for the GM only; closes an idle stream", async () => {
+    const { campaignId, gm, player, playerId } = await seated();
+    const segments: ((s: { text: string; startMs: number; endMs: number }) => void)[] = [];
+    let closed = 0;
+    const transcriber: Transcriber = {
+      name: "scripted",
+      open: (o) => {
+        segments.push(o.onSegment);
+        expect(o.terms.slice(0, 2)).toEqual(["Kara", "Joe"]);
+        return { write: () => {}, close: async () => void closed++ };
+      },
+    };
+    const listening = new Listening(service, { transcriber });
+    hub.close();
+    server.close();
+    hub = new LiveHub(service, undefined, undefined, listening);
+    app = createApp(service, { connected: () => hub.connected, listening });
+    server = await new Promise<Server>((resolve) => {
+      const s = serve({ fetch: app.fetch, port: 0 }, () => resolve(s as Server)) as Server;
+    });
+    hub.attach(server);
+    port = (server.address() as AddressInfo).port;
+
+    await consent(campaignId, gm);
+    await consent(campaignId, player);
+    await setMode(campaignId, gm, "listening");
+    const heardByGm: any[] = [];
+    const g = await tab(campaignId, gm);
+    g.ws.on("message", (d) => {
+      const m = JSON.parse(String(d));
+      if (m.type === "heard") heardByGm.push(...m.lines);
+    });
+    const p = await tab(campaignId, player);
+    const toPlayer: string[] = [];
+    p.ws.on("message", (d) => toPlayer.push(JSON.parse(String(d)).type));
+    p.capture();
+    const before = Date.now();
+    p.speak();
+    p.speak();
+    await p.settle();
+    expect(segments).toHaveLength(1);
+    segments[0]!({ text: "Mine. I swallow it.", startMs: 50, endMs: 180 });
+    await p.settle();
+    expect(heardByGm).toHaveLength(1);
+    expect(heardByGm[0]).toMatchObject({ userId: playerId, text: "Mine. I swallow it." });
+    const started = Date.parse(heardByGm[0].startedAt);
+    expect(started).toBeGreaterThanOrEqual(before - 200);
+    expect(started).toBeLessThanOrEqual(Date.now());
+    expect(toPlayer).not.toContain("heard");
+    const stored = await call("GET", `/campaigns/${campaignId}/heard`, { token: gm });
+    expect(stored.json.lines.map((l: { text: string }) => l.text)).toEqual(["Mine. I swallow it."]);
+    expect((await call("GET", `/campaigns/${campaignId}/heard`, { token: player })).status).toBe(403);
+
+    // The tab keeps reporting its level while quiet; after four seconds without speech the vendor stream closes.
+    p.ws.send(JSON.stringify({ type: "level", level: 0.02 }));
+    await new Promise((r) => setTimeout(r, 4400));
+    listening.tick();
+    expect(closed).toBe(1);
+    p.speak();
+    await p.settle();
+    expect(segments).toHaveLength(2);
+    // A new tab of the GM's is sent the session's lines so far.
+    const later: any[] = [];
+    const g2 = new WebSocket(`ws://127.0.0.1:${port}/api/campaigns/${campaignId}/live`);
+    sockets.push(g2);
+    g2.on("message", (d) => {
+      const m = JSON.parse(String(d));
+      if (m.type === "state") g2.send(JSON.stringify({ type: "listen" }));
+      if (m.type === "heard") later.push(...m.lines);
+    });
+    await new Promise((r) => g2.on("open", r));
+    g2.send(JSON.stringify({ type: "auth", token: gm }));
+    for (let i = 0; i < 100 && !later.length; i++) await new Promise((r) => setTimeout(r, 10));
+    expect(later.map((l) => l.text)).toEqual(["Mine. I swallow it."]);
+  }, 15_000);
+
+  it("deletes heard lines past thirty days", async () => {
+    const { campaignId, playerId } = await seated();
+    await service.addHeard(campaignId, { userId: playerId, sessionId: null, startedAt: new Date(Date.now() - 31 * 86_400_000).toISOString(), endedAt: new Date().toISOString(), text: "old" });
+    await service.addHeard(campaignId, { userId: playerId, sessionId: null, startedAt: new Date(Date.now() - 29 * 86_400_000).toISOString(), endedAt: new Date().toISOString(), text: "recent" });
+    expect(await new Listening(service).purge()).toBe(1);
+    expect((await service.heard(campaignId)).map((l) => l.text)).toEqual(["recent"]);
+  });
+
   it("stops for everyone at a withdrawal, an arrival without consent, and the session's end", async () => {
     const { campaignId, gm, player } = await seated();
     const g = await tab(campaignId, gm);

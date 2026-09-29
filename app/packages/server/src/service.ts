@@ -24,6 +24,7 @@ import {
 import type { Identity, Verifier } from "./auth.ts";
 import type { Db } from "./db.ts";
 import { contentHash, newId, newInviteCode } from "./tokens.ts";
+import type { HeardLine } from "@gradebreaker/record";
 import { type CampaignInfo, type Member, type PlayerView, type Role, type View, viewFor } from "./views.ts";
 
 export class HttpError extends Error {
@@ -221,6 +222,32 @@ export class Service {
       [campaignId],
     );
     return new Set(rows.map((r) => r.user_id));
+  }
+
+  /** Stores a line the listening heard; returns it with its id. */
+  async addHeard(campaignId: string, line: Omit<HeardLine, "id"> & { words?: unknown }): Promise<HeardLine> {
+    const [row] = await this.db.query<{ id: string }>(
+      `insert into heard_lines (campaign_id, session_id, user_id, started_at, ended_at, text, words)
+       values ($1, $2, $3, $4, $5, $6, $7::jsonb) returning id`,
+      [campaignId, line.sessionId, line.userId, line.startedAt, line.endedAt, line.text, line.words === undefined ? null : JSON.stringify(line.words)],
+    );
+    return { id: String(row!.id), userId: line.userId, sessionId: line.sessionId, startedAt: line.startedAt, endedAt: line.endedAt, text: line.text };
+  }
+
+  /** What the listening heard in a campaign, oldest first; one session's when named. */
+  async heard(campaignId: string, sessionId?: string): Promise<HeardLine[]> {
+    const rows = await this.db.query(
+      `select id, user_id, session_id, started_at, ended_at, text from heard_lines
+       where campaign_id = $1 ${sessionId ? "and session_id = $2" : ""} order by started_at, id`,
+      sessionId ? [campaignId, sessionId] : [campaignId],
+    );
+    return rows.map((r) => ({ id: String(r.id), userId: r.user_id, sessionId: r.session_id, startedAt: iso(r.started_at)!, endedAt: iso(r.ended_at)!, text: r.text }));
+  }
+
+  /** Deletes lines said more than `days` ago; returns how many. */
+  async purgeHeard(days: number): Promise<number> {
+    const rows = await this.db.query("delete from heard_lines where started_at < now() - make_interval(days => $1) returning id", [days]);
+    return rows.length;
   }
 
   /** Gives or withdraws one's own consent to listening; nobody sets it for another. */

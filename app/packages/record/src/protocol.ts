@@ -317,9 +317,21 @@ export interface ListeningStatus {
   missing?: string[];
 }
 
-/** What the live channel sends after an append, and the listening status to a tab that asked for it. */
+/** A final stretch of one person's speech, as the listening heard it. The GM's only. */
+export interface HeardLine {
+  id: string;
+  userId: string;
+  /** The session running when it was said. */
+  sessionId: string | null;
+  startedAt: string;
+  endedAt: string;
+  text: string;
+}
+
+/** What the live channel sends after an append, the listening status to a tab that asked for it, and to the GM what was heard. */
 export type LiveMessage =
   | { type: "listening"; status: ListeningStatus }
+  | { type: "heard"; lines: HeardLine[] }
   | { type: "state"; view: View }
   | { type: "appended"; envelope: Envelope; effects: Effect[]; view: GmView }
   | { type: "update"; view: PlayerView }

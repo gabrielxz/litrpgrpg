@@ -5,12 +5,13 @@
  * offers each entry not yet swept. Nothing here reaches a player.
  */
 import type { Engine } from "@gradebreaker/engine";
-import { type CampaignEvent, type Envelope, type GmView, type HveEntry, clockLine, sessionName } from "@gradebreaker/record";
+import { type CampaignEvent, type Envelope, type GmView, type HeardLine, type HveEntry, clockLine, sessionName } from "@gradebreaker/record";
 import { useState } from "react";
 import type { Names } from "../text.ts";
 import { Commit } from "./Commit.tsx";
 import { type DraftRuns, DraftsCard } from "./Drafts.tsx";
 import { EventFields, emptyEvent, eventActionOf } from "./EventFields.tsx";
+import { HeardCard } from "./Heard.tsx";
 
 export function entryLine(x: HveEntry): string {
   return `${x.pole} ${x.intensity}${x.secondary ? `, ${x.secondary} ${x.intensity - 1}` : ""}${x.coercion ? ", coercion of a player character" : ""}`;
@@ -67,8 +68,23 @@ function EventCard({ e, names, session }: { e: CampaignEvent; names: Names; sess
   );
 }
 
-export function EventsSection({ view, engine, names, onRecorded, drafts }: { view: GmView; engine: Engine | null; names: Names; onRecorded: (env: Envelope) => void; drafts: DraftRuns }) {
+export function EventsSection({
+  view,
+  engine,
+  names,
+  onRecorded,
+  drafts,
+  heard,
+}: {
+  view: GmView;
+  engine: Engine | null;
+  names: Names;
+  onRecorded: (env: Envelope) => void;
+  drafts: DraftRuns;
+  heard: HeardLine[];
+}) {
   const [who, setWho] = useState("");
+  const [seed, setSeed] = useState<{ text: string; n: number }>({ text: "", n: 0 });
   if (!engine) return <p className="muted pad">Loading rules…</p>;
   const shown = who ? view.events.filter((e) => e.participants.includes(who)) : view.events;
   const sessionOf = (e: CampaignEvent) => {
@@ -78,7 +94,8 @@ export function EventsSection({ view, engine, names, onRecorded, drafts }: { vie
   return (
     <main className="gm">
       <div>
-        <DraftsCard view={view} engine={engine} names={names} onRecorded={onRecorded} drafts={drafts} />
+        <HeardCard view={view} heard={heard} onUse={(text) => setSeed((s) => ({ text, n: s.n + 1 }))} />
+        <DraftsCard view={view} engine={engine} names={names} onRecorded={onRecorded} drafts={drafts} seed={seed} />
         <LogForm view={view} engine={engine} names={names} onRecorded={onRecorded} />
       </div>
       <aside className="side">
