@@ -35,6 +35,8 @@ export const offerFixtureSchema = z.object({
     stance: z.enum(["affirm", "test"]),
     /** Every flavor that fits; a test may take any. */
     flavors: z.array(flavor).min(1),
+    /** Whether the reward should be proportional (no fixed end) or the table's; absent, either. */
+    proportional: z.boolean().optional(),
     why: z.string().optional(),
   }),
 });
@@ -105,6 +107,8 @@ export interface OfferRun {
   error?: string;
   stanceOk?: boolean;
   flavorOk?: boolean;
+  /** Set when the fixture expects a proportional reward or the table's. */
+  proportionalOk?: boolean;
   flags?: string[];
 }
 
@@ -112,13 +116,15 @@ export interface OfferEvaluation {
   fixtureId: string;
   expected: OfferFixture["expected"];
   runs: OfferRun[];
-  summary: { runs: number; returned: number; stance: number; flavor: number; scaled: number; flagged: number; flags: Record<string, number> };
+  summary: { runs: number; returned: number; stance: number; flavor: number; scaled: number; proportional?: number; flagged: number; flags: Record<string, number> };
 }
 
-export function scoreOffer(engine: Engine, fixture: OfferFixture, draft: OpportunityDraft): Pick<OfferRun, "stanceOk" | "flavorOk" | "flags"> {
+export function scoreOffer(engine: Engine, fixture: OfferFixture, draft: OpportunityDraft): Pick<OfferRun, "stanceOk" | "flavorOk" | "proportionalOk" | "flags"> {
+  const want = fixture.expected.proportional;
   return {
     stanceOk: draft.stance === fixture.expected.stance,
     flavorOk: fixture.expected.flavors.includes(draft.quest.flavor!),
+    ...(want === undefined ? {} : { proportionalOk: Boolean(draft.quest.scaled) === want }),
     flags: offerFlags(engine, draft),
   };
 }
@@ -147,6 +153,7 @@ export async function evaluateOffer(engine: Engine, fixture: OfferFixture, draft
       stance: ok.filter((r) => r.stanceOk).length,
       flavor: ok.filter((r) => r.flavorOk).length,
       scaled: ok.filter((r) => r.draft!.quest.scaled).length,
+      ...(fixture.expected.proportional === undefined ? {} : { proportional: ok.filter((r) => r.proportionalOk).length }),
       flagged: ok.filter((r) => r.flags?.length).length,
       flags,
     },
@@ -157,8 +164,8 @@ export async function evaluateOffer(engine: Engine, fixture: OfferFixture, draft
 export function formatOffer(e: OfferEvaluation): string {
   const s = e.summary;
   const rows = [
-    `${e.fixtureId}: ${s.returned} of ${s.runs} runs returned; expected ${e.expected.stance}, ${e.expected.flavors.join(" or ")}`,
-    `  stance ${s.stance}/${s.returned}, flavor ${s.flavor}/${s.returned}, proportional ${s.scaled}/${s.returned}, flagged ${s.flagged}/${s.returned}${Object.keys(s.flags).length ? ` (${Object.entries(s.flags).map(([k, n]) => `${k} ×${n}`).join(", ")})` : ""}`,
+    `${e.fixtureId}: ${s.returned} of ${s.runs} runs returned; expected ${e.expected.stance}, ${e.expected.flavors.join(" or ")}${e.expected.proportional === undefined ? "" : e.expected.proportional ? ", proportional" : ", the table's VE"}`,
+    `  stance ${s.stance}/${s.returned}, flavor ${s.flavor}/${s.returned}, proportional ${s.scaled}/${s.returned}${s.proportional === undefined ? "" : ` (as expected ${s.proportional}/${s.returned})`}, flagged ${s.flagged}/${s.returned}${Object.keys(s.flags).length ? ` (${Object.entries(s.flags).map(([k, n]) => `${k} ×${n}`).join(", ")})` : ""}`,
   ];
   for (const r of e.runs) {
     if (r.error || r.refused) {

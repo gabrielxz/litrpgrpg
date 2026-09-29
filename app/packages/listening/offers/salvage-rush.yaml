@@ -1,0 +1,29 @@
+# An offer with no fixed end: how much is carried out is the whole point. The format is in src/offers.ts.
+id: salvage-rush
+title: Kara at the sinking depot, an offer whose reward is how much she takes
+source: 'book/55-quests.md, "Personal Opportunities" (the Force example: "Eliminate within 6 hours. Reward proportional to threat") and the generation template''s Visible Reward'
+notes: >
+  Kara's Deep leads Hunger and Force, and the last sweep leaned the same way: she stripped the
+  armory's racks before the others reached them. The depot's floor is sinking into a sinkhole,
+  nobody knows what stock is inside, and the floor goes when it goes. No count, distance, or
+  place fits the offer without being arbitrary: how much she carries out before it drops is
+  the measure, so the reward is proportional. It affirms the pattern.
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara}}
+  - {id: deep, action: {type: hve.deep, characterId: kara, deep: {Hunger: 4, Force: 3, Freedom: 1}}}
+  - {id: racks, action: {type: event.log, summary: Kara strips the armory's racks of everything usable before the others reach them., participants: [kara], entries: [{characterId: kara, pole: Hunger, intensity: 2, intent: Take all of it first}]}}
+  - id: sweep
+    action:
+      type: hve.sweep
+      label: Session 5
+      sheets: [{characterId: kara, moments: [{pole: Hunger, weight: 2, eventId: racks}]}]
+characterId: kara
+situation: >
+  The edge of town, the second day back. A supply depot's floor is sinking into a sinkhole a few
+  centimeters an hour. The stock inside is unknown (nobody has been in since Integration), and
+  the floor will go when it goes. Kara is the only one near it.
+expected:
+  stance: affirm
+  flavors: [exploration]
+  proportional: true
+  why: Current and Deep agree on Hunger; the offer has no fixed end, since the measure is how much she carries out.

@@ -17,6 +17,7 @@ import {
   offerFlags,
   opportunityOf,
   recordOf,
+  scoreOffer,
   stanceSignals,
   tableWords,
 } from "../src/index.ts";
@@ -73,6 +74,18 @@ describe("the offer fixtures", () => {
     expect(e.runs[1]!.flags).toEqual(["names Force", "names Hunger", "says tally", "says Deep", "table word: roll"]);
     expect(formatOffer(e)).toContain("run 1: affirm, combat, Moderate: The Wounded Beast");
     expect(tableWords(engine)).toEqual(["round", "Beat", "turn", "roll", "die", "Margin", "Resistance", "check"]);
+  });
+
+  it("score a proportional reward where the fixture expects one, and leave it unscored where it does not", () => {
+    const rush = byId("salvage-rush");
+    const draft = (scaled: boolean) => {
+      const d = opportunityOf(recordOf(engine, rush), "kara", output({ flavor: "exploration", scaled, notice: scaled ? "Reward proportional to stock recovered." : "Window: 6h." }));
+      if (!("accept" in d)) throw new Error(d.refused);
+      return d;
+    };
+    expect(scoreOffer(engine, rush, draft(true))).toMatchObject({ stanceOk: true, flavorOk: true, proportionalOk: true });
+    expect(scoreOffer(engine, rush, draft(false)).proportionalOk).toBe(false);
+    expect(scoreOffer(engine, byId("apex-after-fight"), draft(true))).not.toHaveProperty("proportionalOk");
   });
 
   it("flag a System message past three lines, and a proportional reward the quest does not pay", () => {
