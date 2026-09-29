@@ -69,9 +69,11 @@ const SHEET_WORDS = /\b(HVE|Hidden Vector|axis|axes|tall(?:y|ies))\b/g;
 /**
  * What in a draft breaks the voice rules a reader can check by eye: the table's words, the System
  * speaking of itself, a chatbot's mannerisms, exclamation, brackets or bold, the sheet's words, and
- * `names` the text must not say (a vision's Principle and family, a message's behavioral sides).
+ * `names` the text must not say in any case (a vision's Principle and family), and `poles`, the
+ * behavioral sides, which it must not say capitalized as the sheet writes them: lowercase they are
+ * ordinary words ("acquisition method", "hemorrhage control").
  */
-export function voiceFlags(engine: Engine, text: string, opts: { names?: string[]; maxLines?: number; maxSentences?: number } = {}): string[] {
+export function voiceFlags(engine: Engine, text: string, opts: { names?: string[]; poles?: string[]; maxLines?: number; maxSentences?: number } = {}): string[] {
   const out: string[] = [];
   const all = (re: RegExp) => [...new Set([...text.matchAll(re)].map((m) => m[0]))];
   for (const w of tableWords(engine).filter((w) => new RegExp(`\\b${w}\\b`, "i").test(text))) out.push(`table word: ${w}`);
@@ -82,6 +84,7 @@ export function voiceFlags(engine: Engine, text: string, opts: { names?: string[
   if (/[[\]]|\*\*/.test(text)) out.push("brackets or bold");
   if (/^\s*["“]/.test(text)) out.push("in quotation marks");
   for (const n of opts.names ?? []) if (new RegExp(`\\b${n}\\b`, "i").test(text)) out.push(`names ${n}`);
+  for (const n of opts.poles ?? []) if (new RegExp(`\\b${n}\\b`).test(text)) out.push(`names ${n}`);
   const lines = text.split("\n").filter((l) => l.trim()).length;
   if (opts.maxLines && lines > opts.maxLines) out.push(`runs ${lines} lines`);
   const sentences = text.split(/(?<=[.?!])\s+/).filter((s) => s.trim()).length;
@@ -154,7 +157,7 @@ export async function draftMessage(engine: Engine, drafter: Drafter, record: Cam
     .map((l) => l.trim())
     .filter(Boolean)
     .join("\n");
-  return { text, register: out.register, added: out.added, flags: voiceFlags(engine, text, { names: polesOf(engine), maxLines: MESSAGE_LINES }) };
+  return { text, register: out.register, added: out.added, flags: voiceFlags(engine, text, { poles: polesOf(engine), maxLines: MESSAGE_LINES }) };
 }
 
 // ---------------------------------------------------------- visions ---

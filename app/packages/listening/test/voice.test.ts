@@ -54,6 +54,8 @@ describe("the voice", () => {
     ]);
     expect(voiceFlags(engine, "Sorry. **Request denied.**")).toEqual(["mannerism: sorry", "brackets or bold"]);
     expect(voiceFlags(engine, "The weight of Impact.", { names: ["Impact", "Weight"] })).toEqual(["names Impact", "names Weight"]);
+    expect(voiceFlags(engine, "Acquisition method: coercion. Hemorrhage control applied.", { poles: ["Method", "Control"] })).toEqual([]);
+    expect(voiceFlags(engine, "Method preferred. Control asserted.", { poles: ["Method", "Control"] })).toEqual(["names Method", "names Control"]);
     expect(voiceFlags(engine, "One.\nTwo.\nThree.", { maxLines: 2 })).toEqual(["runs 3 lines"]);
   });
 

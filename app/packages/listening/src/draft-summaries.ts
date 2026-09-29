@@ -214,5 +214,5 @@ export async function draftCharacterSummary(
   const body = [observation, ...recordLines(engine, record, c)];
   const text = (opts.integration ? [rule, `INTEGRATION COMPLETE: INITIATE ${c.name.toUpperCase()}`, rule, ...body, rule] : body).join("\n");
   const poles = (engine.rules.hve.axes as { poles: { name: string }[] }[]).flatMap((a) => a.poles.map((p) => p.name));
-  return { text, observation, flags: voiceFlags(engine, observation, { names: poles, maxLines: OBSERVATION_LINES }) };
+  return { text, observation, flags: voiceFlags(engine, observation, { poles, maxLines: OBSERVATION_LINES }) };
 }
