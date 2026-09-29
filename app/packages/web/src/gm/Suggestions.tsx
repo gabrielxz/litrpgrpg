@@ -53,6 +53,14 @@ export function suggestionsWaiting(view: GmView, engine: Engine | null, names: N
 
 const HEADING = { title: "Title", "battle-memory": "Battle Memory Card", "hidden-achievement": "Hidden Achievement", "personal-opportunity": "Personal Opportunity" } as const;
 
+/** A warning when player-facing text names a side of a behavioral axis as the sheet does (capitalized): the System never shows how it keeps count. */
+function SheetWords({ engine, text }: { engine: Engine; text: string }) {
+  const poles = (engine.rules.hve.axes as { poles: { name: string }[] }[]).flatMap((a) => a.poles.map((p) => p.name));
+  const named = poles.filter((p) => new RegExp(`\\b${p}\\b`).test(text));
+  if (!named.length) return null;
+  return <p className="warning small">Names the sheet's sides: {named.join(", ")}. The player never sees how the System keeps count.</p>;
+}
+
 /**
  * A drafted Personal Opportunity: the offer as its log entry, the System's words, and the GM's note.
  * It opens in the Quests form to edit and issue; issuing there accepts the draft. The System's
@@ -87,6 +95,7 @@ Reward:     ${[ve, q.rewardText ?? ""].filter(Boolean).join(", ")}${q.time ? `\n
       )}
       {q.note && <p className="small muted">GM note: {q.note}</p>}
       <TableWords text={[q.title, q.objective, q.rewardText ?? "", s.notice ?? ""].join(" ")} />
+      <SheetWords engine={engine} text={[q.title, q.objective, q.rewardText ?? "", s.notice ?? ""].join(" ")} />
       <div className="row">
         <button
           className="primary"

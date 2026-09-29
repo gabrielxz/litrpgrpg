@@ -33,6 +33,10 @@ export interface OpportunityDraft {
 
 // ------------------------------------------------------------ rules ---
 
+/** The longest hidden outcome, in sentences and in words: the GM reads it mid-session (Gabriel, 2026-09-28). */
+export const HIDDEN_SENTENCES = 2;
+export const HIDDEN_WORDS = 40;
+
 /** The difficulties a Personal Opportunity pays at, from the Reward Reference Table. */
 const difficultiesOf = (engine: Engine): string[] =>
   (engine.rules.quests.ve_rewards as { difficulty: string; personal_opportunity: number | null }[]).filter((r) => r.personal_opportunity !== null).map((r) => r.difficulty);
@@ -76,9 +80,12 @@ export function draftOpportunitySchema(engine: Engine, flavors: Flavor[]) {
     count: z.number().int().min(1).nullable().describe("A counted objective's count, or null."),
     countFixed: z.boolean().describe("True when the count cannot scale: reach a place, protect a person, recover a thing."),
     hours: z.number().int().min(1).nullable().describe("The time limit in hours, or null for none."),
-    scaled: z.boolean().describe("True when the reward is proportional to how it is done, set by the GM at completion."),
+    scaled: z.boolean().describe("True only when the objective has no fixed end (how much, how far, how well) and the offer says what the reward is proportional to; the GM then sets the payout at completion. Otherwise false: the table's VE."),
     rewardHint: z.string().nullable().describe("The item or title hint beside the VE, in words, or null."),
-    hiddenOutcome: z.string().nullable().describe("A different reward for a non-obvious or counter-pattern approach, for the GM only, or null."),
+    hiddenOutcome: z
+      .string()
+      .nullable()
+      .describe(`A different reward for a non-obvious or counter-pattern approach, for the GM only, in at most ${HIDDEN_SENTENCES} sentences and ${HIDDEN_WORDS} words; a title by its theme or name only, never with a bonus or effect. Or null.`),
     refusal: z.string().describe("What the System closes off if the offer is refused, for the GM only."),
     notice: z.string().describe("The System's message with the offer: one to three terse lines."),
     why: z.string().describe("One or two sentences for the GM: the pattern the offer reads, and whether it affirms or tests it."),
@@ -115,12 +122,13 @@ Each offer has one flavor: combat, social, or exploration. Only the flavors list
 - Item rewards by difficulty, as a hint beside the VE, weighted to the character's pattern (a character who meets things head-on leans toward weapons and kill-empowering consumables; one who works by method toward sensory tools and resonance items):
 ${items}
 - A time limit is usual and should be short enough to matter.
+- The reward is the table's VE by default, so write the objective with a fixed end where you can: a place, a count, a distance ("out to 2 kilometers", "the three residents on oxygen"). Make it proportional only when no fixed end fits the offer (how much is gathered, how many are brought out, how far a route is charted) and the System's message says what it is proportional to. An objective that is done or not done pays the table.
 
 # What the player sees
 
-The title, the objective, the reward hint, and the System's message reach the player. They follow the System's units: ${units}. They never name the behavioral axes or their sides (${poles}, as behavior), the sheet, tallies, or the engine that keeps them; the System shows what it noticed, never how it keeps count. The System's voice is clinical, confident, and terse; it never jokes. Its message is one to three short lines, for example: "Predator wounded: 1.2km, 8°. Recovery imminent. Opportunity window: 24h. Engagement recommended."
+The title, the objective, the reward hint, and the System's message reach the player. They follow the System's units: ${units}. They never name the behavioral axes or their sides (${poles}, as behavior), the sheet, tallies, or the engine that keeps them; the System shows what it noticed, never how it keeps count. That holds for a test too: say what the task asks ("no one is to be harmed", "a plan for each"), never which way of acting it wants ("Method required", "Force will not be required"). The System's voice is clinical, confident, and terse; it never jokes. Its message is one to three short lines, for example: "Predator wounded: 1.2km, 8°. Recovery imminent. Opportunity window: 24h. Engagement recommended."
 
-The hidden alternative outcome and the refusal consequence are for the GM alone. A refusal is noted against the offer's flavor: at ${refusal.half_frequency_after} refusals of one flavor it comes half as often, and at ${refusal.stops_after} it stops. Beyond that, a refusal may close a minor path; keep it subtle.
+The hidden alternative outcome and the refusal consequence are for the GM alone, who reads them mid-session: write the hidden outcome in at most ${HIDDEN_SENTENCES} sentences and ${HIDDEN_WORDS} words (the approach, then what it pays). It may point toward a title by its theme or a name, and never gives a title a bonus, a number, or an effect; the GM prices titles. A refusal is noted against the offer's flavor: at ${refusal.half_frequency_after} refusals of one flavor it comes half as often, and at ${refusal.stops_after} it stops. Beyond that, a refusal may close a minor path; keep it subtle.
 
 # Output
 

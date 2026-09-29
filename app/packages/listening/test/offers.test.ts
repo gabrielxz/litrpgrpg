@@ -69,7 +69,7 @@ describe("the offer fixtures", () => {
     const outs = [output({}), output({ stance: "test", flavor: "social", notice: "Your Force and Hunger lead your Deep tally. Roll well." })];
     const scripted: Drafter = async <T>() => outs.shift() as T;
     const e = await evaluateOffer(engine, f, scripted, 2);
-    expect(e.summary).toMatchObject({ runs: 2, returned: 2, stance: 1, flavor: 1, flagged: 1 });
+    expect(e.summary).toMatchObject({ runs: 2, returned: 2, stance: 1, flavor: 1, scaled: 0, flagged: 1 });
     expect(e.runs[1]!.flags).toEqual(["names Force", "names Hunger", "says tally", "says Deep", "table word: roll"]);
     expect(formatOffer(e)).toContain("run 1: affirm, combat, Moderate: The Wounded Beast");
     expect(tableWords(engine)).toEqual(["round", "Beat", "turn", "roll", "die", "Margin", "Resistance", "check"]);
@@ -86,5 +86,9 @@ describe("the offer fixtures", () => {
     expect(flags({ notice: "One.\nTwo.\nThree.\nFour." })).toEqual(["message runs 4 lines"]);
     expect(flags({ notice: "Reward proportional to precision." })).toEqual(["message says proportional, the reward is fixed"]);
     expect(flags({ notice: "Reward proportional to precision.", scaled: true })).toEqual([]);
+    expect(flags({ hiddenOutcome: "Spare it. It pays a Resonance Glass." })).toEqual([]);
+    expect(flags({ hiddenOutcome: "Spare it. It pays a Resonance Glass. The beast follows him after." })).toEqual(["hidden outcome runs 3 sentences"]);
+    expect(flags({ hiddenOutcome: "Spare it: the title First Responder, +1 PER." })).toEqual(["hidden outcome prices a title"]);
+    expect(flags({ hiddenOutcome: `Spare it and ${"walk ".repeat(40)}home.` })).toEqual(["hidden outcome runs 44 words"]);
   });
 });

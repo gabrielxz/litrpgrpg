@@ -5,7 +5,8 @@
  * situation in the GM's words, and what the rules decide: affirm or test (Quests, "Personal
  * Opportunities") and the flavors that fit the pattern. The scorer checks those, and flags
  * player-facing text that names the behavioral axes or the sheet, uses the table's words, runs
- * past three lines of the System's message, or promises a proportional reward the quest does not pay. The prose itself is for Gabriel's read.
+ * past three lines of the System's message, or promises a proportional reward the quest does not pay,
+ * and the GM's note when its hidden outcome runs long or prices a title. The prose itself is for Gabriel's read.
  */
 import { readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -14,7 +15,7 @@ import type { Engine } from "@gradebreaker/engine";
 import { type Action, CampaignRecord, actionSchema } from "@gradebreaker/record";
 import { z } from "zod";
 import type { Drafter, Effort } from "./draft-events.ts";
-import { type OpportunityDraft, draftOpportunity } from "./draft-opportunity.ts";
+import { HIDDEN_SENTENCES, HIDDEN_WORDS, type OpportunityDraft, draftOpportunity } from "./draft-opportunity.ts";
 import { readYaml } from "@gradebreaker/engine/node";
 
 export const OFFERS_DIR = join(dirname(fileURLToPath(import.meta.url)), "../offers");
@@ -85,6 +86,13 @@ export function offerFlags(engine: Engine, draft: OpportunityDraft): string[] {
   const lines = draft.notice.split("\n").filter((l) => l.trim()).length;
   if (lines > 3) out.push(`message runs ${lines} lines`);
   if (/proportional/i.test(draft.notice) && !q.scaled) out.push("message says proportional, the reward is fixed");
+  // The GM's note: the hidden outcome stays short and leaves a title's numbers to the GM.
+  const hidden = /Hidden outcome: (.*?) If refused:/s.exec(q.note ?? "")?.[1] ?? "";
+  const sentences = hidden.split(/(?<=[.!?])\s+/).filter((x) => x.trim()).length;
+  if (sentences > HIDDEN_SENTENCES) out.push(`hidden outcome runs ${sentences} sentences`);
+  const words = hidden.split(/\s+/).filter(Boolean).length;
+  if (words > HIDDEN_WORDS) out.push(`hidden outcome runs ${words} words`);
+  if (/[+−-]\d|\bbonus\b/i.test(hidden)) out.push("hidden outcome prices a title");
   return out;
 }
 
@@ -104,7 +112,7 @@ export interface OfferEvaluation {
   fixtureId: string;
   expected: OfferFixture["expected"];
   runs: OfferRun[];
-  summary: { runs: number; returned: number; stance: number; flavor: number; flagged: number; flags: Record<string, number> };
+  summary: { runs: number; returned: number; stance: number; flavor: number; scaled: number; flagged: number; flags: Record<string, number> };
 }
 
 export function scoreOffer(engine: Engine, fixture: OfferFixture, draft: OpportunityDraft): Pick<OfferRun, "stanceOk" | "flavorOk" | "flags"> {
@@ -138,6 +146,7 @@ export async function evaluateOffer(engine: Engine, fixture: OfferFixture, draft
       returned: ok.length,
       stance: ok.filter((r) => r.stanceOk).length,
       flavor: ok.filter((r) => r.flavorOk).length,
+      scaled: ok.filter((r) => r.draft!.quest.scaled).length,
       flagged: ok.filter((r) => r.flags?.length).length,
       flags,
     },
@@ -149,7 +158,7 @@ export function formatOffer(e: OfferEvaluation): string {
   const s = e.summary;
   const rows = [
     `${e.fixtureId}: ${s.returned} of ${s.runs} runs returned; expected ${e.expected.stance}, ${e.expected.flavors.join(" or ")}`,
-    `  stance ${s.stance}/${s.returned}, flavor ${s.flavor}/${s.returned}, flagged ${s.flagged}/${s.returned}${Object.keys(s.flags).length ? ` (${Object.entries(s.flags).map(([k, n]) => `${k} ×${n}`).join(", ")})` : ""}`,
+    `  stance ${s.stance}/${s.returned}, flavor ${s.flavor}/${s.returned}, proportional ${s.scaled}/${s.returned}, flagged ${s.flagged}/${s.returned}${Object.keys(s.flags).length ? ` (${Object.entries(s.flags).map(([k, n]) => `${k} ×${n}`).join(", ")})` : ""}`,
   ];
   for (const r of e.runs) {
     if (r.error || r.refused) {
