@@ -92,12 +92,12 @@ Each track keeps one current handoff here, replaced at the close of a session; t
 
 ### Next book session
 
-**State (2026-09-29).** Rules 0.1.36, pushed, `make check` green. The queue from the app sessions is cleared: the sixteen items and the class-offer rulings are in the book, with each class checked against them (the Adjudicator's Contempt answers the Sanction, the Witness's The Observation comes at any death, the Underdog's Find the Seam works against a stronger same-Grade foe, and Lift stands). Gabriel's rule from that pass is in Classes: a narrow power stands beside a broad one. Three or more creatures size at +10 Force each past the second (class_sim, Levels 10 to 25). The lint now holds the pregens and three prompt templates to the book. The reading copy is build 20260929-112952 (352 pages, rules 0.1.36, no notes); Gabriel's read resumes at **Progression**.
+**State (2026-09-29).** Rules 0.1.36, pushed, `make check` green. The queue from the app sessions is cleared: the sixteen items and the class-offer rulings are in the book, with each class checked against them (the Adjudicator's Contempt answers the Sanction, the Witness's The Observation comes at any death, the Underdog's Find the Seam works against a stronger same-Grade foe, and Lift stands). Gabriel's rule from that pass is in Classes: a narrow power stands beside a broad one. Three or more creatures size at +10 Force each past the second (class_sim, Levels 10 to 25). The lint now holds the pregens and four templates (class, vision, Personal Opportunity, Integration summary) to the book. The reading copy is build 20260929-112952 (352 pages, rules 0.1.36, no notes); Gabriel's read resumes at **Progression**.
 
-**Next.** When he has annotated: `make notes`, work the notes (agreed / his call / pushback), apply, `make check`, commit, archive the annotated copy to `reading/archive/`, `make reading-copy`. If his notes generalize into patterns, sweep the unread chapters before he reaches them.
+**Next.** First, the Hidden Achievements prompt for The System AI, taken from the app's suggestion drafter (`draft-suggestions`) in the book's words, as the vision prompt was. Loot and Identify get no prompt (Gabriel, 2026-09-29): the loot table and What Can Be Seen are the procedure, and a sentence in The System AI will say so. When he has annotated: `make notes`, work the notes (agreed / his call / pushback), apply, `make check`, commit, archive the annotated copy to `reading/archive/`, `make reading-copy`. If his notes generalize into patterns, sweep the unread chapters before he reaches them.
 
 **Carried** (recorded nowhere else):
-- The missing AI-Assisted function prompts: Hidden Achievements, Loot, Skill Synthesis, Identify (The System AI). Battle Memory Visions is written.
+- The Skill Synthesis prompt (The System AI): rare at the table; write it when the app reaches synthesis or in a slow book session.
 
 ### Queued for the book
 
