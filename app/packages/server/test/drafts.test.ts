@@ -38,6 +38,7 @@ let opportunities: ({ output: unknown } | { problem: Problem })[] = [];
 /** The voice drafts, messages and visions alike, and the prompts they were asked with. */
 let voiced: ({ output: unknown } | { problem: Problem })[] = [];
 let voicePrompts: string[] = [];
+let classed: ({ output: unknown } | { problem: Problem })[] = [];
 let prompts: string[] = [];
 const noActions = { items: [], quests: [], ve: [], parties: [], counters: [], cues: [] };
 const noSuggestions = { titles: [], memories: [], hidden: [] };
@@ -45,6 +46,12 @@ const scripted = (_key: string, model: string): LanguageModel => ({
   model,
   async check() {},
   async draft<T>(req: { system: string; prompt: string; schema: z.ZodType<T> }) {
+    if (req.system.includes("You draft class offers")) {
+      voicePrompts.push(req.prompt);
+      const next = classed.shift()!;
+      if ("problem" in next) throw new ModelError(next.problem, `scripted ${next.problem}`);
+      return { output: req.schema.parse(next.output), usage: { model, inputTokens: 3000, outputTokens: 1500, cacheReadTokens: 0, cacheWriteTokens: 0 } };
+    }
     if (req.system.includes("You write the System's messages") || req.system.includes("You write the vision")) {
       voicePrompts.push(req.prompt);
       const next = voiced.shift()!;
@@ -120,6 +127,7 @@ beforeEach(async () => {
   suggested = [];
   opportunities = [];
   voiced = [];
+  classed = [];
   voicePrompts = [];
   prompts = [];
   db = await pgliteDb(new PGlite());
@@ -422,5 +430,49 @@ describe("drafting from typed table talk", () => {
     voiced = [{ problem: "rate" }];
     const limited = await say(gm, { to: ["kara"], gist: "again" });
     expect(limited).toMatchObject({ status: 503, json: { problem: "rate" } });
+  });
+
+  it("drafts three class offers in the background, loaded and recorded through the draft, the guarded list only when asked", async () => {
+    const { gm, player, campaignId } = await table();
+    const act = (action: unknown) => call("POST", `/campaigns/${campaignId}/actions`, gm, { id: randomUUID(), action });
+    const start = (who: string, body: unknown) => call("POST", `/campaigns/${campaignId}/class-offers`, who, body);
+    expect((await start(gm, { characterId: "kara" })).json.error).toMatch(/not due class offers/);
+    for (let level = 2; level <= 10; level++) {
+      await act({ type: "ve.award", basis: { kind: "other", note: "test" }, awards: [{ characterId: "kara", ve: 120 }] });
+      await act({ type: "consolidation.rest", highDensity: false, rests: [{ characterId: "kara", hours: 6 }] });
+      if (level < 10) await act({ type: "points.system", characterId: "kara", level, placement: { STR: 3 } });
+    }
+    const offer = (name: string, extra: Record<string, unknown> = {}) => ({
+      book: null,
+      name,
+      notice: `${name}. Selection: Strength +10. Growth: Strength, Strength, Fortitude.`,
+      role: `${name} role`,
+      weighs: "The Force lead.",
+      profile: { shape: "Fixed", points: [{ attribute: "STR", points: 2 }, { attribute: "FOR", points: 1 }] },
+      technique: { name: `${name} Blow`, cost: "Frequency", effect: "+10 to an attack Clash", drawback: null, reaction: false, noBeat: false, actionEconomy: false, clash: { bonus: 10, side: "attack" }, heal: null },
+      permission: { name: `${name} Way`, effect: "Something the character already decides", actionEconomy: false, onceADay: false },
+      guarded: false,
+      ...extra,
+    });
+    classed = [{ output: { offers: [offer("Breaker"), offer("Taker", { guarded: true }), { ...offer("x"), book: "Battle Medic" }] } }];
+    expect((await start(player, { characterId: "kara" })).status).toBe(403);
+    const started = await start(gm, { characterId: "kara", keepsDoing: "First through every door." });
+    expect(started.status).toBe(202);
+    await drafts.settled(started.json.run.id);
+    expect(voicePrompts.at(-1)).toContain("First through every door.");
+    expect(voicePrompts.at(-1)).toContain("The GM has not asked for one");
+    const run = (await call("GET", `/campaigns/${campaignId}/drafts`, gm)).json.runs[0];
+    expect(run).toMatchObject({ status: "done", feature: "draft-classes" });
+    const [item] = run.items;
+    expect(item.suggestion).toMatchObject({ kind: "class-offers", key: "Breaker, Taker, Battle Medic", characterId: "kara", problems: ["Taker carries a guarded power the GM did not ask for"] });
+    expect(item.action.offers[2]).toMatchObject({ name: "Battle Medic", book: "Battle Medic" });
+    expect(item.action.offers[0].technique.hook).toEqual({ kind: "clash", bonus: 10, side: "attack" });
+    const edited = { ...item.action, offers: item.action.offers.map((o: { guarded?: boolean }) => ({ ...o, guarded: undefined })) };
+    const ok = await call("POST", `/campaigns/${campaignId}/drafts/${run.id}/${item.itemId}/accept`, gm, { id: randomUUID(), action: edited });
+    expect(ok.status).toBe(201);
+    const playerView = (await call("GET", `/campaigns/${campaignId}`, player)).json;
+    expect(JSON.stringify(playerView)).toContain("Breaker");
+    expect(JSON.stringify(playerView)).not.toContain("Force lead");
+    expect((await start(gm, { characterId: "kara" })).json.error).toMatch(/not due class offers/);
   });
 });

@@ -3,7 +3,8 @@
  * Level 10 without a class is due three offers: the GM reads the record beside the writer, starts
  * each offer from one of the book's classes or writes it fresh, and records the three together.
  * The player accepts one on their own screen, or the GM records the choice for a player away.
- * Classes held are listed with their once-a-day permission against dawn on the clock.
+ * Classes held are listed with their once-a-day permission against dawn on the clock. With the
+ * campaign's key, the model drafts the three from the same record and they load into the writer.
  */
 import type { Engine } from "@gradebreaker/engine";
 import {
@@ -21,12 +22,15 @@ import {
   weights,
 } from "@gradebreaker/record";
 import { useEffect, useState } from "react";
+import { type DraftItem, acceptDraft, startClassOffers } from "../api.ts";
 import { costLine, profileLine, returnedOf, selectionLine, techniqueOffer } from "../classes.ts";
 import { ATTRIBUTES, type Names } from "../text.ts";
 import { TableWords } from "./TableWords.tsx";
 import { Commit } from "./Commit.tsx";
+import { type DraftRuns, waitingOn } from "./Drafts.tsx";
+import { useAiConfigured } from "./useAi.ts";
 
-type Props = { view: GmView; engine: Engine | null; names: Names; onRecorded: (env: Envelope) => void };
+type Props = { view: GmView; engine: Engine | null; names: Names; onRecorded: (env: Envelope) => void; drafts?: DraftRuns };
 
 const blank = (): ClassPackage => ({
   name: "",
@@ -334,10 +338,97 @@ function readDraft(key: string, n: number): ClassPackage[] {
   return Array.from({ length: n }, blank);
 }
 
-function OfferWriter({ view, engine, names, onRecorded, c }: Props & { engine: Engine; c: Sheet }) {
+/** Drafting the three offers from the record (Classes, "Building a Class for a Specific Human"), loaded into the writer on the GM's click. */
+function OfferDrafter({ view, c, drafts, onLoad }: { view: GmView; c: Sheet; drafts: DraftRuns; onLoad: (item: DraftItem) => void }) {
+  const ai = useAiConfigured(view.campaign.id);
+  const [keepsDoing, setKeepsDoing] = useState("");
+  const [guarded, setGuarded] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  if (!ai) return null;
+  const mine = drafts.runs.filter((r) => r.feature === "draft-classes");
+  const running = mine.some((r) => r.status === "drafting");
+  const failed = mine[0]?.status === "failed" ? mine[0] : null;
+  const item = mine.flatMap((r) => r.items).find((i) => i.suggestion?.characterId === c.id && waitingOn(i));
+  const start = async () => {
+    setBusy(true);
+    setError(null);
+    try {
+      const { run } = await startClassOffers(view.campaign.id, c.id, keepsDoing, guarded);
+      drafts.setRuns((rs) => [run, ...rs]);
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  };
+  const notes = item?.suggestion?.offers ?? [];
+  const offered = item?.action?.type === "class.offer" ? item.action.offers : [];
+  return (
+    <details className="class-drafter" open={Boolean(item)}>
+      <summary>Draft the three offers from the record</summary>
+      <label>
+        What the player keeps doing that no rule asked for
+        <textarea rows={2} value={keepsDoing} maxLength={2000} onChange={(e) => setKeepsDoing(e.target.value)} placeholder="First through every door; names the loot she wants before the fight is over" />
+      </label>
+      <label className="check">
+        <input type="checkbox" checked={guarded} onChange={(e) => setGuarded(e.target.checked)} /> Ask for a guarded power (one offer may carry one)
+      </label>
+      <div className="row">
+        <button disabled={busy || running || drafts.drafting} onClick={start}>
+          {running ? "Drafting…" : "Draft three offers"}
+        </button>
+        <span className="muted small">The model reads the record at the left; the drafts load into the offers below when you say.</span>
+      </div>
+      {error && <p className="error">{error}</p>}
+      {failed && !running && <p className="error">The last draft failed: {failed.message}</p>}
+      {item && (
+        <div className="class-drafted">
+          <ul className="small">
+            {offered.map((o, i) => (
+              <li key={o.name}>
+                <strong>{o.name}</strong>
+                {o.book ? " (the book's)" : ""}
+                {o.guarded ? " (guarded)" : ""}: {notes[i]?.role}. <span className="muted">Weighs: {notes[i]?.weighs}</span>
+                {[...(notes[i]?.problems ?? []), ...(notes[i]?.warnings ?? [])].map((w) => (
+                  <div key={w} className="warning">
+                    {w}
+                  </div>
+                ))}
+              </li>
+            ))}
+          </ul>
+          {(item.suggestion?.problems ?? []).map((p) => (
+            <p key={p} className="warning small">
+              {p}
+            </p>
+          ))}
+          <div className="row">
+            <button className="primary" onClick={() => onLoad(item)}>
+              Load them into the three offers
+            </button>
+            <button onClick={() => drafts.mark(item, "dismiss")}>Dismiss</button>
+          </div>
+        </div>
+      )}
+    </details>
+  );
+}
+
+function OfferWriter({ view, engine, names, onRecorded, c, drafts }: Props & { engine: Engine; c: Sheet }) {
   const n = engine.rules.classes.selection.offers as number;
   const key = draftKey(view.campaign.id, c.id);
   const [offers, setOffers] = useState<ClassPackage[]>(() => readDraft(key, n));
+  // The drafted offers loaded into the editors: recording them accepts the draft.
+  const [loaded, setLoaded] = useState<DraftItem | null>(null);
+  const [generation, setGeneration] = useState(0);
+  const load = (item: DraftItem) => {
+    if (item.action?.type !== "class.offer") return;
+    const drafted = item.action.offers.map((o) => structuredClone(o));
+    setOffers([...drafted, ...Array.from({ length: Math.max(0, n - drafted.length) }, blank)].slice(0, n));
+    setLoaded(item);
+    setGeneration((g) => g + 1);
+  };
   useEffect(() => {
     try {
       window.localStorage.setItem(key, JSON.stringify(offers));
@@ -366,8 +457,9 @@ function OfferWriter({ view, engine, names, onRecorded, c }: Props & { engine: E
       <div className="class-writer-body">
         <RecordRead engine={engine} c={c} />
         <div className="class-editors">
+          {drafts && <OfferDrafter view={view} c={c} drafts={drafts} onLoad={load} />}
           {offers.map((o, i) => (
-            <OfferEditor key={i} index={i} engine={engine} c={c} value={o} onChange={(p) => setOffers(offers.map((x, j) => (j === i ? p : x)))} />
+            <OfferEditor key={`${generation}-${i}`} index={i} engine={engine} c={c} value={o} onChange={(p) => setOffers(offers.map((x, j) => (j === i ? p : x)))} />
           ))}
         </div>
       </div>
@@ -382,6 +474,15 @@ function OfferWriter({ view, engine, names, onRecorded, c }: Props & { engine: E
         problem={problems.length ? problems.join(" ") : null}
         names={names}
         label={`Offer ${c.name} these three classes`}
+        {...(loaded && drafts && waitingOn(loaded)
+          ? {
+              submitWith: async (id: string, a: Parameters<typeof acceptDraft>[3]) => {
+                const out = await acceptDraft(view.campaign.id, loaded, id, a);
+                drafts.replace(out.item);
+                return out.appended;
+              },
+            }
+          : {})}
         onRecorded={(env) => {
           try {
             window.localStorage.removeItem(key);

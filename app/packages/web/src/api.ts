@@ -93,12 +93,15 @@ export interface DraftItem {
   action?: Action;
   prepId?: string;
   suggestion?: {
-    kind: "title" | "battle-memory" | "hidden-achievement" | "personal-opportunity";
+    kind: "title" | "battle-memory" | "hidden-achievement" | "personal-opportunity" | "class-offers";
     key: string;
     characterId: string;
     /** A Personal Opportunity: whether it affirms or tests the pattern, and the System's words with the offer. */
     stance?: "affirm" | "test";
     notice?: string;
+    /** Class offers: for the GM, each offer's role, what it weighs, and the book's rules and advice it crosses; and problems across the three. */
+    offers?: { role: string; weighs: string; problems: string[]; warnings: string[] }[];
+    problems?: string[];
   };
   /** An event's reason per character. */
   reasons: { characterId: string; why: string }[];
@@ -152,6 +155,9 @@ export const draftMessage = (campaignId: string, to: string[], gist: string) => 
 
 export const draftVision = (campaignId: string, body: { characterId: string; memoryId: string; family: string; words: string }) =>
   api<{ draft: VisionDraft }>("POST", `/campaigns/${campaignId}/voice/vision`, body);
+
+export const startClassOffers = (campaignId: string, characterId: string, keepsDoing: string, guarded: boolean) =>
+  api<{ run: DraftRun }>("POST", `/campaigns/${campaignId}/class-offers`, { characterId, keepsDoing, guarded });
 
 export const startDraft = (campaignId: string, text: string) => api<{ run: DraftRun }>("POST", `/campaigns/${campaignId}/drafts`, { text });
 

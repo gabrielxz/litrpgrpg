@@ -130,14 +130,15 @@ Edits an app session forces, each with Gabriel's ruling or Claude's recommendati
 
 ### Next app session
 
-**State (2026-09-29, tenth close, continued).** Rules 0.1.33, `make check` green (engine 235, record 128, server 64, listening 156, web 8). Voice drafting deployed (run 36571293444, health 200); the stat proposal pushed with this handoff. Each screen change checked in the browser with a GM tab and a player tab:
+**State (2026-09-29, tenth close, continued).** Rules 0.1.33, `make check` green (engine 235, record 128, server 64, listening 156, web 8). Voice drafting and the stat proposal deployed (runs 36571293444 and 36572062219, health 200); class offers pushed with this handoff. Each screen change checked in the browser with a GM tab and a player tab:
 - **A Hidden Achievement script.** `civic-tribunal` (Sector D): Joe takes the Husk Sentinel to the building's own tribunal, a way past it the book does not give; Andre's reading of the tally is Read the Room, the catalog title, as the contrast. 3 runs of each drafter: the Hidden Achievement and Read the Room found every run with nothing invented; events 100%; bookkeeping 100% once the script put the bay's finds in the spoils, as the drafter's own rule does.
 - **System voice drafting (M2).** The composer drafts from what the GM wants said (or puts the GM's own message in the voice) and lists anything the draft adds for the GM to check; the meditation form drafts the vision and proposes the Insight with a reason. Both return to the form, never stored, flagged for what breaks the voice on sight. Sixteen voice fixtures × 2 runs: registers, kept numbers, and Insight right in all 32. Gabriel read the drafts and the vision prompt (2026-09-29): both stand.
+- **Class offers (M2).** The Classes writer drafts three offers from the book's own prompt (`rules/templates/class-generation.txt`) and the record, plus what the GM says the player keeps doing; the guarded list only when the GM ticks it. The draft runs in the background (about 35 seconds), loads into the three editors, and is accepted when recorded. Five fixtures × 2: 9 of 10 within the rules (the tenth now repaired), lead and guarded right in all 10. For Gabriel's read: `build/listening/class-offers-to-read.txt`.
 - **Stat allocation suggestions (M2).** Gabriel ruled each Behavioral Stat Mapping row an HVE side (rules 0.1.33; queued for the book). The Assigned points form proposes a placement from the HVE entries since the last placement, with the totals and why; no model call.
 - **Rules 0.1.32 and 0.1.33:** the book's sample vision joined `rules/system-ai.yaml`; `voice.rules` is one rule to an item; each mapping row names its side. No number moved.
-- Claude's calls are under Decisions ("drafting the System's voice", "assigned points proposed from the HVE entries"), open to Gabriel's cut.
+- Claude's calls are under Decisions ("drafting the System's voice", "assigned points proposed from the HVE entries", "drafting class offers"), open to Gabriel's cut.
 
-**Next.** Check the deploy of the stat proposal. Then M2's next rows: class offers (three from the record, the guarded list only when the GM asks; `voiceInstructions` serves the in-world class text), sweep drafts, summaries. After M3: the in-app user guide, then the walkthrough video (M4).
+**Next.** Gabriel's read of the class offers. Then M2's last rows: sweep drafts, summaries. After M3: the in-app user guide, then the walkthrough video (M4).
 
 ### Queued for the app
 

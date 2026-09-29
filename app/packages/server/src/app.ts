@@ -35,6 +35,7 @@ const aiKey = z.object({ key: z.string().min(1).max(500), model: z.string().opti
 const aiModel = z.object({ model: z.string() });
 const draftOpportunityBody = z.object({ characterId: z.string().max(80), situation: z.string().max(2000).optional() });
 const draftTalk = z.object({ text: z.string().max(MAX_TALK_CHARS * 2) });
+const draftClassesBody = z.object({ characterId: z.string().max(80), keepsDoing: z.string().max(2000).optional(), guarded: z.boolean().optional() });
 const draftMessageBody = z.object({ to: z.array(z.string().max(80)).max(50), gist: z.string().max(2000) });
 const draftVisionBody = z.object({ characterId: z.string().max(80), memoryId: z.string().max(80), family: z.string().max(40), words: z.string().max(500).optional() });
 const acceptDraft = submissionSchema.pick({ id: true, action: true });
@@ -228,6 +229,10 @@ export function createApp(service: Service, opts: AppOptions = {}) {
   app.post("/campaigns/:id/opportunities", async (c) => {
     const b = await body(c, draftOpportunityBody);
     return c.json({ run: await drafts().opportunity(c.req.param("id"), c.get("user"), b.characterId, b.situation ?? "") }, 202);
+  });
+  app.post("/campaigns/:id/class-offers", async (c) => {
+    const b = await body(c, draftClassesBody);
+    return c.json({ run: await drafts().classOffers(c.req.param("id"), c.get("user"), b.characterId, b.keepsDoing ?? "", Boolean(b.guarded)) }, 202);
   });
   // The System's voice: drafted and returned, never stored; the GM's form holds the draft.
   app.post("/campaigns/:id/voice/message", async (c) => {

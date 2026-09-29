@@ -1,0 +1,24 @@
+# Kara at Level 10 on the Apex Predator's record. The format is in src/class-fixtures.ts.
+id: kara-apex
+title: Kara at Level 10, first through and first to claim
+source: 'book/18-classes.md, "Building a Class for a Specific Human"; Titles'' sample stacks (The Apex Predator)'
+notes: >
+  Deep leads Force and Hunger with Will behind; the circled moment is the Heart she took from the
+  young Snarljaw. The book's own class for her is the Breaching Vanguard. Offers should lead with
+  what the pattern runs on, STR or POW, and differ in role.
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara}}
+  - levelTo: {characterId: kara, level: 10, assigned: {STR: 2, FOR: 1}, free: {STR: 1, POW: 1}}
+  - {id: deep, action: {type: hve.deep, characterId: kara, deep: {Force: 6, Hunger: 4, Will: 2, Accord: 1}}}
+  - {id: heart, action: {type: event.log, summary: Kara kills the smallest young Snarljaw for the Heart inside it and eats it., participants: [kara], entries: [{characterId: kara, pole: Hunger, intensity: 3, intent: Take the Heart}]}}
+  - {id: den, action: {type: event.log, summary: Kara goes into the den first while one adult guards it., participants: [kara], entries: [{characterId: kara, pole: Force, intensity: 2}]}}
+  - id: sweep
+    action:
+      type: hve.sweep
+      label: Session 5
+      sheets: [{characterId: kara, moments: [{pole: Hunger, weight: 3, eventId: heart, note: The table went quiet when she ate it.}, {pole: Force, weight: 2, eventId: den}]}]
+characterId: kara
+keepsDoing: First through every door, and she says out loud which piece of the loot she wants before the fight is over.
+expected:
+  anyLead: [STR, POW]
+  why: Force and Hunger lead; the book's classes for that pair lead with STR.

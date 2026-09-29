@@ -268,7 +268,7 @@ export function DraftsCard({ view, engine, names, onRecorded, drafts }: { view: 
       )}
       {error && <p className="error">{error}</p>}
       {runs
-        .filter((r) => r.feature !== "draft-opportunity")
+        .filter((r) => r.feature !== "draft-opportunity" && r.feature !== "draft-classes")
         .slice(0, 3)
         .map((r) => (
           <RunLine key={r.id} run={r} />

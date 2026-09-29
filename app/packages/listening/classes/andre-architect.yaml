@@ -1,0 +1,24 @@
+# Andre at Level 10 on the System Architect's record. The format is in src/class-fixtures.ts.
+id: andre-architect
+title: Andre at Level 10, the one counting
+source: 'book/18-classes.md, "Building a Class for a Specific Human"; Titles'' sample stacks (The System Architect)'
+notes: >
+  Deep leads Method, then Restraint and Accord; the circled moment is the spiral he saw from the
+  deck and kept to himself. Offers should lead with PER or DEX, and at least one should serve a
+  scene that is not a fight.
+setup:
+  - {id: andre, action: {type: character.pregen, characterId: andre, pregen: Andre}}
+  - levelTo: {characterId: andre, level: 10, assigned: {PER: 2, DEX: 1}, free: {PER: 1, FOR: 1}}
+  - {id: deep, action: {type: hve.deep, characterId: andre, deep: {Method: 7, Restraint: 3, Accord: 3, Control: 2}}}
+  - {id: spiral, action: {type: event.log, summary: From the observation deck Andre sees the ruins laid out in a spiral closing on the gate, and tells no one., participants: [andre], entries: [{characterId: andre, pole: Method, intensity: 3, intent: Hold the one thing nobody else knows}]}}
+  - {id: rations, action: {type: event.log, summary: Andre counts the rations and sets aside a share for the Kith., participants: [andre], entries: [{characterId: andre, pole: Restraint, intensity: 1}]}}
+  - id: sweep
+    action:
+      type: hve.sweep
+      label: Session 6
+      sheets: [{characterId: andre, moments: [{pole: Method, weight: 3, eventId: spiral, note: Kept the spiral to himself.}, {pole: Restraint, weight: 1, eventId: rations}]}]
+characterId: andre
+keepsDoing: He maps every room before anyone moves, counts the supplies out loud each night, and always knows the second way out.
+expected:
+  anyLead: [PER, DEX]
+  why: Method leads; the book's Method classes lead with DEX or PER.

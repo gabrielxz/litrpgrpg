@@ -9,3 +9,5 @@ export * from "./harness.ts";
 export * from "./typed.ts";
 export * from "./draft-voice.ts";
 export * from "./voice.ts";
+export * from "./draft-classes.ts";
+export * from "./class-fixtures.ts";

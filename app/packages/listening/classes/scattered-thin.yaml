@@ -1,0 +1,15 @@
+# A thin, scattered record. The format is in src/class-fixtures.ts.
+id: scattered-thin
+title: A newcomer at Level 10 with little on the record
+source: 'book/18-classes.md, "The Level 10 Scene" ("a stock class the record plainly fits")'
+notes: >
+  A character built at the table and levelled with points spread evenly; Deep is Scattered, no
+  moment was circled, and the GM writes nothing about what the player keeps doing. The offers
+  should still be three roles, and a book class as written is a fair answer.
+setup:
+  - {id: sam, action: {type: character.create, characterId: sam, name: Sam, stats: {STR: 6, DEX: 6, FOR: 6, HRT: 6, POW: 5, PER: 6, CHA: 5}, background: "Night-shift nurse at a county hospital."}}
+  - levelTo: {characterId: sam, level: 10, assigned: {STR: 1, DEX: 1, HRT: 1}, free: {FOR: 1, PER: 1}}
+  - {id: deep, action: {type: hve.deep, characterId: sam, deep: {Accord: 2, Restraint: 2, Method: 1, Force: 1}}}
+characterId: sam
+expected:
+  why: Nothing leads; any three roles the record supports.

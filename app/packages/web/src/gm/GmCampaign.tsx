@@ -341,7 +341,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
         <QuestsSection view={view} engine={engine} names={names} onRecorded={live.addToLog} {...(firing?.kind === "quest" ? { firing } : {})} onFired={() => setFiring(null)} />
       )}
       {section === "principles" && <PrinciplesSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
-      {section === "classes" && <ClassesSection view={view} engine={engine} names={names} onRecorded={live.addToLog} />}
+      {section === "classes" && <ClassesSection view={view} engine={engine} names={names} onRecorded={live.addToLog} drafts={drafts} />}
       {section === "events" && <EventsSection view={view} engine={engine} names={names} onRecorded={live.addToLog} drafts={drafts} />}
       {section === "suggestions" && (
         <SuggestionsSection

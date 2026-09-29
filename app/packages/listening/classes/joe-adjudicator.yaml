@@ -1,0 +1,23 @@
+# Joe at Level 10 on the Iron Adjudicator's record. The format is in src/class-fixtures.ts.
+id: joe-adjudicator
+title: Joe at Level 10, between the danger and everyone else
+source: 'book/18-classes.md, "Building a Class for a Specific Human"; Titles'' sample stacks (The Iron Adjudicator)'
+notes: >
+  Deep leads Restraint and Force, with Will and Control behind; the circled moment is taking the
+  Warden's blow meant for Ray at the gate. Offers should lead with FOR, STR, or HRT.
+setup:
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe}}
+  - levelTo: {characterId: joe, level: 10, assigned: {FOR: 2, STR: 1}, free: {FOR: 1, HRT: 1}}
+  - {id: deep, action: {type: hve.deep, characterId: joe, deep: {Restraint: 6, Force: 4, Will: 2, Control: 2}}}
+  - {id: gate, action: {type: event.log, summary: Joe steps in front of Ray and takes the Warden's blow at the gate., participants: [joe], entries: [{characterId: joe, pole: Restraint, intensity: 3, intent: Ray gets through}]}}
+  - {id: spear, action: {type: event.log, summary: Joe sets the rule at camp that nobody eats until the wounded have., participants: [joe], entries: [{characterId: joe, pole: Control, intensity: 1}]}}
+  - id: sweep
+    action:
+      type: hve.sweep
+      label: Session 7
+      sheets: [{characterId: joe, moments: [{pole: Restraint, weight: 3, eventId: gate, note: Took the blow meant for Ray.}, {pole: Control, weight: 1, eventId: spear}]}]
+characterId: joe
+keepsDoing: He triages before he fights, and he stands in the doorway so the others can get out.
+expected:
+  anyLead: [FOR, STR, HRT]
+  why: Restraint and Force lead; the Iron Adjudicator's roles run on FOR and STR.

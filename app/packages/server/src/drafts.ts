@@ -15,6 +15,7 @@
 import { type Action, type Appended, CampaignRecord } from "@gradebreaker/record";
 import {
   DRAFT_ACTIONS_FEATURE,
+  DRAFT_CLASSES_FEATURE,
   DRAFT_EVENTS_FEATURE,
   DRAFT_MESSAGE_FEATURE,
   DRAFT_OPPORTUNITY_FEATURE,
@@ -27,11 +28,13 @@ import {
   type TypedTalk,
   type VisionDraft,
   draftActions,
+  draftClasses,
   draftEvents,
   draftMessage,
   draftOpportunity,
   draftSuggestions,
   draftVision,
+  dueOffers,
   flavorsFor,
   readTypedTalk,
 } from "@gradebreaker/listening";
@@ -55,7 +58,7 @@ const ACCEPTS: Record<ItemKind, readonly Action["type"][]> = {
   event: ["event.log"],
   action: ["item.give", "item.move", "item.remove", "quest.progress", "quest.complete", "quest.fail", "ve.award", "party.invite", "party.answer", "counter.tick"],
   cue: [],
-  suggestion: ["title.grant", "memory.grant", "quest.issue"],
+  suggestion: ["title.grant", "memory.grant", "quest.issue", "class.offer"],
 };
 
 /** A suggestion as the panel names it: a title, a Battle Memory Card, or a Hidden Achievement for a character. */
@@ -66,6 +69,9 @@ export interface Suggested {
   /** A Personal Opportunity: whether it affirms or tests the pattern, and the System's words with the offer. */
   stance?: "affirm" | "test";
   notice?: string;
+  /** Class offers: for the GM, each offer's role, what it weighs, and the book's rules and advice it crosses; and problems across the three. */
+  offers?: { role: string; weighs: string; problems: string[]; warnings: string[] }[];
+  problems?: string[];
 }
 
 export interface DraftItem {
@@ -216,6 +222,57 @@ export class Drafts {
       const p = problemOf(err);
       await this.db.query("update draft_runs set status = 'failed', finished_at = now(), problem = $2, message = $3 where id = $1", [runId, p.problem, p.message]);
     }
+  }
+
+  /**
+   * Drafts three class offers for a character due them, in the background, as a run with one
+   * suggestion: the offers as the `class.offer` the GM records from the Classes writer. What the
+   * player keeps doing is the GM's words; the guarded list goes to the model only when asked.
+   */
+  async classOffers(campaignId: string, user: User | null, characterId: string, keepsDoing: string, guarded: boolean): Promise<DraftRun> {
+    await this.service.requireGm(campaignId, user);
+    await this.requireKey(campaignId);
+    const record = await this.service.record(campaignId);
+    const c = record.sheets().get(characterId);
+    if (!c) throw new HttpError(404, `no character ${characterId}`);
+    if (!dueOffers(record.engine, c)) throw new HttpError(422, `${c.name} is not due class offers`);
+    const [busy] = await this.db.query("select id from draft_runs where campaign_id = $1 and status = 'drafting'", [campaignId]);
+    if (busy) throw new HttpError(409, "a draft is still running; wait for it to finish");
+    const id = newId();
+    const talk: TypedTalk = { speakers: [], lines: [], readings: [] };
+    await this.db.query("insert into draft_runs (id, campaign_id, feature, created_by, status, talk) values ($1, $2, $3, $4, 'drafting', $5::jsonb)", [
+      id,
+      campaignId,
+      DRAFT_CLASSES_FEATURE,
+      user!.id,
+      JSON.stringify(talk),
+    ]);
+    const snapshot = new CampaignRecord(record.engine, record.log);
+    const work = (async () => {
+      try {
+        const out = await draftClasses(record.engine, (req) => this.ai.draft(campaignId, DRAFT_CLASSES_FEATURE, req), snapshot, characterId, { keepsDoing, guarded });
+        const suggestion: Suggested = {
+          kind: "class-offers",
+          key: out.offers.map((o) => o.offer.name).join(", "),
+          characterId,
+          offers: out.offers.map((o) => ({ role: o.role, weighs: o.weighs, problems: o.problems, warnings: o.warnings })),
+          problems: out.problems,
+        };
+        const action: Action = { type: "class.offer", characterId, offers: out.offers.map((o) => o.offer) };
+        await this.db.tx(async (q) => {
+          await q.query(
+            "insert into draft_items (run_id, item_id, campaign_id, kind, lines, action, reasons, why, suggestion) values ($1, 'classes-1', $2, 'suggestion', '[]'::jsonb, $3::jsonb, '[]'::jsonb, $4, $5::jsonb)",
+            [id, campaignId, JSON.stringify(action), keepsDoing.trim() || null, JSON.stringify(suggestion)],
+          );
+          await q.query("update draft_runs set status = 'done', finished_at = now() where id = $1", [id]);
+        });
+      } catch (err) {
+        const p = problemOf(err);
+        await this.db.query("update draft_runs set status = 'failed', finished_at = now(), problem = $2, message = $3 where id = $1", [id, p.problem, p.message]);
+      }
+    })().finally(() => this.running.delete(id));
+    this.running.set(id, work);
+    return (await this.run(campaignId, id))!;
   }
 
   /**

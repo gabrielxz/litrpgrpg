@@ -1,0 +1,22 @@
+# The GM asks for a guarded power. The format is in src/class-fixtures.ts.
+id: kara-guarded
+title: Kara at Level 10, a guarded power asked for
+source: 'book/18-classes.md, "The guarded list" ("The companion app offers a guarded power only when the GM asks for one")'
+notes: >
+  The same record as kara-apex, with the GM asking for a guarded power: exactly one offer carries
+  one, and it is marked.
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara}}
+  - levelTo: {characterId: kara, level: 10, assigned: {STR: 2, FOR: 1}, free: {STR: 1, POW: 1}}
+  - {id: deep, action: {type: hve.deep, characterId: kara, deep: {Force: 6, Hunger: 4, Will: 2, Accord: 1}}}
+  - {id: heart, action: {type: event.log, summary: Kara kills the smallest young Snarljaw for the Heart inside it and eats it., participants: [kara], entries: [{characterId: kara, pole: Hunger, intensity: 3, intent: Take the Heart}]}}
+  - id: sweep
+    action:
+      type: hve.sweep
+      label: Session 5
+      sheets: [{characterId: kara, moments: [{pole: Hunger, weight: 3, eventId: heart, note: The table went quiet when she ate it.}]}]
+characterId: kara
+guarded: true
+keepsDoing: First through every door, and she says out loud which piece of the loot she wants before the fight is over.
+expected:
+  anyLead: [STR, POW]

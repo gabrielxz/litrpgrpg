@@ -51,7 +51,7 @@ export function suggestionsWaiting(view: GmView, engine: Engine | null, names: N
   return record + drafted + elsewhere(view, engine, names).length;
 }
 
-const HEADING = { title: "Title", "battle-memory": "Battle Memory Card", "hidden-achievement": "Hidden Achievement", "personal-opportunity": "Personal Opportunity" } as const;
+const HEADING = { title: "Title", "battle-memory": "Battle Memory Card", "hidden-achievement": "Hidden Achievement", "personal-opportunity": "Personal Opportunity", "class-offers": "Class offers" } as const;
 
 /** A warning when player-facing text names a side of a behavioral axis as the sheet does (capitalized): the System never shows how it keeps count. */
 function SheetWords({ engine, text }: { engine: Engine; text: string }) {
@@ -250,6 +250,21 @@ export function SuggestionsSection({ view, engine, names, onRecorded, drafts, on
                 const key = `${item.runId}/${item.itemId}/${item.status}`;
                 if (item.kind === "cue")
                   return <CueCard key={key} view={view} item={item} cited={<Cited view={view} run={run} item={item} names={names} />} onDismiss={() => drafts.mark(item, "dismiss")} />;
+                if (item.suggestion?.kind === "class-offers")
+                  return (
+                    <li key={key} className="draft">
+                      <h4 className="draft-kind">
+                        Class offers for {names(item.suggestion.characterId)}
+                        <span className="muted">: {item.suggestion.key}</span>
+                      </h4>
+                      <p className="small">
+                        Drafted in the <a href="#classes">Classes</a> section, where they load into the three offers to edit and record.
+                      </p>
+                      <div className="row">
+                        <button onClick={() => drafts.mark(item, "dismiss")}>Dismiss</button>
+                      </div>
+                    </li>
+                  );
                 if (item.suggestion?.kind === "personal-opportunity")
                   return <OpportunityCard key={key} view={view} engine={engine} names={names} item={item} drafts={drafts} onRecorded={onRecorded} onFire={onFire} />;
                 return <SuggestionCard key={key} view={view} engine={engine} names={names} run={run} item={item} drafts={drafts} onRecorded={onRecorded} />;
