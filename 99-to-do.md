@@ -133,7 +133,7 @@ Edits an app session forces, each with Gabriel's ruling or Claude's recommendati
 - **M4 gained a walkthrough video** after the in-app guide, with an animation Claude makes (Todoist mirrored).
 - Claude's calls are under Decisions ("the suggestion panel", "drafting Personal Opportunities"), open to Gabriel's cut.
 
-**Next.** Push the close's commit (Gabriel's go). Gabriel's read of the offers' prose in the latest eval file; whether Joe's offers leaning on his Background is a habit (more fixtures per character would show it). A script with a Hidden Achievement, to measure that kind's recall. Then M2's other rows: System voice drafting, stat allocation suggestions, class offers, sweep drafts, summaries. After M3: the in-app user guide, then the walkthrough video (M4).
+**Next.** Push the close's commit (Gabriel's go). Gabriel read the offers in the latest eval file and they stand (2026-09-29). Whether Joe's offers leaning on his Background is a habit (more fixtures per character would show it). A script with a Hidden Achievement, to measure that kind's recall. Then M2's other rows: System voice drafting, stat allocation suggestions, class offers, sweep drafts, summaries. After M3: the in-app user guide, then the walkthrough video (M4).
 
 ### Queued for the app
 
