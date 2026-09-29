@@ -182,6 +182,7 @@ VERBATIM_TEMPLATES = [
     ("integration-summary.txt", "70-tutorial.md", "#### Summary Template"),
     ("class-generation.txt", "18-classes.md", "### AI-Assisted"),
     ("battle-memory-vision.txt", "45-system-ai.md", "### Battle Memory Visions"),
+    ("personal-opportunity.txt", "55-quests.md", "## Personal Opportunity Generation (System AI Prompt Template)"),
 ]
 
 

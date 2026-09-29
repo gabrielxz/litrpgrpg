@@ -99,7 +99,6 @@ Each track keeps one current handoff here, replaced at the close of a session; t
 **Carried** (recorded nowhere else):
 - The missing AI-Assisted function prompts: Hidden Achievements, Loot, Skill Synthesis, Identify (The System AI). Battle Memory Visions is written.
 - The SVGs in `book/art/emblem/` carry a transform that pushes the clave out of frame.
-- Quests' Personal Opportunity template (step 5, Visible Reward) does not mention when a reward is proportional; the rule sits under the Reward Reference Table.
 
 ### Queued for the book
 

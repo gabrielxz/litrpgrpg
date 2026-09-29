@@ -300,9 +300,13 @@ GENERATE:
 1. Quest title (short, evocative, System-voice).
 2. Issuer (always "System" for Personal Opportunities).
 3. Grade and Difficulty (calibrated to character level).
-4. Objective: specific, actionable, time-limited.
-5. Visible Reward: VE amount + item/title hint, calibrated to the
-   Reward Reference Table.
+4. Objective: specific, actionable, time-limited, with a fixed end
+   where one fits (a place, a count, a distance).
+5. Visible Reward: the VE amount from the Reward Reference Table,
+   plus an item or title hint. Make the reward proportional only
+   when no fixed end fits (how much is gathered, how far a route is
+   charted) or when how well it is done is the reason for the
+   offer, and say what it is proportional to.
 6. Hidden Alternative Outcome (optional): a different reward triggered if the
    character takes a non-obvious or counter-pattern approach.
 7. Refusal Consequence: what the System closes off if this offer
