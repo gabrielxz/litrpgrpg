@@ -27,6 +27,32 @@ export type CostShape = "Aether" | "Frequency" | "Drawback";
  */
 export type TechniqueHook = { kind: "clash"; bonus: number; side: "attack" | "defense" | "either" } | { kind: "heal"; amount: number; reach: "zone" | "adjacent" };
 
+/**
+ * What the app runs of a permission (`classes.yaml`, the permission's `hook`); a permission
+ * without one is applied by the table. `rush`: moving into another Zone and attacking there costs
+ * the attack's Beat alone. `free-move`: a move costs no Beat, into a Zone holding a Downed ally when
+ * `into` says so, else when the table agrees the permission's condition holds. `free-disengage`:
+ * Disengaging costs no Beat. `reaction`: a Clash on someone else's turn for no Beat, limited per
+ * fight. `cover`: after an ally in the same Zone loses a Clash and before the Yield, a Beat from
+ * the next turn cuts the Margin by `cut`, once per round. `no-life`: a turn spent without a Beat
+ * reads the character as dead until they act. `surge-health`: a Surge paid in Health. `surge-up`:
+ * against a higher-Grade target a Surge costs `cost`, or the ordinary cost if lower.
+ * `read-health`: the current Health of every creature in the Zone is shown to the holder.
+ */
+export type PermissionHook =
+  | { kind: "rush" }
+  | { kind: "free-move"; into?: "downed-ally" }
+  | { kind: "free-disengage" }
+  | { kind: "reaction" }
+  | { kind: "cover"; cut: number }
+  | { kind: "no-life" }
+  | { kind: "surge-health"; health: number }
+  | { kind: "surge-up"; cost: number }
+  | { kind: "read-health" };
+
+/** The hooks that change the action economy: the book allows one per class, with the technique's. */
+export const ECONOMY_HOOKS: readonly PermissionHook["kind"][] = ["rush", "free-move", "free-disengage", "reaction"];
+
 /** One class package as offered: the System's text and the mechanics the table runs. */
 export interface ClassPackage {
   name: string;
@@ -46,8 +72,10 @@ export interface ClassPackage {
     drawback?: "health" | "exposed";
     /** A reaction, or a part of a Clash: it takes no Beat of its own. */
     noBeat?: boolean;
+    /** Used on someone else's turn: a Clash declared with it may be made off-turn for no Beat. */
+    reaction?: boolean;
   };
-  permission: { name: string; effect: string; actionEconomy?: boolean; onceADay?: boolean };
+  permission: { name: string; effect: string; actionEconomy?: boolean; onceADay?: boolean; hook?: PermissionHook };
   /** Carries a power from the guarded list: the GM's to know, never shown to the player. */
   guarded?: boolean;
 }
@@ -117,7 +145,7 @@ function clonePackage(p: ClassPackage): ClassPackage {
     ...p,
     profile: { shape: p.profile.shape, points: p.profile.points.map((x) => ({ ...x })) },
     technique: { ...p.technique, ...(p.technique.hook ? { hook: { ...p.technique.hook } } : {}) },
-    permission: { ...p.permission },
+    permission: { ...p.permission, ...(p.permission.hook ? { hook: { ...p.permission.hook } } : {}) },
   };
 }
 
@@ -138,7 +166,9 @@ export function bookClasses(engine: Engine): ClassPackage[] {
     // The class's one action-economy effect is marked on whichever part carries it.
     if (c.permission.action_economy) pkg.permission.actionEconomy = true;
     if (c.permission.once_a_day) pkg.permission.onceADay = true;
-    if (c.technique.reaction) pkg.technique.actionEconomy = true;
+    const ph = permissionHook(c.permission.hook);
+    if (ph) pkg.permission.hook = ph;
+    if (c.technique.reaction) pkg.technique.actionEconomy = pkg.technique.reaction = true;
     if (c.technique.reaction || c.technique.no_own_beat) pkg.technique.noBeat = true;
     if (c.technique.drawback) pkg.technique.drawback = c.technique.drawback;
     const h = c.technique.hook;
@@ -147,6 +177,22 @@ export function bookClasses(engine: Engine): ClassPackage[] {
     if (c.guarded) pkg.guarded = true;
     return pkg;
   });
+}
+
+/** A permission's `hook` as the rules data writes it, in the record's shape. */
+function permissionHook(h: unknown): PermissionHook | undefined {
+  if (h === undefined) return undefined;
+  if (h === "rush") return { kind: "rush" };
+  if (h === "free_disengage") return { kind: "free-disengage" };
+  if (h === "no_life") return { kind: "no-life" };
+  if (h === "read_health") return { kind: "read-health" };
+  const o = h as Record<string, unknown>;
+  if ("free_move" in o) return o.free_move === "downed_ally" ? { kind: "free-move", into: "downed-ally" } : { kind: "free-move" };
+  if ("reaction" in o) return { kind: "reaction" };
+  if ("cover" in o) return { kind: "cover", cut: o.cover as number };
+  if ("surge_in_health" in o) return { kind: "surge-health", health: o.surge_in_health as number };
+  if ("surge_cost_up_grade" in o) return { kind: "surge-up", cost: o.surge_cost_up_grade as number };
+  throw new Error(`classes.yaml: a permission hook the app does not know: ${JSON.stringify(h)}`);
 }
 
 /** The package's own problems against the book's rules; empty means it can be offered. */
@@ -182,6 +228,10 @@ export function packageProblems(engine: Engine, p: ClassPackage): string[] {
   if (h?.kind === "heal" && (!Number.isInteger(h.amount) || h.amount < 1)) out.push(`${label}: a heal restores a whole number of Health from 1`);
   if (h?.kind === "heal" && !["zone", "adjacent"].includes(h.reach)) out.push(`${label}: a heal reaches the Zone or the next one`);
   if (p.technique.drawback && p.technique.cost !== "Drawback") out.push(`${label}: only a Drawback technique names a drawback`);
+  const ph = p.permission.hook;
+  if (ph?.kind === "cover" && (!Number.isInteger(ph.cut) || ph.cut < 1)) out.push(`${label}: a cover cuts the Margin by a whole number from 1`);
+  if (ph?.kind === "surge-health" && (!Number.isInteger(ph.health) || ph.health < 1)) out.push(`${label}: a Surge paid in Health costs a whole number from 1`);
+  if (ph?.kind === "surge-up" && (!Number.isInteger(ph.cost) || ph.cost < 1)) out.push(`${label}: a Surge's cost is a whole number from 1`);
   return out;
 }
 
@@ -189,7 +239,8 @@ export function packageProblems(engine: Engine, p: ClassPackage): string[] {
 export function packageWarnings(engine: Engine, p: ClassPackage): string[] {
   const out: string[] = [];
   const max = engine.rules.classes.permission.action_economy_effects_max as number;
-  const effects = Number(Boolean(p.technique.actionEconomy)) + Number(Boolean(p.permission.actionEconomy));
+  const permissionEconomy = p.permission.actionEconomy || (p.permission.hook && ECONOMY_HOOKS.includes(p.permission.hook.kind));
+  const effects = Number(Boolean(p.technique.actionEconomy)) + Number(Boolean(permissionEconomy));
   if (effects > max) out.push(`${p.name}: ${effects} action-economy effects; the book allows ${max} per class`);
   return out;
 }

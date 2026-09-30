@@ -549,6 +549,7 @@ function apply(engine: Engine, world: World, env: Envelope): Effect[] {
     case "combat.attack":
     case "combat.defend":
     case "combat.resolve":
+    case "combat.cover":
     case "combat.move":
     case "combat.exposed":
     case "combat.zones":
@@ -671,6 +672,7 @@ function authorize(world: World, env: Envelope) {
     case "combat.attack":
     case "combat.defend":
     case "combat.resolve":
+    case "combat.cover":
     case "combat.stabilize":
     case "combat.execute":
     case "combat.pill":

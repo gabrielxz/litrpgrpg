@@ -84,6 +84,8 @@ export interface CombatantView extends Omit<Combatant, "hp" | "maxHp" | "momentu
 
 export interface EncounterView extends Omit<Encounter, "combatants"> {
   combatants: CombatantView[];
+  /** While a lost Clash waits on its Yield: the defender's allies who can cover them now (Take It). */
+  coverIds?: string[];
 }
 
 /**
@@ -112,6 +114,10 @@ export interface PlayerClash {
   damage?: number;
   drivenBack?: boolean;
   turnedAside?: boolean;
+  /** Margin already cut by allies' covers, before the Yield. */
+  cut?: number;
+  /** Combatants who can cover the defender now (Take It). */
+  coverIds?: string[];
 }
 
 export interface PlayerCombat {
@@ -148,6 +154,13 @@ export interface PlayerCombat {
     pills?: { healing: number; aether: number };
     /** The once-per-fight class technique spent: characters only. */
     techniqueUsed?: boolean;
+    /** Reactions the class permission has taken this fight: characters only. */
+    reactionsUsed?: number;
+    /** No Life Here reads them as dead: shown on their own player's screen only. */
+    readAsDead?: boolean;
+    /** Current Health, read by a class permission (What Is Left): creatures in the holder's Zone only. */
+    hp?: number;
+    maxHp?: number;
   }[];
 }
 
@@ -213,6 +226,8 @@ export interface InspectRead {
   name: string;
   /** False when the target is a Grade or more above: "you look, and it does not resolve". */
   resolves: boolean;
+  /** Read as dead (No Life Here): inspection returns nothing, titles included. */
+  nothing?: boolean;
   titles: TitleRead[];
 }
 

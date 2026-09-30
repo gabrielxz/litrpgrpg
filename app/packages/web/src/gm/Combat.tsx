@@ -32,7 +32,7 @@ import type { Names } from "../text.ts";
 import { AftermathPanel } from "./Aftermath.tsx";
 import { RollList } from "../Dice.tsx";
 import { SizingPanel, sizedOf } from "./Sizing.tsx";
-import { techniqueOffer } from "../classes.ts";
+import { permissionClash, reactionsOffered, techniqueOffer } from "../classes.ts";
 import { type Firing, expandCreatures, prepCreaturesOf } from "./Prep.tsx";
 import { prepCause } from "@gradebreaker/record";
 import { Commit } from "./Commit.tsx";
@@ -48,6 +48,7 @@ interface Creature {
   yields: boolean;
   offense: ForceOption[];
   defense: ForceOption[];
+  hunts_by_reading?: boolean;
 }
 
 const rid = () => Math.random().toString(36).slice(2, 6);
@@ -94,7 +95,7 @@ function CreaturePicker({
   const [pick, setPick] = useState(bestiary[0]?.name ?? "");
   const [count, setCount] = useState("1");
   const [sideId, setSideId] = useState(sides[sides.length - 1]?.id ?? "");
-  const [custom, setCustom] = useState({ name: "", grade: "F", hp: "", beats: "2", momentum: "", kind: "npc" as "npc" | "creature" });
+  const [custom, setCustom] = useState({ name: "", grade: "F", hp: "", beats: "2", momentum: "", kind: "npc" as "npc" | "creature", hunts: false });
   const side = sides.some((s) => s.id === sideId) ? sideId : (sides[sides.length - 1]?.id ?? "");
 
   const addBestiary = () => {
@@ -114,6 +115,7 @@ function CreaturePicker({
         yields: c.yields,
         offense: c.offense,
         defense: c.defense,
+        ...(c.hunts_by_reading ? { huntsByReading: true } : {}),
       })),
     );
   };
@@ -131,6 +133,7 @@ function CreaturePicker({
         maxHp: hp,
         beats: Math.max(0, Math.trunc(Number(custom.beats)) || 0),
         momentumForce: Math.max(0, Math.trunc(Number(custom.momentum)) || 0),
+        ...(custom.hunts ? { huntsByReading: true } : {}),
       },
     ]);
     setCustom({ ...custom, name: "", hp: "" });
@@ -194,6 +197,9 @@ function CreaturePicker({
           <label>
             Beats
             <input type="number" className="narrow-input" value={custom.beats} onChange={(e) => setCustom({ ...custom, beats: e.target.value })} />
+          </label>
+          <label className="check" title="It finds its prey by the System's reading, so a character the System reads as dead is passed over">
+            <input type="checkbox" checked={custom.hunts} onChange={(e) => setCustom({ ...custom, hunts: e.target.checked })} /> Hunts by the System's reading
           </label>
           <label title="The higher of its HRT and PER Force">
             Momentum Force
@@ -389,6 +395,7 @@ export function clasherOf(view: GmView, c: CombatantView, role: "attack" | "defe
       shapes: engine ? shapes(engine) : [],
       proficiencies: sheet.proficiencies,
       ...(sheet.class ? { technique: techniqueOffer(engine ?? null, sheet.class, { aether: sheet.aether, usedThisFight: Boolean(c.techniqueUsed), inFight: true }) } : {}),
+      ...permissionClash(sheet.class),
     };
   return { kind: "creature", name: c.name, options: (role === "attack" ? c.offense : c.defense) ?? [] };
 }
@@ -439,9 +446,16 @@ function CombatantRow({
 }) {
   const [delta, setDelta] = useState("");
   const [other, setOther] = useState("");
-  const [attacking, setAttacking] = useState<null | "turn" | "free">(null);
+  const [attacking, setAttacking] = useState<null | "turn" | "free" | { name: string; technique: boolean }>(null);
   const [zone, setZone] = useState(c.zoneId ?? "");
-  const targets = e.combatants.filter((x) => !x.out && x.sideId !== c.sideId).map((x) => ({ id: x.id, name: x.name }));
+  const targets = e.combatants.filter((x) => !x.out && x.sideId !== c.sideId).map((x) => ({ id: x.id, name: x.name, zoneId: x.zoneId }));
+  const sheet = c.characterId ? view.characters.find((s) => s.id === c.characterId) : undefined;
+  const permission = sheet?.class?.permission;
+  const hook = permission?.hook;
+  const reactions = reactionsOffered(engine, sheet?.class, {
+    reactionsUsed: c.reactionsUsed ?? 0,
+    technique: sheet?.class ? techniqueOffer(engine, sheet.class, { aether: sheet.aether, usedThisFight: Boolean(c.techniqueUsed), inFight: true }) : null,
+  });
   const zoneName = (id: string | null) => e.zones.find((z) => z.id === id)?.name ?? "";
   const pickedZone = zone && zone !== c.zoneId ? zone : "";
   const acting = e.acting === c.id;
@@ -465,6 +479,8 @@ function CombatantRow({
         )}
         {c.aura === "suppressed" && <span className="tag danger">Suppressed</span>}
         {c.aura === "steeled" && <span className="tag">Steeled</span>}
+        {c.readAsDead && <span className="tag" title={permission?.effect}>Reads as dead</span>}
+        {c.huntsByReading && <span className="muted small"> · hunts by the System's reading</span>}
         {e.round === 0 && e.surprise?.includes(c.id) && <span className="tag attention">Surprise Beat</span>}
         {c.dead ? <span className="tag danger">Dead</span> : c.out && <span className="tag">Out</span>}
         {acting && <span className="tag attention">Acting</span>}
@@ -538,6 +554,11 @@ function CombatantRow({
                   Move (1 Beat)
                 </button>
               )}
+              {pickedZone && acting && hook?.kind === "free-move" && (
+                <button disabled={busy} title={permission!.effect} onClick={() => run({ type: "combat.move", combatantId: c.id, zoneId: pickedZone, permission: true })}>
+                  Move by {permission!.name} (no Beat)
+                </button>
+              )}
               {pickedZone && (
                 <button disabled={busy} onClick={() => run({ type: "combat.move", combatantId: c.id, zoneId: pickedZone, forced: true })} title="Driven, thrown, or placed: no Beat">
                   Place
@@ -567,6 +588,12 @@ function CombatantRow({
               Free strike…
             </button>
           )}
+          {!acting && !e.clash && e.round > 0 && !c.downed &&
+            reactions.map((r) => (
+              <button key={r.name} disabled={busy} onClick={() => setAttacking(r)} title={r.technique ? sheet!.class!.technique.effect : permission!.effect}>
+                {r.name}…
+              </button>
+            ))}
         </div>
       )}
       {attacking && !e.clash && (
@@ -576,6 +603,8 @@ function CombatantRow({
           suggestFlanking={(d) => flankingSuggested(e as unknown as Encounter, c.id, d)}
           gm
           free={attacking === "free"}
+          {...(typeof attacking === "object" ? { reaction: attacking } : {})}
+          {...(attacking === "turn" && hook?.kind === "rush" ? { rush: { name: permission!.name, zones: e.zones.filter((z) => z.id !== c.zoneId) } } : {})}
           busy={busy}
           onCancel={() => setAttacking(null)}
           onDeclare={async (d) => {
@@ -587,6 +616,8 @@ function CombatantRow({
               ...(d.flanking ? { flanking: true } : {}),
               ...(d.cornered ? { cornered: true } : {}),
               ...(attacking === "free" ? { free: true } : {}),
+              ...(typeof attacking === "object" ? { reaction: true } : {}),
+              ...(d.rush ? { rush: d.rush } : {}),
               ...(d.label ? { label: d.label } : {}),
             });
             if (ok) setAttacking(null);
@@ -603,6 +634,11 @@ function CombatantRow({
               {k}
             </button>
           ))}
+          {hook?.kind === "free-disengage" && (
+            <button disabled={busy} title={permission!.effect} onClick={() => run({ type: "combat.beat", combatantId: c.id, what: "Disengage", permission: true })}>
+              Disengage by {permission!.name} (no Beat)
+            </button>
+          )}
           <input className="narrow-input" value={other} onChange={(ev) => setOther(ev.target.value)} placeholder="Other" />
           <button
             disabled={busy || c.beats < 1 || !other.trim()}
@@ -853,11 +889,12 @@ function ClashPanel({
     const att = e.combatants.find((c) => c.id === cl.attackerId)!;
     const def = e.combatants.find((c) => c.id === cl.defenderId)!;
     const a = cl.attack;
+    const cut = (cl.result?.covers ?? []).reduce((n, x) => n + x.cut, 0);
     const how = a.attribute ? `${a.attribute}` : `${a.means ?? "Force"} ${a.force}`;
     const extras = [
       a.modifier ? `${a.modifier > 0 ? "+" : ""}${a.modifier}` : "",
       cl.flanking ? "Flanking +10" : "",
-      a.surge ? "Surge +5" : "",
+      a.surge ? `Surge +5${a.surgeHealth ? " (paid in Health)" : ""}` : "",
       a.advantage ? "Advantage" : "",
       att.exposed ? "Exposed −10" : "",
       cl.cornered ? `${def.name} Cornered` : "",
@@ -884,11 +921,25 @@ function ClashPanel({
         ) : (
           <>
             <p>
-              {cl.result!.attackTotal} against {cl.result!.defenseTotal}: Margin {cl.result!.margin}.{" "}
+              {cl.result!.attackTotal} against {cl.result!.defenseTotal}: Margin {cl.result!.margin}
+              {cut ? `, ${cut} cut by ${cl.result!.covers!.map((x) => name(x.combatantId)).join(" and ")}, ${Math.max(0, cl.result!.margin - cut)} left` : ""}.{" "}
               {def.characterId ? `${def.name}'s player can choose on their screen.` : ""}
             </p>
+            {(e.coverIds ?? []).length > 0 && (
+              <div className="row tight">
+                {e.coverIds!.map((id) => {
+                  const sh = view.characters.find((s) => s.id === e.combatants.find((x) => x.id === id)?.characterId);
+                  const p = sh?.class?.permission;
+                  return (
+                    <button key={id} disabled={busy} title={p?.effect} onClick={() => run({ type: "combat.cover", combatantId: id })}>
+                      {p?.name ?? "Cover"}: {name(id)} cuts the Margin by {p?.hook?.kind === "cover" ? p.hook.cut : ""} (a Beat from the next turn)
+                    </button>
+                  );
+                })}
+              </div>
+            )}
             <YieldChoice
-              margin={cl.result!.margin}
+              margin={Math.max(0, cl.result!.margin - cut)}
               cap={cl.result!.yieldCap}
               multiplier={engine.damageMultiplier(att.grade)}
               busy={busy}

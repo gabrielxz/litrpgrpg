@@ -9,7 +9,7 @@ import type { Engine } from "@gradebreaker/engine";
 import { type Action, type InterfaceSheet, type PlayerView, pillLimit, shapes, stabilizeCheck } from "@gradebreaker/record";
 import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
-import { techniqueOffer } from "../classes.ts";
+import { permissionClash, reactionsOffered, techniqueOffer } from "../classes.ts";
 import { CareActions, type Mate, pillsOf } from "../Care.tsx";
 import { AttackForm, type Clasher, DefenseForm, YieldChoice } from "../Clash.tsx";
 
@@ -43,6 +43,7 @@ const clasher = (c: InterfaceSheet, engine: Engine | null, combat: Combat): Clas
   shapes: engine ? shapes(engine) : [],
   proficiencies: c.proficiencies,
   ...(c.class ? { technique: techniqueOf(engine, c, combat) } : {}),
+  ...permissionClash(c.class),
 });
 
 /** The character's class technique as this fight offers it. */
@@ -86,10 +87,16 @@ function MyTurn({
   const [attacking, setAttacking] = useState(false);
   const me = combat.combatants.find((x) => x.id === combatantId)!;
   const [zone, setZone] = useState("");
-  const targets = combat.combatants.filter((x) => !x.out && x.sideId !== me.sideId).map((x) => ({ id: x.id, name: x.name }));
+  const targets = combat.combatants.filter((x) => !x.out && x.sideId !== me.sideId).map((x) => ({ id: x.id, name: x.name, zoneId: x.zoneId }));
   const otherZones = combat.zones.filter((z) => z.id !== me.zoneId);
   const picked = otherZones.some((z) => z.id === zone) ? zone : (otherZones[0]?.id ?? "");
   const beats = me.beats ?? 0;
+  const permission = c.class?.permission;
+  const hook = permission?.hook;
+  // Reach the Fallen: free only into a Zone holding a Downed ally.
+  const freeMoveOk =
+    hook?.kind === "free-move" &&
+    (hook.into !== "downed-ally" || combat.combatants.some((x) => x.sideId === me.sideId && x.id !== me.id && x.downed && !x.out && x.zoneId === picked));
   return (
     <div className="my-turn">
       <p className="small">
@@ -100,6 +107,7 @@ function MyTurn({
           attacker={clasher(c, engine, combat)}
           targets={targets}
           suggestFlanking={(d) => flanks(combat, me.id, d)}
+          {...(hook?.kind === "rush" && otherZones.length ? { rush: { name: permission!.name, zones: otherZones } } : {})}
           busy={busy}
           onCancel={() => setAttacking(false)}
           onDeclare={async (d) => {
@@ -110,6 +118,7 @@ function MyTurn({
               attack: d.attack,
               ...(d.flanking ? { flanking: true } : {}),
               ...(d.label ? { label: d.label } : {}),
+              ...(d.rush ? { rush: d.rush } : {}),
             });
             if (ok) setAttacking(false);
           }}
@@ -131,7 +140,21 @@ function MyTurn({
               <button disabled={busy || beats < 1} onClick={() => run({ type: "combat.move", combatantId: me.id, zoneId: picked })}>
                 Move (1 Beat)
               </button>
+              {hook?.kind === "free-move" && (
+                <button
+                  disabled={busy || !freeMoveOk}
+                  title={freeMoveOk ? permission!.effect : "Only into a Zone holding a Downed ally"}
+                  onClick={() => run({ type: "combat.move", combatantId: me.id, zoneId: picked, permission: true })}
+                >
+                  Move by {permission!.name} (no Beat)
+                </button>
+              )}
             </>
+          )}
+          {hook?.kind === "free-disengage" && (
+            <button disabled={busy} title={permission!.effect} onClick={() => run({ type: "combat.beat", combatantId: me.id, what: "Disengage", permission: true })}>
+              Disengage by {permission!.name} (no Beat)
+            </button>
           )}
           <button disabled={busy} onClick={() => run({ type: "combat.done", combatantId: me.id })}>
             Done
@@ -169,10 +192,12 @@ function Defending({ view, engine, combat, c }: { view: PlayerView; engine: Engi
       ) : (
         <>
           <p className="small">
-            {cl.attackTotal} against {cl.defenseTotal}: Margin {cl.margin}. Yield gives up Beats from {c.name}'s next turn, 20 Margin each.
+            {cl.attackTotal} against {cl.defenseTotal}: Margin {cl.margin}
+            {cl.cut ? `, ${cl.cut} cut by an ally, ${Math.max(0, (cl.margin ?? 0) - cl.cut)} left` : ""}. Yield gives up Beats from {c.name}'s next turn, 20 Margin each.
           </p>
+          {cl.coverIds?.length ? <p className="small sys-dim">An ally can still cut the Margin before you Yield.</p> : null}
           <YieldChoice
-            margin={cl.margin ?? 0}
+            margin={Math.max(0, (cl.margin ?? 0) - (cl.cut ?? 0))}
             cap={cl.yieldCap ?? 0}
             multiplier={cl.damageMultiplier ?? 1}
             busy={busy}
@@ -180,6 +205,66 @@ function Defending({ view, engine, combat, c }: { view: PlayerView; engine: Engi
           />
         </>
       )}
+      {error && <p className="error">{error}</p>}
+    </div>
+  );
+}
+
+/** Off-turn, while no Clash waits: the class's reaction, or a technique used as one. */
+function Reactions({ view, engine, combat, c, combatantId }: { view: PlayerView; engine: Engine | null; combat: Combat; c: InterfaceSheet; combatantId: string }) {
+  const { run, busy, error } = useAct(view.campaign.id);
+  const [using, setUsing] = useState<{ name: string; technique: boolean } | null>(null);
+  const me = combat.combatants.find((x) => x.id === combatantId)!;
+  const offered = reactionsOffered(engine, c.class, { reactionsUsed: me.reactionsUsed ?? 0, technique: c.class ? techniqueOf(engine, c, combat) : null });
+  if (!offered.length) return null;
+  const targets = combat.combatants.filter((x) => !x.out && !x.downed && x.sideId !== me.sideId).map((x) => ({ id: x.id, name: x.name, zoneId: x.zoneId }));
+  return (
+    <div className="my-turn">
+      {using ? (
+        <AttackForm
+          attacker={clasher(c, engine, combat)}
+          targets={targets}
+          suggestFlanking={(d) => flanks(combat, me.id, d)}
+          reaction={using}
+          busy={busy}
+          onCancel={() => setUsing(null)}
+          onDeclare={async (d) => {
+            const ok = await run({
+              type: "combat.attack",
+              attackerId: me.id,
+              defenderId: d.defenderId,
+              attack: d.attack,
+              reaction: true,
+              ...(d.flanking ? { flanking: true } : {}),
+              ...(d.label ? { label: d.label } : {}),
+            });
+            if (ok) setUsing(null);
+          }}
+        />
+      ) : (
+        <div className="row tight">
+          {offered.map((r) => (
+            <button key={r.name} disabled={busy} onClick={() => setUsing(r)} title={r.technique ? c.class!.technique.effect : c.class!.permission.effect}>
+              {r.name}: {c.name} strikes now (no Beat)
+            </button>
+          ))}
+        </div>
+      )}
+      {error && <p className="error">{error}</p>}
+    </div>
+  );
+}
+
+/** An ally lost a Clash in this character's Zone: the class's cover, paid from the next turn. */
+function Cover({ view, c, combatantId, defenderName }: { view: PlayerView; c: InterfaceSheet; combatantId: string; defenderName: string }) {
+  const { run, busy, error } = useAct(view.campaign.id);
+  const hook = c.class?.permission.hook;
+  if (hook?.kind !== "cover") return null;
+  return (
+    <div className="my-turn">
+      <button className="primary" disabled={busy} title={c.class!.permission.effect} onClick={() => run({ type: "combat.cover", combatantId })}>
+        {c.class!.permission.name}: {c.name} cuts {defenderName}'s Margin by {hook.cut} (1 Beat from the next turn)
+      </button>
       {error && <p className="error">{error}</p>}
     </div>
   );
@@ -193,6 +278,9 @@ export function Fight({ view, engine, combat, readOnly }: { view: PlayerView; en
   const cl = combat.clash;
   const defending = cl && !readOnly ? combat.combatants.find((c) => c.id === cl.defenderId && c.characterId && mine.has(c.characterId)) : undefined;
   const actingMine = !readOnly ? combat.combatants.find((c) => c.acting && c.characterId && mine.has(c.characterId)) : undefined;
+  const standing = (x: Combat["combatants"][number]) => !readOnly && x.characterId && mine.has(x.characterId) && !x.out && !x.downed;
+  const reacting = combat.round > 0 && !cl ? combat.combatants.filter((x) => standing(x) && !x.acting) : [];
+  const covering = cl?.stage === "yield" ? combat.combatants.filter((x) => standing(x) && cl.coverIds?.includes(x.id)) : [];
   const last = combat.lastClash;
 
   return (
@@ -224,6 +312,13 @@ export function Fight({ view, engine, combat, readOnly }: { view: PlayerView; en
                     {c.exposed && <span className="fight-badge warn">Exposed</span>}
                     {c.downed && <span className="fight-badge warn">{c.stabilized ? "Downed, stable" : "Downed"}</span>}
                     {c.suppressed && <span className="fight-badge warn">Suppressed</span>}
+                    {c.readAsDead && <span className="fight-badge">Reads as dead</span>}
+                    {c.hp !== undefined && (
+                      <span className="sys-dim small">
+                        {" "}
+                        · {c.hp}/{c.maxHp} Health
+                      </span>
+                    )}
                     {c.surprise && !c.acted && <span className="fight-badge">Surprise</span>}
                     {c.zoneId && combat.zones.length > 1 && <span className="sys-dim small"> · {zoneName(c.zoneId)}</span>}
                     {c.beats !== undefined && (
@@ -250,8 +345,14 @@ export function Fight({ view, engine, combat, readOnly }: { view: PlayerView; en
           {cl.stage === "yield" ? `: ${cl.attackTotal} against ${cl.defenseTotal}` : ""}.
         </p>
       )}
+      {covering.map((x) => (
+        <Cover key={x.id} view={view} c={mine.get(x.characterId!)!} combatantId={x.id} defenderName={cl!.defenderName} />
+      ))}
       {defending && <Defending view={view} engine={engine} combat={combat} c={mine.get(defending.characterId!)!} />}
       {actingMine && !cl && <MyTurn view={view} engine={engine} combat={combat} c={mine.get(actingMine.characterId!)!} combatantId={actingMine.id} />}
+      {reacting.map((x) => (
+        <Reactions key={x.id} view={view} engine={engine} combat={combat} c={mine.get(x.characterId!)!} combatantId={x.id} />
+      ))}
       {last && !cl && (
         <p className="small sys-dim">
           {last.attackerWins

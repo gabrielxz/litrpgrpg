@@ -103,7 +103,7 @@ Each track keeps one current handoff here, replaced at the close of a session; t
 
 Edits an app session forces, each with Gabriel's ruling or Claude's recommendation awaiting it. A book session applies them and clears the list. The finishing-blow definition of a confirmed kill stays as written (Titles), and VE stays shared.
 
-*(empty)*
+- **Which chapters are the players' (Introduction, "Who Reads What").** The app answers players' rules questions from the player chapters only (Gabriel, 2026-09-30), and the section names four: Core Mechanics, Character Creation, Cultivation, and The Principle System. A player also needs Progression, Classes, Grade Breakthroughs, and What Can Be Seen, and the section itself calls The Hidden Vector Engine open knowledge. Recommendation: the players' chapters are the Introduction, Core Mechanics, Character Creation, Progression, Classes, The Principle System, Cultivation, Grade Breakthroughs, The Hidden Vector Engine, What Can Be Seen, and the Quick Reference. Titles (its catalog states the triggers a player never sees), Quests, Items (the loot tables), The System AI, the Tutorial, After the Gate, the Bestiary, and the Table Kit stay the GM's. The app runs this meanwhile.
 
 ### Next app session
 

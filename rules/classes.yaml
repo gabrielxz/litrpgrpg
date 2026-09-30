@@ -26,6 +26,17 @@ profile:
 # without a hook has its cost paid by the app and its effect applied by the GM. `drawback` names which
 # drawback a Drawback technique costs (health or exposed); `no_own_beat` and `reaction` mean it takes
 # no Beat of its own.
+#
+# A permission's `hook` is what the app runs of it; a permission without one is the table's to apply.
+# `rush`: moving into another Zone and attacking there costs the attack's Beat alone. `free_move`: a
+# move costs no Beat (`downed_ally`: into a Zone holding a Downed ally). `free_disengage`: Disengaging
+# costs no Beat. `reaction: clash`: a Clash on someone else's turn for no Beat, as many times per
+# fight as `permission.reactions_per_encounter`. `cover`: after an ally in your Zone loses a Clash
+# and before they Yield, a Beat from your next turn cuts that Margin by the number, `once_per` round.
+# `no_life`: a turn spent without a Beat reads the character as dead until they act. `surge_in_health`:
+# a Surge paid with that much Health instead of Aether. `surge_cost_up_grade`: against a higher-Grade
+# target a Surge costs the number, or the ordinary cost if lower. `read_health`: the current Health
+# of every creature in the character's Zone is shown to them.
 technique:
   beats: 1
   aether_cost_at_f: 5            # ×10 per Grade of acquisition, like any acquired skill
@@ -79,21 +90,21 @@ classes:
     poles: [Restraint, Accord]
     profile: {shape: Fixed, points: {POW: 1, DEX: 1, HRT: 1}}
     technique: {name: Triage, cost: Aether, effect: "Restores 10 Health to an ally in your Zone or an adjacent one", hook: {heal: 10, reach: adjacent}}
-    permission: {name: Reach the Fallen, effect: "Moving into a Zone holding a Downed ally costs no Beat", action_economy: true}
+    permission: {name: Reach the Fallen, effect: "Moving into a Zone holding a Downed ally costs no Beat", action_economy: true, hook: {free_move: downed_ally}}
   - name: Breaching Vanguard
     built_for: Kara
     notice: "First through. Breach: once per fight, the first blow after entering new ground lands with Strength counting 10 higher and carries the target back. Entering ground and striking there is one act. Selection: Strength +10. Growth: Strength, Strength, Fortitude."
     poles: [Force, Hunger]
     profile: {shape: Fixed, points: {STR: 2, FOR: 1}}
     technique: {name: Breach, cost: Frequency, effect: "+10 to a Clash against a target in a Zone you entered this turn; a win Drives it Back whatever the Margin", hook: {clash: 10, side: attack}}
-    permission: {name: Rush, effect: "Moving into an adjacent Zone and attacking there costs 1 Beat in total", action_economy: true}
+    permission: {name: Rush, effect: "Moving into an adjacent Zone and attacking there costs 1 Beat in total", action_economy: true, hook: rush}
   - name: Burner
     built_for: Coleman
     notice: "Pay in Blood: 10 Health spent, and in the next blow, given or taken, your Attribute counts 10 higher. Blood may pay for what Aether pays for: a Surge for 10 Health. Selection: Strength +10. Growth: Strength, Fortitude, one point yours."
     poles: [Force, Hunger]
     profile: {shape: Guided, points: {STR: 1, FOR: 1}}
     technique: {name: Pay in Blood, cost: Drawback, drawback: health, effect: "Part of one Clash you roll this turn, attack or defense, declared before rolling; take 10 damage for +10", no_own_beat: true, hook: {clash: 10, side: either}}
-    permission: {name: Blood for Aether, effect: "You may pay a Surge with 10 Health instead of Aether", action_economy: false}
+    permission: {name: Blood for Aether, effect: "You may pay a Surge with 10 Health instead of Aether", action_economy: false, hook: {surge_in_health: 10}}
   - name: Counterpuncher
     built_for: Ines
     notice: "Riposte: once per fight, a blow you turn well aside is answered at once, and the answer takes no time. While the other side holds the press, the first blow you throw in each exchange lands with its Attribute counting 5 higher. Selection: Dexterity +10. Growth: Dexterity, Perception, one point yours."
@@ -114,7 +125,7 @@ classes:
     poles: [Restraint, Accord]
     profile: {shape: Fixed, points: {FOR: 2, HRT: 1}}
     technique: {name: Hold Fast, cost: Frequency, effect: "Until your next turn, you and every ally in your Zone may Yield two Beats even with nowhere to be driven; the second Beat gives ground in place"}
-    permission: {name: Take It, effect: "Once per round, after an ally in your Zone loses a Clash and before damage lands, give up one available Beat from your next turn to cut that Margin by 40; declared before the ally decides whether to Yield, and combines with it", action_economy: false, reaction: true, paid_in_beats: true, margin_cut: 40}
+    permission: {name: Take It, effect: "Once per round, after an ally in your Zone loses a Clash and before damage lands, give up one available Beat from your next turn to cut that Margin by 40; declared before the ally decides whether to Yield, and combines with it", action_economy: false, reaction: true, paid_in_beats: true, hook: {cover: 40, once_per: round}}
   - name: Vowbound
     built_for: Yusuf
     notice: "Sworn Blow: 5 Aether, and a blow against the object of your vow lands with its Attribute counting 10 higher. Speak one vow when a fight begins: what serves it is strengthened by 5, and acting against it leaves you open until the fight ends. Selection: Heart +10. Growth: Heart, Heart, Strength."
@@ -128,7 +139,7 @@ classes:
     poles: [Will, Control]
     profile: {shape: Fixed, points: {HRT: 1, CHA: 1, PER: 1}}
     technique: {name: Sanction, cost: Aether, effect: "Name an action; the next creature in sight that takes it is Exposed until the end of its next turn unless it wins a Clash, HRT Force against yours; one Sanction at a time, expiring with the scene"}
-    permission: {name: Contempt, effect: "Once per encounter, when a creature in your Zone takes the action your Sanction names, you Clash it at once for no Beat, after that action resolves", action_economy: true, reaction: true}
+    permission: {name: Contempt, effect: "Once per encounter, when a creature in your Zone takes the action your Sanction names, you Clash it at once for no Beat, after that action resolves", action_economy: true, reaction: true, hook: {reaction: clash}}
   - name: Peacemaker
     built_for: Hal
     notice: "Open Hand: 5 Aether. One enemy within reach at half its Health or less leaves the fight, or stands still through its next acts, as it chooses, unless its Heart withstands yours. What has no mind does not hear it. Anything that will give ground will also talk. Selection: Charisma +10. Growth: Charisma, Heart, one point yours."
@@ -149,7 +160,7 @@ classes:
     poles: [Freedom, Restraint]
     profile: {shape: Open, points: {DEX: 1}}
     technique: {name: Go Cold, cost: Aether, effect: "Until your next turn, a creature trying to find or target you must first win a Clash, PER Force against your DEX Force +10; a creature that hunts by the System's reading does not find you at all"}
-    permission: {name: No Life Here, effect: "On a turn you spend no Beats, the System reads you as dead until you act: inspection returns nothing, titles included; the party frame is unaffected", action_economy: false}
+    permission: {name: No Life Here, effect: "On a turn you spend no Beats, the System reads you as dead until you act: inspection returns nothing, titles included; the party frame is unaffected", action_economy: false, hook: no_life}
   - name: Witness
     built_for: Sabine
     notice: "Note the Pattern: once per fight, after watching a creature through one exchange, its next act is known to you. Once per fight, at a death in your sight, the observation comes to you: Grade, danger, and one habit. Selection: Perception +10. Growth: Perception, Heart, one point yours."
@@ -178,7 +189,7 @@ classes:
     poles: [Hunger, Will]
     profile: {shape: Fixed, points: {POW: 1, STR: 1, HRT: 1}}
     technique: {name: Consume, cost: Frequency, effect: "Your killing blow on a creature or a person, an execution included, restores 5 Aether, at most once per fight"}
-    permission: {name: What Is Left, effect: "You read the current Health of every creature in your Zone (an exception to What Can Be Seen)", action_economy: false}
+    permission: {name: What Is Left, effect: "You read the current Health of every creature in your Zone (an exception to What Can Be Seen)", action_economy: false, hook: read_health}
   - name: Underdog
     built_for: Tess
     notice: "Find the Seam: once per fight, a blow against what stands above you finds the gap. Against a greater Grade, the difference weighs 20 less; against greater strength of your own Grade, the blow lands harder. Against a greater Grade, a Surge costs no more than 5 Aether. Selection: Strength +10. Growth: Strength, Strength, Heart."
@@ -186,7 +197,7 @@ classes:
     poles: [Force, Will]
     profile: {shape: Fixed, points: {STR: 2, HRT: 1}}
     technique: {name: Find the Seam, cost: Frequency, effect: "An attack on a higher-Grade target ignores 20 of its Cross-Grade Adjustment (guarded); against a target of your own Grade whose Force exceeds your attack's Force, +10"}
-    permission: {name: Above You, effect: "Against a higher-Grade target, Surge costs 5, or your ordinary Surge cost if lower", action_economy: false}
+    permission: {name: Above You, effect: "Against a higher-Grade target, Surge costs 5, or your ordinary Surge cost if lower", action_economy: false, hook: {surge_cost_up_grade: 5}}
 
 # NPC classes print as a Tactics line: the class name and its one technique.
 npc_tactics_example: "Class: Vowbound. Sworn Blow (5 Aether): +10 against the object of its vow, sworn aloud when the fight starts."

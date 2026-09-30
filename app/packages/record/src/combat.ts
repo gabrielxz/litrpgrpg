@@ -33,7 +33,7 @@ import { countPill, findPill, pillLimit } from "./pills.ts";
 import { addMark, checkShape, proficiencyOf } from "./proficiency.ts";
 import { count } from "./titles.ts";
 import { questsOnLeave } from "./quests.ts";
-import type { UseTechnique } from "./classes.ts";
+import type { PermissionHook, UseTechnique } from "./classes.ts";
 
 // --------------------------------------------------------------- actions ---
 
@@ -60,6 +60,8 @@ export interface CombatantSpec {
   offense?: ForceOption[];
   defense?: ForceOption[];
   zoneId?: string;
+  /** Hunts by the System's reading rather than by sight, scent, or sound (Classes, No Life Here). */
+  huntsByReading?: boolean;
 }
 
 /** One line of a stat block's offense or defense: its Force, the stat, what it is. */
@@ -82,6 +84,8 @@ export interface ClashSide {
   advantage?: boolean;
   /** Half of Maximum Aether for +5, declared before the roll. */
   surge?: boolean;
+  /** The Surge paid in Health by a permission that allows it (Blood for Aether). */
+  surgeHealth?: boolean;
   /** A character's weapon shape: its Proficiency bonus is added, and an explosion earns a Mark. */
   shape?: string;
   /** A character's class technique shapes this Clash: its cost is paid and its Clash hook's bonus added. */
@@ -154,11 +158,15 @@ export interface Act {
   combatantId: string;
 }
 
-/** The acting combatant spends a Beat. `what` names it: an attack, a move, a check. */
+/**
+ * The acting combatant spends a Beat. `what` names it: an attack, a move, a check. `permission`:
+ * a Disengage the class permission makes free costs none.
+ */
 export interface SpendBeat {
   type: "combat.beat";
   combatantId: string;
   what: string;
+  permission?: boolean;
 }
 
 /** The acting combatant finishes; Beats left unspent are gone. */
@@ -197,6 +205,19 @@ export interface Attack {
   cornered?: boolean;
   free?: boolean;
   label?: string;
+  /** A Rush: the attacker moves into this Zone first, and the attack's Beat pays for both. */
+  rush?: string;
+  /** On someone else's turn for no Beat: the class's reaction, or a technique used as one. */
+  reaction?: boolean;
+}
+
+/**
+ * A class permission's cover (Take It): after an ally in the same Zone loses a Clash and before
+ * the ally Yields, a Beat from the coverer's next turn cuts the Margin.
+ */
+export interface Cover {
+  type: "combat.cover";
+  combatantId: string;
 }
 
 /** The defender's answer to the pending attack. The server rolls both sides' dice here. */
@@ -213,12 +234,16 @@ export interface ResolveClash {
   yield: number;
 }
 
-/** Into another Zone: for a Beat on the mover's turn, or forced (driven) at no Beat. */
+/**
+ * Into another Zone: for a Beat on the mover's turn, or forced (driven) at no Beat. `permission`:
+ * a move the class permission makes free (Reach the Fallen) costs none.
+ */
 export interface Move {
   type: "combat.move";
   combatantId: string;
   zoneId: string;
   forced?: boolean;
+  permission?: boolean;
 }
 
 /** Exposed from the fiction, or cleared: the GM's call. */
@@ -332,6 +357,7 @@ export type CombatAction =
   | Attack
   | Defend
   | ResolveClash
+  | Cover
   | Move
   | SetExposed
   | SetZones;
@@ -381,6 +407,13 @@ export interface Combatant {
   pills: { healing: number; aether: number };
   /** A character's once-per-fight class technique, spent. */
   techniqueUsed?: boolean;
+  /** Reactions the class permission has taken this fight. */
+  reactionsUsed?: number;
+  /** The round the class permission last covered an ally. */
+  coveredRound?: number;
+  /** No Life Here: a turn spent without a Beat, and nothing done since. Inspection reads nothing. */
+  readAsDead?: boolean;
+  huntsByReading?: boolean;
 }
 
 /** A Clash as it stands, from the attack to the resolution. */
@@ -419,6 +452,8 @@ export interface ClashResult {
   drivenBack?: boolean;
   /** The attacker may drive the defender into an adjacent Zone: Driven Back, or two Beats Yielded. */
   drivable?: boolean;
+  /** Allies' covers cutting the Margin before the Yield, each with its cut. */
+  covers?: { combatantId: string; cut: number }[];
 }
 
 export interface Encounter {
@@ -470,12 +505,28 @@ export function cloneEncounter(e: Encounter): Encounter {
     order: [...e.order],
     pending: e.pending && { ...e.pending },
     zones: e.zones.map((z) => ({ ...z })),
-    clash: e.clash && { ...e.clash, ...(e.clash.result ? { result: { ...e.clash.result } } : {}) },
-    lastClash: e.lastClash && { ...e.lastClash },
+    clash: e.clash && { ...e.clash, ...(e.clash.result ? { result: cloneResult(e.clash.result) } : {}) },
+    lastClash: e.lastClash && cloneResult(e.lastClash),
   };
 }
 
+const cloneResult = (r: ClashResult): ClashResult => ({ ...r, ...(r.covers ? { covers: r.covers.map((c) => ({ ...c })) } : {}) });
+
 // --------------------------------------------------------------- helpers ---
+
+/** The class permission's hook a character combatant holds, if any. */
+function permissionOf(world: World, c: Combatant): PermissionHook | undefined {
+  return c.characterId ? world.characters.get(c.characterId)?.classes?.held?.permission.hook : undefined;
+}
+
+function permissionName(world: World, c: Combatant): string {
+  return (c.characterId && world.characters.get(c.characterId)?.classes?.held?.permission.name) || "the permission";
+}
+
+/** The combatant does something: No Life Here's reading ends. */
+function stir(c: Combatant) {
+  delete c.readAsDead;
+}
 
 function fight(world: World): Encounter {
   const e = world.encounter;
@@ -516,6 +567,7 @@ function spend(e: Encounter, c: Combatant, what: string) {
   noClash(e);
   c.beats -= 1;
   c.spent.push(what);
+  stir(c);
 }
 
 /** Both in the same Zone, or the scene has no Zones. */
@@ -622,6 +674,7 @@ function build(engine: Engine, world: World, e: Encounter, s: CombatantSpec): Co
     const kind = s.kind ?? (s.creature ? "creature" : "npc");
     c = { id: s.combatantId, sideId: s.sideId, name, grade, kind, hp: maxHp, maxHp, momentumForce: mf, beatsPerTurn: beats, ...fresh(e, s, s.yields ?? false) };
     if (s.creature) c.creature = s.creature;
+    if (s.huntsByReading) c.huntsByReading = true;
     if (s.offense?.length) c.offense = s.offense.map((o) => ({ ...o }));
     if (s.defense?.length) c.defense = s.defense.map((o) => ({ ...o }));
   }
@@ -728,6 +781,12 @@ function finish(c: Combatant) {
   if (c.exposed?.started) c.exposed = null;
 }
 
+/** A turn the combatant finished themselves: No Life Here reads a turn spent without a Beat as dead. */
+function endTurn(world: World, e: Encounter, c: Combatant) {
+  finish(c);
+  if (e.round > 0 && !c.downed && c.spent.length === 0 && permissionOf(world, c)?.kind === "no-life") c.readAsDead = true;
+}
+
 function noClash(e: Encounter) {
   if (e.clash) throw new Rejected("a Clash is waiting: finish it first");
 }
@@ -762,7 +821,7 @@ function act(world: World, a: Act): Effect[] {
   }
   if (c.acted) throw new Rejected(`${c.name} has acted${e.round ? " this round" : ""}`);
   noClash(e);
-  if (e.acting && e.acting !== c.id) finish(combatant(e, e.acting));
+  if (e.acting && e.acting !== c.id) endTurn(world, e, combatant(e, e.acting));
   e.acting = c.id;
   if (c.exposed) c.exposed.started = true;
   return [];
@@ -770,7 +829,19 @@ function act(world: World, a: Act): Effect[] {
 
 function beat(world: World, a: SpendBeat): Effect[] {
   const e = fight(world);
-  spend(e, combatant(e, a.combatantId), a.what.trim() || "Beat");
+  const c = combatant(e, a.combatantId);
+  const what = a.what.trim() || "Beat";
+  if (!a.permission) {
+    spend(e, c, what);
+    return [];
+  }
+  // A Disengage the permission makes free: the turn's act without its Beat.
+  if (permissionOf(world, c)?.kind !== "free-disengage") throw new Rejected(`${c.name}'s class does not make that free`);
+  if (what !== "Disengage") throw new Rejected(`${permissionName(world, c)} makes Disengaging free, not ${what}`);
+  if (e.acting !== c.id) throw new Rejected(`${c.name} is not acting`);
+  noClash(e);
+  c.spent.push(`Disengage (${permissionName(world, c)})`);
+  stir(c);
   return [];
 }
 
@@ -779,7 +850,7 @@ function done(world: World, a: Done): Effect[] {
   const c = combatant(e, a.combatantId);
   if (e.acting !== c.id) throw new Rejected(`${c.name} is not acting`);
   noClash(e);
-  finish(c);
+  endTurn(world, e, c);
   e.acting = null;
   advance(e);
   return [];
@@ -818,6 +889,7 @@ function seize(engine: Engine, world: World, a: SeizeMomentum): Effect[] {
   });
   c.beats -= 1;
   c.spent.push("Seize Momentum");
+  stir(c);
   const won = mine > theirs;
   if (won) e.pending = { sideId: c.sideId, by: "seize" };
   return [{ kind: "seized", encounterId: e.id, combatantId: c.id, won, total: mine, against: theirs, rolls }];
@@ -979,6 +1051,8 @@ function end(engine: Engine, world: World): Effect[] {
   e.ended = true;
   e.acting = null;
   e.surprise = null;
+  // No Life Here reads a still turn; outside a fight there are no turns to read.
+  for (const c of e.combatants) stir(c);
   return [{ kind: "combat-ended", encounterId: e.id }, ...out];
 }
 
@@ -1234,12 +1308,24 @@ function move(world: World, a: Move): Effect[] {
   if (c.out) throw new Rejected(`${c.name} is out of the fight`);
   if (!e.zones.some((z) => z.id === a.zoneId)) throw new Rejected(`no Zone ${a.zoneId}`);
   if (c.zoneId === a.zoneId) throw new Rejected(`${c.name} is already there`);
-  if (!a.forced) {
+  if (a.forced && a.permission) throw new Rejected("a forced move costs no Beat already");
+  if (a.permission) {
+    // A move the class permission makes free: on the mover's turn, without its Beat.
+    const hook = permissionOf(world, c);
+    if (hook?.kind !== "free-move") throw new Rejected(`${c.name}'s class does not make a move free`);
+    if (e.acting !== c.id) throw new Rejected(`${c.name} is not acting`);
+    noClash(e);
+    if (hook.into === "downed-ally" && !e.combatants.some((x) => x.sideId === c.sideId && x.id !== c.id && x.downed && !x.dead && x.zoneId === a.zoneId))
+      throw new Rejected(`${permissionName(world, c)} is a move into a Zone holding a Downed ally`);
+    c.spent.push(`Move (${permissionName(world, c)})`);
+    stir(c);
+  } else if (!a.forced) {
     if (e.acting !== c.id) throw new Rejected(`${c.name} is not acting; a move on someone else's turn is forced`);
     if (c.beats < 1) throw new Rejected(`${c.name} has no Beats left`);
     noClash(e);
     c.beats -= 1;
     c.spent.push("Move");
+    stir(c);
   }
   c.zoneId = a.zoneId;
   return [];
@@ -1371,13 +1457,35 @@ export function useTechnique(engine: Engine, world: World, a: UseTechnique): Eff
   return [...out, ...payTechnique(engine, world, e && cb ? e : null, cb, a.characterId, a.drawback)];
 }
 
-function paySurge(engine: Engine, world: World, c: Combatant, s: ClashSide): void {
-  if (!s.surge) return;
+/**
+ * Pays a declared Surge: half of Maximum Aether, or less against a higher-Grade opponent when the
+ * class permission says so (Above You), or in Health when it allows that (Blood for Aether).
+ */
+function paySurge(engine: Engine, world: World, e: Encounter, c: Combatant, s: ClashSide, against: Combatant): Effect[] {
+  if (!s.surge) {
+    if (s.surgeHealth) throw new Rejected("Health pays for a Surge only when one is declared");
+    return [];
+  }
   if (!c.characterId) throw new Rejected("record a creature's Surge in its modifier");
   const ch = world.characters.get(c.characterId)!;
-  const cost = engine.surgeCost(maxAetherOf(engine, ch));
+  const hook = permissionOf(world, c);
+  if (s.surgeHealth) {
+    if (hook?.kind !== "surge-health") throw new Rejected(`${ch.name} pays a Surge in Aether`);
+    return changeHp(engine, world, e, c, -hook.health);
+  }
+  const cost = surgeCostAgainst(engine, world, c, against);
   if (ch.aether < cost) throw new Rejected(`${ch.name} has ${ch.aether} Aether and a Surge costs ${cost}`);
   ch.aether -= cost;
+  return [];
+}
+
+/** What a character's Surge costs against this opponent. */
+export function surgeCostAgainst(engine: Engine, world: World, c: Combatant, against: Combatant | undefined): number {
+  const ch = world.characters.get(c.characterId!)!;
+  const cost = engine.surgeCost(maxAetherOf(engine, ch));
+  const hook = permissionOf(world, c);
+  if (hook?.kind === "surge-up" && against && engine.gradeOrder(against.grade) > engine.gradeOrder(c.grade)) return Math.min(cost, hook.cost);
+  return cost;
 }
 
 /** The Beats of the defender's next turn: this round's if it is still to come, else next round's. */
@@ -1397,15 +1505,39 @@ function attack(engine: Engine, world: World, a: Attack, id: string): Effect[] {
   if (att.sideId === def.sideId) throw new Rejected(`${def.name} is on ${att.name}'s side`);
   if (!Number.isInteger(a.attack.modifier)) throw new Rejected("modifiers are whole numbers");
   sideForce(engine, world, att, a.attack, "attacks");
-  if (!a.free) {
+  if (a.free && (a.rush || a.reaction)) throw new Rejected("a free strike is neither a Rush nor a reaction");
+  if (a.rush && a.reaction) throw new Rejected("a Rush comes on the attacker's own turn");
+  if (a.reaction) {
+    // On someone else's turn for no Beat: a technique used as a reaction, or the permission's.
+    if (e.acting === att.id) throw new Rejected(`${att.name} is acting; a reaction comes on someone else's turn`);
+    if (a.attack.technique) {
+      const { t } = heldTechnique(world, att.characterId, att.name);
+      if (!t.reaction) throw new Rejected(`${t.name} is not used on someone else's turn`);
+    } else {
+      if (permissionOf(world, att)?.kind !== "reaction") throw new Rejected(`${att.name}'s class grants no reaction`);
+      const max = engine.rules.classes.permission.reactions_per_encounter as number;
+      if ((att.reactionsUsed ?? 0) >= max) throw new Rejected(`${att.name} has used ${permissionName(world, att)} this fight`);
+      att.reactionsUsed = (att.reactionsUsed ?? 0) + 1;
+    }
+  } else if (!a.free) {
     if (e.acting !== att.id) throw new Rejected(`${att.name} is not acting; an attack off-turn is a free strike`);
     if (att.beats < 1) throw new Rejected(`${att.name} has no Beats left`);
+    if (a.rush) {
+      // Rush: into the Zone and the attack there, for the attack's one Beat.
+      if (permissionOf(world, att)?.kind !== "rush") throw new Rejected(`${att.name}'s class grants no Rush`);
+      if (!e.zones.some((z) => z.id === a.rush)) throw new Rejected(`no Zone ${a.rush}`);
+      if (att.zoneId === a.rush) throw new Rejected(`${att.name} is already there: an attack in the same Zone is an ordinary attack`);
+      if (def.zoneId && def.zoneId !== a.rush) throw new Rejected(`${def.name} is not in that Zone`);
+      att.zoneId = a.rush;
+    }
     att.beats -= 1;
-    att.spent.push(a.label?.trim() || "Attack");
+    att.spent.push(`${a.rush ? `${permissionName(world, att)}: ` : ""}${a.label?.trim() || "Attack"}`);
   }
-  paySurge(engine, world, att, a.attack);
+  stir(att);
+  if (att.huntsByReading && def.readAsDead) throw new Rejected(`${att.name} hunts by the System's reading and finds no life in ${def.name}`);
+  const surged = paySurge(engine, world, e, att, a.attack, def);
   techniqueBonus(world, att, a.attack, "attack");
-  const paid = a.attack.technique ? payTechnique(engine, world, e, att, att.characterId!) : [];
+  const paid = [...surged, ...(a.attack.technique ? payTechnique(engine, world, e, att, att.characterId!) : [])];
   e.clash = {
     id,
     attackerId: att.id,
@@ -1439,9 +1571,9 @@ function defend(engine: Engine, world: World, a: Defend): Effect[] {
   const defForce = sideForce(engine, world, def, a.defense, "defends");
   checkDice(engine, att.grade, a.attackDice, Boolean(cl.attack.advantage));
   checkDice(engine, def.grade, a.defenseDice, Boolean(a.defense.advantage));
-  paySurge(engine, world, def, a.defense);
+  const surged = paySurge(engine, world, e, def, a.defense, att);
   techniqueBonus(world, def, a.defense, "defense");
-  const paid = a.defense.technique ? payTechnique(engine, world, e, def, def.characterId!) : [];
+  const paid = [...surged, ...(a.defense.technique ? payTechnique(engine, world, e, def, def.characterId!) : [])];
 
   const r = engine.rules;
   const prof = (c: Combatant, s: ClashSide) =>
@@ -1499,7 +1631,8 @@ function defend(engine: Engine, world: World, a: Defend): Effect[] {
     if (c.characterId && s.shape !== undefined && d.natural.length > 1) effects.push(addMark(engine, world.characters.get(c.characterId)!, s.shape));
   }
 
-  if (out.attacker_wins && out.margin > 0 && yieldCap > 0) {
+  // The Clash waits while the defender can Yield or an ally can cover them.
+  if (out.attacker_wins && out.margin > 0 && (yieldCap > 0 || coverers(engine, world, e, def).length > 0)) {
     cl.stage = "yield";
     return effects;
   }
@@ -1529,7 +1662,8 @@ function land(engine: Engine, world: World, e: Encounter, y: number): Effect[] {
       if (next.thisRound) def.beats -= y;
       else def.debt += y;
     }
-    const remaining = Math.max(0, res.margin - y * r.combat.yield.margin_reduction_per_beat);
+    const cut = (res.covers ?? []).reduce((n, c) => n + c.cut, 0);
+    const remaining = Math.max(0, res.margin - cut - y * r.combat.yield.margin_reduction_per_beat);
     const damage = remaining * engine.damageMultiplier(att.grade);
     const drivenBack = remaining >= r.resolution.rule_of_40.driven_back_margin;
     res.yielded = y;
@@ -1558,6 +1692,48 @@ function resolve(engine: Engine, world: World, a: ResolveClash): Effect[] {
   return land(engine, world, e, a.yield);
 }
 
+/** Allies who can cover the defender now: the permission held, in the Zone, a Beat to give, not yet this round. */
+export function coverers(engine: Engine, world: World, e: Encounter, def: Combatant): Combatant[] {
+  return e.combatants.filter(
+    (c) =>
+      canTurn(c) &&
+      c.id !== def.id &&
+      c.sideId === def.sideId &&
+      sameZone(c, def) &&
+      permissionOf(world, c)?.kind === "cover" &&
+      c.coveredRound !== e.round &&
+      nextTurnBeats(engine, e, c).beats >= 1,
+  );
+}
+
+function cover(engine: Engine, world: World, a: Cover): Effect[] {
+  const e = fight(world);
+  const cl = e.clash;
+  if (!cl || cl.stage !== "yield") throw new Rejected("no ally has lost a Clash still to land");
+  const c = combatant(e, a.combatantId);
+  const def = combatant(e, cl.defenderId);
+  const hook = permissionOf(world, c);
+  if (hook?.kind !== "cover") throw new Rejected(`${c.name}'s class does not cover an ally`);
+  if (c.id === def.id) throw new Rejected(`${permissionName(world, c)} covers an ally, not ${c.name}`);
+  if (!coverers(engine, world, e, def).includes(c)) {
+    if (c.sideId !== def.sideId) throw new Rejected(`${def.name} is not ${c.name}'s ally`);
+    if (!sameZone(c, def)) throw new Rejected(`${c.name} must be in ${def.name}'s Zone`);
+    if (c.coveredRound === e.round) throw new Rejected(`${c.name} has used ${permissionName(world, c)} this round`);
+    throw new Rejected(`${c.name} has no Beat to give from the next turn`);
+  }
+  // The Beat comes from the coverer's next turn, as a Yield does.
+  const next = nextTurnBeats(engine, e, c);
+  if (next.thisRound) c.beats -= 1;
+  else c.debt += 1;
+  c.coveredRound = e.round;
+  stir(c);
+  const res = cl.result!;
+  res.covers = [...(res.covers ?? []), { combatantId: c.id, cut: hook.cut }];
+  // With nothing left to Yield against, or no Yield to give, the Clash lands now.
+  if (res.yieldCap === 0 || res.margin - res.covers.reduce((n, x) => n + x.cut, 0) <= 0) return land(engine, world, e, 0);
+  return [];
+}
+
 /** What a player may record in a fight, for their own character; everything else is the GM's. */
 export function authorizeCombatPlayer(world: World, a: CombatAction, userId: string): void {
   const e = world.encounter;
@@ -1581,6 +1757,8 @@ export function authorizeCombatPlayer(world: World, a: CombatAction, userId: str
     case "combat.defend":
     case "combat.resolve":
       return own(e?.clash?.defenderId);
+    case "combat.cover":
+      return own(a.combatantId);
     case "combat.stabilize":
     case "combat.execute":
     case "combat.pill":
@@ -1626,6 +1804,8 @@ export function applyCombat(engine: Engine, world: World, a: CombatAction, env: 
       return defend(engine, world, a);
     case "combat.resolve":
       return resolve(engine, world, a);
+    case "combat.cover":
+      return cover(engine, world, a);
     case "combat.move":
       return move(world, a);
     case "combat.exposed":

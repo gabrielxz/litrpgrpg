@@ -20,6 +20,7 @@ const clashSide = z.object({
   modifier: whole,
   advantage: z.boolean().optional(),
   surge: z.boolean().optional(),
+  surgeHealth: z.boolean().optional(),
   shape: z.string().max(40).optional(),
   technique: z.boolean().optional(),
 });
@@ -97,8 +98,27 @@ const classPackage = z.object({
       .optional(),
     drawback: z.enum(["health", "exposed"]).optional(),
     noBeat: z.boolean().optional(),
+    reaction: z.boolean().optional(),
   }),
-  permission: z.object({ name: z.string().max(60), effect: z.string().max(600), actionEconomy: z.boolean().optional(), onceADay: z.boolean().optional() }),
+  permission: z.object({
+    name: z.string().max(60),
+    effect: z.string().max(600),
+    actionEconomy: z.boolean().optional(),
+    onceADay: z.boolean().optional(),
+    hook: z
+      .discriminatedUnion("kind", [
+        z.object({ kind: z.literal("rush") }),
+        z.object({ kind: z.literal("free-move"), into: z.literal("downed-ally").optional() }),
+        z.object({ kind: z.literal("free-disengage") }),
+        z.object({ kind: z.literal("reaction") }),
+        z.object({ kind: z.literal("cover"), cut: whole }),
+        z.object({ kind: z.literal("no-life") }),
+        z.object({ kind: z.literal("surge-health"), health: whole }),
+        z.object({ kind: z.literal("surge-up"), cost: whole }),
+        z.object({ kind: z.literal("read-health") }),
+      ])
+      .optional(),
+  }),
   guarded: z.boolean().optional(),
 });
 const combatant = z.object({
@@ -116,6 +136,7 @@ const combatant = z.object({
   offense: z.array(forceOption).max(10).optional(),
   defense: z.array(forceOption).max(10).optional(),
   zoneId: id.optional(),
+  huntsByReading: z.boolean().optional(),
 });
 
 const basis = z.discriminatedUnion("kind", [
@@ -208,7 +229,7 @@ export const actionSchema = z.discriminatedUnion("type", [
   }),
   z.object({ type: z.literal("combat.reversal"), sideId: id, note: z.string().max(200).optional() }),
   z.object({ type: z.literal("combat.act"), combatantId: id }),
-  z.object({ type: z.literal("combat.beat"), combatantId: id, what: z.string().max(60) }),
+  z.object({ type: z.literal("combat.beat"), combatantId: id, what: z.string().max(60), permission: z.boolean().optional() }),
   z.object({ type: z.literal("combat.done"), combatantId: id }),
   z.object({ type: z.literal("combat.round") }),
   z.object({ type: z.literal("combat.hp"), combatantId: id, delta: whole }),
@@ -222,10 +243,13 @@ export const actionSchema = z.discriminatedUnion("type", [
     cornered: z.boolean().optional(),
     free: z.boolean().optional(),
     label: z.string().max(60).optional(),
+    rush: id.optional(),
+    reaction: z.boolean().optional(),
   }),
+  z.object({ type: z.literal("combat.cover"), combatantId: id }),
   z.object({ type: z.literal("combat.defend"), defense: clashSide, attackDice: rolledDice.optional(), defenseDice: rolledDice.optional() }),
   z.object({ type: z.literal("combat.resolve"), yield: whole }),
-  z.object({ type: z.literal("combat.move"), combatantId: id, zoneId: id, forced: z.boolean().optional() }),
+  z.object({ type: z.literal("combat.move"), combatantId: id, zoneId: id, forced: z.boolean().optional(), permission: z.boolean().optional() }),
   z.object({ type: z.literal("combat.exposed"), combatantId: id, exposed: z.boolean() }),
   z.object({ type: z.literal("combat.zones"), zones: z.array(zone).max(20) }),
   z.object({ type: z.literal("combat.fate"), combatantId: id, fate: z.enum(["dead", "stabilized"]) }),

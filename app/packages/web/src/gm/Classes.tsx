@@ -16,6 +16,8 @@ import {
   type ProfileShape,
   type Sheet,
   type TechniqueHook,
+  type PermissionHook,
+  ECONOMY_HOOKS,
   bookClasses,
   packageProblems,
   packageWarnings,
@@ -23,7 +25,7 @@ import {
 } from "@gradebreaker/record";
 import { useEffect, useState } from "react";
 import { type DraftItem, acceptDraft, startClassOffers } from "../api.ts";
-import { costLine, profileLine, returnedOf, selectionLine, techniqueOffer } from "../classes.ts";
+import { costLine, permissionHookLine, profileLine, returnedOf, selectionLine, techniqueOffer } from "../classes.ts";
 import { ATTRIBUTES, type Names } from "../text.ts";
 import { TableWords } from "./TableWords.tsx";
 import { Commit } from "./Commit.tsx";
@@ -222,6 +224,10 @@ function OfferEditor({ engine, c, value, onChange, index }: { engine: Engine; c:
         <input type="checkbox" checked={Boolean(value.technique.noBeat)} onChange={(e) => set({ technique: { ...value.technique, noBeat: e.target.checked || undefined } })} />
         It takes no Beat of its own (a reaction, or part of a Clash)
       </label>
+      <label className="check">
+        <input type="checkbox" checked={Boolean(value.technique.reaction)} onChange={(e) => set({ technique: { ...value.technique, reaction: e.target.checked || undefined } })} />
+        It is used on someone else's turn: an attack declared with it comes off-turn for no Beat
+      </label>
       {value.technique.cost === "Drawback" && (
         <label>
           Its drawback
@@ -247,6 +253,7 @@ function OfferEditor({ engine, c, value, onChange, index }: { engine: Engine; c:
         What it permits
         <textarea rows={2} maxLength={600} value={value.permission.effect} onChange={(e) => set({ permission: { ...value.permission, effect: e.target.value } })} />
       </label>
+      <PermissionHookFields engine={engine} value={value} onChange={onChange} />
       <label className="check">
         <input type="checkbox" checked={Boolean(value.permission.actionEconomy)} onChange={(e) => set({ permission: { ...value.permission, actionEconomy: e.target.checked || undefined } })} />
         The permission changes the action economy
@@ -260,6 +267,86 @@ function OfferEditor({ engine, c, value, onChange, index }: { engine: Engine; c:
         Carries a guarded power (known to the GM only)
       </label>
     </fieldset>
+  );
+}
+
+/** The book's value for a permission hook, read from the class that carries it, so the editor starts where the book does. */
+function bookHookValue(engine: Engine, key: string): number {
+  for (const c of engine.rules.classes.classes as { permission: { hook?: unknown } }[]) {
+    const h = c.permission.hook;
+    if (h && typeof h === "object" && key in h) return (h as Record<string, number>)[key]!;
+  }
+  return 1;
+}
+
+/** What the app runs of the permission: one of the shapes it knows, or nothing (the table applies it). */
+function PermissionHookFields({ engine, value, onChange }: { engine: Engine; value: ClassPackage; onChange: (p: ClassPackage) => void }) {
+  const h = value.permission.hook;
+  const key = h ? (h.kind === "free-move" && h.into ? "free-move-downed" : h.kind) : "";
+  const setHook = (hook: PermissionHook | undefined) => {
+    const { hook: _, ...rest } = value.permission;
+    const economy = hook && ECONOMY_HOOKS.includes(hook.kind);
+    onChange({ ...value, permission: hook ? { ...rest, hook, ...(economy ? { actionEconomy: true } : {}) } : rest });
+  };
+  const pick = (k: string): PermissionHook | undefined => {
+    switch (k) {
+      case "rush":
+      case "free-disengage":
+      case "reaction":
+      case "no-life":
+      case "read-health":
+        return { kind: k };
+      case "free-move":
+        return { kind: "free-move" };
+      case "free-move-downed":
+        return { kind: "free-move", into: "downed-ally" };
+      case "cover":
+        return { kind: "cover", cut: bookHookValue(engine, "cover") };
+      case "surge-health":
+        return { kind: "surge-health", health: bookHookValue(engine, "surge_in_health") };
+      case "surge-up":
+        return { kind: "surge-up", cost: bookHookValue(engine, "surge_cost_up_grade") };
+      default:
+        return undefined;
+    }
+  };
+  return (
+    <div className="row tight">
+      <label>
+        The app runs
+        <select value={key} onChange={(e) => setHook(pick(e.target.value))}>
+          <option value="">Nothing: the table applies it</option>
+          <option value="rush">A Rush: move and attack for one Beat</option>
+          <option value="free-move-downed">A free move into a Zone holding a Downed ally</option>
+          <option value="free-move">A free move, when the table agrees</option>
+          <option value="free-disengage">A free Disengage</option>
+          <option value="reaction">A Clash on someone else's turn, once per fight</option>
+          <option value="cover">A cut to an ally's lost Margin, once per round</option>
+          <option value="no-life">A still turn reads as dead</option>
+          <option value="surge-health">A Surge paid in Health</option>
+          <option value="surge-up">A cheaper Surge against a higher Grade</option>
+          <option value="read-health">The Health of creatures in the Zone</option>
+        </select>
+      </label>
+      {h?.kind === "cover" && (
+        <label>
+          Cut
+          <input type="number" className="narrow-input" min={1} value={h.cut} onChange={(e) => setHook({ ...h, cut: Number(e.target.value) || 0 })} />
+        </label>
+      )}
+      {h?.kind === "surge-health" && (
+        <label>
+          Health
+          <input type="number" className="narrow-input" min={1} value={h.health} onChange={(e) => setHook({ ...h, health: Number(e.target.value) || 0 })} />
+        </label>
+      )}
+      {h?.kind === "surge-up" && (
+        <label>
+          Aether
+          <input type="number" className="narrow-input" min={1} value={h.cost} onChange={(e) => setHook({ ...h, cost: Number(e.target.value) || 0 })} />
+        </label>
+      )}
+    </div>
   );
 }
 
@@ -521,6 +608,7 @@ function PackageLines({ engine, p, bonus }: { engine: Engine | null; p: ClassPac
           {p.permission.name}: {p.permission.effect}
           {p.permission.actionEconomy ? " (action economy)" : ""}
           {p.permission.onceADay ? " (once a day)" : ""}
+          {permissionHookLine(p.permission.hook) ? ` ${permissionHookLine(p.permission.hook)}` : ""}
         </li>
       </ul>
     </>

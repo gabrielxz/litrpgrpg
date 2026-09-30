@@ -17,7 +17,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { ATTRIBUTES, type Engine } from "@gradebreaker/engine";
 import { RULES_DIR } from "@gradebreaker/engine/node";
-import { type CampaignRecord, type ClassPackage, type Sheet, bookClasses, packageProblems, packageWarnings } from "@gradebreaker/record";
+import { type CampaignRecord, type ClassPackage, ECONOMY_HOOKS, type PermissionHook, type Sheet, bookClasses, packageProblems, packageWarnings } from "@gradebreaker/record";
 import { z } from "zod";
 import { type Drafter, type Effort, section } from "./draft-events.ts";
 import { voiceFlags, voiceInstructions } from "./draft-voice.ts";
@@ -99,12 +99,39 @@ export function draftClassesSchema(engine: Engine) {
       effect: z.string(),
       actionEconomy: z.boolean(),
       onceADay: z.boolean(),
+      runs: z
+        .enum(PERMISSION_RUNS)
+        .describe(
+          "What the app runs of the permission, when its effect is exactly one of these: rush (moving into another Zone and attacking there costs 1 Beat in total), free-move-downed-ally (moving into a Zone holding a Downed ally costs no Beat), free-move (a move costs no Beat under a condition the table judges), free-disengage (Disengaging costs no Beat), reaction (a Clash on someone else's turn for no Beat, once per encounter), cover (after an ally in your Zone loses a Clash and before damage, a Beat from your next turn cuts that Margin, once per round), no-life (a turn spent without a Beat reads you as dead until you act), surge-health (a Surge paid with Health instead of Aether), surge-up (a cheaper Surge against a higher-Grade target), read-health (you read the current Health of creatures in your Zone). Otherwise none.",
+        ),
     }),
     guarded: z.boolean().describe("Carries a power from the guarded list."),
     everyFight: z.boolean().describe("True when the technique or the permission can be used in most fights with no setup beyond the fight itself."),
   });
   const n = engine.rules.classes.selection.offers as number;
   return z.object({ offers: z.array(offer).describe(`Exactly ${n} offers.`) });
+}
+
+/** A permission's shapes the app runs, as the drafter names them (`PermissionHook`). */
+const PERMISSION_RUNS = ["none", "rush", "free-move-downed-ally", "free-move", "free-disengage", "reaction", "cover", "no-life", "surge-health", "surge-up", "read-health"] as const;
+
+/** The hook for a drafted permission, its number taken from the book's class that carries the shape. */
+function draftedHook(engine: Engine, runs: (typeof PERMISSION_RUNS)[number]): PermissionHook | undefined {
+  const fromBook = (kind: PermissionHook["kind"]) => bookClasses(engine).find((c) => c.permission.hook?.kind === kind)?.permission.hook;
+  switch (runs) {
+    case "none":
+      return undefined;
+    case "free-move-downed-ally":
+      return { kind: "free-move", into: "downed-ally" };
+    case "free-move":
+      return { kind: "free-move" };
+    case "cover":
+    case "surge-health":
+    case "surge-up":
+      return fromBook(runs);
+    default:
+      return { kind: runs };
+  }
 }
 
 export type DraftClassesOutput = z.infer<ReturnType<typeof draftClassesSchema>>;
@@ -254,10 +281,13 @@ export function classOffersOf(engine: Engine, out: DraftClassesOutput, opts: { g
       };
       if (t.actionEconomy || t.reaction) offer.technique.actionEconomy = true;
       if (t.noBeat || t.reaction) offer.technique.noBeat = true;
+      if (t.reaction) offer.technique.reaction = true;
       if (t.cost === "Drawback" && t.drawback) offer.technique.drawback = t.drawback;
       if (t.clash) offer.technique.hook = { kind: "clash", bonus: t.clash.bonus, side: t.clash.side };
       else if (t.heal) offer.technique.hook = { kind: "heal", amount: t.heal.amount, reach: t.heal.reach };
-      if (o.permission.actionEconomy) offer.permission.actionEconomy = true;
+      const hook = draftedHook(engine, o.permission.runs);
+      if (hook) offer.permission.hook = hook;
+      if (o.permission.actionEconomy || (hook && ECONOMY_HOOKS.includes(hook.kind))) offer.permission.actionEconomy = true;
       if (o.permission.onceADay) offer.permission.onceADay = true;
       if (o.guarded) offer.guarded = true;
     }

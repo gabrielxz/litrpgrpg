@@ -26,6 +26,7 @@ import {
   questForHolder,
   interfacePrinciples,
   momentumForceOf,
+  coverers,
   worldOf,
 } from "@gradebreaker/record";
 import type {
@@ -191,7 +192,10 @@ function inspectionFor(record: CampaignRecord, s: Sheet): InspectRead[] {
   const st = record.state;
   const out: InspectRead[] = [];
   const seen = new Set<string>([s.id]);
+  const e = st.encounter && !st.encounter.ended ? st.encounter : null;
   const read = (id: string, name: string, grade: string, titles: Sheet["titles"]) => {
+    // No Life Here: the System reads them as dead, so inspection returns nothing.
+    if (e?.combatants.some((c) => c.characterId === id && !c.out && c.readAsDead)) return void out.push({ id, name, resolves: true, nothing: true, titles: [] });
     const r = titlesRead(record.engine, s.grade, grade, titles);
     out.push({ id, name, resolves: r !== null, titles: r ?? [] });
   };
@@ -200,7 +204,6 @@ function inspectionFor(record: CampaignRecord, s: Sheet): InspectRead[] {
     seen.add(c.id);
     read(c.id, c.name, c.grade, record.sheet(c.id)!.titles);
   }
-  const e = st.encounter && !st.encounter.ended ? st.encounter : null;
   for (const c of e?.combatants ?? []) {
     if (c.out || seen.has(c.characterId ?? c.id)) continue;
     seen.add(c.characterId ?? c.id);
@@ -366,8 +369,11 @@ export function encounterView(record: CampaignRecord, which: "running" | "afterm
   if (!e) return null;
   if (which === "running" ? e.ended : !e.ended || e.settled) return null;
   const world = worldOf(record.state);
+  const def = e.clash?.stage === "yield" ? e.combatants.find((c) => c.id === e.clash!.defenderId) : undefined;
+  const coverIds = def ? coverers(record.engine, world, e, def).map((c) => c.id) : [];
   return {
     ...e,
+    ...(coverIds.length ? { coverIds } : {}),
     combatants: e.combatants.map((c) => {
       const sheet = c.characterId ? record.sheet(c.characterId) : undefined;
       const hp = sheet ? sheet.hp : (c.hp ?? 0);
@@ -378,7 +384,14 @@ export function encounterView(record: CampaignRecord, which: "running" | "afterm
   };
 }
 
-function playerClash(engine: CampaignRecord["engine"], e: Encounter, cl: { attackerId: string; defenderId: string; label?: string; cornered?: boolean }, stage: PlayerClash["stage"], r?: ClashResult): PlayerClash {
+function playerClash(
+  record: CampaignRecord,
+  e: Encounter,
+  cl: { attackerId: string; defenderId: string; label?: string; cornered?: boolean },
+  stage: PlayerClash["stage"],
+  r?: ClashResult,
+): PlayerClash {
+  const engine = record.engine;
   const who = (id: string) => e.combatants.find((c) => c.id === id);
   const out: PlayerClash = {
     attackerId: cl.attackerId,
@@ -396,20 +409,33 @@ function playerClash(engine: CampaignRecord["engine"], e: Encounter, cl: { attac
       out.damageMultiplier = engine.damageMultiplier(who(cl.attackerId)?.grade ?? "F");
     }
     if (r.yielded !== undefined) Object.assign(out, { yielded: r.yielded, damage: r.damage, drivenBack: r.drivenBack });
+    const cut = (r.covers ?? []).reduce((n, c) => n + c.cut, 0);
+    if (cut) out.cut = cut;
+    const def = who(cl.defenderId);
+    if (stage === "yield" && def) {
+      const ids = coverers(engine, worldOf(record.state), e, def).map((c) => c.id);
+      if (ids.length) out.coverIds = ids;
+    }
   }
   return out;
 }
 
-export function playerCombat(record: CampaignRecord): PlayerCombat | null {
+/** The fight as a player sees it; `own` holds their characters, for what only a holder reads. */
+export function playerCombat(record: CampaignRecord, own: ReadonlySet<string> = new Set()): PlayerCombat | null {
   const e = record.state.encounter;
   if (!e || e.ended) return null;
+  // What Is Left: a holder in the fight reads the Health of every creature in their Zone.
+  const readers = e.combatants.filter(
+    (c) => c.characterId && own.has(c.characterId) && !c.out && record.state.characters.get(c.characterId)?.classes?.held?.permission.hook?.kind === "read-health",
+  );
+  const readsHealth = (c: Encounter["combatants"][number]) => !c.characterId && readers.some((r) => r.zoneId === null || c.zoneId === null || r.zoneId === c.zoneId);
   const side = (id: string) => ({ id, name: e.sides.find((s) => s.id === id)?.name ?? id });
   return {
     name: e.name,
     round: e.round,
     zones: e.zones,
-    clash: e.clash ? playerClash(record.engine, e, e.clash, e.clash.stage, e.clash.result) : null,
-    lastClash: e.lastClash ? playerClash(record.engine, e, e.lastClash, "resolved", e.lastClash) : null,
+    clash: e.clash ? playerClash(record, e, e.clash, e.clash.stage, e.clash.result) : null,
+    lastClash: e.lastClash ? playerClash(record, e, e.lastClash, "resolved", e.lastClash) : null,
     order: (e.round ? e.order : e.sides.map((s) => s.id)).map(side),
     turnSide: e.round ? (e.order[e.turn] ?? null) : null,
     pendingShift: e.pending?.sideId ?? null,
@@ -427,8 +453,17 @@ export function playerCombat(record: CampaignRecord): PlayerCombat | null {
       suppressed: c.aura === "suppressed",
       surprise: Boolean(e.round === 0 && e.surprise?.includes(c.id)),
       ...(c.characterId
-        ? { characterId: c.characterId, beats: c.beats, beatsPerTurn: c.beatsPerTurn, pills: { ...(record.sheet(c.characterId)?.pillsTaken ?? c.pills) }, techniqueUsed: Boolean(c.techniqueUsed) }
+        ? {
+            characterId: c.characterId,
+            beats: c.beats,
+            beatsPerTurn: c.beatsPerTurn,
+            pills: { ...(record.sheet(c.characterId)?.pillsTaken ?? c.pills) },
+            techniqueUsed: Boolean(c.techniqueUsed),
+            reactionsUsed: c.reactionsUsed ?? 0,
+            ...(c.readAsDead && own.has(c.characterId) ? { readAsDead: true } : {}),
+          }
         : {}),
+      ...(readsHealth(c) ? { hp: c.hp ?? 0, maxHp: c.maxHp ?? 0 } : {}),
     })),
   };
 }
@@ -474,7 +509,7 @@ export function viewFor(
     roster: sheets.filter((s) => s.playerId !== undefined && !ownIds.has(s.id) && !s.dead).map((s) => ({ id: s.id, name: s.name })),
     feed: feedFor(record, ownIds),
     rolls: rollsFor(record, members, "player"),
-    combat: playerCombat(record),
+    combat: playerCombat(record, ownIds),
     spoils: (record.state.inventory.get(SPOILS) ?? []).map((x) => ({ ...x })),
   };
 }

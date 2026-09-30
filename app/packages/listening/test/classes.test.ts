@@ -27,7 +27,7 @@ const offer = (name: string, extra: Partial<Offer> = {}): Offer => ({
   weighs: "the record",
   profile: { shape: "Fixed", points: [{ attribute: "STR", points: 2 }, { attribute: "FOR", points: 1 }] },
   technique: { name: "Blow", cost: "Frequency", effect: "+10 to an attack Clash", drawback: null, reaction: false, noBeat: false, actionEconomy: false, clash: { bonus: 10, side: "attack" }, heal: null },
-  permission: { name: "Way", effect: "A decision", actionEconomy: false, onceADay: false },
+  permission: { name: "Way", effect: "A decision", actionEconomy: false, onceADay: false, runs: "none" },
   guarded: false,
   everyFight: true,
   ...extra,
@@ -75,5 +75,14 @@ describe("class offers", () => {
     expect(out.offers[2]!.offer).toMatchObject({ name: "Witness", book: "Witness", profile: { shape: "Guided" } });
     expect(out.problems).toEqual(["two offers share a name", "Breaker carries a guarded power the GM did not ask for"]);
     expect(classOffersOf(engine, { offers: [offer("A"), offer("B")] }, { guarded: true }).problems).toEqual(["2 offers drafted; the System offers 3"]);
+  });
+
+  it("carries the permission the app runs, with the book's number for its shape", () => {
+    const run = (runs: Offer["permission"]["runs"]) => classOffersOf(engine, { offers: [offer("P", { permission: { ...offer("x").permission, runs } })] }).offers[0]!.offer.permission;
+    expect(run("cover")).toMatchObject({ hook: { kind: "cover", cut: 40 } });
+    expect(run("rush")).toMatchObject({ hook: { kind: "rush" }, actionEconomy: true });
+    expect(run("free-move-downed-ally").hook).toEqual({ kind: "free-move", into: "downed-ally" });
+    expect(run("none").hook).toBeUndefined();
+    expect(classOffersOf(engine, { offers: [offer("R", { technique: { ...offer("x").technique, reaction: true } })] }).offers[0]!.offer.technique.reaction).toBe(true);
   });
 });

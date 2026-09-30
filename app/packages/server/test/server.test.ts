@@ -765,6 +765,63 @@ describe("classes", () => {
   });
 });
 
+describe("class permissions in the player's view", () => {
+  it("shows What Is Left's holder the Health of creatures in their Zone, and reads a still Still One as nothing", async () => {
+    const { campaignId, gm, player, playerId, invite } = await table();
+    const other = await signIn("Bo");
+    await call("POST", `/invites/${invite}/accept`, { token: other });
+    const otherId = (await call("GET", "/me", { token: other })).json.user.id as string;
+    const classed = async (id: string, pregen: string, who: string, cls: string) => {
+      await act(campaignId, gm, { type: "character.pregen", characterId: id, pregen, playerId: who });
+      for (let level = 2; level <= 10; level++) {
+        await act(campaignId, gm, { type: "ve.award", basis: { kind: "other", note: "test" }, awards: [{ characterId: id, ve: 120 }] });
+        await act(campaignId, gm, { type: "consolidation.rest", highDensity: false, rests: [{ characterId: id, hours: 6 }] });
+        if (level < 10) await act(campaignId, gm, { type: "points.system", characterId: id, level, placement: { STR: 3 } });
+      }
+      const pkgs = bookClasses(new Engine(rules)).filter((c) => [cls, "Witness", "Maker"].includes(c.name));
+      await act(campaignId, gm, { type: "class.offer", characterId: id, offers: pkgs });
+      await act(campaignId, gm, { type: "class.accept", characterId: id, name: cls });
+    };
+    await classed("dev", "Kara", playerId, "Devourer");
+    await classed("pri", "Joe", otherId, "Still One");
+    await act(campaignId, gm, {
+      type: "combat.start",
+      encounterId: "e1",
+      name: "Den",
+      sides: [
+        { id: "party", name: "The party" },
+        { id: "hostiles", name: "Hostiles" },
+      ],
+      zones: [
+        { id: "den", name: "Den" },
+        { id: "mouth", name: "Mouth" },
+      ],
+      combatants: [
+        { combatantId: "dev", sideId: "party", characterId: "dev" },
+        { combatantId: "pri", sideId: "party", characterId: "pri" },
+        { combatantId: "near", sideId: "hostiles", name: "Near Rat", kind: "creature", maxHp: 30, momentumForce: 0 },
+        { combatantId: "far", sideId: "hostiles", name: "Far Rat", kind: "creature", maxHp: 30, momentumForce: 0, zoneId: "mouth" },
+      ],
+    });
+    const fight = async (token: string) => (await call("GET", `/campaigns/${campaignId}`, { token })).json.combat.combatants as { id: string; hp?: number; readAsDead?: boolean }[];
+    const mine = await fight(player);
+    expect(mine.find((c) => c.id === "near")).toMatchObject({ hp: 30 });
+    expect(mine.find((c) => c.id === "far")!.hp).toBeUndefined();
+    expect((await fight(other)).find((c) => c.id === "near")!.hp).toBeUndefined();
+
+    for (const a of [
+      { type: "combat.momentum", attempts: [[{ sideId: "party", combatantId: "pri", natural: [80] }, { sideId: "hostiles", combatantId: "near", natural: [10] }]] },
+      { type: "combat.act", combatantId: "pri" },
+      { type: "combat.done", combatantId: "pri" },
+    ] as const)
+      expect((await act(campaignId, gm, a)).json).toMatchObject({ envelope: {} });
+    const reads = (await call("GET", `/campaigns/${campaignId}`, { token: player })).json.characters[0].inspection as { id: string; nothing?: boolean; titles: unknown[] }[];
+    expect(reads.find((r) => r.id === "pri")).toMatchObject({ nothing: true, titles: [] });
+    expect((await fight(other)).find((c) => c.id === "pri")!.readAsDead).toBe(true);
+    expect((await fight(player)).find((c) => c.id === "pri")!.readAsDead).toBeUndefined();
+  });
+});
+
 describe("the player's titles", () => {
   it("leave an HVE-Resonant title's axis pair on the server", async () => {
     const { campaignId, gm, player, playerId } = await table();

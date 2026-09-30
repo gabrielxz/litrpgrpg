@@ -20,6 +20,10 @@ export type Clasher =
       proficiencies: Proficiency[];
       /** The class technique, when the character holds a class. */
       technique?: TechniqueOffer;
+      /** A class permission lets Health pay for a Surge: this much (Blood for Aether). */
+      surgeHealth?: number;
+      /** A class permission's Surge cost against a higher-Grade opponent (Above You). */
+      surgeUp?: number;
     }
   | { kind: "creature"; name: string; options: ForceOption[] };
 
@@ -145,14 +149,30 @@ function SideFields({
         </label>
       )}
       {who.kind === "character" && (
-        <label className="check" title="Declared before the roll. No Beat.">
+        <label className="check" title={`Declared before the roll. No Beat.${who.surgeUp !== undefined ? ` Against a higher Grade it costs ${Math.min(who.surgeUp, who.surgeCost)} Aether.` : ""}`}>
           <input
             type="checkbox"
             checked={Boolean(value.surge)}
-            disabled={who.aether < who.surgeCost}
-            onChange={(e) => onChange({ ...value, surge: e.target.checked })}
+            disabled={who.aether < Math.min(who.surgeCost, who.surgeUp ?? who.surgeCost) && who.surgeHealth === undefined}
+            onChange={(e) => {
+              const { surge: _s, surgeHealth: _h, ...rest } = value;
+              onChange(e.target.checked ? { ...rest, surge: true, ...(who.aether < who.surgeCost && who.surgeHealth !== undefined ? { surgeHealth: true } : {}) } : rest);
+            }}
           />{" "}
-          Surge (+5 for {who.surgeCost} Aether)
+          Surge (+5 for {who.surgeCost} Aether{who.surgeUp !== undefined && who.surgeUp < who.surgeCost ? `, ${who.surgeUp} against a higher Grade` : ""})
+        </label>
+      )}
+      {who.kind === "character" && who.surgeHealth !== undefined && value.surge && (
+        <label className="check" title="The class permission lets Health pay for the Surge">
+          <input
+            type="checkbox"
+            checked={Boolean(value.surgeHealth)}
+            onChange={(e) => {
+              const { surgeHealth: _, ...rest } = value;
+              onChange(e.target.checked ? { ...rest, surgeHealth: true } : rest);
+            }}
+          />{" "}
+          Pay it with {who.surgeHealth} Health
         </label>
       )}
     </div>
@@ -175,6 +195,8 @@ export interface AttackDeclaration {
   flanking: boolean;
   cornered: boolean;
   label?: string;
+  /** A Rush: the Zone the attacker moves into first. */
+  rush?: string;
 }
 
 export function AttackForm({
@@ -183,27 +205,38 @@ export function AttackForm({
   suggestFlanking,
   gm,
   free,
+  reaction,
+  rush,
   busy,
   onDeclare,
   onCancel,
 }: {
   attacker: Clasher;
-  targets: { id: string; name: string }[];
+  targets: { id: string; name: string; zoneId?: string | null }[];
   suggestFlanking: (defenderId: string) => boolean;
   /** The GM also sets Cornered; Flanking is offered to everyone, pre-checked from the Zones. */
   gm?: boolean;
   free?: boolean;
+  /** Off-turn for no Beat: the reaction's name, and whether it is the class technique used as one. */
+  reaction?: { name: string; technique: boolean };
+  /** The class permission's Rush: its name and the Zones it can go into. */
+  rush?: { name: string; zones: { id: string; name: string }[] };
   busy?: boolean;
   onDeclare: (d: AttackDeclaration) => void;
   onCancel?: () => void;
 }) {
   const [target, setTarget] = useState(targets[0]?.id ?? "");
-  const [side, setSide] = useState<ClashSide>(() => initial(attacker, "attack"));
+  const [side, setSide] = useState<ClashSide>(() => ({ ...initial(attacker, "attack"), ...(reaction?.technique ? { technique: true } : {}) }));
+  const [rushTo, setRushTo] = useState("");
   const [flank, setFlank] = useState<boolean | null>(null);
   const [cornered, setCornered] = useState(false);
   const [label, setLabel] = useState("");
   const defenderId = targets.some((t) => t.id === target) ? target : (targets[0]?.id ?? "");
   const flanking = flank ?? suggestFlanking(defenderId);
+  // A Rush goes into the target's Zone when the scene places it; otherwise the attacker names one.
+  const targetZone = targets.find((t) => t.id === defenderId)?.zoneId ?? null;
+  const rushZones = rush ? rush.zones.filter((z) => !targetZone || z.id === targetZone) : [];
+  const rushing = rushZones.some((z) => z.id === rushTo) ? rushTo : "";
   if (!targets.length) return <p className="muted small">Nobody to attack.</p>;
   return (
     <div className="clash-form">
@@ -223,6 +256,21 @@ export function AttackForm({
           <input className="narrow-input wide" value={label} onChange={(e) => setLabel(e.target.value)} placeholder="Axe" />
         </label>
       </div>
+      {rush && rushZones.length > 0 && (
+        <div className="row tight">
+          <label title="Moving into the Zone and attacking there costs the attack's one Beat">
+            {rush.name}
+            <select value={rushing} onChange={(e) => setRushTo(e.target.value)}>
+              <option value="">No: attack from here</option>
+              {rushZones.map((z) => (
+                <option key={z.id} value={z.id}>
+                  Into {z.name}, then attack
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+      )}
       <SideFields who={attacker} role="attack" value={side} onChange={setSide} />
       <div className="row tight">
         <label className="check" title="+10 when two or more hostiles engage the target; suggested from the Zones">
@@ -238,9 +286,9 @@ export function AttackForm({
         <button
           className="primary"
           disabled={busy || !defenderId}
-          onClick={() => onDeclare({ defenderId, attack: side, flanking, cornered, ...(label.trim() ? { label: label.trim() } : {}) })}
+          onClick={() => onDeclare({ defenderId, attack: side, flanking, cornered, ...(label.trim() ? { label: label.trim() } : {}), ...(rushing ? { rush: rushing } : {}) })}
         >
-          {free ? "Declare the free strike" : `${attacker.name} attacks (1 Beat)`}
+          {free ? "Declare the free strike" : reaction ? `${reaction.name}: ${attacker.name} attacks (no Beat)` : rushing ? `${rush!.name}: move and attack (1 Beat)` : `${attacker.name} attacks (1 Beat)`}
         </button>
         {onCancel && <button onClick={onCancel}>Cancel</button>}
       </div>
@@ -260,7 +308,7 @@ export function DefenseForm({ defender, busy, onDefend }: { defender: Clasher; b
   );
 }
 
-/** The defender's Yield: each Beat takes 20 off the Margin before the Grade multiplier. */
+/** The defender's Yield: each Beat takes 20 off the Margin, after any ally's cover, before the Grade multiplier. */
 export function YieldChoice({
   margin,
   cap,

@@ -4,7 +4,7 @@
  * mechanics beside the System's notice.
  */
 import type { Engine } from "@gradebreaker/engine";
-import type { ClassPackage, TechniqueHook } from "@gradebreaker/record";
+import type { ClassPackage, PermissionHook, TechniqueHook } from "@gradebreaker/record";
 import { ATTRIBUTE_NAMES } from "./text.ts";
 
 type Package = Pick<ClassPackage, "profile" | "technique" | "permission">;
@@ -73,4 +73,52 @@ export function techniqueOffer(
           ? "used this fight"
           : null;
   return { name: t.name, ...(t.hook ? { hook: t.hook } : {}), cost, sides, noBeat: Boolean(t.noBeat), chooseDrawback: t.cost === "Drawback" && !t.drawback, blocked };
+}
+
+/** What a held class's permission adds to the Clash forms: a Surge paid in Health, or cheaper against a higher Grade. */
+export function permissionClash(k: Pick<ClassPackage, "permission"> | null | undefined): { surgeHealth?: number; surgeUp?: number } {
+  const h = k?.permission.hook;
+  if (h?.kind === "surge-health") return { surgeHealth: h.health };
+  if (h?.kind === "surge-up") return { surgeUp: h.cost };
+  return {};
+}
+
+/** The reactions a character can take now, on someone else's turn: the permission's and a technique used as one. */
+export function reactionsOffered(
+  engine: Engine | null,
+  k: Pick<ClassPackage, "permission" | "technique"> | null | undefined,
+  state: { reactionsUsed: number; technique: TechniqueOffer | null },
+): { name: string; technique: boolean }[] {
+  if (!k) return [];
+  const out: { name: string; technique: boolean }[] = [];
+  const max = (engine?.rules.classes.permission.reactions_per_encounter as number | undefined) ?? 1;
+  if (k.permission.hook?.kind === "reaction" && state.reactionsUsed < max) out.push({ name: k.permission.name, technique: false });
+  if (k.technique.reaction && state.technique && !state.technique.blocked) out.push({ name: k.technique.name, technique: true });
+  return out;
+}
+
+/** What the app runs of a permission, in the table's words; null when the table applies it. */
+export function permissionHookLine(h: PermissionHook | undefined): string | null {
+  switch (h?.kind) {
+    case "rush":
+      return "The app offers moving into another Zone and attacking there for the attack's one Beat.";
+    case "free-move":
+      return h.into === "downed-ally" ? "The app offers a move into a Zone holding a Downed ally for no Beat." : "The app offers a move for no Beat when the table agrees the condition holds.";
+    case "free-disengage":
+      return "The app offers Disengaging for no Beat.";
+    case "reaction":
+      return "The app offers a Clash on someone else's turn for no Beat, once per fight.";
+    case "cover":
+      return `The app offers cutting an ally's lost Margin by ${h.cut} for a Beat from the next turn, once per round.`;
+    case "no-life":
+      return "The app reads a turn spent without a Beat as dead until the character acts: inspection shows nothing.";
+    case "surge-health":
+      return `The app lets ${h.health} Health pay for a Surge.`;
+    case "surge-up":
+      return `The app charges ${h.cost} Aether for a Surge against a higher Grade, when that is less.`;
+    case "read-health":
+      return "The app shows the holder the Health of every creature in their Zone.";
+    default:
+      return null;
+  }
 }

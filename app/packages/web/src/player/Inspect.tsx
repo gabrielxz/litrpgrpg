@@ -22,7 +22,11 @@ export function Inspect({ c }: { c: InterfaceSheet }) {
         ))}
       </select>
       {r &&
-        (!r.resolves ? (
+        (r.nothing ? (
+          <p className="sys-dim">
+            <em>{r.name}: no life reads.</em>
+          </p>
+        ) : !r.resolves ? (
           <p className="sys-dim">
             <em>{r.name}: does not resolve.</em>
           </p>

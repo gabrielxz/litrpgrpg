@@ -2094,6 +2094,163 @@ describe("class techniques", () => {
   });
 });
 
+describe("class permissions", () => {
+  const book = (name: string) => bookClasses(engine).find((c) => c.name === name)!;
+  const enc = () => rec.state.encounter!;
+  const who = (id: string) => enc().combatants.find((c) => c.id === id)!;
+  const rolled = (action: Action, ...dice: number[]) => rec.append(rollFor(rec, draft(action), () => dice.shift()!));
+  const as = (actor: Draft["actor"], action: Action) => rec.append(draft(action, actor));
+  function classed(id: string, pregen: string, cls: ClassPackage | string, playerId: string) {
+    gm({ type: "character.pregen", characterId: id, pregen, playerId });
+    levelTo(id, 10);
+    const offer = typeof cls === "string" ? book(cls) : cls;
+    const others = ["Witness", "Maker", "Registrar"].filter((n) => n !== offer.name).slice(0, 2);
+    gm({ type: "class.offer", characterId: id, offers: [offer, ...others.map(book)] });
+    gm({ type: "class.accept", characterId: id, name: offer.name });
+    rest(id, 1);
+  }
+  /** Kara and a second character against a rat and a hound; the party holds Momentum. */
+  function fight(second: string, extra: Partial<Record<string, unknown>> = {}) {
+    gm({
+      type: "combat.start",
+      encounterId: "e1",
+      name: "Treeline",
+      sides: [
+        { id: "party", name: "The party" },
+        { id: "hostiles", name: "Hostiles" },
+      ],
+      zones: [
+        { id: "treeline", name: "Treeline" },
+        { id: "road", name: "Road" },
+      ],
+      combatants: [
+        { combatantId: "kara", sideId: "party", characterId: "kara" },
+        { combatantId: second, sideId: "party", characterId: second },
+        { combatantId: "rat", sideId: "hostiles", name: "Frenzy Rat", grade: "F", maxHp: 200, momentumForce: 1, beats: 2, zoneId: "road", ...extra },
+      ],
+    });
+    rolled({ type: "combat.momentum" }, 90, 10);
+  }
+
+  it("runs Rush: into the Zone and the attack there for one Beat", () => {
+    classed("kara", "Kara", "Breaching Vanguard", "player-1");
+    classed("joe", "Joe", "Witness", "player-2");
+    fight("joe");
+    gm({ type: "combat.act", combatantId: "kara" });
+    expect(() => as(P1, { type: "combat.attack", attackerId: "kara", defenderId: "rat", attack: { attribute: "STR", modifier: 0 }, rush: "treeline" })).toThrow(/already there/);
+    as(P1, { type: "combat.attack", attackerId: "kara", defenderId: "rat", attack: { attribute: "STR", modifier: 0 }, rush: "road" });
+    expect(who("kara")).toMatchObject({ zoneId: "road", beats: 1, spent: ["Rush: Attack"] });
+    rolled({ type: "combat.defend", defense: { force: 1, modifier: 0 } }, 20, 10);
+    gm({ type: "combat.done", combatantId: "kara" });
+    gm({ type: "combat.act", combatantId: "joe" });
+    expect(() => gm({ type: "combat.attack", attackerId: "joe", defenderId: "rat", attack: { attribute: "STR", modifier: 0 }, rush: "road" })).toThrow(/grants no Rush/);
+  });
+
+  it("runs Reach the Fallen: a move into a Zone holding a Downed ally costs no Beat", () => {
+    classed("kara", "Kara", "Witness", "player-1");
+    classed("joe", "Joe", "Battle Medic", "player-2");
+    fight("joe");
+    gm({ type: "combat.act", combatantId: "joe" });
+    expect(() => as(P2, { type: "combat.move", combatantId: "joe", zoneId: "road", permission: true })).toThrow(/Zone holding a Downed ally/);
+    gm({ type: "combat.move", combatantId: "kara", zoneId: "road", forced: true });
+    gm({ type: "combat.hp", combatantId: "kara", delta: -rec.sheet("kara")!.hp });
+    as(P2, { type: "combat.move", combatantId: "joe", zoneId: "road", permission: true });
+    expect(who("joe")).toMatchObject({ zoneId: "road", beats: 2, spent: ["Move (Reach the Fallen)"] });
+  });
+
+  it("runs Take It: a Beat from the Surety's next turn cuts the ally's Margin by 40 before the Yield", () => {
+    classed("kara", "Kara", "Witness", "player-1");
+    classed("wen", "Joe", "Standing Surety", "player-2");
+    fight("wen", { zoneId: "treeline" });
+    gm({ type: "combat.act", combatantId: "kara" });
+    gm({ type: "combat.done", combatantId: "kara" });
+    gm({ type: "combat.act", combatantId: "wen" });
+    gm({ type: "combat.done", combatantId: "wen" });
+    gm({ type: "combat.act", combatantId: "rat" });
+    gm({ type: "combat.attack", attackerId: "rat", defenderId: "kara", attack: { force: 60, modifier: 0 } });
+    expect(() => as(P2, { type: "combat.cover", combatantId: "wen" })).toThrow(/no ally has lost/);
+    rolled({ type: "combat.defend", defense: { attribute: "DEX", modifier: 0 } }, 50, 1);
+    const margin = enc().clash!.result!.margin;
+    expect(margin).toBeGreaterThan(40);
+    expect(() => as(P1, { type: "combat.cover", combatantId: "wen" })).toThrow(/their own character/);
+    as(P2, { type: "combat.cover", combatantId: "wen" });
+    expect(who("wen").debt).toBe(1);
+    expect(() => as(P2, { type: "combat.cover", combatantId: "wen" })).toThrow(/this round/);
+    const hp = rec.sheet("kara")!.hp;
+    as(P1, { type: "combat.resolve", yield: 0 });
+    expect(rec.sheet("kara")!.hp).toBe(Math.max(0, hp - (margin - 40)));
+  });
+
+  it("runs Contempt as a reaction, once a fight, and Riposte as a technique's reaction", () => {
+    classed("kara", "Kara", "Adjudicator", "player-1");
+    classed("ines", "Joe", "Counterpuncher", "player-2");
+    fight("ines", { zoneId: "treeline" });
+    gm({ type: "combat.act", combatantId: "kara" });
+    expect(() => as(P1, { type: "combat.attack", attackerId: "kara", defenderId: "rat", attack: { attribute: "HRT", modifier: 0 }, reaction: true })).toThrow(/someone else's turn/);
+    gm({ type: "combat.done", combatantId: "kara" });
+    const beats = who("kara").beats;
+    as(P1, { type: "combat.attack", attackerId: "kara", defenderId: "rat", attack: { attribute: "HRT", modifier: 0 }, reaction: true });
+    expect(who("kara").beats).toBe(beats);
+    rolled({ type: "combat.defend", defense: { force: 1, modifier: 0 } }, 20, 10);
+    expect(() => as(P1, { type: "combat.attack", attackerId: "kara", defenderId: "rat", attack: { attribute: "HRT", modifier: 0 }, reaction: true })).toThrow(/used Contempt this fight/);
+    expect(() => as(P2, { type: "combat.attack", attackerId: "ines", defenderId: "rat", attack: { attribute: "DEX", modifier: 0 }, reaction: true })).toThrow(/grants no reaction/);
+    as(P2, { type: "combat.attack", attackerId: "ines", defenderId: "rat", attack: { attribute: "DEX", modifier: 0, technique: true }, reaction: true });
+    expect(who("ines").techniqueUsed).toBe(true);
+  });
+
+  it("reads a Still One who spent no Beat as dead until they act", () => {
+    classed("kara", "Kara", "Witness", "player-1");
+    classed("pri", "Joe", "Still One", "player-2");
+    fight("pri", { zoneId: "treeline", huntsByReading: true });
+    gm({ type: "combat.act", combatantId: "pri" });
+    gm({ type: "combat.act", combatantId: "kara" });
+    expect(who("pri").readAsDead).toBe(true);
+    gm({ type: "combat.done", combatantId: "kara" });
+    gm({ type: "combat.act", combatantId: "rat" });
+    expect(() => gm({ type: "combat.attack", attackerId: "rat", defenderId: "pri", attack: { force: 6, modifier: 0 } })).toThrow(/finds no life in Joe/);
+    gm({ type: "combat.done", combatantId: "rat" });
+    gm({ type: "combat.round" });
+    gm({ type: "combat.act", combatantId: "pri" });
+    gm({ type: "combat.beat", combatantId: "pri", what: "Check" });
+    expect(who("pri").readAsDead).toBeUndefined();
+  });
+
+  it("pays a Surge in Health for Blood for Aether, and at 5 against a higher Grade for Above You", () => {
+    classed("kara", "Kara", "Burner", "player-1");
+    classed("udo", "Joe", "Underdog", "player-2");
+    fight("udo", { zoneId: "treeline", grade: "E" });
+    gm({ type: "combat.act", combatantId: "kara" });
+    const hp = rec.sheet("kara")!.hp;
+    const aether = rec.sheet("kara")!.aether;
+    gm({ type: "combat.attack", attackerId: "kara", defenderId: "rat", attack: { attribute: "STR", modifier: 0, surge: true, surgeHealth: true } });
+    expect(rec.sheet("kara")!).toMatchObject({ hp: hp - 10, aether });
+    rolled({ type: "combat.defend", defense: { force: 1, modifier: 0 } }, 20, 10);
+    gm({ type: "combat.done", combatantId: "kara" });
+    gm({ type: "combat.act", combatantId: "udo" });
+    const joe = rec.sheet("udo")!;
+    expect(() => gm({ type: "combat.attack", attackerId: "udo", defenderId: "rat", attack: { attribute: "STR", modifier: 0, surge: true, surgeHealth: true } })).toThrow(/pays a Surge in Aether/);
+    gm({ type: "combat.attack", attackerId: "udo", defenderId: "rat", attack: { attribute: "STR", modifier: 0, surge: true } });
+    expect(rec.sheet("udo")!.aether).toBe(joe.aether - Math.min(5, joe.surgeCost));
+  });
+
+  it("makes a Disengage free for a class written with that permission", () => {
+    const slip: ClassPackage = {
+      ...book("Witness"),
+      name: "Slipknot",
+      book: undefined,
+      permission: { name: "Slip", effect: "Disengaging costs no Beat", actionEconomy: true, hook: { kind: "free-disengage" } },
+    } as ClassPackage;
+    classed("kara", "Kara", slip, "player-1");
+    classed("joe", "Joe", "Maker", "player-2");
+    fight("joe", { zoneId: "treeline" });
+    gm({ type: "combat.act", combatantId: "kara" });
+    expect(() => as(P1, { type: "combat.beat", combatantId: "kara", what: "Check", permission: true })).toThrow(/makes Disengaging free/);
+    as(P1, { type: "combat.beat", combatantId: "kara", what: "Disengage", permission: true });
+    expect(who("kara")).toMatchObject({ beats: 2, spent: ["Disengage (Slip)"] });
+    expect(packageWarnings(engine, { ...slip, technique: { ...slip.technique, actionEconomy: true } })).toHaveLength(1);
+  });
+});
+
 describe("Attribute Treasures", () => {
   const as = (actor: Draft["actor"], action: Action) => rec.append(draft(action, actor));
   const absorb = (extra: Partial<Extract<Action, { type: "treasure.absorb" }>> = {}) =>

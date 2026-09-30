@@ -158,13 +158,15 @@ export function describe(
     case "combat.end":
       return "Fight ends";
     case "combat.attack":
-      return `${a.free ? "Free strike" : "Attack"}: ${name(a.attackerId)} at ${name(a.defenderId)}${a.label ? ` (${a.label})` : ""}`;
+      return `${a.free ? "Free strike" : a.reaction ? "Reaction" : a.rush ? "Rush" : "Attack"}: ${name(a.attackerId)} at ${name(a.defenderId)}${a.label ? ` (${a.label})` : ""}`;
     case "combat.defend":
       return "Defense rolled";
     case "combat.resolve":
       return a.yield ? `Yield ${a.yield} Beat${a.yield === 1 ? "" : "s"}` : "Takes the hit";
+    case "combat.cover":
+      return `${name(a.combatantId)} covers the ally: a Beat from the next turn cuts the Margin`;
     case "combat.move":
-      return `${name(a.combatantId)} ${a.forced ? "is placed" : "moves"}`;
+      return `${name(a.combatantId)} ${a.forced ? "is placed" : a.permission ? "moves, free by the class" : "moves"}`;
     case "combat.exposed":
       return `${name(a.combatantId)}: ${a.exposed ? "Exposed" : "no longer Exposed"}`;
     case "combat.zones":

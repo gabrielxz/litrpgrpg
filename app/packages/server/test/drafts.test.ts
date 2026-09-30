@@ -462,7 +462,7 @@ describe("drafting from typed table talk", () => {
       weighs: "The Force lead.",
       profile: { shape: "Fixed", points: [{ attribute: "STR", points: 2 }, { attribute: "FOR", points: 1 }] },
       technique: { name: `${name} Blow`, cost: "Frequency", effect: "+10 to an attack Clash", drawback: null, reaction: false, noBeat: false, actionEconomy: false, clash: { bonus: 10, side: "attack" }, heal: null },
-      permission: { name: `${name} Way`, effect: "Something the character already decides", actionEconomy: false, onceADay: false },
+      permission: { name: `${name} Way`, effect: "Something the character already decides", actionEconomy: false, onceADay: false, runs: "none" },
       guarded: false,
       everyFight: true,
       ...extra,
