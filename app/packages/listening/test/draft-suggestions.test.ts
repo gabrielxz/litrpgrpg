@@ -94,10 +94,21 @@ describe("the suggestions drafter", () => {
     expect(system).toContain("a Volatility cascade of two or more extra dice");
     expect(system).toContain("+3 to +5");
     expect(system).not.toContain("Ten-Slayer");
-    const prompt = draftSuggestionsPrompt(sceneOfScript(engine, byId("gate-crossing")));
-    expect(prompt).toContain("- andre: titles held: none; Battle Memory Cards due: none.");
+    expect(system).toContain("one to three in a campaign arc");
+    expect(system).toContain("names the title and never the trigger");
+    const scene = sceneOfScript(engine, byId("gate-crossing"));
+    const prompt = draftSuggestionsPrompt(scene);
+    expect(prompt).toContain("- andre: titles held: none; Hidden Achievements earned: none; Battle Memory Cards due: none.");
     expect(prompt).toContain("[l27] Dana (GM): Joe, you're up.");
     expect(prompt).not.toMatch(/HVE|\bDeep\b/);
+    scene.record.append({
+      id: "ha",
+      at: "2026-01-01T00:00:00Z",
+      actor: { role: "gm", userId: "gm" },
+      source: "manual",
+      action: { type: "title.grant", characterId: "andre", title: { name: "Answered in Kind", category: "Hidden Achievement", bonus: { CHA: 4 }, effect: "Triggered by turning a hostile beast aside without striking it." } },
+    });
+    expect(draftSuggestionsPrompt(scene)).toContain("- andre: titles held: Answered in Kind; Hidden Achievements earned: 1 (Answered in Kind);");
   });
 
   it("returns every script's expected suggestions with the action each records, in full", () => {

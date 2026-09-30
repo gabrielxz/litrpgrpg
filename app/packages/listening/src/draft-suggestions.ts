@@ -160,7 +160,11 @@ The app makes these due by itself; never suggest them: ${p.automatic.join("; ")}
 
 ${hidden.shape} Surviving an encounter the character should have died in, solving a problem in a way nobody intended, completing an objective under a constraint they set themselves, an outcome the System did not predict. Suggest one only for a deed the table would remember; a strong play is not one.
 
-Write it in three parts: a short name (two or three words, a title a character would carry), the deed as its trigger ("Triggered by surviving an encounter against an enemy a full Grade above you"), and a bonus of +${min} to +${max} to the one Attribute the deed showed. When the deed shows a second Attribute as plainly, name it as the alternative, and the GM chooses.
+A character earns one to three in a campaign arc. "Titles and cards" lists the Hidden Achievements each character already holds; a character who holds three needs a deed beyond any of theirs.
+
+Write it in three parts: a short name (two or three words, a title a character would carry, never one the character already holds), the deed as its trigger ("Triggered by surviving an encounter against an enemy a full Grade above you"), and a bonus of +${min} to +${max} to the one Attribute the deed showed, higher for the less likely deed. When the deed shows a second Attribute as plainly, name it as the alternative, and the GM chooses. The trigger is for the GM: the character's notice names the title and never the trigger.
+
+For example, a character who turned a territorial beast aside by answering its challenge call, a call they had learned by listening at its den: Answered in Kind. Triggered by turning a hostile beast aside without striking it. +4 CHA; alternative +4 PER.
 
 # Quests
 
@@ -191,8 +195,9 @@ Cite the lines that show each thing happened. Write each reason in one sentence.
 
 const heldLine = (s: Sheet) => {
   const titles = s.titles.filter((t) => t.status === "active").map((t) => t.name);
+  const hidden = s.titles.filter((t) => t.category === "Hidden Achievement").map((t) => t.name);
   const due = s.principles.due.map((d) => d.label);
-  return `- ${s.id}: titles held: ${titles.length ? titles.join(", ") : "none"}; Battle Memory Cards due: ${due.length ? due.join("; ") : "none"}.`;
+  return `- ${s.id}: titles held: ${titles.length ? titles.join(", ") : "none"}; Hidden Achievements earned: ${hidden.length ? `${hidden.length} (${hidden.join(", ")})` : "none"}; Battle Memory Cards due: ${due.length ? due.join("; ") : "none"}.`;
 };
 
 /** A quest as the drafter reads it: open quests only, a Hidden quest with its mode. */

@@ -121,7 +121,7 @@ Every other GM section follows its artboard too (Gabriel, 2026-09-30): Prep, Bes
 
 Book changes the app must follow. An app session applies them and clears the list.
 
-- **The Hidden Achievements prompt (rules 0.1.40).** The System AI prints `rules/templates/hidden-achievement.txt`, drawn from `draft-suggestions`. Two points in it the drafter does not state: a character earns one to three in a campaign arc (the drafter could read the character's Hidden Achievements already granted), and the notice names the title and never the trigger. Check the drafter against it; no rule moved.
+- none
 
 ## Design Items Referenced by the Checklist
 
