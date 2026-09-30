@@ -93,6 +93,13 @@ Ruled by Gabriel, 2026-09-30 (the rehearsal):
 - **Spoken commands wait until after the rehearsal.** The walkthrough video is deferred.
 - **Players may ask rules questions in the app.** A player's question is answered from the player chapters alone, with nothing from the campaign in the request, so it cannot reveal what the player does not already know.
 
+Ruled by Gabriel, 2026-09-30 (the makeover and deploys):
+
+- **The makeover designs for PC play only.** Players use a desktop browser, often beside a video call; phone and tablet layouts wait.
+- **The player's screen is the System's interface, and the GM's is on theme without being diegetic.** The GM's screen keeps the table's words and gets the game's look. The brief for Claude Design is `app/design-brief.md`.
+- **The AssemblyAI key is a Fly secret**, so a recording's second opinion runs in production. Production's live transcriber stays Soniox.
+- **A push that changes a book chapter deploys the app**, so rules questions read the chapters on `main`.
+
 Ruled by Claude on Gabriel's delegation, 2026-09-25 (book sentences queued in the backlog):
 
 - **A collapse's own involuntary Consolidation does not return its temporary point.** The next Consolidation completed without interruption does.
@@ -171,7 +178,7 @@ Each milestone is usable at a table and feeds the next. Items are marked **activ
 
 | Item | | Notes |
 |---|---|---|
-| Visual makeover | **active**, before the rehearsal | Gabriel, 2026-09-29: once M3's functionality is settled, Claude Design gives the app its look; the working look reads as office software. It comes before the user guide and the walkthrough video, so their screenshots show it |
+| Visual makeover | **active**, before the rehearsal | Gabriel, 2026-09-29: once M3's functionality is settled, Claude Design gives the app its look; the working look reads as office software. It comes before the user guide and the walkthrough video, so their screenshots show it. The brief is `app/design-brief.md` (PC only; Decisions, "the makeover and deploys") |
 | User guide | **active**, before the rehearsal | Gabriel, 2026-09-28: after M3, a guide in the app to every feature and how to use it, reachable from every screen; the GM's side covers every section, a player's covers their own screen. Written once listening lands, since M3 changes how a session runs. From then, each feature lands with its guide page, and a feature is not done without it; the screenshots are Claude's, taken in the browser pane with the GM and player tabs that check each change, and retaken when a screen changes (Gabriel, 2026-09-28) |
 | Walkthrough video | *deferred* | Gabriel, 2026-09-28: after the user guide, a video showing how to use the app, with an animation Claude makes. The guide comes first; the video draws on its pages and screenshots |
 | GM command recognition | **active**, after the rehearsal | Only the GM's stream carries authority; quotations, hypotheticals, and NPC speech stay speech |
