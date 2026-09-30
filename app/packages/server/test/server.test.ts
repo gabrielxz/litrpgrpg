@@ -19,7 +19,7 @@ import { jwtVerifier } from "../src/auth.ts";
 import { devSignIn, eitherVerifier } from "../src/devauth.ts";
 import { type Db, migrate, pgliteDb } from "../src/db.ts";
 import { LiveHub } from "../src/live.ts";
-import { Listening, type Transcriber } from "../src/listening.ts";
+import { Listening, RETRY_AFTER_MS, StreamLimit, type Transcriber, type TranscriberOptions } from "../src/listening.ts";
 import { Service } from "../src/service.ts";
 
 const rules = loadRules();
@@ -1200,6 +1200,64 @@ describe("listening", () => {
     for (let i = 0; i < 100 && !later.length; i++) await new Promise((r) => setTimeout(r, 10));
     expect(later.map((l) => l.text)).toEqual(["Mine. I swallow it."]);
   }, 15_000);
+
+  it("shows the GM a stream the vendor refused, and retries it after thirty seconds", async () => {
+    const { campaignId, gm, player, playerId } = await seated();
+    let clock = Date.now();
+    const opens: TranscriberOptions[] = [];
+    const transcriber: Transcriber = {
+      name: "refusing",
+      open: (o) => {
+        opens.push(o);
+        return { write: () => {}, close: async () => {} };
+      },
+    };
+    const listening = new Listening(service, { transcriber, now: () => clock });
+    hub.close();
+    server.close();
+    hub = new LiveHub(service, undefined, undefined, listening);
+    app = createApp(service, { connected: () => hub.connected, listening });
+    server = await new Promise<Server>((resolve) => {
+      const s = serve({ fetch: app.fetch, port: 0 }, () => resolve(s as Server)) as Server;
+    });
+    hub.attach(server);
+    port = (server.address() as AddressInfo).port;
+
+    await consent(campaignId, gm);
+    await consent(campaignId, player);
+    await setMode(campaignId, gm, "listening");
+    const g = await tab(campaignId, gm);
+    const p = await tab(campaignId, player);
+    p.capture();
+    p.speak();
+    await p.settle();
+    expect(opens).toHaveLength(1);
+    opens[0]!.onError(new StreamLimit("Soniox: limit_exceeded: Concurrent requests limit"));
+    const refused = (await g.settle()).streams.find((x: { userId: string }) => x.userId === playerId);
+    expect(refused).toMatchObject({ state: "not-transcribed", failure: "the speech service is at its limit on streams; trying again every 30 s", level: 0 });
+
+    // Frames keep arriving; none opens a stream until thirty seconds have passed.
+    clock += RETRY_AFTER_MS - 1000;
+    p.speak();
+    await p.settle();
+    expect(opens).toHaveLength(1);
+    clock += 1000;
+    p.speak();
+    await p.settle();
+    expect(opens).toHaveLength(2);
+    // Still unconfirmed until the vendor accepts it; a late error from the first stream changes nothing.
+    opens[0]!.onError(new Error("Soniox closed the stream (1011)"));
+    listening.tick();
+    expect((await g.settle()).streams.find((x: { userId: string }) => x.userId === playerId).state).toBe("not-transcribed");
+    opens[1]!.onOpen!();
+    listening.tick();
+    expect((await g.settle()).streams.find((x: { userId: string }) => x.userId === playerId)).toMatchObject({ state: "live" });
+    expect((await g.settle()).streams.find((x: { userId: string }) => x.userId === playerId).failure).toBeUndefined();
+
+    // Any other failure reads as refused or dropped.
+    opens[1]!.onError(new Error("Soniox closed the stream (1011)"));
+    expect((await g.settle()).streams.find((x: { userId: string }) => x.userId === playerId).failure).toMatch(/^the speech service refused or dropped the stream/);
+  });
 
   it("deletes heard lines past thirty days", async () => {
     const { campaignId, playerId } = await seated();

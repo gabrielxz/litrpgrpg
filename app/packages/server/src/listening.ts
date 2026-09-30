@@ -29,6 +29,12 @@ const SILENT_AFTER_MS = 2000;
  * Tabs send audio only while their person speaks, and vendors bill for the time a stream is open.
  */
 export const IDLE_CLOSE_MS = 4000;
+/**
+ * After a vendor refuses or drops a person's stream, how long before a frame opens another. A
+ * table of five retrying at this pace makes ten attempts a minute, well inside a vendor's limit
+ * on new streams, which every table on the key shares.
+ */
+export const RETRY_AFTER_MS = 30_000;
 /** How long a heard line is kept after it was said; the consent text states it. */
 export const HEARD_KEEP_DAYS = 30;
 
@@ -48,8 +54,14 @@ export interface TranscriberOptions {
   /** A sentence or two on what is being said, for a model that takes one. */
   context?: string;
   onSegment(segment: Segment): void;
+  /** The vendor refused or dropped the stream; the server closes it and retries after RETRY_AFTER_MS. */
   onError(error: Error): void;
+  /** The vendor accepted the stream (its first reply that is not an error), which clears a failure. */
+  onOpen?(): void;
 }
+
+/** A vendor refused a stream because the key's limit on streams is full. */
+export class StreamLimit extends Error {}
 
 /** Where a person's audio goes: a speech-to-text adapter (stt/), or a meter until one is chosen. */
 export interface Transcriber {
@@ -88,6 +100,8 @@ interface Stream {
   sink?: TranscriberStream;
   /** The open vendor stream's clock, which its segments are dated by, even when they arrive after it closes. */
   clock?: StreamClock;
+  /** The vendor refused or dropped the last stream; no new one opens before `until`. */
+  failure?: { limit: boolean; until: number };
 }
 
 /** Wall time of a vendor stream's first audio, and how much audio it has been sent. */
@@ -262,18 +276,26 @@ export class Listening {
     const now = this.now();
     s.lastFrameAt = now;
     s.level = Math.max(level(pcm), s.level * 0.5);
+    if (!s.sink && s.failure && now < s.failure.until) return true;
     if (!s.sink || !s.clock) {
       const clock: StreamClock = { origin: now, writtenMs: 0 };
       const sessionId = t.sessionId;
       s.clock = clock;
-      s.sink = this.transcriber.open({
+      const sink: TranscriberStream = this.transcriber.open({
         campaignId: tab.campaignId,
         userId: tab.userId,
         terms: t.terms,
         context: CONTEXT,
-        onSegment: (seg) => void this.heard(tab.campaignId, tab.userId, sessionId, clock.origin, seg).catch((e) => this.log(`listening: ${e}`)),
-        onError: (e) => this.log(`listening: ${e.message}`),
+        onOpen: () => {
+          if (s.sink === sink) delete s.failure;
+        },
+        onSegment: (seg) => {
+          if (s.sink === sink) delete s.failure;
+          void this.heard(tab.campaignId, tab.userId, sessionId, clock.origin, seg).catch((e) => this.log(`listening: ${e}`));
+        },
+        onError: (e) => this.failed(t, tab.userId, s, sink, e),
       });
+      s.sink = sink;
     }
     // A tab's held-back first frames arrive in a burst: the earliest arrival less the audio sent before it dates the stream.
     s.clock.origin = Math.min(s.clock.origin, now - s.clock.writtenMs);
@@ -308,14 +330,29 @@ export class Listening {
     return this.service.purgeHeard(HEARD_KEEP_DAYS);
   }
 
-  /** Closes the vendor stream; an idle close keeps the level the tab still reports. */
+  /** The vendor refused or dropped a stream: close it, and open no other until RETRY_AFTER_MS. */
+  private failed(t: Table, userId: string, s: Stream, sink: TranscriberStream, e: Error) {
+    this.log(`listening: ${e.message}`);
+    if (s.sink !== sink || t.streams.get(userId) !== s) return;
+    s.failure = { limit: e instanceof StreamLimit, until: this.now() + RETRY_AFTER_MS };
+    this.closeSink(t, userId, true);
+    this.broadcast(s.tab.campaignId);
+  }
+
+  /**
+   * Closes the vendor stream. An idle close keeps the level the tab still reports and any failure;
+   * a mute, a pause, or a stop clears both.
+   */
   private closeSink(t: Table, userId: string, idle = false) {
     const s = t.streams.get(userId);
     void s?.sink?.close().catch((e) => this.log(`listening: ${e}`));
     if (s) {
       delete s.sink;
       delete s.clock;
-      if (!idle) s.level = 0;
+      if (!idle) {
+        s.level = 0;
+        delete s.failure;
+      }
     }
   }
 
@@ -365,8 +402,13 @@ export class Listening {
               ? "muted"
               : t.mode === "listening" && this.now() - Math.max(s.lastFrameAt, s.lastLevelAt) > SILENT_AFTER_MS
                 ? "silent"
-                : "live";
-        return { userId: m.userId, displayName: m.displayName, role: m.role, consented: t.consented.has(m.userId), state, level: s && state === "live" ? round(s.level) : 0 };
+                : s.failure
+                  ? "not-transcribed"
+                  : "live";
+        const out: StreamStatus = { userId: m.userId, displayName: m.displayName, role: m.role, consented: t.consented.has(m.userId), state, level: s && state === "live" ? round(s.level) : 0 };
+        if (state === "not-transcribed")
+          out.failure = `${s!.failure!.limit ? "the speech service is at its limit on streams" : "the speech service refused or dropped the stream"}; trying again every ${RETRY_AFTER_MS / 1000} s`;
+        return out;
       });
     return { t, streams, missing: this.missing(t) };
   }

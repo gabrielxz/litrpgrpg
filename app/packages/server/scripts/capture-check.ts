@@ -6,9 +6,10 @@
  *
  * With `--speech <wav>` the microphone plays that file instead (a rendered script's track), and the
  * check waits for the server's transcriber to send the GM what it heard; the dev server needs its
- * vendor key for that.
+ * vendor key for that. `--gm-token` makes an existing development sign-in the GM, so a GM tab in
+ * the browser pane can watch the check's campaign (its id is printed).
  *
- *   node scripts/capture-check.ts [--chrome /usr/bin/google-chrome] [--headed] [--speech <wav> --seconds 60]
+ *   node scripts/capture-check.ts [--chrome /usr/bin/google-chrome] [--headed] [--speech <wav> --seconds 60] [--gm-token <token>]
  */
 import { writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -58,9 +59,10 @@ function toneWav(): string {
 }
 
 const stamp = Date.now().toString(36);
-const gm = (await call<{ token: string }>("POST", "/dev/sign-in", undefined, { name: `Capture GM ${stamp}` })).token;
+const gm = arg("--gm-token") ?? (await call<{ token: string }>("POST", "/dev/sign-in", undefined, { name: `Capture GM ${stamp}` })).token;
 const player = (await call<{ token: string }>("POST", "/dev/sign-in", undefined, { name: `Capture Player ${stamp}` })).token;
 const campaignId = (await call("POST", "/campaigns", gm, { name: `Capture check ${stamp}` })).campaign.id as string;
+console.log(`    campaign ${campaignId}`);
 const code = (await call("POST", `/campaigns/${campaignId}/invites`, gm, {})).code as string;
 await call("POST", `/invites/${code}/accept`, player);
 const playerId = (await call("GET", "/me", player)).user.id as string;
@@ -103,7 +105,8 @@ try {
   await page.goto(`${WEB}/c/${campaignId}`);
   if (arg("--speech")) {
     const seconds = Number(arg("--seconds") ?? 60);
-    await until("the player's microphone is live", () => stream()?.state === "live");
+    // A stream the vendor refuses reads as not transcribed, and the check waits out its retries.
+    await until("the player's microphone is live", () => stream()?.state === "live" || stream()?.state === "not-transcribed");
     await new Promise((r) => setTimeout(r, seconds * 1000));
     if (!heard.length) throw new Error(`nothing heard in ${seconds} s`);
     for (const l of heard) console.log(`    heard ${l.startedAt.slice(11, 19)}: ${l.text}`);

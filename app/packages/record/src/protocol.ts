@@ -289,7 +289,8 @@ export type View = GmView | PlayerView;
 export type ListeningMode = "off" | "listening" | "paused";
 
 /** What one person's microphone is doing, as the GM's panel shows it. */
-export type StreamState = "live" | "muted" | "silent" | "no-microphone" | "not-connected";
+/** `not-transcribed`: audio arrives, but the speech service refused or dropped the stream and it is retried. */
+export type StreamState = "live" | "muted" | "silent" | "no-microphone" | "not-connected" | "not-transcribed";
 
 export interface StreamStatus {
   userId: string;
@@ -299,6 +300,8 @@ export interface StreamStatus {
   state: StreamState;
   /** The last half second's loudness, 0 to 1. */
   level: number;
+  /** Why the stream is not transcribed, in words for the GM. */
+  failure?: string;
 }
 
 /** What each tab is told. `stopped`, `streams`, and `missing` go to the GM only. */

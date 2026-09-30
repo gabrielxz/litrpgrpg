@@ -1657,6 +1657,7 @@ ul.cited {
 }
 .listening-streams .stream.silent,
 .listening-streams .stream.no-microphone,
+.listening-streams .stream.not-transcribed,
 .warn-text {
   color: var(--warn);
 }

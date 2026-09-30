@@ -6,7 +6,7 @@
  * tokens. The docs allow an empty binary frame too, but Soniox ignores one (probed 2026-09-29): the
  * close then waits out its deadline and the words not yet final are lost.
  */
-import type { Segment, Transcriber, TranscriberOptions } from "../listening.ts";
+import { type Segment, StreamLimit, type Transcriber, type TranscriberOptions } from "../listening.ts";
 import { vendorSocket } from "./socket.ts";
 
 const URL = "wss://stt-rt.soniox.com/transcribe-websocket";
@@ -66,6 +66,7 @@ export function soniox(key: string): Transcriber {
     open(opts: TranscriberOptions) {
       const sock = vendorSocket(URL, {}, opts, "Soniox");
       const segments = new SonioxSegments();
+      let accepted = false;
       sock.ws.on("open", () => {
         sock.ws.send(
           JSON.stringify({
@@ -88,7 +89,15 @@ export function soniox(key: string): Transcriber {
       });
       sock.ws.on("message", (data) => {
         const msg = JSON.parse(String(data));
-        if (msg.error_code) opts.onError(new Error(`Soniox: ${msg.error_type ?? msg.error_code}: ${msg.error_message ?? ""}`));
+        if (msg.error_code) {
+          const text = `Soniox: ${msg.error_type ?? msg.error_code}: ${msg.error_message ?? ""}`;
+          opts.onError(msg.error_type === "limit_exceeded" ? new StreamLimit(text) : new Error(text));
+          return;
+        }
+        if (!accepted) {
+          accepted = true;
+          opts.onOpen?.();
+        }
         for (const seg of segments.take(msg.tokens ?? [])) opts.onSegment(seg);
         if (msg.finished) {
           const last = segments.flush();

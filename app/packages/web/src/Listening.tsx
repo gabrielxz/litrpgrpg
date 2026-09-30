@@ -37,6 +37,7 @@ const STREAM_LABEL: Record<StreamStatus["state"], string> = {
   silent: "nothing arriving",
   "no-microphone": "no microphone",
   "not-connected": "no tab open",
+  "not-transcribed": "not transcribed",
 };
 
 export function ListeningBar({ campaignId, role, status, send }: Props) {
@@ -222,6 +223,7 @@ function GmStreams({ status }: { status: ListeningStatus }) {
         streams.map((s) => (
           <span key={s.userId} className={`stream ${s.state}`}>
             {s.displayName}: {STREAM_LABEL[s.state]}
+            {s.failure && ` (${s.failure})`}
             {s.state === "live" && <LevelMeter level={s.level} />}
           </span>
         ))}
