@@ -21,11 +21,13 @@ import {
   type QuestSpec,
   SPOILS,
   packItems,
+  packSetup,
   prepCause,
   tutorialPack,
 } from "@gradebreaker/record";
 import { useState } from "react";
 import { parse as parseYaml } from "yaml";
+import { submit } from "../api.ts";
 import { type Names } from "../text.ts";
 import { TableWords } from "./TableWords.tsx";
 import { Commit } from "./Commit.tsx";
@@ -394,8 +396,47 @@ function NewItem({ view, names, onRecorded, kind }: Omit<Props, "engine" | "log"
 // ------------------------------------------------------------- packs ---
 
 /** A pack from a file in `rules/tutorial.yaml`'s shape, YAML or JSON, checked before it loads. */
+/**
+ * Records a pack's setup, one action at a time in its order. Each keeps its id, so recording
+ * again after a stop records only what is missing; the first refusal stops the run with its reason.
+ */
+function PackSetup({ view, setup, onRecorded }: { view: GmView; setup: { id: string; action: Action }[]; onRecorded: (env: Envelope) => void }) {
+  const [done, setDone] = useState(0);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const creates = setup.filter((s) => s.action.type === "character.create" || s.action.type === "character.pregen").length;
+  const run = async () => {
+    setBusy(true);
+    setError(null);
+    let i = 0;
+    try {
+      for (; i < setup.length; i++) {
+        const out = await submit(view.campaign.id, setup[i]!.id, setup[i]!.action);
+        onRecorded(out.envelope);
+        setDone(i + 1);
+      }
+    } catch (e) {
+      setError(`${setup[i]?.id ?? ""}: ${(e as Error).message}`);
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <div className="form">
+      <p>
+        Its setup: {setup.length} actions{creates ? `, making ${creates} characters` : ""}. Recorded once, in order; each is undone from the campaign log like any other. Afterward, give the characters to their
+        players from the Party section.
+      </p>
+      <button className="primary" disabled={busy || done === setup.length} onClick={run}>
+        {busy ? `Recording ${done} of ${setup.length}…` : done === setup.length ? "Setup recorded" : "Record the setup"}
+      </button>
+      {error && <p className="error">{error}</p>}
+    </div>
+  );
+}
+
 function PackFile({ view, names, onRecorded }: Omit<Props, "engine" | "log">) {
-  const [loaded, setLoaded] = useState<{ name: string; items: PrepItem[]; pack: string } | null>(null);
+  const [loaded, setLoaded] = useState<{ name: string; items: PrepItem[]; pack: string; setup: { id: string; action: Action }[] } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const read = async (file: File) => {
     setError(null);
@@ -403,7 +444,7 @@ function PackFile({ view, names, onRecorded }: Omit<Props, "engine" | "log">) {
     try {
       const text = await file.text();
       const data = (file.name.endsWith(".json") ? JSON.parse(text) : parseYaml(text)) as PackData;
-      setLoaded({ name: file.name, items: packItems(data), pack: data.pack });
+      setLoaded({ name: file.name, items: packItems(data), pack: data.pack, setup: packSetup(data) });
     } catch (e) {
       setError(`${file.name}: ${(e as Error).message}`);
     }
@@ -422,6 +463,7 @@ function PackFile({ view, names, onRecorded }: Omit<Props, "engine" | "log">) {
             {loaded.items.some((x) => view.prep.some((p) => p.id === x.id)) && <span className="warning"> Some are in Prep already; loading replaces them.</span>}
           </p>
           <Commit campaignId={view.campaign.id} action={{ type: "prep.save", items: loaded.items, pack: loaded.pack }} names={names} label={`Load ${loaded.pack}`} onRecorded={onRecorded} />
+          {loaded.setup.length > 0 && <PackSetup view={view} setup={loaded.setup} onRecorded={onRecorded} />}
         </>
       )}
     </details>

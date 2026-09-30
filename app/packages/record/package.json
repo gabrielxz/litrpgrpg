@@ -13,5 +13,8 @@
   "dependencies": {
     "@gradebreaker/engine": "workspace:*",
     "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "yaml": "^2.9.1"
   }
 }

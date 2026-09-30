@@ -15,6 +15,7 @@ import { type Effect, Rejected, type World } from "./fold.ts";
 import type { ForceOption } from "./combat.ts";
 import type { QuestSpec } from "./quests.ts";
 import type { Stack } from "./inventory.ts";
+import type { Action } from "./actions.ts";
 
 /** One kind of creature or NPC in a prepared fight: a Bestiary entry by name, or a block typed in. */
 export interface PrepCreature {
@@ -141,6 +142,12 @@ export interface PackData {
   encounters?: { id: string; group: string; title: string; note?: string; zones: string[]; creatures: PrepCreature[] }[];
   loot?: { id: string; group: string; title: string; note?: string; items: Stack[] }[];
   npcs?: { id: string; group: string; name: string; who: string; line?: string; note?: string; block?: PrepNpc["block"] }[];
+  /**
+   * The record's own actions that set the table before play (characters, their levels, kit,
+   * parties), in order, as a script's setup is written. The GM records them once; each keeps its
+   * id, so recording again records nothing twice.
+   */
+  setup?: { id: string; action: Action }[];
 }
 
 /**
@@ -176,6 +183,19 @@ export function packItems(data: PackData): PrepItem[] {
   }
   // Groups are named in order ("Phase 2", "Scene 10"), so they sort as the pack runs, numbers as numbers.
   return items.sort((a, b) => a.group!.localeCompare(b.group!, "en", { numeric: true }));
+}
+
+/**
+ * A pack's setup as the record's actions, each id prefixed with the pack's name (`rehearsal-kara`)
+ * so it cannot meet another action's id, and every reference to a setup id inside an action (an
+ * invitation answered) rewritten to match.
+ */
+export function packSetup(data: PackData): { id: string; action: Action }[] {
+  const ids = new Map((data.setup ?? []).map((s) => [s.id, `${data.pack}-${s.id}`]));
+  if (ids.size !== (data.setup ?? []).length) throw new Rejected("two setup actions share an id");
+  const rewrite = (v: unknown): unknown =>
+    typeof v === "string" ? (ids.get(v) ?? v) : Array.isArray(v) ? v.map(rewrite) : v && typeof v === "object" ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, k === "type" ? x : rewrite(x)])) : v;
+  return (data.setup ?? []).map((s) => ({ id: ids.get(s.id)!, action: rewrite(s.action) as Action }));
 }
 
 /** The tutorial pack (`rules/tutorial.yaml`) as prepared items. */
