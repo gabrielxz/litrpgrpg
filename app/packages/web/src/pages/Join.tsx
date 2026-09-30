@@ -1,3 +1,4 @@
+import { useRegister } from "../frame.ts";
 import { useEffect, useState } from "react";
 import { ApiError, api } from "../api.ts";
 import { useAuth } from "../auth.ts";
@@ -6,6 +7,7 @@ import { SignInButtons } from "./SignIn.tsx";
 
 /** An invite link: see the campaign's name, sign in if needed, join. */
 export function Join({ code }: { code: string }) {
+  useRegister("gm");
   const auth = useAuth();
   const [invite, setInvite] = useState<{ campaignName: string; usable: boolean } | null>(null);
   const [error, setError] = useState<string | null>(null);

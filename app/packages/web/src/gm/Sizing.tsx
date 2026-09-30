@@ -53,7 +53,7 @@ export function SizingPanel({ engine, party, creatures }: { engine: Engine; part
   const s = sizeEncounter(engine, level, party.length, grade, creatures);
   return (
     <div className="sizing">
-      <div className="row">
+      <div className="form-row">
         <strong>{s.column ? LABEL[s.column] : "Not sized by the table"}</strong>
         <span className="muted small">
           for {party.length} at Level {level} ({s.row} row)

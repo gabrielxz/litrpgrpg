@@ -149,7 +149,7 @@ function OfferEditor({ engine, c, value, onChange, index }: { engine: Engine; c:
       </label>
       <TableWords text={value.notice} />
 
-      <div className="row">
+      <div className="form-row">
         <label>
           Profile
           <select value={value.profile.shape} onChange={(e) => set({ profile: { ...value.profile, shape: e.target.value as ProfileShape } })}>
@@ -166,7 +166,7 @@ function OfferEditor({ engine, c, value, onChange, index }: { engine: Engine; c:
         </span>
       </div>
       {points.map((x, i) => (
-        <div key={i} className="row">
+        <div key={i} className="form-row">
           <label>
             {i === 0 ? "Lead" : "Then"}
             <select value={x.attribute} onChange={(e) => setPoints(points.map((y, j) => (j === i ? { ...y, attribute: e.target.value } : y)))}>
@@ -198,7 +198,7 @@ function OfferEditor({ engine, c, value, onChange, index }: { engine: Engine; c:
         </button>
       )}
 
-      <div className="row">
+      <div className="form-row">
         <label>
           Technique
           <input value={value.technique.name} maxLength={60} onChange={(e) => set({ technique: { ...value.technique, name: e.target.value } })} />
@@ -311,7 +311,7 @@ function PermissionHookFields({ engine, value, onChange }: { engine: Engine; val
     }
   };
   return (
-    <div className="row tight">
+    <div className="form-row tight">
       <label>
         The app runs
         <select value={key} onChange={(e) => setHook(pick(e.target.value))}>
@@ -361,7 +361,7 @@ function HookFields({ engine, value, onChange }: { engine: Engine; value: ClassP
     onChange({ ...value, technique: hook ? { ...rest, hook } : rest });
   };
   return (
-    <div className="row tight">
+    <div className="form-row tight">
       <label>
         The app applies
         <select
@@ -461,7 +461,7 @@ function OfferDrafter({ view, c, drafts, onLoad }: { view: GmView; c: Sheet; dra
       <label className="check">
         <input type="checkbox" checked={guarded} onChange={(e) => setGuarded(e.target.checked)} /> Ask for a guarded power (one offer may carry one)
       </label>
-      <div className="row">
+      <div className="form-row">
         <button disabled={busy || running || drafts.drafting} onClick={start}>
           {running ? "Drafting…" : "Draft three offers"}
         </button>
@@ -491,7 +491,7 @@ function OfferDrafter({ view, c, drafts, onLoad }: { view: GmView; c: Sheet; dra
               {p}
             </p>
           ))}
-          <div className="row">
+          <div className="form-row">
             <button className="primary" onClick={() => onLoad(item)}>
               Load them into the three offers
             </button>
@@ -652,7 +652,7 @@ function TechniqueOutside({ view, engine, names, onRecorded, c }: Props & { c: S
   if (c.dead || t.hook?.kind === "clash" || k.technique.cost === "Frequency") return null;
   if (inFight) return <p className="small muted">{k.technique.name} is used from the fight's tracker while {c.name} is in it.</p>;
   return (
-    <div className="row tight">
+    <div className="form-row tight">
       {t.hook?.kind === "heal" && (
         <label>
           {k.technique.name} restores {t.hook.amount} Health to

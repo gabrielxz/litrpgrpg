@@ -73,7 +73,7 @@ export function Table({ view }: { view: GmView }) {
           </li>
         ))}
       </ul>
-      <div className="row">
+      <div className="form-row">
         <input
           type="number"
           min={1}

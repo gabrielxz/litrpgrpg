@@ -42,10 +42,10 @@ function ActionFields({ view, engine, names, action, onChange }: { view: GmView;
   switch (action.type) {
     case "item.give":
       return (
-        <div className="row">
+        <div className="form-row">
           <Holder view={view} label="To" value={action.to} onChange={(to) => onChange({ ...action, to })} />
           {action.items.map((s, i) => (
-            <span key={i} className="row tight">
+            <span key={i} className="form-row tight">
               <label>
                 Item
                 <input value={s.name} onChange={(e) => onChange({ ...action, items: action.items.map((x, j) => (j === i ? { ...x, name: e.target.value } : x)) })} />
@@ -57,7 +57,7 @@ function ActionFields({ view, engine, names, action, onChange }: { view: GmView;
       );
     case "item.move":
       return (
-        <div className="row">
+        <div className="form-row">
           <Holder view={view} label="From" value={action.from} onChange={(from) => onChange({ ...action, from })} />
           <Holder view={view} label="To" value={action.to} onChange={(to) => onChange({ ...action, to })} />
           <label>
@@ -69,7 +69,7 @@ function ActionFields({ view, engine, names, action, onChange }: { view: GmView;
       );
     case "item.remove":
       return (
-        <div className="row">
+        <div className="form-row">
           <Holder view={view} label="From" value={action.from} onChange={(from) => onChange({ ...action, from })} />
           <label>
             Item
@@ -83,10 +83,10 @@ function ActionFields({ view, engine, names, action, onChange }: { view: GmView;
         </div>
       );
     case "quest.progress":
-      return <div className="row">{count(action.by, (by) => onChange({ ...action, by }))}</div>;
+      return <div className="form-row">{count(action.by, (by) => onChange({ ...action, by }))}</div>;
     case "quest.complete":
       return (
-        <div className="row">
+        <div className="form-row">
           {action.awards.map((w, i) => (
             <label key={w.characterId}>
               VE to {names(w.characterId)}
@@ -104,7 +104,7 @@ function ActionFields({ view, engine, names, action, onChange }: { view: GmView;
     case "ve.award": {
       const b = action.basis;
       return (
-        <div className="row">
+        <div className="form-row">
           {b.kind === "core" ? (
             <label>
               Core
@@ -133,7 +133,7 @@ function ActionFields({ view, engine, names, action, onChange }: { view: GmView;
     }
     case "party.invite":
       return (
-        <div className="row">
+        <div className="form-row">
           {(["fromId", "toId"] as const).map((k) => (
             <label key={k}>
               {k === "fromId" ? "Who invites" : "Who is invited"}
@@ -150,7 +150,7 @@ function ActionFields({ view, engine, names, action, onChange }: { view: GmView;
       );
     case "party.answer":
       return (
-        <div className="row">
+        <div className="form-row">
           <label className="check">
             <input type="radio" checked={action.accept} onChange={() => onChange({ ...action, accept: true })} /> Joins
           </label>
@@ -161,7 +161,7 @@ function ActionFields({ view, engine, names, action, onChange }: { view: GmView;
       );
     case "counter.tick":
       return (
-        <div className="row">
+        <div className="form-row">
           <label>
             Who
             <select value={action.characterId} onChange={(e) => onChange({ ...action, characterId: e.target.value })}>
@@ -278,7 +278,7 @@ export function ActionDraftCard({
         }}
         {...(onRecorded ? { onRecorded } : {})}
       />
-      <div className="row">
+      <div className="form-row">
         <button onClick={onDismiss}>Dismiss</button>
       </div>
     </li>
@@ -298,7 +298,7 @@ export function CueCard({ view, item, cited, onDismiss }: { view: GmView; item: 
       {item.why && <p className="muted small">Drafted because: {item.why}</p>}
       {prep?.note && <p className="small">Its cue: {prep.note}</p>}
       {!prep && <p className="small warning">That prepared item is no longer in Prep.</p>}
-      <div className="row">
+      <div className="form-row">
         {prep && !item.fired && (
           <a className="button" href="#prep">
             Fire it from Prep

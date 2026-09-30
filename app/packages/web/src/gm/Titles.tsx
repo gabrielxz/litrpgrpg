@@ -4,12 +4,12 @@
  * counts only the fiction knows; and grant or pass on each catalog title whose count is met.
  */
 import type { Engine } from "@gradebreaker/engine";
-import { type Action, DERIVED_COUNTERS, type Envelope, type GmView, type Sheet, type TitleCategory, type TitleSpec, catalogSpec, counted, tickedCounters } from "@gradebreaker/record";
+import { type Action, DERIVED_COUNTERS, type Effect, type Envelope, type GmView, type Sheet, type TitleCategory, type TitleSpec, catalogSpec, counted, tickedCounters } from "@gradebreaker/record";
 import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
 import { ATTRIBUTES, counterLabel, type Names } from "../text.ts";
 import { TableWords } from "./TableWords.tsx";
-import { Commit } from "./Commit.tsx";
+import { Commit, PlayerPreview } from "./Commit.tsx";
 
 const CATEGORIES: TitleCategory[] = ["Achievement", "Hidden Achievement", "HVE-Resonant", "Bestowed"];
 
@@ -93,7 +93,7 @@ export function TitlesForm({ view, engine, names, onRecorded }: { view: GmView; 
   const action: Action = { type: "title.grant", characterId: c.id, title: spec };
   return (
     <div className="form">
-      <div className="row">
+      <div className="form-row">
         <label>
           Character
           <select value={c.id} onChange={(e) => setCharacterId(e.target.value)}>
@@ -113,7 +113,7 @@ export function TitlesForm({ view, engine, names, onRecorded }: { view: GmView; 
       </div>
       {source === "catalog" ? (
         <>
-          <div className="row">
+          <div className="form-row">
             <label>
               Title
               <select value={catalog} onChange={(e) => setCatalog(e.target.value)}>
@@ -131,7 +131,7 @@ export function TitlesForm({ view, engine, names, onRecorded }: { view: GmView; 
         </>
       ) : (
         <>
-          <div className="row">
+          <div className="form-row">
             <label>
               Name
               <input value={custom.name} onChange={(e) => setCustom({ ...custom, name: e.target.value })} placeholder="Cornerless" />
@@ -147,7 +147,7 @@ export function TitlesForm({ view, engine, names, onRecorded }: { view: GmView; 
             {custom.category === "HVE-Resonant" && (
               <label>
                 Axis pair
-                <span className="row tight">
+                <span className="form-row tight">
                   {(["poleA", "poleB"] as const).map((k) => (
                     <select key={k} value={custom[k]} onChange={(e) => setCustom({ ...custom, [k]: e.target.value })}>
                       <option value="">Pole</option>
@@ -166,7 +166,7 @@ export function TitlesForm({ view, engine, names, onRecorded }: { view: GmView; 
             )}
           </div>
           <TableWords text={custom.name} />
-          <div className="row tight">
+          <div className="form-row tight">
             {ATTRIBUTES.map((a) => (
               <label key={a}>
                 {a}
@@ -306,25 +306,28 @@ export function TitlesDueCard({ view, engine, onRecorded }: { view: GmView; engi
   const { run, busy, error } = useRun(view.campaign.id, onRecorded);
   const due = view.characters.flatMap((c) => c.titlesDue.map((t) => ({ c, t })));
   if (!due.length) return null;
+  // Conferring is the GM's tap; the players' notices show beside it (Decisions, "the makeover").
+  const notices: Effect[] = due.map(({ c, t }) => ({ kind: "title-conferred", characterId: c.id, titleId: t, name: t, negative: false }));
   return (
-    <article className="sheet-card due">
-      <header>
-        <h3>Titles due</h3>
-        <span className="muted small">A count reached its trigger.</span>
-      </header>
-      <ul className="items">
+    <section className="panel" aria-label="Titles due">
+      <div className="panel__head">
+        <i className="ic ic-title dim" aria-hidden="true" />
+        <h2>Titles due</h2>
+        <span className="small dim">A count reached its trigger.</span>
+      </div>
+      <ul className="rows panel__rows">
         {due.map(({ c, t }) => {
           const s = catalogSpec(engine, t);
           return (
             <li key={`${c.id}:${t}`}>
-              <span>
-                <strong>{c.name}</strong>: {t} <span className="muted small">{bonusLine(s.bonus ?? {}, s.choice)}</span>
+              <span className="row__main">
+                <b>{c.name}</b>: {t} <span className="dim small">{bonusLine(s.bonus ?? {}, s.choice)}</span>
               </span>
-              <span className="item-actions">
-                <button className="primary" disabled={busy} onClick={() => run({ type: "title.grant", characterId: c.id, title: { catalog: t } })}>
+              <span className="row__actions">
+                <button className="btn btn--primary btn--sm" disabled={busy} onClick={() => run({ type: "title.grant", characterId: c.id, title: { catalog: t } })}>
                   Confer
                 </button>
-                <button disabled={busy} onClick={() => run({ type: "title.dismiss", characterId: c.id, catalog: t })}>
+                <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "title.dismiss", characterId: c.id, catalog: t })}>
                   Pass
                 </button>
               </span>
@@ -332,7 +335,10 @@ export function TitlesDueCard({ view, engine, onRecorded }: { view: GmView; engi
           );
         })}
       </ul>
-      {error && <p className="error">{error}</p>}
-    </article>
+      <div className="panel__previews">
+        <PlayerPreview effects={notices} names={(id) => view.characters.find((c) => c.id === id)?.name ?? id} />
+      </div>
+      {error && <p className="error panel__error">{error}</p>}
+    </section>
   );
 }

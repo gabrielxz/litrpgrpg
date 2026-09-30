@@ -86,7 +86,7 @@ export function AiCard({ view }: { view: GmView }) {
               )}
             </div>
           )}
-          <div className="row">
+          <div className="form-row">
             <label>
               Model{" "}
               <select
@@ -115,7 +115,7 @@ export function AiCard({ view }: { view: GmView }) {
               </>
             )}
           </div>
-          <div className="row">
+          <div className="form-row">
             <input
               type="password"
               autoComplete="off"

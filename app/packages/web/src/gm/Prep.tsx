@@ -113,7 +113,7 @@ function FireNotice({ view, names, item, onRecorded }: { view: GmView; names: Na
         <textarea rows={Math.min(8, text.split("\n").length + 1)} value={text} onChange={(e) => setText(e.target.value)} />
       </label>
       <TableWords text={text} />
-      <div className="row tight">
+      <div className="form-row tight">
         <span className="small">To:</span>
         {living.map((c) => (
           <label key={c.id} className="check">
@@ -143,7 +143,7 @@ function NewNotice({ view, names, onRecorded }: Omit<Props, "engine" | "log">) {
     <details className="card">
       <summary>Prepare a System notice</summary>
       <div className="form">
-        <div className="row">
+        <div className="form-row">
           <label>
             Title
             <input value={f.title} onChange={(e) => setF({ ...f, title: e.target.value })} placeholder="The gate opens" />
@@ -297,7 +297,7 @@ function EditItem({ view, names, item, onRecorded, onFire, onDone }: { view: GmV
   const set = (k: keyof typeof f) => (e: { target: { value: string } }) => setF({ ...f, [k]: e.target.value });
   return (
     <div className="form">
-      <div className="row">
+      <div className="form-row">
         <label>
           {item.kind === "npc" ? "Name" : "Title"}
           <input value={f.title} onChange={set("title")} />
@@ -332,7 +332,7 @@ function EditItem({ view, names, item, onRecorded, onFire, onDone }: { view: GmV
             Their line: their condition, and how the party treated them
             <input className="wide" value={f.line} onChange={set("line")} />
           </label>
-          <div className="row">
+          <div className="form-row">
             <label>
               Grade
               <input className="narrow-input" value={f.grade} onChange={set("grade")} />
@@ -480,7 +480,7 @@ function ItemCard({ view, engine, names, onRecorded, item, fired, onFire }: Omit
   const joins = item.kind === "npc" && item.npc.block?.maxHp !== undefined && view.encounter;
   return (
     <div className="prep-item">
-      <div className="row">
+      <div className="form-row">
         <span className="tag">{KIND[item.kind]}</span>
         <strong className="grow">{item.title}</strong>
         {fired > 0 && <span className="muted small">fired {fired === 1 ? "once" : `${fired} times`}</span>}

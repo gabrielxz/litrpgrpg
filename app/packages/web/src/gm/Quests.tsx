@@ -118,7 +118,7 @@ function IssueForm({
         </p>
       )}
       <div className="form">
-        <div className="row">
+        <div className="form-row">
           <label>
             Category
             <select value={f.category} onChange={(e) => set("category", e.target.value)}>
@@ -144,7 +144,7 @@ function IssueForm({
             </label>
           )}
         </div>
-        <div className="row">
+        <div className="form-row">
           <label>
             Grade
             <select value={f.grade} onChange={(e) => set("grade", e.target.value)}>
@@ -192,7 +192,7 @@ function IssueForm({
           Objective
           <input className="wide" value={f.objective} onChange={(e) => set("objective", e.target.value)} placeholder="Eliminate Glow-Mote swarms reported near the eastern perimeter." />
         </label>
-        <div className="row">
+        <div className="form-row">
           <label title="A counted objective; sharing multiplies it by the holders unless it cannot scale">
             Count
             <input type="number" className="narrow-input" min={1} value={f.count} onChange={(e) => set("count", e.target.value)} placeholder="3" />
@@ -233,13 +233,13 @@ function IssueForm({
           ))}
         </datalist>
         {items.map((it, i) => (
-          <div key={i} className="row tight">
+          <div key={i} className="form-row tight">
             <input list="quest-items" value={it.name} onChange={(e) => setItems(items.map((x, j) => (j === i ? { ...x, name: e.target.value } : x)))} placeholder="Stuttering Tincture" aria-label="Reward item" />
             <input type="number" className="narrow-input" min={1} value={it.count} onChange={(e) => setItems(items.map((x, j) => (j === i ? { ...x, count: e.target.value } : x)))} aria-label="How many" />
             <button onClick={() => setItems(items.filter((_, j) => j !== i))}>Remove</button>
           </div>
         ))}
-        <div className="row">
+        <div className="form-row">
           <button onClick={() => setItems([...items, { name: "", count: "1" }])}>Add a reward item</button>
           <label>
             Other reward
@@ -251,7 +251,7 @@ function IssueForm({
           GM note (never on their log)
           <textarea rows={2} maxLength={1000} value={f.note} onChange={(e) => set("note", e.target.value)} placeholder="A hidden alternative outcome; what a refusal closes" />
         </label>
-        <div className="row tight">
+        <div className="form-row tight">
           <span className="small">{single ? "Offered to:" : "Binds:"}</span>
           {living.map((c) =>
             single ? (
@@ -351,7 +351,7 @@ Status:     ${q.status[0]!.toUpperCase() + q.status.slice(1)}${q.flavor ? ` · $
         {q.refusedBy.length ? ` · refused by ${q.refusedBy.map(names).join(", ")}` : ""}
       </p>
       {open && (
-        <div className="row tight">
+        <div className="form-row tight">
           {q.status === "offered" && (
             <>
               <button disabled={busy} onClick={() => run({ type: "quest.answer", questId: q.id, characterId: q.holders[0]!, accept: true })} title="For a player away from their screen">
@@ -402,7 +402,7 @@ Status:     ${q.status[0]!.toUpperCase() + q.status.slice(1)}${q.flavor ? ` · $
             Every holder who meaningfully took part collects the stated award; a holder above the quest's Grade collects nothing.{q.scaled ? " Proportional: exceptional performance pays up to half again, poor performance half." : ""}
           </p>
           {q.holders.map((h) => (
-            <div key={h} className="row tight">
+            <div key={h} className="form-row tight">
               <label className="check">
                 <input
                   type="checkbox"

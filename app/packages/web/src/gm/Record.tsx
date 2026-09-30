@@ -61,15 +61,18 @@ export function RecordPanel(props: Omit<FormProps, "onRecorded"> & { onRecorded:
   };
   const p = { ...props, onRecorded };
   return (
-    <section className="card record">
-      <nav className="tabs">
+    <section className="panel record-panel" aria-label="Record">
+      <div className="panel__head">
+        <h2>Record</h2>
+      </div>
+      <div className="record-panel__tabs" role="tablist" aria-label="What to record">
         {TABS.map(([t, label]) => (
-          <button key={t} className={t === tab ? "active" : ""} onClick={() => setTab(t)}>
+          <button key={t} className="nav__item" role="tab" aria-selected={t === tab} aria-current={t === tab ? "page" : undefined} onClick={() => setTab(t)}>
             {label}
           </button>
         ))}
-      </nav>
-      <div key={`${tab}-${round}`}>
+      </div>
+      <div className="panel__body" key={`${tab}-${round}`}>
         {tab === "character" && <NewCharacterForm {...p} />}
         {tab === "ve" && <AwardForm {...p} />}
         {tab === "rest" && <RestForm {...p} />}
@@ -149,7 +152,7 @@ function NewCharacterForm({ view, engine, names, onRecorded }: FormProps) {
 
   return (
     <div className="form">
-      <div className="row">
+      <div className="form-row">
         <label>
           <input type="radio" checked={mode === "pregen"} onChange={() => setMode("pregen")} /> Ready-made
         </label>
@@ -300,7 +303,7 @@ function AwardForm({ view, engine, names, onRecorded }: FormProps) {
         </select>
       </label>
       {kind === "kill" && (
-        <div className="row">
+        <div className="form-row">
           <label>
             Creature
             <input value={creature} onChange={(e) => setCreature(e.target.value)} placeholder="Frenzy Rat" />
@@ -337,7 +340,7 @@ function AwardForm({ view, engine, names, onRecorded }: FormProps) {
         </label>
       )}
       {kind === "ambient" && (
-        <div className="row">
+        <div className="form-row">
           <label>
             Density
             <select value={density} onChange={(e) => setDensity(e.target.value)}>
@@ -575,7 +578,7 @@ function PointsForm({ view, engine, names, onRecorded }: FormProps) {
 
   return (
     <div className="form">
-      <div className="row">
+      <div className="form-row">
         <label>
           Character
           <select value={c.id} onChange={(e) => setCharacterId(e.target.value)}>
@@ -685,7 +688,7 @@ function VitalsForm({ view, names, onRecorded }: FormProps) {
   const action: Action = { type: resource === "hp" ? "hp.change" : "aether.change", characterId: c.id, delta: d };
   return (
     <div className="form">
-      <div className="row">
+      <div className="form-row">
         <label>
           Character
           <select value={c.id} onChange={(e) => setCharacterId(e.target.value)}>
@@ -730,7 +733,7 @@ function MarkForm({ view, engine, names, onRecorded }: FormProps) {
   if (!c) return <NoCharacters />;
   return (
     <div className="form">
-      <div className="row">
+      <div className="form-row">
         <label>
           Character
           <select value={c.id} onChange={(e) => setCharacterId(e.target.value)}>
@@ -779,7 +782,7 @@ function CollapseForm({ view, names, onRecorded }: FormProps) {
   const action: Action = { type: "saturation.collapse", characterId: c.id, attribute, highDensity };
   return (
     <div className="form">
-      <div className="row">
+      <div className="form-row">
         <label>
           Character
           <select value={c.id} onChange={(e) => setCharacterId(e.target.value)}>

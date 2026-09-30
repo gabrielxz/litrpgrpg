@@ -91,7 +91,7 @@ function Corrector({ campaignId, r, onClose }: { campaignId: string; r: Recordin
   const checkedCount = data.lines.filter((l) => l.checked).length;
   return (
     <div className="form">
-      <div className="row">
+      <div className="form-row">
         <strong className="grow">
           Correcting: {checkedCount} of {data.lines.length} lines checked
           {data.second ? `; the second opinion (${data.second.model}) differs on ${data.lines.filter(differs).length}` : ""}
@@ -109,7 +109,7 @@ function Corrector({ campaignId, r, onClose }: { campaignId: string; r: Recordin
           const alt = second(l);
           return (
             <li key={l.id} className={l.checked ? "checked" : ""}>
-              <div className="row tight">
+              <div className="form-row tight">
                 <button className="link" onClick={() => play(l)} title="Hear this line">
                   ▶ {clock(l.startMs)}
                 </button>
@@ -135,7 +135,7 @@ function Corrector({ campaignId, r, onClose }: { campaignId: string; r: Recordin
         })}
       </ul>
       {shown.length > SHOWN + more && <button onClick={() => setMore(more + SHOWN)}>Show {Math.min(SHOWN, shown.length - SHOWN - more)} more</button>}
-      <div className="row">
+      <div className="form-row">
         <button className="primary" disabled={!Object.keys(edits).length} onClick={save}>
           Save {Object.keys(edits).length || ""} line{Object.keys(edits).length === 1 ? "" : "s"}
         </button>
@@ -218,7 +218,7 @@ export function RecordingsCard({ view }: { view: GmView }) {
             {new Date(r.startedAt).toLocaleString()}
             {r.endedAt ? `, ${minutes(r)} min` : ", recording"}: {r.people.map((p) => p.name).join(", ") || "nobody"}
             {r.endedAt && (
-              <div className="row">
+              <div className="form-row">
                 {r.files.map((f) => (
                   <button key={f.name} className="link" onClick={() => download(r, f.name, f.save)}>
                     {f.name === "timeline.json"

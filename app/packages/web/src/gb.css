@@ -1,0 +1,2445 @@
+/*
+ * Copied as is from Claude Design's canvas "Gradebreaker App Makeover" (project/gb.css,
+ * https://claude.ai/artifact/7wzrXRhs9U4FeS751NXWey). Change the design on the canvas and copy
+ * it here again; what the app adds or overrides lives in styles.css.
+ */
+/*
+ * Gradebreaker companion app: tokens and components.
+ *
+ * Two registers of one visual language.
+ *   .sys   The System's interface (the player's screen, and every preview of what a player
+ *          will receive). Dark only: blue-black ground, bone text, cyan System geometry.
+ *   .gm    The operator's console (the GM's screen). Light and dark, following the OS; set
+ *          data-theme="light" or "dark" on the element to force one.
+ * Both read the same semantic tokens (--ground, --surface, --text, --line ...), so every
+ * component works in either register. Put .gb on the root; nest a .sys block inside a .gm
+ * screen wherever the GM previews what a player will get.
+ *
+ * Color carries meaning. Cyan is the System. Gold is the world beyond the party (places,
+ * NPCs, factions, lore). Nothing else uses either. Status colors always travel with a word
+ * or an icon. The cut corner marks a button; tabs and links take an underline; fields are
+ * sunken wells with a baseline. Cyan never marks something as operable.
+ *
+ * Fonts (all OFL, embeddable): Alegreya Sans (interface, and the System's italics),
+ * EB Garamond (the human world: backgrounds, lore, prose the GM writes), JetBrains Mono
+ * (labels and every number), Chakra Petch (display: the wordmark, names on the status
+ * screen, the moments). The app self-hosts them; the mockups load Google Fonts.
+ */
+
+/* ------------------------------------------------------------------ primitives */
+:root {
+  /* bone: paper and ivory */
+  --bone-50: #fbf7f0;
+  --bone-100: #f4ede1;
+  --bone-200: #ece3d3;
+  --bone-300: #e0d4c0;
+  --bone-400: #cbbda6;
+  --bone-500: #aaa396;
+  /* slate and ink: the light theme's text */
+  --slate-600: #5f5c56;
+  --slate-700: #525553;
+  --ink-900: #131b20;
+  /* blue-black: the System's ground (the clave's ink is --night-700) */
+  --night-950: #0b1115;
+  --night-900: #111a20;
+  --night-800: #16222b;
+  --night-700: #1d2b35;
+  --night-600: #26363f;
+  --night-500: #3a4f5a;
+  /* graphite: the console's dark theme, warmer and less blue than the System */
+  --carbon-950: #111416;
+  --carbon-900: #16191b;
+  --carbon-850: #1c2023;
+  --carbon-800: #23282b;
+  --carbon-700: #30363a;
+  --carbon-600: #454c50;
+  /* on-dark text */
+  --chalk-100: #ede6d8;
+  --chalk-300: #a8a294;
+  --chalk-500: #7c786e;
+  /* cyan: the System */
+  --cyan-200: #b8f1f6;
+  --cyan-300: #8fe6ef; /* the clave's cyan */
+  --cyan-500: #2eb4c6;
+  --cyan-700: #0b6f80;
+  /* gold: the world */
+  --gold-300: #d4b26a;
+  --gold-600: #7d5f1e;
+  /* status */
+  --red-300: #f08a7e;
+  --red-600: #a3322a;
+  --ember-300: #f59a5b;
+  --ember-600: #9a4715;
+  --moss-300: #a9c48a;
+  --moss-600: #4f6b35;
+
+  /* type */
+  --font-ui: "Alegreya Sans", "Gill Sans", "Segoe UI", system-ui, sans-serif;
+  --font-prose: "EB Garamond", Garamond, "Iowan Old Style", Georgia, serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+  --font-display: "Chakra Petch", "Bahnschrift", "Arial Narrow", sans-serif;
+
+  /* type scale, in rem so 200% zoom scales everything */
+  --fs-2xs: 0.6875rem; /* 11: mono labels */
+  --fs-xs: 0.75rem; /* 12 */
+  --fs-sm: 0.8125rem; /* 13: meta, field labels */
+  --fs-md: 0.9375rem; /* 15: the console's body */
+  --fs-lg: 1.0625rem; /* 17: the System's body, notices */
+  --fs-xl: 1.25rem; /* 20: section titles */
+  --fs-2xl: 1.625rem; /* 26: screen titles */
+  --fs-3xl: 2.25rem; /* 36: names on the status screen */
+  --fs-4xl: 3.5rem; /* 56: a level in a moment */
+  --fs-5xl: 6rem; /* 96: a Grade in a breakthrough */
+  --lh-tight: 1.15;
+  --lh-body: 1.45;
+  --lh-prose: 1.55;
+  --track-label: 0.12em;
+
+  /* space: a 4 px step */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+
+  /* borders and corners: square everywhere; the cut corner is for buttons */
+  --hair: 1px;
+  --rule: 2px;
+  --radius: 0;
+  --cut: 7px;
+  --cut-sm: 5px;
+  --cut-lg: 12px;
+
+  /* motion */
+  --dur-instant: 80ms;
+  --dur-quick: 160ms;
+  --dur-base: 240ms;
+  --dur-notice: 480ms;
+  --dur-moment: 900ms;
+  --dur-ceremony: 1600ms;
+  --dur-breakthrough: 2800ms;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.6, 0, 0.2, 1);
+  --ease-resolve: cubic-bezier(0.16, 1, 0.3, 1); /* fragments settling into alignment */
+  --ease-fall: cubic-bezier(0.5, 0, 0.9, 0.4); /* vital coherence dropping */
+}
+
+/* ------------------------------------------------------------------ registers */
+/* The console, light (default) */
+.gm {
+  color-scheme: light;
+  --ground: var(--bone-100);
+  --surface: var(--bone-50);
+  --surface-2: #fffdf8;
+  --sunken: var(--bone-200);
+  --line: var(--bone-300);
+  --line-strong: var(--bone-400);
+  --text: var(--ink-900);
+  --text-dim: var(--slate-700);
+  --text-faint: var(--slate-600); /* placeholders; still 4.5:1 on --surface */
+  --system: var(--cyan-700); /* System text on this ground */
+  --system-geo: var(--cyan-500); /* System lines, never text */
+  --system-wash: rgba(46, 180, 198, 0.1);
+  --world: var(--gold-600);
+  --danger: var(--red-600);
+  --warn: var(--ember-600);
+  --ok: var(--moss-600);
+  --danger-wash: rgba(163, 50, 42, 0.1);
+  --warn-wash: rgba(154, 71, 21, 0.1);
+  --btn-fill: var(--ink-900);
+  --btn-text: var(--bone-50);
+  --btn-hover: #26343d;
+  --focus: var(--ink-900);
+  --focus-inner: var(--bone-50);
+  --meter-track: var(--bone-200);
+  --health: #3e4a42; /* the body: a dark mass on paper */
+  --aether: var(--cyan-700);
+  --ve: var(--ember-600);
+  --shadow-1: 0 1px 0 rgba(19, 27, 32, 0.06);
+  --shadow-2: 0 10px 28px -12px rgba(19, 27, 32, 0.28), 0 1px 0 rgba(19, 27, 32, 0.06);
+}
+/* The console, dark */
+.gm[data-theme="dark"] {
+  color-scheme: dark;
+  --ground: var(--carbon-900);
+  --surface: var(--carbon-850);
+  --surface-2: var(--carbon-800);
+  --sunken: var(--carbon-950);
+  --line: var(--carbon-700);
+  --line-strong: var(--carbon-600);
+  --text: var(--chalk-100);
+  --text-dim: var(--chalk-300);
+  --text-faint: #8f8a7f;
+  --system: #7fd9e3;
+  --system-geo: var(--cyan-500);
+  --system-wash: rgba(46, 180, 198, 0.12);
+  --world: var(--gold-300);
+  --danger: var(--red-300);
+  --warn: var(--ember-300);
+  --ok: var(--moss-300);
+  --danger-wash: rgba(240, 138, 126, 0.12);
+  --warn-wash: rgba(245, 154, 91, 0.12);
+  --btn-fill: var(--chalk-100);
+  --btn-text: var(--carbon-900);
+  --btn-hover: #ffffff;
+  --focus: var(--chalk-100);
+  --focus-inner: var(--carbon-900);
+  --meter-track: var(--carbon-950);
+  --health: var(--chalk-300);
+  --aether: #7fd9e3;
+  --ve: var(--ember-300);
+  --shadow-1: 0 1px 0 rgba(0, 0, 0, 0.3);
+  --shadow-2: 0 14px 32px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--carbon-700);
+}
+@media (prefers-color-scheme: dark) {
+  .gm:not([data-theme="light"]) {
+    color-scheme: dark;
+    --ground: var(--carbon-900);
+    --surface: var(--carbon-850);
+    --surface-2: var(--carbon-800);
+    --sunken: var(--carbon-950);
+    --line: var(--carbon-700);
+    --line-strong: var(--carbon-600);
+    --text: var(--chalk-100);
+    --text-dim: var(--chalk-300);
+    --text-faint: #8f8a7f;
+    --system: #7fd9e3;
+    --system-geo: var(--cyan-500);
+    --system-wash: rgba(46, 180, 198, 0.12);
+    --world: var(--gold-300);
+    --danger: var(--red-300);
+    --warn: var(--ember-300);
+    --ok: var(--moss-300);
+    --danger-wash: rgba(240, 138, 126, 0.12);
+    --warn-wash: rgba(245, 154, 91, 0.12);
+    --btn-fill: var(--chalk-100);
+    --btn-text: var(--carbon-900);
+    --btn-hover: #ffffff;
+    --focus: var(--chalk-100);
+    --focus-inner: var(--carbon-900);
+    --meter-track: var(--carbon-950);
+    --health: var(--chalk-300);
+    --aether: #7fd9e3;
+    --ve: var(--ember-300);
+    --shadow-1: 0 1px 0 rgba(0, 0, 0, 0.3);
+    --shadow-2: 0 14px 32px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--carbon-700);
+  }
+}
+/* The System's interface: dark by nature, in either console theme */
+.sys {
+  color-scheme: dark;
+  --ground: var(--night-900);
+  --surface: var(--night-800);
+  --surface-2: var(--night-700);
+  --sunken: var(--night-950);
+  --line: var(--night-600);
+  --line-strong: var(--night-500);
+  --text: var(--chalk-100);
+  --text-dim: var(--chalk-300);
+  --text-faint: #8e8a80;
+  --system: var(--cyan-300);
+  --system-geo: var(--cyan-500);
+  --system-wash: rgba(143, 230, 239, 0.08);
+  --world: var(--gold-300);
+  --danger: var(--red-300);
+  --warn: var(--ember-300);
+  --ok: var(--moss-300);
+  --danger-wash: rgba(240, 138, 126, 0.12);
+  --warn-wash: rgba(245, 154, 91, 0.12);
+  --btn-fill: var(--chalk-100);
+  --btn-text: var(--night-900);
+  --btn-hover: #ffffff;
+  --focus: var(--chalk-100);
+  --focus-inner: var(--night-900);
+  --meter-track: var(--night-950);
+  --health: var(--chalk-100);
+  --aether: var(--cyan-300);
+  --ve: var(--cyan-300);
+  --shadow-1: none;
+  --shadow-2: 0 18px 40px -16px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--night-600);
+  --frame: rgba(237, 230, 216, 0.22);
+}
+/* The player's table tray: out of the fiction, so it borrows the console's dark theme */
+.tray {
+  --ground: var(--carbon-900);
+  --surface: var(--carbon-850);
+  --surface-2: var(--carbon-800);
+  --sunken: var(--carbon-950);
+  --line: var(--carbon-700);
+  --line-strong: var(--carbon-600);
+  --text: var(--chalk-100);
+  --text-dim: var(--chalk-300);
+  --system: #7fd9e3;
+  --btn-fill: var(--chalk-100);
+  --btn-text: var(--carbon-900);
+  --focus-inner: var(--carbon-900);
+  --meter-track: var(--carbon-950);
+}
+
+/* ------------------------------------------------------------------ base */
+.gb {
+  font-family: var(--font-ui);
+  font-size: var(--fs-md);
+  line-height: var(--lh-body);
+  font-variant-numeric: lining-nums;
+  color: var(--text);
+  background: var(--ground);
+  -webkit-font-smoothing: antialiased;
+}
+.gb *,
+.gb *::before,
+.gb *::after {
+  box-sizing: border-box;
+}
+:where(.gb) h1,
+:where(.gb) h2,
+:where(.gb) h3,
+:where(.gb) h4,
+:where(.gb) p,
+:where(.gb) ul,
+:where(.gb) ol,
+:where(.gb) dl,
+:where(.gb) dd,
+:where(.gb) figure {
+  margin: 0;
+}
+:where(.gb) ul,
+:where(.gb) ol {
+  padding: 0;
+  list-style: none;
+}
+:where(.gb) h1 {
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+}
+:where(.gb) h2 {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+}
+:where(.gb) h3 {
+  font-size: var(--fs-md);
+  font-weight: 700;
+}
+:where(.gb) h4 {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+}
+:where(.gb) a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+:where(.gb) a:hover {
+  text-decoration-thickness: 2px;
+}
+:where(.gb) :focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.sys {
+  font-size: var(--fs-lg);
+}
+
+/* ------------------------------------------------------------------ type roles */
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  font-weight: 500;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "zero" 0;
+}
+.dim {
+  color: var(--text-dim);
+}
+.small {
+  font-size: var(--fs-sm);
+}
+.prose {
+  font-family: var(--font-prose);
+  font-size: 1.0625rem;
+  line-height: var(--lh-prose);
+}
+.world {
+  color: var(--world);
+} /* places, NPCs, factions, lore */
+.display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+/* The System's voice: bare italics, no brackets, no bold */
+.voice {
+  font-family: var(--font-ui);
+  font-style: italic;
+  font-weight: 400;
+}
+.sys .voice {
+  font-size: var(--fs-lg);
+}
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------------ layout helpers */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap, var(--sp-3));
+}
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap, var(--sp-2));
+}
+.spread {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+.grow {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.rule {
+  height: 0;
+  border: 0;
+  border-top: var(--hair) solid var(--line);
+  margin: 0;
+}
+
+/* ------------------------------------------------------------------ buttons
+ * The cut corner (top right) marks a button. Primary is filled; quiet is outlined, and its
+ * outline opens at the cut; destructive is outlined in the danger color and names what it
+ * destroys. Focus is an inset double ring, since the cut clips an outer outline. */
+.btn {
+  --b-bg: transparent;
+  --b-fg: var(--text);
+  --b-line: var(--line-strong);
+  --c: var(--cut);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  min-height: 2.25rem;
+  padding: 0.4rem 0.95rem 0.4rem 0.8rem;
+  font: 500 var(--fs-md) / 1.2 var(--font-ui);
+  color: var(--b-fg);
+  background: var(--b-bg);
+  border: var(--hair) solid var(--b-line);
+  border-radius: 0;
+  clip-path: polygon(0 0, calc(100% - var(--c)) 0, 100% var(--c), 100% 100%, 0 100%);
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background var(--dur-instant) linear, border-color var(--dur-instant) linear;
+}
+.btn:hover {
+  --b-line: var(--text-dim);
+  --b-bg: var(--system-wash);
+}
+.gm .btn:hover {
+  --b-bg: color-mix(in srgb, var(--text) 6%, transparent);
+}
+.btn:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--focus), inset 0 0 0 4px var(--focus-inner);
+}
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.42;
+  cursor: default;
+}
+.btn--primary {
+  --b-bg: var(--btn-fill);
+  --b-fg: var(--btn-text);
+  --b-line: var(--btn-fill);
+  font-weight: 700;
+}
+.btn--primary:hover,
+.gm .btn--primary:hover {
+  --b-bg: var(--btn-hover);
+  --b-line: var(--btn-hover);
+}
+.btn--danger {
+  --b-fg: var(--danger);
+  --b-line: var(--danger);
+}
+.btn--danger:hover,
+.gm .btn--danger:hover {
+  --b-bg: var(--danger-wash);
+  --b-line: var(--danger);
+}
+.btn--sm {
+  --c: var(--cut-sm);
+  min-height: 1.75rem;
+  padding: 0.2rem 0.7rem 0.2rem 0.55rem;
+  font-size: var(--fs-sm);
+}
+.btn--icon {
+  padding: 0;
+  width: 2.25rem;
+}
+.btn--icon.btn--sm {
+  width: 1.75rem;
+}
+/* A text button inside a sentence: an underline, no box */
+.btn-link {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+/* The confirm tap: the first press arms, the second records. Armed, the row states the
+ * consequence and offers the way back. */
+.confirm {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+}
+.confirm--armed {
+  padding: var(--sp-1) var(--sp-1) var(--sp-1) var(--sp-3);
+  background: var(--sunken);
+  border: var(--hair) dashed var(--line-strong);
+}
+.confirm__what {
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+
+/* ------------------------------------------------------------------ fields */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  min-width: 0;
+}
+.field > span:first-child,
+.field__label {
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+.field--row {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--sp-2);
+}
+.input,
+.select,
+.textarea {
+  font: 400 var(--fs-md) / 1.3 var(--font-ui);
+  color: var(--text);
+  background: var(--sunken);
+  border: 0;
+  border-bottom: var(--rule) solid var(--line-strong);
+  border-radius: 0;
+  padding: 0.45rem 0.6rem 0.35rem;
+  min-height: 2.25rem;
+  width: 100%;
+}
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--text-faint);
+}
+.input:hover,
+.select:hover,
+.textarea:hover {
+  border-bottom-color: var(--text-dim);
+}
+.input:focus-visible,
+.select:focus-visible,
+.textarea:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 0;
+  border-bottom-color: var(--text);
+}
+.input.num {
+  font-family: var(--font-mono);
+  text-align: right;
+}
+.select {
+  appearance: none;
+  padding-right: 2rem;
+  background-image: linear-gradient(45deg, transparent 50%, var(--text-dim) 50%), linear-gradient(-45deg, transparent 50%, var(--text-dim) 50%);
+  background-size: 5px 5px, 5px 5px;
+  background-position: right 0.95rem center, right 0.65rem center;
+  background-repeat: no-repeat;
+  background-color: var(--sunken);
+}
+.textarea {
+  min-height: 5rem;
+  resize: vertical;
+  line-height: var(--lh-body);
+}
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-md);
+  cursor: pointer;
+}
+.check input {
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  flex: none;
+  border: var(--rule) solid var(--line-strong);
+  background: var(--sunken);
+  display: grid;
+  place-content: center;
+}
+.check input[type="radio"] {
+  transform: rotate(45deg) scale(0.85);
+}
+.check input:checked {
+  border-color: var(--text);
+  background: var(--text);
+  box-shadow: inset 0 0 0 2px var(--sunken);
+}
+.check input:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.problem {
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+.error {
+  font-size: var(--fs-sm);
+  color: var(--danger);
+  display: flex;
+  gap: var(--sp-2);
+  align-items: center;
+}
+
+/* ------------------------------------------------------------------ panel */
+.panel {
+  background: var(--surface);
+  border: var(--hair) solid var(--line);
+  box-shadow: var(--shadow-1);
+}
+.panel__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: var(--hair) solid var(--line);
+}
+.panel__head h2,
+.panel__head h3 {
+  font-size: var(--fs-md);
+}
+.panel__body {
+  padding: var(--sp-4);
+}
+.panel--flush .panel__body {
+  padding: 0;
+}
+.panel--sunken {
+  background: var(--sunken);
+  box-shadow: none;
+}
+/* Section heading inside a screen: a mono eyebrow over a title */
+.eyebrow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+}
+
+/* ------------------------------------------------------------------ tags and counts */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.05rem 0.45rem;
+  font: 500 var(--fs-xs) / 1.5 var(--font-mono);
+  letter-spacing: 0.02em;
+  color: var(--text-dim);
+  border: var(--hair) solid var(--line-strong);
+  white-space: nowrap;
+}
+.tag .ic {
+  width: 1.1em;
+  height: 1.1em;
+}
+.tag--danger {
+  color: var(--danger);
+  border-color: currentColor;
+  background: var(--danger-wash);
+}
+.tag--warn {
+  color: var(--warn);
+  border-color: currentColor;
+  background: var(--warn-wash);
+}
+.tag--system {
+  color: var(--system);
+  border-color: color-mix(in srgb, var(--system-geo) 55%, transparent);
+}
+.tag--solid {
+  color: var(--ground);
+  background: var(--text);
+  border-color: var(--text);
+}
+/* A count waiting on the GM: inverted, never colored */
+.count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.35rem;
+  height: 1.2rem;
+  padding: 0 0.3rem;
+  font: 600 var(--fs-2xs) / 1 var(--font-mono);
+  color: var(--ground);
+  background: var(--text);
+}
+
+/* ------------------------------------------------------------------ list rows */
+.rows > li,
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-2) 0;
+  border-bottom: var(--hair) solid var(--line);
+  min-height: 2.75rem;
+}
+.rows > li:last-child {
+  border-bottom: 0;
+}
+.row__main {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.row__meta {
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+.row__actions {
+  display: flex;
+  gap: var(--sp-2);
+  align-items: center;
+  flex: none;
+}
+
+/* ------------------------------------------------------------------ meters
+ * Health is the body (bone on the System, a dark mass on paper); Aether is cyan; Volatile
+ * Energy is hatched, unrefined. The number beside each meter is the value; the meter is
+ * the glance. Ticks every 10 on the level meter. */
+.meter {
+  position: relative;
+  height: 0.5rem;
+  background: var(--meter-track);
+  overflow: hidden;
+}
+.meter > i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--v, 50%);
+  background: var(--m-fill, var(--text));
+  transition: width var(--dur-base) var(--ease-out);
+}
+.meter--health {
+  --m-fill: var(--health);
+}
+.meter--aether {
+  --m-fill: var(--aether);
+}
+.meter--ve {
+  --m-fill: repeating-linear-gradient(135deg, var(--ve) 0 2px, transparent 2px 5px);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ve) 45%, transparent);
+}
+.meter--level {
+  height: 0.25rem;
+  --m-fill: var(--system);
+}
+.meter--thin {
+  height: 0.3rem;
+}
+.meter--danger {
+  --m-fill: var(--danger);
+}
+/* A meter row: label, meter, value */
+.vital {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr 6.5rem;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.vital__value {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-sm);
+}
+.vital__value b {
+  font-weight: 600;
+  color: var(--text);
+}
+/* Beats as pips: filled squares left, open squares spent */
+.pips {
+  display: inline-flex;
+  gap: 3px;
+}
+.pips > i {
+  width: 0.55rem;
+  height: 0.55rem;
+  border: var(--rule) solid var(--text);
+  transform: rotate(45deg) scale(0.8);
+}
+.pips > i.on {
+  background: var(--text);
+}
+
+/* ------------------------------------------------------------------ stat block
+ * Attributes in both readings. Raw is the large number; Force sits under it. */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  border-top: var(--hair) solid var(--line);
+  border-bottom: var(--hair) solid var(--line);
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  padding: var(--sp-3) var(--sp-2) var(--sp-3) var(--sp-3);
+  border-right: var(--hair) solid var(--line);
+  min-width: 0;
+}
+.stat:last-child {
+  border-right: 0;
+}
+.stat__abbr {
+  font: 500 var(--fs-2xs) / 1 var(--font-mono);
+  letter-spacing: var(--track-label);
+  color: var(--text-dim);
+}
+.stat__raw {
+  font: 500 1.75rem / 1.05 var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+.stat__force {
+  font: 400 var(--fs-xs) / 1.3 var(--font-mono);
+  color: var(--text-dim);
+}
+.stat__force b {
+  font-weight: 600;
+  color: var(--text);
+}
+.stat__name {
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+/* Allocation: the stepper sits under the numbers while points wait */
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-top: var(--sp-2);
+}
+.stepper .btn {
+  --c: 4px;
+  min-height: 1.75rem;
+  width: 1.75rem;
+  padding: 0;
+}
+.stepper__add {
+  min-width: 2.25rem;
+  text-align: center;
+  font: 600 var(--fs-sm) / 1 var(--font-mono);
+  color: var(--text);
+}
+.stat--pending .stat__raw {
+  color: var(--text);
+}
+.stat--pending {
+  background: var(--system-wash);
+}
+/* The console's compact attribute strip */
+.statline {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  text-align: center;
+  border: var(--hair) solid var(--line);
+}
+.statline > div {
+  padding: 0.3rem 0;
+  border-right: var(--hair) solid var(--line);
+}
+.statline > div:last-child {
+  border-right: 0;
+}
+.statline dt {
+  font: 500 0.625rem / 1.2 var(--font-mono);
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+}
+.statline dd {
+  font: 500 var(--fs-md) / 1.3 var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------------ tracker row
+ * One combatant in the fight. Grid: status stripe | who | Health | Beats | actions. */
+.tracker {
+  display: flex;
+  flex-direction: column;
+}
+.track {
+  display: grid;
+  grid-template-columns: 4px minmax(11rem, 1.3fr) minmax(12rem, 1.4fr) 6.5rem auto;
+  align-items: center;
+  column-gap: var(--sp-4);
+  padding: var(--sp-3) var(--sp-4) var(--sp-3) 0;
+  background: var(--surface);
+  border-bottom: var(--hair) solid var(--line);
+}
+.track__stripe {
+  align-self: stretch;
+  margin: calc(var(--sp-3) * -1) 0;
+  background: transparent;
+}
+.track--acting {
+  background: var(--surface-2);
+  box-shadow: inset 0 0 0 1px var(--text);
+}
+.track--acting .track__stripe {
+  background: var(--text);
+}
+.track--done {
+  color: var(--text-dim);
+}
+.track--done .track__name {
+  font-weight: 500;
+}
+.track--downed .track__stripe {
+  background: var(--danger);
+}
+.track__who {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+.track__name {
+  font-weight: 700;
+  font-size: 1rem;
+}
+.track__meta {
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+.track__hp {
+  display: grid;
+  grid-template-columns: 1fr 4.5rem;
+  gap: var(--sp-2);
+  align-items: center;
+}
+.track__hp .num {
+  text-align: right;
+  font-size: var(--fs-sm);
+}
+.track__beats {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-sm);
+}
+.track__actions {
+  display: flex;
+  gap: var(--sp-2);
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+.track__tags {
+  display: flex;
+  gap: var(--sp-1);
+  flex-wrap: wrap;
+  margin-top: 0.2rem;
+}
+.track__drawer {
+  grid-column: 2 / -1;
+  margin-top: var(--sp-3);
+  padding-top: var(--sp-3);
+  border-top: var(--hair) dashed var(--line-strong);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+/* ------------------------------------------------------------------ the System's notices */
+.notices {
+  display: flex;
+  flex-direction: column;
+}
+.notice {
+  display: grid;
+  grid-template-columns: 1rem 1fr;
+  gap: var(--sp-3);
+  align-items: start;
+  padding: var(--sp-3) 0;
+  border-bottom: var(--hair) solid var(--line);
+}
+.notice .clave {
+  width: 0.8rem;
+  height: 0.95rem;
+  margin-top: 0.25rem;
+  color: var(--system);
+}
+.notice__text {
+  font: italic 400 var(--fs-lg) / 1.4 var(--font-ui);
+  color: var(--text);
+  white-space: pre-line;
+}
+.notice__who {
+  display: block;
+  font: 500 var(--fs-2xs) / 1.6 var(--font-mono);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-dim);
+  font-style: normal;
+}
+.notice--old .notice__text {
+  color: var(--text-dim);
+}
+.notice--old .clave {
+  color: var(--text-faint);
+  opacity: 0.6;
+}
+/* A notice that marks a moment: a larger, framed line */
+.notice--moment {
+  padding: var(--sp-4) var(--sp-3);
+  margin: var(--sp-2) 0;
+  background: var(--system-wash);
+  border: 0;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--system-geo) 40%, transparent);
+}
+.notice--moment .notice__text {
+  font-size: 1.25rem;
+}
+
+/* ------------------------------------------------------------------ the interrupted frame
+ * A boundary with missing sections, completed in one place by a short cyan segment. Once
+ * per screen at most: the player's interface, a System preview, a moment. */
+.iframe {
+  position: relative;
+  --f: var(--frame, var(--line-strong));
+  background:
+    linear-gradient(90deg, var(--f) 0 31%, transparent 31% 38%, var(--f) 38% 100%) top / 100% 1px no-repeat,
+    linear-gradient(90deg, var(--f) 0 74%, transparent 74% 83%, var(--f) 83% 100%) bottom / 100% 1px no-repeat,
+    linear-gradient(180deg, var(--f) 0 55%, transparent 55% 63%, var(--f) 63% 100%) left / 1px 100% no-repeat,
+    linear-gradient(180deg, var(--f) 0 12%, transparent 12% 20%, var(--f) 20% 100%) right / 1px 100% no-repeat,
+    var(--iframe-bg, transparent);
+}
+.iframe::before {
+  /* the cyan segment that completes part of the boundary */
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 31%;
+  width: 7%;
+  height: 2px;
+  background: var(--system-geo);
+}
+.iframe::after {
+  /* the corner fragment, bottom right */
+  content: "";
+  position: absolute;
+  right: -5px;
+  bottom: -5px;
+  width: 9px;
+  height: 9px;
+  border-right: 1px solid var(--f);
+  border-bottom: 1px solid var(--f);
+}
+
+/* ------------------------------------------------------------------ System preview
+ * Where the registers meet: anything a player will receive, previewed on the GM's screen
+ * in the player's register. Always dark, in either console theme. */
+.preview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4) var(--sp-4);
+  background: var(--ground);
+  color: var(--text);
+  position: relative;
+  border-top: var(--rule) solid var(--system-geo);
+}
+.preview__to {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font: 500 var(--fs-2xs) / 1.4 var(--font-mono);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--system);
+}
+.preview .notice {
+  padding: var(--sp-1) 0;
+  border: 0;
+}
+.preview .notice__text {
+  font-size: var(--fs-md);
+}
+
+/* The console's record of an action: what the table's record will say */
+.record {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--sunken);
+  border-top: var(--hair) dashed var(--line-strong);
+  font-size: var(--fs-sm);
+}
+.record__head {
+  font: 500 var(--fs-2xs) / 1.4 var(--font-mono);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.record ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.record li::before {
+  content: "\2013\00a0";
+  color: var(--text-faint);
+}
+.delta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+}
+.delta b {
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------------ draft card
+ * What the listener heard and proposes, waiting on the GM. Cited lines on the left rule,
+ * the proposal, the player's preview where a player will see it, then the decision. */
+.draft {
+  background: var(--surface);
+  border: var(--hair) solid var(--line);
+  box-shadow: var(--shadow-1);
+  display: flex;
+  flex-direction: column;
+}
+.draft__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4) var(--sp-2);
+}
+.draft__kind {
+  font: 500 var(--fs-2xs) / 1.4 var(--font-mono);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.draft__title {
+  font-weight: 700;
+  font-size: 1rem;
+}
+.draft__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: 0 var(--sp-4) var(--sp-3);
+}
+.cited {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--sunken);
+  font-size: var(--fs-sm);
+}
+.cited li {
+  display: grid;
+  grid-template-columns: 8.5rem 1fr;
+  gap: var(--sp-2);
+}
+.cited .who {
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  letter-spacing: 0.04em;
+  padding-top: 0.15rem;
+}
+.why {
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+.why b {
+  color: var(--text);
+  font-weight: 500;
+}
+.draft__decide {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4);
+  border-top: var(--hair) solid var(--line);
+  background: var(--surface-2);
+}
+
+/* ------------------------------------------------------------------ app frame */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  height: 3rem;
+  padding: 0 var(--sp-5);
+  background: var(--ground);
+  border-bottom: var(--hair) solid var(--line);
+}
+.topbar__mark {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  text-decoration: none;
+}
+.topbar__mark .clave {
+  width: 1.05rem;
+  height: 1.25rem;
+  color: var(--system-geo);
+}
+.gm .topbar__mark .clave {
+  color: var(--text);
+}
+.topbar__mark .wordmark {
+  font-size: 0.8125rem;
+}
+.topbar__campaign {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-weight: 500;
+}
+.live {
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--ok);
+  transform: rotate(45deg);
+}
+.live--off {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--warn);
+}
+
+/* Section navigation: tabs underline; waiting counts are inverted squares */
+.nav {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  padding: 0 var(--sp-4);
+  background: var(--surface);
+  border-bottom: var(--hair) solid var(--line);
+  overflow-x: auto;
+}
+.nav__group {
+  display: flex;
+  align-items: stretch;
+}
+.nav__group + .nav__group {
+  margin-left: var(--sp-2);
+  padding-left: var(--sp-2);
+  box-shadow: inset 1px 0 0 var(--line);
+}
+.nav__item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 2.75rem;
+  padding: 0 0.7rem;
+  font: 500 var(--fs-md) / 1 var(--font-ui);
+  color: var(--text-dim);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.nav__item:hover {
+  color: var(--text);
+}
+.nav__item:hover::after {
+  content: "";
+  position: absolute;
+  left: 0.7rem;
+  right: 0.7rem;
+  bottom: 0;
+  height: 1px;
+  background: var(--text-dim);
+}
+.nav__item[aria-current="page"] {
+  color: var(--text);
+  font-weight: 700;
+}
+.nav__item[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 0.7rem;
+  right: 0.7rem;
+  bottom: 0;
+  height: 3px;
+  background: var(--text);
+}
+.nav__item:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -4px;
+}
+.nav__state {
+  font: 500 var(--fs-2xs) / 1 var(--font-mono);
+  padding: 0.2rem 0.35rem;
+  border: var(--hair) solid var(--line-strong);
+  color: var(--text-dim);
+}
+
+/* The table bar: the session, listening, and the clock, under the nav */
+.tablebar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+  min-height: 3.25rem;
+  padding: var(--sp-2) var(--sp-5);
+  background: var(--ground);
+  border-bottom: var(--hair) solid var(--line);
+  font-size: var(--fs-sm);
+}
+.tablebar__part {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.tablebar__part + .tablebar__part {
+  padding-left: var(--sp-5);
+  box-shadow: inset 1px 0 0 var(--line);
+}
+.tablebar__big {
+  font: 600 var(--fs-md) / 1 var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+.listen-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  background: var(--danger);
+  transform: rotate(45deg);
+}
+.level-meter {
+  display: inline-flex;
+  gap: 2px;
+  align-items: flex-end;
+  height: 0.9rem;
+}
+.level-meter i {
+  width: 3px;
+  background: var(--text-dim);
+}
+/* The quiet echo of a player's moment: one line, then it fades into the log */
+.echo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 0.25rem 0.6rem;
+  font-size: var(--fs-sm);
+  color: var(--text);
+  background: var(--system-wash);
+  box-shadow: inset 0 -1px 0 var(--system-geo);
+}
+.echo .clave {
+  width: 0.65rem;
+  height: 0.8rem;
+  color: var(--system);
+}
+
+/* Screen scaffolds */
+.screen {
+  display: grid;
+  gap: var(--sp-5);
+  padding: var(--sp-5) var(--sp-6);
+  align-items: start;
+}
+.screen--side {
+  grid-template-columns: minmax(0, 1fr) minmax(22rem, 26rem);
+}
+.screen__title {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--sp-4);
+  padding: var(--sp-5) var(--sp-6) 0;
+}
+
+/* ------------------------------------------------------------------ the player's interface */
+.interface {
+  --iframe-bg: var(--ground);
+  padding: var(--sp-5) var(--sp-5) var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+.sys-head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--sp-4);
+  align-items: center;
+}
+.sys-head .clave {
+  width: 1.9rem;
+  height: 2.25rem;
+  color: var(--system);
+}
+.sys-name {
+  font: 600 var(--fs-3xl) / 1 var(--font-display);
+  letter-spacing: 0.01em;
+}
+.sys-sub {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: baseline;
+  margin-top: var(--sp-2);
+  font-size: var(--fs-md);
+  color: var(--text-dim);
+}
+.sys-sub b {
+  font-weight: 500;
+  color: var(--text);
+}
+.sys-grade {
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  font: 700 1.75rem / 1 var(--font-display);
+  color: var(--text);
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+  position: relative;
+}
+.sys-grade::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 8px;
+  height: 8px;
+  border-top: 1.5px solid var(--system-geo);
+  border-left: 1.5px solid var(--system-geo);
+}
+.sys-grade small {
+  position: absolute;
+  bottom: -1.1rem;
+  font: 500 0.625rem / 1 var(--font-mono);
+  letter-spacing: var(--track-label);
+  color: var(--text-dim);
+}
+/* A section of the interface: an observation bracket, a mono label, then content */
+.sys-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+.sys-label {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font: 500 var(--fs-2xs) / 1 var(--font-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--system);
+}
+.sys-label::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-top: 1px solid var(--system-geo);
+  border-left: 1px solid var(--system-geo);
+  transform: translateY(2px);
+}
+.sys-label::after {
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  background: linear-gradient(90deg, var(--line) 0 100%);
+}
+.sys-label .tail {
+  order: 2;
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+}
+.sys-label .tail + * {
+  order: 3;
+}
+.sys-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-3);
+  padding: var(--sp-2) 0;
+  border-bottom: var(--hair) solid var(--line);
+}
+.sys-row:last-child {
+  border-bottom: 0;
+}
+.sys-row__main {
+  flex: 1 1 auto;
+}
+.sys-row__side {
+  font: 400 var(--fs-sm) / 1.3 var(--font-mono);
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+/* Quest entry: the book's quest UI, key and value in columns */
+.quest {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 0.2rem var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--surface);
+  font-size: var(--fs-md);
+}
+.quest__id {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-2);
+}
+.quest__id .num {
+  color: var(--system);
+  font-size: var(--fs-sm);
+}
+.quest__id b {
+  font-size: 1.0625rem;
+}
+.quest dt {
+  font: 500 var(--fs-2xs) / 1.9 var(--font-mono);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.quest dd {
+  margin: 0;
+}
+.quest__actions {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: var(--sp-2);
+  margin-top: var(--sp-3);
+}
+/* The table tray: the player's out-of-fiction tools, docked under the notices */
+.tray-head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) 0;
+  font: 500 var(--fs-2xs) / 1 var(--font-mono);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.tray-head::after {
+  content: "";
+  flex: 1 1 auto;
+  border-top: var(--hair) dashed var(--line-strong);
+}
+
+/* ------------------------------------------------------------------ illustration slot */
+.slot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  background:
+    repeating-linear-gradient(135deg, transparent 0 11px, color-mix(in srgb, var(--text) 7%, transparent) 11px 12px),
+    var(--sunken);
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+  color: var(--text-dim);
+  text-align: center;
+  font: 500 var(--fs-2xs) / 1.5 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+.slot__safe {
+  position: absolute;
+  border: 1px dashed color-mix(in srgb, var(--system-geo) 70%, transparent);
+}
+.slot__label {
+  position: relative;
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--ground);
+  max-width: 80%;
+}
+
+/* ------------------------------------------------------------------ the moments
+ * Motion is spent on the player's advancement and nowhere else. Every moment has a reduced
+ * form under prefers-reduced-motion: the end state, reached by a short crossfade. */
+@keyframes gb-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes gb-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.6rem);
+  }
+}
+@keyframes gb-resolve {
+  0% {
+    opacity: 0;
+    transform: translate(var(--dx, 0), var(--dy, 0)) rotate(var(--rot, 0deg));
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes gb-draw {
+  from {
+    stroke-dashoffset: var(--len, 200);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes gb-fill {
+  from {
+    width: var(--from, 0%);
+  }
+}
+@keyframes gb-flash {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+}
+@keyframes gb-roll {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+@keyframes gb-extinguish {
+  0% {
+    opacity: 1;
+    background: var(--danger);
+  }
+  60% {
+    opacity: 0.35;
+  }
+  100% {
+    opacity: 1;
+    background: transparent;
+  }
+}
+@keyframes gb-close {
+  to {
+    opacity: 0.35;
+    transform: scale(0.97);
+    filter: saturate(0);
+  }
+}
+@keyframes gb-displace {
+  0%,
+  100% {
+    transform: none;
+  }
+  20% {
+    transform: translate(2px, 0);
+  }
+  45% {
+    transform: translate(-1px, 1px);
+  }
+  70% {
+    transform: translate(1px, -1px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gb *,
+  .gb *::before,
+  .gb *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+  .gb .rm-fade {
+    animation: gb-fade-in 200ms linear both !important;
+  }
+}
+
+/* ------------------------------------------------------------------ console tables */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+}
+.table th {
+  text-align: left;
+  font: 500 var(--fs-2xs) / 1.4 var(--font-mono);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 0.4rem 0.5rem;
+  border-bottom: var(--hair) solid var(--line-strong);
+}
+.table td {
+  padding: 0.45rem 0.5rem;
+  border-bottom: var(--hair) solid var(--line);
+  vertical-align: middle;
+}
+.table th.num,
+.table td.num {
+  text-align: right;
+}
+.table tr.is-current td {
+  background: var(--sunken);
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------------ disclosure, fieldset, warnings */
+.gb details > summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.gb details > summary::-webkit-details-marker {
+  display: none;
+}
+.gb details > summary::before {
+  content: "";
+  flex: none;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform var(--dur-quick) var(--ease-out);
+}
+.gb details[open] > summary::before {
+  transform: rotate(45deg);
+}
+.fieldset {
+  border: var(--hair) solid var(--line);
+  padding: var(--sp-4);
+  margin: 0;
+  min-width: 0;
+}
+.fieldset > legend {
+  padding: 0 var(--sp-2);
+  font: 500 var(--fs-2xs) / 1 var(--font-mono);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.warning {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  font-size: var(--fs-sm);
+  color: var(--warn);
+}
+.circled {
+  box-shadow: inset 0 0 0 1.5px currentColor;
+  padding: 0 0.3rem;
+}
+/* A toggle that opens a form: pressed while its form is open */
+.btn[aria-pressed="true"],
+.btn[aria-expanded="true"] {
+  --b-bg: var(--sunken);
+  --b-line: var(--text);
+  box-shadow: inset 0 -2px 0 var(--text);
+}
+/* An inline form opened from a row or a card */
+.drawer {
+  margin-top: var(--sp-3);
+  padding-top: var(--sp-3);
+  border-top: var(--hair) dashed var(--line-strong);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+/* Spec sheets on the canvas: key and value */
+.spec {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 0.4rem 1rem;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+}
+.spec dt {
+  font: 500 var(--fs-2xs) / 1.9 var(--font-mono);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.spec dd {
+  margin: 0;
+}
+.tag--ok {
+  color: var(--ok);
+  border-color: currentColor;
+}
+/* A line that warns about the whole section: stripe, wash, icon, words */
+.callout {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  font-size: var(--fs-sm);
+  color: var(--text);
+  background: var(--warn-wash);
+  box-shadow: inset 3px 0 0 var(--warn);
+}
+.callout .ic {
+  color: var(--warn);
+}
+.callout--danger {
+  background: var(--danger-wash);
+  box-shadow: inset 3px 0 0 var(--danger);
+}
+.callout--danger .ic {
+  color: var(--danger);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ------------------------------------------------------------------ Downed: vital coherence */
+.coherence {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--danger-wash);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--danger) 60%, transparent);
+}
+.coherence__text {
+  font: italic 400 1.375rem / 1.2 var(--font-ui);
+  color: var(--text);
+}
+.coherence__segments {
+  display: flex;
+  gap: 5px;
+}
+.coherence__segments > i {
+  width: 1.1rem;
+  height: 1.6rem;
+  border: var(--rule) solid var(--danger);
+  background: transparent;
+  clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 0 100%);
+}
+.coherence__segments > i.on {
+  background: var(--danger);
+}
+.coherence--stable {
+  background: var(--system-wash);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--system-geo) 45%, transparent);
+}
+.coherence--stable .coherence__segments > i {
+  border-color: var(--text);
+  background: var(--text);
+}
+/* The interrupted frame under instability: displaced, in the danger color */
+.iframe--unstable {
+  --f: color-mix(in srgb, var(--danger) 55%, transparent);
+}
+.iframe--unstable::before {
+  left: 58%;
+  top: 2px;
+  background: var(--danger);
+}
+.iframe--unstable::after {
+  right: -9px;
+  bottom: -2px;
+  border-color: var(--danger);
+}
+
+/* ------------------------------------------------------------------ moment stages
+ * Each moment is a set of classes that animate only under .is-playing (the app adds it when
+ * the event lands, and removes it when the moment ends). Without .is-playing everything
+ * rests in its end state, so a reload, a late join, or reduced motion shows the result. */
+.mo-roll {
+  display: inline-flex;
+  flex-direction: column;
+  height: 1em;
+  line-height: 1;
+  overflow: hidden;
+  vertical-align: -0.12em;
+}
+.mo-roll > span {
+  display: block;
+  height: 1em;
+  transform: translateY(-100%);
+}
+.is-playing .mo-roll > span {
+  animation: mo-roll 360ms var(--ease-resolve) 900ms both;
+}
+@keyframes mo-roll {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+.mo-levelfill > i {
+  width: var(--v-new, 17%);
+}
+.is-playing .mo-levelfill > i {
+  animation: mo-levelfill 1600ms var(--ease-in-out) both;
+}
+@keyframes mo-levelfill {
+  0% {
+    width: var(--v-old, 83%);
+  }
+  42% {
+    width: 100%;
+  }
+  56% {
+    width: 100%;
+    opacity: 1;
+  }
+  60% {
+    width: 0%;
+    opacity: 0;
+  }
+  64% {
+    opacity: 1;
+  }
+  100% {
+    width: var(--v-new, 17%);
+  }
+}
+.mo-flash {
+  position: relative;
+}
+.mo-flash::after {
+  content: "";
+  position: absolute;
+  inset: -3px 0;
+  background: var(--system);
+  opacity: 0;
+  pointer-events: none;
+}
+.is-playing .mo-flash::after {
+  animation: gb-flash 420ms linear 660ms both;
+}
+/* Fragments resolving into alignment: each glyph sets --dx, --dy, --rot as its start */
+.mo-frag {
+  display: inline-block;
+}
+.is-playing .mo-frag {
+  animation: gb-resolve 700ms var(--ease-resolve) var(--delay, 900ms) both;
+}
+.is-playing .mo-rise {
+  animation: gb-rise var(--dur-notice) var(--ease-out) var(--delay, 0ms) both;
+}
+.is-playing .mo-fade {
+  animation: gb-fade-in 400ms linear var(--delay, 0ms) both;
+}
+.is-playing .mo-wash {
+  animation: mo-wash 900ms var(--ease-out) var(--delay, 1000ms) both;
+}
+@keyframes mo-wash {
+  from {
+    background-color: transparent;
+    box-shadow: inset 0 0 0 1px transparent;
+  }
+}
+/* Title conferred: fine brackets close on the name, then open away */
+.mo-brackets {
+  position: relative;
+  display: inline-block;
+  padding: 0 0.5rem;
+}
+.mo-brackets::before,
+.mo-brackets::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 6px;
+  border: 1px solid var(--system-geo);
+  opacity: 0;
+}
+.mo-brackets::before {
+  left: 0;
+  border-right: 0;
+}
+.mo-brackets::after {
+  right: 0;
+  border-left: 0;
+}
+.is-playing .mo-brackets::before {
+  animation: mo-bracket-l 1100ms var(--ease-resolve) 200ms both;
+}
+.is-playing .mo-brackets::after {
+  animation: mo-bracket-r 1100ms var(--ease-resolve) 200ms both;
+}
+@keyframes mo-bracket-l {
+  0% {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+  45% {
+    opacity: 1;
+    transform: none;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes mo-bracket-r {
+  0% {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+  45% {
+    opacity: 1;
+    transform: none;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.is-playing .mo-insert {
+  animation: mo-insert 320ms var(--ease-out) both;
+}
+@keyframes mo-insert {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 4rem;
+  }
+}
+/* Technique acquired or advanced: a Mark fills, the tier word turns over, radial ticks */
+.mo-marks {
+  display: inline-flex;
+  gap: 4px;
+}
+.mo-marks > i {
+  width: 0.6rem;
+  height: 0.6rem;
+  border: 1.5px solid var(--text);
+  transform: rotate(45deg) scale(0.8);
+}
+.mo-marks > i.on {
+  background: var(--text);
+}
+.is-playing .mo-marks > i.new {
+  animation: mo-mark 380ms var(--ease-resolve) 150ms both;
+}
+@keyframes mo-mark {
+  from {
+    background: transparent;
+    transform: rotate(45deg) scale(1.6);
+    border-color: var(--system);
+  }
+}
+.mo-ticks {
+  position: absolute;
+  inset: -14px;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    linear-gradient(var(--system), var(--system)) 50% 0 / 1px 7px no-repeat,
+    linear-gradient(var(--system), var(--system)) 50% 100% / 1px 7px no-repeat,
+    linear-gradient(var(--system), var(--system)) 0 50% / 7px 1px no-repeat,
+    linear-gradient(var(--system), var(--system)) 100% 50% / 7px 1px no-repeat;
+}
+.is-playing .mo-ticks {
+  animation: mo-ticks 700ms var(--ease-out) 380ms both;
+}
+@keyframes mo-ticks {
+  0% {
+    opacity: 1;
+    transform: scale(0.55);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.15);
+  }
+}
+.mo-swap {
+  display: inline-grid;
+}
+.mo-swap > span {
+  grid-area: 1 / 1;
+}
+.mo-swap > .was {
+  opacity: 0;
+}
+.is-playing .mo-swap > .was {
+  animation: mo-out 260ms linear var(--delay, 520ms) both reverse;
+}
+.is-playing .mo-swap > .now {
+  animation: gb-rise 320ms var(--ease-resolve) calc(var(--delay, 520ms) + 200ms) both;
+}
+@keyframes mo-out {
+  from {
+    opacity: 0;
+    transform: translateY(-0.4rem);
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* Class offers: dealt in turn; the chosen one's frame completes, the others close */
+.is-playing .mo-deal {
+  animation: gb-rise 420ms var(--ease-out) var(--delay, 0ms) both;
+}
+.mo-closed {
+  opacity: 0.35;
+  filter: saturate(0);
+  transform: scale(0.97);
+}
+.is-playing .mo-closed {
+  animation: mo-closing 600ms var(--ease-in-out) 1500ms both;
+}
+@keyframes mo-closing {
+  from {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}
+.mo-chosen {
+  box-shadow: inset 0 0 0 1.5px var(--system-geo);
+}
+.is-playing .mo-chosen {
+  animation: mo-chosen 700ms var(--ease-resolve) 1500ms both;
+}
+@keyframes mo-chosen {
+  from {
+    box-shadow: inset 0 0 0 1px var(--line-strong);
+  }
+}
+/* Drawn strokes: an SVG path or rect with pathLength="100" */
+.mo-draw {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 0;
+}
+.is-playing .mo-draw {
+  animation: mo-draw var(--dur, 700ms) var(--ease-in-out) var(--delay, 0ms) both;
+}
+@keyframes mo-draw {
+  from {
+    stroke-dashoffset: 100;
+  }
+}
+/* Quest offered: the card unfolds from its top edge; completed: the boundary closes */
+.is-playing .mo-unfold {
+  animation: mo-unfold 520ms var(--ease-out) both;
+  transform-origin: top;
+}
+@keyframes mo-unfold {
+  from {
+    opacity: 0;
+    transform: scaleY(0.2);
+  }
+}
+.is-playing .mo-line {
+  animation: gb-fade-in 260ms linear var(--delay, 300ms) both;
+}
+.mo-closebar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 3px;
+  background: var(--text);
+  transform-origin: top;
+}
+.is-playing .mo-closebar {
+  animation: mo-closebar 420ms var(--ease-in-out) var(--delay, 1500ms) both;
+}
+@keyframes mo-closebar {
+  from {
+    transform: scaleY(0);
+  }
+}
+/* Downed: the Health drains, the frame displaces once, a segment goes out per step */
+.is-playing .mo-drain > i {
+  animation: gb-fill 500ms var(--ease-fall) both;
+  --from: 40%;
+}
+.is-playing .mo-displace {
+  animation: gb-displace 520ms steps(4, end) 420ms both;
+}
+.is-playing .mo-out-seg {
+  animation: gb-extinguish 700ms var(--ease-fall) var(--delay, 1600ms) both;
+}
+/* Grade breakthrough: the frame completes, the clave assembles, the Grade turns over */
+.mo-veil {
+  position: absolute;
+  inset: 0;
+  background: var(--sunken);
+  opacity: 0;
+  pointer-events: none;
+}
+.is-playing .mo-veil {
+  animation: mo-veil 2800ms var(--ease-in-out) both;
+}
+@keyframes mo-veil {
+  0% {
+    opacity: 0;
+  }
+  14%,
+  78% {
+    opacity: 0.82;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.mo-grade {
+  display: inline-grid;
+}
+.mo-grade > span {
+  grid-area: 1 / 1;
+}
+.mo-grade > .was {
+  opacity: 0;
+}
+.is-playing .mo-grade > .was {
+  animation: mo-grade-out 2800ms var(--ease-in-out) both;
+}
+.is-playing .mo-grade > .now {
+  animation: mo-grade-in 2800ms var(--ease-resolve) both;
+}
+@keyframes mo-grade-out {
+  0%,
+  45% {
+    opacity: 1;
+    transform: none;
+  }
+  60%,
+  100% {
+    opacity: 0;
+    transform: translateY(-0.25em);
+  }
+}
+@keyframes mo-grade-in {
+  0%,
+  52% {
+    opacity: 0;
+    transform: translateY(0.3em);
+  }
+  72%,
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+.is-playing .mo-piece {
+  animation: gb-resolve 1100ms var(--ease-resolve) var(--delay, 500ms) both;
+  transform-box: fill-box;
+}
+/* The GM's quiet echo */
+.is-playing .mo-echo {
+  animation: gb-fade-in var(--dur-base) linear both;
+}
+
+/* Reduced motion: every moment rests in its end state; only a short fade marks arrival */
+@media (prefers-reduced-motion: reduce) {
+  .gb .is-playing .mo-rise,
+  .gb .is-playing .mo-deal,
+  .gb .is-playing .mo-unfold,
+  .gb .is-playing .mo-insert {
+    animation: gb-fade-in 200ms linear both !important;
+  }
+}
+.force-reduced .is-playing *,
+.force-reduced .is-playing *::before,
+.force-reduced .is-playing *::after {
+  animation-duration: 1ms !important;
+  animation-delay: 0ms !important;
+}
+.force-reduced .is-playing .mo-rise,
+.force-reduced .is-playing .mo-deal,
+.force-reduced .is-playing .mo-unfold,
+.force-reduced .is-playing .mo-insert {
+  animation: gb-fade-in 200ms linear both !important;
+}
+.mo-piece {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+/* Grade breakthrough: the interface's frame closes completely, holds, and opens again */
+.mo-frame-close {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  opacity: 0;
+}
+.is-playing .mo-frame-close {
+  animation: mo-frame-close 2800ms var(--ease-in-out) both;
+}
+@keyframes mo-frame-close {
+  0% {
+    stroke-dashoffset: 100;
+    opacity: 1;
+  }
+  40% {
+    stroke-dashoffset: 0;
+  }
+  80% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+.mo-hold {
+  opacity: 0;
+}
+.is-playing .mo-hold {
+  animation: mo-hold 2800ms linear both;
+}
+@keyframes mo-hold {
+  0%,
+  30% {
+    opacity: 0;
+  }
+  42%,
+  86% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+/* Generated by gen/icons.py: the functional icons, the System glyphs, and the clave, as masks.
+   Color follows `color` (background: currentColor). Meanings are fixed; see the Icons artboard. */
+.ic, .gl, .clave { display: inline-block; flex: none; background: currentColor; -webkit-mask: var(--m) no-repeat center / contain; mask: var(--m) no-repeat center / contain; vertical-align: -0.2em; }
+.ic { width: 1.25em; height: 1.25em; }
+.gl { width: 0.75em; height: 1em; }
+.clave { width: 0.85em; height: 1em; }
+.ic-health { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M8 3H12V8H17V12H12V17H8V12H3V8H8Z%22/%3E%3C/svg%3E"); }
+.ic-aether { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M10 2.5L16 10L10 17.5L4 10Z M10 7V13%22/%3E%3C/svg%3E"); }
+.ic-ve { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M4 15L10 4L16 15 M7.5 17H12.5%22/%3E%3C/svg%3E"); }
+.ic-level { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M5 10L10 5L15 10 M5 15L10 10L15 15%22/%3E%3C/svg%3E"); }
+.ic-grade { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M3 16H17 M5.5 12H14.5 M8 8H12 M9.5 4H10.5%22/%3E%3C/svg%3E"); }
+.ic-beat { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M7 4L13 10L7 16%22/%3E%3C/svg%3E"); }
+.ic-momentum { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M4 4L10 10L4 16 M10 4L16 10L10 16%22/%3E%3C/svg%3E"); }
+.ic-time { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M10 3A7 7 0 1 0 17 10 M10 6.5V10H13%22/%3E%3C/svg%3E"); }
+.ic-dawn { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M3 15H17 M6 15A4 4 0 0 1 14 15 M10 5V7.5 M4.5 9.5L6 11 M15.5 9.5L14 11%22/%3E%3C/svg%3E"); }
+.ic-rest { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M13 3A7 7 0 1 0 17 13A5.5 5.5 0 0 1 13 3Z%22/%3E%3C/svg%3E"); }
+.ic-downed { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M10 3V12 M6 8L10 12L14 8 M4 16H16%22/%3E%3C/svg%3E"); }
+.ic-exposed { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M10 3L16 5V10L10 17L4 10V5Z M10 3L8.5 8L11.5 11L10 17%22/%3E%3C/svg%3E"); }
+.ic-suppressed { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M4 4H16V16H4Z M8 4V16 M12 4V16%22/%3E%3C/svg%3E"); }
+.ic-warning { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M10 3L18 17H2Z M10 8V12 M10 14V15.5%22/%3E%3C/svg%3E"); }
+.ic-danger { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M7 2.5H13L17.5 7V13L13 17.5H7L2.5 13V7Z M10 6V11 M10 13V14.5%22/%3E%3C/svg%3E"); }
+.ic-item { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M4 7H16V16H4Z M7 7V4H13V7 M4 11H16%22/%3E%3C/svg%3E"); }
+.ic-pill { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M6.5 16.5L3.5 13.5L13.5 3.5L16.5 6.5Z M8.5 8.5L11.5 11.5%22/%3E%3C/svg%3E"); }
+.ic-spoils { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M3 9H17V16H3Z M3 9L5 5H15L17 9 M9 12H11%22/%3E%3C/svg%3E"); }
+.ic-quest { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M5 3H12L15 6V17H5Z M12 3V6H15 M8 10H12 M8 13H12%22/%3E%3C/svg%3E"); }
+.ic-title { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M5 3H15V16L10 13L5 16Z%22/%3E%3C/svg%3E"); }
+.ic-principle { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M3 3H17V17H9 M6 6H14V14H6V10%22/%3E%3C/svg%3E"); }
+.ic-class { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M10 2.5L16.5 6.25V13.75L10 17.5L3.5 13.75V6.25Z M7 11.5L10 8.5L13 11.5%22/%3E%3C/svg%3E"); }
+.ic-memory { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M4 4H14V17H4Z M14 7H16V17 M7 8L9 10L7 12 M10 12H11.5%22/%3E%3C/svg%3E"); }
+.ic-party { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M3 16V13L6.5 11L10 13V16 M10 16V13L13.5 11L17 13V16 M6.5 9L5 7.5L6.5 6L8 7.5Z M13.5 9L12 7.5L13.5 6L15 7.5Z%22/%3E%3C/svg%3E"); }
+.ic-clash { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M3 3L14 14 M17 3L6 14 M12 16L16 12 M4 12L8 16%22/%3E%3C/svg%3E"); }
+.ic-dice { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M10 2.5L16.5 9L10 17.5L3.5 9Z M3.5 9L10 11L16.5 9 M10 11V17.5%22/%3E%3C/svg%3E"); }
+.ic-move { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M3 4V16 M6 10H16 M12 6L16 10L12 14%22/%3E%3C/svg%3E"); }
+.ic-zone { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M3 3H9 M3 3V9 M17 17H11 M17 17V11 M11 3H17V9 M3 11V17H9%22/%3E%3C/svg%3E"); }
+.ic-inspect { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M3 7V3H7 M13 3H17V7 M17 13V17H13 M7 17H3V13 M9 9H11V11H9Z%22/%3E%3C/svg%3E"); }
+.ic-eye { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M2 10L6 5H14L18 10L14 15H6Z M9 9H11V11H9Z%22/%3E%3C/svg%3E"); }
+.ic-listen { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M8 3H12V11H8Z M5 9V11L7 14H13L15 11V9 M10 14V17 M7 17H13%22/%3E%3C/svg%3E"); }
+.ic-mute { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M8 3H12V8 M12 11H8V7 M5 9V11L7 14H13L15 11V9 M10 14V17 M7 17H13 M3 3L17 17%22/%3E%3C/svg%3E"); }
+.ic-session { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M2 8H18L16 11H4Z M5 11V16 M15 11V16%22/%3E%3C/svg%3E"); }
+.ic-suggestion { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M3 4H17V13H9L5 16V13H3Z M7 8H13%22/%3E%3C/svg%3E"); }
+.ic-event { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M3 10H6.5 M13.5 10H17 M10 6L14 10L10 14L6 10Z%22/%3E%3C/svg%3E"); }
+.ic-hve { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M10 3V17 M3 10H17 M12.5 6.5H14.5V8.5H12.5Z%22/%3E%3C/svg%3E"); }
+.ic-prep { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M5 4H15V17H5Z M8 3H12V5H8Z M8 9H12 M8 12H12%22/%3E%3C/svg%3E"); }
+.ic-bestiary { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M5 4L9 16 M9 3L12.5 15 M13 3L15.5 12%22/%3E%3C/svg%3E"); }
+.ic-log { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M4 5H16 M4 10H16 M4 15H11%22/%3E%3C/svg%3E"); }
+.ic-rules { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M3 4H9L10 5L11 4H17V16H11L10 17L9 16H3Z M10 5V17%22/%3E%3C/svg%3E"); }
+.ic-confirm { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M4 10L8 14L16 5%22/%3E%3C/svg%3E"); }
+.ic-undo { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M7 5L3 9L7 13 M3 9H13L16 12V16%22/%3E%3C/svg%3E"); }
+.ic-close { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M5 5L15 15 M15 5L5 15%22/%3E%3C/svg%3E"); }
+.ic-edit { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M4 16L5 12L13 4L16 7L8 15Z M11 6L14 9%22/%3E%3C/svg%3E"); }
+.ic-send { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M3 10H12 M9 7L12 10L9 13 M14 4H17V16H14%22/%3E%3C/svg%3E"); }
+.ic-add { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M10 4V16 M4 10H16%22/%3E%3C/svg%3E"); }
+.ic-remove { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M4 10H16%22/%3E%3C/svg%3E"); }
+.ic-caret { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M5 8L10 13L15 8%22/%3E%3C/svg%3E"); }
+.ic-next { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M8 5L13 10L8 15%22/%3E%3C/svg%3E"); }
+.ic-play { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M6 4L15 10L6 16Z%22/%3E%3C/svg%3E"); }
+.ic-pause { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M7 4V16 M13 4V16%22/%3E%3C/svg%3E"); }
+.ic-stop { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M5 5H15V15H5Z%22/%3E%3C/svg%3E"); }
+.ic-hidden { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M2 10L6 5H14L18 10L14 15H6Z M3 17L17 3%22/%3E%3C/svg%3E"); }
+.ic-lock { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M5 9H15V17H5Z M7 9V6L10 3L13 6V9%22/%3E%3C/svg%3E"); }
+.ic-link { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.5%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M8 12L12 8 M6 10L3 13L7 17L10 14 M14 10L17 7L13 3L10 6%22/%3E%3C/svg%3E"); }
+.gl-tri { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 12 16%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.25%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M2 12L7 3L9 8 M10 12.5H11%22/%3E%3C/svg%3E"); }
+.gl-step { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 12 16%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.25%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M1 13H4V9H7V5H10 M10 5L11.5 3.5%22/%3E%3C/svg%3E"); }
+.gl-nest { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 12 16%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.25%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M1 4H10V13H6 M4 7V10H7%22/%3E%3C/svg%3E"); }
+.gl-fork { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 12 16%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.25%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M1 8H6L10 4 M6 8L10 12 M3 11V13%22/%3E%3C/svg%3E"); }
+.gl-bars { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 12 16%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.25%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M2 13L6 3 M6 13L10 3 M8 3H11%22/%3E%3C/svg%3E"); }
+.gl-kite { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 12 16%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.25%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M6 2L9 5L6 8L3 5Z M6 8V14%22/%3E%3C/svg%3E"); }
+.gl-corner { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 12 16%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.25%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M2 4H5 M2 4V7 M10 12H7 M10 12V9 M5.5 7.5H6.5V8.5H5.5Z%22/%3E%3C/svg%3E"); }
+.gl-bracket { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 12 16%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.25%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M2 3H10V13H2 M5 6V10%22/%3E%3C/svg%3E"); }
+.gl-peak { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 12 16%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.25%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M3 12L6 7L9 12Z M6 2V4.5%22/%3E%3C/svg%3E"); }
+.gl-shelf { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 12 16%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.25%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M1 5H8 M4 10H11 M8 5V13%22/%3E%3C/svg%3E"); }
+.gl-rise { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 12 16%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.25%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M2 6L6 3L10 6 M2 11L6 8L10 11%22/%3E%3C/svg%3E"); }
+.gl-break { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 12 16%22 fill=%22none%22 stroke=%22black%22 stroke-width=%221.25%22 stroke-linecap=%22square%22 stroke-linejoin=%22miter%22%3E%3Cpath d=%22M6 2L10 6L6 10 M2 10L6 14%22/%3E%3C/svg%3E"); }
+.clave { --m: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%22390 140 680 800%22%3E%3Cdefs%3E%3Cmask id=%22p%22 maskUnits=%22userSpaceOnUse%22 x=%22390%22 y=%22140%22 width=%22680%22 height=%22800%22%3E%3Crect x=%22390%22 y=%22140%22 width=%22680%22 height=%22800%22 fill=%22white%22/%3E%3Cpath d=%22M972 153L909 216M973 304L1043 374M850 380L850 540M600 580L600 730M451 703L505 757M451 891L519 823%22 stroke=%22black%22 stroke-width=%225%22/%3E%3C/mask%3E%3C/defs%3E%3Cg fill=%22black%22%3E%3Cpath d=%22M737 304L737 255L833 161H970L1038 226V326L475 754V817L509 851H612L710 778V820L613 906H475L415 851V747L977 317V257L935 215H840Z%22 mask=%22url%28%23p%29%22/%3E%3Cpath d=%22M705 375L724 356L743 375V705L724 724L705 705Z%22/%3E%3C/g%3E%3C/svg%3E"); }

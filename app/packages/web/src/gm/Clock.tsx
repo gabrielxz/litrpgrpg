@@ -17,7 +17,7 @@ function AdvanceForm({ view, names, onRecorded }: { view: GmView; names: Names; 
   const ok = Number.isInteger(total) && total > 0;
   return (
     <div className="form">
-      <div className="row tight">
+      <div className="form-row tight">
         <label>
           Hours
           <input type="number" min={0} value={hours} onChange={(e) => setHours(e.target.value)} />
@@ -55,7 +55,7 @@ function SetForm({ view, engine, names, onRecorded }: { view: GmView; engine: En
   };
   return (
     <div className="form">
-      <div className="row tight">
+      <div className="form-row tight">
         <label>
           Day
           <input type="number" min={1} value={day} onChange={(e) => setDay(e.target.value)} />
@@ -112,30 +112,45 @@ export function ClockControls({
   };
   const dawnIn = clock ? toNextDawn(clock) : 0;
   return (
-    <div className="clock">
-      <div className="session-line">
+    <>
+      <div className="tablebar__part clock">
+        <i className="ic ic-time dim" aria-hidden="true" />
         {clock ? (
           <>
-            <strong>{clockLine(clock.at)}</strong>
-            <button disabled={busy} onClick={() => run({ type: "clock.advance", minutes: 60 })}>
+            <span className="tablebar__big">{clockLine(clock.at)}</span>
+            <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "clock.advance", minutes: 60 })}>
               Forward 1 hour
             </button>
-            <button disabled={busy} onClick={() => run({ type: "clock.advance", minutes: dawnIn })} title={`Dawn at ${String(clock.dawn).padStart(2, "0")}:00`}>
+            <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "clock.advance", minutes: dawnIn })} title={`Dawn at ${String(clock.dawn).padStart(2, "0")}:00`}>
               Forward to dawn ({duration(dawnIn)})
             </button>
-            <button onClick={() => toggle("advance")}>Forward…</button>
-            <button onClick={() => toggle("set")}>Set…</button>
+            <button className="btn btn--sm" aria-expanded={open === "advance"} onClick={() => toggle("advance")}>
+              Forward…
+            </button>
+            <button className="btn btn--sm" aria-expanded={open === "set"} onClick={() => toggle("set")}>
+              Set…
+            </button>
           </>
         ) : (
           <>
-            <span className="muted">No in-game clock.</span>
-            <button onClick={() => toggle("set")}>Set the clock</button>
+            <span className="dim">No in-game clock.</span>
+            <button className="btn btn--sm" aria-expanded={open === "set"} onClick={() => toggle("set")}>
+              Set the clock
+            </button>
           </>
         )}
+        {error && <span className="error">{error}</span>}
       </div>
-      {error && <p className="error">{error}</p>}
-      {open === "advance" && clock && <AdvanceForm view={view} names={names} onRecorded={recorded} />}
-      {open === "set" && engine && <SetForm view={view} engine={engine} names={names} onRecorded={recorded} />}
-    </div>
+      {open === "advance" && clock && (
+        <div className="tablebar__drawer">
+          <AdvanceForm view={view} names={names} onRecorded={recorded} />
+        </div>
+      )}
+      {open === "set" && engine && (
+        <div className="tablebar__drawer">
+          <SetForm view={view} engine={engine} names={names} onRecorded={recorded} />
+        </div>
+      )}
+    </>
   );
 }

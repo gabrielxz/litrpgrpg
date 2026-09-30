@@ -5,10 +5,11 @@
  * appends it under an idempotency key that is renewed only after it lands, so a double click or a
  * retry records it once.
  */
-import type { Action, Envelope, Preview } from "@gradebreaker/record";
+import { type Action, type Effect, type Envelope, type Preview, noticesFor } from "@gradebreaker/record";
 import { createContext, useContext, useEffect, useState } from "react";
 import { type Appended, newActionId, preview, submit } from "../api.ts";
-import { changeLine, effectLine, type Names } from "../text.ts";
+import { changeLine, effectLine, type Names, noticeLine } from "../text.ts";
+import { Clave, Icon } from "../ui.tsx";
 
 /** The GM view's log length; a preview is redone when it changes. */
 export const LogSeq = createContext(0);
@@ -28,49 +29,97 @@ export interface CommitProps {
   submitWith?: (id: string, action: Action) => Promise<Appended>;
 }
 
+/** "Kara", "Kara and Joe", "Kara, Joe, and Andre". */
+const listed = (xs: string[]) => (xs.length < 3 ? xs.join(" and ") : `${xs.slice(0, -1).join(", ")}, and ${xs.at(-1)}`);
+
+/**
+ * What the players get, in their register (Decisions, "the makeover", P2): each character's
+ * notices, chosen by the same rule as their feed; characters who receive the same notices share
+ * one preview.
+ */
+export function PlayerPreview({ effects, names }: { effects: Effect[]; names: Names }) {
+  const everyone = new Set(effects.flatMap((e) => ("characterId" in e && e.characterId ? [e.characterId] : [])));
+  const byCharacter = new Map<string, string[]>();
+  for (const e of noticesFor(effects, everyone)) {
+    const text = noticeLine(e);
+    const id = (e as { characterId: string }).characterId;
+    if (text) byCharacter.set(id, [...(byCharacter.get(id) ?? []), text]);
+  }
+  const groups = new Map<string, { ids: string[]; texts: string[] }>();
+  for (const [id, texts] of byCharacter) {
+    const key = texts.join("\u0000");
+    const g = groups.get(key);
+    if (g) g.ids.push(id);
+    else groups.set(key, { ids: [id], texts });
+  }
+  return (
+    <>
+      {[...groups.values()].map((g) => (
+        <div key={g.ids.join()} className="preview sys">
+          <div className="preview__to">
+            <Icon name="send" />
+            {listed(g.ids.map(names))} {g.ids.length > 1 ? "each receive" : "receives"}
+          </div>
+          {g.texts.map((t, i) => (
+            <div key={i} className="notice">
+              <Clave />
+              <span className="notice__text">{t}</span>
+            </div>
+          ))}
+        </div>
+      ))}
+    </>
+  );
+}
+
 export function PreviewView({ pv, names }: { pv: Preview; names: Names }) {
   const effects = pv.effects.map((e) => effectLine(e, names)).filter((l): l is string => Boolean(l));
   return (
-    <div className="preview">
-      <h4>{pv.accepted ? "If you record this:" : "This cannot be recorded:"}</h4>
-      {!pv.accepted && <p className="error">{pv.reason}</p>}
-      {effects.length > 0 && (
-        <ul className="effects">
-          {effects.map((l, i) => (
-            <li key={i}>{l}</li>
-          ))}
-        </ul>
-      )}
-      {pv.changes.map((d) => {
-        const lines = d.changes.map(changeLine).filter((l): l is string => Boolean(l));
-        if (d.status === "changed" && !lines.length) return null;
-        return (
-          <div key={d.characterId} className="change">
-            {d.status === "added" ? "New character: " : d.status === "removed" ? "Removed from the campaign: " : ""}
-            <strong>{d.name}</strong>
-            {lines.length > 0 && (
-              <ul>
-                {lines.map((l, i) => (
-                  <li key={i}>{l}</li>
-                ))}
-              </ul>
-            )}
-          </div>
-        );
-      })}
-      {pv.newlyRejected.length > 0 && (
-        <div className="stranded">
-          <strong>Earlier-recorded actions that would stop applying:</strong>
-          <ul>
-            {pv.newlyRejected.map((r) => (
-              <li key={r.envelope.id}>
-                #{r.envelope.seq + 1}: {r.reason}
-              </li>
+    <>
+      <div className="record">
+        <div className={`record__head${pv.accepted ? "" : " refused"}`}>{pv.accepted ? "If you record this" : "This cannot be recorded"}</div>
+        {!pv.accepted && <p className="error">{pv.reason}</p>}
+        {effects.length > 0 && (
+          <ul className="effects">
+            {effects.map((l, i) => (
+              <li key={i}>{l}</li>
             ))}
           </ul>
-        </div>
-      )}
-    </div>
+        )}
+        {pv.changes.map((d) => {
+          const lines = d.changes.map(changeLine).filter((l): l is string => Boolean(l));
+          if (d.status === "changed" && !lines.length) return null;
+          return (
+            <div key={d.characterId} className="change">
+              {d.status === "added" ? "New character: " : d.status === "removed" ? "Removed from the campaign: " : ""}
+              <strong>{d.name}</strong>
+              {lines.length > 0 && (
+                <ul>
+                  {lines.map((l, i) => (
+                    <li key={i} className="delta">
+                      {l}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          );
+        })}
+        {pv.newlyRejected.length > 0 && (
+          <div className="stranded">
+            <strong>Earlier-recorded actions that would stop applying:</strong>
+            <ul>
+              {pv.newlyRejected.map((r) => (
+                <li key={r.envelope.id}>
+                  #{r.envelope.seq + 1}: {r.reason}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+      {pv.accepted && <PlayerPreview effects={pv.effects} names={names} />}
+    </>
   );
 }
 
@@ -117,11 +166,14 @@ export function Commit({ campaignId, action, problem, names, label, onRecorded, 
 
   return (
     <div className="commit">
-      {problem ? <p className="muted">{problem}</p> : pv && <PreviewView pv={pv} names={names} />}
+      {problem ? <p className="problem">{problem}</p> : pv && <PreviewView pv={pv} names={names} />}
       {error && <p className="error">{error}</p>}
-      <button className="primary" disabled={!action || Boolean(problem) || !pv?.accepted || busy} onClick={record}>
-        {label}
-      </button>
+      <div className="commit__decide">
+        <button className="btn btn--primary" disabled={!action || Boolean(problem) || !pv?.accepted || busy} onClick={record}>
+          <Icon name="confirm" />
+          {label}
+        </button>
+      </div>
     </div>
   );
 }

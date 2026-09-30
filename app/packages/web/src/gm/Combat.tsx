@@ -141,7 +141,7 @@ function CreaturePicker({
 
   return (
     <div className="form">
-      <div className="row">
+      <div className="form-row">
         <label>
           From the Bestiary
           <select value={pick} onChange={(e) => setPick(e.target.value)}>
@@ -170,7 +170,7 @@ function CreaturePicker({
       </div>
       <details>
         <summary>Someone not in the Bestiary</summary>
-        <div className="row">
+        <div className="form-row">
           <label>
             Name
             <input value={custom.name} onChange={(e) => setCustom({ ...custom, name: e.target.value })} />
@@ -252,14 +252,14 @@ function Setup({ view, engine, onRecorded, firing, onFired }: { view: GmView; en
     <section className="card combat-setup">
       <h2>A new fight</h2>
       {firing && <p className="muted small">From Prep. Place the characters, then start it.</p>}
-      <div className="row">
+      <div className="form-row">
         <label>
           Name
           <input value={name} onChange={(e) => setName(e.target.value)} placeholder="The treeline" />
         </label>
       </div>
       <h3>Sides</h3>
-      <div className="row">
+      <div className="form-row">
         {sides.map((s, i) => (
           <label key={s.id}>
             Side {i + 1}
@@ -273,7 +273,7 @@ function Setup({ view, engine, onRecorded, firing, onFired }: { view: GmView; en
         )}
       </div>
       <h3>Zones</h3>
-      <div className="row">
+      <div className="form-row">
         <label>
           Loose areas, separated by commas; everyone starts in the first
           <input className="wide" value={zoneText} onChange={(e) => setZoneText(e.target.value)} placeholder="The bar, The floor, The doorway" />
@@ -373,7 +373,7 @@ function Setup({ view, engine, onRecorded, firing, onFired }: { view: GmView; en
       {others.length > 0 && (
         <details>
           <summary>Save this fight to Prep</summary>
-          <div className="row">
+          <div className="form-row">
             <label>
               Title
               <input value={prepTitle} onChange={(e) => setPrepTitle(e.target.value)} placeholder={name.trim() || "The treeline"} />
@@ -528,7 +528,7 @@ function CombatantRow({
         </div>
       )}
       {(c.downed || (c.dead && c.kind !== "character" && c.hp === 0)) && (
-        <div className="row tight">
+        <div className="form-row tight">
           <span className="muted small">Your ruling:</span>
           {(c.dead || !c.downed?.stabilized) && (
             <button disabled={busy} onClick={() => run({ type: "combat.fate", combatantId: c.id, fate: "stabilized" })} title="Left alive, or success at a cost: the countdown stops">
@@ -543,7 +543,7 @@ function CombatantRow({
         </div>
       )}
       {!c.out && (
-        <div className="row tight">
+        <div className="form-row tight">
           <input type="number" className="narrow-input" min={1} value={delta} onChange={(ev) => setDelta(ev.target.value)} placeholder="HP" />
           <button disabled={busy || !(d > 0)} onClick={() => applyHp(-1)}>
             Damage
@@ -563,7 +563,7 @@ function CombatantRow({
         </div>
       )}
       {!c.out && (
-        <div className="row tight">
+        <div className="form-row tight">
           {e.zones.length > 1 && (
             <>
               <select value={zone || c.zoneId || ""} onChange={(ev) => setZone(ev.target.value)} aria-label="Zone">
@@ -649,7 +649,7 @@ function CombatantRow({
         />
       )}
       {acting && !e.clash && (
-        <div className="row tight beats">
+        <div className="form-row tight beats">
           <button className="primary" disabled={busy || c.beats < 1} onClick={() => setAttacking(attacking === "turn" ? null : "turn")}>
             Attack…
           </button>
@@ -777,7 +777,7 @@ function Running({
         )}
       </header>
       {e.round > 0 && (
-        <div className="row tight reversals">
+        <div className="form-row tight reversals">
           <span className="muted small">Decisive Tactical Reversal:</span>
           {e.sides
             .filter((s) => s.id !== e.order[0])
@@ -838,10 +838,10 @@ function SurprisePanel({ e, run, busy }: { e: EncounterView; run: (a: Action) =>
   const [picked, setPicked] = useState<string[]>([]);
   const able = e.combatants.filter((c) => !c.out && !c.downed);
   return (
-    <details className="panel">
+    <details className="disclosure">
       <summary>An ambush? Give the Surprise Beat</summary>
       <p className="small muted">Each surprising combatant takes one free Beat before Initial Momentum is rolled.</p>
-      <div className="row tight">
+      <div className="form-row tight">
         {able.map((c) => (
           <label key={c.id} className="check">
             <input
@@ -878,7 +878,7 @@ function AuraPanel({ engine, e, run, busy }: { engine: Engine; e: EncounterView;
             {savers.map((s) => s.name).join(", ")} {savers.length === 1 ? "makes" : "make"} the Will Save, Heart against its aura. Three or more Grades
             apart, you may mark them Suppressed without a save; an entity holding its aura in asks for no save.
           </p>
-          <div className="row tight">
+          <div className="form-row tight">
             <button className="primary" disabled={busy} onClick={() => run({ type: "combat.aura", entityId: c.id, flaring: false })}>
               Carried calmly: Moderate (90)
             </button>
@@ -950,7 +950,7 @@ function ClashPanel({
               {def.characterId ? `${def.name}'s player can choose on their screen.` : ""}
             </p>
             {(e.coverIds ?? []).length > 0 && (
-              <div className="row tight">
+              <div className="form-row tight">
                 {e.coverIds!.map((id) => {
                   const sh = view.characters.find((s) => s.id === e.combatants.find((x) => x.id === id)?.characterId);
                   const p = sh?.class?.permission;
@@ -989,7 +989,7 @@ function ClashPanel({
         <p className="small muted">A defensive Clash won on an explosion can be a Decisive Tactical Reversal; call it above if it is.</p>
       )}
       {r.drivable && def && !def.out && zones.length > 0 && (
-        <div className="row tight">
+        <div className="form-row tight">
           <span className="small">{name(r.attackerId)} may drive {def.name} into an adjacent Zone:</span>
           <select value={target} onChange={(ev) => setDrive(ev.target.value)}>
             {zones.map((z) => (
@@ -1056,7 +1056,7 @@ function AddMidFight({ view, engine, e, run }: { view: GmView; engine: Engine; e
   return (
     <div className="form">
       {free.length > 0 && (
-        <div className="row">
+        <div className="form-row">
           <label>
             Character
             <select value={picked} onChange={(ev) => setCharacterId(ev.target.value)}>

@@ -117,7 +117,7 @@ function DraftCard({
         }}
         onRecorded={onRecorded}
       />
-      <div className="row">
+      <div className="form-row">
         <button onClick={dismiss}>Dismiss</button>
         {error && <span className="error small">{error}</span>}
       </div>
@@ -136,7 +136,7 @@ function RunLine({ run }: { run: DraftRun }) {
   if (run.status === "failed") return <p className="error small">The draft from {lines} ({when(run.createdAt)}) failed: {run.message}</p>;
   const n = run.items.length;
   return (
-    <details className="panel small">
+    <details className="disclosure small">
       <summary>
         {when(run.createdAt)}: {n === 0 ? "no moments" : `${n} draft${n === 1 ? "" : "s"}`} from {lines}
         {run.dropped.length > 0 ? `, ${run.dropped.length} dropped` : ""}
@@ -285,7 +285,7 @@ export function DraftsCard({
             />
           </label>
           {talk.lines.length > 0 && <Readings talk={talk} view={view} names={names} />}
-          <div className="row">
+          <div className="form-row">
             <button className="primary" disabled={!talk.lines.length || busy || drafting || !configured} onClick={start}>
               Draft
             </button>
@@ -333,7 +333,7 @@ export function DraftsCard({
         </>
       )}
       {accepted.length > 0 && (
-        <details className="panel">
+        <details className="disclosure">
           <summary>Accepted ({accepted.length})</summary>
           <ul className="small">
             {accepted.map(({ item }) => (
@@ -343,7 +343,7 @@ export function DraftsCard({
         </details>
       )}
       {dismissed.length > 0 && (
-        <details className="panel">
+        <details className="disclosure">
           <summary>Dismissed ({dismissed.length})</summary>
           <ul className="small">
             {dismissed.map(({ item }) => (

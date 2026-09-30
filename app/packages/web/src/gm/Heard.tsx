@@ -78,7 +78,7 @@ export function HeardCard({ view, heard, drafts, onUse }: { view: GmView; heard:
           ))}
         </ol>
       )}
-      <div className="row">
+      <div className="form-row">
         {configured === false ? (
           <span className="muted small">Drafting from these needs the campaign's key (the AI card in the Table section). Kept 30 days, then deleted.</span>
         ) : (

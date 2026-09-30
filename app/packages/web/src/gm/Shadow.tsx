@@ -65,7 +65,7 @@ export function ShadowCard({ view, names, heard, drafts }: { view: GmView; names
         {runs.length} window{runs.length === 1 ? "" : "s"} of heard lines drafted this session
         {hidden ? `; ${hidden === runs.length ? "their" : `${hidden} windows'`} drafts are kept from review.` : ", all in review."}
       </p>
-      <div className="row">
+      <div className="form-row">
         <button disabled={busy} onClick={compare}>
           {report ? "Compare again" : "Compare with what you logged"}
         </button>
@@ -85,7 +85,7 @@ export function ShadowCard({ view, names, heard, drafts }: { view: GmView; names
             {report.both.some((m) => m.sameSide === false) ? ` ${report.both.filter((m) => m.sameSide === false).length} shared moment(s) read on another side.` : ""}
           </p>
           {report.gmOnly.length > 0 && (
-            <details className="panel" open>
+            <details className="disclosure" open>
               <summary>You logged, the listener missed ({report.gmOnly.length})</summary>
               <ul className="small">
                 {report.gmOnly.map((e) => (
@@ -95,7 +95,7 @@ export function ShadowCard({ view, names, heard, drafts }: { view: GmView; names
             </details>
           )}
           {report.listenerOnly.length > 0 && (
-            <details className="panel" open>
+            <details className="disclosure" open>
               <summary>The listener drafted, you did not log ({report.listenerOnly.length})</summary>
               <ul className="small">
                 {report.listenerOnly.map((i) => (
@@ -109,7 +109,7 @@ export function ShadowCard({ view, names, heard, drafts }: { view: GmView; names
             </details>
           )}
           {report.both.length > 0 && (
-            <details className="panel">
+            <details className="disclosure">
               <summary>Both ({report.both.length})</summary>
               <ul className="small">
                 {report.both.map((m) => (

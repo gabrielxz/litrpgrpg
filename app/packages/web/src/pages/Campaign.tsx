@@ -2,16 +2,19 @@ import { GmCampaign } from "../gm/GmCampaign.tsx";
 import { ListeningBar } from "../Listening.tsx";
 import { useCampaign } from "../live.ts";
 import { PlayerCampaign } from "../player/PlayerCampaign.tsx";
+import { useRegister } from "../frame.ts";
 import { TopBar } from "./Home.tsx";
 
 export function Campaign({ id }: { id: string }) {
   const live = useCampaign(id);
   const { view, status, error } = live;
 
+  useRegister(view?.role === "player" ? "sys" : "gm");
+
   const statusLine = (
-    <span className={`live-status ${status}`}>
+    <span className="topbar__campaign">
       {view?.campaign.name}
-      <span className="dot" title={status === "live" ? "Live" : "Reconnecting"} />
+      <i className={status === "live" ? "live" : "live live--off"} title={status === "live" ? "Live" : "Reconnecting"} />
     </span>
   );
 
@@ -34,7 +37,7 @@ export function Campaign({ id }: { id: string }) {
   return (
     <>
       <TopBar>{statusLine}</TopBar>
-      <ListeningBar campaignId={id} role={view.role} status={live.listening} send={live.send} />
+      {view.role !== "gm" && <ListeningBar campaignId={id} role={view.role} status={live.listening} send={live.send} />}
       {view.role === "gm" ? <GmCampaign view={view} live={live} /> : <PlayerCampaign view={view} />}
     </>
   );

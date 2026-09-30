@@ -93,7 +93,7 @@ export function EventsSection({
     return s && sessionName(s);
   };
   return (
-    <main className="gm">
+    <main className="gm-split">
       <div>
         <HeardCard view={view} heard={heard} drafts={drafts} onUse={(text) => setSeed((s) => ({ text, n: s.n + 1 }))} />
         <ShadowCard view={view} names={names} heard={heard} drafts={drafts} />

@@ -21,7 +21,7 @@ export function InspectionForm({ view, engine }: { view: GmView; engine: Engine 
   const unread = read ? active.filter((t) => !read.some((r) => r.name === t.name)) : active;
   return (
     <div className="form">
-      <div className="row">
+      <div className="form-row">
         <label>
           Who looks
           <select value={observer} onChange={(e) => setObserver(e.target.value)}>

@@ -104,7 +104,7 @@ Reward:     ${[ve, q.rewardText ?? ""].filter(Boolean).join(", ")}${q.time ? `\n
       {q.note && <p className="small muted">GM note: {q.note}</p>}
       <TableWords text={[q.title, q.objective, q.rewardText ?? "", s.notice ?? ""].join(" ")} />
       <SheetWords engine={engine} text={[q.title, q.objective, q.rewardText ?? "", s.notice ?? ""].join(" ")} />
-      <div className="row">
+      <div className="form-row">
         <button
           className="primary"
           onClick={() =>
@@ -168,7 +168,7 @@ function RevealCard({ view, names, run, item, drafts, onRecorded }: Pick<Props, 
         }}
         onRecorded={onRecorded}
       />
-      <div className="row">
+      <div className="form-row">
         <button onClick={() => drafts.mark(item, "dismiss")}>Dismiss</button>
       </div>
     </li>
@@ -244,7 +244,7 @@ function SuggestionCard({ view, engine, names, run, item, drafts, onRecorded }: 
             Trigger
             <input className="wide" value={deed} maxLength={300} onChange={(e) => setDeed(e.target.value)} />
           </label>
-          <div className="row">
+          <div className="form-row">
             <label>
               Attribute
               <select value={stat} onChange={(e) => setStat(e.target.value)}>
@@ -276,7 +276,7 @@ function SuggestionCard({ view, engine, names, run, item, drafts, onRecorded }: 
         }}
         onRecorded={onRecorded}
       />
-      <div className="row">
+      <div className="form-row">
         <button onClick={() => drafts.mark(item, "dismiss")}>Dismiss</button>
       </div>
     </li>
@@ -297,7 +297,7 @@ export function SuggestionsSection({ view, engine, names, onRecorded, drafts, on
   const pointers = elsewhere(view, engine, names);
   const due = view.characters.some((c) => !c.dead && (c.titlesDue.length || c.principles.due.length));
   return (
-    <main className="gm">
+    <main className="gm-split">
       <div>
         <section className="card">
           <h2>From the table talk</h2>
@@ -322,7 +322,7 @@ export function SuggestionsSection({ view, engine, names, onRecorded, drafts, on
                       <p className="small">
                         Drafted in the <a href="#classes">Classes</a> section, where they load into the three offers to edit and record.
                       </p>
-                      <div className="row">
+                      <div className="form-row">
                         <button onClick={() => drafts.mark(item, "dismiss")}>Dismiss</button>
                       </div>
                     </li>
@@ -336,7 +336,7 @@ export function SuggestionsSection({ view, engine, names, onRecorded, drafts, on
           )}
           {drafts.error && <p className="error">{drafts.error}</p>}
           {accepted.length > 0 && (
-            <details className="panel">
+            <details className="disclosure">
               <summary>Accepted ({accepted.length})</summary>
               <ul className="small">
                 {accepted.map(({ item }) => (
@@ -346,7 +346,7 @@ export function SuggestionsSection({ view, engine, names, onRecorded, drafts, on
             </details>
           )}
           {dismissed.length > 0 && (
-            <details className="panel">
+            <details className="disclosure">
               <summary>Dismissed ({dismissed.length})</summary>
               <ul className="small">
                 {dismissed.map(({ item }) => (

@@ -19,7 +19,7 @@ type FormProps = { view: GmView; engine: Engine; names: Names; onRecorded: (env:
 export function ItemsForm(props: FormProps) {
   const [mode, setMode] = useState<"give" | "remove" | "absorb">("give");
   const modes = (
-    <div className="row">
+    <div className="form-row">
       <label>
         <input type="radio" checked={mode === "give"} onChange={() => setMode("give")} /> Give
       </label>
@@ -47,7 +47,7 @@ function GiveOrRemove({ view, engine, names, onRecorded, mode, modes }: FormProp
   return (
     <div className="form">
       {modes}
-      <div className="row">
+      <div className="form-row">
         <label>
           {mode === "give" ? "To" : "From"}
           <select value={holder} onChange={(e) => setHolder(e.target.value)}>
@@ -133,7 +133,7 @@ function TreasureForm({ view, engine, names, onRecorded, modes }: FormProps & { 
   return (
     <div className="form">
       {modes}
-      <div className="row">
+      <div className="form-row">
         <label>
           Who absorbs it
           <select value={who} onChange={(e) => pickWho(e.target.value)}>
@@ -156,7 +156,7 @@ function TreasureForm({ view, engine, names, onRecorded, modes }: FormProps & { 
           </select>
         </label>
       </div>
-      <div className="row">
+      <div className="form-row">
         <label>
           Size
           <select value={size} onChange={(e) => setSize(e.target.value)}>
@@ -217,31 +217,34 @@ export function SpoilsCard({ view, onRecorded }: { view: GmView; onRecorded: (en
     }
   };
   return (
-    <article className="sheet-card spoils">
-      <header>
-        <h3>The spoils</h3>
-        <span className="muted small">Players can claim these on their screens.</span>
-      </header>
-      <ul className="items">
+    <section className="panel" aria-label="The spoils">
+      <div className="panel__head">
+        <i className="ic ic-spoils dim" aria-hidden="true" />
+        <h2>The spoils</h2>
+        <span className="small dim">Players can claim these on their screens.</span>
+      </div>
+      <ul className="rows panel__rows">
         {spoils.map((s) => (
           <li key={s.name}>
-            {stackLine(s)}
+            <span className="row__main">{stackLine(s)}</span>
             {living.length > 0 && (
               <>
-                <select value={to[s.name] ?? living[0]!.id} onChange={(e) => setTo({ ...to, [s.name]: e.target.value })} aria-label={`Who gets ${s.name}`}>
+                <select className="select select--sm" value={to[s.name] ?? living[0]!.id} onChange={(e) => setTo({ ...to, [s.name]: e.target.value })} aria-label={`Who gets ${s.name}`}>
                   {living.map((c) => (
                     <option key={c.id} value={c.id}>
                       {c.name}
                     </option>
                   ))}
                 </select>
-                <button onClick={() => give(s)}>Give one</button>
+                <button className="btn btn--sm" onClick={() => give(s)}>
+                  Give one
+                </button>
               </>
             )}
           </li>
         ))}
       </ul>
-      {error && <p className="error">{error}</p>}
-    </article>
+      {error && <p className="error panel__error">{error}</p>}
+    </section>
   );
 }

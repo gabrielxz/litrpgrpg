@@ -163,7 +163,7 @@ export function AftermathPanel({ view, engine, names, onRecorded }: { view: GmVi
       )}
 
       <h3>Took part</h3>
-      <div className="row tight">
+      <div className="form-row tight">
         {fighters.map((c) => {
           const gone = sheet(c.characterId!)?.dead;
           return (
@@ -226,7 +226,7 @@ export function AftermathPanel({ view, engine, names, onRecorded }: { view: GmVi
             ))}
           </ul>
         ) : (
-          <div className="row tight">
+          <div className="form-row tight">
             <button className="primary" disabled={busy} onClick={rollLoot}>
               Roll loot
             </button>
@@ -251,7 +251,7 @@ export function AftermathPanel({ view, engine, names, onRecorded }: { view: GmVi
         ))}
       </datalist>
       {spoils.map((s, i) => (
-        <div key={i} className="row tight">
+        <div key={i} className="form-row tight">
           <input list="item-catalog" value={s.name} onChange={(ev) => setSpoils(spoils.map((x, j) => (j === i ? { ...x, name: ev.target.value } : x)))} placeholder="Lesser Healing Pill" aria-label="Item" />
           <input type="number" className="narrow-input" min={1} value={s.count} onChange={(ev) => setSpoils(spoils.map((x, j) => (j === i ? { ...x, count: ev.target.value } : x)))} aria-label="How many" />
           <button onClick={() => setSpoils(spoils.filter((_, j) => j !== i))}>Remove</button>

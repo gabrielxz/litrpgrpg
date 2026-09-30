@@ -163,80 +163,76 @@ export function ListeningBar({ campaignId, role, status, send }: Props) {
                 ? micError
                 : "Your microphone is live.";
 
-  return (
-    <div className={`listening-bar ${status.mode}`} role="region" aria-label="Listening">
-      <div className="listening-line">
-        <strong className="listening-mode">
-          <span className="dot" />
-          {MODE_LABEL[status.mode]}
-        </strong>
-        {mine && <span className="small">{mine}</span>}
-        {status.recorded && <span className="tag attention">Recording for testing</span>}
-        {micOn && !micError && <LevelMeter level={level} />}
-        {micOn && micError && (
-          <button onClick={() => setRetry((n) => n + 1)}>{needsClick ? "Turn my microphone on" : "Try again"}</button>
-        )}
-        {takenElsewhere && <button onClick={() => setTakenElsewhere(false)}>Use this tab</button>}
-        {wantCapture && (
-          <button className={muted ? "primary" : ""} onClick={() => setMuted((m) => !m)} aria-pressed={muted}>
-            {muted ? "Unmute" : "Mute"}
+  const own = (
+    <>
+      {status.recorded && <span className="tag tag--danger">Recording for testing</span>}
+      {micOn && !micError && <LevelMeter level={level} />}
+      {micOn && micError && (
+        <button className="btn btn--sm" onClick={() => setRetry((n) => n + 1)}>
+          {needsClick ? "Turn my microphone on" : "Try again"}
+        </button>
+      )}
+      {takenElsewhere && (
+        <button className="btn btn--sm" onClick={() => setTakenElsewhere(false)}>
+          Use this tab
+        </button>
+      )}
+      {wantCapture && (
+        <button className="btn btn--sm" onClick={() => setMuted((m) => !m)} aria-pressed={muted}>
+          <i className={`ic ic-${muted ? "listen" : "mute"}`} aria-hidden="true" />
+          {muted ? "Unmute" : "Mute"}
+        </button>
+      )}
+    </>
+  );
+  const consents = (
+    <span className="cluster listening-consent">
+      {status.consented ? (
+        <button className="btn-link small dim" onClick={() => consent(false)}>
+          Withdraw consent
+        </button>
+      ) : (
+        !asking && (
+          <button className="btn btn--sm" onClick={() => setAsking(true)}>
+            Consent to listening…
           </button>
-        )}
-        {role === "gm" && (
-          <span className="listening-controls">
-            {status.mode === "off" && (status.streams ?? []).length > 0 && !(status.missing ?? []).length && (
-              <button onClick={() => setMode("listening")}>Start listening</button>
-            )}
-            {status.mode === "listening" && <button onClick={() => setMode("paused")}>Pause for everyone</button>}
-            {status.mode === "paused" && <button onClick={() => setMode("listening")}>Resume</button>}
-            {status.mode !== "off" && <button onClick={() => setMode("off")}>Stop listening</button>}
-            {status.mode !== "off" &&
-              (status.recording?.on ? (
-                <button onClick={() => record(false)}>Stop the test recording</button>
-              ) : (
-                <button onClick={() => record(true)}>Record for testing</button>
-              ))}
-          </span>
-        )}
-        <span className="listening-consent">
-          {status.consented ? (
-            <button className="link small" onClick={() => consent(false)}>
-              Withdraw consent
-            </button>
-          ) : (
-            !asking && <button onClick={() => setAsking(true)}>Consent to listening…</button>
-          )}
-          {status.recordingConsented ? (
-            <button className="link small" onClick={() => consent(false, "recording-consent")}>
-              Withdraw test-recording consent
-            </button>
-          ) : (
-            !askingRecording && (
-              <button className="link small" onClick={() => setAskingRecording(true)}>
-                Test recordings…
-              </button>
-            )
-          )}
-        </span>
-      </div>
+        )
+      )}
+      {status.recordingConsented ? (
+        <button className="btn-link small dim" onClick={() => consent(false, "recording-consent")}>
+          Withdraw test-recording consent
+        </button>
+      ) : (
+        !askingRecording && (
+          <button className="btn-link small dim" onClick={() => setAskingRecording(true)}>
+            Test recordings…
+          </button>
+        )
+      )}
+    </span>
+  );
+  const asks = (
+    <>
       {asking && !status.consented && (
-        <div className="listening-ask">
+        <div className="listening-ask stack">
           <p>
             While the GM has listening on during a session, this tab sends your microphone to the Gradebreaker server, which passes it to
             Soniox to turn into text. Neither keeps the audio. The text appears on the GM's screen, where the app uses it to draft what
             happened, and is deleted 30 days after it was said. You can mute this tab at any time. The table listens only while everyone
             at it has consented, and withdrawing your consent stops it for everyone.
           </p>
-          <div className="row">
-            <button className="primary" onClick={() => consent(true)}>
+          <div className="cluster">
+            <button className="btn btn--primary btn--sm" onClick={() => consent(true)}>
               I consent
             </button>
-            <button onClick={() => setAsking(false)}>Not now</button>
+            <button className="btn btn--sm" onClick={() => setAsking(false)}>
+              Not now
+            </button>
           </div>
         </div>
       )}
       {askingRecording && !status.recordingConsented && (
-        <div className="listening-ask">
+        <div className="listening-ask stack">
           <p>
             A test recording keeps your voice so the listener can be measured against real speech. While the GM records a listening session
             for testing, the Gradebreaker server saves what your microphone sends, with the text the listening made of it, for the GM to
@@ -244,34 +240,118 @@ export function ListeningBar({ campaignId, role, status, send }: Props) {
             tab says when your voice is being kept. Withdrawing this consent deletes your part of every test recording still on the server.
             It is separate from consenting to listening, which keeps no audio.
           </p>
-          <div className="row">
-            <button className="primary" onClick={() => consent(true, "recording-consent")}>
+          <div className="cluster">
+            <button className="btn btn--primary btn--sm" onClick={() => consent(true, "recording-consent")}>
               I consent to test recordings
             </button>
-            <button onClick={() => setAskingRecording(false)}>Not now</button>
+            <button className="btn btn--sm" onClick={() => setAskingRecording(false)}>
+              Not now
+            </button>
           </div>
         </div>
       )}
-      {role === "gm" && <GmStreams status={status} />}
       {error && <p className="error small">{error}</p>}
+    </>
+  );
+
+  // The GM's: a part of the table bar, beside the session and the clock (P1); what needs a line of
+  // its own (consent, streams that are not live) opens under the bar.
+  if (role === "gm") {
+    const details = <GmStreamDetails status={status} />;
+    const open = (asking && !status.consented) || (askingRecording && !status.recordingConsented) || Boolean(error);
+    return (
+      <>
+        <div className="tablebar__part listening" role="region" aria-label="Listening">
+          <i className={`listen-dot listen-dot--${status.mode}`} aria-hidden="true" />
+          <b>{MODE_LABEL[status.mode]}</b>
+          <GmStreamSummary status={status} />
+          {mine && status.mode !== "off" && <span className="dim">{mine}</span>}
+          {own}
+          {status.mode === "off" && (status.streams ?? []).length > 0 && !(status.missing ?? []).length && (
+            <button className="btn btn--sm" onClick={() => setMode("listening")}>
+              <i className="ic ic-play" aria-hidden="true" />
+              Start listening
+            </button>
+          )}
+          {status.mode === "listening" && (
+            <button className="btn btn--sm" onClick={() => setMode("paused")}>
+              <i className="ic ic-pause" aria-hidden="true" />
+              Pause for everyone
+            </button>
+          )}
+          {status.mode === "paused" && (
+            <button className="btn btn--sm" onClick={() => setMode("listening")}>
+              <i className="ic ic-play" aria-hidden="true" />
+              Resume
+            </button>
+          )}
+          {status.mode !== "off" && (
+            <button className="btn btn--sm" onClick={() => setMode("off")}>
+              <i className="ic ic-stop" aria-hidden="true" />
+              Stop listening
+            </button>
+          )}
+          {status.mode !== "off" &&
+            (status.recording?.on ? (
+              <button className="btn btn--sm" onClick={() => record(false)}>
+                Stop the test recording
+              </button>
+            ) : (
+              <button className="btn btn--sm" onClick={() => record(true)}>
+                Record for testing
+              </button>
+            ))}
+          {consents}
+        </div>
+        {details}
+        {open && <div className="tablebar__drawer">{asks}</div>}
+      </>
+    );
+  }
+
+  // A player's: a thin strip above their screen.
+  return (
+    <div className={`listen-strip listen-strip--${status.mode}`} role="region" aria-label="Listening">
+      <div className="listen-strip__line">
+        <i className={`listen-dot listen-dot--${status.mode}`} aria-hidden="true" />
+        <b>{MODE_LABEL[status.mode]}</b>
+        {mine && <span className="dim">{mine}</span>}
+        {own}
+        <span className="grow" />
+        {consents}
+      </div>
+      {asks}
     </div>
   );
 }
 
-function GmStreams({ status }: { status: ListeningStatus }) {
+/** How many of the table's streams are live, in the bar. */
+function GmStreamSummary({ status }: { status: ListeningStatus }) {
+  const streams = status.streams ?? [];
+  if (status.mode === "off") return streams.length === 0 && !status.stopped ? <span className="dim">Start a session to listen.</span> : null;
+  const live = streams.filter((s) => s.state === "live").length;
+  return (
+    <span className="dim">
+      {live} of {streams.length} live
+    </span>
+  );
+}
+
+/** What needs the GM's eye, under the bar: a stop, consent missing, a stream that is not live. */
+function GmStreamDetails({ status }: { status: ListeningStatus }) {
   const streams = status.streams ?? [];
   const missing = status.missing ?? [];
+  const unrecorded = status.recording?.on ? status.recording.unconsented : [];
+  const trouble = status.mode === "listening" && streams.some((s) => s.state !== "live");
+  if (!(status.mode === "off" && status.stopped) && !missing.length && !unrecorded.length && !trouble) return null;
   return (
-    <div className="listening-streams small">
+    <div className="tablebar__drawer listening-streams small">
       {status.mode === "off" && status.stopped && <span>Stopped: {status.stopped}.</span>}
-      {missing.length > 0 && <span className="warn-text">Waiting on consent from {names(missing)}.</span>}
-      {status.recording?.on && status.recording.unconsented.length > 0 && (
-        <span className="muted">Not recorded (no test-recording consent): {names(status.recording.unconsented)}.</span>
-      )}
-      {streams.length === 0 && status.mode === "off" && !status.stopped && <span className="muted">Start a session to listen.</span>}
-      {status.mode === "listening" &&
+      {missing.length > 0 && <span className="warning">Waiting on consent from {names(missing)}.</span>}
+      {unrecorded.length > 0 && <span className="dim">Not recorded (no test-recording consent): {names(unrecorded)}.</span>}
+      {trouble &&
         streams.map((s) => (
-          <span key={s.userId} className={`stream ${s.state}`}>
+          <span key={s.userId} className={`stream stream--${s.state}`}>
             {s.displayName}: {STREAM_LABEL[s.state]}
             {s.failure && ` (${s.failure})`}
             {s.state === "live" && <LevelMeter level={s.level} />}
@@ -284,10 +364,15 @@ function GmStreams({ status }: { status: ListeningStatus }) {
 
 const names = (list: string[]) => (list.length < 2 ? list.join("") : `${list.slice(0, -1).join(", ")} and ${list.at(-1)}`);
 
+/** The level as a few bars of a meter; its shape is fixed and its height follows the level. */
+const BARS = [0.55, 1, 0.7, 0.85, 0.45];
 function LevelMeter({ level }: { level: number }) {
+  const l = Math.min(1, level);
   return (
-    <span className="level" aria-label={`Level ${Math.round(level * 100)}`}>
-      <span style={{ width: `${Math.round(Math.min(1, level) * 100)}%` }} />
+    <span className="level-meter" role="img" aria-label={`Level ${Math.round(l * 100)}`}>
+      {BARS.map((k, i) => (
+        <i key={i} style={{ height: `${Math.max(12, Math.round(l * k * 100))}%` }} />
+      ))}
     </span>
   );
 }

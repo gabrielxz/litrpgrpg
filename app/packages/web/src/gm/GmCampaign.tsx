@@ -32,95 +32,82 @@ import { Table } from "./Invites.tsx";
 import { Log } from "./Log.tsx";
 import { RecordPanel } from "./Record.tsx";
 import { AskRules } from "../AskRules.tsx";
-
-function Meter({ value, max, className }: { value: number; max: number; className?: string }) {
-  const pct = max > 0 ? Math.max(0, Math.min(100, (value / max) * 100)) : 0;
-  return (
-    <div className={`meter ${className ?? ""}`}>
-      <div style={{ width: `${pct}%` }} />
-    </div>
-  );
-}
+import { ListeningBar } from "../Listening.tsx";
+import { Icon, Vital } from "../ui.tsx";
 
 function CharacterCard({ c, player, party, items }: { c: Sheet; player: string; party: string | null; items: Stack[] }) {
   const band = c.saturation.band;
   return (
-    <article className="sheet-card">
-      <header>
-        <h3>{c.name}</h3>
-        <span className="muted">{player}</span>
-      </header>
-      <div className="line">
-        Level {c.level} · {c.grade}-Grade
-        {c.pendingSystemLevels.length > 0 && <span className="tag attention">Assigned points due: Level {c.pendingSystemLevels.join(", ")}</span>}
-        {c.freePoints > 0 && <span className="tag">{c.freePoints} free held</span>}
-        {c.class && <span className="tag">{c.class.name}</span>}
-        {c.classOffers.length > 0 && <span className="tag attention">Class offers standing</span>}
-        {party && <span className="tag">Party: {party}</span>}
-      </div>
-      <div className="vital">
-        <span>HP</span>
-        <Meter value={c.hp} max={c.maxHp} className="hp" />
-        <span className="num">
-          {c.hp}/{c.maxHp}
+    <article className={`panel sheet${c.downed || c.dead ? " sheet--down" : ""}`}>
+      <div className="panel__head">
+        <h2 className="sheet__name">{c.name}</h2>
+        <span className="small dim">{player}</span>
+        <span className="grow" />
+        <span className="num small">
+          Level {c.level} · {c.grade}
         </span>
       </div>
-      {c.dead ? <p className="tag danger">Dead</p> : c.downed && <p className="tag danger">Downed</p>}
-      <div className="vital">
-        <span>Aether</span>
-        <Meter value={c.aether} max={c.maxAether} className="aether" />
-        <span className="num">
-          {c.aether}/{c.maxAether}
-        </span>
+      <div className="panel__body stack sheet__body">
+        <div className="cluster sheet__tags">
+          {c.dead ? (
+            <span className="tag tag--danger">
+              <Icon name="danger" />
+              Dead
+            </span>
+          ) : (
+            c.downed && (
+              <span className="tag tag--danger">
+                <Icon name="downed" />
+                Downed
+              </span>
+            )
+          )}
+          {c.pendingSystemLevels.length > 0 && <span className="tag tag--solid">Assigned points due: Level {c.pendingSystemLevels.join(", ")}</span>}
+          {c.freePoints > 0 && <span className="tag">{c.freePoints} free held</span>}
+          {c.class && <span className="tag">{c.class.name}</span>}
+          {c.classOffers.length > 0 && <span className="tag tag--solid">Class offers standing</span>}
+          {party && <span className="tag">Party: {party}</span>}
+          {band !== "None" && (
+            <span className={`tag ${band === "Mild" ? "tag--warn" : "tag--danger"}`}>
+              <Icon name="warning" />
+              {band} Saturation {c.saturation.penalty}
+              {c.saturation.collapseClock ? " · collapse clock running" : ""}
+            </span>
+          )}
+        </div>
+        <Vital label="HP" kind={c.downed || c.dead ? "danger" : "health"} value={c.hp} max={c.maxHp} />
+        <Vital label="Aether" kind="aether" value={c.aether} max={c.maxAether} />
+        <Vital label="Stored" kind={band === "None" ? "ve" : "danger"} value={c.storedVe} max={c.tolerance} />
+        <Vital label="Refined" kind="level" value={c.refinedVe} max={c.refinedVe + (c.veToNextLevel ?? 0)} text={c.atCap ? "cap" : `${c.veToNextLevel} to go`} />
+        <dl className="statline">
+          {ATTRIBUTES.map((a) => (
+            <div key={a}>
+              <dt>{a}</dt>
+              <dd>{c.raw[a]}</dd>
+            </div>
+          ))}
+        </dl>
+        {c.temporary.length > 0 && <p className="small dim">Temporarily down 1 {c.temporary.join(", 1 ")} until a clean Consolidation.</p>}
+        {c.proficiencies.length > 0 && (
+          <p className="small">
+            <span className="dim">Proficiencies</span> {c.proficiencies.map((p) => `${p.shape} ${p.tier} (${p.marks})`).join(", ")}
+          </p>
+        )}
+        {c.titles.length > 0 && (
+          <p className="small">
+            <span className="dim">Titles</span>{" "}
+            {c.titles
+              .map((t) => `${t.name}${t.status !== "active" ? ` (${t.status})` : t.negative ? " (negative)" : t.choice ? " (stat to choose)" : ""}`)
+              .join(", ")}
+          </p>
+        )}
+        {items.length > 0 && (
+          <p className="small">
+            <span className="dim">Carries</span> {items.map(stackLine).join(", ")}
+          </p>
+        )}
+        {c.background && <p className="prose dim sheet__background">{c.background}</p>}
       </div>
-      <div className="vital">
-        <span>Stored</span>
-        <Meter value={c.storedVe} max={c.tolerance} className={`ve band-${band.toLowerCase()}`} />
-        <span className="num">
-          {c.storedVe}/{c.tolerance}
-        </span>
-      </div>
-      {band !== "None" && (
-        <p className={`tag band-${band.toLowerCase()}`}>
-          {band} Saturation {c.saturation.penalty}
-          {c.saturation.collapseClock ? " · collapse clock running" : ""}
-        </p>
-      )}
-      <div className="vital">
-        <span>Refined</span>
-        <Meter value={c.refinedVe} max={c.refinedVe + (c.veToNextLevel ?? 0)} className="refined" />
-        <span className="num">{c.atCap ? "cap" : `${c.veToNextLevel} to go`}</span>
-      </div>
-      <table className="stats">
-        <tbody>
-          <tr>
-            {ATTRIBUTES.map((a) => (
-              <th key={a}>{a}</th>
-            ))}
-          </tr>
-          <tr>
-            {ATTRIBUTES.map((a) => (
-              <td key={a}>{c.raw[a]}</td>
-            ))}
-          </tr>
-        </tbody>
-      </table>
-      {c.temporary.length > 0 && <p className="small muted">Temporarily down 1 {c.temporary.join(", 1 ")} until a clean Consolidation.</p>}
-      {c.proficiencies.length > 0 && (
-        <p className="small">
-          Proficiencies: {c.proficiencies.map((p) => `${p.shape} ${p.tier} (${p.marks})`).join(", ")}
-        </p>
-      )}
-      {c.titles.length > 0 && (
-        <p className="small">
-          Titles:{" "}
-          {c.titles
-            .map((t) => `${t.name}${t.status !== "active" ? ` (${t.status})` : t.negative ? " (negative)" : t.choice ? " (stat to choose)" : ""}`)
-            .join(", ")}
-        </p>
-      )}
-      {items.length > 0 && <p className="small">Carries: {items.map(stackLine).join(", ")}</p>}
-      <p className="small muted">{c.background}</p>
     </article>
   );
 }
@@ -210,22 +197,44 @@ function ViewAs({ view }: { view: GmView }) {
 }
 
 type Section = "party" | "suggestions" | "prep" | "combat" | "bestiary" | "quests" | "principles" | "classes" | "events" | "hve" | "log" | "rules" | "table" | "player";
-const SECTIONS: [Section, string][] = [
-  ["party", "Party"],
-  ["suggestions", "Suggestions"],
-  ["prep", "Prep"],
-  ["combat", "Combat"],
-  ["bestiary", "Bestiary"],
-  ["quests", "Quests"],
-  ["principles", "Principles"],
-  ["classes", "Classes"],
-  ["events", "Events"],
-  ["hve", "HVE"],
-  ["log", "Campaign log"],
-  ["rules", "Rules"],
-  ["table", "Table"],
-  ["player", "Player view"],
+/** The sections in four groups, by the GM's job (Decisions, "the makeover", P7). */
+const GROUPS: { label: string; sections: [Section, string][] }[] = [
+  {
+    label: "Play",
+    sections: [
+      ["party", "Party"],
+      ["combat", "Combat"],
+      ["suggestions", "Suggestions"],
+      ["events", "Events"],
+    ],
+  },
+  {
+    label: "Record",
+    sections: [
+      ["quests", "Quests"],
+      ["principles", "Principles"],
+      ["classes", "Classes"],
+      ["hve", "HVE"],
+      ["log", "Campaign log"],
+    ],
+  },
+  {
+    label: "Prepare",
+    sections: [
+      ["prep", "Prep"],
+      ["bestiary", "Bestiary"],
+    ],
+  },
+  {
+    label: "Table",
+    sections: [
+      ["table", "Table"],
+      ["rules", "Rules"],
+      ["player", "Player view"],
+    ],
+  },
 ];
+const SECTIONS = GROUPS.flatMap((g) => g.sections);
 
 function useSection(): [Section, (s: Section) => void] {
   const read = () => {
@@ -280,38 +289,58 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
 
   return (
     <LogSeq.Provider value={view.seq}>
-      <nav className="sections">
-        {SECTIONS.map(([s, label]) => (
-          <button key={s} className={s === section ? "active" : ""} onClick={() => setSection(s)}>
-            {label}
-            {s === "suggestions" && suggestionsWaiting(view, engine, names, drafts.runs) > 0 && (
-              <span className="tag attention">{suggestionsWaiting(view, engine, names, drafts.runs)}</span>
-            )}
-            {s === "principles" && principlesWaiting(view) > 0 && <span className="tag attention">{principlesWaiting(view)}</span>}
-            {s === "classes" && classesWaiting(view, engine) > 0 && <span className="tag attention">{classesWaiting(view, engine)}</span>}
-            {s === "log" && view.rejected.length > 0 && <span className="tag attention">{view.rejected.length}</span>}
-            {s === "combat" && view.encounter && <span className="tag attention">{view.encounter.round ? `Round ${view.encounter.round}` : "Set"}</span>}
-            {s === "combat" && !view.encounter && view.aftermath && <span className="tag attention">To settle</span>}
-          </button>
+      <nav className="nav" aria-label="Sections">
+        {GROUPS.map((g) => (
+          <span key={g.label} className="nav__group" role="group" aria-label={g.label}>
+            {g.sections.map(([s, label]) => {
+              const count =
+                s === "suggestions"
+                  ? suggestionsWaiting(view, engine, names, drafts.runs)
+                  : s === "principles"
+                    ? principlesWaiting(view)
+                    : s === "classes"
+                      ? classesWaiting(view, engine)
+                      : s === "log"
+                        ? view.rejected.length
+                        : 0;
+              const state = s !== "combat" ? null : view.encounter ? (view.encounter.round ? `Round ${view.encounter.round}` : "Set") : view.aftermath ? "To settle" : null;
+              return (
+                <button key={s} className="nav__item" aria-current={s === section ? "page" : undefined} onClick={() => setSection(s)}>
+                  {label}
+                  {count > 0 && (
+                    <span className="count" aria-label={`${count} waiting`}>
+                      {count}
+                    </span>
+                  )}
+                  {state && <span className="nav__state">{state}</span>}
+                </button>
+              );
+            })}
+          </span>
         ))}
       </nav>
-      <div className="table-bar">
+      <div className="tablebar" role="region" aria-label="The table">
         <SessionBar view={view} names={names} onRecorded={live.addToLog} onSweep={() => setSection("hve")} />
+        <ListeningBar campaignId={view.campaign.id} role="gm" status={live.listening} send={live.send} />
         <ClockControls view={view} engine={engine} names={names} onRecorded={live.addToLog} />
       </div>
       {section === "party" && (
-        <main className="gm">
-          <section className="sheets">
+        <main className="screen screen--side party-screen">
+          <div className="stack party-screen__main">
             {engine && <TitlesDueCard view={view} engine={engine} onRecorded={live.addToLog} />}
             {view.characters.length === 0 ? (
-              <p className="muted">No characters yet. Players can build their own once they join, or you can create one under New character.</p>
+              <p className="dim">No characters yet. Players can build their own once they join, or you can create one under New character.</p>
             ) : (
-              view.characters.map((c) => <CharacterCard key={c.id} c={c} player={playerName(c)} party={partyWith(c.id)} items={view.inventory[c.id] ?? []} />)
+              <div className="sheets">
+                {view.characters.map((c) => (
+                  <CharacterCard key={c.id} c={c} player={playerName(c)} party={partyWith(c.id)} items={view.inventory[c.id] ?? []} />
+                ))}
+              </div>
             )}
             <SpoilsCard view={view} onRecorded={live.addToLog} />
-          </section>
-          <aside className="side">
-            {engine ? <RecordPanel view={view} engine={engine} names={names} onRecorded={live.addToLog} /> : <p className="muted">Loading rules…</p>}
+          </div>
+          <aside className="party-screen__side">
+            {engine ? <RecordPanel view={view} engine={engine} names={names} onRecorded={live.addToLog} /> : <p className="dim">Loading rules…</p>}
           </aside>
         </main>
       )}

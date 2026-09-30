@@ -119,7 +119,7 @@ export function CareActions({
 
   return (
     <>
-      <div className="row tight">
+      <div className="form-row tight">
         {pills.length > 0 && (
           <button disabled={noBeat || pillTargets.length === 0} onClick={() => toggle("pill")}>
             Pill…
@@ -152,7 +152,7 @@ export function CareActions({
         )}
       </div>
       {open === "pill" && (
-        <div className="row tight subform">
+        <div className="form-row tight subform">
           <select value={pill} onChange={(e) => setPill(e.target.value)} aria-label="Pill">
             {pills.map((p) => (
               <option key={p.name} value={p.name}>
@@ -168,7 +168,7 @@ export function CareActions({
         </div>
       )}
       {open === "stabilize" && (
-        <div className="row tight subform">
+        <div className="form-row tight subform">
           {targetSelect}
           {me.force ? (
             <span className="small">
@@ -198,7 +198,7 @@ export function CareActions({
         </div>
       )}
       {open === "technique" && ownUse && (
-        <div className="row tight subform">
+        <div className="form-row tight subform">
           {ownUse.hook?.kind === "heal" && (
             <>
               {targetSelect}
@@ -231,7 +231,7 @@ export function CareActions({
         </div>
       )}
       {open === "execute" && (
-        <div className="row tight subform">
+        <div className="form-row tight subform">
           {targetSelect}
           <button className="danger" disabled={noBeat || !picked} onClick={() => done({ type: "combat.execute", combatantId: me.id, targetId: picked })}>
             Execute {pickedMate?.name} (1 Beat)
@@ -239,7 +239,7 @@ export function CareActions({
         </div>
       )}
       {open === "intervene" && (
-        <div className="row tight subform">
+        <div className="form-row tight subform">
           {targetSelect}
           <button
             className="primary"

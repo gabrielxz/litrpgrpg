@@ -1,8 +1,12 @@
 /**
- * The player's System interface: what What Can Be Seen lists under "Your Own Interface", in
- * its order, for each character the player holds, the party frame, and the System's notices
- * beside it. The player spends free points and makes the party's choices here (inviting,
- * answering, leaving); everything else arrives from the GM's record.
+ * The player's System interface: what What Can Be Seen lists under "Your Own Interface" for each
+ * character the player holds, the party frame, and the System's notices beside it. The player
+ * spends free points and makes the party's choices here (inviting, answering, leaving); everything
+ * else arrives from the GM's record.
+ *
+ * Two registers (Decisions, "the makeover"): the interface is the System's, in world words only;
+ * the table's tools (the fight, the spoils, the dice, rules questions) sit in the "At the table"
+ * tray beside the notices, in the table's words.
  */
 import type { Engine } from "@gradebreaker/engine";
 import { type Action, type FeedItem, type InterfaceSheet, type PlayerQuest, type PlayerView, shapes } from "@gradebreaker/record";
@@ -14,27 +18,42 @@ import { useEngine } from "../live.ts";
 import { Fight } from "./Fight.tsx";
 import { pillsOf } from "../Care.tsx";
 import { stackLine } from "../items.ts";
+import { momentOf } from "../moments.ts";
 import { ATTRIBUTES, ATTRIBUTE_NAMES, noticeLine } from "../text.ts";
+import { Clave, Icon, Meter, Vital } from "../ui.tsx";
 import { type CharacterSpec, Creator } from "./Creator.tsx";
 import { PrincipleSection } from "./Principle.tsx";
 import { ClassHeld, ClassOffers } from "./Class.tsx";
 import { Inspect } from "./Inspect.tsx";
 import { AskRules } from "../AskRules.tsx";
 
-function Bar({ value, max }: { value: number; max: number }) {
-  const pct = max > 0 ? Math.max(0, Math.min(100, (value / max) * 100)) : 0;
-  return (
-    <div className="sys-bar">
-      <div style={{ width: `${pct}%` }} />
-    </div>
-  );
+/** Records one of the player's own actions, with a fresh idempotency key each time. */
+function useAct(campaignId: string) {
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const run = async (action: Action) => {
+    setBusy(true);
+    setError(null);
+    try {
+      await submit(campaignId, newActionId(), action);
+      return true;
+    } catch (e) {
+      setError((e as Error).message);
+      return false;
+    } finally {
+      setBusy(false);
+    }
+  };
+  return { run, busy, error };
 }
 
-function SpendPoints({ campaignId, c }: { campaignId: string; c: InterfaceSheet }) {
+/** Attributes in both readings, raw over Force; while points wait, a stepper under each. */
+function Attributes({ campaignId, c, readOnly }: { campaignId: string; c: InterfaceSheet; readOnly?: boolean }) {
   const [placement, setPlacement] = useState<Record<string, number>>({});
   const [id, setId] = useState(newActionId);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const spending = c.freePoints > 0 && !readOnly;
   const total = Object.values(placement).reduce((a, b) => a + b, 0);
   const bump = (a: string, d: number) => {
     const next = Math.max(0, (placement[a] ?? 0) + d);
@@ -56,48 +75,49 @@ function SpendPoints({ campaignId, c }: { campaignId: string; c: InterfaceSheet 
     }
   };
   return (
-    <div className="sys-section">
-      <h3>Unallocated points: {c.freePoints - total}</h3>
-      <div className="allocate">
+    <section className="sys-section">
+      <h2 className="sys-label">
+        Attributes <span className="tail">Raw · Force</span>
+      </h2>
+      {c.freePoints > 0 && (
+        <div className="points-waiting">
+          <span className="voice">
+            Unallocated points: <span className="num">{c.freePoints - total}</span>
+          </span>
+        </div>
+      )}
+      <div className="stats">
         {ATTRIBUTES.map((a) => (
-          <div key={a} className="allocate-row">
-            <span>{ATTRIBUTE_NAMES[a]}</span>
-            <button onClick={() => bump(a, -1)} disabled={!placement[a]} aria-label={`One less ${a}`}>
-              −
-            </button>
-            <span className="num">{placement[a] ? `+${placement[a]}` : ""}</span>
-            <button onClick={() => bump(a, 1)} disabled={total >= c.freePoints} aria-label={`One more ${a}`}>
-              +
-            </button>
+          <div key={a} className={`stat${placement[a] ? " stat--pending" : ""}`}>
+            <span className="stat__name">{ATTRIBUTE_NAMES[a]}</span>
+            <span className="stat__raw">{c.raw[a]}</span>
+            <span className="stat__force">
+              Force <b>{c.force[a]}</b>
+            </span>
+            {spending && (
+              <div className="stepper">
+                <button className="btn btn--sm btn--icon" onClick={() => bump(a, -1)} disabled={!placement[a]} aria-label={`One less ${ATTRIBUTE_NAMES[a]}`}>
+                  <Icon name="remove" />
+                </button>
+                <span className="stepper__add">{placement[a] ? `+${placement[a]}` : ""}</span>
+                <button className="btn btn--sm btn--icon" onClick={() => bump(a, 1)} disabled={total >= c.freePoints} aria-label={`One more ${ATTRIBUTE_NAMES[a]}`}>
+                  <Icon name="add" />
+                </button>
+              </div>
+            )}
           </div>
         ))}
       </div>
-      <button className="sys-confirm" disabled={!total || busy} onClick={confirm}>
-        Allocate
-      </button>
+      {spending && (
+        <div className="cluster">
+          <button className="btn btn--primary" disabled={!total || busy} onClick={confirm}>
+            Allocate
+          </button>
+        </div>
+      )}
       {error && <p className="error">{error}</p>}
-    </div>
+    </section>
   );
-}
-
-/** Records one of the player's own actions, with a fresh idempotency key each time. */
-function useAct(campaignId: string) {
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const run = async (action: Action) => {
-    setBusy(true);
-    setError(null);
-    try {
-      await submit(campaignId, newActionId(), action);
-      return true;
-    } catch (e) {
-      setError((e as Error).message);
-      return false;
-    } finally {
-      setBusy(false);
-    }
-  };
-  return { run, busy, error };
 }
 
 /** The party frame (What Can Be Seen, "What a Party Shares") and the party's choices. */
@@ -125,73 +145,78 @@ function PartySection({
   if (nothing) return null;
 
   return (
-    <div className="sys-section party">
-      <h3>Party</h3>
+    <section className="sys-section">
+      <h2 className="sys-label">Party</h2>
       {c.party ? (
         <ul className="party-frame">
           {c.party.members.map((m) => (
-            <li key={m.id} className={m.downed ? "downed" : ""}>
-              <span className="who">{m.name}</span>
-              <Bar value={m.hp} max={m.maxHp} />
-              <span className="num">
+            <li key={m.id}>
+              <span className="cluster">
+                {m.name}
+                {m.downed && (
+                  <span className="tag tag--danger">
+                    <Icon name="downed" />
+                    Downed
+                  </span>
+                )}
+              </span>
+              <Meter kind={m.downed ? "danger" : "health"} value={m.hp} max={m.maxHp} thin />
+              <span className="num small" style={m.downed ? { color: "var(--danger)" } : undefined}>
                 {m.hp} / {m.maxHp}
               </span>
-              <span className="num sys-dim">Aether {m.aether}</span>
-              {m.downed && <span className="sys-alert">Downed</span>}
+              <span className="num small dim">Aether {m.aether}</span>
             </li>
           ))}
         </ul>
       ) : (
-        <p className="sys-dim">
-          <em>No party.</em>
-        </p>
+        <p className="voice dim">No party.</p>
       )}
       {c.invitations.map((i) => (
         <div key={i.id} className="sys-row">
-          <em>Party invitation: {i.fromName}.</em>
+          <span className="sys-row__main voice">Party invitation: {i.fromName}.</span>
           {!readOnly && (
-            <>
-              <button className="sys-confirm" disabled={busy} onClick={() => run({ type: "party.answer", inviteId: i.id, accept: true })}>
+            <span className="cluster">
+              <button className="btn btn--primary btn--sm" disabled={busy} onClick={() => run({ type: "party.answer", inviteId: i.id, accept: true })}>
                 Accept
               </button>
-              <button className="sys-quiet" disabled={busy} onClick={() => run({ type: "party.answer", inviteId: i.id, accept: false })}>
+              <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "party.answer", inviteId: i.id, accept: false })}>
                 Decline
               </button>
-            </>
+            </span>
           )}
         </div>
       ))}
       {c.invited.map((i) => (
-        <div key={i.id} className="sys-row sys-dim">
-          <em>Invitation pending: {i.toName}.</em>
+        <div key={i.id} className="sys-row">
+          <span className="sys-row__main voice dim">Invitation pending: {i.toName}.</span>
           {!readOnly && (
-            <button className="sys-quiet" disabled={busy} onClick={() => run({ type: "void", targetId: i.id, reason: "undo" })}>
+            <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "void", targetId: i.id, reason: "undo" })}>
               Withdraw
             </button>
           )}
         </div>
       ))}
-      {!readOnly && (
-        <div className="sys-row">
+      {!readOnly && (invitable.length > 0 || c.party) && (
+        <div className="cluster">
           {invitable.length > 0 && (
             <>
-              <select value={picked} onChange={(e) => setTarget(e.target.value)} aria-label="Character to invite">
+              <select className="select select--sm" value={picked} onChange={(e) => setTarget(e.target.value)} aria-label="Character to invite">
                 {invitable.map((r) => (
                   <option key={r.id} value={r.id}>
                     {r.name}
                   </option>
                 ))}
               </select>
-              <button className="sys-confirm" disabled={busy || !picked} onClick={() => run({ type: "party.invite", fromId: c.id, toId: picked })}>
+              <button className="btn btn--sm" disabled={busy || !picked} onClick={() => run({ type: "party.invite", fromId: c.id, toId: picked })}>
                 Invite {invitable.find((r) => r.id === picked)?.name}
               </button>
             </>
           )}
           {c.party &&
             (leaving ? (
-              <>
+              <span className="confirm confirm--armed">
                 <button
-                  className="sys-confirm"
+                  className="btn btn--sm btn--danger"
                   disabled={busy}
                   onClick={async () => {
                     if (await run({ type: "party.leave", characterId: c.id })) setLeaving(false);
@@ -199,19 +224,19 @@ function PartySection({
                 >
                   Leave the party
                 </button>
-                <button className="sys-quiet" onClick={() => setLeaving(false)}>
+                <button className="btn btn--sm" onClick={() => setLeaving(false)}>
                   Stay
                 </button>
-              </>
+              </span>
             ) : (
-              <button className="sys-quiet" onClick={() => setLeaving(true)}>
+              <button className="btn btn--sm" onClick={() => setLeaving(true)}>
                 Leave…
               </button>
             ))}
         </div>
       )}
       {error && <p className="error">{error}</p>}
-    </div>
+    </section>
   );
 }
 
@@ -221,36 +246,24 @@ function PartySection({
  * someone in the campaign or the spoils, or mark one used.
  */
 function Carried({ campaignId, c, roster, readOnly, pills }: { campaignId: string; c: InterfaceSheet; roster: PlayerView["roster"]; readOnly?: boolean; pills: string[] }) {
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { run, busy, error } = useAct(campaignId);
   const [to, setTo] = useState<Record<string, string>>({});
   if (!c.items.length && !c.pillsTaken.healing && !c.pillsTaken.aether) return null;
-  const run = async (action: Action) => {
-    setBusy(true);
-    setError(null);
-    try {
-      await submit(campaignId, newActionId(), action);
-    } catch (e) {
-      setError((e as Error).message);
-    } finally {
-      setBusy(false);
-    }
-  };
   return (
-    <div className="sys-section">
-      <h3>Carried</h3>
+    <section className="sys-section">
+      <h2 className="sys-label">Carried</h2>
       {(c.pillsTaken.healing > 0 || c.pillsTaken.aether > 0) && (
-        <p className="small sys-dim">
-          Pills since Consolidation: healing {c.pillsTaken.healing}, Aether {c.pillsTaken.aether}
+        <p className="small dim">
+          Pills since Consolidation: healing <span className="num">{c.pillsTaken.healing}</span>, Aether <span className="num">{c.pillsTaken.aether}</span>
         </p>
       )}
-      <ul className="items">
+      <ul>
         {c.items.map((s) => (
-          <li key={s.name}>
-            {stackLine(s)}
+          <li key={s.name} className="sys-row sys-row--center">
+            <span className="sys-row__main">{stackLine(s)}</span>
             {!readOnly && !c.dead && (
-              <span className="item-actions">
-                <select value={to[s.name] ?? "spoils"} onChange={(e) => setTo({ ...to, [s.name]: e.target.value })} aria-label={`Where ${s.name} goes`}>
+              <>
+                <select className="select select--sm" value={to[s.name] ?? "spoils"} onChange={(e) => setTo({ ...to, [s.name]: e.target.value })} aria-label={`Where ${s.name} goes`}>
                   <option value="spoils">To the spoils</option>
                   {roster.map((r) => (
                     <option key={r.id} value={r.id}>
@@ -258,25 +271,25 @@ function Carried({ campaignId, c, roster, readOnly, pills }: { campaignId: strin
                     </option>
                   ))}
                 </select>
-                <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "item.move", from: c.id, to: to[s.name] ?? "spoils", name: s.name, count: 1 })}>
+                <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "item.move", from: c.id, to: to[s.name] ?? "spoils", name: s.name, count: 1 })}>
                   Hand over one
                 </button>
                 {pills.includes(s.name.toLowerCase()) ? (
-                  <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "pill.take", characterId: c.id, targetId: c.id, pill: s.name })}>
+                  <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "pill.take", characterId: c.id, targetId: c.id, pill: s.name })}>
                     Take one
                   </button>
                 ) : (
-                  <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "item.remove", from: c.id, name: s.name, count: 1, note: "used" })}>
+                  <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "item.remove", from: c.id, name: s.name, count: 1, note: "used" })}>
                     Used one
                   </button>
                 )}
-              </span>
+              </>
             )}
           </li>
         ))}
       </ul>
       {error && <p className="error">{error}</p>}
-    </div>
+    </section>
   );
 }
 
@@ -285,22 +298,10 @@ function Carried({ campaignId, c, roster, readOnly, pills }: { campaignId: strin
  * hides a Bestowed title, reveals a Hidden Achievement for good, and places a player's-choice point.
  */
 function Titles({ campaignId, c, readOnly }: { campaignId: string; c: InterfaceSheet; readOnly?: boolean }) {
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { run, busy, error } = useAct(campaignId);
   const [revealing, setRevealing] = useState<string | null>(null);
   const [stat, setStat] = useState<Record<string, string>>({});
   if (!c.titles.length) return null;
-  const run = async (action: Action) => {
-    setBusy(true);
-    setError(null);
-    try {
-      await submit(campaignId, newActionId(), action);
-    } catch (e) {
-      setError((e as Error).message);
-    } finally {
-      setBusy(false);
-    }
-  };
   const bonus = (b: Record<string, number>) =>
     Object.entries(b)
       .filter(([, v]) => v)
@@ -308,196 +309,237 @@ function Titles({ campaignId, c, readOnly }: { campaignId: string; c: InterfaceS
       .join(", ");
   const can = !readOnly && !c.dead;
   return (
-    <div className="sys-section titles">
-      <h3>Titles</h3>
-      <ul className="items">
+    <section className="sys-section">
+      <h2 className="sys-label">Titles</h2>
+      <ul>
         {c.titles.map((t) => (
-          <li key={t.id} className={t.status !== "active" ? "sys-dim" : ""}>
-            <span className="grow">
-              <strong>{t.name}</strong> <span className="sys-dim small">{t.category}
+          <li key={t.id} className={`sys-row${t.status !== "active" ? " dim" : ""}`}>
+            <span className="sys-row__main">
+              <b className="title-name">{t.name}</b>{" "}
+              <span className="small dim">
+                {t.category}
                 {t.category === "Hidden Achievement" ? (t.revealed ? ", revealed" : ", hidden from observers") : ""}
                 {t.status === "echoed" ? ", Echoed" : t.status === "released" ? ", released" : ""}
               </span>
-              {bonus(t.bonus) && <span className="small"> · {bonus(t.bonus)}</span>}
-              {t.effect && <div className="small">{t.effect}</div>}
-              {t.negative && t.status === "active" && <div className="small sys-alert">Visible to every observer of your Grade or higher.{t.release ? ` Released by: ${t.release}` : ""}</div>}
-            </span>
-            {can && t.choice !== undefined && (
-              <span className="item-actions">
-                <select value={stat[t.id] ?? "STR"} onChange={(e) => setStat({ ...stat, [t.id]: e.target.value })} aria-label="Stat">
-                  {ATTRIBUTES.map((a) => (
-                    <option key={a} value={a}>
-                      {ATTRIBUTE_NAMES[a]}
-                    </option>
-                  ))}
-                </select>
-                <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "title.choose", characterId: c.id, titleId: t.id, attribute: stat[t.id] ?? "STR" })}>
-                  Place +{t.choice}
-                </button>
-              </span>
-            )}
-            {can && t.category === "Bestowed" && !t.negative && t.status !== "released" && (
-              <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "title.wear", characterId: c.id, titleId: t.id, worn: !t.worn })}>
-                {t.worn ? "Worn: hide it" : "Hidden: wear it"}
-              </button>
-            )}
-            {can && t.category === "Hidden Achievement" && !t.revealed && (
-              revealing === t.id ? (
-                <span className="item-actions">
-                  <span className="small">Revealing is permanent.</span>
-                  <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "title.reveal", characterId: c.id, titleId: t.id })}>
-                    Reveal {t.name}
-                  </button>
-                  <button className="sys-confirm inline" onClick={() => setRevealing(null)}>
-                    Keep it hidden
+              {t.effect && <span className="sys-row__more small">{t.effect}</span>}
+              {t.negative && t.status === "active" && (
+                <span className="sys-row__more small" style={{ color: "var(--danger)" }}>
+                  Visible to every observer of your Grade or higher.{t.release ? ` Released by: ${t.release}` : ""}
+                </span>
+              )}
+              {can && t.choice !== undefined && (
+                <span className="cluster sys-row__more">
+                  <select className="select select--sm" value={stat[t.id] ?? "STR"} onChange={(e) => setStat({ ...stat, [t.id]: e.target.value })} aria-label="Stat">
+                    {ATTRIBUTES.map((a) => (
+                      <option key={a} value={a}>
+                        {ATTRIBUTE_NAMES[a]}
+                      </option>
+                    ))}
+                  </select>
+                  <button className="btn btn--sm btn--primary" disabled={busy} onClick={() => run({ type: "title.choose", characterId: c.id, titleId: t.id, attribute: stat[t.id] ?? "STR" })}>
+                    Place +{t.choice}
                   </button>
                 </span>
-              ) : (
-                <button className="sys-confirm inline" onClick={() => setRevealing(t.id)}>
-                  Reveal…
-                </button>
-              )
-            )}
+              )}
+              {can && t.category === "Bestowed" && !t.negative && t.status !== "released" && (
+                <span className="cluster sys-row__more">
+                  <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "title.wear", characterId: c.id, titleId: t.id, worn: !t.worn })}>
+                    {t.worn ? "Worn: hide it" : "Hidden: wear it"}
+                  </button>
+                </span>
+              )}
+              {can && t.category === "Hidden Achievement" && !t.revealed && (
+                <span className="cluster sys-row__more">
+                  {revealing === t.id ? (
+                    <span className="confirm confirm--armed">
+                      <span className="confirm__what">Revealing is permanent.</span>
+                      <button className="btn btn--sm btn--primary" disabled={busy} onClick={() => run({ type: "title.reveal", characterId: c.id, titleId: t.id })}>
+                        Reveal {t.name}
+                      </button>
+                      <button className="btn btn--sm" onClick={() => setRevealing(null)}>
+                        Keep it hidden
+                      </button>
+                    </span>
+                  ) : (
+                    <button className="btn btn--sm" onClick={() => setRevealing(t.id)}>
+                      Reveal…
+                    </button>
+                  )}
+                </span>
+              )}
+            </span>
+            {bonus(t.bonus) && <span className="sys-row__side">{bonus(t.bonus)}</span>}
           </li>
         ))}
       </ul>
       {error && <p className="error">{error}</p>}
-    </div>
+    </section>
   );
 }
 
-/** The quest log (System Quests, "The Quest UI"): each entry in the book's shape, and the player's answers. */
+const STATUS = (q: PlayerQuest) => (q.status === "offered" ? "Offered" : q.status[0]!.toUpperCase() + q.status.slice(1));
+
+/** One entry in the book's quest shape (System Quests, "The Quest UI"): key and value in columns. */
+function QuestEntry({ q, children, closed }: { q: PlayerQuest; children?: React.ReactNode; closed?: boolean }) {
+  const reward = [q.scaled ? "Proportional" : q.ve === null ? "" : `${q.ve} VE`, ...(q.items ?? []).map((i) => (i.count === 1 ? i.name : `${i.count} ${i.name}`)), q.rewardText ?? ""]
+    .filter(Boolean)
+    .join(", ");
+  const full = !q.hidden || q.status === "completed";
+  return (
+    <dl className={`quest${q.status === "offered" ? " quest--offered" : ""}${closed ? " dim" : ""}`}>
+      <div className="quest__id">
+        <span className="num">[{q.code}]</span>
+        <b>{q.title}</b>
+        <span className="grow" />
+        {q.status === "offered" && <span className="tag tag--system">Offered</span>}
+      </div>
+      {full ? (
+        <>
+          <dt>Issuer</dt>
+          <dd className={q.issuer === "System" ? undefined : "world"}>{q.issuer}</dd>
+          <dt>Grade</dt>
+          <dd>
+            {q.grade} · Difficulty: {q.difficulty}
+          </dd>
+          {q.objective && (
+            <>
+              <dt>Objective</dt>
+              <dd>
+                {q.objective}
+                {q.count && <span className="num dim"> ({q.count.done}/{q.count.of})</span>}
+              </dd>
+            </>
+          )}
+          {reward && (
+            <>
+              <dt>Reward</dt>
+              <dd>{reward}</dd>
+            </>
+          )}
+          {q.time && (
+            <>
+              <dt>Time</dt>
+              <dd>{q.time}</dd>
+            </>
+          )}
+          {q.hoursLeft !== undefined && (
+            <>
+              <dt>Remaining</dt>
+              <dd className="num">{q.hoursLeft === 1 ? "1 hour" : `${q.hoursLeft} hours`}</dd>
+            </>
+          )}
+        </>
+      ) : (
+        q.objective && <dd className="quest__whole">{q.objective}</dd>
+      )}
+      <dt>Status</dt>
+      <dd>
+        {STATUS(q)}
+        {q.shared ? " · Shared" : ""}
+      </dd>
+      {children && <div className="quest__actions">{children}</div>}
+    </dl>
+  );
+}
+
+/** The quest log: each entry in the book's shape, and the player's answers. */
 function QuestLog({ campaignId, c, readOnly }: { campaignId: string; c: InterfaceSheet; readOnly?: boolean }) {
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { run: act, busy, error } = useAct(campaignId);
   const [refusing, setRefusing] = useState<string | null>(null);
   if (!c.quests.length) return null;
   const run = async (action: Action) => {
-    setBusy(true);
-    setError(null);
-    try {
-      await submit(campaignId, newActionId(), action);
-      setRefusing(null);
-    } catch (e) {
-      setError((e as Error).message);
-    } finally {
-      setBusy(false);
-    }
+    if (await act(action)) setRefusing(null);
   };
   const can = !readOnly && !c.dead;
-  const entry = (q: PlayerQuest) => {
-    const reward = [q.scaled ? "Proportional" : q.ve === null ? "" : `${q.ve} VE`, ...(q.items ?? []).map((i) => (i.count === 1 ? i.name : `${i.count} ${i.name}`)), q.rewardText ?? ""]
-      .filter(Boolean)
-      .join(", ");
-    const lines = [`[${q.code}] ${q.title}`];
-    if (!q.hidden || q.status === "completed") {
-      lines.push(`Issuer:     ${q.issuer}`, `Grade:      ${q.grade} · Difficulty: ${q.difficulty}`);
-      if (q.objective) lines.push(`Objective:  ${q.objective}${q.count ? ` (${q.count.done}/${q.count.of})` : ""}`);
-      if (reward) lines.push(`Reward:     ${reward}`);
-      if (q.time) lines.push(`Time:       ${q.time}`);
-      if (q.hoursLeft !== undefined) lines.push(`Remaining:  ${q.hoursLeft === 1 ? "1 hour" : `${q.hoursLeft} hours`}`);
-    } else if (q.objective) lines.push(q.objective);
-    lines.push(`Status:     ${q.status === "offered" ? "Offered" : q.status[0]!.toUpperCase() + q.status.slice(1)}${q.shared ? " · Shared" : ""}`);
-    return lines.join("\n");
-  };
   const open = c.quests.filter((q) => q.status === "offered" || q.status === "active");
   const closed = c.quests.filter((q) => q.status !== "offered" && q.status !== "active");
   return (
-    <div className="sys-section quest-log">
-      <h3>Quest log</h3>
+    <section className="sys-section">
+      <h2 className="sys-label">Quest log</h2>
       {open.map((q) => (
-        <div key={q.id} className="quest">
-          <pre className="quest-entry">{entry(q)}</pre>
+        <QuestEntry key={q.id} q={q}>
           {can && (
-            <div className="row tight">
+            <>
               {q.status === "offered" && (
                 <>
-                  <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "quest.answer", questId: q.id, characterId: c.id, accept: true })}>
+                  <button className="btn btn--primary btn--sm" disabled={busy} onClick={() => run({ type: "quest.answer", questId: q.id, characterId: c.id, accept: true })}>
                     Accept
                   </button>
-                  <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "quest.answer", questId: q.id, characterId: c.id, accept: false })}>
+                  <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "quest.answer", questId: q.id, characterId: c.id, accept: false })}>
                     Refuse
                   </button>
                 </>
               )}
               {q.sharable && (
-                <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "quest.share", questId: q.id, characterId: c.id })}>
+                <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "quest.share", questId: q.id, characterId: c.id })}>
                   Share with the party
                 </button>
               )}
               {q.category === "Mandate" && q.status === "active" &&
                 (refusing === q.id ? (
-                  <>
-                    <span className="small">Refusing a Mandate has consequences.</span>
-                    <button className="sys-confirm inline" disabled={busy} onClick={() => run({ type: "quest.answer", questId: q.id, characterId: c.id, accept: false })}>
+                  <span className="confirm confirm--armed">
+                    <span className="confirm__what">Refusing a Mandate has consequences.</span>
+                    <button className="btn btn--sm btn--danger" disabled={busy} onClick={() => run({ type: "quest.answer", questId: q.id, characterId: c.id, accept: false })}>
                       Refuse [{q.code}]
                     </button>
-                    <button className="sys-confirm inline" onClick={() => setRefusing(null)}>
+                    <button className="btn btn--sm" onClick={() => setRefusing(null)}>
                       Keep it
                     </button>
-                  </>
+                  </span>
                 ) : (
-                  <button className="sys-confirm inline" onClick={() => setRefusing(q.id)}>
+                  <button className="btn btn--sm" onClick={() => setRefusing(q.id)}>
                     Refuse…
                   </button>
                 ))}
-            </div>
+            </>
           )}
-        </div>
+        </QuestEntry>
       ))}
       {closed.length > 0 && (
-        <details>
-          <summary className="small">Completed, failed, and refused ({closed.length})</summary>
-          {closed.map((q) => (
-            <pre key={q.id} className="quest-entry sys-dim">
-              {entry(q)}
-            </pre>
-          ))}
+        <details className="small">
+          <summary className="dim">Completed, failed, and refused ({closed.length})</summary>
+          <div className="stack quest-closed">
+            {closed.map((q) => (
+              <QuestEntry key={q.id} q={q} closed />
+            ))}
+          </div>
         </details>
       )}
       {error && <p className="error">{error}</p>}
-    </div>
+    </section>
   );
 }
 
 /** What the party has not divided: any player can claim an item for their own character. */
 function Spoils({ view, readOnly }: { view: PlayerView; readOnly?: boolean }) {
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { run, busy, error } = useAct(view.campaign.id);
   const living = view.characters.filter((c) => !c.dead);
   const [who, setWho] = useState(living[0]?.id ?? "");
   if (!view.spoils.length) return null;
   const claimer = living.some((c) => c.id === who) ? who : (living[0]?.id ?? "");
-  const take = async (name: string) => {
-    setBusy(true);
-    setError(null);
-    try {
-      await submit(view.campaign.id, newActionId(), { type: "item.move", from: "spoils", to: claimer, name, count: 1 });
-    } catch (e) {
-      setError((e as Error).message);
-    } finally {
-      setBusy(false);
-    }
-  };
   return (
-    <section className="table-dice">
-      <h3>Spoils</h3>
-      <p className="small sys-dim">What the party has not divided yet.</p>
-      {!readOnly && living.length > 1 && (
-        <select value={claimer} onChange={(e) => setWho(e.target.value)} aria-label="Claim for">
-          {living.map((c) => (
-            <option key={c.id} value={c.id}>
-              For {c.name}
-            </option>
-          ))}
-        </select>
-      )}
-      <ul className="items">
+    <section className="stack tray-part">
+      <h3 className="spread">
+        Spoils
+        {!readOnly && living.length > 1 ? (
+          <select className="select select--sm" value={claimer} onChange={(e) => setWho(e.target.value)} aria-label="Claim for">
+            {living.map((c) => (
+              <option key={c.id} value={c.id}>
+                For {c.name}
+              </option>
+            ))}
+          </select>
+        ) : (
+          living[0] && <span className="small dim">For {living[0].name}</span>
+        )}
+      </h3>
+      <p className="small dim">What the party has not divided yet.</p>
+      <ul className="rows small">
         {view.spoils.map((s) => (
           <li key={s.name}>
-            {stackLine(s)}
+            <span className="row__main">{stackLine(s)}</span>
             {!readOnly && claimer && (
-              <button className="sys-confirm inline" disabled={busy} onClick={() => take(s.name)}>
+              <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "item.move", from: "spoils", to: claimer, name: s.name, count: 1 })}>
                 Take one
               </button>
             )}
@@ -529,111 +571,84 @@ function Interface({
   pills: string[];
 }) {
   const toNext = c.veToNextLevel;
+  const falling = !c.dead && c.vitalCoherence !== null;
   return (
-    <article className="interface">
-      {/* The paper sheet's order (Table Kit): what the interface shows the character, then what the party shares and inspection. */}
-      <header>
-        <img src="/clave.svg" alt="" className="clave-mark" />
-        <div>
-          <h2>{c.name}</h2>
-          <div className="sys-dim">
-            Level {c.level} · {c.grade}-Grade{c.class ? ` · ${c.class.name}` : ""}
+    <article className={`interface iframe${falling ? " iframe--unstable" : ""}`} aria-label={`${c.name}'s interface`}>
+      {/* The head and the vitals stay in view while the rest scrolls (Decisions, "the makeover", P9). */}
+      <div className="interface__pinned">
+        <header className="sys-head">
+          <Clave />
+          <div>
+            <h1 className="sys-name">{c.name}</h1>
+            <div className="sys-sub">
+              <span>
+                Level <b className="num">{c.level}</b>
+              </span>
+              <span aria-hidden="true">·</span>
+              <span>{c.grade}-Grade</span>
+              {c.class && (
+                <>
+                  <span aria-hidden="true">·</span>
+                  <span>{c.class.name}</span>
+                </>
+              )}
+            </div>
           </div>
-          <div className="sys-dim">{c.background}</div>
-        </div>
-
-      </header>
-
-      <div className="sys-section">
-        <div className="sys-vital">
-          <span>Level {c.level + 1}</span>
-          <Bar value={c.refinedVe} max={c.refinedVe + (toNext ?? 0)} />
-          <span className="num">{toNext === null ? "Grade limit" : `${c.refinedVe} / ${c.refinedVe + toNext}`}</span>
-        </div>
-
-      </div>
-
-      <div className="sys-section">
-        <table className="sys-stats">
-          <thead>
-            <tr>
-              <th />
-              <th>Raw</th>
-              <th>Force</th>
-            </tr>
-          </thead>
-          <tbody>
-            {ATTRIBUTES.map((a) => (
-              <tr key={a}>
-                <td>{ATTRIBUTE_NAMES[a]}</td>
-                <td className="num">{c.raw[a]}</td>
-                <td className="num">{c.force[a]}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-      </div>
-
-      {c.freePoints > 0 &&
-        (readOnly ? (
-          <div className="sys-section">
-            <h3>Unallocated points: {c.freePoints}</h3>
+          <div className="sys-grade" aria-label={`${c.grade}-Grade`}>
+            {c.grade}
+            <small>Grade</small>
           </div>
-        ) : (
-          <SpendPoints campaignId={campaignId} c={c} />
-        ))}
+        </header>
 
-      <div className="sys-section vitals">
         {c.dead ? (
-          <p className="sys-alert">
-            <em>Deceased.</em>
-          </p>
+          <section className="coherence" aria-label="Vital coherence">
+            <p className="coherence__text">Deceased.</p>
+          </section>
         ) : (
-          c.vitalCoherence !== null && (
-            <p className="sys-alert">
-              <em>Vital coherence: {c.vitalCoherence}. Falling.</em>
-            </p>
+          falling && (
+            <section className="coherence" aria-live="polite" aria-label="Vital coherence">
+              <p className="coherence__text">Vital coherence: {c.vitalCoherence}. Falling.</p>
+              <div className="coherence__segments" role="img" aria-label={`Vital coherence ${c.vitalCoherence} of 3`}>
+                {[1, 2, 3].map((n) => (
+                  <i key={n} className={n <= (c.vitalCoherence ?? 0) ? "on" : ""} />
+                ))}
+              </div>
+            </section>
           )
         )}
-        <div className="sys-vital">
-          <span>Health</span>
-          <Bar value={c.hp} max={c.maxHp} />
-          <span className="num">
-            {c.hp} / {c.maxHp}
-          </span>
-        </div>
-        <div className="sys-vital">
-          <span>Aether</span>
-          <Bar value={c.aether} max={c.maxAether} />
-          <span className="num">
-            {c.aether} / {c.maxAether}
-          </span>
-        </div>
-        <div className="sys-vital">
-          <span>Volatile Energy</span>
-          <Bar value={c.storedVe} max={c.tolerance} />
-          <span className="num">
-            {c.storedVe} / {c.tolerance}
-          </span>
-        </div>
 
+        <section className="sys-section" aria-label="Progress and vitals">
+          <Vital
+            label={<span className="label" style={{ color: "var(--system)" }}>Level {c.level + 1}</span>}
+            kind="level"
+            value={c.refinedVe}
+            max={c.refinedVe + (toNext ?? 0)}
+            text={toNext === null ? "Grade limit" : undefined}
+          />
+          <Vital label="Health" kind="health" value={c.hp} max={c.maxHp} danger={c.hp === 0} />
+          <Vital label="Aether" kind="aether" value={c.aether} max={c.maxAether} />
+          <Vital label="Volatile Energy" kind="ve" value={c.storedVe} max={c.tolerance} />
+        </section>
       </div>
 
+      {c.background && <p className="prose dim background">{c.background}</p>}
+
+      <Attributes campaignId={campaignId} c={c} readOnly={readOnly} />
+
       {c.proficiencies.length > 0 && (
-        <div className="sys-section">
-          <h3>Proficiencies</h3>
-          <ul className="items">
+        <section className="sys-section">
+          <h2 className="sys-label">Proficiencies</h2>
+          <ul>
             {c.proficiencies.map((p) => (
-              <li key={p.shape}>
-                <span className="grow">{p.shape}</span>
-                <span className="sys-dim">
+              <li key={p.shape} className="sys-row">
+                <span className="sys-row__main">{p.shape}</span>
+                <span className="sys-row__side">
                   {p.tier} +{p.bonus} · {p.marks} Mark{p.marks === 1 ? "" : "s"}
                 </span>
               </li>
             ))}
           </ul>
-        </div>
+        </section>
       )}
 
       <ClassOffers campaignId={campaignId} engine={engine} c={c} readOnly={readOnly} />
@@ -655,26 +670,67 @@ function Interface({
   );
 }
 
-function Notices({ feed, names }: { feed: FeedItem[]; names: Map<string, string> | null }) {
-  const lines = feed.map((n) => ({ ...n, text: noticeLine(n.effect) })).filter((n) => n.text);
+/** How many notices read as current; older ones dim. */
+const RECENT = 5;
+/** How many show before the rest fold under "Earlier notices", so the tray stays in reach. */
+const SHOWN = 8;
+
+/** A notice of several paragraphs shows its first, with the rest a press away (P10). */
+function NoticeText({ text }: { text: string }) {
+  const [open, setOpen] = useState(false);
+  const cut = text.indexOf("\n\n");
+  if (cut < 0) return <span className="notice__text">{text}</span>;
   return (
-    <aside className="notices">
+    <span className="notice__text">
+      {open ? text : text.slice(0, cut)}
+      <button className="btn-link notice__more" onClick={() => setOpen(!open)}>
+        {open ? "Less" : "Read the rest"}
+      </button>
+    </span>
+  );
+}
+
+type Line = FeedItem & { text: string | null; moment: ReturnType<typeof momentOf> };
+
+function NoticeItem({ n, old, names }: { n: Line; old: boolean; names: Map<string, string> | null }) {
+  const moment = !old && n.moment;
+  return (
+    <li className={`notice${moment ? " notice--moment" : ""}${moment === "downed" ? " notice--downed" : ""}${old ? " notice--old" : ""}`}>
+      <Clave />
+      <span>
+        {names && <span className="notice__who">{names.get(n.characterId)}</span>}
+        <NoticeText text={n.text!} />
+      </span>
+    </li>
+  );
+}
+
+function Notices({ feed, names }: { feed: FeedItem[]; names: Map<string, string> | null }) {
+  const lines: Line[] = feed.map((n) => ({ ...n, text: noticeLine(n.effect), moment: momentOf(n.effect) })).filter((n) => n.text);
+  const earlier = lines.slice(SHOWN);
+  return (
+    <section aria-label="The System's notices">
+      <h2 className="sys-label notices__label">Notices</h2>
       {lines.length === 0 ? (
-        <p className="sys-dim">
-          <em>No new notices.</em>
-        </p>
+        <p className="voice dim">No new notices.</p>
       ) : (
-        <ol>
-          {lines.map((n) => (
-            <li key={n.key}>
-              <img src="/clave.svg" alt="" className="clave-tiny" />
-              {names && <span className="sys-dim small">{names.get(n.characterId)} · </span>}
-              <em>{n.text}</em>
-            </li>
+        <ol className="notices">
+          {lines.slice(0, SHOWN).map((n, i) => (
+            <NoticeItem key={n.key} n={n} old={i >= RECENT} names={names} />
           ))}
         </ol>
       )}
-    </aside>
+      {earlier.length > 0 && (
+        <details className="notices__earlier">
+          <summary className="small dim">Earlier notices ({earlier.length})</summary>
+          <ol className="notices">
+            {earlier.map((n) => (
+              <NoticeItem key={n.key} n={n} old names={names} />
+            ))}
+          </ol>
+        </details>
+      )}
+    </section>
   );
 }
 
@@ -719,33 +775,46 @@ function Arrival({ view }: { view: PlayerView }) {
 
   if (building && engine) return <Creator engine={engine} submitLabel="Register" onSubmit={create} onCancel={() => setBuilding(false)} />;
   return (
-    <div className="arrival">
-      <p className="sys-dim">
-        <em>Interface: awaiting registration.</em>
-      </p>
-      <p className="small">You have no character in this campaign yet. Your GM may make one for you, or you can bring your own.</p>
-      <div className="row">
-        <button className="sys-confirm" onClick={() => setBuilding(true)} disabled={!engine}>
+    <article className="interface iframe arrival">
+      <header className="sys-head">
+        <Clave />
+        <p className="voice">Interface: awaiting registration.</p>
+      </header>
+      <p className="small dim">You have no character in this campaign yet. Your GM may make one for you, or you can bring your own.</p>
+      <div className="cluster">
+        <button className="btn btn--primary" onClick={() => setBuilding(true)} disabled={!engine}>
           Build a character
         </button>
       </div>
       {pool.length > 0 && (
-        <div className="sys-section">
-          <h3>Or bring one you built</h3>
-          <ul className="pool">
+        <section className="sys-section">
+          <h2 className="sys-label">Or bring one you built</h2>
+          <ul>
             {pool.map((c) => (
-              <li key={c.id}>
-                {c.name}
-                <button className="sys-confirm" onClick={() => bring(c.id)}>
+              <li key={c.id} className="sys-row sys-row--center">
+                <span className="sys-row__main">{c.name}</span>
+                <button className="btn btn--sm" onClick={() => bring(c.id)}>
                   Bring {c.name}
                 </button>
               </li>
             ))}
           </ul>
-        </div>
+        </section>
       )}
       {error && <p className="error">{error}</p>}
-    </div>
+    </article>
+  );
+}
+
+/** A tool in the tray: open by default, folded closed while a fight runs (P5). */
+function TrayPart({ title, folded, children }: { title: string; folded: boolean; children: React.ReactNode }) {
+  return (
+    <details className="tray-part" open={!folded} key={folded ? "folded" : "open"}>
+      <summary>
+        <h3>{title}</h3>
+      </summary>
+      <div className="stack">{children}</div>
+    </details>
   );
 }
 
@@ -760,19 +829,20 @@ export function PlayerCampaign({
   // A player with several characters here sees which one each notice is about.
   const names = view.characters.length > 1 ? new Map(view.characters.map((c) => [c.id, c.name])) : null;
   const engine = useEngine(view.campaign.rulesVersion);
+  const fighting = Boolean(view.combat);
   return (
-    <main className="player">
-      {view.characters.length === 0 ? (
-        readOnly ? (
-          <p className="sys-dim">
-            <em>Interface: awaiting registration.</em>
-          </p>
+    <main className="player-screen">
+      <div className="interfaces">
+        {view.characters.length === 0 ? (
+          readOnly ? (
+            <article className="interface iframe">
+              <p className="voice dim">Interface: awaiting registration.</p>
+            </article>
+          ) : (
+            <Arrival view={view} />
+          )
         ) : (
-          <Arrival view={view} />
-        )
-      ) : (
-        <div className="interfaces">
-          {view.characters.map((c) => (
+          view.characters.map((c) => (
             <Interface
               key={c.id}
               campaignId={view.campaign.id}
@@ -783,26 +853,32 @@ export function PlayerCampaign({
               engine={engine}
               inFight={Boolean(view.combat?.combatants.some((x) => x.characterId === c.id && !x.out))}
             />
-          ))}
-        </div>
-      )}
-      <div className="side-column">
-        <Notices feed={view.feed} names={names} />
-        {view.combat && <Fight view={view} engine={engine} combat={view.combat} readOnly={readOnly} />}
-        <Spoils view={view} readOnly={readOnly} />
-        <section className="table-dice">
-          <h3>Dice</h3>
-          {!readOnly && view.characters.length > 0 && (
-            <RollForm
-              campaignId={view.campaign.id}
-              characters={view.characters.map((c) => ({ id: c.id, name: c.name, force: c.force, aether: c.aether, surgeCost: c.surgeCost, proficiencies: c.proficiencies }))}
-              shapes={engine ? shapes(engine) : []}
-            />
-          )}
-          <RollList rolls={view.rolls} />
-        </section>
-        {!readOnly && <AskRules campaignId={view.campaign.id} />}
+          ))
+        )}
       </div>
+      <aside className="player-side">
+        <Notices feed={view.feed} names={names} />
+        <div className="tray table-tray">
+          <div className="tray-head">At the table</div>
+          {view.combat && <Fight view={view} engine={engine} combat={view.combat} readOnly={readOnly} />}
+          <Spoils view={view} readOnly={readOnly} />
+          <TrayPart title="Dice" folded={fighting}>
+            {!readOnly && view.characters.length > 0 && (
+              <RollForm
+                campaignId={view.campaign.id}
+                characters={view.characters.map((c) => ({ id: c.id, name: c.name, force: c.force, aether: c.aether, surgeCost: c.surgeCost, proficiencies: c.proficiencies }))}
+                shapes={engine ? shapes(engine) : []}
+              />
+            )}
+            <RollList rolls={view.rolls} />
+          </TrayPart>
+          {!readOnly && (
+            <TrayPart title="Ask the rules" folded={fighting}>
+              <AskRules campaignId={view.campaign.id} className="stack ask-rules" heading={false} />
+            </TrayPart>
+          )}
+        </div>
+      </aside>
     </main>
   );
 }

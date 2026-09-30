@@ -90,7 +90,7 @@ export function PartyForm({ view, names, onRecorded }: FormProps) {
 
   return (
     <div className="form">
-      <div className="row">
+      <div className="form-row">
         {MODES.map(([m, l]) => (
           <label key={m}>
             <input type="radio" checked={mode === m} onChange={() => setMode(m)} /> {l}
@@ -98,13 +98,13 @@ export function PartyForm({ view, names, onRecorded }: FormProps) {
         ))}
       </div>
       {mode === "invite" && (
-        <div className="row">
+        <div className="form-row">
           <label>From {pick(fromId, setFromId, everyone)}</label>
           <label>To {pick(toId, setToId, everyone)}</label>
         </div>
       )}
       {mode === "answer" && view.invites.length > 0 && (
-        <div className="row">
+        <div className="form-row">
           <label>
             Invitation
             {pick(
@@ -122,12 +122,12 @@ export function PartyForm({ view, names, onRecorded }: FormProps) {
         </div>
       )}
       {mode === "leave" && members.length > 0 && (
-        <div className="row">
+        <div className="form-row">
           <label>Member {pick(leaverId, setLeaverId, members.map((m) => [m, names(m)]))}</label>
         </div>
       )}
       {mode === "disband" && view.parties.length > 0 && (
-        <div className="row">
+        <div className="form-row">
           <label>Party {pick(partyId, setPartyId, view.parties.map((p) => [p.id, partyOf(p.id)]))}</label>
         </div>
       )}
@@ -239,14 +239,14 @@ export function MessageForm({ view, names, onRecorded }: FormProps) {
             What the System conveys
             <textarea rows={2} value={gist} maxLength={2000} onChange={(e) => setGist(e.target.value)} placeholder="In your words, or leave it empty to put the message below in the voice" />
           </label>
-          <div className="row">
+          <div className="form-row">
             <button disabled={!recipients.length || !asked || drafting} onClick={draft}>
               {drafting ? "Drafting…" : "Draft"}
             </button>
             <span className="muted small">The draft replaces the message below, for you to edit before sending.</span>
           </div>
           {recipients.length === 1 && (
-            <div className="row">
+            <div className="form-row">
               <button disabled={drafting} onClick={summarize}>
                 Draft a summary of {names(recipients[0]!)}
               </button>
@@ -305,7 +305,7 @@ export function MessageForm({ view, names, onRecorded }: FormProps) {
                   <em>{m.text}</em>
                 </div>
                 <div className="muted small">For {m.to.map(names).join(", ")}</div>
-                <div className="row">
+                <div className="form-row">
                   <button onClick={() => setHeldPick({ id: m.id, send: true })}>Send now…</button>
                   <button onClick={() => setHeldPick({ id: m.id, send: false })}>Discard…</button>
                 </div>

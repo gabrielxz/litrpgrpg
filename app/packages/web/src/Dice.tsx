@@ -109,7 +109,7 @@ export function RollForm({
   const name = c?.name ?? (otherName.trim() || "them");
   return (
     <div className="form dice-form">
-      <div className="row">
+      <div className="form-row">
         {(gm || characters.length > 1) && (
           <label>
             Who rolls
@@ -142,7 +142,7 @@ export function RollForm({
           </>
         )}
       </div>
-      <div className="row">
+      <div className="form-row">
         <label>
           <input type="radio" checked={kind === "clash"} onChange={() => setKind("clash")} /> Clash
         </label>
@@ -155,7 +155,7 @@ export function RollForm({
           </label>
         )}
       </div>
-      <div className="row">
+      <div className="form-row">
         {c && kind !== "table" && (
           <label>
             Force
@@ -186,7 +186,7 @@ export function RollForm({
           </label>
         )}
       </div>
-      <div className="row">
+      <div className="form-row">
         {kind !== "table" && (
           <label className="check" title="Two d100, keep the higher. The GM grants it from the fiction.">
             <input type="checkbox" checked={advantage} onChange={(e) => setAdvantage(e.target.checked)} /> Advantage
@@ -227,7 +227,7 @@ export function RollForm({
       {gm && (
         <details className="typed">
           <summary>Dice rolled by hand</summary>
-          <div className="row">
+          <div className="form-row">
             <label>
               Kept die and any it exploded into
               <input value={typed} onChange={(e) => setTyped(e.target.value)} placeholder="97 12" />

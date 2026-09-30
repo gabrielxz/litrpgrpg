@@ -9,14 +9,28 @@ import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
 import { costLine, profileLine, selectionLine, techniqueOffer } from "../classes.ts";
 
+/** A few System glyphs beside a class's name: decoration, the same for a class every time. */
+const GLYPHS = ["tri", "step", "nest", "fork", "bars", "kite", "corner", "bracket", "peak", "shelf", "rise", "break"];
+function Glyphs({ name }: { name: string }) {
+  let h = 0;
+  for (const ch of name) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  const picks = [GLYPHS[h % 12]!, GLYPHS[(h >>> 4) % 12]!, GLYPHS[(h >>> 8) % 12]!].slice(0, 2 + (h % 2));
+  return (
+    <span className="cluster glyphs" aria-hidden="true">
+      {picks.map((g, i) => (
+        <i key={i} className={`gl gl-${g}`} />
+      ))}
+    </span>
+  );
+}
+
+/** The class in the System's words, then its mechanics in the table's register (the tray). */
 function Package({ engine, p, bonus }: { engine: Engine | null; p: PlayerClass; bonus?: number }) {
   const selection = selectionLine(engine, p, bonus);
   return (
     <>
-      <p className="sys-text">
-        <em>{p.notice}</em>
-      </p>
-      <dl className="class-mechanics small">
+      <p className="voice">{p.notice}</p>
+      <dl className="tray spec mechanics">
         <dt>Profile</dt>
         <dd>
           {profileLine(engine, p)}
@@ -50,36 +64,40 @@ export function ClassOffers({ campaignId, engine, c, readOnly }: { campaignId: s
     }
   };
   return (
-    <div className="sys-section class-offers">
-      <h3>Classification</h3>
-      <p className="sys-dim small">
-        <em>Three offers. One will be accepted; the others close.</em>
-      </p>
+    <section className="sys-section" aria-label="Classification">
+      <h2 className="sys-label">Classification</h2>
+      <p className="voice dim">Three offers. One will be accepted; the others close.</p>
       {c.classOffers.map((p) => (
-        <div key={p.name} className="class-offer">
-          <h4>{p.name}</h4>
+        <article key={p.name} className={`class-card stack${picked === p.name ? " class-card--picked" : ""}`}>
+          <div className="spread">
+            <h3>{p.name}</h3>
+            <Glyphs name={p.name} />
+          </div>
           <Package engine={engine} p={p} />
           {!readOnly &&
             !c.dead &&
             (picked === p.name ? (
-              <div className="item-actions">
-                <span className="small">The other two close.</span>
-                <button className="sys-confirm inline" disabled={busy} onClick={() => accept(p.name)}>
+              <div className="confirm confirm--armed">
+                <span className="confirm__what">The other two close.</span>
+                <button className="btn btn--primary" disabled={busy} onClick={() => accept(p.name)}>
+                  <i className="ic ic-confirm" aria-hidden="true" />
                   Accept {p.name}
                 </button>
-                <button className="sys-confirm inline" onClick={() => setPicked(null)}>
+                <button className="btn" onClick={() => setPicked(null)}>
                   Not yet
                 </button>
               </div>
             ) : (
-              <button className="sys-confirm inline" onClick={() => setPicked(p.name)}>
-                Accept…
-              </button>
+              <div>
+                <button className="btn" onClick={() => setPicked(p.name)}>
+                  Accept…
+                </button>
+              </div>
             ))}
-        </div>
+        </article>
       ))}
       {error && <p className="error">{error}</p>}
-    </div>
+    </section>
   );
 }
 
@@ -113,9 +131,9 @@ function OutOfFight({ campaignId, engine, c, inFight }: { campaignId: string; en
     }
   };
   return (
-    <div className="item-actions">
+    <div className="cluster">
       {t.hook?.kind === "heal" && (
-        <select value={target} onChange={(e) => setTarget(e.target.value)} aria-label="Whom">
+        <select className="select select--sm" value={target} onChange={(e) => setTarget(e.target.value)} aria-label="Whom">
           {people.map((p) => (
             <option key={p.id} value={p.id}>
               {p.id === c.id ? `${p.name} (self)` : p.name}
@@ -123,10 +141,10 @@ function OutOfFight({ campaignId, engine, c, inFight }: { campaignId: string; en
           ))}
         </select>
       )}
-      <button className="sys-confirm inline" disabled={busy || Boolean(t.blocked)} onClick={use} title={t.blocked ?? t.cost}>
+      <button className="btn btn--sm" disabled={busy || Boolean(t.blocked)} onClick={use} title={t.blocked ?? t.cost}>
         Use {t.name} ({t.cost})
       </button>
-      {t.blocked && <span className="small sys-dim">{t.blocked}</span>}
+      {t.blocked && <span className="small dim">{t.blocked}</span>}
       {error && <p className="error">{error}</p>}
     </div>
   );
@@ -149,23 +167,27 @@ export function ClassHeld({ campaignId, engine, c, readOnly, inFight }: { campai
     }
   };
   return (
-    <div className="sys-section">
-      <h3>Class: {k.name}</h3>
+    <section className="sys-section">
+      <h2 className="sys-label">Class</h2>
+      <div className="spread">
+        <h3 className="class-name">{k.name}</h3>
+        <Glyphs name={k.name} />
+      </div>
       <Package engine={engine} p={k} bonus={k.bonus} />
       {!readOnly && !c.dead && <OutOfFight campaignId={campaignId} engine={engine} c={c} inFight={inFight} />}
       {k.permission.onceADay && (
-        <div className="item-actions">
-          <span className="small sys-dim">
+        <div className="cluster">
+          <span className="small dim">
             {k.usedSinceDawn === null ? `${k.permission.name}: once a day.` : k.usedSinceDawn ? `${k.permission.name}: used. Ready at dawn.` : `${k.permission.name}: ready.`}
           </span>
           {!readOnly && !c.dead && k.usedSinceDawn !== true && (
-            <button className="sys-confirm inline" disabled={busy} onClick={use}>
+            <button className="btn btn--sm" disabled={busy} onClick={use}>
               Use {k.permission.name}
             </button>
           )}
         </div>
       )}
       {error && <p className="error">{error}</p>}
-    </div>
+    </section>
   );
 }

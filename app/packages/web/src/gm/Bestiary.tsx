@@ -29,7 +29,7 @@ const two = (n: number) => String(n).padStart(2, "0");
 const line = (xs: Entry["offense"]) => xs.map((x) => `${two(x.force)} ${x.stat}${x.means ? ` (${x.means})` : ""}`).join(" · ");
 
 function SizingTable({ view, engine }: { view: GmView; engine: Engine }) {
-  const party = view.characters.filter((c) => c.playerId && !c.dead);
+  const party = view.characters.filter((c) => !c.dead);
   const level = partyLevelOf(party.map((c) => c.level));
   const size = party.length || 4;
   const rows = engine.rules.bestiary.encounter_sizing as {
@@ -130,7 +130,7 @@ export function BestiarySection({ view, engine }: { view: GmView; engine: Engine
     <main className="page">
       <SizingTable view={view} engine={engine} />
       <section className="card">
-        <div className="row">
+        <div className="form-row">
           <h2>Stat blocks</h2>
           <label className="inline-label">
             Tier

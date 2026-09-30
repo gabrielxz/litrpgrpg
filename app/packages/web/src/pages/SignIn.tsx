@@ -1,3 +1,4 @@
+import { useRegister } from "../frame.ts";
 import { useState } from "react";
 import { authConfig, devSignIn, signInWithGoogle } from "../auth.ts";
 
@@ -36,6 +37,7 @@ export function SignInButtons({ returnTo }: { returnTo?: string }) {
 }
 
 export function SignIn() {
+  useRegister("gm");
   return (
     <main className="page narrow center">
       <img src="/clave.svg" alt="" className="clave-large" />

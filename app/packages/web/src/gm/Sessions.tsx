@@ -32,7 +32,7 @@ function DraftSummary({ view, s, onDraft }: { view: GmView; s: CampaignSession; 
     }
   };
   return (
-    <div className="row">
+    <div className="form-row">
       <button disabled={busy} onClick={draft}>
         {busy ? "Drafting…" : "Draft it from the record"}
       </button>
@@ -175,30 +175,50 @@ export function SessionBar({ view, names, onRecorded, onSweep }: { view: GmView;
   };
   const toggle = (p: typeof open) => setOpen(open === p ? null : p);
   const here = running ? running.present.filter((id) => !running.left.includes(id)) : [];
+  // A part of the table bar; its forms open under the bar (styles.css, "the table bar").
   return (
-    <div className="session-bar">
-      <div className="session-line">
+    <>
+      <div className="tablebar__part session">
+        <i className="ic ic-session dim" aria-hidden="true" />
         {running ? (
           <>
-            <strong>{sessionName(running)}</strong>
-            <span className="muted">
+            <span className="tablebar__big tablebar__name">{sessionName(running)}</span>
+            <span className="dim">
               since {time(running.startedAt)} · {here.length ? here.map(names).join(", ") : "nobody at the table"}
               {running.left.length > 0 && ` (left: ${running.left.map(names).join(", ")})`}
             </span>
-            <button onClick={() => toggle("attendance")}>Attendance</button>
-            <button onClick={() => toggle("end")}>End the session</button>
+            <button className="btn btn--sm" aria-expanded={open === "attendance"} onClick={() => toggle("attendance")}>
+              Attendance
+            </button>
+            <button className="btn btn--sm" aria-expanded={open === "end"} onClick={() => toggle("end")}>
+              End the session
+            </button>
           </>
         ) : (
           <>
-            <span className="muted">No session running.</span>
-            <button onClick={() => toggle("start")}>Start a session</button>
+            <span className="dim">No session running.</span>
+            <button className="btn btn--sm" aria-expanded={open === "start"} onClick={() => toggle("start")}>
+              Start a session
+            </button>
           </>
         )}
       </div>
-      {open === "start" && !running && <StartForm view={view} names={names} onRecorded={recorded} />}
-      {open === "attendance" && running && <Attendance view={view} s={running} onRecorded={onRecorded} />}
-      {open === "end" && running && <EndForm view={view} s={running} names={names} onRecorded={recorded} onSweep={onSweep} />}
-    </div>
+      {open === "start" && !running && (
+        <div className="tablebar__drawer">
+          <StartForm view={view} names={names} onRecorded={recorded} />
+        </div>
+      )}
+      {open === "attendance" && running && (
+        <div className="tablebar__drawer">
+          <Attendance view={view} s={running} onRecorded={onRecorded} />
+        </div>
+      )}
+      {open === "end" && running && (
+        <div className="tablebar__drawer">
+          <EndForm view={view} s={running} names={names} onRecorded={recorded} onSweep={onSweep} />
+        </div>
+      )}
+    </>
   );
 }
 
@@ -270,7 +290,7 @@ function MemoryEditor({ view, s, names, onRecorded }: { view: GmView; s: Campaig
         </label>
       ))}
       {ai && (
-        <div className="row">
+        <div className="form-row">
           <button disabled={busy} onClick={draft}>
             {busy ? "Drafting…" : "Draft the rewrite"}
           </button>
@@ -290,7 +310,7 @@ export function SessionsCard({ view, names, onRecorded }: { view: GmView; names:
   return (
     <section className="card">
       <h2>Sessions</h2>
-      <div className="panel">
+      <div className="disclosure">
         <h3>Campaign memory</h3>
         {now.campaign ? <p>{now.campaign.text}</p> : <p className="muted small">No campaign paragraph yet.</p>}
         {[...now.chronicles].length > 0 && (

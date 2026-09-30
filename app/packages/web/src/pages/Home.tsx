@@ -1,3 +1,4 @@
+import { useRegister } from "../frame.ts";
 import { useEffect, useState } from "react";
 import { type CampaignSummary, type User, api } from "../api.ts";
 import { authConfig, setUser, signOut, useAuth } from "../auth.ts";
@@ -9,17 +10,19 @@ export function TopBar({ children }: { children?: React.ReactNode }) {
   const auth = useAuth();
   return (
     <header className="topbar">
-      <Link to="/" className="brand">
-        <img src="/clave-ink.svg" alt="" /> Gradebreaker
+      <Link to="/" className="topbar__mark">
+        <i className="clave" aria-hidden="true" />
+        <span className="wordmark">Gradebreaker</span>
       </Link>
-      <div className="topbar-middle">{children}</div>
-      <div className="topbar-user">
+      {children}
+      <span className="grow" />
+      <span className="small dim">
         {auth.user?.displayName}
         {auth.via === "dev" && <span className="tag">dev</span>}
-        <button className="link" onClick={() => void signOut().then(() => navigate("/"))}>
-          Sign out
-        </button>
-      </div>
+      </span>
+      <button className="btn-link small" onClick={() => void signOut().then(() => navigate("/"))}>
+        Sign out
+      </button>
     </header>
   );
 }
@@ -74,7 +77,7 @@ function Pool({ campaigns }: { campaigns: CampaignSummary[] }) {
                 {c.spec.kind === "pregen" ? "ready-made" : Object.entries(c.spec.stats).map(([k, v]) => `${k} ${v}`).join(" ")}
               </span>
               {campaigns.length > 0 && (
-                <span className="row">
+                <span className="form-row">
                   <select value={target[c.id] ?? campaigns[0]!.id} onChange={(e) => setTarget({ ...target, [c.id]: e.target.value })}>
                     {campaigns.map((k) => (
                       <option key={k.id} value={k.id}>
@@ -126,6 +129,7 @@ function CampaignList({ campaigns, empty }: { campaigns: CampaignSummary[]; empt
 }
 
 export function Home() {
+  useRegister("gm");
   const auth = useAuth();
   const [campaigns, setCampaigns] = useState<CampaignSummary[] | null>(null);
   const [name, setName] = useState("");
@@ -175,7 +179,7 @@ export function Home() {
             <section>
               <h2>Campaigns you run</h2>
               <CampaignList campaigns={running} empty="None yet." />
-              <div className="row">
+              <div className="form-row">
                 <input value={name} onChange={(e) => setName(e.target.value)} placeholder="New campaign name" />
                 <button className="primary" disabled={!name.trim()} onClick={create}>
                   Start a campaign
@@ -188,7 +192,7 @@ export function Home() {
 
         <section className="card">
           <h2>Your name at the table</h2>
-          <div className="row">
+          <div className="form-row">
             <input value={displayName} onChange={(e) => setDisplayName(e.target.value)} />
             <button disabled={!displayName.trim() || displayName === auth.user?.displayName} onClick={rename}>
               Save

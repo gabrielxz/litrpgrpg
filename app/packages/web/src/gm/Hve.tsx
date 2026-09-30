@@ -415,7 +415,7 @@ function OpportunityCard({ view, drafts }: { view: GmView; drafts: DraftRuns }) 
         Drafted after the sweep, from the character's sheet, the sweep's moments, and the situation. The draft waits in Suggestions for you to edit and issue; a
         Personal Opportunity written in the <a href="#quests">Quests</a> section makes the same record.
       </p>
-      <div className="row">
+      <div className="form-row">
         <label>
           For
           <select value={who} onChange={(e) => setWho(e.target.value)}>
@@ -431,7 +431,7 @@ function OpportunityCard({ view, drafts }: { view: GmView; drafts: DraftRuns }) 
         The situation (optional)
         <textarea rows={2} maxLength={2000} value={situation} onChange={(e) => setSituation(e.target.value)} placeholder="Where they are, who is near, what presses on them" />
       </label>
-      <div className="row">
+      <div className="form-row">
         <button className="primary" disabled={busy || !who || drafts.drafting} onClick={draft}>
           Draft an offer
         </button>
@@ -452,7 +452,7 @@ function OpportunityCard({ view, drafts }: { view: GmView; drafts: DraftRuns }) 
 export function HveSection({ view, engine, names, onRecorded, drafts }: { view: GmView; engine: Engine | null; names: Names; onRecorded: (env: Envelope) => void; drafts: DraftRuns }) {
   if (!engine) return <p className="muted pad">Loading rules…</p>;
   return (
-    <main className="gm">
+    <main className="gm-split">
       <div>
         <SweepForm view={view} engine={engine} names={names} onRecorded={onRecorded} />
         <OpportunityCard view={view} drafts={drafts} />

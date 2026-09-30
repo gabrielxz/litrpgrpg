@@ -14,7 +14,8 @@ interface Asked {
   inBook: boolean;
 }
 
-export function AskRules({ campaignId, gm, className }: { campaignId: string; gm?: boolean; className?: string }) {
+/** `heading: false` where the surrounding fold already names it (the player's tray). */
+export function AskRules({ campaignId, gm, className, heading = true }: { campaignId: string; gm?: boolean; className?: string; heading?: boolean }) {
   const [question, setQuestion] = useState("");
   const [asked, setAsked] = useState<Asked[]>([]);
   const [busy, setBusy] = useState(false);
@@ -36,8 +37,8 @@ export function AskRules({ campaignId, gm, className }: { campaignId: string; gm
   };
   return (
     <section className={className ?? "table-dice"}>
-      <h3>Ask the rules</h3>
-      <p className="small sys-dim">{gm ? "Answered from every chapter of the book." : "Answered from the chapters players read."}</p>
+      {heading && <h3>Ask the rules</h3>}
+      <p className="small dim">{gm ? "Answered from every chapter of the book." : "Answered from the chapters players read."}</p>
       <textarea
         rows={2}
         maxLength={1000}
@@ -61,8 +62,8 @@ export function AskRules({ campaignId, gm, className }: { campaignId: string; gm
             <strong>{a.question}</strong>
           </p>
           <p>{a.answer}</p>
-          {a.citations.length > 0 && <p className="small sys-dim">{a.citations.map((c) => `${c.chapter}, "${c.heading}"`).join("; ")}</p>}
-          {!a.inBook && <p className="small sys-dim">Not answered in {gm ? "the book" : "the players' chapters"}: the GM's call.</p>}
+          {a.citations.length > 0 && <p className="small dim">{a.citations.map((c) => `${c.chapter}, "${c.heading}"`).join("; ")}</p>}
+          {!a.inBook && <p className="small dim">Not answered in {gm ? "the book" : "the players' chapters"}: the GM's call.</p>}
         </div>
       ))}
     </section>

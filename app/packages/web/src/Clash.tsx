@@ -55,7 +55,7 @@ function SideFields({
   const [mod, setMod] = useState(value.modifier ? String(value.modifier) : "");
   const choices = role === "attack" ? OFFENSE : DEFENSE;
   return (
-    <div className="row tight">
+    <div className="form-row tight">
       {who.kind === "character" ? (
         <label>
           {role === "attack" ? "Attack with" : "Defend with"}
@@ -240,7 +240,7 @@ export function AttackForm({
   if (!targets.length) return <p className="muted small">Nobody to attack.</p>;
   return (
     <div className="clash-form">
-      <div className="row tight">
+      <div className="form-row tight">
         <label>
           {free ? "Free strike at" : "Target"}
           <select value={defenderId} onChange={(e) => (setTarget(e.target.value), setFlank(null))}>
@@ -257,7 +257,7 @@ export function AttackForm({
         </label>
       </div>
       {rush && rushZones.length > 0 && (
-        <div className="row tight">
+        <div className="form-row tight">
           <label title="Moving into the Zone and attacking there costs the attack's one Beat">
             {rush.name}
             <select value={rushing} onChange={(e) => setRushTo(e.target.value)}>
@@ -272,7 +272,7 @@ export function AttackForm({
         </div>
       )}
       <SideFields who={attacker} role="attack" value={side} onChange={setSide} />
-      <div className="row tight">
+      <div className="form-row tight">
         <label className="check" title="+10 when two or more hostiles engage the target; suggested from the Zones">
           <input type="checkbox" checked={flanking} onChange={(e) => setFlank(e.target.checked)} /> Flanking +10
         </label>
@@ -282,7 +282,7 @@ export function AttackForm({
           </label>
         )}
       </div>
-      <div className="row tight">
+      <div className="form-row tight">
         <button
           className="primary"
           disabled={busy || !defenderId}
@@ -327,7 +327,7 @@ export function YieldChoice({
     return { y, damage: left * multiplier, drivenBack: left >= 40 };
   });
   return (
-    <div className="row tight yield">
+    <div className="form-row tight yield">
       {options.map((o) => (
         <button key={o.y} className={o.y === 0 ? "" : "primary"} disabled={busy} onClick={() => onYield(o.y)}>
           {o.y === 0 ? `Take ${o.damage}` : `Yield ${o.y} Beat${o.y === 1 ? "" : "s"}: ${o.damage}`}

@@ -143,7 +143,7 @@ function MeditateForm({ view, engine, names, onRecorded, c, memoryId }: Props & 
   const flags = note?.flags.filter((f) => !f.startsWith("table word")) ?? [];
   return (
     <div className="form">
-      <div className="row tight">
+      <div className="form-row tight">
         <FamilySelect engine={engine} value={family} onChange={setFamily} />
         <label>
           Insight
@@ -165,7 +165,7 @@ function MeditateForm({ view, engine, names, onRecorded, c, memoryId }: Props & 
         <textarea value={vision} maxLength={1000} rows={2} onChange={(e) => setVision(e.target.value)} placeholder="Three images: the moment with one detail changed, the Principle in a pure or alien form, one image that misleads" />
       </label>
       {ai && (
-        <div className="row">
+        <div className="form-row">
           <button disabled={drafting} onClick={draft}>
             {drafting ? "Drafting…" : "Draft the vision"}
           </button>
@@ -208,7 +208,7 @@ function AwardForm({ view, engine, names, onRecorded, c }: Props & { c: Sheet })
             ))}
           </select>
         </label>
-        <div className="row tight">
+        <div className="form-row tight">
           <FamilySelect engine={engine} value={family} onChange={setFamily} />
           <label>
             Insight
@@ -315,12 +315,12 @@ function DistillForm({ view, engine, names, onRecorded, c, x, refine }: Props & 
         {refine ? `Reshaping at ${x.tier}: same slot, same Insight, a shifted identity.` : `Distillation to ${tier}.`} The articulation must be {test}.
       </p>
       {ai && (
-        <div className="panel">
+        <div className="disclosure">
           <label>
             What the player has said (optional)
             <input className="wide" value={words} maxLength={2000} onChange={(e) => setWords(e.target.value)} placeholder="I hit stuff, and I stand in front of people?" />
           </label>
-          <div className="row">
+          <div className="form-row">
             <button disabled={busy} onClick={draft}>
               {busy ? "Drafting…" : drafted ? "Draft again" : "Draft two readings"}
             </button>
@@ -451,7 +451,7 @@ function CharacterCard(props: Props & { c: Sheet }) {
             </div>
           ))}
           {!c.dead && !x.offer && (
-            <div className="row tight">
+            <div className="form-row tight">
               {x.distillable && <button onClick={() => toggle(`d:${x.family}`)}>Distill</button>}
               <button onClick={() => toggle(`r:${x.family}`)}>Reshape</button>
             </div>
@@ -500,7 +500,7 @@ export function PrinciplesSection({ view, engine, names, onRecorded }: { view: G
   if (!engine) return <p className="muted pad">Loading rules…</p>;
   const props = { view, engine, names, onRecorded };
   return (
-    <main className="gm">
+    <main className="gm-split">
       <div>
         <MemoriesDueCard view={view} names={names} onRecorded={onRecorded} />
         {view.characters.map((c) => (

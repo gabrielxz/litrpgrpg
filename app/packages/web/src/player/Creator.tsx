@@ -6,6 +6,7 @@
 import type { Engine } from "@gradebreaker/engine";
 import { pointBuyProblems } from "@gradebreaker/record";
 import { useState } from "react";
+import { Clave, Icon } from "../ui.tsx";
 import { ATTRIBUTES, ATTRIBUTE_NAMES } from "../text.ts";
 
 export type CharacterSpec =
@@ -78,19 +79,33 @@ export function Creator({
     }
   };
 
+  const anchorLine = (a: string) => {
+    const line = anchor(engine, a, stats[a]!);
+    const cut = line.indexOf(": ");
+    return cut < 0 ? (
+      line
+    ) : (
+      <>
+        <span className="anchor__band">{line.slice(0, cut)}</span>
+        {line.slice(cut)}
+      </>
+    );
+  };
+
+  // Always the System's register, on the player's screen or on the console's home page.
   return (
-    <article className="interface creator">
-      <header>
-        <img src="/clave.svg" alt="" className="clave-mark" />
+    <article className="interface iframe sys creator" aria-label="Registration">
+      <header className="sys-head sys-head--plain">
+        <Clave />
         <div>
-          <h2>Registration</h2>
-          <div className="sys-dim">
-            <em>Integrant record: incomplete.</em>
-          </div>
+          <h1 className="sys-name">Registration</h1>
+          <p className="sys-sub">
+            <span className="voice dim">Integrant record: incomplete.</span>
+          </p>
         </div>
       </header>
 
-      <div className="sys-section sys-choice">
+      <div className="cluster creator__paths" role="radiogroup" aria-label="How to register">
         <label className="check">
           <input type="radio" checked={mode === "custom"} onChange={() => setMode("custom")} /> Build your own
         </label>
@@ -100,28 +115,29 @@ export function Creator({
       </div>
 
       {mode === "pregen" ? (
-        <div className="sys-section pregens">
+        <div className="pregens" role="radiogroup" aria-label="Ready-made characters">
           {pregens.map((p) => (
-            <label key={p.name} className={`pregen ${pregen === p.name ? "chosen" : ""}`}>
+            <label key={p.name} className={`check pregen${pregen === p.name ? " pregen--chosen" : ""}`}>
               <input type="radio" checked={pregen === p.name} onChange={() => setPregen(p.name)} />
-              <strong>{p.name}</strong>
-              <span>{p.tagline}</span>
-              <span className="sys-dim small">
-                {ATTRIBUTES.map((a) => `${a} ${p.stats[a]}`).join(" · ")}
+              <span className="stack">
+                <b className="display pregen__name">{p.name}</b>
+                <span className="prose pregen__line">{p.tagline}</span>
+                <span className="num dim pregen__stats">{ATTRIBUTES.map((a) => `${a} ${p.stats[a]}`).join(" · ")}</span>
               </span>
             </label>
           ))}
         </div>
       ) : (
         <>
-          <div className="sys-section sys-fields">
-            <label>
-              Name
-              <input value={name} onChange={(e) => setName(e.target.value)} />
+          <div className="stack">
+            <label className="field creator__name">
+              <span>Name</span>
+              <input className="input" value={name} onChange={(e) => setName(e.target.value)} />
             </label>
-            <label>
-              Background
+            <label className="field">
+              <span>Background</span>
               <textarea
+                className="textarea prose creator__background"
                 rows={2}
                 value={background}
                 onChange={(e) => setBackground(e.target.value)}
@@ -129,42 +145,43 @@ export function Creator({
               />
             </label>
           </div>
-          <div className="sys-section">
-            <h3>
-              Attributes <span className="sys-dim">{left === 0 ? "all points spent" : left > 0 ? `${left} points left` : `${-left} over`}</span>
-            </h3>
-            <div className="point-buy">
+          <section className="sys-section" aria-label="Attributes">
+            <h2 className="sys-label">
+              Attributes <span className="tail">{left === 0 ? "all points spent" : left > 0 ? `${left} points left` : `${-left} over`}</span>
+            </h2>
+            <div>
               {ATTRIBUTES.map((a) => (
                 <div key={a} className="point-row">
                   <span>{ATTRIBUTE_NAMES[a]}</span>
-                  <button onClick={() => bump(a, -1)} disabled={stats[a]! <= pb.min_per_stat} aria-label={`Lower ${a}`}>
-                    −
+                  <button className="btn btn--sm btn--icon" onClick={() => bump(a, -1)} disabled={stats[a]! <= pb.min_per_stat} aria-label={`Lower ${a}`}>
+                    <Icon name="remove" />
                   </button>
-                  <span className="num">{stats[a]}</span>
-                  <button onClick={() => bump(a, 1)} disabled={stats[a]! >= pb.max_per_stat} aria-label={`Raise ${a}`}>
-                    +
+                  <span className="num point-row__value">{stats[a]}</span>
+                  <button className="btn btn--sm btn--icon" onClick={() => bump(a, 1)} disabled={stats[a]! >= pb.max_per_stat} aria-label={`Raise ${a}`}>
+                    <Icon name="add" />
                   </button>
-                  <span className="sys-dim small anchor">{anchor(engine, a, stats[a]!)}</span>
+                  <span className="small dim">{anchorLine(a)}</span>
                 </div>
               ))}
             </div>
-            <p className="sys-dim small">
-              Health {engine.maxHp(stats.FOR!)} (Fortitude × 2) · Aether {engine.maxAether(stats.POW!)} (Power) · each Attribute{" "}
-              {pb.min_per_stat} to {pb.max_per_stat}
+            <p className="small dim">
+              Health <span className="num creator__derived">{engine.maxHp(stats.FOR!)}</span> (Fortitude × 2) · Aether{" "}
+              <span className="num creator__derived">{engine.maxAether(stats.POW!)}</span> (Power) · each Attribute <span className="num">{pb.min_per_stat}</span> to{" "}
+              <span className="num">{pb.max_per_stat}</span>
             </p>
-          </div>
+          </section>
         </>
       )}
 
-      <div className="sys-section">
-        {problems.length > 0 && <p className="sys-dim small">{problems[0]}</p>}
+      <div className="stack">
+        {problems.length > 0 && <p className="problem">{problems[0]}</p>}
         {error && <p className="error">{error}</p>}
-        <div className="row">
-          <button className="sys-confirm" disabled={problems.length > 0 || busy} onClick={submit}>
+        <div className="cluster creator__submit">
+          <button className="btn btn--primary" disabled={problems.length > 0 || busy} onClick={submit}>
             {submitLabel}
           </button>
           {onCancel && (
-            <button className="link sys-link" onClick={onCancel}>
+            <button className="btn-link small dim" onClick={onCancel}>
               Cancel
             </button>
           )}
