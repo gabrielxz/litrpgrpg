@@ -47,7 +47,7 @@ function Package({ engine, p, bonus }: { engine: Engine | null; p: PlayerClass; 
   );
 }
 
-export function ClassOffers({ campaignId, engine, c, readOnly }: { campaignId: string; engine: Engine | null; c: InterfaceSheet; readOnly?: boolean }) {
+export function ClassOffers({ campaignId, engine, c, readOnly, dealt }: { campaignId: string; engine: Engine | null; c: InterfaceSheet; readOnly?: boolean; dealt?: boolean }) {
   const [picked, setPicked] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -67,8 +67,12 @@ export function ClassOffers({ campaignId, engine, c, readOnly }: { campaignId: s
     <section className="sys-section" aria-label="Classification">
       <h2 className="sys-label">Classification</h2>
       <p className="voice dim">Three offers. One will be accepted; the others close.</p>
-      {c.classOffers.map((p) => (
-        <article key={p.name} className={`class-card stack${picked === p.name ? " class-card--picked" : ""}`}>
+      {c.classOffers.map((p, i) => (
+        <article
+          key={p.name}
+          className={`class-card stack${picked === p.name ? " class-card--picked" : ""}${dealt ? " mo-deal" : ""}`}
+          style={dealt ? ({ "--delay": `${i * 140}ms` } as React.CSSProperties) : undefined}
+        >
           <div className="spread">
             <h3>{p.name}</h3>
             <Glyphs name={p.name} />
@@ -150,7 +154,7 @@ function OutOfFight({ campaignId, engine, c, inFight }: { campaignId: string; en
   );
 }
 
-export function ClassHeld({ campaignId, engine, c, readOnly, inFight }: { campaignId: string; engine: Engine | null; c: InterfaceSheet; readOnly?: boolean; inFight: boolean }) {
+export function ClassHeld({ campaignId, engine, c, readOnly, inFight, taken }: { campaignId: string; engine: Engine | null; c: InterfaceSheet; readOnly?: boolean; inFight: boolean; taken?: boolean }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const k = c.class;
@@ -167,7 +171,7 @@ export function ClassHeld({ campaignId, engine, c, readOnly, inFight }: { campai
     }
   };
   return (
-    <section className="sys-section">
+    <section className={`sys-section${taken ? " mo-rise class-taken" : ""}`}>
       <h2 className="sys-label">Class</h2>
       <div className="spread">
         <h3 className="class-name">{k.name}</h3>

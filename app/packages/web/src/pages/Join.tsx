@@ -4,6 +4,8 @@ import { ApiError, api } from "../api.ts";
 import { useAuth } from "../auth.ts";
 import { navigate } from "../router.tsx";
 import { SignInButtons } from "./SignIn.tsx";
+import { TopBar } from "./Home.tsx";
+import { Clave } from "../ui.tsx";
 
 /** An invite link: see the campaign's name, sign in if needed, join. */
 export function Join({ code }: { code: string }) {
@@ -31,29 +33,37 @@ export function Join({ code }: { code: string }) {
   };
 
   return (
-    <main className="page narrow center">
-      <img src="/clave.svg" alt="" className="clave-large" />
-      {error && <p className="error">{error}</p>}
-      {invite && (
-        <>
-          <h1>{invite.campaignName}</h1>
-          {!invite.usable ? (
-            <p className="muted">This invite can no longer be used. Ask your GM for a new link.</p>
-          ) : auth.status === "signed-in" ? (
+    <>
+      {auth.status === "signed-in" && <TopBar />}
+      <main className="arrive arrive--join">
+        <img className="arrive__art" src="/art/office-bone-portrait.webp" alt="" />
+        <div className="stack arrive__stack">
+          <Clave style={{ width: "2.5rem", height: "2.95rem" }} />
+          {error && <p className="error">{error}</p>}
+          {invite && (
             <>
-              <p className="muted">You are joining as {auth.user?.displayName}, as a player.</p>
-              <button className="primary" disabled={busy} onClick={join}>
-                Join the campaign
-              </button>
-            </>
-          ) : (
-            <>
-              <p className="muted">Sign in to join as a player.</p>
-              <SignInButtons returnTo={window.location.href} />
+              <h1 className="arrive__campaign">{invite.campaignName}</h1>
+              {!invite.usable ? (
+                <p className="dim arrive__line">This invite can no longer be used. Ask your GM for a new link.</p>
+              ) : auth.status === "signed-in" ? (
+                <>
+                  <p className="dim arrive__line">You are joining as {auth.user?.displayName}, as a player.</p>
+                  <div>
+                    <button className="btn btn--primary arrive__go" disabled={busy} onClick={join}>
+                      Join the campaign
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="dim arrive__line">Sign in to join as a player.</p>
+                  <SignInButtons returnTo={window.location.href} />
+                </>
+              )}
             </>
           )}
-        </>
-      )}
-    </main>
+        </div>
+      </main>
+    </>
   );
 }

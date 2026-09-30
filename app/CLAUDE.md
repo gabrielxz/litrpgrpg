@@ -10,6 +10,8 @@ STANDING RULES (Gabriel):
 - Every AI feature has a manual path producing the same record (the Unplugged Floor applies to the app).
 - Player-facing text uses in-world words; `packages/web/src/text.ts` holds the notices and a test enforces it.
 
+THE LOOK: every screen follows Claude Design's canvas "Gradebreaker App Makeover" (https://claude.ai/artifact/7wzrXRhs9U4FeS751NXWey). `packages/web/src/gb.css` is its design system, copied unedited: change the canvas and copy the file again. What the app adds lives in `styles.css`, on `gb.css`'s tokens. A player's screen is the `.sys` register and the GM's the `.gm` register; anything the GM previews for a player renders in `.sys`.
+
 CHECKS: `make app-check` typechecks the workspace and runs every package's tests, the engine against `rules/fixtures/`; `make check` runs it too. A function added to `tools/rules_engine.py` fails the check until `scripts/signatures.py` is rerun and the method is ported.
 
 RUNNING IT (details in `app/README.md`): the development Postgres is the Docker container on 127.0.0.1:54340 (`docker compose up -d --wait` in `app/`); another project's Supabase runs on 54322, so leave it alone. `.claude/launch.json` starts app-api (8787) and app-web (5173) for the browser pane. Development sign-in gives each browser tab its own person, so a GM tab and player tabs run side by side: seed by a fetch to `/api/dev/sign-in` and set sessionStorage `gradebreaker.devToken` per tab. A screenshot of a background tab can render stale; read the DOM instead. Verify every screen change in the browser pane with a GM tab and at least one player tab.

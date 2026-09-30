@@ -5,6 +5,7 @@ import { authConfig, setUser, signOut, useAuth } from "../auth.ts";
 import { useEngine } from "../live.ts";
 import { type CharacterSpec, Creator } from "../player/Creator.tsx";
 import { Link, navigate } from "../router.tsx";
+import { Icon } from "../ui.tsx";
 
 export function TopBar({ children }: { children?: React.ReactNode }) {
   const auth = useAuth();
@@ -39,6 +40,7 @@ function Pool({ campaigns }: { campaigns: CampaignSummary[] }) {
   const [building, setBuilding] = useState(false);
   const [target, setTarget] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState<string | null>(null);
   const load = () =>
     api<{ characters: Unassigned[] }>("GET", "/characters")
       .then((r) => setCharacters(r.characters))
@@ -58,70 +60,99 @@ function Pool({ campaigns }: { campaigns: CampaignSummary[] }) {
     }
   };
   const remove = async (id: string) => {
+    setDeleting(null);
     await api("DELETE", `/characters/${id}`).catch((e) => setError(e.message));
     await load();
   };
 
   return (
-    <section className="card">
-      <h2>Your characters</h2>
-      <p className="muted">
-        Characters you have built that are not in a campaign yet. Bringing one into a campaign moves it there for good.
-      </p>
-      {characters && characters.length > 0 && (
-        <ul className="pool">
-          {characters.map((c) => (
-            <li key={c.id}>
-              <strong>{c.name}</strong>
-              <span className="muted small">
-                {c.spec.kind === "pregen" ? "ready-made" : Object.entries(c.spec.stats).map(([k, v]) => `${k} ${v}`).join(" ")}
-              </span>
-              {campaigns.length > 0 && (
-                <span className="form-row">
-                  <select value={target[c.id] ?? campaigns[0]!.id} onChange={(e) => setTarget({ ...target, [c.id]: e.target.value })}>
-                    {campaigns.map((k) => (
-                      <option key={k.id} value={k.id}>
-                        {k.name}
-                      </option>
-                    ))}
-                  </select>
-                  <button onClick={() => join(c.id)}>Bring into campaign</button>
-                </span>
-              )}
-              <button className="link" onClick={() => remove(c.id)}>
-                Delete
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-      {building && engine ? (
-        <Creator
-          engine={engine}
-          submitLabel="Register"
-          onCancel={() => setBuilding(false)}
-          onSubmit={async (spec) => {
-            await api("POST", "/characters", spec);
-            setBuilding(false);
-            await load();
-          }}
-        />
-      ) : (
-        <button onClick={() => setBuilding(true)}>Build a character</button>
-      )}
-      {error && <p className="error">{error}</p>}
+    <section className="panel" aria-labelledby="chars-h">
+      <div className="panel__head">
+        <h2 id="chars-h">Your characters</h2>
+      </div>
+      <div className="panel__body stack home__chars">
+        <p className="small dim">Characters you have built that are not in a campaign yet. Bringing one into a campaign moves it there for good.</p>
+        {characters && characters.length > 0 && (
+          <ul>
+            {characters.map((c) => (
+              <li key={c.id} className="stack home__char">
+                <div className="spread">
+                  <b className="home__char-name">{c.name}</b>
+                  <span className="num dim home__char-stats">
+                    {c.spec.kind === "pregen" ? "ready-made" : Object.entries(c.spec.stats).map(([k, v]) => `${k} ${v}`).join(" ")}
+                  </span>
+                </div>
+                {campaigns.length > 0 && (
+                  <div className="cluster">
+                    <select className="select select--sm" value={target[c.id] ?? campaigns[0]!.id} onChange={(e) => setTarget({ ...target, [c.id]: e.target.value })} aria-label={`Campaign for ${c.name}`}>
+                      {campaigns.map((k) => (
+                        <option key={k.id} value={k.id}>
+                          {k.name}
+                        </option>
+                      ))}
+                    </select>
+                    <button className="btn btn--sm" onClick={() => join(c.id)}>
+                      Bring into campaign
+                    </button>
+                  </div>
+                )}
+                {/* Deleting is for good, so it takes the confirm tap (Decisions, "the makeover", P12). */}
+                <div>
+                  {deleting === c.id ? (
+                    <span className="confirm confirm--armed">
+                      <span className="confirm__what">Deleting is permanent.</span>
+                      <button className="btn btn--sm btn--danger" onClick={() => remove(c.id)}>
+                        Delete {c.name}
+                      </button>
+                      <button className="btn btn--sm" onClick={() => setDeleting(null)}>
+                        Keep {c.name}
+                      </button>
+                    </span>
+                  ) : (
+                    <button className="btn btn--sm btn--danger" onClick={() => setDeleting(c.id)}>
+                      Delete…
+                    </button>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+        {building && engine ? (
+          <Creator
+            engine={engine}
+            submitLabel="Register"
+            onCancel={() => setBuilding(false)}
+            onSubmit={async (spec) => {
+              await api("POST", "/characters", spec);
+              setBuilding(false);
+              await load();
+            }}
+          />
+        ) : (
+          <div>
+            <button className="btn" onClick={() => setBuilding(true)}>
+              <Icon name="add" />
+              Build a character
+            </button>
+          </div>
+        )}
+        {error && <p className="error">{error}</p>}
+      </div>
     </section>
   );
 }
 
 function CampaignList({ campaigns, empty }: { campaigns: CampaignSummary[]; empty: string }) {
-  if (!campaigns.length) return <p className="muted">{empty}</p>;
+  if (!campaigns.length) return <p className="dim panel__body">{empty}</p>;
   return (
-    <ul className="campaign-list">
+    <ul className="rows panel__rows">
       {campaigns.map((c) => (
         <li key={c.id}>
-          <Link to={`/c/${c.id}`}>{c.name}</Link>
-          <span className="muted">rules {c.rulesVersion}</span>
+          <Link to={`/c/${c.id}`} className="row__main home__campaign">
+            {c.name}
+          </Link>
+          <span className="num small dim">rules {c.rulesVersion}</span>
         </li>
       ))}
     </ul>
@@ -166,40 +197,54 @@ export function Home() {
   return (
     <>
       <TopBar />
-      <main className="page narrow">
+      <img className="home__band" src="/art/office-bone-band.webp" alt="" />
+      <main className="screen screen--side home">
         {campaigns === null ? (
-          <p className="muted">Loading…</p>
+          <p className="dim">Loading…</p>
         ) : (
-          <>
-            <section>
-              <h2>Campaigns you play in</h2>
+          <div className="stack home__main">
+            <section className="panel" aria-labelledby="run-h">
+              <div className="panel__head">
+                <h2 id="run-h">Campaigns you run</h2>
+              </div>
+              <CampaignList campaigns={running} empty="None yet." />
+              <div className="stack home__new">
+                <div className="cluster home__new-row">
+                  <input className="input" value={name} onChange={(e) => setName(e.target.value)} placeholder="New campaign name" aria-label="New campaign name" />
+                  <button className="btn btn--primary" disabled={!name.trim()} onClick={create}>
+                    Start a campaign
+                  </button>
+                </div>
+                <p className="small dim">
+                  You run it as the GM, on rules <span className="num">{authConfig()?.rulesVersion}</span>.
+                </p>
+              </div>
+            </section>
+            <section className="panel" aria-labelledby="play-h">
+              <div className="panel__head">
+                <h2 id="play-h">Campaigns you play in</h2>
+              </div>
               <CampaignList campaigns={playing} empty="None yet. Open an invite link from your GM to join one." />
             </section>
-            <Pool campaigns={campaigns} />
-            <section>
-              <h2>Campaigns you run</h2>
-              <CampaignList campaigns={running} empty="None yet." />
-              <div className="form-row">
-                <input value={name} onChange={(e) => setName(e.target.value)} placeholder="New campaign name" />
-                <button className="primary" disabled={!name.trim()} onClick={create}>
-                  Start a campaign
+          </div>
+        )}
+        <aside className="stack home__side">
+          {campaigns !== null && <Pool campaigns={campaigns} />}
+          <section className="panel" aria-labelledby="name-h">
+            <div className="panel__head">
+              <h2 id="name-h">Your name at the table</h2>
+            </div>
+            <div className="panel__body">
+              <div className="cluster home__new-row">
+                <input className="input" value={displayName} onChange={(e) => setDisplayName(e.target.value)} aria-label="Your name at the table" />
+                <button className="btn" disabled={!displayName.trim() || displayName === auth.user?.displayName} onClick={rename}>
+                  Save
                 </button>
               </div>
-              <p className="muted small">You run it as the GM, on rules {authConfig()?.rulesVersion}.</p>
-            </section>
-          </>
-        )}
-
-        <section className="card">
-          <h2>Your name at the table</h2>
-          <div className="form-row">
-            <input value={displayName} onChange={(e) => setDisplayName(e.target.value)} />
-            <button disabled={!displayName.trim() || displayName === auth.user?.displayName} onClick={rename}>
-              Save
-            </button>
-          </div>
-        </section>
-        {error && <p className="error">{error}</p>}
+            </div>
+          </section>
+          {error && <p className="error">{error}</p>}
+        </aside>
       </main>
     </>
   );

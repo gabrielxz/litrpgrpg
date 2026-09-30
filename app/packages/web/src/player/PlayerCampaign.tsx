@@ -18,7 +18,7 @@ import { useEngine } from "../live.ts";
 import { Fight } from "./Fight.tsx";
 import { pillsOf } from "../Care.tsx";
 import { stackLine } from "../items.ts";
-import { momentOf } from "../moments.ts";
+import { type Playing, momentOf, useMoments } from "../moments.ts";
 import { ATTRIBUTES, ATTRIBUTE_NAMES, noticeLine } from "../text.ts";
 import { Clave, Icon, Meter, Vital } from "../ui.tsx";
 import { type CharacterSpec, Creator } from "./Creator.tsx";
@@ -48,7 +48,7 @@ function useAct(campaignId: string) {
 }
 
 /** Attributes in both readings, raw over Force; while points wait, a stepper under each. */
-function Attributes({ campaignId, c, readOnly }: { campaignId: string; c: InterfaceSheet; readOnly?: boolean }) {
+function Attributes({ campaignId, c, readOnly, leveled }: { campaignId: string; c: InterfaceSheet; readOnly?: boolean; leveled?: boolean }) {
   const [placement, setPlacement] = useState<Record<string, number>>({});
   const [id, setId] = useState(newActionId);
   const [error, setError] = useState<string | null>(null);
@@ -80,9 +80,15 @@ function Attributes({ campaignId, c, readOnly }: { campaignId: string; c: Interf
         Attributes <span className="tail">Raw · Force</span>
       </h2>
       {c.freePoints > 0 && (
-        <div className="points-waiting">
+        <div className={`spread points-waiting${leveled ? " mo-wash" : ""}`}>
           <span className="voice">
             Unallocated points: <span className="num">{c.freePoints - total}</span>
+          </span>
+          {/* Fragments resolving into alignment while points wait; they resolve in motion when a level lands. */}
+          <span className="cluster glyphs" aria-hidden="true">
+            <i className="gl gl-tri mo-frag" style={{ "--dx": "-46px", "--dy": "-22px", "--rot": "-40deg", "--delay": "950ms" } as React.CSSProperties} />
+            <i className="gl gl-step mo-frag" style={{ "--dx": "26px", "--dy": "24px", "--rot": "30deg", "--delay": "1020ms" } as React.CSSProperties} />
+            <i className="gl gl-nest mo-frag" style={{ "--dx": "52px", "--dy": "-14px", "--rot": "45deg", "--delay": "1090ms" } as React.CSSProperties} />
           </span>
         </div>
       )}
@@ -297,7 +303,7 @@ function Carried({ campaignId, c, roster, readOnly, pills }: { campaignId: strin
  * Every title the character holds, hidden ones included (What Can Be Seen): the holder wears or
  * hides a Bestowed title, reveals a Hidden Achievement for good, and places a player's-choice point.
  */
-function Titles({ campaignId, c, readOnly }: { campaignId: string; c: InterfaceSheet; readOnly?: boolean }) {
+function Titles({ campaignId, c, readOnly, fresh }: { campaignId: string; c: InterfaceSheet; readOnly?: boolean; fresh?: string }) {
   const { run, busy, error } = useAct(campaignId);
   const [revealing, setRevealing] = useState<string | null>(null);
   const [stat, setStat] = useState<Record<string, string>>({});
@@ -313,9 +319,9 @@ function Titles({ campaignId, c, readOnly }: { campaignId: string; c: InterfaceS
       <h2 className="sys-label">Titles</h2>
       <ul>
         {c.titles.map((t) => (
-          <li key={t.id} className={`sys-row${t.status !== "active" ? " dim" : ""}`}>
+          <li key={t.id} className={`sys-row${t.status !== "active" ? " dim" : ""}${t.id === fresh ? " mo-insert" : ""}`}>
             <span className="sys-row__main">
-              <b className="title-name">{t.name}</b>{" "}
+              <b className={`title-name${t.id === fresh ? " mo-brackets" : ""}`}>{t.name}</b>{" "}
               <span className="small dim">
                 {t.category}
                 {t.category === "Hidden Achievement" ? (t.revealed ? ", revealed" : ", hidden from observers") : ""}
@@ -368,7 +374,11 @@ function Titles({ campaignId, c, readOnly }: { campaignId: string; c: InterfaceS
                 </span>
               )}
             </span>
-            {bonus(t.bonus) && <span className="sys-row__side">{bonus(t.bonus)}</span>}
+            {bonus(t.bonus) && (
+              <span className={`sys-row__side${t.id === fresh ? " mo-fade" : ""}`} style={t.id === fresh ? ({ "--delay": "700ms" } as React.CSSProperties) : undefined}>
+                {bonus(t.bonus)}
+              </span>
+            )}
           </li>
         ))}
       </ul>
@@ -380,13 +390,13 @@ function Titles({ campaignId, c, readOnly }: { campaignId: string; c: InterfaceS
 const STATUS = (q: PlayerQuest) => (q.status === "offered" ? "Offered" : q.status[0]!.toUpperCase() + q.status.slice(1));
 
 /** One entry in the book's quest shape (System Quests, "The Quest UI"): key and value in columns. */
-function QuestEntry({ q, children, closed }: { q: PlayerQuest; children?: React.ReactNode; closed?: boolean }) {
+function QuestEntry({ q, children, closed, fresh }: { q: PlayerQuest; children?: React.ReactNode; closed?: boolean; fresh?: boolean }) {
   const reward = [q.scaled ? "Proportional" : q.ve === null ? "" : `${q.ve} VE`, ...(q.items ?? []).map((i) => (i.count === 1 ? i.name : `${i.count} ${i.name}`)), q.rewardText ?? ""]
     .filter(Boolean)
     .join(", ");
   const full = !q.hidden || q.status === "completed";
   return (
-    <dl className={`quest${q.status === "offered" ? " quest--offered" : ""}${closed ? " dim" : ""}`}>
+    <dl className={`quest${q.status === "offered" ? " quest--offered" : ""}${closed ? " dim" : ""}${fresh ? " mo-unfold" : ""}`}>
       <div className="quest__id">
         <span className="num">[{q.code}]</span>
         <b>{q.title}</b>
@@ -443,7 +453,7 @@ function QuestEntry({ q, children, closed }: { q: PlayerQuest; children?: React.
 }
 
 /** The quest log: each entry in the book's shape, and the player's answers. */
-function QuestLog({ campaignId, c, readOnly }: { campaignId: string; c: InterfaceSheet; readOnly?: boolean }) {
+function QuestLog({ campaignId, c, readOnly, fresh }: { campaignId: string; c: InterfaceSheet; readOnly?: boolean; fresh?: string }) {
   const { run: act, busy, error } = useAct(campaignId);
   const [refusing, setRefusing] = useState<string | null>(null);
   if (!c.quests.length) return null;
@@ -457,7 +467,7 @@ function QuestLog({ campaignId, c, readOnly }: { campaignId: string; c: Interfac
     <section className="sys-section">
       <h2 className="sys-label">Quest log</h2>
       {open.map((q) => (
-        <QuestEntry key={q.id} q={q}>
+        <QuestEntry key={q.id} q={q} fresh={q.id === fresh}>
           {can && (
             <>
               {q.status === "offered" && (
@@ -559,12 +569,15 @@ function Interface({
   pills,
   engine,
   inFight,
+  playing,
 }: {
   campaignId: string;
   c: InterfaceSheet;
   roster: PlayerView["roster"];
   readOnly?: boolean;
   engine: Engine | null;
+  /** A moment landing on this character (moments.ts): the interface plays it. */
+  playing?: Playing;
   /** In the running fight: the technique is used from the fight's panel. */
   inFight: boolean;
   /** Pill names from the Items tables, lower-cased: these are taken, not just used. */
@@ -572,8 +585,15 @@ function Interface({
 }) {
   const toNext = c.veToNextLevel;
   const falling = !c.dead && c.vitalCoherence !== null;
+  const m = playing?.moment;
+  const e = playing?.effect;
+  const leveled = m === "level";
+  const downed = m === "downed";
   return (
-    <article className={`interface iframe${falling ? " iframe--unstable" : ""}`} aria-label={`${c.name}'s interface`}>
+    <article
+      className={`interface iframe${falling ? " iframe--unstable" : ""}${playing ? " is-playing" : ""}${downed ? " mo-displace" : ""}`}
+      aria-label={`${c.name}'s interface`}
+    >
       {/* The head and the vitals stay in view while the rest scrolls (Decisions, "the makeover", P9). */}
       <div className="interface__pinned">
         <header className="sys-head">
@@ -582,7 +602,17 @@ function Interface({
             <h1 className="sys-name">{c.name}</h1>
             <div className="sys-sub">
               <span>
-                Level <b className="num">{c.level}</b>
+                Level{" "}
+                <b className="num">
+                  {leveled && c.level > 1 ? (
+                    <span className="mo-roll">
+                      <span>{c.level - 1}</span>
+                      <span>{c.level}</span>
+                    </span>
+                  ) : (
+                    c.level
+                  )}
+                </b>
               </span>
               <span aria-hidden="true">·</span>
               <span>{c.grade}-Grade</span>
@@ -606,7 +636,7 @@ function Interface({
           </section>
         ) : (
           falling && (
-            <section className="coherence" aria-live="polite" aria-label="Vital coherence">
+            <section className={`coherence${downed ? " mo-rise" : ""}`} style={downed ? ({ "--delay": "450ms" } as React.CSSProperties) : undefined} aria-live="polite" aria-label="Vital coherence">
               <p className="coherence__text">Vital coherence: {c.vitalCoherence}. Falling.</p>
               <div className="coherence__segments" role="img" aria-label={`Vital coherence ${c.vitalCoherence} of 3`}>
                 {[1, 2, 3].map((n) => (
@@ -624,8 +654,9 @@ function Interface({
             value={c.refinedVe}
             max={c.refinedVe + (toNext ?? 0)}
             text={toNext === null ? "Grade limit" : undefined}
+            {...(leveled ? { meterClass: "mo-levelfill mo-flash", vars: { "--v-old": "90%" } } : {})}
           />
-          <Vital label="Health" kind="health" value={c.hp} max={c.maxHp} danger={c.hp === 0} />
+          <Vital label="Health" kind="health" value={c.hp} max={c.maxHp} danger={c.hp === 0} {...(downed ? { meterClass: "mo-drain" } : {})} />
           <Vital label="Aether" kind="aether" value={c.aether} max={c.maxAether} />
           <Vital label="Volatile Energy" kind="ve" value={c.storedVe} max={c.tolerance} />
         </section>
@@ -633,15 +664,23 @@ function Interface({
 
       {c.background && <p className="prose dim background">{c.background}</p>}
 
-      <Attributes campaignId={campaignId} c={c} readOnly={readOnly} />
+      <Attributes campaignId={campaignId} c={c} readOnly={readOnly} leveled={leveled} />
 
       {c.proficiencies.length > 0 && (
         <section className="sys-section">
           <h2 className="sys-label">Proficiencies</h2>
           <ul>
             {c.proficiencies.map((p) => (
-              <li key={p.shape} className="sys-row">
+              <li key={p.shape} className={`sys-row sys-row--center${m === "technique" && e?.kind === "mark" && e.marks === 1 && e.shape.toLowerCase() === p.shape.toLowerCase() ? " mo-insert" : ""}`}>
                 <span className="sys-row__main">{p.shape}</span>
+                <span className="marks">
+                  <span className="mo-marks" role="img" aria-label={`${p.marks} Mark${p.marks === 1 ? "" : "s"}`}>
+                    {Array.from({ length: p.marks }, (_, i) => (
+                      <i key={i} className={`on${m === "technique" && e?.kind === "mark" && i === p.marks - 1 && e.shape.toLowerCase() === p.shape.toLowerCase() ? " new" : ""}`} />
+                    ))}
+                  </span>
+                  {m === "technique" && e?.kind === "mark" && e.shape.toLowerCase() === p.shape.toLowerCase() && <span className="mo-ticks" />}
+                </span>
                 <span className="sys-row__side">
                   {p.tier} +{p.bonus} · {p.marks} Mark{p.marks === 1 ? "" : "s"}
                 </span>
@@ -651,15 +690,15 @@ function Interface({
         </section>
       )}
 
-      <ClassOffers campaignId={campaignId} engine={engine} c={c} readOnly={readOnly} />
+      <ClassOffers campaignId={campaignId} engine={engine} c={c} readOnly={readOnly} dealt={m === "class" && e?.kind === "classification"} />
 
-      <ClassHeld campaignId={campaignId} engine={engine} c={c} readOnly={readOnly} inFight={inFight} />
+      <ClassHeld campaignId={campaignId} engine={engine} c={c} readOnly={readOnly} inFight={inFight} taken={m === "class" && e?.kind === "class-accepted"} />
 
-      <PrincipleSection campaignId={campaignId} c={c} readOnly={readOnly} />
+      <PrincipleSection campaignId={campaignId} c={c} readOnly={readOnly} distilled={m === "distillation" && e?.kind === "distilled" ? e.name : undefined} />
 
-      <Titles campaignId={campaignId} c={c} readOnly={readOnly} />
+      <Titles campaignId={campaignId} c={c} readOnly={readOnly} fresh={m === "title" && e?.kind === "title-conferred" ? e.titleId : undefined} />
 
-      <QuestLog campaignId={campaignId} c={c} readOnly={readOnly} />
+      <QuestLog campaignId={campaignId} c={c} readOnly={readOnly} fresh={m === "quest" && e?.kind === "quest-offered" ? e.questId : undefined} />
 
       <Carried campaignId={campaignId} c={c} roster={roster} readOnly={readOnly} pills={pills} />
 
@@ -692,10 +731,10 @@ function NoticeText({ text }: { text: string }) {
 
 type Line = FeedItem & { text: string | null; moment: ReturnType<typeof momentOf> };
 
-function NoticeItem({ n, old, names }: { n: Line; old: boolean; names: Map<string, string> | null }) {
+function NoticeItem({ n, old, names, rising }: { n: Line; old: boolean; names: Map<string, string> | null; rising?: boolean }) {
   const moment = !old && n.moment;
   return (
-    <li className={`notice${moment ? " notice--moment" : ""}${moment === "downed" ? " notice--downed" : ""}${old ? " notice--old" : ""}`}>
+    <li className={`notice${moment ? " notice--moment" : ""}${moment === "downed" ? " notice--downed" : ""}${old ? " notice--old" : ""}${rising ? " mo-rise" : ""}`}>
       <Clave />
       <span>
         {names && <span className="notice__who">{names.get(n.characterId)}</span>}
@@ -705,7 +744,7 @@ function NoticeItem({ n, old, names }: { n: Line; old: boolean; names: Map<strin
   );
 }
 
-function Notices({ feed, names }: { feed: FeedItem[]; names: Map<string, string> | null }) {
+function Notices({ feed, names, rising }: { feed: FeedItem[]; names: Map<string, string> | null; rising: Set<string> }) {
   const lines: Line[] = feed.map((n) => ({ ...n, text: noticeLine(n.effect), moment: momentOf(n.effect) })).filter((n) => n.text);
   const earlier = lines.slice(SHOWN);
   return (
@@ -714,9 +753,9 @@ function Notices({ feed, names }: { feed: FeedItem[]; names: Map<string, string>
       {lines.length === 0 ? (
         <p className="voice dim">No new notices.</p>
       ) : (
-        <ol className="notices">
+        <ol className={`notices${rising.size ? " is-playing" : ""}`}>
           {lines.slice(0, SHOWN).map((n, i) => (
-            <NoticeItem key={n.key} n={n} old={i >= RECENT} names={names} />
+            <NoticeItem key={n.key} n={n} old={i >= RECENT} names={names} rising={rising.has(n.key)} />
           ))}
         </ol>
       )}
@@ -830,6 +869,8 @@ export function PlayerCampaign({
   const names = view.characters.length > 1 ? new Map(view.characters.map((c) => [c.id, c.name])) : null;
   const engine = useEngine(view.campaign.rulesVersion);
   const fighting = Boolean(view.combat);
+  const playing = useMoments(view.feed);
+  const rising = new Set([...playing.values()].map((p) => p.key));
   return (
     <main className="player-screen">
       <div className="interfaces">
@@ -852,12 +893,13 @@ export function PlayerCampaign({
               pills={pillsOf(engine).map((p) => p.name.toLowerCase())}
               engine={engine}
               inFight={Boolean(view.combat?.combatants.some((x) => x.characterId === c.id && !x.out))}
+              playing={playing.get(c.id)}
             />
           ))
         )}
       </div>
       <aside className="player-side">
-        <Notices feed={view.feed} names={names} />
+        <Notices feed={view.feed} names={names} rising={rising} />
         <div className="tray table-tray">
           <div className="tray-head">At the table</div>
           {view.combat && <Fight view={view} engine={engine} combat={view.combat} readOnly={readOnly} />}

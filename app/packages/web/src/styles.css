@@ -183,8 +183,7 @@ body {
 
 /* ------------------------------------------------------------------ utilities */
 
-.muted,
-.sys-dim {
+.muted {
   color: var(--text-dim);
 }
 .form-row {
@@ -210,7 +209,6 @@ input.wide {
   padding: var(--sp-4);
 }
 .warn,
-.warn-text,
 span.warn {
   color: var(--warn);
 }
@@ -316,32 +314,6 @@ details.disclosure[open] > summary {
   grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
   gap: var(--sp-4);
 }
-.sheet-card {
-  background: var(--surface);
-  border: var(--hair) solid var(--line);
-  border-top: var(--rule) solid var(--text);
-  box-shadow: var(--shadow-1);
-  padding: var(--sp-3) var(--sp-4);
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-2);
-}
-.sheet-card header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: var(--sp-2);
-}
-.sheet-card header strong {
-  font-size: 1.0625rem;
-}
-.sheet-card .line {
-  font-size: var(--fs-sm);
-}
-.sheet-card .vital {
-  grid-template-columns: 4.5rem 1fr 5.5rem;
-  font-size: var(--fs-sm);
-}
 /* Meters whose fill is a child div with an inline width (the app's markup) */
 .meter > div {
   position: absolute;
@@ -363,30 +335,6 @@ details.disclosure[open] > summary {
 .meter.ve.band-heavy,
 .meter.ve.band-critical {
   --m-fill: var(--danger);
-}
-.meter.refined {
-  --m-fill: var(--text);
-}
-table.stat-table {
-  width: 100%;
-  border-collapse: collapse;
-  border: var(--hair) solid var(--line);
-  text-align: center;
-  font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums;
-}
-table.stat-table th {
-  font: 500 0.625rem / 1.2 var(--font-mono);
-  letter-spacing: 0.08em;
-  color: var(--text-dim);
-  padding-top: 0.3rem;
-}
-table.stat-table td {
-  padding-bottom: 0.3rem;
-}
-table.stat-table th + th,
-table.stat-table td + td {
-  border-left: var(--hair) solid var(--line);
 }
 
 /* Tabs inside a card: the design's underline */
@@ -735,12 +683,6 @@ tr.current-row td {
 .listening-ask {
   --gap: var(--sp-3);
 }
-.session-line {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--sp-2) var(--sp-3);
-  align-items: center;
-}
 .attendance {
   display: flex;
   flex-wrap: wrap;
@@ -757,20 +699,6 @@ tr.current-row td {
   flex: 1 1 auto;
   min-width: 0;
 }
-.tracker-head {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--sp-2) var(--sp-3);
-  align-items: center;
-  margin-bottom: var(--sp-3);
-}
-.tracker-head h2 {
-  margin: 0;
-  font-size: var(--fs-xl);
-}
-.reversals {
-  margin-bottom: var(--sp-3);
-}
 .sides {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
@@ -786,57 +714,6 @@ tr.current-row td {
 }
 .side > .card {
   margin: 0;
-}
-.combatants {
-  display: flex;
-  flex-direction: column;
-}
-.combatant {
-  border-top: var(--hair) solid var(--line);
-  padding: var(--sp-3) 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-2);
-}
-.combatant-head {
-  display: flex;
-  gap: var(--sp-2);
-  align-items: center;
-  flex-wrap: wrap;
-}
-.combatant-head strong {
-  font-size: 1rem;
-}
-.combatant.acting {
-  background: var(--surface-2);
-  box-shadow: inset 0 0 0 1px var(--text), inset 4px 0 0 var(--text);
-  margin: 0 calc(var(--sp-2) * -1);
-  padding: var(--sp-3) var(--sp-2) var(--sp-3) var(--sp-3);
-}
-.combatant.acted,
-.combatant.out {
-  color: var(--text-dim);
-}
-.combatant.downed {
-  box-shadow: inset 4px 0 0 var(--danger);
-  padding-left: var(--sp-3);
-}
-.combatant.downed .meter {
-  --m-fill: var(--danger);
-}
-.combatant .vital {
-  grid-template-columns: 4.5rem 1fr 5.5rem;
-  font-size: var(--fs-sm);
-}
-.pip {
-  display: inline-block;
-  width: 0.55rem;
-  height: 0.55rem;
-  border: var(--rule) solid currentColor;
-  transform: rotate(45deg) scale(0.8);
-}
-.pip.on {
-  background: currentColor;
 }
 .pips {
   vertical-align: middle;
@@ -862,18 +739,6 @@ tr.current-row td {
   flex-direction: column;
   gap: var(--sp-2);
   margin: var(--sp-2) 0;
-}
-.zones-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--sp-2) var(--sp-4);
-  align-items: center;
-  margin-bottom: var(--sp-3);
-}
-.zone {
-  border: var(--hair) dashed var(--line-strong);
-  padding: 0.1rem var(--sp-2);
-  font-size: var(--fs-sm);
 }
 .subform {
   margin-top: var(--sp-2);
@@ -1082,18 +947,6 @@ ul.events ul.moments {
   border-top: var(--hair) solid var(--line);
   padding-top: var(--sp-3);
   margin-top: var(--sp-3);
-}
-.class-mechanics {
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  gap: var(--sp-1) var(--sp-3);
-  margin: var(--sp-2) 0;
-}
-.class-mechanics dt {
-  font-weight: 700;
-}
-.class-mechanics dd {
-  margin: 0;
 }
 .prep-item {
   border-top: var(--hair) solid var(--line);
@@ -1883,4 +1736,181 @@ li.draft > .draft__decide {
   border-left: 0;
   border-right: 0;
   border-bottom: 0;
+}
+
+/* ------------------------------------------------------------------ Player view */
+
+.view-as-bar {
+  padding: var(--sp-2) var(--sp-5);
+  background: var(--surface);
+  border-bottom: var(--hair) solid var(--line);
+  font-size: var(--fs-sm);
+}
+.view-as__screen {
+  background: var(--ground);
+  color: var(--text);
+  font-size: var(--fs-lg);
+  min-height: 60vh;
+}
+
+/* ------------------------------------------------------------------ arriving: sign in, join, home */
+
+/* The painting beside the column, never under it; below 960 px it becomes a band above */
+.arrive {
+  display: grid;
+  grid-template-columns: 58fr 42fr;
+  min-height: 100vh;
+}
+.arrive__art {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  object-fit: cover;
+  object-position: 62% 50%;
+  box-shadow: inset -1px 0 0 var(--line-strong);
+  display: block;
+}
+.arrive__column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 4.5rem;
+}
+.arrive__stack {
+  --gap: 1.75rem;
+  max-width: 24rem;
+}
+.arrive__title {
+  --gap: 0.6rem;
+}
+.arrive__wordmark {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+.arrive__line {
+  font-size: var(--fs-lg);
+}
+.arrive .clave {
+  color: var(--text);
+}
+.sign-in {
+  --gap: var(--sp-4);
+}
+.sign-in__google {
+  width: 100%;
+  min-height: 2.75rem;
+}
+.sign-in__dev {
+  --gap: 0.6rem;
+}
+.arrive--join {
+  grid-template-columns: 360px minmax(0, 1fr);
+  gap: 3rem;
+  align-items: center;
+  min-height: auto;
+  padding: 3rem;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+.arrive--join .arrive__art {
+  height: 540px;
+  min-height: 0;
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+}
+.arrive--join .arrive__stack {
+  --gap: 1.25rem;
+  max-width: 26rem;
+}
+.arrive__campaign {
+  font-size: var(--fs-3xl);
+}
+.arrive__go {
+  min-height: 2.75rem;
+  padding-left: 1.25rem;
+  padding-right: 1.5rem;
+}
+@media (max-width: 960px) {
+  .arrive,
+  .arrive--join {
+    grid-template-columns: 1fr;
+  }
+  .arrive__art,
+  .arrive--join .arrive__art {
+    min-height: 0;
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+}
+
+.home__band {
+  display: block;
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  box-shadow: inset 0 -1px 0 var(--line);
+}
+.home {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+.home__main,
+.home__side {
+  --gap: var(--sp-5);
+  min-width: 0;
+}
+.home__campaign {
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  text-decoration: none;
+}
+.home__campaign:hover {
+  text-decoration: underline;
+}
+.home__new {
+  --gap: var(--sp-2);
+  padding: 0.9rem var(--sp-4) var(--sp-4);
+  border-top: var(--hair) solid var(--line);
+}
+.home__new-row {
+  --gap: 0.6rem;
+  flex-wrap: nowrap;
+}
+.home__new-row .input {
+  max-width: 24rem;
+}
+.home__chars {
+  --gap: 0.9rem;
+}
+.home__char {
+  --gap: var(--sp-2);
+  padding: var(--sp-3) 0;
+  border-top: var(--hair) solid var(--line);
+}
+.home__char:last-child {
+  border-bottom: var(--hair) solid var(--line);
+}
+.home__char-name {
+  font-size: var(--fs-lg);
+}
+.home__char-stats {
+  font-size: var(--fs-2xs);
+}
+
+/* ------------------------------------------------------------------ the moments */
+
+.marks {
+  position: relative;
+  display: inline-flex;
+  padding: 0 0.3rem;
+}
+.tablebar__echo {
+  order: 0;
+}
+.echo--danger {
+  color: var(--danger);
+  background: var(--danger-wash);
+  box-shadow: inset 0 -1px 0 var(--danger);
+}
+.echo--danger .ic {
+  color: var(--danger);
 }

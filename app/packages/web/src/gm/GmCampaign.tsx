@@ -34,6 +34,7 @@ import { RecordPanel } from "./Record.tsx";
 import { AskRules } from "../AskRules.tsx";
 import { ListeningBar } from "../Listening.tsx";
 import { Icon, Vital } from "../ui.tsx";
+import { useEcho } from "../moments.ts";
 
 function CharacterCard({ c, player, party, items }: { c: Sheet; player: string; party: string | null; items: Stack[] }) {
   const band = c.saturation.band;
@@ -179,9 +180,10 @@ function ViewAs({ view }: { view: GmView }) {
   if (!players.length) return <p className="muted pad">No players yet. Invite them from the Table.</p>;
   return (
     <div className="view-as">
-      <div className="view-as-bar">
+      <div className="view-as-bar cluster">
+        <i className="ic ic-eye" aria-hidden="true" />
         Viewing as
-        <select value={picked} onChange={(e) => setUserId(e.target.value)}>
+        <select className="select select--sm" value={picked} onChange={(e) => setUserId(e.target.value)}>
           {players.map((m) => (
             <option key={m.userId} value={m.userId}>
               {m.displayName}
@@ -191,7 +193,12 @@ function ViewAs({ view }: { view: GmView }) {
         <span className="muted small">exactly what their screen shows; nothing here can be changed</span>
       </div>
       {error && <p className="error">{error}</p>}
-      {shown && <PlayerCampaign view={shown} readOnly />}
+      {/* The player's register, exactly as their screen shows it. */}
+      {shown && (
+        <div className="sys view-as__screen">
+          <PlayerCampaign view={shown} readOnly />
+        </div>
+      )}
     </div>
   );
 }
@@ -269,6 +276,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
   // A prepared fight or quest handed to Combat or Quests to fire there.
   const [firing, setFiring] = useState<Firing | null>(null);
   const drafts = useDraftRuns(view, live.draftsChanged);
+  const echo = useEcho(view);
   // Characters by id, and every creature or NPC a fight has named, for the log's lines.
   const byId = new Map(view.characters.map((c) => [c.id, c.name]));
   for (const env of live.log) {
@@ -323,6 +331,16 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
         <SessionBar view={view} names={names} onRecorded={live.addToLog} onSweep={() => setSection("hve")} />
         <ListeningBar campaignId={view.campaign.id} role="gm" status={live.listening} send={live.send} />
         <ClockControls view={view} engine={engine} names={names} onRecorded={live.addToLog} />
+        <span className="grow" />
+        {echo && (
+          // The quiet echo of a player's moment: one line, then it goes (moments.ts).
+          <span key={echo.at} className="is-playing tablebar__echo">
+            <span className={`echo mo-echo${echo.danger ? " echo--danger" : ""}`} role="status">
+              {echo.danger ? <Icon name="downed" /> : <i className="clave" aria-hidden="true" />}
+              {echo.text}
+            </span>
+          </span>
+        )}
       </div>
       {section === "party" && (
         <main className="screen screen--side party-screen">

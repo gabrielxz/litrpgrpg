@@ -9,7 +9,7 @@ import type { Action, InterfaceSheet } from "@gradebreaker/record";
 import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
 
-export function PrincipleSection({ campaignId, c, readOnly }: { campaignId: string; c: InterfaceSheet; readOnly?: boolean }) {
+export function PrincipleSection({ campaignId, c, readOnly, distilled }: { campaignId: string; c: InterfaceSheet; readOnly?: boolean; distilled?: string }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const p = c.principle;
@@ -36,11 +36,15 @@ export function PrincipleSection({ campaignId, c, readOnly }: { campaignId: stri
           <svg className="principle__mark" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.1" strokeLinecap="square" aria-hidden="true">
             <path d="M6 6H14V14H6V10" />
             <path d="M3 3H17V17H9" />
+            {/* A Distillation draws the mark's next side. */}
+            {distilled === x.name && <path d="M9 17H3V5" pathLength={100} className="mo-draw" style={{ "--dur": "600ms", "--delay": "200ms" } as React.CSSProperties} />}
           </svg>
           <div className="stack">
             <div className="cluster">
               <b className="principle__name">{x.name}</b>
-              <span className="small dim">{x.tier}</span>
+              <span className={`small dim${distilled === x.name ? " mo-fade" : ""}`} style={distilled === x.name ? ({ "--delay": "500ms" } as React.CSSProperties) : undefined}>
+                {x.tier}
+              </span>
             </div>
             <p>
               Insight: <span className="num">{x.insight}</span>
