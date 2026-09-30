@@ -58,6 +58,9 @@ export function Join({ code }: { code: string }) {
                 <>
                   <p className="dim arrive__line">Sign in to join as a player.</p>
                   <SignInButtons returnTo={window.location.href} />
+                  <a className="small dim" href="/guide/start" target="_blank" rel="noreferrer">
+                    Guide
+                  </a>
                 </>
               )}
             </>

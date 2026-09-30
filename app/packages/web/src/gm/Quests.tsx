@@ -114,7 +114,7 @@ function IssueForm({
       <h2>Issue a quest</h2>
       {firing && (
         <p className="muted small">
-          {"draftId" in firing ? "Drafted from the sweep. Edit what you like, check who receives it, and issue it." : "From Prep. Check the code, pick who receives it, and issue it."}
+          {"draftId" in firing ? "Drafted. Edit what you like, check who receives it, and issue it." : "From Prep. Check the code, pick who receives it, and issue it."}
         </p>
       )}
       <div className="form">

@@ -92,7 +92,7 @@ Each track keeps one current handoff here, replaced at the close of a session; t
 
 ### Next book session
 
-**State (2026-09-30).** Rules 0.1.40, `make check` green, committed, not pushed (a push deploys the app, since it touches a book chapter). The Hidden Achievements prompt is in The System AI, "Hidden Achievements and Titles", taken from the app's suggestion drafter and held to the book by the template lint (`rules/templates/hidden-achievement.txt`); Titles points to it. The AI-Assisted paragraph says Loot and Identify take no prompt. The players'-chapters item waits for Gabriel's Introduction: he writes it himself and Claude edits after (Gabriel, 2026-09-30). The reading copy is build 20260929-123816 (356 pages, rules 0.1.37, no notes). His read resumes at **Progression**.
+**State (2026-09-30).** Rules 0.1.40, `make check` green, pushed and deployed (run green). The Hidden Achievements prompt is in The System AI, "Hidden Achievements and Titles", taken from the app's suggestion drafter and held to the book by the template lint (`rules/templates/hidden-achievement.txt`); Titles points to it. The AI-Assisted paragraph says Loot and Identify take no prompt. The players'-chapters item waits for Gabriel's Introduction: he writes it himself and Claude edits after (Gabriel, 2026-09-30). The reading copy is build 20260929-123816 (356 pages, rules 0.1.37, no notes). His read resumes at **Progression**.
 
 **Next.** When he has annotated: `make notes`, work the notes (agreed / his call / pushback), apply, `make check`, commit, archive the annotated copy to `reading/archive/`, `make reading-copy`. If his notes generalize into patterns, sweep the unread chapters before he reaches them. When his Introduction draft lands, edit it and apply the players'-chapters item below.
 
@@ -107,15 +107,25 @@ Edits an app session forces, each with Gabriel's ruling or Claude's recommendati
 
 ### Next app session
 
-**State (2026-09-30, sixteenth close).** Rules 0.1.39, `make app-check` green (engine 236, record 139, server 86, listening 191, web 8). Everything pushed and deployed (last: e609a3b, run green, health 200). The makeover is built from Claude Design's canvas "Gradebreaker App Makeover" (https://claude.ai/artifact/7wzrXRhs9U4FeS751NXWey), each screen checked in the browser with a GM tab and a player tab: `gb.css` is the canvas's design system (see `app/CLAUDE.md`, THE LOOK), `styles.css` the app's layer, the four fonts self-hosted. Gabriel accepted Claude's recommendations on the canvas's proposals (Decisions, "the makeover and deploys"): P1, P2, P3, P4 (reactions and free strikes kept in view), P5, P7, P9, P10, P12 built; P6 cut; P8, P11, P13 deferred. Built:
-- **The player's screen** as the System's interface with the "At the table" tray, pinned head and vitals, folded long notices, and the moments (level, title, technique, class, Distillation, quest, Downed), with the GM's quiet echo in the table bar.
-- **The GM's frame** (sections in four groups, one table bar holding session, listening, and clock), **Party**, **Combat** (the Clash docked beside the tracker, drawers on the rows), **Suggestions** and every draft as a card, **Events**, **Quests** in the book's shape, and **every preview** showing what each player receives (`noticesFor` moved to the record package so the preview and the feed agree).
-- **Sign-in, home, and join** with crops of the art bible's standard painting until the dedicated paintings exist; Home's Delete takes the confirm tap.
-- Encounter sizing in the Bestiary counts GM-held characters. The AssemblyAI key is a Fly secret, and a push that changes a book chapter deploys.
+**State (2026-09-30, seventeenth close).** Rules 0.1.40, `make app-check` green (engine 236, record 139, server 86, listening 191, web 12). Committed, not pushed. This session:
+- **The Hidden Achievements drafter follows the book's prompt** (rules 0.1.40): one to three a campaign arc, with each character's earned Hidden Achievements in the request, the bonus higher for the less likely deed, the book's example, the trigger for the GM only. Not re-measured against the model.
+- **The user guide** at `/guide`, 29 pages written from the running code (every GM section, setup, sessions, listening, and six player pages), open without signing in; the top bar's **Guide** opens the page for the screen the reader is on, in its own tab. Screenshots come from `make guide-shots` (the development servers running): a campaign seeded from the rehearsal pack, captured by headless Chrome. `test/guide.test.ts` holds links, shots, and Markdown; `app/CLAUDE.md` has THE GUIDE rule. The deploy workflow now deploys a guide-page edit (it skipped Markdown under `app/`).
+- **"Set up the table"** on a new campaign's Party, from the canvas: invite, session, clock, each Done from the record, with **Hide**. The canvas's painting slot for an empty campaign is not built (Gabriel keeps the current paintings).
+- Fixed in passing: stale help on the AI card, the HP and Aether tab, and the Quests form's "Drafted from the sweep"; Player view replaying moments on switching players.
 
-Every other GM section follows its artboard too (Gabriel, 2026-09-30): Prep, Bestiary, Principles, Classes, HVE, the log, Rules, and Table, ported by four agents with file ownership and checked in the browser, plus Combat's setup and aftermath. The class offer writer and the Distillation form are ported but unseen in a browser: no local character reaches them, so the rehearsal pack's Level 10 rests are the first chance to look. Claude's calls in the port are under Decisions for Gabriel's cut.
+**Next.** Gabriel reads the guide (Claude's calls are under Decisions, "the user guide"), then the rehearsal. Push when he says (it deploys).
 
-**Next.** The user guide, reachable from every screen, with screenshots of the new look; the canvas's "Set up the table" checklist for a new campaign belongs with it. Then the rehearsal. Open for Gabriel: the paintings for the sign-in, home, and join slots (the canvas's Illustration artboard gives sizes and crops).
+**Found while writing the guide**, for Gabriel's call (from reading code; none seen failing at a table):
+- A player's **Ask the rules** and the HVE section's **Draft an offer** show without a campaign key and return the raw server error; every other AI control checks for the key first.
+- Numbers the client restates that the rules data could carry: Yield's 20 per Beat and 40 for Driven Back (`Clash.tsx`, `player/Fight.tsx`), Surge +5, Flanking +10, Exposed −10, the Will Save's 90 and 115, "Pay 10 Health" (`Care.tsx`), and the 30 and 7 day retention in the consent text (the server holds its own constants).
+- A negative title's **Release** records with no preview of what the player receives.
+- A test recording's **Delete** has no confirm, and the Test recordings card tells the GM to save files into `build/listening/audio/` and run `stt-eval` (developer text).
+- The aftermath has no undo for a loot roll; only the Campaign log.
+- Prep's **Set up the fight** shows while a fight runs or an aftermath waits, and the fight it hands over lingers until the setup opens later.
+- An accepted draft later undone, in a run older than the newest ten, drops out of review (`server/src/drafts.ts`).
+- A heal technique recorded by the GM outside a fight can target anyone; the player's own button offers only themselves and their party. One is wrong.
+- The Bestiary's VE line says "each participant of its Grade" and computes for F-Grade (right while every creature is F).
+- The Surprise, Aura, join-mid-fight, and Clash forms still carry the old `primary` button class.
 
 ### Queued for the app
 

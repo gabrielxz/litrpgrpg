@@ -1,4 +1,4 @@
-/** Paths: `/`, `/c/:campaignId`, `/join/:code`. History API only; the server serves the app for any path. */
+/** Paths: `/`, `/c/:campaignId`, `/join/:code`, `/guide/:page`. History API only; the server serves the app for any path. */
 import { type MouseEvent, type ReactNode, useSyncExternalStore } from "react";
 
 export function navigate(path: string) {
@@ -17,14 +17,14 @@ export function usePath(): string {
   );
 }
 
-export function Link({ to, children, className }: { to: string; children: ReactNode; className?: string }) {
+export function Link({ to, children, className, current }: { to: string; children: ReactNode; className?: string; current?: boolean }) {
   const go = (e: MouseEvent) => {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
     e.preventDefault();
     navigate(to);
   };
   return (
-    <a href={to} onClick={go} className={className}>
+    <a href={to} onClick={go} className={className} aria-current={current ? "page" : undefined}>
       {children}
     </a>
   );

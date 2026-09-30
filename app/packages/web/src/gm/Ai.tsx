@@ -84,7 +84,7 @@ export function AiCard({ view }: { view: GmView }) {
           <>
             <p className="small dim">
               Your own Anthropic API key. It stays on the server, and no player ever receives it; after saving you see only its last four
-              characters. The drafting features use it when they arrive.
+              characters. Drafting, suggestions, summaries, the campaign memory, and rules questions (players' too) spend it.
             </p>
             {ai.configured && (
               <div className="stack ai-card__status">

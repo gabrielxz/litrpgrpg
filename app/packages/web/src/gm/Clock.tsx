@@ -9,6 +9,7 @@ import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
 import { type Names, duration } from "../text.ts";
 import { Commit } from "./Commit.tsx";
+import { useTablebarOpen } from "./Setup.tsx";
 
 function AdvanceForm({ view, names, onRecorded }: { view: GmView; names: Names; onRecorded: (env: Envelope) => void }) {
   const [hours, setHours] = useState("");
@@ -91,6 +92,7 @@ export function ClockControls({
   onRecorded: (env: Envelope) => void;
 }) {
   const [open, setOpen] = useState<"advance" | "set" | null>(null);
+  useTablebarOpen("set", () => setOpen("set"));
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const clock = view.clock;

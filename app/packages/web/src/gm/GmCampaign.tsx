@@ -26,6 +26,7 @@ import { ClassesSection, classesWaiting } from "./Classes.tsx";
 import { BestiarySection } from "./Bestiary.tsx";
 import { type Firing, PrepSection } from "./Prep.tsx";
 import { TitlesDueCard } from "./Titles.tsx";
+import { SetupChecklist } from "./Setup.tsx";
 import { stackLine } from "../items.ts";
 import { ATTRIBUTES } from "../text.ts";
 import { Table } from "./Invites.tsx";
@@ -214,7 +215,8 @@ function ViewAs({ view }: { view: GmView }) {
       {/* The player's register, exactly as their screen shows it. */}
       {shown && (
         <div className="sys view-as__screen">
-          <PlayerCampaign view={shown} readOnly />
+          {/* Keyed by the player, so switching starts the moments' seen-notice list afresh (moments.ts). */}
+          <PlayerCampaign key={picked} view={shown} readOnly />
         </div>
       )}
     </div>
@@ -372,6 +374,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
       {section === "party" && (
         <main className="screen screen--side party-screen">
           <div className="stack party-screen__main">
+            <SetupChecklist view={view} onTable={() => setSection("table")} />
             {engine && <TitlesDueCard view={view} engine={engine} onRecorded={live.addToLog} />}
             {view.characters.length === 0 ? (
               <p className="dim">No characters yet. Players can build their own once they join, or you can create one under New character.</p>

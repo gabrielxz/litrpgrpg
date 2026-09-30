@@ -55,6 +55,9 @@ export function SignIn() {
             <p className="dim arrive__line">The companion for the tabletop game.</p>
           </div>
           <SignInButtons />
+          <a className="small dim" href="/guide/start" target="_blank" rel="noreferrer">
+            Guide
+          </a>
         </div>
       </div>
     </main>

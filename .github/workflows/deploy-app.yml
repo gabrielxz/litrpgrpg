@@ -1,6 +1,6 @@
 # Deploys the companion app to Fly.io (the personal org's `gradebreaker` app) when app code,
-# rules data, the book's chapters (rules questions read them), or the deploy files change on
-# main. The book's art, kit, and pipeline do not deploy. The deploy waits until nobody is
+# the user guide's pages (Markdown the app serves), rules data, the book's chapters (rules
+# questions read them), or the deploy files change on main. The book's art, kit, and pipeline do not deploy. The deploy waits until nobody is
 # connected, so a push mid-session does not drop the table; a manual run can force it.
 name: Deploy the companion app
 
@@ -10,6 +10,7 @@ on:
     paths:
       - "app/**"
       - "!app/**/*.md"
+      - "app/packages/web/src/guide/pages/*.md"
       - "rules/**"
       - "book/[0-9][0-9]-*.md"
       - "Dockerfile"

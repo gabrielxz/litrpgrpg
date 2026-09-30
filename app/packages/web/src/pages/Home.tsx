@@ -7,7 +7,8 @@ import { type CharacterSpec, Creator } from "../player/Creator.tsx";
 import { Link, navigate } from "../router.tsx";
 import { Icon } from "../ui.tsx";
 
-export function TopBar({ children }: { children?: React.ReactNode }) {
+/** The bar over every signed-in screen; its Guide link opens the guide's page for that screen in a tab of its own. */
+export function TopBar({ children, guide = "start" }: { children?: React.ReactNode; guide?: string }) {
   const auth = useAuth();
   return (
     <header className="topbar">
@@ -17,6 +18,9 @@ export function TopBar({ children }: { children?: React.ReactNode }) {
       </Link>
       {children}
       <span className="grow" />
+      <a className="small topbar__guide" href={`/guide/${guide}`} target="_blank" rel="noreferrer">
+        Guide
+      </a>
       <span className="small dim">
         {auth.user?.displayName}
         {auth.via === "dev" && <span className="tag">dev</span>}

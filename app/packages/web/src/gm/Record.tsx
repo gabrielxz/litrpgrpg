@@ -710,7 +710,7 @@ function VitalsForm({ view, names, onRecorded }: FormProps) {
           <input type="number" className="narrow-input" value={delta} onChange={(e) => setDelta(e.target.value)} placeholder="−5" />
         </label>
       </div>
-      <p className="muted">Until the combat tracker records fights, damage and spending are entered here.</p>
+      <p className="muted">For changes outside a fight; a fight's damage and spending are recorded in Combat.</p>
       <Commit
         campaignId={view.campaign.id}
         action={action}

@@ -13,6 +13,7 @@ import { draftMemory, draftSessionSummary, newActionId, submit } from "../api.ts
 import type { Names } from "../text.ts";
 import { Commit } from "./Commit.tsx";
 import { useAiConfigured } from "./useAi.ts";
+import { useTablebarOpen } from "./Setup.tsx";
 
 /** Drafts the session's summary into the GM's field; the GM edits it before saving. */
 function DraftSummary({ view, s, onDraft }: { view: GmView; s: CampaignSession; onDraft: (text: string) => void }) {
@@ -169,6 +170,7 @@ function Attendance({ view, s, onRecorded }: { view: GmView; s: CampaignSession;
 export function SessionBar({ view, names, onRecorded, onSweep }: { view: GmView; names: Names; onRecorded: (env: Envelope) => void; onSweep: () => void }) {
   const running = view.sessions[0] && !view.sessions[0].endedAt ? view.sessions[0] : undefined;
   const [open, setOpen] = useState<"start" | "end" | "attendance" | null>(null);
+  useTablebarOpen("start", () => setOpen("start"));
   const recorded = (env: Envelope) => {
     setOpen(null);
     onRecorded(env);

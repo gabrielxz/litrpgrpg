@@ -1800,3 +1800,133 @@ details.folded > .commit {
 .aftermath__settle > .callout {
   margin: var(--sp-3) var(--sp-4) 0;
 }
+
+/* ------------------------------------------------------------------ the user guide */
+.topbar__guide {
+  text-decoration: none;
+}
+.guide {
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  gap: var(--sp-6);
+  padding: var(--sp-5) var(--sp-6) var(--sp-8);
+  align-items: start;
+}
+.guide__contents {
+  position: sticky;
+  top: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  max-height: calc(100vh - var(--sp-6));
+  overflow-y: auto;
+}
+.guide__group {
+  --gap: var(--sp-1);
+}
+.guide__link {
+  display: block;
+  padding: 0.2rem 0 0.2rem var(--sp-2);
+  border-left: 2px solid transparent;
+  color: var(--text-dim);
+  text-decoration: none;
+}
+.guide__link:hover {
+  color: var(--text);
+}
+.guide__link[aria-current="page"] {
+  color: var(--text);
+  font-weight: 700;
+  border-left-color: var(--text);
+}
+.guide__page {
+  min-width: 0;
+  font-size: var(--fs-lg);
+  line-height: var(--lh-body);
+}
+.guide__page > * {
+  max-width: 46rem;
+}
+.guide__page > * + * {
+  margin-top: var(--sp-3);
+}
+.guide__page > h1 {
+  margin-bottom: var(--sp-4);
+}
+.guide__page > h2 {
+  margin-top: var(--sp-6);
+}
+.guide__page > h3 {
+  margin-top: var(--sp-5);
+  font-size: var(--fs-lg);
+}
+.guide__page ul,
+.guide__page ol {
+  padding-left: 1.4rem;
+}
+.guide__page ul {
+  list-style: square;
+}
+.guide__page ol {
+  list-style: decimal;
+}
+.guide__page li + li {
+  margin-top: var(--sp-1);
+}
+.guide__page code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+.guide__note {
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--surface);
+  border: var(--hair) solid var(--line);
+  border-left: 3px solid var(--text);
+}
+.guide__page > .guide__shot {
+  margin: var(--sp-5) 0;
+  max-width: 72rem;
+}
+/* A whole screen scales to the column; a crop of one panel keeps its own size. */
+.guide__shot img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: var(--hair) solid var(--line-strong);
+  box-shadow: var(--shadow-1);
+}
+.guide__shot figcaption {
+  margin-top: var(--sp-2);
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+}
+
+/* ------------------------------------------------------------------ Set up the table */
+.table-setup__steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.table-setup__step {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  column-gap: var(--sp-3);
+  row-gap: 0.4rem;
+  padding: var(--sp-4) var(--sp-5) 1.1rem var(--sp-4);
+  align-content: start;
+}
+.table-setup__step + .table-setup__step {
+  border-left: var(--hair) solid var(--line);
+}
+.table-setup__step > :not(.table-setup__num) {
+  grid-column: 2;
+}
+.table-setup__num {
+  grid-row: 1 / span 3;
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+.table-setup__step--done h3,
+.table-setup__step--done .table-setup__num {
+  color: var(--text-dim);
+}

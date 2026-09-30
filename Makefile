@@ -75,7 +75,7 @@ ART_MASTERS := $(shell find $(ART_SRC) -name '*.png')
 TITLE_FONT   := $(shell kpsewhich Alegreya-Black.otf)
 BYLINE_FONT  := $(shell kpsewhich EBGaramond-Italic.otf)
 
-.PHONY: all pdf epub kit art tutorial tables test check app-check notes reading-copy clean
+.PHONY: guide-shots all pdf epub kit art tutorial tables test check app-check notes reading-copy clean
 
 all: pdf epub
 
@@ -215,6 +215,11 @@ app-check:
 	python3 app/packages/engine/scripts/signatures.py | diff -u app/packages/engine/src/signatures.ts - \
 	  || (echo "signatures.ts is stale: regenerate it and port the new function"; exit 1)
 	cd app && pnpm -r typecheck && pnpm -r test
+
+# The user guide's screenshots, from a campaign seeded with the rehearsal pack. Needs
+# the development servers running (app-api and app-web in .claude/launch.json).
+guide-shots:
+	cd app/packages/web && node scripts/guide-shots.ts
 
 # --- Read-through ----------------------------------------------------------
 # reading/ holds the copy annotated during a read. No build writes there and

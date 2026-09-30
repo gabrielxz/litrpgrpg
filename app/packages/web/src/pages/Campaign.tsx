@@ -4,10 +4,24 @@ import { useCampaign } from "../live.ts";
 import { PlayerCampaign } from "../player/PlayerCampaign.tsx";
 import { useRegister } from "../frame.ts";
 import { TopBar } from "./Home.tsx";
+import { guideFor } from "../guide/pages.ts";
+import { useSyncExternalStore } from "react";
+
+/** The GM's section, from the location's hash. */
+function useHash(): string {
+  return useSyncExternalStore(
+    (l) => {
+      window.addEventListener("hashchange", l);
+      return () => window.removeEventListener("hashchange", l);
+    },
+    () => window.location.hash.slice(1),
+  );
+}
 
 export function Campaign({ id }: { id: string }) {
   const live = useCampaign(id);
   const { view, status, error } = live;
+  const hash = useHash();
 
   useRegister(view?.role === "player" ? "sys" : "gm");
 
@@ -36,7 +50,7 @@ export function Campaign({ id }: { id: string }) {
     );
   return (
     <>
-      <TopBar>{statusLine}</TopBar>
+      <TopBar guide={guideFor({ role: view.role === "gm" ? "gm" : "player", section: hash || undefined })}>{statusLine}</TopBar>
       {view.role !== "gm" && <ListeningBar campaignId={id} role={view.role} status={live.listening} send={live.send} />}
       {view.role === "gm" ? <GmCampaign view={view} live={live} /> : <PlayerCampaign view={view} />}
     </>
