@@ -283,6 +283,8 @@ export function describe(
       return `Session ended${a.summary ? `: ${a.summary}` : ""}`;
     case "session.summary":
       return a.summary.trim() ? `Session summary: ${a.summary}` : "Session summary cleared";
+    case "session.memory":
+      return "Campaign memory written";
     case "event.log":
       return `Event: ${a.summary}${a.participants.length ? ` (${a.participants.map(name).join(", ")})` : ""}${a.entries?.length ? `, ${a.entries.length} HVE ${a.entries.length === 1 ? "entry" : "entries"}` : ""}`;
     case "void": {

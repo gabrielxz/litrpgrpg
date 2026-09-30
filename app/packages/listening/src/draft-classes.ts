@@ -17,7 +17,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { ATTRIBUTES, type Engine } from "@gradebreaker/engine";
 import { RULES_DIR } from "@gradebreaker/engine/node";
-import { type CampaignRecord, type ClassPackage, ECONOMY_HOOKS, type PermissionHook, type Sheet, bookClasses, packageProblems, packageWarnings } from "@gradebreaker/record";
+import { type CampaignRecord, type ClassPackage, ECONOMY_HOOKS, memoryOf, type PermissionHook, type Sheet, bookClasses, packageProblems, packageWarnings } from "@gradebreaker/record";
 import { z } from "zod";
 import { type Drafter, type Effort, section } from "./draft-events.ts";
 import { voiceFlags, voiceInstructions } from "./draft-voice.ts";
@@ -235,6 +235,7 @@ export function draftClassesPrompt(engine: Engine, record: CampaignRecord, chara
     ]),
     section("Defining moments (circled at the sweeps)", circled),
     section("Other large moments", biggest),
+    section("Their chronicle", memoryOf(record.state).chronicles.get(characterId) ? [memoryOf(record.state).chronicles.get(characterId)!.text] : []),
     section("What the player keeps doing, from the GM", opts.keepsDoing?.trim() ? [opts.keepsDoing.trim()] : []),
     section("Classes elsewhere in the campaign", held),
     section(

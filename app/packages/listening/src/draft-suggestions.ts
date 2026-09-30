@@ -20,6 +20,7 @@ import { type Action, CampaignRecord, type Draft, type Quest, type QuestSpec, ty
 import { z } from "zod";
 import { type Drafter, type Effort, type Scene, cited, earlierOf, lineOrder, rosterOf, section, transcriptOf } from "./draft-events.ts";
 import type { Drafted } from "./script.ts";
+import { campaignContext } from "./memory.ts";
 
 export const DRAFT_SUGGESTIONS_FEATURE = "draft-suggestions";
 
@@ -203,6 +204,7 @@ export function draftSuggestionsPrompt(scene: Scene): string {
   const nameOf = (id: string) => scene.record.sheets().get(id)?.name ?? id;
   const quests = [...scene.record.state.quests.values()].filter((q) => q.status === "active" || q.status === "offered").map((q) => questLine(q, nameOf));
   return [
+    ...campaignContext(scene.record),
     section("Roster", rosterOf(scene)),
     section("Titles and cards", sheets.map(heldLine)),
     section("Quests", quests.length ? quests : ["- none open"]),

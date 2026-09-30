@@ -10,7 +10,7 @@
  * GM fills the same template by hand in the same form.
  */
 import type { Engine } from "@gradebreaker/engine";
-import { type Action, type CampaignRecord, type Draft, type QuestSpec, type Sheet, leadsOf, nextQuestCode } from "@gradebreaker/record";
+import { type Action, type CampaignRecord, type Draft, type QuestSpec, type Sheet, leadsOf, memoryOf, nextQuestCode } from "@gradebreaker/record";
 import { z } from "zod";
 import { type Drafter, type Effort, section } from "./draft-events.ts";
 
@@ -164,6 +164,7 @@ export function draftOpportunityPrompt(engine: Engine, record: CampaignRecord, c
   const refusals = FLAVORS.map((f) => `- ${f}: ${c.refusals[f] ?? 0} refused${open.includes(f) ? (halved.includes(f) ? ", offered half as often" : "") : ", no longer offered"}`);
   const party = [...state.parties.values()].find((p) => p.members.includes(characterId));
   const sessions = [...state.sessions.values()].filter((s) => s.summary);
+  const memory = memoryOf(state);
   const events = [...state.events.values()].slice(-5).map((e) => `- ${e.summary} (${e.participants.map(nameOf).join(", ")})`);
   const quests = [...state.quests.values()].filter((q) => q.holders.includes(characterId) && (q.status === "active" || q.status === "offered")).map((q) => `- [${q.code}] ${q.title} (${q.category}, ${q.status}): ${q.objective}`);
   return [
@@ -180,6 +181,8 @@ export function draftOpportunityPrompt(engine: Engine, record: CampaignRecord, c
     section("Personal Opportunities refused, by flavor", refusals),
     section("Party", party ? [`- ${party.members.map(nameOf).join(", ")}`] : []),
     section("Quests held or offered", quests),
+    section("The campaign", memory.campaign ? [memory.campaign.text] : []),
+    section(`${c.name}'s chronicle`, memory.chronicles.get(characterId) ? [memory.chronicles.get(characterId)!.text] : []),
     section("The last session", sessions.length ? [`- ${sessions.at(-1)!.summary}`] : []),
     section("Recent events", events),
     section("The situation now, from the GM", situation.trim() ? [situation.trim()] : []),

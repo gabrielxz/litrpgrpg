@@ -601,6 +601,7 @@ function apply(engine: Engine, world: World, env: Envelope): Effect[] {
     case "session.attend":
     case "session.end":
     case "session.summary":
+    case "session.memory":
       return applySessions(world, a, env);
     case "clock.set":
     case "clock.advance":

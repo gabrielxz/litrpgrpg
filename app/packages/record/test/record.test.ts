@@ -5,7 +5,7 @@
 import { Engine } from "@gradebreaker/engine";
 import { loadRules } from "@gradebreaker/engine/node";
 import { beforeEach, describe, expect, it } from "vitest";
-import { type Action, type ClassPackage, CampaignRecord, partyLevelOf, sizeEncounter, bookClasses, packageWarnings, type Draft, RecordError, encounterAwards, hoursForGoal, flankingSuggested, killAwards, questForHolder, rollD100s, rollFor, treasurePoints, tutorialPack, packItems } from "../src/index.ts";
+import { type Action, type ClassPackage, CampaignRecord, partyLevelOf, sizeEncounter, bookClasses, packageWarnings, type Draft, RecordError, encounterAwards, hoursForGoal, flankingSuggested, killAwards, questForHolder, rollD100s, rollFor, treasurePoints, tutorialPack, packItems, memoryOf } from "../src/index.ts";
 
 const engine = new Engine(loadRules());
 const GM = { role: "gm", userId: "gm-1" } as const;
@@ -1972,6 +1972,27 @@ describe("Prep", () => {
     expect(rec.state.prep.has("tutorial-void")).toBe(false);
     gm({ type: "void", targetId: load.envelope.id, reason: "undo" });
     expect(rec.state.prep.size).toBe(0);
+  });
+});
+
+describe("campaign memory", () => {
+  it("rides on sessions: the latest paragraph and each character's latest chronicle", () => {
+    gm({ type: "character.pregen", characterId: "kara", pregen: "Kara" });
+    gm({ type: "character.pregen", characterId: "joe", pregen: "Joe" });
+    const one = gm({ type: "session.start", present: ["kara", "joe"] }).envelope.id;
+    gm({ type: "session.memory", sessionId: one, campaign: "The valley fell.", chronicles: [{ characterId: "kara", text: "Took the pill." }, { characterId: "joe", text: "Gave it up." }] });
+    gm({ type: "session.end" });
+    const two = gm({ type: "session.start", present: ["kara"] }).envelope.id;
+    gm({ type: "session.memory", sessionId: two, chronicles: [{ characterId: "kara", text: "Took the pill, then paid for it." }] });
+    const m = memoryOf(rec.state);
+    expect(m.campaign).toEqual({ text: "The valley fell.", sessionId: one });
+    expect(m.chronicles.get("kara")).toEqual({ text: "Took the pill, then paid for it.", sessionId: two });
+    expect(m.chronicles.get("joe")?.text).toBe("Gave it up.");
+    gm({ type: "session.memory", sessionId: two, campaign: "The valley is gone." });
+    expect(memoryOf(rec.state).campaign?.text).toBe("The valley is gone.");
+    expect(() => gm({ type: "session.memory", sessionId: two })).toThrow(/campaign paragraph or a chronicle/);
+    expect(() => gm({ type: "session.memory", sessionId: two, chronicles: [{ characterId: "nobody", text: "x" }] })).toThrow(/no character nobody/);
+    expect(() => rec.append(draft({ type: "session.memory", sessionId: two, campaign: "x" }, P1))).toThrow(/only the GM/);
   });
 });
 

@@ -7,6 +7,11 @@
  * sweeps recorded while a session runs belong to it, and the session-end sweep takes the
  * session's name. The GM can write or replace a summary after the session ends. Sessions are
  * the GM's record; nothing here reaches a player.
+ *
+ * Campaign memory (app/DESIGN.md, "AI context") rides on sessions: the campaign paragraph (the
+ * standing context's premise and current situation) and each character's chronicle, as written
+ * for a session, usually at its close. The memory now is the latest written for each, so every
+ * session keeps the memory as it stood then.
  */
 import type { Envelope } from "./actions.ts";
 import { type Effect, Rejected, type World } from "./fold.ts";
@@ -39,7 +44,18 @@ export interface SummarizeSession {
   summary: string;
 }
 
-export type SessionAction = StartSession | MarkAttendance | EndSession | SummarizeSession;
+/**
+ * Writes the campaign memory for a session: the campaign paragraph, and chronicles by character.
+ * Each replaces what that session held; empty text clears it. GM only.
+ */
+export interface SessionMemory {
+  type: "session.memory";
+  sessionId: string;
+  campaign?: string;
+  chronicles?: { characterId: string; text: string }[];
+}
+
+export type SessionAction = StartSession | MarkAttendance | EndSession | SummarizeSession | SessionMemory;
 
 export interface CampaignSession {
   id: string;
@@ -56,10 +72,24 @@ export interface CampaignSession {
   /** Characters who left before the end. */
   left: string[];
   summary?: string;
+  /** The campaign paragraph as written for this session. */
+  campaign?: string;
+  /** Each character's chronicle as written for this session. */
+  chronicles?: Record<string, string>;
 }
 
 export function cloneSession(s: CampaignSession): CampaignSession {
-  return { ...s, present: [...s.present], left: [...s.left] };
+  return { ...s, present: [...s.present], left: [...s.left], ...(s.chronicles ? { chronicles: { ...s.chronicles } } : {}) };
+}
+
+/** The campaign memory now: the latest campaign paragraph and, per character, the latest chronicle, with the session each came from. */
+export function memoryOf(world: Pick<World, "sessions">): { campaign?: { text: string; sessionId: string }; chronicles: Map<string, { text: string; sessionId: string }> } {
+  const out: ReturnType<typeof memoryOf> = { chronicles: new Map() };
+  for (const s of world.sessions.values()) {
+    if (s.campaign) out.campaign = { text: s.campaign, sessionId: s.id };
+    for (const [id, text] of Object.entries(s.chronicles ?? {})) out.chronicles.set(id, { text, sessionId: s.id });
+  }
+  return out;
 }
 
 /** A session's name as the table says it. */
@@ -115,6 +145,24 @@ export function applySessions(world: World, a: SessionAction, env: Envelope): Ef
       const text = a.summary.trim();
       if (text) s.summary = text;
       else delete s.summary;
+      return [];
+    }
+    case "session.memory": {
+      const s = world.sessions.get(a.sessionId);
+      if (!s) throw new Rejected(`no session ${a.sessionId}`);
+      if (a.campaign === undefined && !a.chronicles?.length) throw new Rejected("write the campaign paragraph or a chronicle");
+      for (const c of a.chronicles ?? []) if (!world.characters.has(c.characterId)) throw new Rejected(`no character ${c.characterId}`);
+      if (a.campaign !== undefined) {
+        if (a.campaign.trim()) s.campaign = a.campaign.trim();
+        else delete s.campaign;
+      }
+      for (const c of a.chronicles ?? []) {
+        const chronicles = { ...(s.chronicles ?? {}) };
+        if (c.text.trim()) chronicles[c.characterId] = c.text.trim();
+        else delete chronicles[c.characterId];
+        if (Object.keys(chronicles).length) s.chronicles = chronicles;
+        else delete s.chronicles;
+      }
       return [];
     }
   }

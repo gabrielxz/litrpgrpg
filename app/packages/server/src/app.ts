@@ -358,6 +358,9 @@ export function createApp(service: Service, opts: AppOptions = {}) {
   app.post("/campaigns/:id/sessions/:session/summary-draft", async (c) => {
     return c.json({ draft: await drafts().sessionSummary(c.req.param("id"), c.get("user"), c.req.param("session")) });
   });
+  app.post("/campaigns/:id/sessions/:session/memory-draft", async (c) => {
+    return c.json({ draft: await drafts().memory(c.req.param("id"), c.get("user"), c.req.param("session")) });
+  });
   app.post("/campaigns/:id/voice/vision", async (c) => {
     const b = await body(c, draftVisionBody);
     return c.json({ draft: await drafts().vision(c.req.param("id"), c.get("user"), b.characterId, b.memoryId, b.family, b.words ?? "") });

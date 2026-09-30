@@ -2,12 +2,14 @@
  * Sessions on the GM's screen: a bar under the sections that starts a session, marks who
  * arrives or leaves, and ends it with the summary and a check that the sweep was recorded; and
  * the campaign's sessions, newest first, each summary editable afterward. With the campaign's
- * key, the summary can be drafted from what the record holds for the session. Nothing here
- * reaches a player.
+ * key, the summary can be drafted from what the record holds for the session. The campaign
+ * memory (the campaign paragraph and each character's chronicle, which AI requests carry instead
+ * of the whole history) is written for the newest session, and can be drafted as a rewrite of
+ * the memory before it with the session folded in. Nothing here reaches a player.
  */
-import { type Action, type CampaignSession, type Envelope, type GmView, clockLine, sessionName } from "@gradebreaker/record";
+import { type Action, type CampaignSession, type Envelope, type GmView, clockLine, memoryOf, sessionName } from "@gradebreaker/record";
 import { useState } from "react";
-import { draftSessionSummary, newActionId, submit } from "../api.ts";
+import { draftMemory, draftSessionSummary, newActionId, submit } from "../api.ts";
 import type { Names } from "../text.ts";
 import { Commit } from "./Commit.tsx";
 import { useAiConfigured } from "./useAi.ts";
@@ -219,11 +221,89 @@ function SummaryEditor({ view, s, names, onRecorded }: { view: GmView; s: Campai
   );
 }
 
+/** The memory now, from the sessions as the view holds them (newest first there, oldest first here). */
+const memoryNow = (view: GmView) => memoryOf({ sessions: new Map([...view.sessions].reverse().map((s) => [s.id, s])) });
+
+/**
+ * The campaign memory written for the newest session: the paragraph and a chronicle for each
+ * character present, starting from the memory now. With the campaign's key, a rewrite drafts in.
+ */
+function MemoryEditor({ view, s, names, onRecorded }: { view: GmView; s: CampaignSession; names: Names; onRecorded: (env: Envelope) => void }) {
+  const ai = useAiConfigured(view.campaign.id);
+  const now = memoryNow(view);
+  const who = s.present.filter((id) => view.characters.some((c) => c.id === id && !c.dead));
+  const [campaign, setCampaign] = useState(now.campaign?.text ?? "");
+  const [chronicles, setChronicles] = useState<Record<string, string>>(Object.fromEntries(who.map((id) => [id, now.chronicles.get(id)?.text ?? ""])));
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const draft = async () => {
+    setBusy(true);
+    setError(null);
+    try {
+      const d = (await draftMemory(view.campaign.id, s.id)).draft;
+      setCampaign(d.campaign);
+      setChronicles({ ...chronicles, ...Object.fromEntries(d.chronicles.map((c) => [c.characterId, c.text])) });
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  };
+  const changed = who.filter((id) => (chronicles[id] ?? "").trim() !== (now.chronicles.get(id)?.text ?? ""));
+  const campaignChanged = campaign.trim() !== (now.campaign?.text ?? "");
+  const action: Action | null =
+    campaignChanged || changed.length
+      ? { type: "session.memory", sessionId: s.id, ...(campaignChanged ? { campaign } : {}), ...(changed.length ? { chronicles: changed.map((id) => ({ characterId: id, text: chronicles[id] ?? "" })) } : {}) }
+      : null;
+  return (
+    <details>
+      <summary>{now.campaign ? "Update the campaign memory" : "Write the campaign memory"}</summary>
+      <p className="muted small">What every AI request for this campaign carries in place of the whole history. The campaign paragraph: the premise and where the story stands. A chronicle: who a character has been so far.</p>
+      <label>
+        The campaign
+        <textarea value={campaign} maxLength={3000} rows={4} onChange={(e) => setCampaign(e.target.value)} placeholder="The premise, where the story stands, what is unresolved, who matters." />
+      </label>
+      {who.map((id) => (
+        <label key={id}>
+          {names(id)}'s chronicle
+          <textarea value={chronicles[id] ?? ""} maxLength={2000} rows={2} onChange={(e) => setChronicles({ ...chronicles, [id]: e.target.value })} />
+        </label>
+      ))}
+      {ai && (
+        <div className="row">
+          <button disabled={busy} onClick={draft}>
+            {busy ? "Drafting…" : "Draft the rewrite"}
+          </button>
+          <span className="muted small">Folds {sessionName(s)} into the memory as it stood; it replaces the text above.</span>
+          {error && <span className="error">{error}</span>}
+        </div>
+      )}
+      <Commit campaignId={view.campaign.id} action={action} problem={action ? null : "Unchanged."} names={names} label="Save the memory" onRecorded={onRecorded} />
+    </details>
+  );
+}
+
 export function SessionsCard({ view, names, onRecorded }: { view: GmView; names: Names; onRecorded: (env: Envelope) => void }) {
   if (!view.sessions.length) return null;
+  const now = memoryNow(view);
+  const newest = view.sessions[0]!;
   return (
     <section className="card">
       <h2>Sessions</h2>
+      <div className="panel">
+        <h3>Campaign memory</h3>
+        {now.campaign ? <p>{now.campaign.text}</p> : <p className="muted small">No campaign paragraph yet.</p>}
+        {[...now.chronicles].length > 0 && (
+          <ul className="small">
+            {[...now.chronicles].map(([id, c]) => (
+              <li key={id}>
+                <strong>{names(id)}</strong>: {c.text}
+              </li>
+            ))}
+          </ul>
+        )}
+        <MemoryEditor key={`${newest.id}:${now.campaign?.text ?? ""}:${[...now.chronicles.values()].map((c) => c.text).join("|")}`} view={view} s={newest} names={names} onRecorded={onRecorded} />
+      </div>
       <ul className="events">
         {view.sessions.map((s) => {
           const events = view.events.filter((e) => e.sessionId === s.id).length;

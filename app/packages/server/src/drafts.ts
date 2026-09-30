@@ -25,6 +25,9 @@ import {
   DRAFT_MESSAGE_FEATURE,
   DRAFT_OPPORTUNITY_FEATURE,
   DRAFT_SESSION_SUMMARY_FEATURE,
+  DRAFT_MEMORY_FEATURE,
+  type MemoryDraft,
+  draftMemory,
   DRAFT_SUGGESTIONS_FEATURE,
   DRAFT_VISION_FEATURE,
   type Drafter,
@@ -504,6 +507,19 @@ export class Drafts {
     if (!record.state.sessions.has(sessionId)) throw new HttpError(404, "no such session");
     try {
       return await draftSessionSummary((req) => this.ai.draft(campaignId, DRAFT_SESSION_SUMMARY_FEATURE, req), record, sessionId);
+    } catch (err) {
+      throw problemOf(err);
+    }
+  }
+
+  /** The campaign memory rewritten for the session: the campaign paragraph and the chronicles of those present. Returned to the GM's form, never stored here. */
+  async memory(campaignId: string, user: User | null, sessionId: string): Promise<MemoryDraft> {
+    await this.service.requireGm(campaignId, user);
+    await this.requireKey(campaignId);
+    const record = await this.service.record(campaignId);
+    if (!record.state.sessions.has(sessionId)) throw new HttpError(404, "no such session");
+    try {
+      return await draftMemory((req) => this.ai.draft(campaignId, DRAFT_MEMORY_FEATURE, req), record, sessionId);
     } catch (err) {
       throw problemOf(err);
     }

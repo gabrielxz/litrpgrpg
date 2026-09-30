@@ -15,13 +15,19 @@
  * Neither request carries the Hidden Vector Engine's sheet: an observation reads acts.
  */
 import type { Engine } from "@gradebreaker/engine";
-import type { CampaignRecord, Effect, Envelope, Sheet } from "@gradebreaker/record";
+import { type CampaignRecord, type Effect, type Envelope, type Sheet, memoryOf } from "@gradebreaker/record";
 import { z } from "zod";
 import { type Drafter, type Effort, section } from "./draft-events.ts";
 import { voiceFlags, voiceInstructions } from "./draft-voice.ts";
 
 export const DRAFT_SESSION_SUMMARY_FEATURE = "draft-session-summary";
 export const DRAFT_CHARACTER_SUMMARY_FEATURE = "draft-character-summary";
+export const DRAFT_MEMORY_FEATURE = "draft-memory";
+
+/** The campaign paragraph: the premise and where the story stands. */
+export const CAMPAIGN_SENTENCES = 6;
+/** A character's chronicle: who they have been in the story so far. */
+export const CHRONICLE_SENTENCES = 4;
 
 /** The standing context's "Last session" line runs three sentences. */
 export const SESSION_SENTENCES = 3;
@@ -136,6 +142,64 @@ export async function draftSessionSummary(drafter: Drafter, record: CampaignReco
   return { summary: out.summary.replace(/\s*\n+\s*/g, " ").trim() };
 }
 
+// ----------------------------------------------------------- memory ---
+
+/** The memory as it stood before a session: what the sessions before it wrote. */
+function memoryBefore(record: CampaignRecord, sessionId: string) {
+  const s = record.state.sessions.get(sessionId)!;
+  return memoryOf({ sessions: new Map([...record.state.sessions].filter(([, x]) => x.number < s.number)) });
+}
+
+export function draftMemorySchema() {
+  return z.object({
+    campaign: z.string().describe(`The campaign paragraph, at most ${CAMPAIGN_SENTENCES} sentences.`),
+    chronicles: z.array(z.object({ characterId: z.string(), text: z.string().describe(`At most ${CHRONICLE_SENTENCES} sentences.`) })).describe("One for each character present at the session."),
+  });
+}
+
+export function draftMemorySystem(): string {
+  return `You keep the memory of a campaign of Gradebreaker, a LitRPG tabletop roleplaying game, for the Game Master (GM). The memory goes into every later request an assistant makes for this campaign, in place of the whole history, so it has to carry what matters and stay short. The GM edits what you write, and your next rewrite starts from the GM's version, so keep what the GM wrote unless the session changed it.
+
+Rewrite two things from the memory as it stood and the session just played:
+
+- The campaign paragraph: the premise, where the story stands now, what is unresolved, and who matters beyond the party. At most ${CAMPAIGN_SENTENCES} sentences of plain present-tense prose. Fold the session in; drop what no longer matters.
+- A chronicle for each character present: who they have been in the story so far, the choices that defined them, and what they carry forward (a debt, a promise, a wound, a rival). At most ${CHRONICLE_SENTENCES} sentences each. Start from their chronicle as it stood.
+
+Use only what the memory and the record below say. Say nothing about how the Game Master or the System reads the characters' behavior, and name no side of a behavioral axis.`;
+}
+
+export function draftMemoryPrompt(record: CampaignRecord, sessionId: string): string {
+  const s = record.state.sessions.get(sessionId)!;
+  const sheets = record.sheets();
+  const name = (id: string) => sheets.get(id)?.name ?? id;
+  const before = memoryBefore(record, sessionId);
+  return [
+    section("The campaign paragraph as it stood", [before.campaign ? before.campaign.text : "- none written yet"]),
+    section(
+      "Chronicles as they stood",
+      s.present.map((id) => `- ${id} (${name(id)}): ${before.chronicles.get(id)?.text ?? "none written yet"}`),
+    ),
+    section("The session", [`- Session ${s.number}${s.label ? `, ${s.label}` : ""}. Present: ${s.present.map(name).join(", ") || "no one recorded"}.`, ...(s.summary ? [`- The GM's summary: ${s.summary}`] : [])]),
+    section("What the record holds, in order", happenings(record, sessionLog(record, sessionId))),
+  ].join("\n\n");
+}
+
+export interface MemoryDraft {
+  campaign: string;
+  chronicles: { characterId: string; text: string }[];
+}
+
+/** The rewritten memory: a chronicle for each character present and no one else, each named by id. */
+export async function draftMemory(drafter: Drafter, record: CampaignRecord, sessionId: string, opts: { effort?: Effort } = {}): Promise<MemoryDraft> {
+  const s = record.state.sessions.get(sessionId);
+  if (!s) throw new Error(`no session ${sessionId}`);
+  const out = await drafter({ system: draftMemorySystem(), prompt: draftMemoryPrompt(record, sessionId), schema: draftMemorySchema(), effort: opts.effort ?? "medium" });
+  const flat = (t: string) => t.replace(/\s*\n+\s*/g, " ").trim();
+  const seen = new Set<string>();
+  const chronicles = out.chronicles.filter((c) => s.present.includes(c.characterId) && !seen.has(c.characterId) && seen.add(c.characterId)).map((c) => ({ characterId: c.characterId, text: flat(c.text) }));
+  return { campaign: flat(out.campaign), chronicles };
+}
+
 // -------------------------------------------------------- character ---
 
 export interface CharacterSummaryDraft {
@@ -190,6 +254,7 @@ export function draftCharacterSummaryPrompt(record: CampaignRecord, characterId:
     .map(([k, n]) => `- ${k.replace(/-/g, " ")}: ${n}`);
   return [
     section("Character", [`- ${c.name}, ${c.grade}-Grade, Level ${c.level}. Background: ${c.background.replace(/\.$/, "")}.`]),
+    section("Their chronicle", memoryOf(record.state).chronicles.get(characterId) ? [memoryOf(record.state).chronicles.get(characterId)!.text] : []),
     section("What the record holds of the character, in order", lines.slice(-20)),
     section("Counts the System keeps", counts),
   ].join("\n\n");

@@ -13,6 +13,7 @@ import type { CampaignRecord, Sheet } from "@gradebreaker/record";
 import { z } from "zod";
 import { type Drafter, type Effort, section } from "./draft-events.ts";
 import { tableWords } from "./offers.ts";
+import { campaignContext } from "./memory.ts";
 
 export const DRAFT_MESSAGE_FEATURE = "draft-message";
 export const DRAFT_VISION_FEATURE = "draft-vision";
@@ -142,7 +143,11 @@ ${voiceInstructions(engine)}
 
 export function draftMessagePrompt(record: CampaignRecord, to: string[], gist: string): string {
   const sheets = record.sheets();
-  return [section("Recipients", to.map((id) => sheets.get(id)).filter((c): c is Sheet => Boolean(c)).map(known)), `# What the GM wants the System to say\n\n${gist.trim()}`].join("\n\n");
+  return [
+    ...campaignContext(record, to),
+    section("Recipients", to.map((id) => sheets.get(id)).filter((c): c is Sheet => Boolean(c)).map(known)),
+    `# What the GM wants the System to say\n\n${gist.trim()}`,
+  ].join("\n\n");
 }
 
 export async function draftMessage(engine: Engine, drafter: Drafter, record: CampaignRecord, to: string[], gist: string, opts: { effort?: Effort } = {}): Promise<MessageDraft> {

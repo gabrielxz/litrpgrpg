@@ -413,6 +413,12 @@ export const actionSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("session.attend"), characterId: id, present: z.boolean() }),
   z.object({ type: z.literal("session.end"), summary: z.string().max(2000).optional() }),
   z.object({ type: z.literal("session.summary"), sessionId: id, summary: z.string().max(2000) }),
+  z.object({
+    type: z.literal("session.memory"),
+    sessionId: id,
+    campaign: z.string().max(3000).optional(),
+    chronicles: z.array(z.object({ characterId: id, text: z.string().max(2000) })).max(20).optional(),
+  }),
   z.object({ type: z.literal("hve.deep"), characterId: id, deep: z.record(z.string().max(20), whole) }),
   z.object({ type: z.literal("pill.take"), characterId: id, targetId: id, pill: z.string().max(60) }),
   z.object({

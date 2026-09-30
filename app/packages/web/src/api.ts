@@ -175,6 +175,8 @@ export interface VisionDraft {
 
 export const draftMessage = (campaignId: string, to: string[], gist: string) => api<{ draft: MessageDraft }>("POST", `/campaigns/${campaignId}/voice/message`, { to, gist });
 
+export const draftMemory = (campaignId: string, sessionId: string) =>
+  api<{ draft: { campaign: string; chronicles: { characterId: string; text: string }[] } }>("POST", `/campaigns/${campaignId}/sessions/${sessionId}/memory-draft`, {});
 export const draftSessionSummary = (campaignId: string, sessionId: string) =>
   api<{ draft: { summary: string } }>("POST", `/campaigns/${campaignId}/sessions/${sessionId}/summary-draft`, {});
 

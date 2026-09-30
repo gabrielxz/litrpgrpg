@@ -19,6 +19,7 @@ import { type Action, CampaignRecord, type Effect, type LogEvent } from "@gradeb
 import { z } from "zod";
 import type { Script } from "./script.ts";
 import { replay, setupOf } from "./script.ts";
+import { campaignContext, eventsFor } from "./memory.ts";
 
 export const DRAFT_EVENTS_FEATURE = "draft-events";
 
@@ -250,8 +251,9 @@ export function draftEventsPrompt(scene: Scene): string {
   const quests = [...state.quests.values()]
     .filter((q) => q.status === "active" || q.status === "offered")
     .map((q) => `- ${q.title} (${q.code}), ${q.status}, held by ${q.holders.join(", ")}: ${q.objective}${q.count ? ` ${q.count.done} of ${q.count.of}.` : ""}`);
-  const events = [...state.events.values()].map((e) => `- ${e.summary} (${e.participants.join(", ")})`);
+  const events = eventsFor(scene.record, scene.lines.map((l) => l.text).join(" ")).map((e) => `- ${e.summary} (${e.participants.join(", ")})`);
   return [
+    ...campaignContext(scene.record),
     section("Roster", rosterOf(scene)),
     section("Parties", parties),
     section("Items held", items),
