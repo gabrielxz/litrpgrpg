@@ -49,6 +49,8 @@ const listeningBody = z.object({ mode: z.enum(["off", "listening", "paused"]) })
 const acceptDraft = submissionSchema.pick({ id: true, action: true });
 const draftDistillationBody = z.object({ characterId: z.string().min(1).max(100), family: z.string().min(1).max(40), words: z.string().max(2000).optional(), refine: z.boolean().optional() });
 
+const rulesQuestionBody = z.object({ question: z.string().min(1).max(1000) });
+
 const createInvite = z.object({
   maxUses: z.number().int().positive().optional(),
   expiresInHours: z.number().positive().optional(),
@@ -359,6 +361,10 @@ export function createApp(service: Service, opts: AppOptions = {}) {
   });
   app.post("/campaigns/:id/sessions/:session/summary-draft", async (c) => {
     return c.json({ draft: await drafts().sessionSummary(c.req.param("id"), c.get("user"), c.req.param("session")) });
+  });
+  app.post("/campaigns/:id/rules-question", async (c) => {
+    const b = await body(c, rulesQuestionBody);
+    return c.json({ answer: await drafts().rulesQuestion(c.req.param("id"), c.get("user"), b.question) });
   });
   app.post("/campaigns/:id/distillation-draft", async (c) => {
     const b = await body(c, draftDistillationBody);

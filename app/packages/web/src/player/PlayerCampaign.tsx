@@ -19,6 +19,7 @@ import { type CharacterSpec, Creator } from "./Creator.tsx";
 import { PrincipleSection } from "./Principle.tsx";
 import { ClassHeld, ClassOffers } from "./Class.tsx";
 import { Inspect } from "./Inspect.tsx";
+import { AskRules } from "../AskRules.tsx";
 
 function Bar({ value, max }: { value: number; max: number }) {
   const pct = max > 0 ? Math.max(0, Math.min(100, (value / max) * 100)) : 0;
@@ -800,6 +801,7 @@ export function PlayerCampaign({
           )}
           <RollList rolls={view.rolls} />
         </section>
+        {!readOnly && <AskRules campaignId={view.campaign.id} />}
       </div>
     </main>
   );

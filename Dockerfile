@@ -1,5 +1,5 @@
-# The companion app: the server (app/packages/server) with the rules data it loads at start,
-# and the web client it serves. Node runs the server's TypeScript directly; only the web
+# The companion app: the server (app/packages/server) with the rules data it loads at start and
+# the book's chapters its rules questions read, and the web client it serves. Node runs the server's TypeScript directly; only the web
 # client is built. Deployed by Fly (fly.toml).
 
 # ---- build the web client ----
@@ -30,6 +30,7 @@ COPY app/packages/server/package.json app/packages/server/
 RUN cd app && pnpm install --frozen-lockfile --prod --filter "@gradebreaker/server..."
 
 COPY rules rules
+COPY book book
 COPY app/packages/engine app/packages/engine
 COPY app/packages/record app/packages/record
 COPY app/packages/listening app/packages/listening

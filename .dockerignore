@@ -1,5 +1,6 @@
-# The image needs only the app workspace and the rules data; the repository is mostly book
-# art and builds, so everything else stays out of the build context.
+# The image needs the app workspace, the rules data, and the book's chapters (rules questions
+# read them); the repository is mostly book art and builds, so everything else stays out of the
+# build context.
 *
 !app/package.json
 !app/pnpm-lock.yaml
@@ -7,6 +8,7 @@
 !app/tsconfig.base.json
 !app/packages
 !rules
+!book/[0-9][0-9]-*.md
 app/packages/*/node_modules
 app/packages/*/test
 app/packages/web/dist

@@ -27,6 +27,12 @@ import {
   DRAFT_SESSION_SUMMARY_FEATURE,
   DRAFT_MEMORY_FEATURE,
   DRAFT_DISTILLATION_FEATURE,
+  BOOK_DIR,
+  type Chapter,
+  RULES_QUESTION_FEATURE,
+  type RulesAnswer,
+  askRules,
+  bookChapters,
   type DistillationDraft,
   draftDistillation,
   type MemoryDraft,
@@ -523,6 +529,24 @@ export class Drafts {
     if (!record.state.sessions.has(sessionId)) throw new HttpError(404, "no such session");
     try {
       return await draftMemory((req) => this.ai.draft(campaignId, DRAFT_MEMORY_FEATURE, req), record, sessionId);
+    } catch (err) {
+      throw problemOf(err);
+    }
+  }
+
+  private chapters: Chapter[] | null = null;
+
+  /**
+   * A rules question from any member: the GM's reads every chapter, a player's the players' chapters
+   * alone, and neither carries anything from the campaign. Answered to the asker, never stored.
+   */
+  async rulesQuestion(campaignId: string, user: User | null, question: string): Promise<RulesAnswer> {
+    const role = await this.service.requireMember(campaignId, user);
+    await this.requireKey(campaignId);
+    if (!question.trim()) throw new HttpError(422, "ask a question");
+    this.chapters ??= bookChapters(BOOK_DIR);
+    try {
+      return await askRules((req) => this.ai.draft(campaignId, RULES_QUESTION_FEATURE, req), this.chapters, role === "gm" ? "gm" : "player", question);
     } catch (err) {
       throw problemOf(err);
     }

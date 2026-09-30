@@ -175,6 +175,8 @@ export interface VisionDraft {
 
 export const draftMessage = (campaignId: string, to: string[], gist: string) => api<{ draft: MessageDraft }>("POST", `/campaigns/${campaignId}/voice/message`, { to, gist });
 
+export const askRules = (campaignId: string, question: string) =>
+  api<{ answer: { answer: string; citations: { chapter: string; heading: string }[]; inBook: boolean } }>("POST", `/campaigns/${campaignId}/rules-question`, { question });
 export interface DistillationReading {
   articulation: string;
   phrasing: string;

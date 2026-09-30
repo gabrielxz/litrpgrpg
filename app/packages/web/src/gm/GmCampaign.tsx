@@ -31,6 +31,7 @@ import { ATTRIBUTES } from "../text.ts";
 import { Table } from "./Invites.tsx";
 import { Log } from "./Log.tsx";
 import { RecordPanel } from "./Record.tsx";
+import { AskRules } from "../AskRules.tsx";
 
 function Meter({ value, max, className }: { value: number; max: number; className?: string }) {
   const pct = max > 0 ? Math.max(0, Math.min(100, (value / max) * 100)) : 0;
@@ -208,7 +209,7 @@ function ViewAs({ view }: { view: GmView }) {
   );
 }
 
-type Section = "party" | "suggestions" | "prep" | "combat" | "bestiary" | "quests" | "principles" | "classes" | "events" | "hve" | "log" | "table" | "player";
+type Section = "party" | "suggestions" | "prep" | "combat" | "bestiary" | "quests" | "principles" | "classes" | "events" | "hve" | "log" | "rules" | "table" | "player";
 const SECTIONS: [Section, string][] = [
   ["party", "Party"],
   ["suggestions", "Suggestions"],
@@ -221,6 +222,7 @@ const SECTIONS: [Section, string][] = [
   ["events", "Events"],
   ["hve", "HVE"],
   ["log", "Campaign log"],
+  ["rules", "Rules"],
   ["table", "Table"],
   ["player", "Player view"],
 ];
@@ -371,6 +373,11 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
           <AiCard view={view} />
           <RecordingsCard view={view} />
           <Holders view={view} names={names} onRecorded={live.addToLog} />
+        </main>
+      )}
+      {section === "rules" && (
+        <main className="page narrow">
+          <AskRules campaignId={view.campaign.id} gm className="card" />
         </main>
       )}
       {section === "player" && <ViewAs view={view} />}
