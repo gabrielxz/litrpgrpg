@@ -161,7 +161,7 @@ quests:
   - group: "Scene 1: The depot gate"
     note: "When the Snarljaws are in sight. Issue to one character; the holder shares it with the party."
     quest: {id: Q-201, category: Routine, title: Fence Line Clearance, issuer: System, grade: F, difficulty: Easy,
-            objective: "Eliminate the Snarljaws at the depot fence.", count: 3, time: Open.}
+            objective: "Eliminate the Snarljaws at the depot fence.", count: 3, countFixed: true, time: Open.}
   - group: "Scene 1: The depot gate"
     note: "Mara's request, if the listener does not draft it: to the character she asked, then shared. Severe, because a construct holds the three in the annex; set it Severe if the listener drafts it lower."
     quest: {id: Q-202, category: Faction, title: Bring Them Home, issuer: Mara, grade: F, difficulty: Severe,

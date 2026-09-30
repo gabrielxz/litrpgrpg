@@ -1,0 +1,591 @@
+<title>Depot Fence Run Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Chakra+Petch:wght@600;700&family=EB+Garamond:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root {
+  --ground: #f4ede1;
+  --surface: #fbf7f0;
+  --sunken: #ece3d3;
+  --line: #e0d4c0;
+  --line-strong: #cbbda6;
+  --text: #131b20;
+  --dim: #55595a;
+  --system: #0b6f80;
+  --system-wash: rgba(46, 180, 198, 0.1);
+  --world: #7d5f1e;
+  --danger: #a3322a;
+  --ok: #4f7a43;
+  --key-bg: #131b20;
+  --key-text: #fbf7f0;
+  --focus: #131b20;
+  --ui: "Alegreya Sans", "Segoe UI", system-ui, sans-serif;
+  --display: "Chakra Petch", "Alegreya Sans", system-ui, sans-serif;
+  --prose: "EB Garamond", Georgia, "Times New Roman", serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --ground: #0e1012;
+    --surface: #1c2125;
+    --sunken: #15191c;
+    --line: #2f373d;
+    --line-strong: #4a535a;
+    --text: #e6e1d6;
+    --dim: #a39d90;
+    --system: #7fd9e3;
+    --system-wash: rgba(46, 180, 198, 0.12);
+    --world: #d4b26a;
+    --danger: #f08a7e;
+    --ok: #95bd8a;
+    --key-bg: #e6e1d6;
+    --key-text: #0e1012;
+    --focus: #e6e1d6;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ground: #0e1012;
+  --surface: #1c2125;
+  --sunken: #15191c;
+  --line: #2f373d;
+  --line-strong: #4a535a;
+  --text: #e6e1d6;
+  --dim: #a39d90;
+  --system: #7fd9e3;
+  --system-wash: rgba(46, 180, 198, 0.12);
+  --world: #d4b26a;
+  --danger: #f08a7e;
+  --ok: #95bd8a;
+  --key-bg: #e6e1d6;
+  --key-text: #0e1012;
+  --focus: #e6e1d6;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--text);
+  font: 17px/1.55 var(--ui);
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 50rem; margin: 0 auto; padding-inline: 16px; padding-block: 0 5rem; }
+
+/* The bar: where you are, how far along, and a jump to any part */
+.bar {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 5;
+  background: var(--ground);
+  border-bottom: 1px solid var(--line-strong);
+}
+.bar__in { max-width: 50rem; margin: 0 auto; padding: 0.55rem 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; }
+.bar__name { font: 700 0.95rem/1 var(--display); letter-spacing: 0.08em; text-transform: uppercase; }
+.bar__jump { display: flex; flex-wrap: wrap; gap: 0.15rem 0.7rem; font-size: 0.9rem; }
+.bar__jump a { color: var(--dim); text-decoration: none; }
+.bar__jump a:hover { color: var(--text); text-decoration: underline; }
+.bar__progress { margin-left: auto; font: 500 0.8rem/1 var(--mono); color: var(--dim); font-variant-numeric: tabular-nums; }
+.meter { flex-basis: 100%; height: 3px; background: var(--line); }
+.meter i { display: block; height: 100%; width: 0; background: var(--system); transition: width 0.2s; }
+
+header.top { padding-block: 2.2rem 1rem; }
+h1 { font: 700 2rem/1.1 var(--display); letter-spacing: 0.02em; margin: 0 0 0.4rem; text-wrap: balance; }
+.lede { color: var(--dim); margin: 0; max-width: 40rem; }
+
+h2 { font: 700 1.35rem/1.2 var(--display); letter-spacing: 0.02em; margin: 3rem 0 0.3rem; scroll-margin-top: 5rem; text-wrap: balance; }
+h2 .part { display: block; font: 500 0.72rem/1 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--system); margin-bottom: 0.45rem; }
+h3 { font: 700 1.05rem/1.3 var(--ui); margin: 2rem 0 0.2rem; scroll-margin-top: 5rem; }
+.when { font: 500 0.78rem/1.4 var(--mono); color: var(--dim); margin: 0 0 0.8rem; }
+p { margin: 0 0 0.8rem; }
+
+/* The verdict */
+.verdict { background: var(--surface); border: 1px solid var(--line); padding: 1.1rem 1.25rem; margin: 0.5rem 0 1.5rem; }
+.verdict h2 { margin-top: 0; }
+.verdict ol { margin: 0.4rem 0 0; padding-left: 1.3rem; }
+.verdict li + li { margin-top: 0.35rem; }
+
+/* The key to the line kinds */
+.key { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.5rem 1.25rem; font-size: 0.92rem; margin: 0 0 1rem; padding: 0; list-style: none; }
+.key li { display: flex; gap: 0.5rem; align-items: baseline; }
+.tagk { flex: none; font: 500 0.68rem/1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; padding: 0.22rem 0.4rem; border: 1px solid var(--line-strong); color: var(--dim); }
+
+/* Steps */
+ol.steps { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.step { display: grid; grid-template-columns: 1.6rem minmax(0, 1fr); gap: 0.1rem 0.6rem; padding: 0.7rem 0; border-bottom: 1px solid var(--line); }
+.step input { margin: 0.3rem 0 0; width: 1.1rem; height: 1.1rem; accent-color: var(--system); cursor: pointer; }
+.step input:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.step > div > * + * { margin-top: 0.5rem; }
+.step > div > p { margin-bottom: 0; }
+.step.done > div { opacity: 0.45; }
+.step.done .say, .step.done .sys { display: none; }
+.lab { font: 500 0.66rem/1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); margin-right: 0.35rem; }
+
+.say { font: 1.12rem/1.55 var(--prose); background: var(--sunken); padding: 0.7rem 0.95rem; border-left: 3px solid var(--line-strong); }
+.say .lab { display: block; margin-bottom: 0.35rem; }
+.sys { font-style: italic; color: var(--system); background: var(--system-wash); padding: 0.55rem 0.95rem; }
+.sys .lab { font-style: normal; color: var(--system); }
+.players { padding-left: 0.95rem; border-left: 3px dotted var(--line-strong); }
+.if { padding-left: 0.95rem; border-left: 3px solid var(--world); }
+.if .lab { color: var(--world); }
+.warn { padding-left: 0.95rem; border-left: 3px solid var(--danger); }
+.warn .lab { color: var(--danger); }
+.step ul { margin: 0.3rem 0 0; padding-left: 1.15rem; }
+.step li + li { margin-top: 0.2rem; }
+
+kbd {
+  font: 500 0.78rem/1 var(--mono);
+  background: var(--key-bg);
+  color: var(--key-text);
+  padding: 0.18rem 0.4rem 0.2rem;
+  white-space: nowrap;
+  border-radius: 2px;
+}
+.where { font: 500 0.72rem/1 var(--mono); letter-spacing: 0.06em; color: var(--system); border: 1px solid currentColor; padding: 0.12rem 0.35rem; white-space: nowrap; }
+.w { color: var(--world); }
+b { font-weight: 700; }
+
+.aside { background: var(--surface); border: 1px solid var(--line); padding: 1rem 1.2rem; margin-top: 1rem; }
+.aside h3 { margin-top: 0; }
+.aside dl { margin: 0; }
+.aside dt { font-weight: 700; margin-top: 0.7rem; }
+.aside dt:first-child { margin-top: 0; }
+.aside dd { margin: 0.15rem 0 0; }
+
+.reset { margin-top: 3rem; display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; font-size: 0.9rem; color: var(--dim); }
+button { font: 500 0.85rem/1 var(--ui); padding: 0.5rem 0.8rem; background: var(--surface); color: var(--text); border: 1px solid var(--line-strong); cursor: pointer; }
+button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+button.danger { border-color: var(--danger); color: var(--danger); }
+
+@media (max-width: 34rem) {
+  body { font-size: 16px; }
+  h1 { font-size: 1.6rem; }
+  .bar__progress { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .meter i { transition: none; } }
+</style>
+
+<div class="bar">
+  <div class="bar__in">
+    <span class="bar__name">Depot Fence</span>
+    <nav class="bar__jump" aria-label="Parts">
+      <a href="#before">Before</a>
+      <a href="#setup">Setup</a>
+      <a href="#s1">1 Gate</a>
+      <a href="#s2">2 Fence</a>
+      <a href="#rest1">Rest</a>
+      <a href="#part2">Part 2</a>
+      <a href="#s3">3 Annex</a>
+      <a href="#s4">4 Upstairs</a>
+      <a href="#rest2">Classes</a>
+      <a href="#s5">5 Terminal</a>
+      <a href="#close">Close</a>
+      <a href="#trouble">Trouble</a>
+    </nav>
+    <span class="bar__progress" id="progress">0 of 0</span>
+    <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+  </div>
+</div>
+
+<main class="wrap">
+<header class="top">
+  <h1>Past the Depot Fence</h1>
+  <p class="lede">The rehearsal, step by step: what to say, what the players do, and which button to press when. Tick each step as you go; the ticks stay in this browser.</p>
+</header>
+
+<section class="verdict" aria-labelledby="verdict-h">
+  <h2 id="verdict-h">Is it easy enough?</h2>
+  <p>Not as one sitting. The rehearsal was written to touch every system once: four fights, two rests, a level, class offers, a Distillation, a Mandate, and listening throughout. Run straight through for the first time, that is a five-hour session with a lot of new buttons. It becomes comfortable with four changes, and this sheet is built around them:</p>
+  <ol>
+    <li><b>Two sittings.</b> Part 1 is the gate, the fence, and the first rest (about two and a half hours). Part 2 is the annex, the three upstairs, the classes, and the terminal. If Part 1 runs well, carry on the same night.</li>
+    <li><b>Review drafts only at the rests.</b> While a scene runs, ignore the Suggestions and Events counts. The rests and the close have a step for it.</li>
+    <li><b>A solo dry run first.</b> Twenty minutes alone with the fence fight, below, so the first fight at the table is your second.</li>
+    <li><b>Cut what the plan does not need.</b> The Alpha in the lot runs only if the party talks the Sentinel down (it replaces that VE). Andre's Distillation happens only if his Insight gets there. Scene 5 can move to another night.</li>
+  </ol>
+</section>
+
+<ul class="key" aria-label="How to read a step">
+  <li><span class="tagk">Say</span>Read aloud or paraphrase.</li>
+  <li><span class="tagk" style="color:var(--system);border-color:var(--system)">System</span>What the players' screens show.</li>
+  <li><span class="tagk">Players</span>What they do on their own screens.</li>
+  <li><span class="tagk" style="color:var(--world);border-color:var(--world)">If</span>A branch; skip it if it does not happen.</li>
+  <li><kbd>Button</kbd> Press this, exactly as labeled.</li>
+  <li><span class="where">Section</span> Where the button is.</li>
+</ul>
+
+<!-- ================================================================ BEFORE -->
+<h2 id="before"><span class="part">Before the day</span>Get ready</h2>
+<p class="when">A day or two ahead</p>
+<ol class="steps">
+  <li class="step" data-id="b-dry"><input type="checkbox" aria-label="Done"><div>
+    <p><b>Solo dry run.</b> On Home, start a campaign called <b>Dry run</b>. In <span class="where">Prep</span>, under <b>Load a pack from a file</b>, choose <code>app/packs/rehearsal.yaml</code>, press <kbd>Load rehearsal</kbd>, then <kbd>Record the setup</kbd>. The four characters stay <b>Held by the GM</b>, so you can act for all of them.</p>
+    <p>Then run Scene 1's fight from this sheet, playing every side: <span class="where">Prep</span> <kbd>Set up the fight</kbd> on the fence line, set each character's side to <b>The party</b>, <kbd>Start the fight</kbd>, <kbd>Roll Initial Momentum</kbd>, and take a few turns with <kbd>Kara acts</kbd> and <kbd>Attack…</kbd>. End it, settle it, and record one rest. That is every hard button in Part 1.</p>
+  </div></li>
+  <li class="step" data-id="b-players"><input type="checkbox" aria-label="Done"><div>
+    <p><b>Send the players two things:</b> the guide's pages <b>Your screen</b> and <b>Listening</b> (<code>gradebreaker.fly.dev/guide/player-screen</code> and <code>/guide/player-listening</code>), and a note to join on a laptop in Chrome, with headphones so the table's voices do not reach each other's microphones.</p>
+  </div></li>
+  <li class="step" data-id="b-notes"><input type="checkbox" aria-label="Done"><div>
+    <p><b>Open a notes file</b> beside the app for the rehearsal's real purpose: a line whenever a draft arrives late, invents something, or misses something plain; whenever the app wanted a click the table did not want to wait for; and whenever a player could not find something.</p>
+  </div></li>
+</ol>
+
+<!-- ================================================================ PART 1 -->
+<h2 id="setup"><span class="part">Part 1 · Sitting one</span>Setting up the table</h2>
+<p class="when">Before the players arrive, then the first 15 minutes</p>
+<ol class="steps">
+  <li class="step" data-id="p-camp"><input type="checkbox" aria-label="Done"><div>
+    <p>On Home, start a campaign called <b>Past the depot fence</b>. You land on <span class="where">Party</span> with the <b>Set up the table</b> checklist.</p>
+  </div></li>
+  <li class="step" data-id="p-key"><input type="checkbox" aria-label="Done"><div>
+    <p><span class="where">Table</span> On the <b>AI</b> card, paste your Anthropic key and press <kbd>Check and save</kbd>. Wait for <b>Works</b>.</p>
+  </div></li>
+  <li class="step" data-id="p-pack"><input type="checkbox" aria-label="Done"><div>
+    <p><span class="where">Prep</span> Under <b>Load a pack from a file</b>, choose <code>rehearsal.yaml</code>, press <kbd>Load rehearsal</kbd>, then <kbd>Record the setup</kbd>. It counts to 119 in a few seconds. Kara, Joe, Andre, and Nia now exist at Level 8, and the clock reads Day 12, 16:00.</p>
+  </div></li>
+  <li class="step" data-id="p-invite"><input type="checkbox" aria-label="Done"><div>
+    <p><span class="where">Table</span> Under <b>Invite links</b>, type <b>4</b> and press <kbd>New invite link</kbd>, then <kbd>Copy</kbd>. Paste it into the table's chat.</p>
+    <p class="players"><span class="lab">Players</span>Open the link, sign in with Google, press <b>Join the campaign</b>. Their screen reads that they have no character yet; that is expected.</p>
+  </div></li>
+  <li class="step" data-id="p-assign"><input type="checkbox" aria-label="Done"><div>
+    <p><span class="where">Table</span> Under <b>Who plays whom</b>, pick each character's player in <b>Played by</b>, and press the <kbd>Hand Kara to …</kbd> button that appears. Repeat for all four.</p>
+  </div></li>
+  <li class="step" data-id="p-consent"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Say</span>"Before we start: the app can listen to the table and draft what happened for me to check. There's a strip at the top of your screen. Press <b>Consent to listening</b>, read it, and say yes only if you're happy with it. If you're willing, the <b>Test recordings</b> one helps me measure how well it hears us; that one keeps your audio for seven days."</p>
+    <p>Press <kbd>Consent to listening…</kbd> in your own table bar too, and <kbd>I consent</kbd>.</p>
+  </div></li>
+  <li class="step" data-id="p-session"><input type="checkbox" aria-label="Done"><div>
+    <p>In the table bar, press <kbd>Start a session</kbd>, name it <b>The depot gate</b>, leave all four ticked, and press <kbd>Start The depot gate</kbd>.</p>
+  </div></li>
+  <li class="step" data-id="p-listen"><input type="checkbox" aria-label="Done"><div>
+    <p>In the table bar, press <kbd>Start listening</kbd>. If it says <b>Waiting on consent from …</b>, that player has not consented yet. Once it shows <b>Listening</b>, press <kbd>Record for testing</kbd>.</p>
+    <p class="if"><span class="lab">If</span>someone declines listening, skip it for the night. Everything below works without it; you will log moments by hand at the rests.</p>
+  </div></li>
+  <li class="step" data-id="p-week"><input type="checkbox" aria-label="Done"><div>
+    <p><span class="where">Party</span> The <b>Titles due</b> card lists <b>Week One</b> for all four (they have survived eleven days). Press <kbd>Confer</kbd> on each row. This is the gentlest first button of the night.</p>
+    <p class="sys"><span class="lab">System</span>Title conferred: Week One.</p>
+    <p class="players"><span class="lab">Players</span>Under <b>Titles</b> on their interface, pick an Attribute for the +1 and press <b>Place</b>.</p>
+  </div></li>
+</ol>
+
+<!-- ================================================================ SCENE 1 -->
+<h2 id="s1"><span class="part">Scene 1</span>The depot gate</h2>
+<p class="when">About 45 minutes · Prep group "Scene 1: The depot gate"</p>
+<ol class="steps">
+  <li class="step" data-id="s1-notice"><input type="checkbox" aria-label="Done"><div>
+    <p><span class="where">Prep</span> On <b>Day 12: the status notice</b>, press <kbd>Send…</kbd>, leave everyone ticked, and press <kbd>Send the notice</kbd>.</p>
+    <p class="sys"><span class="lab">System</span>Day 12 since Integration. Sector: Depot District. Initiates in range: 4. Local hostiles: present.</p>
+  </div></li>
+  <li class="step" data-id="s1-open"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Say</span>The depot district smells of diesel and wet concrete. A chain-link fence runs the length of the freight yard, sagging where something heavy leaned on it. At the gate stands a woman in her sixties with a crowbar and a co-op armband. She watches the fence line more than she watches you.</p>
+  </div></li>
+  <li class="step" data-id="s1-mara"><input type="checkbox" aria-label="Done"><div>
+    <p>Play <span class="w">Mara</span>. Pick one character to ask, by name.</p>
+    <p class="say"><span class="lab">Say, as Mara</span>"My grandson went past that fence yesterday with two others. Teo. Nineteen. They said the records annex still had power. They didn't come back. You look like you can handle yourself. Bring them home."</p>
+    <p class="if"><span class="lab">If</span>they agree: leave it to the listener. At the first rest you will look for a drafted <b>Bring Them Home</b> quest in Suggestions. If listening is off, issue it now from <span class="where">Prep</span>: <b>[Q-202] Bring Them Home</b> <kbd>Issue…</kbd>, offer it to the character Mara asked, and press <kbd>Issue [Q-202]</kbd>.</p>
+  </div></li>
+  <li class="step" data-id="s1-snarl"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Say</span>Three shapes move along the fence line, low to the ground, heads down. Dog-sized, but the jaws are wrong: too wide, with a second row of teeth behind the first. One stops and looks straight at you.</p>
+    <p><span class="where">Prep</span> On <b>[Q-201] Fence Line Clearance</b>, press <kbd>Issue…</kbd>. The Quests form opens filled in. Offer it to whoever is nearest the fence and press <kbd>Issue [Q-201]</kbd>.</p>
+    <p class="players"><span class="lab">Players</span>That player presses <b>Accept</b> in their quest log, then <b>Share with the party</b>. Say so out loud; it is the first thing a player does on their screen tonight.</p>
+  </div></li>
+  <li class="step" data-id="s1-setup"><input type="checkbox" aria-label="Done"><div>
+    <p><span class="where">Prep</span> On <b>The fence line: three Snarljaws</b>, press <kbd>Set up the fight</kbd>. Combat opens filled in with the three Snarljaws and the Zones (the gate, the fence line, the yard). Check each character's side reads <b>The party</b>, then press <kbd>Start the fight</kbd>.</p>
+    <p>Press <kbd>Roll Initial Momentum</kbd>. The side that wins acts first.</p>
+    <p class="say"><span class="lab">Say</span>"Your screens have the fight now, in the At the table tray. When your side has the turn, press <b>Act</b>, then <b>Attack…</b>, pick a target and your Attribute, and press attack. When something attacks you, your screen asks how you defend: press <b>Roll the Clash</b>, and if you lose, choose to take it or Yield Beats. I'll narrate what the numbers mean."</p>
+  </div></li>
+  <li class="step" data-id="s1-snarlturn"><input type="checkbox" aria-label="Done"><div>
+    <p><b>Running a Snarljaw's turn</b> (repeat for each, on the Hostiles' turn):</p>
+    <ul>
+      <li>On its row, press <kbd>Snarljaw 1 acts</kbd>, then <kbd>Attack…</kbd>.</li>
+      <li>Pick the target; its bite fills in. <b>Flanking +10</b> ticks itself when another Snarljaw shares the Zone. Press <kbd>Snarljaw 1 attacks (1 Beat)</kbd>.</li>
+      <li>The Clash docks on the right. Wait while the player defends and chooses; or press <kbd>Roll the Clash</kbd> yourself if they are stuck.</li>
+      <li>It has 2 Beats: attack again, or after a hit, drag the prey down instead (open the target's row and press <kbd>Exposed</kbd>). Then <kbd>Done</kbd>.</li>
+    </ul>
+    <p>When every side has acted, press <kbd>Next round</kbd>.</p>
+  </div></li>
+  <li class="step" data-id="s1-spare"><input type="checkbox" aria-label="Done"><div>
+    <p><b>Set up Scene 2's test.</b> When a Snarljaw is badly hurt, describe it backing away, belly low, whining.</p>
+    <p class="say"><span class="lab">Say</span>The last one stops fighting. It backs toward the gap in the fence, one foreleg held up, eyes on you.</p>
+    <p class="if"><span class="lab">If</span>a character lets it go: press <kbd>Out</kbd> on its row (it fled; no kill). Remember who spared it. That character gets the Hidden quest in Scene 2.</p>
+  </div></li>
+  <li class="step" data-id="s1-end"><input type="checkbox" aria-label="Done"><div>
+    <p>Press <kbd>End the fight…</kbd>, then <kbd>End The fence line: three Snarljaws</kbd>.</p>
+    <p class="warn"><span class="lab">If it refuses</span>a character is Downed and dying. Someone must stabilize them (their <b>Stabilize…</b>), or run the rounds out. See Trouble, below.</p>
+  </div></li>
+  <li class="step" data-id="s1-settle"><input type="checkbox" aria-label="Done"><div>
+    <p>The aftermath panel shows each kill, who landed the finishing blow, and 10 VE each. Check it reads right and press <kbd>Settle The fence line: three Snarljaws</kbd>.</p>
+    <p class="sys"><span class="lab">System</span>Kill confirmed. Grade F, Moderate. Volatile Energy absorbed: 10.</p>
+    <p class="if"><span class="lab">If</span>one character killed all three, <b>Pack-Breaker</b> appears under <b>Titles due</b> on <span class="where">Party</span>. Press <kbd>Confer</kbd>.</p>
+  </div></li>
+  <li class="step" data-id="s1-q201"><input type="checkbox" aria-label="Done"><div>
+    <p><span class="where">Quests</span> On <b>[Q-201]</b>, press <kbd>+1</kbd> once per Snarljaw killed. Then <kbd>Complete…</kbd> and <kbd>Complete [Q-201]</kbd> (8 VE each; it completes even if one fled).</p>
+  </div></li>
+</ol>
+
+<!-- ================================================================ SCENE 2 -->
+<h2 id="s2"><span class="part">Scene 2</span>Past the fence</h2>
+<p class="when">About 25 minutes · Prep group "Scene 2: Past the fence"</p>
+<ol class="steps">
+  <li class="step" data-id="s2-fox"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Say</span>Past the fence, the yard is containers and weeds. A fox-thing is caught in a wire snare, one hind leg twisted, fur the color of rust. It snaps at you once, then goes still, panting, watching your hands.</p>
+    <p>Let them decide. This is the Hidden quest's second chance.</p>
+  </div></li>
+  <li class="step" data-id="s2-hidden"><input type="checkbox" aria-label="Done"><div>
+    <p><b>The first time a character spares something</b> (the Snarljaw, or this fox): <span class="where">Prep</span> <b>[Q-HID-01] Spare the Beaten</b> <kbd>Issue…</kbd>. In the Quests form, tick that one character under <b>Binds:</b> and press <kbd>Issue [Q-HID-01]</kbd>. Their log shows an entry they cannot read.</p>
+    <p><b>The second time the same character spares something</b>: <span class="where">Prep</span> <b>Pattern detected</b> <kbd>Send…</kbd> to that character, <kbd>Send the notice</kbd>.</p>
+    <p class="sys"><span class="lab">System</span>Pattern detected. Monitoring.</p>
+    <p>Leave the partial reveal to the listener; you will look for it at the rest. By hand: <span class="where">Quests</span> on Q-HID-01, type a suggestive name such as <b>Let It Go</b> and press <kbd>Partial reveal</kbd>.</p>
+  </div></li>
+  <li class="step" data-id="s2-locker"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Say</span>Against the back fence, a dented maintenance locker. The padlock is already snapped.</p>
+    <p><span class="where">Prep</span> On <b>The depot locker</b>, press <kbd>Give…</kbd>, keep <b>The spoils</b>, press <kbd>Put it in the spoils</kbd>.</p>
+    <p class="players"><span class="lab">Players</span>Under <b>Spoils</b> in their tray, pick who each item is for and press <b>Take one</b>. Let them argue it out.</p>
+  </div></li>
+</ol>
+
+<!-- ================================================================ REST 1 -->
+<h2 id="rest1"><span class="part">Part 1 · The first rest</span>Consolidation, 4 hours</h2>
+<p class="when">About 25 minutes · Everyone reaches Level 9</p>
+<ol class="steps">
+  <li class="step" data-id="r1-say"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Say</span>"You find a container with a door that closes. Four hours of rest. Take five at the table while I catch up."</p>
+  </div></li>
+  <li class="step" data-id="r1-drafts"><input type="checkbox" aria-label="Done"><div>
+    <p><b>Review the drafts now, not before.</b></p>
+    <ul>
+      <li><span class="where">Events</span> Under <b>To review</b>, open each draft: <kbd>Accept</kbd> what happened, <kbd>Dismiss</kbd> what did not. Note any that are wrong.</li>
+      <li><span class="where">Suggestions</span> Look for <b>Bring Them Home</b> (<kbd>Open in Quests to issue</kbd>, set Difficulty to <b>Severe</b> if it drafted lower, and issue it to the character Mara asked; they share it) and a partial reveal of Q-HID-01 (<kbd>Reveal it to …</kbd>). Accept or dismiss the rest.</li>
+    </ul>
+    <p class="if"><span class="lab">If</span>Q-202 is still not issued, issue it from Prep now, as in Scene 1.</p>
+  </div></li>
+  <li class="step" data-id="r1-rest"><input type="checkbox" aria-label="Done"><div>
+    <p><span class="where">Party</span> In the Record panel, open <b>Consolidation</b>. Leave all four ticked, goal <b>Process everything</b>, set <b>Hours</b> to <b>4</b> for each, keep the clock box ticked, and press <kbd>Record the rest and move the clock 4 h</kbd>.</p>
+    <p class="sys"><span class="lab">System</span>Level 9 attained.</p>
+  </div></li>
+  <li class="step" data-id="r1-points"><input type="checkbox" aria-label="Done"><div>
+    <p><span class="where">Party</span> Each sheet shows <b>Assigned points due: Level 9</b>. In the Record panel, open <b>Assigned points</b>. For each character: press <kbd>Use the proposal</kbd> if it offers one (it reads the HVE entries you accepted), otherwise click the row of the behavior table that fits how they played tonight. Press <kbd>Place Kara's Level 9 points</kbd>.</p>
+    <p class="players"><span class="lab">Players</span>Their 2 free points: <b>+</b> under the Attributes, then <b>Allocate</b>.</p>
+  </div></li>
+  <li class="step" data-id="r1-kara"><input type="checkbox" aria-label="Done"><div>
+    <p><b>Kara meditates on her Battle Memory</b> (the Alpha's jaws on her buckler).</p>
+    <p class="players"><span class="lab">Kara's player</span>Under <b>Principle</b>, presses <b>Meditate on this</b> on the card.</p>
+    <p class="say"><span class="lab">Say</span>"Close your eyes, Kara. The jaws, the buckler. What did you learn in that second?" Let the player answer in a sentence or two.</p>
+    <p><span class="where">Principles</span> On Kara's card, press <kbd>meditation</kbd> on the card's line. Leave <b>Family</b> as suggested unless her answer points elsewhere, pick <b>Insight</b> 1 to 3, type <b>What the player said</b>, press <kbd>Draft the vision</kbd>, edit it, and press <kbd>Record the meditation</kbd>.</p>
+  </div></li>
+  <li class="step" data-id="r1-joe"><input type="checkbox" aria-label="Done"><div>
+    <p class="if"><span class="lab">If</span>Joe protected someone tonight: <span class="where">Principles</span> Joe's card, <b>Award Insight</b>, Source <b>Consolidation vision</b>, Family <b>Preservation</b>, 1, <kbd>Award 1 Insight</kbd>. That reaches 3 and a naming form opens. Ask Joe's player what the Principle is, in one plain word, type it and press <kbd>Name it …</kbd>.</p>
+  </div></li>
+</ol>
+
+<h3 id="close1">Closing Part 1</h3>
+<p class="when">If you stop here for the night. Otherwise go straight to Part 2 and skip this.</p>
+<ol class="steps">
+  <li class="step" data-id="c1-sweep"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Say</span>"Before we go: what were the three biggest moments tonight?" Take their answers.</p>
+    <p><span class="where">HVE</span> Each character's sheet already holds the entries you accepted. Add any moment the table named that is missing (Side, Weight, <kbd>Add</kbd>), then press <kbd>Record the sweep</kbd>.</p>
+  </div></li>
+  <li class="step" data-id="c1-end"><input type="checkbox" aria-label="Done"><div>
+    <p>In the table bar, press <kbd>End the session</kbd>, then <kbd>Draft it from the record</kbd>, fix the summary, and press <kbd>End The depot gate</kbd>. Listening and the test recording stop with it.</p>
+  </div></li>
+</ol>
+
+<!-- ================================================================ PART 2 -->
+<h2 id="part2"><span class="part">Part 2 · Sitting two</span>Starting again</h2>
+<ol class="steps">
+  <li class="step" data-id="p2-start"><input type="checkbox" aria-label="Done"><div>
+    <p>Table bar: <kbd>Start a session</kbd>, name it <b>The lit building</b>, <kbd>Start The lit building</kbd>. Then <kbd>Start listening</kbd> and <kbd>Record for testing</kbd>. Consent carries over from last time.</p>
+    <p class="say"><span class="lab">Say</span>"Last time: you cleared the fence for Mara, found the depot locker, and rested to Level 9. Mara's grandson is still out there."</p>
+  </div></li>
+</ol>
+
+<!-- ================================================================ SCENE 3 -->
+<h2 id="s3"><span class="part">Scene 3</span>The lit building</h2>
+<p class="when">About 45 minutes · Prep group "Scene 3: The lit building"</p>
+<ol class="steps">
+  <li class="step" data-id="s3-lot"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Say</span>Across a cracked parking lot, one building has light: the municipal records annex, three floors, its lobby windows a flat yellow. Nothing else on the street has power.</p>
+    <p><span class="where">Prep</span> <b>Structure scan</b> <kbd>Send…</kbd>, tick only whoever steps into the lot first, <kbd>Send the notice</kbd>.</p>
+    <p class="sys"><span class="lab">System</span>Structure: municipal records annex. Power: partial. Occupancy: 3 human, 1 construct.</p>
+    <p class="if"><span class="lab">If</span>Andre reads the building's structure out loud (exits, load, where the construct can go): <span class="where">Principles</span> Andre's card, <b>Award Insight</b>, Source <b>Any other Principle-aligned experience</b>, <b>Architecture</b>, 2, <kbd>Award 2 Insight</kbd>. He reaches 10 and can distill at the next rest.</p>
+  </div></li>
+  <li class="step" data-id="s3-sentinel"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Say</span>The lobby doors are unlocked. Where the security desk was stands a figure of layered grey plating, taller than a man, a glaive held across its body. Its head turns toward the door as you come in.</p>
+    <p><span class="where">Prep</span> <b>The lobby: the Husk Sentinel</b> <kbd>Set up the fight</kbd>, check sides, <kbd>Start the fight</kbd>, <kbd>Roll Initial Momentum</kbd>.</p>
+    <p><b>Its trick:</b> when it wins a defense, it strikes back for free. On its row press <kbd>Free strike…</kbd> and attack the one who missed.</p>
+  </div></li>
+  <li class="step" data-id="s3-mara"><input type="checkbox" aria-label="Done"><div>
+    <p class="if"><span class="lab">If</span>Mara followed them in: <span class="where">Prep</span> on <b>Mara</b>, <kbd>Joins the fight…</kbd>, side <b>The party</b>, press <kbd>Mara joins The lobby</kbd>. You run her turns like a creature's.</p>
+  </div></li>
+  <li class="step" data-id="s3-talk"><input type="checkbox" aria-label="Done"><div>
+    <p><b>Below 40 HP, it listens.</b></p>
+    <p class="say"><span class="lab">Say</span>The glaive dips a hand's width. The plating along its chest shifts, the way a person breathes out.</p>
+    <p class="if"><span class="lab">If</span>they talk it down: press <kbd>Out</kbd> on its row. It opens the stairwell. It pays no kill VE, so the party is short for Level 10: run <b>The lot: the Alpha</b> from Prep on the way out (Hard, 20 each), exactly as this fight.</p>
+    <p>End and settle as in Scene 1: <kbd>End the fight…</kbd>, <kbd>End …</kbd>, <kbd>Settle …</kbd>.</p>
+  </div></li>
+  <li class="step" data-id="s3-cache"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Say</span>Behind the desk, a steel cabinet with its door hanging open. Inside: a fist-sized crystal humming faintly, a dense metal heart that is warm to the touch, and two thin grey tablets.</p>
+    <p><span class="where">Prep</span> <b>The lobby cache</b> <kbd>Give…</kbd>, <kbd>Put it in the spoils</kbd>. Players take them from their tray.</p>
+    <p class="if"><span class="lab">If</span>someone absorbs the <b>Pristine Core</b>: Record panel <b>Award VE</b>, Source <b>Core</b>, tick only them, 40, <kbd>Award 40 VE</kbd>. They press <b>Used one</b> on the core. Their stored VE passes 80: a <b>Mild Saturation</b> tag appears on your sheet only.</p>
+    <p class="if"><span class="lab">If</span>someone absorbs the <b>Sentinel Heart</b>: Record panel <b>Items</b>, <b>Attribute Treasure absorbed</b>, Size <b>Standard</b>, Grade <b>F</b>, the Attribute the player chose, and record it.</p>
+  </div></li>
+</ol>
+
+<!-- ================================================================ SCENE 4 -->
+<h2 id="s4"><span class="part">Scene 4</span>The three upstairs</h2>
+<p class="when">About 20 minutes</p>
+<ol class="steps">
+  <li class="step" data-id="s4-find"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Say</span>Second floor, a records office barricaded with filing cabinets. Three voices behind it go quiet when you knock. Then a young man's: "Gran sent you?"</p>
+    <p>Play <span class="w">Teo</span> (wants to go home now), <span class="w">Dana</span> (wants to stay and loot the records: property deeds, co-op ledgers, worth something to someone), and <span class="w">Fitch</span> (says little, sides with whoever is loudest).</p>
+    <p>Let the party choose. The cost is real either way: time in the annex, or Dana's resentment. That choice is what the sweep is for.</p>
+  </div></li>
+  <li class="step" data-id="s4-q202"><input type="checkbox" aria-label="Done"><div>
+    <p><span class="where">Quests</span> On <b>[Q-202] Bring Them Home</b>, press <kbd>Complete…</kbd>. Each holder shows 90 VE. Press <kbd>Complete [Q-202]</kbd>.</p>
+    <p class="warn"><span class="lab">Check</span>everyone holds it (it was shared). A character who does not hold it gets nothing, and misses Level 10.</p>
+  </div></li>
+  <li class="step" data-id="s4-voice"><input type="checkbox" aria-label="Done"><div>
+    <p><b>Try the composer.</b> <span class="where">Party</span> Record panel <b>System message</b>: tick everyone, type in your own words what the System should convey (for example: the annex's records are now logged to whoever carries them out), press <kbd>Draft it in the System's voice</kbd>, edit, then press the send button.</p>
+  </div></li>
+</ol>
+
+<!-- ================================================================ REST 2 -->
+<h2 id="rest2"><span class="part">The second rest</span>Consolidation, 6 hours, and the classes</h2>
+<p class="when">A 20-minute break for the players · everyone reaches Level 10</p>
+<ol class="steps">
+  <li class="step" data-id="r2-rest"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Say</span>"Six hours in the annex while Teo sleeps. Take a real break, twenty minutes. When you come back, the System will have something for you."</p>
+    <p>Record panel <b>Consolidation</b>: all four, <b>Process everything</b>, <b>Hours</b> 6, <kbd>Record the rest and move the clock 6 h</kbd>.</p>
+    <p class="sys"><span class="lab">System</span>Level 10 attained. Level 10. Classification available.</p>
+  </div></li>
+  <li class="step" data-id="r2-drafts"><input type="checkbox" aria-label="Done"><div>
+    <p><b>Drafts, quickly.</b> <span class="where">Events</span> and <span class="where">Suggestions</span>: accept or dismiss as before. Look for a Hidden Achievement or a title from the Dana choice.</p>
+  </div></li>
+  <li class="step" data-id="r2-classes"><input type="checkbox" aria-label="Done"><div>
+    <p><span class="where">Classes</span> Each character has a panel <b>… is due three class offers</b>. Start all four drafts first, then come back:</p>
+    <ul>
+      <li>Open <b>Draft the three offers from the record</b>, type one line under <b>What the player keeps doing that no rule asked for</b> (Kara: first through every door; Joe: goes back for people; Andre: maps before moving; Nia: triages under fire), press <kbd>Draft three offers</kbd>. Do the next character while it runs.</li>
+      <li>When a draft lands, press <kbd>Load them into the three offers</kbd>, read the three, fix any line that sounds wrong, and press <kbd>Offer Kara these three classes</kbd>.</li>
+    </ul>
+    <p class="if"><span class="lab">If</span>a draft is poor or slow: pick <b>Start from</b> a book class in each of the three editors instead. The list marks the ones that fit the character.</p>
+    <p class="players"><span class="lab">Players</span>Read the three cards under <b>Classification</b>, press <b>Accept…</b> on one, then confirm. Give them time; this is the biggest choice of the night.</p>
+  </div></li>
+  <li class="step" data-id="r2-andre"><input type="checkbox" aria-label="Done"><div>
+    <p class="if"><span class="lab">If</span>Andre shows <b>Distillation available</b>: <span class="where">Principles</span> Andre's card, <kbd>Distill</kbd>. Ask Andre's player what Measure Twice means to him now, type it, press <kbd>Draft two readings</kbd>, <kbd>Use this reading</kbd> on the better one, edit it with the player, and press <kbd>Distill to Seed</kbd>. Skip it if the table is tired; it keeps.</p>
+  </div></li>
+</ol>
+
+<!-- ================================================================ SCENE 5 -->
+<h2 id="s5"><span class="part">Scene 5</span>The terminal</h2>
+<p class="when">About 40 minutes · can move to another night</p>
+<ol class="steps">
+  <li class="step" data-id="s5-mandate"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Say</span>As you carry Teo down the stairs, every light in the annex flickers at once. From the basement, a sound like a dial tone bent out of shape.</p>
+    <p><span class="where">Prep</span> <b>[M-01] Fragment Containment: Records Annex</b> <kbd>Issue…</kbd>. Tick all four under <b>Binds:</b>, set <b>Limit (hours)</b> to 2, and press <kbd>Issue [M-01]</kbd>. Read the objective aloud.</p>
+  </div></li>
+  <li class="step" data-id="s5-room"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Say</span>The basement server room is cold. One terminal is still on, its screen scrolling characters that belong to no alphabet you know. The air in front of it bends, like heat over a road, but cold.</p>
+    <p><span class="where">Prep</span> <b>Fragment detected</b> <kbd>Send…</kbd> to everyone, <kbd>Send the notice</kbd>.</p>
+    <p class="sys"><span class="lab">System</span>Data fragment detected. Coherence: failing. Containment: none. It has noticed you.</p>
+  </div></li>
+  <li class="step" data-id="s5-fight"><input type="checkbox" aria-label="Done"><div>
+    <p><span class="where">Prep</span> <b>The terminal: the Fragment Wraith</b> <kbd>Set up the fight</kbd>, <kbd>Start the fight</kbd>, <kbd>Roll Initial Momentum</kbd>.</p>
+    <p><b>Tell the players what their classes do here:</b> the new technique and permission appear on their fight panel. Physical attacks with STR or DEX take −10 against it; attacks with PER take no penalty and hit harder (Andre's bow). Its Mind-Leach drains Aether; they defend with HRT.</p>
+  </div></li>
+  <li class="step" data-id="s5-after"><input type="checkbox" aria-label="Done"><div>
+    <p>End and settle. The finishing blow earns <b>Giant-Feller</b>: <span class="where">Party</span> <b>Titles due</b>, <kbd>Confer</kbd>.</p>
+    <p><span class="where">Quests</span> On <b>[M-01]</b>, <kbd>Complete…</kbd>, <kbd>Complete [M-01]</kbd>.</p>
+    <p class="say"><span class="lab">Say</span>The screen goes dark. Upstairs, one by one, the district's streetlights come on.</p>
+  </div></li>
+</ol>
+
+<!-- ================================================================ CLOSE -->
+<h2 id="close"><span class="part">The close</span>Wrapping up</h2>
+<p class="when">About 20 minutes; the players can go after the first step</p>
+<ol class="steps">
+  <li class="step" data-id="c-moments"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Say</span>"Last thing: the three biggest moments tonight?" Then thank them, and ask one question: "Was there anything on your screen you couldn't find?" Write the answers in your notes.</p>
+    <p>Table bar: <kbd>Stop listening</kbd>. The test recording stops with it.</p>
+  </div></li>
+  <li class="step" data-id="c-sweep"><input type="checkbox" aria-label="Done"><div>
+    <p><span class="where">HVE</span> Add the moments they named that are missing, and press <kbd>Record the sweep</kbd>.</p>
+    <p>Optional: under <b>Personal Opportunities</b>, pick a character, press <kbd>Draft an offer</kbd>, and look at it in Suggestions. Issue it next time or dismiss it.</p>
+  </div></li>
+  <li class="step" data-id="c-end"><input type="checkbox" aria-label="Done"><div>
+    <p>Table bar: <kbd>End the session</kbd>, <kbd>Draft it from the record</kbd>, fix it, <kbd>End The lit building</kbd>.</p>
+  </div></li>
+  <li class="step" data-id="c-memory"><input type="checkbox" aria-label="Done"><div>
+    <p><span class="where">Campaign log</span> In the <b>Sessions</b> panel, open <b>Write the campaign memory</b>, press <kbd>Draft the rewrite</kbd>, read it, and press <kbd>Save the memory</kbd>.</p>
+  </div></li>
+  <li class="step" data-id="c-rec"><input type="checkbox" aria-label="Done"><div>
+    <p><span class="where">Table</span> In <b>Test recordings</b>, download each person's track and the Timeline. The server deletes them after 7 days.</p>
+  </div></li>
+</ol>
+
+<!-- ================================================================ TROUBLE -->
+<h2 id="trouble"><span class="part">When it goes sideways</span>Trouble</h2>
+<div class="aside">
+  <dl>
+    <dt>You pressed the wrong thing</dt>
+    <dd><span class="where">Campaign log</span> Find the entry, press <kbd>Undo</kbd>, read the preview, confirm. In a fight, the tracker's own <kbd>Undo</kbd> takes back the last tracker action.</dd>
+    <dt>The fight will not end</dt>
+    <dd>A character is Downed and dying. An ally uses <b>Stabilize…</b> or a heal, or you press <kbd>Next round</kbd> until it resolves. On the Downed row, <b>Your ruling:</b> <kbd>Stabilized</kbd> settles it at once if the fiction supports it.</dd>
+    <dt>Nothing happens when a player presses</dt>
+    <dd>A Clash is waiting. Look at the right column: someone must defend or choose Take or Yield first. Press <kbd>Roll the Clash</kbd> or pick their choice yourself.</dd>
+    <dt>A player cannot find something</dt>
+    <dd><span class="where">Player view</span> Pick their name and you see exactly their screen. Tell them where it is; write it in your notes.</dd>
+    <dt>Listening stopped</dt>
+    <dd>The table bar says why: the session ended, someone withdrew, or a character arrived whose player has not consented. Fix that, then <kbd>Start listening</kbd>.</dd>
+    <dt>A draft is wrong</dt>
+    <dd><kbd>Dismiss</kbd> it and note it. Wrong drafts are the rehearsal's most useful output.</dd>
+    <dt>The AI is slow or down</dt>
+    <dd>Everything has a manual path: log an event by hand in <span class="where">Events</span>, write class offers from <b>Start from</b> a book class, write the summary yourself.</dd>
+    <dt>You are behind on time</dt>
+    <dd>Skip the composer, Andre's Distillation, the Personal Opportunity, and Scene 5. The level and the classes are the parts worth keeping.</dd>
+  </dl>
+</div>
+
+<div class="reset">
+  <button type="button" id="reset">Clear all ticks</button>
+  <button type="button" id="reset-yes" class="danger" hidden>Yes, clear them</button>
+  <button type="button" id="reset-no" hidden>Keep them</button>
+</div>
+</main>
+
+<script>
+(function () {
+  var KEY = "depot-fence-run-sheet";
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { state = {}; }
+  var steps = Array.prototype.slice.call(document.querySelectorAll(".step"));
+  var progress = document.getElementById("progress");
+  var meter = document.getElementById("meter");
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+  function tally() {
+    var done = steps.filter(function (s) { return s.classList.contains("done"); }).length;
+    progress.textContent = done + " of " + steps.length;
+    meter.style.width = (steps.length ? (done / steps.length) * 100 : 0) + "%";
+  }
+  steps.forEach(function (s) {
+    var id = s.getAttribute("data-id");
+    var box = s.querySelector("input");
+    box.id = "tick-" + id;
+    if (state[id]) { box.checked = true; s.classList.add("done"); }
+    box.addEventListener("change", function () {
+      s.classList.toggle("done", box.checked);
+      if (box.checked) state[id] = 1; else delete state[id];
+      save();
+      tally();
+    });
+  });
+  tally();
+  var reset = document.getElementById("reset"), yes = document.getElementById("reset-yes"), no = document.getElementById("reset-no");
+  reset.addEventListener("click", function () { reset.hidden = true; yes.hidden = false; no.hidden = false; });
+  no.addEventListener("click", function () { reset.hidden = false; yes.hidden = true; no.hidden = true; });
+  yes.addEventListener("click", function () {
+    state = {}; save();
+    steps.forEach(function (s) { s.classList.remove("done"); s.querySelector("input").checked = false; });
+    tally();
+    reset.hidden = false; yes.hidden = true; no.hidden = true;
+  });
+})();
+</script>

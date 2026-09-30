@@ -6,9 +6,9 @@ The party is four Initiates at Level 8 on Day 12, eleven days after Integration,
 
 ## Before the table sits down
 
-1. Create the campaign, enter the model key and the speech-to-text key, and set drafting to **on** in the Heard card.
+1. Create the campaign, enter the model key on the Table section's AI card, and check that drafting is **on** in the Heard card (Events). Speech-to-text runs on the server's own key.
 2. In Prep, load `rehearsal.yaml` from a file, then record its setup (119 actions, a few seconds).
-3. Invite the four players. In the Party section, give each a character.
+3. Invite the four players. In the Table section's Who plays whom, give each a character.
 4. Each player consents to listening, and to test recordings if they agree.
 5. Start the session with all four present, start listening, and start "Record for testing".
 
