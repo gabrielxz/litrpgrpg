@@ -8,7 +8,7 @@
 import type { Engine } from "@gradebreaker/engine";
 import { type Action, type InterfaceSheet, type PlayerView, pillLimit, shapes, stabilizeCheck } from "@gradebreaker/record";
 import { useState } from "react";
-import { Icon } from "../ui.tsx";
+import { Icon, Mark } from "../ui.tsx";
 import { newActionId, submit } from "../api.ts";
 import { permissionClash, reactionsOffered, techniqueOffer } from "../classes.ts";
 import { CareActions, type Mate, pillsOf } from "../Care.tsx";
@@ -318,7 +318,10 @@ export function Fight({ view, engine, combat, readOnly }: { view: PlayerView; en
                   <li key={c.id} className={`spread fight-row${c.acting ? " fight-row--acting" : c.acted ? " fight-row--done" : ""}`}>
                     <span>
                       {c.acting ? "▸ " : ""}
-                      {c.name}
+                      <span className={c.characterId ? undefined : "world"}>
+                        <Mark id={c.characterId} />
+                        {c.name}
+                      </span>
                       {c.exposed && (
                         <span className="tag tag--danger">
                           <Icon name="exposed" />

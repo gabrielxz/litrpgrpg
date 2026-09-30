@@ -908,7 +908,7 @@ h4.draft-kind .muted {
   gap: var(--sp-4);
   margin: calc(var(--sp-5) * -1) calc(var(--sp-5) * -1) 0;
   padding: var(--sp-5) var(--sp-5) var(--sp-3);
-  background: var(--ground);
+  background: var(--surface);
   box-shadow: 0 1px 0 var(--line);
 }
 .interface .background {

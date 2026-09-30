@@ -3,8 +3,8 @@
  * campaign log, the table (members, invite links, who plays whom), and any player's screen as
  * that player sees it.
  */
-import type { Envelope, GmView, PlayerView, Sheet, Stack } from "@gradebreaker/record";
-import { useEffect, useState } from "react";
+import { type Envelope, type GmView, type PlayerView, type Sheet, type Stack, marksOf } from "@gradebreaker/record";
+import { useEffect, useMemo, useState } from "react";
 import { api } from "../api.ts";
 import type { useCampaign } from "../live.ts";
 import { useEngine } from "../live.ts";
@@ -33,7 +33,7 @@ import { Log } from "./Log.tsx";
 import { RecordPanel } from "./Record.tsx";
 import { AskRules } from "../AskRules.tsx";
 import { ListeningBar } from "../Listening.tsx";
-import { Icon, Vital } from "../ui.tsx";
+import { Icon, Mark, Marks, Vital } from "../ui.tsx";
 import { useEcho } from "../moments.ts";
 
 function CharacterCard({ c, player, party, items }: { c: Sheet; player: string; party: string | null; items: Stack[] }) {
@@ -41,7 +41,10 @@ function CharacterCard({ c, player, party, items }: { c: Sheet; player: string; 
   return (
     <article className={`panel sheet${c.downed || c.dead ? " sheet--down" : ""}`}>
       <div className="panel__head">
-        <h2 className="sheet__name">{c.name}</h2>
+        <h2 className="sheet__name">
+          <Mark id={c.id} />
+          {c.name}
+        </h2>
         <span className="small dim">{player}</span>
         <span className="grow" />
         <span className="num small">
@@ -104,7 +107,7 @@ function CharacterCard({ c, player, party, items }: { c: Sheet; player: string; 
         )}
         {items.length > 0 && (
           <p className="small">
-            <span className="dim">Carries</span> {items.map(stackLine).join(", ")}
+            <span className="dim">Carries</span> <span className="world">{items.map(stackLine).join(", ")}</span>
           </p>
         )}
         {c.background && <p className="prose dim sheet__background">{c.background}</p>}
@@ -293,6 +296,7 @@ function RulesCard({ view }: { view: GmView }) {
 }
 
 export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<typeof useCampaign> }) {
+  const marks = useMemo(() => marksOf(view.characters.map((c) => c.id)), [view.characters]);
   const engine = useEngine(view.campaign.rulesVersion);
   const [section, setSection] = useSection();
   // A prepared fight or quest handed to Combat or Quests to fire there.
@@ -318,6 +322,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
     c.playerId ? (view.members.find((m) => m.userId === c.playerId)?.displayName ?? "a former player") : "GM";
 
   return (
+    <Marks.Provider value={marks}>
     <LogSeq.Provider value={view.seq}>
       <nav className="nav" aria-label="Sections">
         {GROUPS.map((g) => (
@@ -455,5 +460,6 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
       )}
       {section === "player" && <ViewAs view={view} />}
     </LogSeq.Provider>
+    </Marks.Provider>
   );
 }

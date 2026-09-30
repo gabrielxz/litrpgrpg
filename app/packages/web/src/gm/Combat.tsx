@@ -25,7 +25,7 @@ import {
   stabilizeCheck,
 } from "@gradebreaker/record";
 import { useState } from "react";
-import { Icon, Meter } from "../ui.tsx";
+import { Icon, Mark, Meter, useMarkRow } from "../ui.tsx";
 import { newActionId, submit } from "../api.ts";
 import { type Actor, CareActions, type Mate, pillsOf } from "../Care.tsx";
 import { AttackForm, type Clasher, DefenseForm, YieldChoice } from "../Clash.tsx";
@@ -544,6 +544,7 @@ function CombatantRow({
   const offTurn = !acting && !e.clash && e.round > 0 && !c.out && !c.downed;
   const reactionsNow = offTurn ? reactions : [];
   const down = Boolean(c.downed || c.dead);
+  const marked = useMarkRow(c.characterId);
   const hpControls = (
     <>
       <input type="number" className="input num track__delta" min={1} value={delta} onChange={(ev) => setDelta(ev.target.value)} placeholder="HP" aria-label={`HP for ${c.name}`} />
@@ -557,10 +558,13 @@ function CombatantRow({
   );
 
   return (
-    <li className={`track${acting ? " track--acting" : ""}${(c.acted || c.out) && !acting ? " track--done" : ""}${down ? " track--downed" : ""}`}>
+    <li className={`track${acting ? " track--acting" : ""}${(c.acted || c.out) && !acting ? " track--done" : ""}${down ? " track--downed" : ""}${marked.className}`} style={marked.style}>
       <span className="track__stripe" aria-hidden="true" />
       <div className="track__who">
-        <span className="track__name">{c.name}</span>
+        <span className={`track__name${c.characterId ? "" : " world"}`}>
+          <Mark id={c.characterId} />
+          {c.name}
+        </span>
         <span className="track__meta">
           {c.creature && c.creature !== c.name && `${c.creature} · `}Momentum {c.momentumForce}
           {c.zoneId && (
@@ -1207,8 +1211,14 @@ function ZonesBar({ e, run, busy }: { e: EncounterView; run: (a: Action) => Prom
             <div className="small dim">
               {e.combatants
                 .filter((c) => c.zoneId === z.id && !c.out)
-                .map((c) => c.name)
-                .join(", ") || "empty"}
+                .map((c, i) => (
+                  <span key={c.id} className={c.characterId ? undefined : "world"}>
+                    {i > 0 && ", "}
+                    <Mark id={c.characterId} />
+                    {c.name}
+                  </span>
+                ))}
+              {!e.combatants.some((c) => c.zoneId === z.id && !c.out) && "empty"}
             </div>
           </div>
         ))}

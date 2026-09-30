@@ -20,7 +20,7 @@ import { pillsOf } from "../Care.tsx";
 import { stackLine } from "../items.ts";
 import { type Playing, momentOf, useMoments } from "../moments.ts";
 import { ATTRIBUTES, ATTRIBUTE_NAMES, noticeLine } from "../text.ts";
-import { Clave, Icon, Meter, Vital } from "../ui.tsx";
+import { Clave, Icon, Mark, Marks, Meter, Vital } from "../ui.tsx";
 import { type CharacterSpec, Creator } from "./Creator.tsx";
 import { PrincipleSection } from "./Principle.tsx";
 import { ClassHeld, ClassOffers } from "./Class.tsx";
@@ -158,7 +158,10 @@ function PartySection({
           {c.party.members.map((m) => (
             <li key={m.id}>
               <span className="cluster">
-                {m.name}
+                <span>
+                  <Mark id={m.id} />
+                  {m.name}
+                </span>
                 {m.downed && (
                   <span className="tag tag--danger">
                     <Icon name="downed" />
@@ -266,7 +269,7 @@ function Carried({ campaignId, c, roster, readOnly, pills }: { campaignId: strin
       <ul>
         {c.items.map((s) => (
           <li key={s.name} className="sys-row sys-row--center">
-            <span className="sys-row__main">{stackLine(s)}</span>
+            <span className="sys-row__main world">{stackLine(s)}</span>
             {!readOnly && !c.dead && (
               <>
                 <select className="select select--sm" value={to[s.name] ?? "spoils"} onChange={(e) => setTo({ ...to, [s.name]: e.target.value })} aria-label={`Where ${s.name} goes`}>
@@ -547,7 +550,7 @@ function Spoils({ view, readOnly }: { view: PlayerView; readOnly?: boolean }) {
       <ul className="rows small">
         {view.spoils.map((s) => (
           <li key={s.name}>
-            <span className="row__main">{stackLine(s)}</span>
+            <span className="row__main world">{stackLine(s)}</span>
             {!readOnly && claimer && (
               <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "item.move", from: "spoils", to: claimer, name: s.name, count: 1 })}>
                 Take one
@@ -599,7 +602,10 @@ function Interface({
         <header className="sys-head">
           <Clave />
           <div>
-            <h1 className="sys-name">{c.name}</h1>
+            <h1 className="sys-name">
+              <Mark id={c.id} large />
+              {c.name}
+            </h1>
             <div className="sys-sub">
               <span>
                 Level{" "}
@@ -737,7 +743,12 @@ function NoticeItem({ n, old, names, rising }: { n: Line; old: boolean; names: M
     <li className={`notice${moment ? " notice--moment" : ""}${moment === "downed" ? " notice--downed" : ""}${old ? " notice--old" : ""}${rising ? " mo-rise" : ""}`}>
       <Clave />
       <span>
-        {names && <span className="notice__who">{names.get(n.characterId)}</span>}
+        {names && (
+          <span className="notice__who">
+            <Mark id={n.characterId} />
+            {names.get(n.characterId)}
+          </span>
+        )}
         <NoticeText text={n.text!} />
       </span>
     </li>
@@ -748,7 +759,7 @@ function Notices({ feed, names, rising }: { feed: FeedItem[]; names: Map<string,
   const lines: Line[] = feed.map((n) => ({ ...n, text: noticeLine(n.effect), moment: momentOf(n.effect) })).filter((n) => n.text);
   const earlier = lines.slice(SHOWN);
   return (
-    <section aria-label="The System's notices">
+    <section className="sys-panel" aria-label="The System's notices">
       <h2 className="sys-label notices__label">Notices</h2>
       {lines.length === 0 ? (
         <p className="voice dim">No new notices.</p>
@@ -872,6 +883,7 @@ export function PlayerCampaign({
   const playing = useMoments(view.feed);
   const rising = new Set([...playing.values()].map((p) => p.key));
   return (
+    <Marks.Provider value={view.marks ?? {}}>
     <main className="player-screen">
       <div className="interfaces">
         {view.characters.length === 0 ? (
@@ -922,5 +934,6 @@ export function PlayerCampaign({
         </div>
       </aside>
     </main>
+    </Marks.Provider>
   );
 }

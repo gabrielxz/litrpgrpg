@@ -295,6 +295,8 @@ export interface PlayerView {
   combat: PlayerCombat | null;
   /** What the party has not divided yet. */
   spoils: Stack[];
+  /** Each character this view names, by id: its mark (marksOf), so a character's color matches the GM's. */
+  marks: Record<string, number>;
 }
 
 export type View = GmView | PlayerView;

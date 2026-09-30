@@ -7,6 +7,7 @@ import type { Action, Proficiency, RollView } from "@gradebreaker/record";
 import { useState } from "react";
 import { newActionId, submit } from "./api.ts";
 import { ATTRIBUTES } from "./text.ts";
+import { Mark } from "./ui.tsx";
 
 export interface RollerOption {
   id: string;
@@ -259,7 +260,10 @@ export function RollList({ rolls, gm }: { rolls: RollView[]; gm?: boolean }) {
         return (
           <li key={r.id} className={r.private ? "private" : ""}>
             <div className="roll-head">
-              <strong>{r.roller}</strong>
+              <strong className={r.characterId || r.rollKind === "table" ? undefined : "world"}>
+                <Mark id={r.characterId} />
+                {r.roller}
+              </strong>
               {r.label && <span> · {r.label}</span>}
               <span className="muted small">
                 {" "}

@@ -28,6 +28,7 @@ import {
   momentumForceOf,
   coverers,
   noticesFor,
+  marksOf,
   worldOf,
 } from "@gradebreaker/record";
 import type {
@@ -432,15 +433,29 @@ export function viewFor(
   }
   const own = sheets.filter((s) => s.playerId === who.userId);
   const ownIds = new Set(own.map((s) => s.id));
+  const characters = own.map((s) => interfaceSheet(s, record));
+  const roster = sheets.filter((s) => s.playerId !== undefined && !ownIds.has(s.id) && !s.dead).map((s) => ({ id: s.id, name: s.name }));
+  const rolls = rollsFor(record, members, "player");
+  const combat = playerCombat(record, ownIds);
+  // Marks only for the characters this view already names, so the map reveals nobody new.
+  const order = marksOf(sheets.map((s) => s.id));
+  const named = new Set([
+    ...ownIds,
+    ...roster.map((r) => r.id),
+    ...characters.flatMap((c) => c.party?.members.map((m) => m.id) ?? []),
+    ...(combat?.combatants.flatMap((x) => (x.characterId ? [x.characterId] : [])) ?? []),
+    ...rolls.flatMap((r) => (r.characterId ? [r.characterId] : [])),
+  ]);
   return {
     role: "player",
     campaign,
     members,
-    characters: own.map((s) => interfaceSheet(s, record)),
-    roster: sheets.filter((s) => s.playerId !== undefined && !ownIds.has(s.id) && !s.dead).map((s) => ({ id: s.id, name: s.name })),
+    characters,
+    roster,
     feed: feedFor(record, ownIds),
-    rolls: rollsFor(record, members, "player"),
-    combat: playerCombat(record, ownIds),
+    rolls,
+    combat,
     spoils: (record.state.inventory.get(SPOILS) ?? []).map((x) => ({ ...x })),
+    marks: Object.fromEntries([...named].filter((id) => order[id] !== undefined).map((id) => [id, order[id]!])),
   };
 }

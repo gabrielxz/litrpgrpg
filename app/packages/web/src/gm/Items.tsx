@@ -226,7 +226,7 @@ export function SpoilsCard({ view, onRecorded }: { view: GmView; onRecorded: (en
       <ul className="rows panel__rows">
         {spoils.map((s) => (
           <li key={s.name}>
-            <span className="row__main">{stackLine(s)}</span>
+            <span className="row__main world">{stackLine(s)}</span>
             {living.length > 0 && (
               <>
                 <select className="select select--sm" value={to[s.name] ?? living[0]!.id} onChange={(e) => setTo({ ...to, [s.name]: e.target.value })} aria-label={`Who gets ${s.name}`}>

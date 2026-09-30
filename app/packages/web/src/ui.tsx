@@ -1,5 +1,5 @@
 /** The design system's small repeated pieces (gb.css): meters, a vital row, icons, the clave. */
-import type { CSSProperties, ReactNode } from "react";
+import { type CSSProperties, type ReactNode, createContext, useContext } from "react";
 
 export type MeterKind = "health" | "aether" | "ve" | "level" | "danger";
 
@@ -57,4 +57,28 @@ export function Icon({ name }: { name: string }) {
 
 export function Clave({ style }: { style?: CSSProperties }) {
   return <i className="clave" aria-hidden="true" style={style} />;
+}
+
+/**
+ * Each character's mark by id (marksOf in the record): the GM's screen gives every sheet's, a
+ * player's view the ones it names. A mark is one of four colors, solid for the first four
+ * characters and hollow for the next four (gb.css, "character marks").
+ */
+export const Marks = createContext<Record<string, number>>({});
+
+const markStyle = (n: number) => ({ "--id": `var(--id-${(n % 4) + 1})` }) as CSSProperties;
+const hollow = (n: number) => n % 8 >= 4;
+
+/** The mark beside a character's name; nothing for a creature, an NPC, or anyone unmarked. */
+export function Mark({ id, large }: { id: string | undefined; large?: boolean }) {
+  const n = useContext(Marks)[id ?? ""];
+  if (n === undefined) return null;
+  return <i className={`idm${hollow(n) ? " idm--hollow" : ""}${large ? " idm--lg" : ""}`} style={markStyle(n)} aria-hidden="true" />;
+}
+
+/** A tracker row's classes and color for its character: the stripe takes the mark's color. */
+export function useMarkRow(id: string | undefined): { className: string; style?: CSSProperties } {
+  const n = useContext(Marks)[id ?? ""];
+  if (n === undefined) return { className: "" };
+  return { className: ` track--pc${hollow(n) ? " track--pc-hollow" : ""}`, style: markStyle(n) };
 }

@@ -16,8 +16,10 @@
  * screen wherever the GM previews what a player will get.
  *
  * Color carries meaning. Cyan is the System. Gold is the world beyond the party (places,
- * NPCs, factions, lore). Nothing else uses either. Status colors always travel with a word
- * or an icon. The cut corner marks a button; tabs and links take an underline; fields are
+ * NPCs, creatures, factions, items, lore). Each character has a mark of their own (--id-1 to
+ * --id-4, in the order the campaign's characters were made; the fifth to eighth repeat the
+ * four as hollow marks). Nothing else uses any of these. Status colors always travel with a
+ * word or an icon. The cut corner marks a button; tabs and links take an underline; fields are
  * sunken wells with a baseline. Cyan never marks something as operable.
  *
  * Fonts (all OFL, embeddable): Alegreya Sans (interface, and the System's italics),
@@ -40,21 +42,23 @@
   --slate-700: #525553;
   --ink-900: #131b20;
   /* blue-black: the System's ground (the clave's ink is --night-700) */
-  --night-950: #0b1115;
-  --night-900: #111a20;
-  --night-800: #16222b;
-  --night-700: #1d2b35;
-  --night-600: #26363f;
-  --night-500: #3a4f5a;
+  --night-950: #070b0e;
+  --night-900: #0a1015;
+  --night-800: #142029;
+  --night-700: #1b2a34;
+  --night-600: #243540;
+  --night-500: #3a515d;
   /* graphite: the console's dark theme, warmer and less blue than the System */
-  --carbon-950: #111416;
-  --carbon-900: #16191b;
-  --carbon-850: #1c2023;
-  --carbon-800: #23282b;
-  --carbon-700: #30363a;
-  --carbon-600: #454c50;
+  --carbon-950: #090b0c;
+  --carbon-900: #0e1012;
+  --carbon-850: #1c2125;
+  --carbon-800: #283036;
+  --carbon-700: #2f373d;
+  --carbon-600: #4a535a;
   /* on-dark text */
+  --chalk-50: #faf4e8;
   --chalk-100: #ede6d8;
+  --chalk-200: #e2dbcd;
   --chalk-300: #a8a294;
   --chalk-500: #7c786e;
   /* cyan: the System */
@@ -72,6 +76,15 @@
   --ember-600: #9a4715;
   --moss-300: #a9c48a;
   --moss-600: #4f6b35;
+  /* character marks: four hues clear of red, orange, gold, and cyan */
+  --rose-300: #dc93b4;
+  --rose-600: #b24f7e;
+  --green-300: #95bd8a;
+  --green-600: #4f7a43;
+  --blue-300: #8ea8e3;
+  --blue-600: #4561a8;
+  --violet-300: #b79be3;
+  --violet-600: #7353b0;
 
   /* type */
   --font-ui: "Alegreya Sans", "Gill Sans", "Segoe UI", system-ui, sans-serif;
@@ -138,12 +151,17 @@
   --line: var(--bone-300);
   --line-strong: var(--bone-400);
   --text: var(--ink-900);
+  --text-strong: #0a0f12;
   --text-dim: var(--slate-700);
   --text-faint: var(--slate-600); /* placeholders; still 4.5:1 on --surface */
   --system: var(--cyan-700); /* System text on this ground */
   --system-geo: var(--cyan-500); /* System lines, never text */
   --system-wash: rgba(46, 180, 198, 0.1);
   --world: var(--gold-600);
+  --id-1: var(--rose-600);
+  --id-2: var(--green-600);
+  --id-3: var(--blue-600);
+  --id-4: var(--violet-600);
   --danger: var(--red-600);
   --warn: var(--ember-600);
   --ok: var(--moss-600);
@@ -170,13 +188,18 @@
   --sunken: var(--carbon-950);
   --line: var(--carbon-700);
   --line-strong: var(--carbon-600);
-  --text: var(--chalk-100);
-  --text-dim: var(--chalk-300);
+  --text: var(--chalk-200);
+  --text-strong: var(--chalk-50);
+  --text-dim: #9f998c;
   --text-faint: #8f8a7f;
   --system: #7fd9e3;
   --system-geo: var(--cyan-500);
   --system-wash: rgba(46, 180, 198, 0.12);
   --world: var(--gold-300);
+  --id-1: var(--rose-300);
+  --id-2: var(--green-300);
+  --id-3: var(--blue-300);
+  --id-4: var(--violet-300);
   --danger: var(--red-300);
   --warn: var(--ember-300);
   --ok: var(--moss-300);
@@ -188,7 +211,7 @@
   --focus: var(--chalk-100);
   --focus-inner: var(--carbon-900);
   --meter-track: var(--carbon-950);
-  --health: var(--chalk-300);
+  --health: var(--chalk-50);
   --aether: #7fd9e3;
   --ve: var(--ember-300);
   --shadow-1: 0 1px 0 rgba(0, 0, 0, 0.3);
@@ -203,13 +226,18 @@
     --sunken: var(--carbon-950);
     --line: var(--carbon-700);
     --line-strong: var(--carbon-600);
-    --text: var(--chalk-100);
-    --text-dim: var(--chalk-300);
+    --text: var(--chalk-200);
+    --text-strong: var(--chalk-50);
+    --text-dim: #9f998c;
     --text-faint: #8f8a7f;
     --system: #7fd9e3;
     --system-geo: var(--cyan-500);
     --system-wash: rgba(46, 180, 198, 0.12);
     --world: var(--gold-300);
+    --id-1: var(--rose-300);
+    --id-2: var(--green-300);
+    --id-3: var(--blue-300);
+    --id-4: var(--violet-300);
     --danger: var(--red-300);
     --warn: var(--ember-300);
     --ok: var(--moss-300);
@@ -221,7 +249,7 @@
     --focus: var(--chalk-100);
     --focus-inner: var(--carbon-900);
     --meter-track: var(--carbon-950);
-    --health: var(--chalk-300);
+    --health: var(--chalk-50);
     --aether: #7fd9e3;
     --ve: var(--ember-300);
     --shadow-1: 0 1px 0 rgba(0, 0, 0, 0.3);
@@ -237,13 +265,18 @@
   --sunken: var(--night-950);
   --line: var(--night-600);
   --line-strong: var(--night-500);
-  --text: var(--chalk-100);
-  --text-dim: var(--chalk-300);
+  --text: #ddd6c8;
+  --text-strong: var(--chalk-50);
+  --text-dim: #98928a;
   --text-faint: #8e8a80;
   --system: var(--cyan-300);
   --system-geo: var(--cyan-500);
   --system-wash: rgba(143, 230, 239, 0.08);
   --world: var(--gold-300);
+  --id-1: var(--rose-300);
+  --id-2: var(--green-300);
+  --id-3: var(--blue-300);
+  --id-4: var(--violet-300);
   --danger: var(--red-300);
   --warn: var(--ember-300);
   --ok: var(--moss-300);
@@ -255,28 +288,29 @@
   --focus: var(--chalk-100);
   --focus-inner: var(--night-900);
   --meter-track: var(--night-950);
-  --health: var(--chalk-100);
+  --health: var(--chalk-50);
   --aether: var(--cyan-300);
   --ve: var(--cyan-300);
   --shadow-1: none;
   --shadow-2: 0 18px 40px -16px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--night-600);
-  --frame: rgba(237, 230, 216, 0.22);
+  --frame: rgba(237, 230, 216, 0.28);
 }
-/* The player's table tray: out of the fiction, so it borrows the console's dark theme */
+/* The player's table tray: out of the fiction, a lighter graphite plane beside the System's */
 .tray {
-  --ground: var(--carbon-900);
-  --surface: var(--carbon-850);
-  --surface-2: var(--carbon-800);
-  --sunken: var(--carbon-950);
-  --line: var(--carbon-700);
-  --line-strong: var(--carbon-600);
-  --text: var(--chalk-100);
-  --text-dim: var(--chalk-300);
+  --ground: #1f2428;
+  --surface: #262c31;
+  --surface-2: #2f363b;
+  --sunken: #16191c;
+  --line: #394146;
+  --line-strong: #525c62;
+  --text: #ece5d6;
+  --text-strong: var(--chalk-50);
+  --text-dim: #aba497;
   --system: #7fd9e3;
   --btn-fill: var(--chalk-100);
   --btn-text: var(--carbon-900);
   --focus-inner: var(--carbon-900);
-  --meter-track: var(--carbon-950);
+  --meter-track: #16191c;
 }
 
 /* ------------------------------------------------------------------ base */
@@ -315,6 +349,7 @@
   font-size: var(--fs-2xl);
   font-weight: 700;
   line-height: var(--lh-tight);
+  color: var(--text-strong);
 }
 :where(.gb) h2 {
   font-size: var(--fs-xl);
@@ -648,11 +683,13 @@
   align-items: center;
   gap: var(--sp-3);
   padding: var(--sp-3) var(--sp-4);
+  background: var(--surface-2);
   border-bottom: var(--hair) solid var(--line);
 }
 .panel__head h2,
 .panel__head h3 {
   font-size: var(--fs-md);
+  color: var(--text-strong);
 }
 .panel__body {
   padding: var(--sp-4);
@@ -752,7 +789,7 @@
  * the glance. Ticks every 10 on the level meter. */
 .meter {
   position: relative;
-  height: 0.5rem;
+  height: 0.625rem;
   background: var(--meter-track);
   overflow: hidden;
 }
@@ -778,7 +815,7 @@
   --m-fill: var(--system);
 }
 .meter--thin {
-  height: 0.3rem;
+  height: 0.375rem;
 }
 .meter--danger {
   --m-fill: var(--danger);
@@ -796,9 +833,12 @@
   font-variant-numeric: tabular-nums;
   font-size: var(--fs-sm);
 }
+.vital > span:first-child {
+  color: var(--text-dim);
+}
 .vital__value b {
   font-weight: 600;
-  color: var(--text);
+  color: var(--text-strong);
 }
 /* Beats as pips: filled squares left, open squares spent */
 .pips {
@@ -841,9 +881,9 @@
   color: var(--text-dim);
 }
 .stat__raw {
-  font: 500 1.75rem / 1.05 var(--font-mono);
+  font: 500 2rem / 1.05 var(--font-mono);
   font-variant-numeric: tabular-nums;
-  color: var(--text);
+  color: var(--text-strong);
 }
 .stat__force {
   font: 400 var(--fs-xs) / 1.3 var(--font-mono);
@@ -911,6 +951,7 @@
 .tracker {
   display: flex;
   flex-direction: column;
+  gap: 4px;
 }
 .track {
   display: grid;
@@ -919,7 +960,6 @@
   column-gap: var(--sp-4);
   padding: var(--sp-3) var(--sp-4) var(--sp-3) 0;
   background: var(--surface);
-  border-bottom: var(--hair) solid var(--line);
 }
 .track__stripe {
   align-self: stretch;
@@ -949,8 +989,11 @@
   min-width: 0;
 }
 .track__name {
+  display: inline-flex;
+  align-items: center;
   font-weight: 700;
   font-size: 1rem;
+  color: var(--text-strong);
 }
 .track__meta {
   font-size: var(--fs-sm);
@@ -1349,7 +1392,7 @@
 .tablebar__big {
   font: 600 var(--fs-md) / 1 var(--font-mono);
   font-variant-numeric: tabular-nums;
-  color: var(--text);
+  color: var(--text-strong);
 }
 .listen-dot {
   width: 0.55rem;
@@ -1403,7 +1446,8 @@
 
 /* ------------------------------------------------------------------ the player's interface */
 .interface {
-  --iframe-bg: var(--ground);
+  --iframe-bg: var(--surface);
+  box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.8);
   padding: var(--sp-5) var(--sp-5) var(--sp-6);
   display: flex;
   flex-direction: column;
@@ -1421,8 +1465,11 @@
   color: var(--system);
 }
 .sys-name {
+  display: flex;
+  align-items: center;
   font: 600 var(--fs-3xl) / 1 var(--font-display);
   letter-spacing: 0.01em;
+  color: var(--text-strong);
 }
 .sys-sub {
   display: flex;
@@ -1473,8 +1520,8 @@
   display: flex;
   align-items: center;
   gap: var(--sp-2);
-  font: 500 var(--fs-2xs) / 1 var(--font-mono);
-  letter-spacing: 0.16em;
+  font: 500 0.75rem / 1 var(--font-mono);
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--system);
 }
@@ -1490,7 +1537,7 @@
   content: "";
   flex: 1 1 auto;
   height: 1px;
-  background: linear-gradient(90deg, var(--line) 0 100%);
+  background: var(--line-strong);
 }
 .sys-label .tail {
   order: 2;
@@ -1571,6 +1618,49 @@
   content: "";
   flex: 1 1 auto;
   border-top: var(--hair) dashed var(--line-strong);
+}
+
+/* A System panel outside the interface: the notices column */
+.sys-panel {
+  padding: var(--sp-1) var(--sp-4) var(--sp-3);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+/* ------------------------------------------------------------------ character marks
+ * A small diamond in the character's color beside their name wherever it appears: the
+ * tracker, the party frame, zones, rolls, sheets, notices. Set --id on the mark, or on a
+ * tracker row, to one of var(--id-1) ... var(--id-4). */
+.idm {
+  display: inline-block;
+  flex: none;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-right: 0.4rem;
+  background: var(--id);
+  transform: rotate(45deg) translateY(-1px);
+}
+.idm--hollow {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--id);
+}
+.idm--lg {
+  width: 0.8rem;
+  height: 0.8rem;
+  margin-right: 0.65rem;
+}
+.track--pc .track__stripe {
+  background: var(--id);
+}
+.track--pc-hollow .track__stripe {
+  background: repeating-linear-gradient(180deg, var(--id) 0 6px, transparent 6px 10px);
+}
+.track--pc.track--acting {
+  box-shadow: inset 0 0 0 1px var(--id), inset 4px 0 0 var(--id);
+}
+/* The world's gold holds inside a row or a name that sets its own text color */
+.gb .world {
+  color: var(--world);
 }
 
 /* ------------------------------------------------------------------ illustration slot */

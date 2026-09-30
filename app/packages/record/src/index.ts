@@ -13,7 +13,7 @@ export {
   worldOf,
 } from "./fold.ts";
 export { noticesFor } from "./notices.ts";
-export { type Change, type Sheet, type SheetDiff, diffSheets, sheetOf } from "./sheet.ts";
+export { type Change, type Sheet, type SheetDiff, diffSheets, marksOf, sheetOf } from "./sheet.ts";
 export { type Appended, CampaignRecord, IdConflict, type Preview, RecordError } from "./record.ts";
 export { type RestGoal, type RestPlan, type SizedCreature, type Sizing, hoursForGoal, killAwards, partyLevelOf, sizeEncounter } from "./planning.ts";
 export { actionSchema, type Submission, submissionSchema } from "./schema.ts";

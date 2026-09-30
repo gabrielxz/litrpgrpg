@@ -158,6 +158,15 @@ function flatten(value: unknown, prefix: string, out: Map<string, unknown>) {
 const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
 
 /** Every field that differs, per character. Characters with no difference are left out. */
+/**
+ * Each character's mark: its place in the order the campaign's characters were made. The screens
+ * draw it in one of four colors, solid for the first four and hollow for the next four, the same
+ * on the GM's screen and every player's.
+ */
+export function marksOf(ids: readonly string[]): Record<string, number> {
+  return Object.fromEntries(ids.map((id, i) => [id, i]));
+}
+
 export function diffSheets(before: Map<string, Sheet>, after: Map<string, Sheet>): SheetDiff[] {
   const out: SheetDiff[] = [];
   for (const id of new Set([...before.keys(), ...after.keys()])) {
