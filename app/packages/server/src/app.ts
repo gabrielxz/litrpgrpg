@@ -47,6 +47,8 @@ const consentBody = z.object({ give: z.boolean() });
 const recordBody = z.object({ on: z.boolean() });
 const listeningBody = z.object({ mode: z.enum(["off", "listening", "paused"]) });
 const acceptDraft = submissionSchema.pick({ id: true, action: true });
+const draftDistillationBody = z.object({ characterId: z.string().min(1).max(100), family: z.string().min(1).max(40), words: z.string().max(2000).optional(), refine: z.boolean().optional() });
+
 const createInvite = z.object({
   maxUses: z.number().int().positive().optional(),
   expiresInHours: z.number().positive().optional(),
@@ -357,6 +359,10 @@ export function createApp(service: Service, opts: AppOptions = {}) {
   });
   app.post("/campaigns/:id/sessions/:session/summary-draft", async (c) => {
     return c.json({ draft: await drafts().sessionSummary(c.req.param("id"), c.get("user"), c.req.param("session")) });
+  });
+  app.post("/campaigns/:id/distillation-draft", async (c) => {
+    const b = await body(c, draftDistillationBody);
+    return c.json({ draft: await drafts().distillation(c.req.param("id"), c.get("user"), b) });
   });
   app.post("/campaigns/:id/sessions/:session/memory-draft", async (c) => {
     return c.json({ draft: await drafts().memory(c.req.param("id"), c.get("user"), c.req.param("session")) });

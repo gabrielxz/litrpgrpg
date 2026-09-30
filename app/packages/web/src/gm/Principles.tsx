@@ -8,7 +8,7 @@
 import type { Engine } from "@gradebreaker/engine";
 import { type Envelope, type GmView, type Sheet, families, ipSources, weights } from "@gradebreaker/record";
 import { useState } from "react";
-import { type VisionDraft, draftVision } from "../api.ts";
+import { type DistillationReading, type VisionDraft, draftDistillation, draftVision } from "../api.ts";
 import type { Names } from "../text.ts";
 import { TableWords } from "./TableWords.tsx";
 import { Commit } from "./Commit.tsx";
@@ -279,6 +279,33 @@ function DistillForm({ view, engine, names, onRecorded, c, x, refine }: Props & 
   const [attune, setAttune] = useState("");
   const [rename, setRename] = useState("");
   const tier = refine ? x.tier : x.next?.tier;
+  const ai = useAiConfigured(view.campaign.id);
+  const [words, setWords] = useState("");
+  const [drafted, setDrafted] = useState<{ readings: DistillationReading[]; attunements?: string } | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const draft = async () => {
+    setBusy(true);
+    setError(null);
+    try {
+      setDrafted((await draftDistillation(view.campaign.id, { characterId: c.id, family: x.family, ...(words.trim() ? { words: words.trim() } : {}), ...(refine ? { refine: true } : {}) })).draft);
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  };
+  /** A reading into the form: the articulation, its second phrasing on the Quiet Path, and its grant. */
+  const take = (r: DistillationReading) => {
+    setA1(r.articulation);
+    setA2(r.phrasing);
+    if (refine) setRename(r.name);
+    else {
+      setGrant(r.name);
+      setText(r.effect);
+      if (drafted?.attunements) setAttune(drafted.attunements);
+    }
+  };
   const articulations = [a1, ...(quiet ? [a2] : [])].map((s) => s.trim()).filter(Boolean);
   const test = (engine.rules.principles.distillation_test as string[]).join(", ");
   const problem = !articulations.length ? "State the articulation." : refine && !rename.trim() ? "Name the new identity." : null;
@@ -287,6 +314,47 @@ function DistillForm({ view, engine, names, onRecorded, c, x, refine }: Props & 
       <p className="small">
         {refine ? `Reshaping at ${x.tier}: same slot, same Insight, a shifted identity.` : `Distillation to ${tier}.`} The articulation must be {test}.
       </p>
+      {ai && (
+        <div className="panel">
+          <label>
+            What the player has said (optional)
+            <input className="wide" value={words} maxLength={2000} onChange={(e) => setWords(e.target.value)} placeholder="I hit stuff, and I stand in front of people?" />
+          </label>
+          <div className="row">
+            <button disabled={busy} onClick={draft}>
+              {busy ? "Drafting…" : drafted ? "Draft again" : "Draft two readings"}
+            </button>
+            <span className="muted small">From the circled moments, the meditations, and the player's words.</span>
+          </div>
+          {error && <p className="error">{error}</p>}
+          {drafted && (
+            <ol className="small">
+              {drafted.readings.map((r, i) => (
+                <li key={i}>
+                  <strong>{r.articulation}</strong> <span className="muted">Or: {r.phrasing}</span>
+                  <br />
+                  {refine ? "New identity" : "Grant"}: {r.name}. {r.effect}
+                  <br />
+                  <span className="muted">
+                    Does: {r.test.operational}. Stops: {r.test.bounded}. Seen: {r.test.testable}.
+                  </span>
+                  {r.flags.map((f) => (
+                    <p key={f} className="warning small">
+                      {f}
+                    </p>
+                  ))}
+                  <div>
+                    <button className="link" onClick={() => take(r)}>
+                      Use this reading
+                    </button>
+                  </div>
+                </li>
+              ))}
+              {drafted.attunements && <li className="muted">Attunements: {drafted.attunements}</li>}
+            </ol>
+          )}
+        </div>
+      )}
       <label className="check">
         <input type="checkbox" checked={quiet} onChange={(e) => setQuiet(e.target.checked)} /> The Quiet Path: offer it for the player to confirm
       </label>

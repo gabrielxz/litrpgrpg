@@ -175,6 +175,16 @@ export interface VisionDraft {
 
 export const draftMessage = (campaignId: string, to: string[], gist: string) => api<{ draft: MessageDraft }>("POST", `/campaigns/${campaignId}/voice/message`, { to, gist });
 
+export interface DistillationReading {
+  articulation: string;
+  phrasing: string;
+  test: { operational: string; bounded: string; testable: string };
+  name: string;
+  effect: string;
+  flags: string[];
+}
+export const draftDistillation = (campaignId: string, b: { characterId: string; family: string; words?: string; refine?: boolean }) =>
+  api<{ draft: { family: string; tier: string; readings: DistillationReading[]; attunements?: string } }>("POST", `/campaigns/${campaignId}/distillation-draft`, b);
 export const draftMemory = (campaignId: string, sessionId: string) =>
   api<{ draft: { campaign: string; chronicles: { characterId: string; text: string }[] } }>("POST", `/campaigns/${campaignId}/sessions/${sessionId}/memory-draft`, {});
 export const draftSessionSummary = (campaignId: string, sessionId: string) =>

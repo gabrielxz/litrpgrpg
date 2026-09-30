@@ -4,6 +4,7 @@ export * from "./draft-events.ts";
 export * from "./draft-actions.ts";
 export * from "./draft-suggestions.ts";
 export * from "./memory.ts";
+export * from "./draft-distillation.ts";
 export * from "./draft-opportunity.ts";
 export * from "./offers.ts";
 export * from "./harness.ts";

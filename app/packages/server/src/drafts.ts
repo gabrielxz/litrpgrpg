@@ -26,6 +26,9 @@ import {
   DRAFT_OPPORTUNITY_FEATURE,
   DRAFT_SESSION_SUMMARY_FEATURE,
   DRAFT_MEMORY_FEATURE,
+  DRAFT_DISTILLATION_FEATURE,
+  type DistillationDraft,
+  draftDistillation,
   type MemoryDraft,
   draftMemory,
   DRAFT_SUGGESTIONS_FEATURE,
@@ -520,6 +523,24 @@ export class Drafts {
     if (!record.state.sessions.has(sessionId)) throw new HttpError(404, "no such session");
     try {
       return await draftMemory((req) => this.ai.draft(campaignId, DRAFT_MEMORY_FEATURE, req), record, sessionId);
+    } catch (err) {
+      throw problemOf(err);
+    }
+  }
+
+  /** Two readings for a Distillation or a Reshaping, with their grants. Returned to the GM's form, never stored here. */
+  async distillation(campaignId: string, user: User | null, b: { characterId: string; family: string; words?: string; refine?: boolean }): Promise<DistillationDraft> {
+    await this.service.requireGm(campaignId, user);
+    await this.requireKey(campaignId);
+    const record = await this.service.record(campaignId);
+    const x = record.sheets().get(b.characterId)?.principles.principles.find((p) => p.family === b.family);
+    if (!x) throw new HttpError(404, "no such Principle");
+    if (!b.refine && !x.distillable) throw new HttpError(422, `${x.name} is not ready to Distill`);
+    try {
+      return await draftDistillation(record.engine, (req) => this.ai.draft(campaignId, DRAFT_DISTILLATION_FEATURE, req), record, b.characterId, b.family, {
+        ...(b.words ? { words: b.words } : {}),
+        ...(b.refine ? { refine: true } : {}),
+      });
     } catch (err) {
       throw problemOf(err);
     }
