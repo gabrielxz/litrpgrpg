@@ -88,7 +88,11 @@ function QuestCard({ view, engine, names, run, item, drafts, onRecorded, onFire 
         </span>
       </h4>
       {run && <Cited view={view} run={run} item={item} names={names} />}
-      {item.why && <p className="muted small">Drafted because: {item.why}</p>}
+      {item.why && (
+        <p className="why">
+          <b>Drafted because:</b> {item.why}
+        </p>
+      )}
       {item.undone && <p className="small warning">Issued, and the offer was undone in the log. Issue it again or dismiss it.</p>}
       <pre className="quest-entry">
         {`[${q.id}] ${q.title}
@@ -148,7 +152,11 @@ function RevealCard({ view, names, run, item, drafts, onRecorded }: Pick<Props, 
         <span className="muted">: [{q?.code ?? drafted.questId}] {q?.title ?? ""}</span>
       </h4>
       <Cited view={view} run={run} item={item} names={names} />
-      {item.why && <p className="muted small">Drafted because: {item.why}</p>}
+      {item.why && (
+        <p className="why">
+          <b>Drafted because:</b> {item.why}
+        </p>
+      )}
       {q && <p className="small">Objective, still hidden from {who}: {q.objective}</p>}
       <label>
         The name the log shows
@@ -167,10 +175,12 @@ function RevealCard({ view, names, run, item, drafts, onRecorded }: Pick<Props, 
           return out.appended;
         }}
         onRecorded={onRecorded}
+        actions={
+          <button className="btn" onClick={() => drafts.mark(item, "dismiss")}>
+            Dismiss
+          </button>
+        }
       />
-      <div className="form-row">
-        <button onClick={() => drafts.mark(item, "dismiss")}>Dismiss</button>
-      </div>
     </li>
   );
 }
@@ -211,7 +221,11 @@ function SuggestionCard({ view, engine, names, run, item, drafts, onRecorded }: 
         {s.kind === "title" && <span className="muted">: {s.key}</span>}
       </h4>
       <Cited view={view} run={run} item={item} names={names} />
-      {item.why && <p className="muted small">Drafted because: {item.why}</p>}
+      {item.why && (
+        <p className="why">
+          <b>Drafted because:</b> {item.why}
+        </p>
+      )}
       {item.undone && <p className="small warning">Accepted, and its grant was undone in the log. Accept it again or dismiss it.</p>}
       {catalog && <p className="small">{bonusLine(catalog.bonus ?? {}, catalog.choice)}{catalog.effect ? `; ${catalog.effect}` : ""}</p>}
       {s.kind === "battle-memory" && (
@@ -275,10 +289,12 @@ function SuggestionCard({ view, engine, names, run, item, drafts, onRecorded }: 
           return out.appended;
         }}
         onRecorded={onRecorded}
+        actions={
+          <button className="btn" onClick={() => drafts.mark(item, "dismiss")}>
+            Dismiss
+          </button>
+        }
       />
-      <div className="form-row">
-        <button onClick={() => drafts.mark(item, "dismiss")}>Dismiss</button>
-      </div>
     </li>
   );
 }
@@ -299,8 +315,11 @@ export function SuggestionsSection({ view, engine, names, onRecorded, drafts, on
   return (
     <main className="gm-split">
       <div>
-        <section className="card">
-          <h2>From the table talk</h2>
+        <section className="stack suggestions">
+          <h1 className="cluster">
+            <i className="ic ic-suggestion dim" aria-hidden="true" />
+            From the table talk
+          </h1>
           {waiting.length === 0 ? (
             <p className="muted">
               Nothing waiting. Drafting from table talk (the <a href="#events">Events</a> section) raises the titles the fiction earns, Battle Memory Cards,
@@ -322,8 +341,10 @@ export function SuggestionsSection({ view, engine, names, onRecorded, drafts, on
                       <p className="small">
                         Drafted in the <a href="#classes">Classes</a> section, where they load into the three offers to edit and record.
                       </p>
-                      <div className="form-row">
-                        <button onClick={() => drafts.mark(item, "dismiss")}>Dismiss</button>
+                      <div className="draft__decide">
+                        <button className="btn" onClick={() => drafts.mark(item, "dismiss")}>
+                          Dismiss
+                        </button>
                       </div>
                     </li>
                   );
@@ -336,7 +357,7 @@ export function SuggestionsSection({ view, engine, names, onRecorded, drafts, on
           )}
           {drafts.error && <p className="error">{drafts.error}</p>}
           {accepted.length > 0 && (
-            <details className="disclosure">
+            <details className="panel folded">
               <summary>Accepted ({accepted.length})</summary>
               <ul className="small">
                 {accepted.map(({ item }) => (
@@ -346,7 +367,7 @@ export function SuggestionsSection({ view, engine, names, onRecorded, drafts, on
             </details>
           )}
           {dismissed.length > 0 && (
-            <details className="disclosure">
+            <details className="panel folded">
               <summary>Dismissed ({dismissed.length})</summary>
               <ul className="small">
                 {dismissed.map(({ item }) => (
@@ -363,15 +384,19 @@ export function SuggestionsSection({ view, engine, names, onRecorded, drafts, on
         </section>
       </div>
       <aside className="side">
-        <section className="card">
-          <h2>Due from the record</h2>
-          {!due && !pointers.length && <p className="muted">Nothing is due.</p>}
+        <section className="panel">
+          <div className="panel__head">
+            <h2>Due from the record</h2>
+          </div>
+          {!due && !pointers.length && <p className="dim panel__body">Nothing is due.</p>}
           {pointers.length > 0 && (
-            <ul className="items">
+            <ul className="rows panel__rows">
               {pointers.map((x) => (
                 <li key={x.line}>
-                  <span>{x.line}</span>
-                  <a href={`#${x.section}`}>{x.label}</a>
+                  <span className="row__main">{x.line}</span>
+                  <a className="small" href={`#${x.section}`}>
+                    {x.label}
+                  </a>
                 </li>
               ))}
             </ul>

@@ -62,7 +62,11 @@ export function Cited({ view, run, item, names }: { view: GmView; run: DraftRun;
         const as = l.as ? (characterIds.has(l.as) ? names(l.as) : l.as) : null;
         return (
           <li key={id}>
-            <span className="muted">{speakers.get(l.speaker) ?? "?"}{as ? ` as ${as}` : ""}:</span> {l.text}
+            <span className="who">
+              {speakers.get(l.speaker) ?? "?"}
+              {as ? ` as ${as}` : ""}
+            </span>
+            <span>{l.text}</span>
           </li>
         );
       })}
@@ -116,11 +120,13 @@ function DraftCard({
           return out.appended;
         }}
         onRecorded={onRecorded}
+        actions={
+          <button className="btn" onClick={dismiss}>
+            Dismiss
+          </button>
+        }
       />
-      <div className="form-row">
-        <button onClick={dismiss}>Dismiss</button>
-        {error && <span className="error small">{error}</span>}
-      </div>
+      {error && <p className="error small">{error}</p>}
     </li>
   );
 }

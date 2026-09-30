@@ -281,13 +281,13 @@ details.disclosure[open] > summary {
 .card > :first-child {
   margin-top: 0;
 }
-:where(.card, .page, .tracker, .clash-panel, .side, .quest-card, .class-editor, .stat-block, .prep-item, .sweep-sheet) :is(h2, h3, h4):not([class]) {
+:where(.card, .page, .tracker, .clash-panel, .quest-card, .class-editor, .stat-block, .prep-item, .sweep-sheet) :is(h2, h3, h4):not([class]) {
   margin: 0 0 var(--sp-2);
 }
 :where(.card, .page, .tracker) h2:not([class]) {
   font-size: var(--fs-lg);
 }
-:where(.card, .page, .tracker, .clash-panel, .side, .quest-card, .class-editor, .stat-block, .prep-item, .sweep-sheet, .subform) :is(p, ul, ol, table, .form, .form-row, details):not(:last-child) {
+:where(.card, .page, .tracker, .clash-panel, .quest-card, .class-editor, .stat-block, .prep-item, .sweep-sheet, .subform) :is(p, ul, ol, table, .form, .form-row, details):not(:last-child) {
   margin-bottom: var(--sp-2);
 }
 :where(.card) ul:not([class]),
@@ -303,7 +303,7 @@ details.disclosure[open] > summary {
 
 .gm-split {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(24rem, 34rem);
+  grid-template-columns: minmax(0, 1fr) minmax(22rem, 28rem);
   gap: var(--sp-5);
   padding: var(--sp-5) var(--sp-6);
   align-items: start;
@@ -777,19 +777,15 @@ tr.current-row td {
   gap: var(--sp-4);
   margin-bottom: var(--sp-4);
 }
+/* A screen's side column: its panels stacked */
 .side {
-  background: var(--surface);
-  border: var(--hair) solid var(--line);
-  padding: var(--sp-3) var(--sp-4);
-}
-.side.taking {
-  box-shadow: inset 3px 0 0 var(--text);
-  border-color: var(--line-strong);
-}
-.side h3 {
   display: flex;
-  gap: var(--sp-2);
-  align-items: center;
+  flex-direction: column;
+  gap: var(--sp-4);
+  min-width: 0;
+}
+.side > .card {
+  margin: 0;
 }
 .combatants {
   display: flex;
@@ -1009,9 +1005,27 @@ fieldset.participants > legend {
   margin: var(--sp-1) 0;
 }
 ul.events li.event {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
   border-bottom: var(--hair) solid var(--line);
-  padding: var(--sp-2) 0;
+  padding: var(--sp-3) 0;
   font-size: var(--fs-md);
+}
+ul.events li.event strong {
+  font-weight: 600;
+}
+ul.events li.event > .small {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+}
+ul.events ul.moments {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
 }
 
 /* ------------------------------------------------------------------ Principles, classes, Prep */
@@ -1097,42 +1111,70 @@ ul.events li.event {
 .readings p {
   margin: var(--sp-1) 0 0;
 }
-ul.drafts li.draft {
-  background: none;
+/* A draft: the design's card. Its parts sit inside the card's margins; the record, the
+   player's preview, and the decide row run to its edges. */
+ul.drafts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  margin: var(--sp-3) 0;
+}
+li.draft {
+  gap: var(--sp-3);
+  padding-top: var(--sp-3);
+}
+li.draft > :not(.commit) {
+  margin-left: var(--sp-4);
+  margin-right: var(--sp-4);
+}
+li.draft > :last-child:not(.commit) {
+  margin-bottom: var(--sp-3);
+}
+li.draft > .commit {
+  margin-top: 0;
   border: 0;
-  box-shadow: none;
   border-top: var(--hair) solid var(--line);
-  padding: var(--sp-3) 0;
-  display: block;
+}
+li.draft > .commit > .record {
+  border-top: 0;
 }
 h4.draft-kind {
   font: 500 var(--fs-2xs) / 1.4 var(--font-mono);
   letter-spacing: var(--track-label);
   text-transform: uppercase;
   color: var(--text-dim);
-  margin: 0 0 var(--sp-2);
+  margin: 0;
 }
 h4.draft-kind .muted {
-  font-weight: normal;
+  font: 700 1rem / 1.3 var(--font-ui);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--text);
 }
-ul.cited {
-  margin: 0 0 var(--sp-2);
+.why {
+  margin: 0;
 }
-.cited li {
-  display: block;
-}
-
 /* ------------------------------------------------------------------ what the listening heard */
 
 .heard-lines {
-  margin: 0 0 var(--sp-2);
+  margin: 0 0 var(--sp-3);
   max-height: 16rem;
   overflow-y: auto;
-  font-size: var(--fs-sm);
+  font-size: var(--fs-md);
 }
 .heard-lines li {
-  padding: var(--sp-1) 0;
-  border-bottom: var(--hair) solid var(--line);
+  display: grid;
+  grid-template-columns: 5.5rem 7rem 1fr;
+  gap: var(--sp-2);
+  padding: 0.3rem 0;
+  align-items: baseline;
+}
+.heard-lines li > .small {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+.heard-lines li > strong {
+  font-weight: 500;
 }
 .heard-lines li.used {
   color: var(--text-dim);
@@ -1792,4 +1834,53 @@ details.typed > summary {
 .btn--primary[aria-expanded="true"],
 .btn--primary[aria-pressed="true"] {
   --b-fg: var(--text);
+}
+
+/* A folded list in a panel: Accepted, Dismissed */
+details.folded {
+  padding: var(--sp-3) var(--sp-4);
+}
+details.folded[open] > summary {
+  margin-bottom: var(--sp-3);
+}
+details.folded ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+.suggestions {
+  --gap: var(--sp-4);
+}
+li.draft > .draft__decide {
+  margin: 0;
+}
+
+/* ------------------------------------------------------------------ Quests (the GM's) */
+
+.quest-card.panel {
+  padding: 0;
+}
+.quest-card .quest {
+  background: transparent;
+}
+.quest-card.offered {
+  box-shadow: inset 0 2px 0 var(--system-geo), var(--shadow-1);
+}
+.quest-card__body {
+  --gap: 0.6rem;
+  padding: 0 var(--sp-4) 0.9rem;
+}
+.quest-card__body p {
+  margin: 0;
+}
+.quest-card__complete {
+  --gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4) var(--sp-4);
+  border-top: var(--hair) dashed var(--line-strong);
+}
+.quest-card__complete > .commit {
+  margin: 0 calc(var(--sp-4) * -1) calc(var(--sp-4) * -1);
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 0;
 }

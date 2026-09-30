@@ -5,11 +5,11 @@
  * a player away from their screen. Personal Opportunity refusals show by flavor.
  */
 import type { Engine } from "@gradebreaker/engine";
-import { type Action, type Envelope, type GmView, QUEST_CATEGORIES, type Quest, type QuestCategory, type QuestSpec, clockLine, nextQuestCode, prepCause, questTableVe } from "@gradebreaker/record";
+import { type Action, type Effect, type Envelope, type GmView, QUEST_CATEGORIES, questForHolder, type Quest, type QuestCategory, type QuestSpec, clockLine, nextQuestCode, prepCause, questTableVe } from "@gradebreaker/record";
 import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
 import { catalogNames } from "../items.ts";
-import { type Names, duration } from "../text.ts";
+import { type Names, duration, noticeLine } from "../text.ts";
 import { TableWords } from "./TableWords.tsx";
 import { type Firing, savedTo } from "./Prep.tsx";
 import { Commit } from "./Commit.tsx";
@@ -327,23 +327,72 @@ function QuestCard({ q, view, engine, names, onRecorded }: { q: Quest; view: GmV
     const grade = view.characters.find((c) => c.id === h)?.grade ?? q.grade;
     return engine.gradeOrder(grade) > engine.gradeOrder(q.grade) ? 0 : (q.ve ?? 0);
   };
-  const complete = () =>
-    run({
-      type: "quest.complete",
-      questId: q.id,
-      awards: holders.map((h) => ({ characterId: h, ve: Math.max(0, int(awards[h] ?? "") ?? stated(h)) })),
-      ...(q.items?.length ? { itemsTo } : {}),
-    }).then((ok) => ok && setCompleting(false));
+  const completeAction: Action = {
+    type: "quest.complete",
+    questId: q.id,
+    awards: holders.map((h) => ({ characterId: h, ve: Math.max(0, int(awards[h] ?? "") ?? stated(h)) })),
+    ...(q.items?.length ? { itemsTo } : {}),
+  };
+  // A button that reaches the players says what they will read (Decisions, "the makeover": the
+  // GM's press is the tap, so the notice shows beside it rather than behind a second step).
+  const receives = (kind: Effect["kind"], to: string[] = q.holders, extra: Record<string, unknown> = {}) => {
+    const shown = questForHolder(q);
+    if (!shown || !to.length) return undefined;
+    const text = noticeLine({ kind, characterId: to[0]!, questId: shown.id, line: `[${shown.code}] ${shown.title}`, ...extra } as Effect);
+    return text ? `${to.map(names).join(", ")} ${to.length > 1 ? "each receive" : "receives"}: ${text}` : undefined;
+  };
   return (
-    <article className={`quest-card ${q.status}`}>
-      <pre className="quest-entry">
-        {`[${q.code}] ${q.title}${q.hidden ? `   (hidden: ${q.hidden}${q.hiddenName ? `, "${q.hiddenName}"` : ""})` : ""}
-Issuer:     ${q.issuer}${q.category === "Faction" ? "" : ` · ${q.category}`}
-Grade:      ${q.grade} · Difficulty: ${q.difficulty}
-Objective:  ${q.objective}${q.count ? ` (${q.count.done}/${q.count.of})` : ""}
-Reward:     ${reward || "none"}${q.time ? `\nTime:       ${q.time}` : ""}${q.due !== undefined ? `\nDue:        ${clockLine(q.due)}${open && view.clock ? (view.clock.at >= q.due ? " · time limit reached" : ` · ${duration(q.due - view.clock.at)} left`) : ""}` : ""}
-Status:     ${q.status[0]!.toUpperCase() + q.status.slice(1)}${q.flavor ? ` · ${q.flavor}` : ""}`}
-      </pre>
+    <article className={`panel quest-card ${q.status}`} aria-label={`[${q.code}] ${q.title}`}>
+      <dl className="quest">
+        <div className="quest__id">
+          <span className="num">[{q.code}]</span>
+          <b>{q.title}</b>
+          {q.hidden && (
+            <span className="tag">
+              <i className="ic ic-hidden" aria-hidden="true" />
+              hidden: {q.hidden}
+              {q.hiddenName ? `, "${q.hiddenName}"` : ""}
+            </span>
+          )}
+        </div>
+        <dt>Issuer</dt>
+        <dd>
+          <span className={q.issuer === "System" ? undefined : "world"}>{q.issuer}</span>
+          {q.category === "Faction" ? "" : ` · ${q.category}`}
+        </dd>
+        <dt>Grade</dt>
+        <dd>
+          {q.grade} · Difficulty: {q.difficulty}
+        </dd>
+        <dt>Objective</dt>
+        <dd>
+          {q.objective}
+          {q.count && <span className="num"> ({q.count.done}/{q.count.of})</span>}
+        </dd>
+        <dt>Reward</dt>
+        <dd>{reward || "none"}</dd>
+        {q.time && (
+          <>
+            <dt>Time</dt>
+            <dd>{q.time}</dd>
+          </>
+        )}
+        {q.due !== undefined && (
+          <>
+            <dt>Due</dt>
+            <dd className="num">
+              {clockLine(q.due)}
+              {open && view.clock ? (view.clock.at >= q.due ? " · time limit reached" : ` · ${duration(q.due - view.clock.at)} left`) : ""}
+            </dd>
+          </>
+        )}
+        <dt>Status</dt>
+        <dd>
+          {q.status[0]!.toUpperCase() + q.status.slice(1)}
+          {q.flavor ? ` · ${q.flavor}` : ""}
+        </dd>
+      </dl>
+      <div className="quest-card__body stack">
       {q.note && <p className="small muted">GM note: {q.note}</p>}
       <p className="small">
         {q.status === "offered" ? "Offered to" : "Held by"} {q.holders.map(names).join(", ") || "nobody"}
@@ -354,30 +403,30 @@ Status:     ${q.status[0]!.toUpperCase() + q.status.slice(1)}${q.flavor ? ` · $
         <div className="form-row tight">
           {q.status === "offered" && (
             <>
-              <button disabled={busy} onClick={() => run({ type: "quest.answer", questId: q.id, characterId: q.holders[0]!, accept: true })} title="For a player away from their screen">
+              <button disabled={busy} onClick={() => run({ type: "quest.answer", questId: q.id, characterId: q.holders[0]!, accept: true })} title={`For a player away from their screen. ${receives("quest-accepted", [q.holders[0]!]) ?? ""}`}>
                 Accept for {names(q.holders[0]!)}
               </button>
-              <button disabled={busy} onClick={() => run({ type: "quest.answer", questId: q.id, characterId: q.holders[0]!, accept: false })}>
+              <button disabled={busy} onClick={() => run({ type: "quest.answer", questId: q.id, characterId: q.holders[0]!, accept: false })} title={receives("quest-refused", [q.holders[0]!])}>
                 Refuse for {names(q.holders[0]!)}
               </button>
             </>
           )}
           {q.status === "active" && q.count && (
             <>
-              <button disabled={busy} onClick={() => run({ type: "quest.progress", questId: q.id, by: -1 })}>
+              <button disabled={busy} onClick={() => run({ type: "quest.progress", questId: q.id, by: -1 })} title={receives("quest-progress", q.holders, { done: q.count.done - 1, of: q.count.of })}>
                 −1
               </button>
-              <button disabled={busy} onClick={() => run({ type: "quest.progress", questId: q.id, by: 1 })}>
+              <button disabled={busy} onClick={() => run({ type: "quest.progress", questId: q.id, by: 1 })} title={receives("quest-progress", q.holders, { done: q.count.done + 1, of: q.count.of })}>
                 +1
               </button>
             </>
           )}
           {q.status === "active" && (
             <>
-              <button className="primary" disabled={busy} onClick={() => setCompleting(!completing)}>
+              <button className="primary" disabled={busy} aria-expanded={completing} onClick={() => setCompleting(!completing)}>
                 Complete…
               </button>
-              <button disabled={busy} onClick={() => run({ type: "quest.fail", questId: q.id })}>
+              <button disabled={busy} onClick={() => run({ type: "quest.fail", questId: q.id })} title={receives("quest-failed")}>
                 Failed
               </button>
             </>
@@ -396,8 +445,9 @@ Status:     ${q.status[0]!.toUpperCase() + q.status.slice(1)}${q.flavor ? ` · $
           )}
         </div>
       )}
+      </div>
       {completing && (
-        <div className="subform">
+        <div className="quest-card__complete stack">
           <p className="small">
             Every holder who meaningfully took part collects the stated award; a holder above the quest's Grade collects nothing.{q.scaled ? " Proportional: exceptional performance pays up to half again, poor performance half." : ""}
           </p>
@@ -441,9 +491,16 @@ Status:     ${q.status[0]!.toUpperCase() + q.status.slice(1)}${q.flavor ? ` · $
               </select>
             </label>
           ) : null}
-          <button className="primary" disabled={busy} onClick={complete}>
-            Complete [{q.code}]
-          </button>
+          <Commit
+            campaignId={view.campaign.id}
+            action={completeAction}
+            names={names}
+            label={`Complete [${q.code}]`}
+            onRecorded={(env) => {
+              setCompleting(false);
+              onRecorded(env);
+            }}
+          />
         </div>
       )}
       {error && <p className="error">{error}</p>}

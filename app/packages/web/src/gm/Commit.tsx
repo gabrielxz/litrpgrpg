@@ -27,6 +27,8 @@ export interface CommitProps {
   cause?: string;
   /** Records through another route than the log's (accepting a draft); the preview is the same. */
   submitWith?: (id: string, action: Action) => Promise<Appended>;
+  /** Other buttons for the decide row, after the record button (a draft's Dismiss). */
+  actions?: React.ReactNode;
 }
 
 /** "Kara", "Kara and Joe", "Kara, Joe, and Andre". */
@@ -123,7 +125,7 @@ export function PreviewView({ pv, names }: { pv: Preview; names: Names }) {
   );
 }
 
-export function Commit({ campaignId, action, problem, names, label, onRecorded, cause, submitWith }: CommitProps) {
+export function Commit({ campaignId, action, problem, names, label, onRecorded, cause, submitWith, actions }: CommitProps) {
   const [id, setId] = useState(newActionId);
   const [pv, setPv] = useState<Preview | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -173,6 +175,7 @@ export function Commit({ campaignId, action, problem, names, label, onRecorded, 
           <Icon name="confirm" />
           {label}
         </button>
+        {actions}
       </div>
     </div>
   );

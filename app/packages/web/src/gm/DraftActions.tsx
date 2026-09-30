@@ -263,7 +263,11 @@ export function ActionDraftCard({
       </h4>
       {cited}
       {item.undone && <p className="small warning">Accepted, and it was undone in the log. Accept it again or dismiss it.</p>}
-      {item.why && <p className="muted small">Drafted because: {item.why}</p>}
+      {item.why && (
+        <p className="why">
+          <b>Drafted because:</b> {item.why}
+        </p>
+      )}
       <ActionFields view={view} engine={engine} names={names} action={action} onChange={setAction} />
       <Commit
         campaignId={view.campaign.id}
@@ -277,10 +281,12 @@ export function ActionDraftCard({
           return out.appended;
         }}
         {...(onRecorded ? { onRecorded } : {})}
+        actions={
+          <button className="btn" onClick={onDismiss}>
+            Dismiss
+          </button>
+        }
       />
-      <div className="form-row">
-        <button onClick={onDismiss}>Dismiss</button>
-      </div>
     </li>
   );
 }
@@ -295,7 +301,11 @@ export function CueCard({ view, item, cited, onDismiss }: { view: GmView; item: 
         {item.fired && <span className="tag">fired</span>}
       </h4>
       {cited}
-      {item.why && <p className="muted small">Drafted because: {item.why}</p>}
+      {item.why && (
+        <p className="why">
+          <b>Drafted because:</b> {item.why}
+        </p>
+      )}
       {prep?.note && <p className="small">Its cue: {prep.note}</p>}
       {!prep && <p className="small warning">That prepared item is no longer in Prep.</p>}
       <div className="form-row">
