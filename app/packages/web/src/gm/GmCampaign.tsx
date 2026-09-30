@@ -119,44 +119,59 @@ function Holders({ view, names, onRecorded }: { view: GmView; names: (id: string
   const players = view.members.filter((m) => m.role === "player");
   const who = (id: string | undefined) => (id ? (players.find((m) => m.userId === id)?.displayName ?? "a former player") : "the GM");
   if (!view.characters.length) return null;
+  const pending = view.characters.filter((c) => (choice[c.id] ?? c.playerId ?? "") !== (c.playerId ?? ""));
   return (
-    <section className="card">
-      <h2>Who plays whom</h2>
-      <table className="rows">
-        <tbody>
-          {view.characters.map((c) => {
-            const current = c.playerId ?? "";
-            const picked = choice[c.id] ?? current;
-            return (
-              <tr key={c.id}>
-                <td>{c.name}</td>
-                <td>
-                  <select value={picked} onChange={(e) => setChoice({ ...choice, [c.id]: e.target.value })}>
-                    <option value="">The GM</option>
-                    {players.map((m) => (
-                      <option key={m.userId} value={m.userId}>
-                        {m.displayName}
-                      </option>
-                    ))}
-                  </select>
-                  {picked !== current && (
-                    <Commit
-                      campaignId={view.campaign.id}
-                      action={{ type: "character.assign", characterId: c.id, ...(picked ? { playerId: picked } : {}) }}
-                      names={names}
-                      label={`Hand ${c.name} to ${who(picked || undefined)}`}
-                      onRecorded={(env) => {
-                        setChoice({ ...choice, [c.id]: picked });
-                        onRecorded(env);
-                      }}
-                    />
-                  )}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+    <section className="panel holders" aria-labelledby="holders-h">
+      <div className="panel__head">
+        <h2 id="holders-h">Who plays whom</h2>
+      </div>
+      <div className="panel__body">
+        <table className="table holders__table">
+          <thead>
+            <tr>
+              <th>Character</th>
+              <th>Played by</th>
+            </tr>
+          </thead>
+          <tbody>
+            {view.characters.map((c) => {
+              const current = c.playerId ?? "";
+              const picked = choice[c.id] ?? current;
+              return (
+                <tr key={c.id}>
+                  <td>{c.name}</td>
+                  <td>
+                    <select className="select" aria-label={`Who plays ${c.name}`} value={picked} onChange={(e) => setChoice({ ...choice, [c.id]: e.target.value })}>
+                      <option value="">The GM</option>
+                      {players.map((m) => (
+                        <option key={m.userId} value={m.userId}>
+                          {m.displayName}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      {pending.map((c) => {
+        const picked = choice[c.id] ?? c.playerId ?? "";
+        return (
+          <Commit
+            key={c.id}
+            campaignId={view.campaign.id}
+            action={{ type: "character.assign", characterId: c.id, ...(picked ? { playerId: picked } : {}) }}
+            names={names}
+            label={`Hand ${c.name} to ${who(picked || undefined)}`}
+            onRecorded={(env) => {
+              setChoice({ ...choice, [c.id]: picked });
+              onRecorded(env);
+            }}
+          />
+        );
+      })}
     </section>
   );
 }
@@ -260,12 +275,19 @@ function useSection(): [Section, (s: Section) => void] {
 /** The rules the campaign runs on: always the current ones until the first printed edition (app/DESIGN.md, "Rules editions"). */
 function RulesCard({ view }: { view: GmView }) {
   return (
-    <section className="card">
-      <h2>Rules</h2>
-      <p>
-        This campaign runs on rules {view.campaign.rulesVersion}. It follows each new version as it lands; an action a new version no longer
-        applies shows in the campaign log's rejected list.
-      </p>
+    <section className="panel" aria-labelledby="rules-h">
+      <div className="panel__head">
+        <i className="ic ic-rules dim" aria-hidden="true" />
+        <h2 id="rules-h">Rules</h2>
+        <span className="grow" />
+        <span className="tag">{view.campaign.rulesVersion}</span>
+      </div>
+      <div className="panel__body">
+        <p>
+          This campaign runs on rules <span className="num">{view.campaign.rulesVersion}</span>. It follows each new version as it lands; an
+          action a new version no longer applies shows in the campaign log's rejected list.
+        </p>
+      </div>
     </section>
   );
 }
@@ -408,23 +430,27 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
       )}
       {section === "hve" && <HveSection view={view} engine={engine} names={names} onRecorded={live.addToLog} drafts={drafts} />}
       {section === "log" && (
-        <main className="page">
-          <SessionsCard view={view} names={names} onRecorded={live.addToLog} />
+        <main className="screen screen--side log-screen">
           <Log view={view} log={live.log} names={names} onRecorded={live.addToLog} />
+          <SessionsCard view={view} names={names} onRecorded={live.addToLog} />
         </main>
       )}
       {section === "table" && (
-        <main className="page narrow">
-          <Table view={view} />
-          <RulesCard view={view} />
-          <AiCard view={view} />
-          <RecordingsCard view={view} />
-          <Holders view={view} names={names} onRecorded={live.addToLog} />
+        <main className="screen table-screen">
+          <div className="stack table-screen__col">
+            <Table view={view} />
+            <Holders view={view} names={names} onRecorded={live.addToLog} />
+          </div>
+          <div className="stack table-screen__col">
+            <AiCard view={view} />
+            <RulesCard view={view} />
+            <RecordingsCard view={view} />
+          </div>
         </main>
       )}
       {section === "rules" && (
-        <main className="page narrow">
-          <AskRules campaignId={view.campaign.id} gm className="card" />
+        <main className="screen rules-screen">
+          <AskRules campaignId={view.campaign.id} gm />
         </main>
       )}
       {section === "player" && <ViewAs view={view} />}

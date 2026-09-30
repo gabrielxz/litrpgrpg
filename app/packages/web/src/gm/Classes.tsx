@@ -6,6 +6,7 @@
  * Classes held are listed with their once-a-day permission against dawn on the clock. With the
  * campaign's key, the model drafts the three from the same record and they load into the writer.
  */
+import "../css/principles-classes.css";
 import type { Engine } from "@gradebreaker/engine";
 import {
   type ClassPackage,
@@ -23,7 +24,7 @@ import {
   packageWarnings,
   weights,
 } from "@gradebreaker/record";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { type DraftItem, acceptDraft, startClassOffers } from "../api.ts";
 import { costLine, permissionHookLine, profileLine, returnedOf, selectionLine, techniqueOffer } from "../classes.ts";
 import { ATTRIBUTES, type Names } from "../text.ts";
@@ -64,43 +65,55 @@ function RecordRead({ engine, c }: { engine: Engine; c: Sheet }) {
   const principle = c.principles.principles[0];
   const insight = Object.entries(c.principles.insight).sort((a, b) => b[1] - a[1]);
   return (
-    <div className="class-record">
+    <div className="panel panel--sunken stack classes-record" aria-label={`${c.name}'s record`}>
       <h3>{c.name}'s record</h3>
+      <dl className="statline">
+        {ATTRIBUTES.map((a) => (
+          <div key={a}>
+            <dt>{a}</dt>
+            <dd>{c.raw[a]}</dd>
+          </div>
+        ))}
+      </dl>
+      <div className="small">
+        <span className="dim">Background</span>
+        <p className="prose classes-record__background">{c.background}</p>
+      </div>
       <p className="small">
-        {ATTRIBUTES.map((a) => `${a} ${c.raw[a]}`).join(" · ")}
-      </p>
-      <p className="small">Background: {c.background}</p>
-      <p className="small">
-        Deep leads:{" "}
-        {c.hve.leads.map((l) => (l.pole ? `${l.pole} by ${l.by}` : `${l.axis} even`)).join(", ")}
+        <span className="dim">Deep leads</span> {c.hve.leads.map((l) => (l.pole ? `${l.pole} by ${l.by}` : `${l.axis} even`)).join(", ")}
         {c.hve.archetype ? ` · ${c.hve.archetype}` : ""} · Coherence {c.hve.coherence.profile}
       </p>
       {circled.length > 0 && (
-        <div className="small">
-          Circled:
-          <ul>
+        <div className="small stack classes-record__circled">
+          <span className="dim">Circled</span>
+          <ul className="stack">
             {circled.map(({ label, m }, i) => (
               <li key={i}>
-                {m.pole}: {m.note} <span className="muted">({label})</span>
+                {m.pole}: {m.note} <span className="dim">({label})</span>
               </li>
             ))}
           </ul>
         </div>
       )}
       <p className="small">
-        Principle: {principle ? `${principle.name}, ${principle.tier}` : insight.length ? `none yet; Insight ${insight.map(([f, n]) => `${f} ${n}`).join(", ")}` : "none"}
+        <span className="dim">Principle</span>{" "}
+        {principle ? `${principle.name}, ${principle.tier}` : insight.length ? `none yet; Insight ${insight.map(([f, n]) => `${f} ${n}`).join(", ")}` : "none"}
       </p>
-      {c.proficiencies.length > 0 && <p className="small">Proficiencies: {c.proficiencies.map((p) => `${p.shape} ${p.tier}`).join(", ")}</p>}
+      {c.proficiencies.length > 0 && (
+        <p className="small">
+          <span className="dim">Proficiencies</span> {c.proficiencies.map((p) => `${p.shape} ${p.tier}`).join(", ")}
+        </p>
+      )}
       {c.titles.some((t) => t.status === "active") && (
         <p className="small">
-          Titles:{" "}
+          <span className="dim">Titles</span>{" "}
           {c.titles
             .filter((t) => t.status === "active")
             .map((t) => t.name)
             .join(", ")}
         </p>
       )}
-      <p className="small muted">And the thing the player keeps doing that no rule asked for.</p>
+      <p className="small dim">And the thing the player keeps doing that no rule asked for.</p>
     </div>
   );
 }
@@ -119,11 +132,12 @@ function OfferEditor({ engine, c, value, onChange, index }: { engine: Engine; c:
   const shape = shapes.find((s) => s.shape === value.profile.shape);
   const assigned = points.reduce((s, x) => s + (x.points || 0), 0);
   return (
-    <fieldset className="class-editor">
-      <legend>Offer {index + 1}</legend>
-      <label>
-        Start from
+    <fieldset className="stack classes-offer">
+      <legend className="label">Offer {index + 1}</legend>
+      <label className="field">
+        <span>Start from</span>
         <select
+          className="select"
           value={value.book ?? ""}
           onChange={(e) => {
             const picked = book.find((b) => b.name === e.target.value);
@@ -139,20 +153,27 @@ function OfferEditor({ engine, c, value, onChange, index }: { engine: Engine; c:
           ))}
         </select>
       </label>
-      <label>
-        Name
-        <input value={value.name} maxLength={60} onChange={(e) => set({ name: e.target.value })} />
+      <label className="field">
+        <span>Name</span>
+        <input className="input" value={value.name} maxLength={60} onChange={(e) => set({ name: e.target.value })} />
       </label>
-      <label>
-        The System's notice
-        <textarea rows={3} maxLength={1000} value={value.notice} onChange={(e) => set({ notice: e.target.value })} placeholder="In the System's units: Attributes, levels, Health, Aether, hours, meters." />
+      <label className="field">
+        <span>The System's notice</span>
+        <textarea
+          className="textarea classes-offer__notice"
+          rows={3}
+          maxLength={1000}
+          value={value.notice}
+          onChange={(e) => set({ notice: e.target.value })}
+          placeholder="In the System's units: Attributes, levels, Health, Aether, hours, meters."
+        />
       </label>
       <TableWords text={value.notice} />
 
-      <div className="form-row">
-        <label>
-          Profile
-          <select value={value.profile.shape} onChange={(e) => set({ profile: { ...value.profile, shape: e.target.value as ProfileShape } })}>
+      <div className="classes-offer__profile">
+        <label className="field">
+          <span>Profile</span>
+          <select className="select" value={value.profile.shape} onChange={(e) => set({ profile: { ...value.profile, shape: e.target.value as ProfileShape } })}>
             {shapes.map((s) => (
               <option key={s.shape} value={s.shape}>
                 {s.shape} ({s.system} assigned)
@@ -160,78 +181,86 @@ function OfferEditor({ engine, c, value, onChange, index }: { engine: Engine; c:
             ))}
           </select>
         </label>
-        <span className="small muted">
+        <span className="small dim classes-offer__assigned">
           {assigned} of {shape?.system ?? "?"} assigned
           {returnedOf(engine, value) ? `, ${returnedOf(engine, value)} returned to the player` : ""}
         </span>
       </div>
-      {points.map((x, i) => (
-        <div key={i} className="form-row">
-          <label>
-            {i === 0 ? "Lead" : "Then"}
-            <select value={x.attribute} onChange={(e) => setPoints(points.map((y, j) => (j === i ? { ...y, attribute: e.target.value } : y)))}>
-              {ATTRIBUTES.map((a) => (
-                <option key={a}>{a}</option>
-              ))}
-            </select>
-          </label>
-          <label>
-            Points
-            <input
-              type="number"
-              min={1}
-              max={3}
-              value={x.points || ""}
-              onChange={(e) => setPoints(points.map((y, j) => (j === i ? { ...y, points: Number(e.target.value) || 0 } : y)))}
-            />
-          </label>
-          {points.length > 1 && (
-            <button className="link" onClick={() => setPoints(points.filter((_, j) => j !== i))}>
-              Remove
-            </button>
-          )}
-        </div>
-      ))}
+      <div className={`classes-offer__points${points.length > 1 ? " classes-offer__points--removable" : ""}`}>
+        {points.map((x, i) => (
+          <Fragment key={i}>
+            <label className="field">
+              <span>{i === 0 ? "Lead" : "Then"}</span>
+              <select className="select" value={x.attribute} onChange={(e) => setPoints(points.map((y, j) => (j === i ? { ...y, attribute: e.target.value } : y)))}>
+                {ATTRIBUTES.map((a) => (
+                  <option key={a}>{a}</option>
+                ))}
+              </select>
+            </label>
+            <label className="field">
+              <span>Points</span>
+              <input
+                className="input num"
+                type="number"
+                min={1}
+                max={3}
+                value={x.points || ""}
+                onChange={(e) => setPoints(points.map((y, j) => (j === i ? { ...y, points: Number(e.target.value) || 0 } : y)))}
+              />
+            </label>
+            {points.length > 1 && (
+              <button className="btn-link small classes-offer__remove" onClick={() => setPoints(points.filter((_, j) => j !== i))}>
+                Remove
+              </button>
+            )}
+          </Fragment>
+        ))}
+      </div>
       {points.length < 3 && (
-        <button className="link" onClick={() => setPoints([...points, { attribute: ATTRIBUTES.find((a) => !points.some((p) => p.attribute === a))!, points: 1 }])}>
-          Add an Attribute
-        </button>
+        <div>
+          <button className="btn-link small" onClick={() => setPoints([...points, { attribute: ATTRIBUTES.find((a) => !points.some((p) => p.attribute === a))!, points: 1 }])}>
+            Add an Attribute
+          </button>
+        </div>
       )}
 
-      <div className="form-row">
-        <label>
-          Technique
-          <input value={value.technique.name} maxLength={60} onChange={(e) => set({ technique: { ...value.technique, name: e.target.value } })} />
+      <div className="classes-offer__technique">
+        <label className="field">
+          <span>Technique</span>
+          <input className="input" value={value.technique.name} maxLength={60} onChange={(e) => set({ technique: { ...value.technique, name: e.target.value } })} />
         </label>
-        <label>
-          Cost
-          <select value={value.technique.cost} onChange={(e) => set({ technique: { ...value.technique, cost: e.target.value as CostShape } })}>
+        <label className="field">
+          <span>Cost</span>
+          <select className="select" value={value.technique.cost} onChange={(e) => set({ technique: { ...value.technique, cost: e.target.value as CostShape } })}>
             {costs.map((k) => (
               <option key={k}>{k}</option>
             ))}
           </select>
         </label>
       </div>
-      <label>
-        What it does <span className="muted small">({costLine(engine, value)})</span>
-        <textarea rows={2} maxLength={600} value={value.technique.effect} onChange={(e) => set({ technique: { ...value.technique, effect: e.target.value } })} />
+      <label className="field">
+        <span>
+          What it does <span className="dim">({costLine(engine, value)})</span>
+        </span>
+        <textarea className="textarea" rows={2} maxLength={600} value={value.technique.effect} onChange={(e) => set({ technique: { ...value.technique, effect: e.target.value } })} />
       </label>
-      <label className="check">
+      <label className="check small">
         <input type="checkbox" checked={Boolean(value.technique.actionEconomy)} onChange={(e) => set({ technique: { ...value.technique, actionEconomy: e.target.checked || undefined } })} />
         The technique changes the action economy (a reaction, a free or combined act)
       </label>
-      <label className="check">
+      <label className="check small">
         <input type="checkbox" checked={Boolean(value.technique.noBeat)} onChange={(e) => set({ technique: { ...value.technique, noBeat: e.target.checked || undefined } })} />
         It takes no Beat of its own (a reaction, or part of a Clash)
       </label>
-      <label className="check">
+      <label className="check small">
         <input type="checkbox" checked={Boolean(value.technique.reaction)} onChange={(e) => set({ technique: { ...value.technique, reaction: e.target.checked || undefined } })} />
         It is used on someone else's turn: an attack declared with it comes off-turn for no Beat
       </label>
       {value.technique.cost === "Drawback" && (
-        <label>
-          Its drawback
+        <label className="field">
+          <span>Its drawback</span>
           <select
+            className="select"
             value={value.technique.drawback ?? ""}
             onChange={(e) => {
               const { drawback: _, ...rest } = value.technique;
@@ -245,24 +274,24 @@ function OfferEditor({ engine, c, value, onChange, index }: { engine: Engine; c:
         </label>
       )}
       <HookFields engine={engine} value={value} onChange={onChange} />
-      <label>
-        Permission
-        <input value={value.permission.name} maxLength={60} onChange={(e) => set({ permission: { ...value.permission, name: e.target.value } })} />
+      <label className="field">
+        <span>Permission</span>
+        <input className="input" value={value.permission.name} maxLength={60} onChange={(e) => set({ permission: { ...value.permission, name: e.target.value } })} />
       </label>
-      <label>
-        What it permits
-        <textarea rows={2} maxLength={600} value={value.permission.effect} onChange={(e) => set({ permission: { ...value.permission, effect: e.target.value } })} />
+      <label className="field">
+        <span>What it permits</span>
+        <textarea className="textarea" rows={2} maxLength={600} value={value.permission.effect} onChange={(e) => set({ permission: { ...value.permission, effect: e.target.value } })} />
       </label>
       <PermissionHookFields engine={engine} value={value} onChange={onChange} />
-      <label className="check">
+      <label className="check small">
         <input type="checkbox" checked={Boolean(value.permission.actionEconomy)} onChange={(e) => set({ permission: { ...value.permission, actionEconomy: e.target.checked || undefined } })} />
         The permission changes the action economy
       </label>
-      <label className="check">
+      <label className="check small">
         <input type="checkbox" checked={Boolean(value.permission.onceADay)} onChange={(e) => set({ permission: { ...value.permission, onceADay: e.target.checked || undefined } })} />
         Once a day, ready again at dawn
       </label>
-      <label className="check">
+      <label className="check small">
         <input type="checkbox" checked={Boolean(value.guarded)} onChange={(e) => set({ guarded: e.target.checked || undefined })} />
         Carries a guarded power (known to the GM only)
       </label>
@@ -311,10 +340,10 @@ function PermissionHookFields({ engine, value, onChange }: { engine: Engine; val
     }
   };
   return (
-    <div className="form-row tight">
-      <label>
-        The app runs
-        <select value={key} onChange={(e) => setHook(pick(e.target.value))}>
+    <div className="classes-hook classes-hook--runs">
+      <label className="field">
+        <span>The app runs</span>
+        <select className="select" value={key} onChange={(e) => setHook(pick(e.target.value))}>
           <option value="">Nothing: the table applies it</option>
           <option value="rush">A Rush: move and attack for one Beat</option>
           <option value="free-move-downed">A free move into a Zone holding a Downed ally</option>
@@ -329,21 +358,21 @@ function PermissionHookFields({ engine, value, onChange }: { engine: Engine; val
         </select>
       </label>
       {h?.kind === "cover" && (
-        <label>
-          Cut
-          <input type="number" className="narrow-input" min={1} value={h.cut} onChange={(e) => setHook({ ...h, cut: Number(e.target.value) || 0 })} />
+        <label className="field">
+          <span>Cut</span>
+          <input type="number" className="input num" min={1} value={h.cut} onChange={(e) => setHook({ ...h, cut: Number(e.target.value) || 0 })} />
         </label>
       )}
       {h?.kind === "surge-health" && (
-        <label>
-          Health
-          <input type="number" className="narrow-input" min={1} value={h.health} onChange={(e) => setHook({ ...h, health: Number(e.target.value) || 0 })} />
+        <label className="field">
+          <span>Health</span>
+          <input type="number" className="input num" min={1} value={h.health} onChange={(e) => setHook({ ...h, health: Number(e.target.value) || 0 })} />
         </label>
       )}
       {h?.kind === "surge-up" && (
-        <label>
-          Aether
-          <input type="number" className="narrow-input" min={1} value={h.cost} onChange={(e) => setHook({ ...h, cost: Number(e.target.value) || 0 })} />
+        <label className="field">
+          <span>Aether</span>
+          <input type="number" className="input num" min={1} value={h.cost} onChange={(e) => setHook({ ...h, cost: Number(e.target.value) || 0 })} />
         </label>
       )}
     </div>
@@ -361,10 +390,11 @@ function HookFields({ engine, value, onChange }: { engine: Engine; value: ClassP
     onChange({ ...value, technique: hook ? { ...rest, hook } : rest });
   };
   return (
-    <div className="form-row tight">
-      <label>
-        The app applies
+    <div className="classes-hook classes-hook--applies">
+      <label className="field classes-hook__kind">
+        <span>The app applies</span>
         <select
+          className="select"
           value={h?.kind ?? ""}
           onChange={(e) =>
             setHook(e.target.value === "clash" ? { kind: "clash", bonus: def, side: "attack" } : e.target.value === "heal" ? { kind: "heal", amount: heal, reach: "zone" } : undefined)
@@ -377,13 +407,13 @@ function HookFields({ engine, value, onChange }: { engine: Engine; value: ClassP
       </label>
       {h?.kind === "clash" && (
         <>
-          <label>
-            Bonus
-            <input type="number" className="narrow-input" min={1} max={cap} value={h.bonus} onChange={(e) => setHook({ ...h, bonus: Number(e.target.value) || 0 })} />
+          <label className="field">
+            <span>Bonus</span>
+            <input type="number" className="input num" min={1} max={cap} value={h.bonus} onChange={(e) => setHook({ ...h, bonus: Number(e.target.value) || 0 })} />
           </label>
-          <label>
-            On
-            <select value={h.side} onChange={(e) => setHook({ ...h, side: e.target.value as "attack" | "defense" | "either" })}>
+          <label className="field">
+            <span>On</span>
+            <select className="select" value={h.side} onChange={(e) => setHook({ ...h, side: e.target.value as "attack" | "defense" | "either" })}>
               <option value="attack">an attack</option>
               <option value="defense">a defense</option>
               <option value="either">either</option>
@@ -393,13 +423,13 @@ function HookFields({ engine, value, onChange }: { engine: Engine; value: ClassP
       )}
       {h?.kind === "heal" && (
         <>
-          <label>
-            Health
-            <input type="number" className="narrow-input" min={1} value={h.amount} onChange={(e) => setHook({ ...h, amount: Number(e.target.value) || 0 })} />
+          <label className="field">
+            <span>Health</span>
+            <input type="number" className="input num" min={1} value={h.amount} onChange={(e) => setHook({ ...h, amount: Number(e.target.value) || 0 })} />
           </label>
-          <label>
-            Reach
-            <select value={h.reach} onChange={(e) => setHook({ ...h, reach: e.target.value as "zone" | "adjacent" })}>
+          <label className="field">
+            <span>Reach</span>
+            <select className="select" value={h.reach} onChange={(e) => setHook({ ...h, reach: e.target.value as "zone" | "adjacent" })}>
               <option value="zone">your Zone</option>
               <option value="adjacent">your Zone or the next</option>
             </select>
@@ -452,53 +482,57 @@ function OfferDrafter({ view, c, drafts, onLoad }: { view: GmView; c: Sheet; dra
   const notes = item?.suggestion?.offers ?? [];
   const offered = item?.action?.type === "class.offer" ? item.action.offers : [];
   return (
-    <details className="class-drafter" open={Boolean(item)}>
+    <details className="small classes-drafter" open={Boolean(item)}>
       <summary>Draft the three offers from the record</summary>
-      <label>
-        What the player keeps doing that no rule asked for
-        <textarea rows={2} value={keepsDoing} maxLength={2000} onChange={(e) => setKeepsDoing(e.target.value)} placeholder="First through every door; names the loot she wants before the fight is over" />
-      </label>
-      <label className="check">
-        <input type="checkbox" checked={guarded} onChange={(e) => setGuarded(e.target.checked)} /> Ask for a guarded power (one offer may carry one)
-      </label>
-      <div className="form-row">
-        <button disabled={busy || running || drafts.drafting} onClick={start}>
-          {running ? "Drafting…" : "Draft three offers"}
-        </button>
-        <span className="muted small">The model reads the record at the left; the drafts load into the offers below when you say.</span>
-      </div>
-      {error && <p className="error">{error}</p>}
-      {failed && !running && <p className="error">The last draft failed: {failed.message}</p>}
-      {item && (
-        <div className="class-drafted">
-          <ul className="small">
-            {offered.map((o, i) => (
-              <li key={o.name}>
-                <strong>{o.name}</strong>
-                {o.book ? " (the book's)" : ""}
-                {o.guarded ? " (guarded)" : ""}
-                {notes[i]?.everyFight ? " · usable in most fights" : ""}: {notes[i]?.role}. <span className="muted">Weighs: {notes[i]?.weighs}</span>
-                {[...(notes[i]?.problems ?? []), ...(notes[i]?.warnings ?? [])].map((w) => (
-                  <div key={w} className="warning">
-                    {w}
-                  </div>
-                ))}
-              </li>
-            ))}
-          </ul>
-          {(item.suggestion?.problems ?? []).map((p) => (
-            <p key={p} className="warning small">
-              {p}
-            </p>
-          ))}
-          <div className="form-row">
-            <button className="primary" onClick={() => onLoad(item)}>
-              Load them into the three offers
-            </button>
-            <button onClick={() => drafts.mark(item, "dismiss")}>Dismiss</button>
-          </div>
+      <div className="stack classes-drafter__body">
+        <label className="field">
+          <span>What the player keeps doing that no rule asked for</span>
+          <textarea className="textarea" rows={2} value={keepsDoing} maxLength={2000} onChange={(e) => setKeepsDoing(e.target.value)} placeholder="First through every door; names the loot she wants before the fight is over" />
+        </label>
+        <label className="check">
+          <input type="checkbox" checked={guarded} onChange={(e) => setGuarded(e.target.checked)} /> Ask for a guarded power (one offer may carry one)
+        </label>
+        <div className="cluster">
+          <button className="btn btn--sm" disabled={busy || running || drafts.drafting} onClick={start}>
+            {running ? "Drafting…" : "Draft three offers"}
+          </button>
+          <span className="dim small">The model reads the record at the left; the drafts load into the offers below when you say.</span>
         </div>
-      )}
+        {error && <p className="error">{error}</p>}
+        {failed && !running && <p className="error">The last draft failed: {failed.message}</p>}
+        {item && (
+          <div className="stack classes-drafted">
+            <ul className="small stack classes-drafted__list">
+              {offered.map((o, i) => (
+                <li key={o.name}>
+                  <b>{o.name}</b>
+                  {o.book ? " (the book's)" : ""}
+                  {o.guarded ? " (guarded)" : ""}
+                  {notes[i]?.everyFight ? " · usable in most fights" : ""}: {notes[i]?.role}. <span className="dim">Weighs: {notes[i]?.weighs}</span>
+                  {[...(notes[i]?.problems ?? []), ...(notes[i]?.warnings ?? [])].map((w) => (
+                    <div key={w} className="warning">
+                      {w}
+                    </div>
+                  ))}
+                </li>
+              ))}
+            </ul>
+            {(item.suggestion?.problems ?? []).map((p) => (
+              <p key={p} className="warning small">
+                {p}
+              </p>
+            ))}
+            <div className="cluster">
+              <button className="btn btn--primary btn--sm" onClick={() => onLoad(item)}>
+                Load them into the three offers
+              </button>
+              <button className="btn btn--sm" onClick={() => drafts.mark(item, "dismiss")}>
+                Dismiss
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </details>
   );
 }
@@ -535,27 +569,34 @@ function OfferWriter({ view, engine, names, onRecorded, c, drafts }: Props & { e
     warnings.push(`${guarded + draftGuarded} guarded classes would be in play. The book: offer a guarded power with great care; one in a campaign is plenty.`);
   const bonus = engine.rules.classes.selection.lead_attribute_bonus as number;
   return (
-    <section className="card class-writer">
-      <h2>{c.name} is due three class offers</h2>
-      <p className="muted small">
-        Level {c.level}. The offers differ in role and in which part of the record they weigh; one may amplify the dominant pattern,
-        one formalize the secondary, one combine them. The player accepts one; the selection adds {bonus} to its lead Attribute and the
-        profile places the held assigned points.
-      </p>
-      <div className="class-writer-body">
-        <RecordRead engine={engine} c={c} />
-        <div className="class-editors">
-          {drafts && <OfferDrafter view={view} c={c} drafts={drafts} onLoad={load} />}
-          {offers.map((o, i) => (
-            <OfferEditor key={`${generation}-${i}`} index={i} engine={engine} c={c} value={o} onChange={(p) => setOffers(offers.map((x, j) => (j === i ? p : x)))} />
-          ))}
-        </div>
+    <section className="panel classes-panel" aria-label={`${c.name} is due three class offers`}>
+      <div className="panel__head">
+        <i className="ic ic-class dim" aria-hidden="true" />
+        <h2>{c.name} is due three class offers</h2>
       </div>
-      {warnings.map((w) => (
-        <p key={w} className="warning small">
-          {w}
+      <div className="panel__body stack classes-writer">
+        <p className="small dim classes-writer__intro">
+          Level {c.level}. The offers differ in role and in which part of the record they weigh; one may amplify the dominant pattern,
+          one formalize the secondary, one combine them. The player accepts one; the selection adds {bonus} to its lead Attribute and the
+          profile places the held assigned points.
         </p>
-      ))}
+        <div className="classes-writer__body">
+          <RecordRead engine={engine} c={c} />
+          <div className="stack classes-writer__offers">
+            {drafts && <OfferDrafter view={view} c={c} drafts={drafts} onLoad={load} />}
+            <div className="classes-offers">
+              {offers.map((o, i) => (
+                <OfferEditor key={`${generation}-${i}`} index={i} engine={engine} c={c} value={o} onChange={(p) => setOffers(offers.map((x, j) => (j === i ? p : x)))} />
+              ))}
+            </div>
+          </div>
+        </div>
+        {warnings.map((w) => (
+          <p key={w} className="warning small">
+            {w}
+          </p>
+        ))}
+      </div>
       <Commit
         campaignId={view.campaign.id}
         action={{ type: "class.offer", characterId: c.id, offers: clean.map((o) => (o.book === undefined ? (({ book: _b, ...rest }) => rest)(o) : o)) }}
@@ -590,10 +631,8 @@ function PackageLines({ engine, p, bonus }: { engine: Engine | null; p: ClassPac
   const selection = selectionLine(engine, p, bonus);
   return (
     <>
-      <p className="small">
-        <em>{p.notice}</em>
-      </p>
-      <ul className="small">
+      <p className="voice classes-notice">{p.notice}</p>
+      <ul className="small stack classes-lines">
         <li>
           Profile: {profileLine(engine, p)}
           {selection ? ` Selection: ${selection}.` : ""}
@@ -619,15 +658,18 @@ function Standing({ view, engine, names, onRecorded, c }: Props & { c: Sheet }) 
   const from = (engine?.rules.character.leveling.class_level as number | undefined) ?? 0;
   const held = c.pendingSystemLevels.filter((l) => l >= from);
   return (
-    <section className="card">
-      <h2>{c.name}'s offers stand</h2>
-      <p className="muted small">They wait on the player's choice{held.length ? `, and Level ${held.join(", ")}'s assigned points wait with them` : ""}. Undo the offer in the campaign log to write others.</p>
+    <section className="panel classes-panel" aria-label={`${c.name}'s offers stand`}>
+      <div className="panel__head">
+        <i className="ic ic-class dim" aria-hidden="true" />
+        <h2>{c.name}'s offers stand</h2>
+      </div>
+      <p className="panel__body small dim">They wait on the player's choice{held.length ? `, and Level ${held.join(", ")}'s assigned points wait with them` : ""}. Undo the offer in the campaign log to write others.</p>
       {c.classOffers.map((o) => (
-        <div key={o.name} className="class-offer">
-          <h3>
-            {o.name}
-            {o.guarded && <span className="tag attention">guarded</span>}
-          </h3>
+        <div key={o.name} className="panel__body stack classes-item">
+          <div className="cluster">
+            <h3>{o.name}</h3>
+            {o.guarded && <span className="tag tag--solid">guarded</span>}
+          </div>
           <PackageLines engine={engine} p={o} />
           <Commit
             campaignId={view.campaign.id}
@@ -650,13 +692,15 @@ function TechniqueOutside({ view, engine, names, onRecorded, c }: Props & { c: S
   const inFight = Boolean(view.encounter?.combatants.some((x) => x.characterId === c.id && !x.out));
   const t = techniqueOffer(engine, k, { aether: c.aether, inFight: false });
   if (c.dead || t.hook?.kind === "clash" || k.technique.cost === "Frequency") return null;
-  if (inFight) return <p className="small muted">{k.technique.name} is used from the fight's tracker while {c.name} is in it.</p>;
+  if (inFight) return <p className="small dim">{k.technique.name} is used from the fight's tracker while {c.name} is in it.</p>;
   return (
-    <div className="form-row tight">
+    <div className="stack classes-technique">
       {t.hook?.kind === "heal" && (
-        <label>
-          {k.technique.name} restores {t.hook.amount} Health to
-          <select value={target} onChange={(e) => setTarget(e.target.value)}>
+        <label className="field">
+          <span>
+            {k.technique.name} restores {t.hook.amount} Health to
+          </span>
+          <select className="select" value={target} onChange={(e) => setTarget(e.target.value)}>
             {living.map((x) => (
               <option key={x.id} value={x.id}>
                 {x.name}
@@ -688,20 +732,25 @@ function Held({ view, engine, names, onRecorded }: Props) {
   const clock = view.clock;
   const today = clock ? Math.floor((clock.at - clock.dawn * 60) / MINUTES_PER_DAY) : null;
   return (
-    <section className="card">
-      <h2>Classes held</h2>
-      <p className="muted small">A class is not published: inspection never shows it, and only its holder's player sees it.</p>
+    <section className="panel classes-panel" aria-label="Classes held">
+      <div className="panel__head">
+        <i className="ic ic-class dim" aria-hidden="true" />
+        <h2>Classes held</h2>
+      </div>
+      <p className="panel__body small dim">A class is not published: inspection never shows it, and only its holder's player sees it.</p>
       {held.map((c) => {
         const k = c.class!;
         const used = today !== null && c.classUsedDay === today;
         return (
-          <div key={c.id} className="class-offer">
-            <h3>
-              {c.name}: {k.name}
-              {k.guarded && <span className="tag attention">guarded</span>}
-            </h3>
+          <div key={c.id} className="panel__body stack classes-item">
+            <div className="cluster">
+              <h3>
+                {c.name}: {k.name}
+              </h3>
+              {k.guarded && <span className="tag tag--solid">guarded</span>}
+            </div>
             <PackageLines engine={engine} p={k} bonus={k.bonus} />
-            {k.lost ? <p className="small muted">{k.lost} of the selection bonus was lost past the stat cap.</p> : null}
+            {k.lost ? <p className="small dim">{k.lost} of the selection bonus was lost past the stat cap.</p> : null}
             <TechniqueOutside view={view} engine={engine} names={names} onRecorded={onRecorded} c={c} />
             {k.permission.onceADay && (
               <>
@@ -740,7 +789,7 @@ export function ClassesSection(props: Props) {
   const due = view.characters.filter((c) => !c.dead && c.level >= level && !c.class && !c.classOffers.length);
   const standing = view.characters.filter((c) => c.classOffers.length);
   return (
-    <main className="page">
+    <main className="screen classes-screen">
       {due.map((c) => (
         <OfferWriter key={c.id} {...props} engine={engine} c={c} />
       ))}
@@ -749,8 +798,8 @@ export function ClassesSection(props: Props) {
       ))}
       <Held {...props} />
       {!due.length && !standing.length && !view.characters.some((c) => c.class) && (
-        <section className="card">
-          <p className="muted">
+        <section className="panel classes-panel">
+          <p className="panel__body dim">
             No character has reached Level {level}. At Level {level} the System offers three classes, and they are written here.
           </p>
         </section>

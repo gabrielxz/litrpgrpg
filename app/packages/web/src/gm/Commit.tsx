@@ -29,6 +29,8 @@ export interface CommitProps {
   submitWith?: (id: string, action: Action) => Promise<Appended>;
   /** Other buttons for the decide row, after the record button (a draft's Dismiss). */
   actions?: React.ReactNode;
+  /** An action that takes something back (an undo): the destructive button, with its icon. */
+  danger?: { icon: string };
 }
 
 /** "Kara", "Kara and Joe", "Kara, Joe, and Andre". */
@@ -125,7 +127,7 @@ export function PreviewView({ pv, names }: { pv: Preview; names: Names }) {
   );
 }
 
-export function Commit({ campaignId, action, problem, names, label, onRecorded, cause, submitWith, actions }: CommitProps) {
+export function Commit({ campaignId, action, problem, names, label, onRecorded, cause, submitWith, actions, danger }: CommitProps) {
   const [id, setId] = useState(newActionId);
   const [pv, setPv] = useState<Preview | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -171,8 +173,8 @@ export function Commit({ campaignId, action, problem, names, label, onRecorded, 
       {problem ? <p className="problem">{problem}</p> : pv && <PreviewView pv={pv} names={names} />}
       {error && <p className="error">{error}</p>}
       <div className="commit__decide">
-        <button className="btn btn--primary" disabled={!action || Boolean(problem) || !pv?.accepted || busy} onClick={record}>
-          <Icon name="confirm" />
+        <button className={danger ? "btn btn--danger" : "btn btn--primary"} disabled={!action || Boolean(problem) || !pv?.accepted || busy} onClick={record}>
+          <Icon name={danger?.icon ?? "confirm"} />
           {label}
         </button>
         {actions}

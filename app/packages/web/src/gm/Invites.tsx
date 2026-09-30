@@ -1,6 +1,8 @@
+import "../css/table-rules.css";
 import type { GmView } from "@gradebreaker/record";
 import { useEffect, useState } from "react";
 import { type Invite, api } from "../api.ts";
+import { Icon } from "../ui.tsx";
 
 /** The table: who is in the campaign, and invite links for players. */
 export function Table({ view }: { view: GmView }) {
@@ -46,46 +48,56 @@ export function Table({ view }: { view: GmView }) {
   const active = invites.filter(open);
 
   return (
-    <section className="card">
-      <h2>Table</h2>
-      <ul className="members">
-        {view.members.map((m) => (
-          <li key={m.userId}>
-            {m.displayName} <span className="muted">{m.role === "gm" ? "GM" : playing(m.userId) || "no character yet"}</span>
-          </li>
-        ))}
-      </ul>
-      <h3>Invite links</h3>
-      {active.length === 0 && <p className="muted">No open links. Each link lets whoever holds it join as a player.</p>}
-      <ul className="invites">
-        {active.map((i) => (
-          <li key={i.code}>
-            <code>{link(i.code)}</code>
-            <span className="muted">
-              {i.uses} joined{i.maxUses ? ` of ${i.maxUses}` : ""}
-            </span>
-            <button className="link" onClick={() => copy(i.code)}>
-              {copied === i.code ? "Copied" : "Copy"}
-            </button>
-            <button className="link" onClick={() => revoke(i.code)}>
-              Revoke
-            </button>
-          </li>
-        ))}
-      </ul>
-      <div className="form-row">
-        <input
-          type="number"
-          min={1}
-          className="narrow-input"
-          value={maxUses}
-          onChange={(e) => setMaxUses(e.target.value)}
-          placeholder="Any"
-          title="How many people the link admits"
-        />
-        <button onClick={create}>New invite link</button>
+    <section className="panel" aria-labelledby="table-h">
+      <div className="panel__head">
+        <h2 id="table-h">Table</h2>
       </div>
-      {error && <p className="error">{error}</p>}
+      <div className="panel__body stack table-card">
+        <ul className="rows">
+          {view.members.map((m) => (
+            <li key={m.userId}>
+              <span className="row__main">{m.displayName}</span>
+              <span className="small dim">{m.role === "gm" ? "GM" : playing(m.userId) || "no character yet"}</span>
+            </li>
+          ))}
+        </ul>
+        <h3 className="cluster table-card__h">
+          <i className="ic ic-link dim" aria-hidden="true" />
+          Invite links
+        </h3>
+        {active.length === 0 && <p className="small dim">No open links. Each link lets whoever holds it join as a player.</p>}
+        {active.length > 0 && (
+          <ul className="rows">
+            {active.map((i) => (
+              <li key={i.code}>
+                <code className="num small row__main invite-link">{link(i.code)}</code>
+                <span className="small dim invite-uses">
+                  {i.uses} joined{i.maxUses ? ` of ${i.maxUses}` : ""}
+                </span>
+                <div className="row__actions">
+                  <button className="btn btn--sm" type="button" onClick={() => copy(i.code)}>
+                    {copied === i.code ? "Copied" : "Copy"}
+                  </button>
+                  <button className="btn btn--sm btn--danger" type="button" onClick={() => revoke(i.code)}>
+                    Revoke
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+        <div className="cluster invite-new">
+          <label className="field invite-new__uses">
+            <span>How many people the link admits</span>
+            <input type="number" min={1} className="input num" value={maxUses} onChange={(e) => setMaxUses(e.target.value)} placeholder="Any" />
+          </label>
+          <button className="btn" type="button" onClick={create}>
+            <Icon name="add" />
+            New invite link
+          </button>
+        </div>
+        {error && <p className="error">{error}</p>}
+      </div>
     </section>
   );
 }

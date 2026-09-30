@@ -32,11 +32,11 @@ function DraftSummary({ view, s, onDraft }: { view: GmView; s: CampaignSession; 
     }
   };
   return (
-    <div className="form-row">
-      <button disabled={busy} onClick={draft}>
+    <div className="cluster">
+      <button className="btn btn--sm" type="button" disabled={busy} onClick={draft}>
         {busy ? "Drafting…" : "Draft it from the record"}
       </button>
-      <span className="muted small">From the session's events, kills, quests, titles, and levels; it replaces the text above.</span>
+      <span className="small dim">From the session's events, kills, quests, titles, and levels; it replaces the text above.</span>
       {error && <span className="error">{error}</span>}
     </div>
   );
@@ -225,18 +225,20 @@ export function SessionBar({ view, names, onRecorded, onSweep }: { view: GmView;
 function SummaryEditor({ view, s, names, onRecorded }: { view: GmView; s: CampaignSession; names: Names; onRecorded: (env: Envelope) => void }) {
   const [text, setText] = useState(s.summary ?? "");
   return (
-    <details>
+    <details className="small log-disclosure">
       <summary>{s.summary ? "Edit the summary" : "Write a summary"}</summary>
-      <textarea value={text} maxLength={2000} rows={3} onChange={(e) => setText(e.target.value)} />
-      <DraftSummary view={view} s={s} onDraft={setText} />
-      <Commit
-        campaignId={view.campaign.id}
-        action={text.trim() === (s.summary ?? "") ? null : { type: "session.summary", sessionId: s.id, summary: text }}
-        problem={text.trim() === (s.summary ?? "") ? "Unchanged." : null}
-        names={names}
-        label="Save the summary"
-        onRecorded={onRecorded}
-      />
+      <div className="stack log-disclosure__body">
+        <textarea className="textarea" aria-label="Summary" value={text} maxLength={2000} rows={3} onChange={(e) => setText(e.target.value)} />
+        <DraftSummary view={view} s={s} onDraft={setText} />
+        <Commit
+          campaignId={view.campaign.id}
+          action={text.trim() === (s.summary ?? "") ? null : { type: "session.summary", sessionId: s.id, summary: text }}
+          problem={text.trim() === (s.summary ?? "") ? "Unchanged." : null}
+          names={names}
+          label="Save the summary"
+          onRecorded={onRecorded}
+        />
+      </div>
     </details>
   );
 }
@@ -276,29 +278,31 @@ function MemoryEditor({ view, s, names, onRecorded }: { view: GmView; s: Campaig
       ? { type: "session.memory", sessionId: s.id, ...(campaignChanged ? { campaign } : {}), ...(changed.length ? { chronicles: changed.map((id) => ({ characterId: id, text: chronicles[id] ?? "" })) } : {}) }
       : null;
   return (
-    <details>
+    <details className="small log-disclosure">
       <summary>{now.campaign ? "Update the campaign memory" : "Write the campaign memory"}</summary>
-      <p className="muted small">What every AI request for this campaign carries in place of the whole history. The campaign paragraph: the premise and where the story stands. A chronicle: who a character has been so far.</p>
-      <label>
-        The campaign
-        <textarea value={campaign} maxLength={3000} rows={4} onChange={(e) => setCampaign(e.target.value)} placeholder="The premise, where the story stands, what is unresolved, who matters." />
-      </label>
-      {who.map((id) => (
-        <label key={id}>
-          {names(id)}'s chronicle
-          <textarea value={chronicles[id] ?? ""} maxLength={2000} rows={2} onChange={(e) => setChronicles({ ...chronicles, [id]: e.target.value })} />
+      <div className="stack log-disclosure__body">
+        <p className="dim">What every AI request for this campaign carries in place of the whole history. The campaign paragraph: the premise and where the story stands. A chronicle: who a character has been so far.</p>
+        <label className="field">
+          <span>The campaign</span>
+          <textarea className="textarea" value={campaign} maxLength={3000} rows={4} onChange={(e) => setCampaign(e.target.value)} placeholder="The premise, where the story stands, what is unresolved, who matters." />
         </label>
-      ))}
-      {ai && (
-        <div className="form-row">
-          <button disabled={busy} onClick={draft}>
-            {busy ? "Drafting…" : "Draft the rewrite"}
-          </button>
-          <span className="muted small">Folds {sessionName(s)} into the memory as it stood; it replaces the text above.</span>
-          {error && <span className="error">{error}</span>}
-        </div>
-      )}
-      <Commit campaignId={view.campaign.id} action={action} problem={action ? null : "Unchanged."} names={names} label="Save the memory" onRecorded={onRecorded} />
+        {who.map((id) => (
+          <label key={id} className="field">
+            <span>{names(id)}'s chronicle</span>
+            <textarea className="textarea" value={chronicles[id] ?? ""} maxLength={2000} rows={2} onChange={(e) => setChronicles({ ...chronicles, [id]: e.target.value })} />
+          </label>
+        ))}
+        {ai && (
+          <div className="cluster">
+            <button className="btn btn--sm" type="button" disabled={busy} onClick={draft}>
+              {busy ? "Drafting…" : "Draft the rewrite"}
+            </button>
+            <span className="small dim">Folds {sessionName(s)} into the memory as it stood; it replaces the text above.</span>
+            {error && <span className="error">{error}</span>}
+          </div>
+        )}
+        <Commit campaignId={view.campaign.id} action={action} problem={action ? null : "Unchanged."} names={names} label="Save the memory" onRecorded={onRecorded} />
+      </div>
     </details>
   );
 }
@@ -308,48 +312,51 @@ export function SessionsCard({ view, names, onRecorded }: { view: GmView; names:
   const now = memoryNow(view);
   const newest = view.sessions[0]!;
   return (
-    <section className="card">
-      <h2>Sessions</h2>
-      <div className="disclosure">
+    <aside className="panel sessions-panel" aria-labelledby="sessions-h">
+      <div className="panel__head">
+        <i className="ic ic-session dim" aria-hidden="true" />
+        <h2 id="sessions-h">Sessions</h2>
+      </div>
+      <div className="panel__body stack sessions-memory">
         <h3>Campaign memory</h3>
-        {now.campaign ? <p>{now.campaign.text}</p> : <p className="muted small">No campaign paragraph yet.</p>}
+        {now.campaign ? <p className="prose">{now.campaign.text}</p> : <p className="small dim">No campaign paragraph yet.</p>}
         {[...now.chronicles].length > 0 && (
-          <ul className="small">
+          <ul className="small stack sessions-chronicles">
             {[...now.chronicles].map(([id, c]) => (
               <li key={id}>
-                <strong>{names(id)}</strong>: {c.text}
+                <b>{names(id)}</b>: {c.text}
               </li>
             ))}
           </ul>
         )}
         <MemoryEditor key={`${newest.id}:${now.campaign?.text ?? ""}:${[...now.chronicles.values()].map((c) => c.text).join("|")}`} view={view} s={newest} names={names} onRecorded={onRecorded} />
       </div>
-      <ul className="events">
+      <ol className="rows sessions-rows">
         {view.sessions.map((s) => {
           const events = view.events.filter((e) => e.sessionId === s.id).length;
           const swept = sweptIn(view, s);
           return (
-            <li key={s.id} className="event">
+            <li key={s.id}>
               <div>
-                <strong>{sessionName(s)}</strong>
-                <span className="muted">
+                <b>{sessionName(s)}</b>
+                <span className="small dim">
                   {" "}
                   · {day(s.startedAt)}, {time(s.startedAt)}
                   {s.endedAt ? ` to ${time(s.endedAt)}` : ", running"}
                   {s.clockStart !== undefined && ` · in the game, ${clockLine(s.clockStart)}${s.clockEnd !== undefined ? ` to ${clockLine(s.clockEnd)}` : ""}`}
                 </span>
               </div>
-              <div className="muted small">
+              <div className="small dim sessions-roster">
                 {s.present.map(names).join(", ") || "nobody"}
                 {s.left.length > 0 && ` (left early: ${s.left.map(names).join(", ")})`} · {events} {events === 1 ? "event" : "events"} ·{" "}
                 {swept.length ? `swept: ${swept.map(names).join(", ")}` : "no sweep"}
               </div>
-              {s.summary && <p>{s.summary}</p>}
+              {s.summary && <p className="prose sessions-summary">{s.summary}</p>}
               <SummaryEditor key={s.summary ?? ""} view={view} s={s} names={names} onRecorded={onRecorded} />
             </li>
           );
         })}
-      </ul>
-    </section>
+      </ol>
+    </aside>
   );
 }

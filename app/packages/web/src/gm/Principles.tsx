@@ -5,9 +5,10 @@
  * Principle a family crystallizes into, and Distillation (in the player's words, or on the Quiet
  * Path as an offer the player confirms). Players see their cards, Insight, and Principle.
  */
+import "../css/principles-classes.css";
 import type { Engine } from "@gradebreaker/engine";
 import { type Envelope, type GmView, type Sheet, families, ipSources, weights } from "@gradebreaker/record";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { type DistillationReading, type VisionDraft, draftDistillation, draftVision } from "../api.ts";
 import type { Names } from "../text.ts";
 import { TableWords } from "./TableWords.tsx";
@@ -25,9 +26,9 @@ function leadingFamily(engine: Engine, c: Sheet): string {
 
 function FamilySelect({ engine, value, onChange }: { engine: Engine; value: string; onChange: (v: string) => void }) {
   return (
-    <label>
-      Family
-      <select value={value} onChange={(e) => onChange(e.target.value)}>
+    <label className="field">
+      <span>Family</span>
+      <select className="select" value={value} onChange={(e) => onChange(e.target.value)}>
         {families(engine).map((f) => (
           <option key={f.name} value={f.name}>
             {f.name} ({f.pole})
@@ -44,18 +45,23 @@ export function MemoriesDueCard({ view, names, onRecorded }: Omit<Props, "engine
   const [text, setText] = useState<Record<string, string>>({});
   if (!due.length) return null;
   return (
-    <section className="card">
-      <h2>Battle Memory Cards due</h2>
+    <section className="panel principles-panel" aria-label="Battle Memory Cards due">
+      <div className="panel__head">
+        <i className="ic ic-memory dim" aria-hidden="true" />
+        <h2>Battle Memory Cards due</h2>
+      </div>
       {due.map(({ c, d }) => (
-        <div key={d.key} className="due-memory">
-          <p>
-            <strong>{c.name}</strong>: {d.label}
-            {d.reason === "downed" && <span className="muted small"> (withhold it if the Downing taught nothing)</span>}
-          </p>
-          <label>
-            What the card says
-            <input value={text[d.key] ?? ""} maxLength={300} onChange={(e) => setText({ ...text, [d.key]: e.target.value })} placeholder="The moment, in a line" />
-          </label>
+        <div key={d.key} className="principles-due">
+          <div className="panel__body stack">
+            <p>
+              <b>{c.name}</b>: {d.label}
+              {d.reason === "downed" && <span className="small dim"> (withhold it if the Downing taught nothing)</span>}
+            </p>
+            <label className="field">
+              <span>What the card says</span>
+              <input className="input" value={text[d.key] ?? ""} maxLength={300} onChange={(e) => setText({ ...text, [d.key]: e.target.value })} placeholder="The moment, in a line" />
+            </label>
+          </div>
           <Commit
             campaignId={view.campaign.id}
             action={text[d.key]?.trim() ? { type: "memory.grant", characterId: c.id, text: text[d.key]!.trim(), due: d.key } : null}
@@ -79,13 +85,16 @@ function GrantForm({ view, names, onRecorded }: Omit<Props, "engine">) {
   const [text, setText] = useState("");
   if (!living.length) return null;
   return (
-    <section className="card">
-      <h2>Grant a Battle Memory</h2>
-      <p className="muted small">For a moment of extreme stress the System deems statistically improbable.</p>
-      <div className="form">
-        <label>
-          Character
-          <select value={who} onChange={(e) => setWho(e.target.value)}>
+    <section className="panel principles-panel" aria-label="Grant a Battle Memory">
+      <div className="panel__head">
+        <i className="ic ic-memory dim" aria-hidden="true" />
+        <h2>Grant a Battle Memory</h2>
+      </div>
+      <div className="panel__body stack principles-grant">
+        <p className="small dim">For a moment of extreme stress the System deems statistically improbable.</p>
+        <label className="field">
+          <span>Character</span>
+          <select className="select" value={who} onChange={(e) => setWho(e.target.value)}>
             {living.map((c) => (
               <option key={c.id} value={c.id}>
                 {c.name}
@@ -93,9 +102,9 @@ function GrantForm({ view, names, onRecorded }: Omit<Props, "engine">) {
             ))}
           </select>
         </label>
-        <label>
-          What the card says
-          <input value={text} maxLength={300} onChange={(e) => setText(e.target.value)} placeholder="Held the slab while the ceiling came down" />
+        <label className="field">
+          <span>What the card says</span>
+          <input className="input" value={text} maxLength={300} onChange={(e) => setText(e.target.value)} placeholder="Held the slab while the ceiling came down" />
         </label>
       </div>
       <Commit
@@ -142,12 +151,12 @@ function MeditateForm({ view, engine, names, onRecorded, c, memoryId }: Props & 
   const note = drafted && drafted.vision === vision.trim() ? drafted : null;
   const flags = note?.flags.filter((f) => !f.startsWith("table word")) ?? [];
   return (
-    <div className="form">
-      <div className="form-row tight">
+    <div className="stack principles-drawer">
+      <div className="principles-pair">
         <FamilySelect engine={engine} value={family} onChange={setFamily} />
-        <label>
-          Insight
-          <select value={ip} onChange={(e) => setIp(Number(e.target.value))}>
+        <label className="field">
+          <span>Insight</span>
+          <select className="select" value={ip} onChange={(e) => setIp(Number(e.target.value))}>
             {Array.from({ length: row.ip_max - row.ip_min + 1 }, (_, i) => row.ip_min + i).map((n) => (
               <option key={n} value={n}>
                 {n}
@@ -156,24 +165,24 @@ function MeditateForm({ view, engine, names, onRecorded, c, memoryId }: Props & 
           </select>
         </label>
       </div>
-      <label>
-        What the player said
-        <input value={words} maxLength={500} onChange={(e) => setWords(e.target.value)} placeholder="What they felt, noticed, or glimpsed" />
+      <label className="field">
+        <span>What the player said</span>
+        <input className="input" value={words} maxLength={500} onChange={(e) => setWords(e.target.value)} placeholder="What they felt, noticed, or glimpsed" />
       </label>
-      <label title={procedure}>
-        The System's vision
-        <textarea value={vision} maxLength={1000} rows={2} onChange={(e) => setVision(e.target.value)} placeholder="Three images: the moment with one detail changed, the Principle in a pure or alien form, one image that misleads" />
+      <label className="field" title={procedure}>
+        <span>The System's vision</span>
+        <textarea className="textarea" value={vision} maxLength={1000} rows={2} onChange={(e) => setVision(e.target.value)} placeholder="Three images: the moment with one detail changed, the Principle in a pure or alien form, one image that misleads" />
       </label>
       {ai && (
-        <div className="form-row">
-          <button disabled={drafting} onClick={draft}>
+        <div className="cluster">
+          <button className="btn btn--sm" disabled={drafting} onClick={draft}>
             {drafting ? "Drafting…" : "Draft the vision"}
           </button>
-          <span className="muted small">From the card, the family, and what the player said; it proposes the Insight too.</span>
+          <span className="small dim">From the card, the family, and what the player said; it proposes the Insight too.</span>
         </div>
       )}
       {draftError && <p className="error">{draftError}</p>}
-      {note && <p className="muted small">{note.why}</p>}
+      {note && <p className="small dim">{note.why}</p>}
       {flags.length > 0 && <p className="warning small">The draft may break the voice: {flags.join(", ")}.</p>}
       <TableWords text={vision} />
       <Commit
@@ -195,12 +204,12 @@ function AwardForm({ view, engine, names, onRecorded, c }: Props & { c: Sheet })
   const [ip, setIp] = useState(row.ip_min);
   const amount = Math.min(Math.max(ip, row.ip_min), row.ip_max);
   return (
-    <details>
-      <summary>Award Insight</summary>
-      <div className="form">
-        <label>
-          Source
-          <select value={source} onChange={(e) => setSource(e.target.value)}>
+    <details className="small principles-award">
+      <summary className="dim">Award Insight</summary>
+      <div className="stack principles-award__form">
+        <label className="field">
+          <span>Source</span>
+          <select className="select" value={source} onChange={(e) => setSource(e.target.value)}>
             {sources.map((s) => (
               <option key={s.source} value={s.source}>
                 {s.source} ({s.ip_min === s.ip_max ? s.ip_min : `${s.ip_min} to ${s.ip_max}`})
@@ -208,11 +217,11 @@ function AwardForm({ view, engine, names, onRecorded, c }: Props & { c: Sheet })
             ))}
           </select>
         </label>
-        <div className="form-row tight">
+        <div className="principles-pair">
           <FamilySelect engine={engine} value={family} onChange={setFamily} />
-          <label>
-            Insight
-            <select value={amount} onChange={(e) => setIp(Number(e.target.value))}>
+          <label className="field">
+            <span>Insight</span>
+            <select className="select" value={amount} onChange={(e) => setIp(Number(e.target.value))}>
               {Array.from({ length: row.ip_max - row.ip_min + 1 }, (_, i) => row.ip_min + i).map((n) => (
                 <option key={n} value={n}>
                   {n}
@@ -240,24 +249,30 @@ function NameForm({ view, engine, names, onRecorded, c, family }: Props & { c: S
   const circled = c.hve.sweeps.flatMap((s) => s.moments.filter((m) => circledWeights.has(m.weight) && m.note).map((m) => m.note!));
   const words = c.principles.memories.filter((m) => m.meditation?.family === family && m.meditation.words).map((m) => m.meditation!.words!);
   return (
-    <div className="crystallizing">
+    <div className="stack principles-drawer">
       <p>
-        <strong>{family}</strong> has reached {engine.rules.principles.crystallizes_at_ip} Insight: name the Principle. Say it to the player first; they may ask
-        once for another reading.
+        <b>{family}</b> has reached <span className="num">{engine.rules.principles.crystallizes_at_ip}</span> Insight: name the Principle. Say it to the player
+        first; they may ask once for another reading.
       </p>
-      {circled.length > 0 && <p className="small">Circled: {circled.join(" · ")}</p>}
-      {words.length > 0 && <p className="small">In the player's words: {words.join(" · ")}</p>}
-      <div className="form">
-        <label>
-          Principle
-          <input value={name} maxLength={60} onChange={(e) => setName(e.target.value)} placeholder="Weight" />
-        </label>
-        <TableWords text={name} />
-        <label>
-          Minor passive
-          <input value={passive} maxLength={300} onChange={(e) => setPassive(e.target.value)} placeholder={engine.rules.principles.initial_insight_passive_example} />
-        </label>
-      </div>
+      {circled.length > 0 && (
+        <p className="small">
+          <span className="dim">Circled:</span> {circled.join(" · ")}
+        </p>
+      )}
+      {words.length > 0 && (
+        <p className="small">
+          <span className="dim">In the player's words:</span> {words.join(" · ")}
+        </p>
+      )}
+      <label className="field">
+        <span>Principle</span>
+        <input className="input" value={name} maxLength={60} onChange={(e) => setName(e.target.value)} placeholder="Weight" />
+      </label>
+      <TableWords text={name} />
+      <label className="field">
+        <span>Minor passive</span>
+        <input className="input" value={passive} maxLength={300} onChange={(e) => setPassive(e.target.value)} placeholder={engine.rules.principles.initial_insight_passive_example} />
+      </label>
       <Commit
         campaignId={view.campaign.id}
         action={name.trim() ? { type: "principle.name", characterId: c.id, family, name: name.trim(), ...(passive.trim() ? { passive: passive.trim() } : {}) } : null}
@@ -310,88 +325,94 @@ function DistillForm({ view, engine, names, onRecorded, c, x, refine }: Props & 
   const test = (engine.rules.principles.distillation_test as string[]).join(", ");
   const problem = !articulations.length ? "State the articulation." : refine && !rename.trim() ? "Name the new identity." : null;
   return (
-    <div className="form">
+    <div className="stack principles-drawer">
       <p className="small">
         {refine ? `Reshaping at ${x.tier}: same slot, same Insight, a shifted identity.` : `Distillation to ${tier}.`} The articulation must be {test}.
       </p>
-      {ai && (
-        <div className="disclosure">
-          <label>
-            What the player has said (optional)
-            <input className="wide" value={words} maxLength={2000} onChange={(e) => setWords(e.target.value)} placeholder="I hit stuff, and I stand in front of people?" />
-          </label>
-          <div className="form-row">
-            <button disabled={busy} onClick={draft}>
-              {busy ? "Drafting…" : drafted ? "Draft again" : "Draft two readings"}
-            </button>
-            <span className="muted small">From the circled moments, the meditations, and the player's words.</span>
+      <div className={ai ? "principles-distill" : "stack"}>
+        {ai && (
+          <div className="panel panel--sunken stack principles-readings">
+            <label className="field">
+              <span>What the player has said (optional)</span>
+              <input className="input" value={words} maxLength={2000} onChange={(e) => setWords(e.target.value)} placeholder="I hit stuff, and I stand in front of people?" />
+            </label>
+            <div className="cluster">
+              <button className="btn btn--sm" disabled={busy} onClick={draft}>
+                {busy ? "Drafting…" : drafted ? "Draft again" : "Draft two readings"}
+              </button>
+              <span className="small dim">From the circled moments, the meditations, and the player's words.</span>
+            </div>
+            {error && <p className="error">{error}</p>}
+            {drafted && (
+              <ol className="small principles-readings__list">
+                {drafted.readings.map((r, i) => (
+                  <li key={i} className="stack">
+                    <div>
+                      <b>{r.articulation}</b> <span className="dim">Or: {r.phrasing}</span>
+                    </div>
+                    <div>
+                      {refine ? "New identity" : "Grant"}: {r.name}. {r.effect}
+                    </div>
+                    <div className="dim">
+                      Does: {r.test.operational}. Stops: {r.test.bounded}. Seen: {r.test.testable}.
+                    </div>
+                    {r.flags.map((f) => (
+                      <p key={f} className="warning small">
+                        {f}
+                      </p>
+                    ))}
+                    <div>
+                      <button className="btn-link" onClick={() => take(r)}>
+                        Use this reading
+                      </button>
+                    </div>
+                  </li>
+                ))}
+                {drafted.attunements && <li className="dim">Attunements: {drafted.attunements}</li>}
+              </ol>
+            )}
           </div>
-          {error && <p className="error">{error}</p>}
-          {drafted && (
-            <ol className="small">
-              {drafted.readings.map((r, i) => (
-                <li key={i}>
-                  <strong>{r.articulation}</strong> <span className="muted">Or: {r.phrasing}</span>
-                  <br />
-                  {refine ? "New identity" : "Grant"}: {r.name}. {r.effect}
-                  <br />
-                  <span className="muted">
-                    Does: {r.test.operational}. Stops: {r.test.bounded}. Seen: {r.test.testable}.
-                  </span>
-                  {r.flags.map((f) => (
-                    <p key={f} className="warning small">
-                      {f}
-                    </p>
-                  ))}
-                  <div>
-                    <button className="link" onClick={() => take(r)}>
-                      Use this reading
-                    </button>
-                  </div>
-                </li>
-              ))}
-              {drafted.attunements && <li className="muted">Attunements: {drafted.attunements}</li>}
-            </ol>
-          )}
-        </div>
-      )}
-      <label className="check">
-        <input type="checkbox" checked={quiet} onChange={(e) => setQuiet(e.target.checked)} /> The Quiet Path: offer it for the player to confirm
-      </label>
-      <label>
-        {quiet ? "Phrasing one" : "The articulation"}
-        <input value={a1} maxLength={500} onChange={(e) => setA1(e.target.value)} placeholder="The mountain does not strike. It arrives." />
-      </label>
-      {quiet && (
-        <label>
-          Phrasing two (optional)
-          <input value={a2} maxLength={500} onChange={(e) => setA2(e.target.value)} />
-        </label>
-      )}
-      <label>
-        {refine ? "New identity" : "Broadened name (optional)"}
-        <input value={rename} maxLength={60} onChange={(e) => setRename(e.target.value)} placeholder={refine ? "Consuming Flame" : "Gravity"} />
-      </label>
-      <TableWords text={rename} />
-      {!refine && (
-        <>
-          <label>
-            {tier === "Mid Fragment" ? "Infusion: what the Principle's force means" : tier === "Peak Fragment" ? "Domain" : "Application"}
-            <input value={grant} maxLength={80} onChange={(e) => setGrant(e.target.value)} placeholder={tier === "Seed" ? "Searing Strike" : ""} />
+        )}
+        <div className="stack principles-distill__fields">
+          <label className="check">
+            <input type="checkbox" checked={quiet} onChange={(e) => setQuiet(e.target.checked)} /> The Quiet Path: offer it for the player to confirm
           </label>
-          <TableWords text={grant} />
-          <label>
-            Effect
-            <textarea value={text} maxLength={1000} rows={2} onChange={(e) => setText(e.target.value)} placeholder="Within the Modifier Budget: +5 minor, +10 standard, +15 to +20 peak" />
+          <label className="field">
+            <span>{quiet ? "Phrasing one" : "The articulation"}</span>
+            <input className="input" value={a1} maxLength={500} onChange={(e) => setA1(e.target.value)} placeholder="The mountain does not strike. It arrives." />
           </label>
-          {tier === "Seed" && (
-            <label>
-              Attunements beyond the baseline
-              <input value={attune} maxLength={1000} onChange={(e) => setAttune(e.target.value)} />
+          {quiet && (
+            <label className="field">
+              <span>Phrasing two (optional)</span>
+              <input className="input" value={a2} maxLength={500} onChange={(e) => setA2(e.target.value)} />
             </label>
           )}
-        </>
-      )}
+          <label className="field">
+            <span>{refine ? "New identity" : "Broadened name (optional)"}</span>
+            <input className="input" value={rename} maxLength={60} onChange={(e) => setRename(e.target.value)} placeholder={refine ? "Consuming Flame" : "Gravity"} />
+          </label>
+          <TableWords text={rename} />
+          {!refine && (
+            <>
+              <label className="field">
+                <span>{tier === "Mid Fragment" ? "Infusion: what the Principle's force means" : tier === "Peak Fragment" ? "Domain" : "Application"}</span>
+                <input className="input" value={grant} maxLength={80} onChange={(e) => setGrant(e.target.value)} placeholder={tier === "Seed" ? "Searing Strike" : ""} />
+              </label>
+              <TableWords text={grant} />
+              <label className="field">
+                <span>Effect</span>
+                <textarea className="textarea" value={text} maxLength={1000} rows={2} onChange={(e) => setText(e.target.value)} placeholder="Within the Modifier Budget: +5 minor, +10 standard, +15 to +20 peak" />
+              </label>
+              {tier === "Seed" && (
+                <label className="field">
+                  <span>Attunements beyond the baseline</span>
+                  <input className="input" value={attune} maxLength={1000} onChange={(e) => setAttune(e.target.value)} />
+                </label>
+              )}
+            </>
+          )}
+        </div>
+      </div>
       <Commit
         campaignId={view.campaign.id}
         action={
@@ -427,72 +448,98 @@ function CharacterCard(props: Props & { c: Sheet }) {
   const [open, setOpen] = useState<string | null>(null);
   const toggle = (k: string) => setOpen(open === k ? null : k);
   return (
-    <section className="card">
-      <h3>
-        {c.name}
-        {c.dead && <span className="tag danger">dead</span>}
-      </h3>
-      {p.principles.map((x) => (
-        <div key={x.family} className="principle-entry">
-          <div>
-            <strong>{x.name}</strong> <span className="muted small">{x.family} · {x.tier}</span>
-          </div>
-          <div className="small">
-            Insight {x.ip}
-            {x.next ? `/${x.next.ip} for ${x.next.tier}` : ""}
-            {x.distillable && <span className="tag attention">Distillation available</span>}
-            {x.offer && <span className="tag">offered, waiting on the player</span>}
-          </div>
-          {x.passive && <div className="small">{x.passive}</div>}
-          {x.grants.map((g) => (
-            <div key={g.id} className="small grant">
-              {g.tier}: {g.kind === "refinement" ? `reshaped from ${g.from}` : (g.name ?? g.kind)}
-              {g.aether ? ` · ${g.aether} Aether` : ""} · <em>{g.articulation}</em>
-            </div>
-          ))}
-          {!c.dead && !x.offer && (
-            <div className="form-row tight">
-              {x.distillable && <button onClick={() => toggle(`d:${x.family}`)}>Distill</button>}
-              <button onClick={() => toggle(`r:${x.family}`)}>Reshape</button>
-            </div>
-          )}
-          {open === `d:${x.family}` && x.distillable && !x.offer && <DistillForm {...props} x={x} refine={false} />}
-          {open === `r:${x.family}` && !x.offer && <DistillForm {...props} x={x} refine={true} />}
-        </div>
-      ))}
-      {p.crystallizing && !c.dead && <NameForm {...props} family={p.crystallizing} />}
-      {Object.entries(p.insight)
-        .filter(([f, ip]) => ip > 0 && !p.principles.some((x) => x.family === f))
-        .map(([f, ip]) => (
-          <div key={f} className="small">
-            Resonance: {f} {ip}/{engine.rules.principles.crystallizes_at_ip}
-          </div>
-        ))}
-      {held.length > 0 && (
-        <>
-          <h4>Battle Memories held</h4>
-          <ul className="moments">
-            {held.map((m) => (
-              <li key={m.id}>
-                {m.text} <span className="muted small">({m.source})</span>
-                {m.chosen && <span className="tag attention">chosen</span>}{" "}
-                {rested(m.afterRests) ? (
-                  !c.dead && (
-                    <button className="link" onClick={() => toggle(`m:${m.id}`)}>
-                      meditation
+    <article className="panel principles-panel principles-card" aria-label={c.name}>
+      <div className="panel__head">
+        <h3>{c.name}</h3>
+        {c.dead && <span className="tag tag--danger">dead</span>}
+      </div>
+      <div className="panel__body stack principles-card__body">
+        {p.principles.map((x) => (
+          <Fragment key={x.family}>
+            <div className="stack principles-entry">
+              <div>
+                <b className="principles-entry__name">{x.name}</b>{" "}
+                <span className="small dim">
+                  {x.family} · {x.tier}
+                </span>
+              </div>
+              <div className="cluster small">
+                <span>
+                  Insight{" "}
+                  <span className="num">
+                    {x.ip}
+                    {x.next ? `/${x.next.ip}` : ""}
+                  </span>
+                  {x.next ? ` for ${x.next.tier}` : ""}
+                </span>
+                {x.distillable && <span className="tag tag--solid">Distillation available</span>}
+                {x.offer && <span className="tag">offered, waiting on the player</span>}
+              </div>
+              {x.passive && <div className="small">{x.passive}</div>}
+              {x.grants.map((g) => (
+                <div key={g.id} className="small">
+                  {g.tier}: {g.kind === "refinement" ? `reshaped from ${g.from}` : (g.name ?? g.kind)}
+                  {g.aether ? ` · ${g.aether} Aether` : ""} · <em>{g.articulation}</em>
+                </div>
+              ))}
+              {!c.dead && !x.offer && (
+                <div className="cluster principles-entry__actions">
+                  {x.distillable && (
+                    <button className="btn btn--sm" aria-expanded={open === `d:${x.family}`} onClick={() => toggle(`d:${x.family}`)}>
+                      Distill
                     </button>
-                  )
-                ) : (
-                  <span className="muted small">meditation at a later Consolidation</span>
-                )}
-                {open === `m:${m.id}` && <MeditateForm {...props} memoryId={m.id} />}
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-      {!c.dead && <AwardForm {...props} />}
-    </section>
+                  )}
+                  <button className="btn btn--sm" aria-expanded={open === `r:${x.family}`} onClick={() => toggle(`r:${x.family}`)}>
+                    Reshape
+                  </button>
+                </div>
+              )}
+            </div>
+            {open === `d:${x.family}` && x.distillable && !x.offer && <DistillForm {...props} x={x} refine={false} />}
+            {open === `r:${x.family}` && !x.offer && <DistillForm {...props} x={x} refine={true} />}
+          </Fragment>
+        ))}
+        {p.crystallizing && !c.dead && <NameForm {...props} family={p.crystallizing} />}
+        {Object.entries(p.insight)
+          .filter(([f, ip]) => ip > 0 && !p.principles.some((x) => x.family === f))
+          .map(([f, ip]) => (
+            <p key={f} className="small">
+              Resonance: {f}{" "}
+              <span className="num">
+                {ip}/{engine.rules.principles.crystallizes_at_ip}
+              </span>
+            </p>
+          ))}
+        {held.length > 0 && (
+          <div className="stack principles-held">
+            <h4>Battle Memories held</h4>
+            <ul className="rows">
+              {held.map((m) => (
+                <li key={m.id} className="principles-memory">
+                  <span className="row__main">
+                    {m.text} <span className="small dim">({m.source})</span>
+                  </span>
+                  <div className="row__actions">
+                    {m.chosen && <span className="tag">chosen</span>}
+                    {rested(m.afterRests) ? (
+                      !c.dead && (
+                        <button className="btn-link small" aria-expanded={open === `m:${m.id}`} onClick={() => toggle(`m:${m.id}`)}>
+                          meditation
+                        </button>
+                      )
+                    ) : (
+                      <span className="small dim">meditation at a later Consolidation</span>
+                    )}
+                  </div>
+                  {open === `m:${m.id}` && <MeditateForm {...props} memoryId={m.id} />}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {!c.dead && <AwardForm {...props} />}
+      </div>
+    </article>
   );
 }
 
@@ -500,14 +547,14 @@ export function PrinciplesSection({ view, engine, names, onRecorded }: { view: G
   if (!engine) return <p className="muted pad">Loading rules…</p>;
   const props = { view, engine, names, onRecorded };
   return (
-    <main className="gm-split">
-      <div>
+    <main className="screen screen--side principles-screen">
+      <div className="stack principles-main">
         <MemoriesDueCard view={view} names={names} onRecorded={onRecorded} />
         {view.characters.map((c) => (
           <CharacterCard key={c.id} {...props} c={c} />
         ))}
       </div>
-      <aside className="side">
+      <aside className="side principles-side">
         <GrantForm view={view} names={names} onRecorded={onRecorded} />
       </aside>
     </main>

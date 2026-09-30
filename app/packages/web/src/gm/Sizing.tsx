@@ -52,25 +52,25 @@ export function SizingPanel({ engine, party, creatures }: { engine: Engine; part
   const grade = party[0]!.grade;
   const s = sizeEncounter(engine, level, party.length, grade, creatures);
   return (
-    <div className="sizing">
-      <div className="form-row">
+    <div className="sizing stack">
+      <div className="cluster sizing__head">
         <strong>{s.column ? LABEL[s.column] : "Not sized by the table"}</strong>
-        <span className="muted small">
+        <span className="small dim grow">
           for {party.length} at Level {level} ({s.row} row)
           {s.force !== undefined && `; the fight counts as Force ${s.force}`}
           {s.columns && `; this party's columns: easy ${s.columns.easy}, standard ${s.columns.standard}, hard ${s.columns.hard}`}
         </span>
-        <label className="inline-label">
-          Party level
-          <input type="number" className="narrow-input" min={1} max={25} value={override} placeholder={String(computed)} onChange={(e) => setOverride(e.target.value)} />
+        <label className="field field--row">
+          <span>Party level</span>
+          <input type="number" className="input num sizing__level" min={1} max={25} value={override} placeholder={String(computed)} onChange={(e) => setOverride(e.target.value)} />
         </label>
       </div>
       {s.notes.map((n) => (
-        <p key={n} className="muted small">
+        <p key={n} className="small dim">
           {n}
         </p>
       ))}
-      <p className="muted small">
+      <p className="small dim">
         A standard fight Downs a character in about one fight in five; a hard one doubles that. The Hard column assumes the top of the band; terrain with nowhere to be driven is deadlier.
       </p>
     </div>

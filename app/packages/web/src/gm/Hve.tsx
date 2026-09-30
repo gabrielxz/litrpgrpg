@@ -4,6 +4,7 @@
  * record moves Current into Deep, and each character's standing sheet (Deep, Coherence, the
  * circled notes, past sweeps). Nothing here reaches a player.
  */
+import "../css/hve-log.css";
 import type { Engine } from "@gradebreaker/engine";
 import {
   type CampaignEvent,
@@ -25,6 +26,7 @@ import { Commit } from "./Commit.tsx";
 import { entryLine } from "./Events.tsx";
 import { startOpportunity } from "../api.ts";
 import type { DraftRuns } from "./Drafts.tsx";
+import { Icon } from "../ui.tsx";
 
 type Drafts = Record<string, Moment[]>;
 
@@ -83,75 +85,85 @@ function AddMoment({ engine, onAdd }: { engine: Engine; onAdd: (m: Moment) => vo
     setCoercion(false);
   };
   return (
-    <div className="moment-form">
-      <label>
-        Side
-        <select
-          value={pole}
-          onChange={(e) => {
-            setPole(e.target.value);
-            if (secondary && axisOf(secondary) === axisOf(e.target.value)) setSecondary("");
-          }}
-        >
-          {ax.map((a) => (
-            <optgroup key={a.name} label={a.name}>
-              {a.poles.map((p) => (
-                <option key={p}>{p}</option>
-              ))}
-            </optgroup>
-          ))}
-        </select>
-      </label>
-      <label>
-        Weight
-        <select value={weight} onChange={(e) => setWeight(Number(e.target.value))}>
-          {ws.map((x) => (
-            <option key={x.tallies} value={x.tallies}>
-              {x.tallies}: {x.name}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label title="A moment that clearly reads on two axes tallies its secondary one weight lower">
-        Also reads on
-        <select value={secondary} disabled={weight < 2} onChange={(e) => setSecondary(e.target.value)}>
-          <option value="">nothing else</option>
-          {ax
-            .filter((a) => a.name !== axisOf(pole))
-            .map((a) => (
+    <div className="stack hve-moment">
+      <div className="hve-moment__fields">
+        <label className="field">
+          <span>Side</span>
+          <select
+            className="select"
+            value={pole}
+            onChange={(e) => {
+              setPole(e.target.value);
+              if (secondary && axisOf(secondary) === axisOf(e.target.value)) setSecondary("");
+            }}
+          >
+            {ax.map((a) => (
               <optgroup key={a.name} label={a.name}>
                 {a.poles.map((p) => (
-                  <option key={p} value={p}>
-                    {p} ({weight - 1})
-                  </option>
+                  <option key={p}>{p}</option>
                 ))}
               </optgroup>
             ))}
-        </select>
-      </label>
-      <label className="grow">
-        {w.margin_note ? "Margin note (required)" : "Note"}
-        <input value={note} maxLength={300} onChange={(e) => setNote(e.target.value)} placeholder={w.margin_note ? "One line: what they did" : "Optional cue"} />
-      </label>
-      <label className="check">
-        <input type="checkbox" checked={coercion} onChange={(e) => setCoercion(e.target.checked)} />
-        Coercion of a player character
-      </label>
-      <button disabled={Boolean(problem)} onClick={add}>
-        Add
-      </button>
-      {problem && <p className="muted small">{problem}</p>}
+          </select>
+        </label>
+        <label className="field">
+          <span>Weight</span>
+          <select className="select" value={weight} onChange={(e) => setWeight(Number(e.target.value))}>
+            {ws.map((x) => (
+              <option key={x.tallies} value={x.tallies}>
+                {x.tallies}: {x.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="field" title="A moment that clearly reads on two axes tallies its secondary one weight lower">
+          <span>Also reads on</span>
+          <select className="select" value={secondary} disabled={weight < 2} onChange={(e) => setSecondary(e.target.value)}>
+            <option value="">nothing else</option>
+            {ax
+              .filter((a) => a.name !== axisOf(pole))
+              .map((a) => (
+                <optgroup key={a.name} label={a.name}>
+                  {a.poles.map((p) => (
+                    <option key={p} value={p}>
+                      {p} ({weight - 1})
+                    </option>
+                  ))}
+                </optgroup>
+              ))}
+          </select>
+        </label>
+        <label className="field">
+          <span>{w.margin_note ? "Margin note (required)" : "Note"}</span>
+          <input className="input" value={note} maxLength={300} onChange={(e) => setNote(e.target.value)} placeholder={w.margin_note ? "One line: what they did" : "Optional cue"} />
+        </label>
+      </div>
+      <div className="cluster hve-moment__act">
+        <label className="check small">
+          <input type="checkbox" checked={coercion} onChange={(e) => setCoercion(e.target.checked)} />
+          Coercion of a player character
+        </label>
+        <button className="btn btn--sm" type="button" disabled={Boolean(problem)} onClick={add}>
+          <Icon name="add" />
+          Add
+        </button>
+      </div>
+      {problem && <p className="problem">{problem}</p>}
     </div>
   );
 }
 
 /** Four rows, one per axis: Current as tallied so far, and Deep as it stands. */
 function SheetRows({ engine, current, deep }: { engine: Engine; current: Record<string, number> | null; deep: Record<string, number> }) {
-  const side = (v: Record<string, number>, p: string) => <span className={v[p] ? "" : "muted"}>{`${p} ${v[p] ?? 0}`}</span>;
+  const side = (v: Record<string, number>, p: string) => (
+    <span className={v[p] ? undefined : "dim"}>
+      {p} <span className="num">{v[p] ?? 0}</span>
+    </span>
+  );
   return (
-    <table className="rows hve-rows">
+    <table className={`hve-axes${current ? " hve-axes--current" : ""}`}>
       <thead>
-        <tr>
+        <tr className="label">
           <th>Axis</th>
           {current && <th>Current</th>}
           <th>Deep</th>
@@ -163,11 +175,11 @@ function SheetRows({ engine, current, deep }: { engine: Engine; current: Record<
             <td>{a.name}</td>
             {current && (
               <td>
-                {side(current, a.poles[0])} | {side(current, a.poles[1])}
+                {side(current, a.poles[0])} <span className="dim">|</span> {side(current, a.poles[1])}
               </td>
             )}
             <td>
-              {side(deep, a.poles[0])} | {side(deep, a.poles[1])}
+              {side(deep, a.poles[0])} <span className="dim">|</span> {side(deep, a.poles[1])}
             </td>
           </tr>
         ))}
@@ -202,64 +214,69 @@ function SweepForm({ view, engine, names, onRecorded }: { view: GmView; engine: 
   const sheets = living.filter((c) => momentsOf(c.id).length > 0).map((c) => ({ characterId: c.id, moments: momentsOf(c.id) }));
   const total = sheets.reduce((n, s) => n + Object.values(currentOf(engine, s.moments)).reduce((a, b) => a + b, 0), 0);
   return (
-    <section className="card">
-      <h2>The session-end sweep</h2>
-      <p>
-        Say the session's three biggest moments out loud with the table and name what they share. The tallies that follow are yours alone:
-        tally only what you recall without effort.
-      </p>
-      <details>
-        <summary>Weighing a moment</summary>
-        <table className="rows">
-          <thead>
-            <tr>
-              <th>Weight</th>
-              <th>What qualifies</th>
-              <th>Example</th>
-            </tr>
-          </thead>
-          <tbody>
-            {(sweep.weights as Weight[]).map((w) => (
-              <tr key={w.tallies}>
-                <td>
-                  {w.tallies ? `${w.tallies}: ` : ""}
-                  {w.name}
-                  {w.circled ? ", circled" : ""}
-                </td>
-                <td>{w.qualifies}</td>
-                <td className="muted">{w.example}</td>
+    <section className="panel hve-sweep" aria-label="The session-end sweep">
+      <div className="panel__head">
+        <i className="ic ic-hve dim" aria-hidden="true" />
+        <h2>The session-end sweep</h2>
+      </div>
+      <div className="panel__body stack hve-panel-body">
+        <p className="hve-intro">
+          Say the session's three biggest moments out loud with the table and name what they share. The tallies that follow are yours alone:
+          tally only what you recall without effort.
+        </p>
+        <details className="small hve-weighing">
+          <summary>Weighing a moment</summary>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Weight</th>
+                <th>What qualifies</th>
+                <th>Example</th>
               </tr>
+            </thead>
+            <tbody>
+              {(sweep.weights as Weight[]).map((w) => (
+                <tr key={w.tallies}>
+                  <td>
+                    {w.tallies ? `${w.tallies}: ` : ""}
+                    {w.name}
+                    {w.circled ? ", circled" : ""}
+                  </td>
+                  <td>{w.qualifies}</td>
+                  <td className="dim">{w.example}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <ul>
+            {(sweep.calibration as string[]).map((c) => (
+              <li key={c}>{c.charAt(0).toUpperCase() + c.slice(1)}.</li>
             ))}
-          </tbody>
-        </table>
-        <ul className="small">
-          {(sweep.calibration as string[]).map((c) => (
-            <li key={c}>{c.charAt(0).toUpperCase() + c.slice(1)}.</li>
-          ))}
-          <li>Coercion aimed at another player character is always at least {sweep.pvp_coercion_min_will_tallies} tallies of Will.</li>
-        </ul>
-      </details>
-      <label>
-        Session
-        <input value={label} maxLength={80} onChange={(e) => setLabel(e.target.value)} placeholder={running ? sessionName(running) : "Session 3"} />
-      </label>
-      {!running && <p className="muted small">No session is running; name the session this sweep closes.</p>}
-      {living.length === 0 && <p className="muted">No characters yet.</p>}
+            <li>Coercion aimed at another player character is always at least {sweep.pvp_coercion_min_will_tallies} tallies of Will.</li>
+          </ul>
+        </details>
+        <label className="field hve-session">
+          <span>Session</span>
+          <input className="input" value={label} maxLength={80} onChange={(e) => setLabel(e.target.value)} placeholder={running ? sessionName(running) : "Session 3"} />
+        </label>
+        {!running && <p className="small dim">No session is running; name the session this sweep closes.</p>}
+        {living.length === 0 && <p className="dim">No characters yet.</p>}
+      </div>
       {living.map((c) => (
-        <div key={c.id} className="sweep-sheet">
+        <div key={c.id} className="stack hve-sheet" role="group" aria-label={`${c.name}'s sweep sheet`}>
           <h3>{c.name}</h3>
           {logged(c.id).length > 0 && (
-            <div>
-              <h4>Logged since the last sweep</h4>
-              <ul className="moments">
+            <div className="stack hve-list">
+              <h4 className="dim">Logged since the last sweep</h4>
+              <ul className="stack hve-list">
                 {logged(c.id).map(({ e, x }) => (
                   <li key={e.id}>
-                    <label className="check">
+                    <label className="check small hve-logged">
                       <input type="checkbox" checked={isIn(e, x)} onChange={(ev) => setPicked({ ...picked, [`${e.id}:${x.characterId}`]: ev.target.checked })} />
                       <span>
                         {entryLine(x)}
-                        {x.intensity === below && <span className="muted"> ({isIn(e, x) ? "raised to a full tally" : "a reminder"})</span>}
-                        <span className="muted"> · {e.summary}</span>
+                        {x.intensity === below && <span className="dim"> ({isIn(e, x) ? "raised to a full tally" : "a reminder"})</span>}
+                        <span className="dim"> · {e.summary}</span>
                       </span>
                     </label>
                   </li>
@@ -268,12 +285,12 @@ function SweepForm({ view, engine, names, onRecorded }: { view: GmView; engine: 
             </div>
           )}
           {handMoments(c.id).length > 0 && (
-            <ul className="moments">
+            <ul className="stack small hve-list">
               {handMoments(c.id).map((m, i) => (
                 <li key={i}>
-                  <span className={ws.find((w) => w.tallies === m.weight)?.circled ? "circled" : ""}>{momentLine(ws, m)}</span>
-                  {m.note && <span className="muted"> · {m.note}</span>}{" "}
-                  <button className="link" onClick={() => set(c.id, handMoments(c.id).filter((_, j) => j !== i))}>
+                  <span className={ws.find((w) => w.tallies === m.weight)?.circled ? "circled" : undefined}>{momentLine(ws, m)}</span>
+                  {m.note && <span className="dim"> · {m.note}</span>}{" "}
+                  <button className="btn-link" type="button" onClick={() => set(c.id, handMoments(c.id).filter((_, j) => j !== i))}>
                     remove
                   </button>
                 </li>
@@ -285,8 +302,11 @@ function SweepForm({ view, engine, names, onRecorded }: { view: GmView; engine: 
         </div>
       ))}
       {total > high && (
-        <p className="warn small">
-          {total} tallies across the party. A normal session runs {low} to {high}; more usually means table talk is being counted.
+        <p className="callout hve-callout" role="status">
+          <Icon name="warning" />
+          <span>
+            {total} tallies across the party. A normal session runs {low} to {high}; more usually means table talk is being counted.
+          </span>
         </p>
       )}
       <Commit
@@ -311,14 +331,14 @@ function CopyDeep({ view, engine, c, names, onRecorded }: { view: GmView; engine
   const [deep, setDeep] = useState<Record<string, number>>({ ...c.hve.deep });
   const bad = Object.values(deep).some((n) => !Number.isInteger(n) || n < 0);
   return (
-    <details>
-      <summary>Copy Deep across from a paper sheet</summary>
-      <div className="deep-inputs">
+    <details className="small hve-disclosure">
+      <summary className="dim">Copy Deep across from a paper sheet</summary>
+      <div className="hve-deep">
         {axes(engine).flatMap((a) =>
           a.poles.map((p) => (
-            <label key={p}>
-              {p}
-              <input type="number" min={0} value={deep[p] ?? 0} onChange={(e) => setDeep({ ...deep, [p]: Number(e.target.value) })} />
+            <label key={p} className="field">
+              <span>{p}</span>
+              <input className="input num" type="number" min={0} value={deep[p] ?? 0} onChange={(e) => setDeep({ ...deep, [p]: Number(e.target.value) })} />
             </label>
           )),
         )}
@@ -340,43 +360,45 @@ function StandingSheet({ view, engine, c, names, onRecorded }: { view: GmView; e
   const circled = new Set(ws.filter((w) => w.circled).map((w) => w.tallies));
   const notes = c.hve.sweeps.flatMap((s) => s.moments.filter((m) => circled.has(m.weight) && m.note).map((m) => ({ s, m })));
   return (
-    <section className="card">
-      <h3>
-        {c.name}
-        {c.dead && <span className="tag danger">dead</span>}
-      </h3>
-      <p>
-        <strong>{c.hve.coherence.profile}</strong> (Coherence +{c.hve.coherence.bonus})
-        {c.hve.archetype && <span className="muted"> · reads as {c.hve.archetype}</span>}
-      </p>
-      <SheetRows engine={engine} current={null} deep={c.hve.deep} />
-      {notes.length > 0 && (
-        <div>
-          <h4>Circled</h4>
-          <ul className="moments">
-            {notes.map(({ s, m }, i) => (
-              <li key={i}>
-                <span className="circled">{m.pole}</span> {m.note}
-                {s.label && <span className="muted"> ({s.label})</span>}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {c.hve.sweeps.length > 0 && (
-        <details>
-          <summary>Sweeps ({c.hve.sweeps.length})</summary>
-          <ul className="moments small">
-            {[...c.hve.sweeps].reverse().map((s) => (
-              <li key={s.id}>
-                <strong>{s.label ?? "Unnamed session"}</strong>: {s.moments.map((m) => momentLine(ws, m)).join("; ")}
-                {s.added.length ? ` → Deep ${s.added.map((p) => `${p} +1`).join(", ")}` : " → Deep unchanged"}
-              </li>
-            ))}
-          </ul>
-        </details>
-      )}
-      {!c.dead && <CopyDeep view={view} engine={engine} c={c} names={names} onRecorded={onRecorded} />}
+    <section className="panel hve-standing" aria-label={c.name}>
+      <div className="panel__head">
+        <h3>{c.name}</h3>
+        {c.dead && <span className="tag tag--danger">dead</span>}
+      </div>
+      <div className="panel__body stack hve-standing__body">
+        <p className="small">
+          <b>{c.hve.coherence.profile}</b> (Coherence +{c.hve.coherence.bonus})
+          {c.hve.archetype && <span className="dim"> · reads as {c.hve.archetype}</span>}
+        </p>
+        <SheetRows engine={engine} current={null} deep={c.hve.deep} />
+        {notes.length > 0 && (
+          <div className="stack small hve-circled">
+            <h4>Circled</h4>
+            <ul className="stack hve-circled">
+              {notes.map(({ s, m }, i) => (
+                <li key={i}>
+                  <span className="circled">{m.pole}</span> {m.note}
+                  {s.label && <span className="dim"> ({s.label})</span>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {c.hve.sweeps.length > 0 && (
+          <details className="small hve-disclosure">
+            <summary className="dim">Sweeps ({c.hve.sweeps.length})</summary>
+            <ul className="stack hve-circled">
+              {[...c.hve.sweeps].reverse().map((s) => (
+                <li key={s.id}>
+                  <b>{s.label ?? "Unnamed session"}</b>: {s.moments.map((m) => momentLine(ws, m)).join("; ")}
+                  {s.added.length ? ` → Deep ${s.added.map((p) => `${p} +1`).join(", ")}` : " → Deep unchanged"}
+                </li>
+              ))}
+            </ul>
+          </details>
+        )}
+        {!c.dead && <CopyDeep view={view} engine={engine} c={c} names={names} onRecorded={onRecorded} />}
+      </div>
     </section>
   );
 }
@@ -409,16 +431,19 @@ function OpportunityCard({ view, drafts }: { view: GmView; drafts: DraftRuns }) 
   };
   if (!living.length) return null;
   return (
-    <section className="card">
-      <h2>Personal Opportunities</h2>
-      <p className="muted small">
-        Drafted after the sweep, from the character's sheet, the sweep's moments, and the situation. The draft waits in Suggestions for you to edit and issue; a
-        Personal Opportunity written in the <a href="#quests">Quests</a> section makes the same record.
-      </p>
-      <div className="form-row">
-        <label>
-          For
-          <select value={who} onChange={(e) => setWho(e.target.value)}>
+    <section className="panel" aria-label="Personal Opportunities">
+      <div className="panel__head">
+        <i className="ic ic-quest dim" aria-hidden="true" />
+        <h2>Personal Opportunities</h2>
+      </div>
+      <div className="panel__body stack hve-panel-body">
+        <p className="small dim hve-offer-note">
+          Drafted after the sweep, from the character's sheet, the sweep's moments, and the situation. The draft waits in Suggestions for you to edit and issue; a
+          Personal Opportunity written in the <a href="#quests">Quests</a> section makes the same record.
+        </p>
+        <label className="field hve-offer-for">
+          <span>For</span>
+          <select className="select" value={who} onChange={(e) => setWho(e.target.value)}>
             {living.map((c) => (
               <option key={c.id} value={c.id}>
                 {c.name}
@@ -426,39 +451,39 @@ function OpportunityCard({ view, drafts }: { view: GmView; drafts: DraftRuns }) 
             ))}
           </select>
         </label>
+        <label className="field">
+          <span>The situation (optional)</span>
+          <textarea className="textarea" rows={2} maxLength={2000} value={situation} onChange={(e) => setSituation(e.target.value)} placeholder="Where they are, who is near, what presses on them" />
+        </label>
+        <div className="cluster">
+          <button className="btn btn--primary" type="button" disabled={busy || !who || drafts.drafting} onClick={draft}>
+            Draft an offer
+          </button>
+          {run?.status === "drafting" && <span className="small dim">Drafting…</span>}
+          {run?.status === "done" && run.items.length > 0 && (
+            <span className="small">
+              Drafted: waiting in <a href="#suggestions">Suggestions</a>.
+            </span>
+          )}
+          {run?.status === "done" && !run.items.length && <span className="error">{run.dropped[0]?.why ?? "Nothing came back."}</span>}
+          {run?.status === "failed" && <span className="error">{run.message}</span>}
+        </div>
+        {error && <p className="error">{error}</p>}
       </div>
-      <label>
-        The situation (optional)
-        <textarea rows={2} maxLength={2000} value={situation} onChange={(e) => setSituation(e.target.value)} placeholder="Where they are, who is near, what presses on them" />
-      </label>
-      <div className="form-row">
-        <button className="primary" disabled={busy || !who || drafts.drafting} onClick={draft}>
-          Draft an offer
-        </button>
-        {run?.status === "drafting" && <span className="muted small">Drafting…</span>}
-        {run?.status === "done" && run.items.length > 0 && (
-          <span className="small">
-            Drafted: waiting in <a href="#suggestions">Suggestions</a>.
-          </span>
-        )}
-        {run?.status === "done" && !run.items.length && <span className="error small">{run.dropped[0]?.why ?? "Nothing came back."}</span>}
-        {run?.status === "failed" && <span className="error small">{run.message}</span>}
-      </div>
-      {error && <p className="error">{error}</p>}
     </section>
   );
 }
 
 export function HveSection({ view, engine, names, onRecorded, drafts }: { view: GmView; engine: Engine | null; names: Names; onRecorded: (env: Envelope) => void; drafts: DraftRuns }) {
-  if (!engine) return <p className="muted pad">Loading rules…</p>;
+  if (!engine) return <p className="dim pad">Loading rules…</p>;
   return (
-    <main className="gm-split">
-      <div>
+    <main className="screen screen--side hve-screen">
+      <div className="stack hve-main">
         <SweepForm view={view} engine={engine} names={names} onRecorded={onRecorded} />
         <OpportunityCard view={view} drafts={drafts} />
       </div>
-      <aside className="side">
-        <p className="muted small">Players never see these sheets. Undo a sweep from the campaign log.</p>
+      <aside className="stack hve-side" aria-label="Standing sheets">
+        <p className="small dim">Players never see these sheets. Undo a sweep from the campaign log.</p>
         {view.characters.map((c) => (
           <StandingSheet key={c.id} view={view} engine={engine} c={c} names={names} onRecorded={onRecorded} />
         ))}

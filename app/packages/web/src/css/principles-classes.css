@@ -1,0 +1,286 @@
+/*
+ * The GM's Principles and Classes sections, and the Battle Memory Cards due panel that the
+ * Suggestions screen shows too. Drawn from the canvas artboards GmPrinciples and GmClasses;
+ * everything reads gb.css's tokens.
+ *
+ * A Commit (gm/Commit.tsx) renders the record, the player's preview, and the decide row. Placed
+ * straight in a panel it runs edge to edge; placed inside a panel's body it reaches out through
+ * the body's padding to the same edges.
+ */
+
+/* ------------------------------------------------------------------ shared */
+
+:is(.principles-panel, .classes-panel) .cluster > .tag,
+:is(.principles-panel, .classes-panel) .panel__head > .tag,
+:is(.principles-panel, .classes-panel) .row__actions > .tag {
+  margin-left: 0;
+}
+:is(.principles-panel, .classes-panel) .commit {
+  margin: 0;
+  border: 0;
+}
+:is(.principles-card__body, .classes-item) .commit {
+  margin: 0 calc(var(--sp-4) * -1);
+  border-bottom: var(--hair) solid var(--line);
+}
+
+/* ------------------------------------------------------------------ Principles */
+
+.principles-main {
+  --gap: 1.25rem;
+}
+.principles-side {
+  position: sticky;
+  top: var(--sp-4);
+}
+.principles-grant {
+  --gap: var(--sp-3);
+}
+
+/* The cards due: one block per card, each with its own record and decision */
+.principles-due + .principles-due {
+  border-top: var(--hair) solid var(--line);
+}
+.principles-due > .panel__body {
+  --gap: var(--sp-3);
+}
+
+/* A character's card */
+.principles-card .panel__head h3 {
+  font-size: 1.125rem;
+}
+.principles-card__body {
+  --gap: var(--sp-3);
+}
+.principles-entry {
+  --gap: 0.3rem;
+  padding-left: var(--sp-3);
+  box-shadow: inset 2px 0 0 var(--line-strong);
+}
+.principles-entry__name {
+  font-size: var(--fs-lg);
+}
+.principles-entry__actions {
+  margin-top: 0.35rem;
+}
+
+/* A form opened from the card: Distill, Reshape, the naming, a meditation */
+.principles-drawer {
+  --gap: var(--sp-3);
+  padding-top: var(--sp-3);
+  border-top: var(--hair) dashed var(--line-strong);
+}
+.principles-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 7rem;
+  gap: var(--sp-3);
+  align-items: end;
+}
+
+/* Distillation: the drafted readings beside the fields they fill */
+.principles-distill {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+.principles-readings {
+  --gap: var(--sp-3);
+  padding: 0.9rem var(--sp-4);
+}
+.principles-readings .input {
+  background: var(--surface);
+}
+.principles-readings__list > li {
+  --gap: var(--sp-1);
+  padding: 0.7rem 0;
+  border-top: var(--hair) solid var(--line);
+}
+.principles-readings__list > li:last-child {
+  padding-bottom: 0;
+}
+.principles-distill__fields {
+  --gap: 0.8rem;
+}
+
+/* Battle Memories held: a row, and its meditation opening under it */
+.principles-held {
+  --gap: var(--sp-1);
+}
+.rows > li.principles-memory {
+  flex-wrap: wrap;
+}
+.rows > li.principles-memory:has(> .principles-drawer) {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.principles-memory > .principles-drawer {
+  flex: 1 0 100%;
+}
+
+/* Award Insight: the last thing on the card, so its decision closes the card */
+.principles-award__form {
+  --gap: var(--sp-3);
+  margin-top: var(--sp-3);
+  font-size: var(--fs-md);
+}
+.principles-award[open]:last-child {
+  margin-bottom: calc(var(--sp-4) * -1);
+}
+.principles-award[open]:last-child .commit {
+  border-bottom: 0;
+}
+
+/* ------------------------------------------------------------------ Classes */
+
+.classes-writer {
+  --gap: var(--sp-4);
+}
+.classes-writer__intro {
+  max-width: 62rem;
+}
+.classes-writer__body {
+  display: grid;
+  grid-template-columns: 17rem minmax(0, 1fr);
+  gap: var(--sp-4);
+  align-items: start;
+}
+.classes-writer__offers {
+  --gap: var(--sp-3);
+}
+
+/* The record the offers are read from, held in view beside them */
+.classes-record {
+  --gap: 0.7rem;
+  padding: 0.9rem var(--sp-4);
+  position: sticky;
+  top: var(--sp-4);
+}
+.classes-record .statline {
+  background: var(--surface);
+}
+.classes-record__background {
+  font-size: var(--fs-md);
+  font-style: italic;
+}
+.classes-record__circled {
+  --gap: 0.3rem;
+}
+.classes-record__circled ul {
+  --gap: 0.35rem;
+}
+
+/* Drafting the three from the record */
+.classes-drafter {
+  padding: var(--sp-2) var(--sp-3);
+  border: var(--hair) solid var(--line);
+}
+.classes-drafter__body {
+  --gap: var(--sp-3);
+  margin-top: var(--sp-3);
+  font-size: var(--fs-md);
+}
+.classes-drafted {
+  --gap: var(--sp-3);
+}
+.classes-drafted__list {
+  --gap: var(--sp-2);
+}
+
+/* The three offers, side by side */
+.classes-offers {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-3);
+  align-items: start;
+}
+.classes-offer {
+  --gap: 0.7rem;
+  margin: 0;
+  min-width: 0;
+  padding: 0.4rem 0.9rem var(--sp-4);
+  border: var(--hair) solid var(--line);
+  background: var(--surface-2);
+}
+.classes-offer > legend {
+  padding: 0 0.4rem;
+}
+.classes-offer__notice {
+  min-height: 9.5rem;
+}
+.classes-offer .check {
+  align-items: flex-start;
+}
+.classes-offer .check input {
+  margin-top: 0.15rem;
+}
+.classes-offer__profile {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.6rem;
+  align-items: end;
+}
+.classes-offer__assigned {
+  padding-bottom: var(--sp-2);
+  max-width: 8.5rem;
+}
+.classes-offer__points {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 4.5rem;
+  gap: 0.6rem;
+  align-items: end;
+}
+.classes-offer__points--removable {
+  grid-template-columns: minmax(0, 1fr) 4.5rem auto;
+}
+.classes-offer__remove {
+  padding-bottom: 0.55rem;
+}
+.classes-offer__technique {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 7.5rem;
+  gap: 0.6rem;
+}
+
+/* What the app runs of the technique and the permission: a select, then its number */
+.classes-hook {
+  display: grid;
+  gap: 0.6rem;
+  align-items: end;
+}
+.classes-hook--applies {
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+}
+.classes-hook--applies > .classes-hook__kind {
+  grid-column: 1 / -1;
+}
+.classes-hook--runs {
+  grid-template-columns: minmax(0, 1fr) 4.5rem;
+}
+.classes-hook--runs > :only-child {
+  grid-column: 1 / -1;
+}
+
+/* Offers standing and classes held */
+.classes-item {
+  --gap: var(--sp-2);
+  border-top: var(--hair) solid var(--line);
+}
+.classes-item h3 {
+  font-size: 1.125rem;
+}
+.classes-item > .commit:last-child,
+.classes-item > .classes-technique:last-child > .commit:last-child {
+  margin-bottom: calc(var(--sp-4) * -1);
+  border-bottom: 0;
+}
+.classes-technique {
+  --gap: var(--sp-2);
+}
+.classes-lines {
+  --gap: 0.2rem;
+}
+.classes-lines > li::before {
+  content: "\2013\00a0";
+  color: var(--text-faint);
+}

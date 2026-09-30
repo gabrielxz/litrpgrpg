@@ -1,0 +1,261 @@
+/*
+ * The GM's Prep and Bestiary sections, and the encounter sizing reading in Combat's setup
+ * (Sizing.tsx), after the canvas artboards GmPrep and GmBestiary. Only gb.css tokens.
+ * Imported from Prep.tsx; GmCampaign loads Prep.tsx up front, so these rules reach the
+ * Bestiary and Combat's setup too.
+ */
+
+/* ------------------------------------------------------------------ Prep: the screen */
+
+.prep-screen__main {
+  --gap: var(--sp-5);
+}
+.prep-screen__intro {
+  --gap: 0.4rem;
+}
+.prep-screen__intro h1 {
+  --gap: 0.6rem;
+}
+.prep-screen__intro p {
+  max-width: 58rem;
+}
+.prep-screen__side {
+  --gap: var(--sp-4);
+}
+
+/* A record-then-confirm step at the foot of a panel or an item runs to its edges; the record's
+   dashed rule, or the problem line's, separates it from the form above. */
+.prep-screen .panel > .commit,
+.prep-screen details.prep-new > .commit,
+.prep-card > .commit {
+  margin: 0;
+  border: 0;
+  border-top: var(--hair) dashed var(--line-strong);
+}
+.prep-screen .panel > .commit > .record,
+.prep-screen details.prep-new > .commit > .record,
+.prep-card > .commit > .record {
+  border-top: 0;
+}
+.prep-screen .panel > .commit > .problem,
+.prep-card > .commit > .problem {
+  padding: var(--sp-3) var(--sp-4) var(--sp-3);
+  background: var(--sunken);
+}
+
+/* A panel that opens: its head is the summary, with the design's chevron turning down */
+details.prep-new > summary.panel__head {
+  cursor: pointer;
+  list-style: none;
+}
+details.prep-new > summary.panel__head::before {
+  content: none;
+}
+details.prep-new > summary.panel__head > .ic {
+  color: var(--text-dim);
+  transition: transform var(--dur-quick) var(--ease-out);
+}
+details.prep-new[open] > summary.panel__head > .ic {
+  transform: rotate(90deg);
+}
+details.prep-new:not([open]) > summary.panel__head {
+  border-bottom: 0;
+}
+.prep-new > .panel__body {
+  --gap: 0.85rem;
+}
+
+/* Two fields side by side: a title and its group */
+.prep-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-3);
+}
+.prep-numbers {
+  --gap: var(--sp-3);
+  align-items: flex-end;
+}
+.prep-numbers .input {
+  width: 5.5rem;
+}
+
+/* A file input whose button reads as the design's small button */
+.prep-file {
+  font: 400 var(--fs-sm) / 1.3 var(--font-ui);
+  color: var(--text-dim);
+  max-width: 100%;
+}
+.prep-file::file-selector-button {
+  margin-right: var(--sp-3);
+  min-height: 1.75rem;
+  padding: 0.2rem 0.75rem 0.2rem 0.6rem;
+  font: 500 var(--fs-sm) / 1.2 var(--font-ui);
+  color: var(--text);
+  background: transparent;
+  border: var(--hair) solid var(--line-strong);
+  border-radius: 0;
+  clip-path: polygon(0 0, calc(100% - var(--cut-sm)) 0, 100% var(--cut-sm), 100% 100%, 0 100%);
+  cursor: pointer;
+}
+.prep-file::file-selector-button:hover {
+  border-color: var(--text-dim);
+  background: var(--sunken);
+}
+.prep-setup {
+  --gap: var(--sp-2);
+  padding-top: var(--sp-2);
+}
+
+/* ------------------------------------------------------------------ Prep: an item */
+
+.prep-card + .prep-card {
+  border-top: var(--hair) solid var(--line);
+}
+.prep-card__body {
+  --gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4) var(--sp-2);
+}
+.prep-card__head {
+  --gap: 0.6rem;
+}
+.prep-card__title {
+  font-size: 1rem;
+}
+.prep-card__text {
+  white-space: pre-wrap;
+}
+.prep-card__who {
+  font-size: var(--fs-md);
+}
+
+/* The form an item opens: below its lines, above its record */
+.prep-form {
+  --gap: var(--sp-3);
+  padding: var(--sp-2) var(--sp-4) var(--sp-4);
+}
+.prep-new > .prep-form {
+  padding-top: 0;
+}
+.prep-to {
+  --gap: var(--sp-4);
+}
+
+.prep-card__foot {
+  padding: 0 var(--sp-4) var(--sp-3);
+}
+.prep-card > .commit + .prep-card__foot {
+  padding-top: var(--sp-3);
+}
+.prep-card__foot > details > summary,
+.prep-pack details > summary {
+  width: fit-content;
+}
+
+/* ------------------------------------------------------------------ Bestiary */
+
+.bestiary-screen__main {
+  --gap: var(--sp-4);
+}
+.bestiary-screen__main h2 {
+  --gap: 0.6rem;
+}
+.bestiary-screen__tier {
+  width: 9rem;
+}
+
+.creature-blocks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: var(--sp-4);
+  align-items: start;
+}
+.creature-block .panel__head {
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+.creature-block .panel__head h3 {
+  font-size: var(--fs-lg);
+}
+.creature-block .panel__body {
+  --gap: var(--sp-3);
+}
+.creature-block__line {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.creature-block__line--aether {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.creature-block__line dt {
+  text-transform: uppercase;
+}
+.creature-block__attacks {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  gap: var(--sp-1) var(--sp-2);
+  align-items: baseline;
+}
+.creature-block__tactics {
+  font-size: var(--fs-md);
+}
+.creature-block__pays {
+  border-top: var(--hair) solid var(--line);
+  padding-top: 0.6rem;
+}
+.creature-block__pays b {
+  color: var(--text);
+}
+
+/* The sizing table beside the blocks, held in view while the blocks scroll */
+.sizing-panel {
+  position: sticky;
+  top: var(--sp-4);
+}
+.sizing-panel .panel__body {
+  --gap: 0.9rem;
+}
+.sizing-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: var(--fs-sm);
+}
+.sizing-table__level {
+  width: 4rem;
+}
+.sizing-table th,
+.sizing-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: var(--sp-2) 0.4rem;
+}
+.sizing-table thead th {
+  padding: 0.35rem 0.4rem;
+  font-weight: 500;
+  vertical-align: bottom;
+}
+.sizing-table tbody tr {
+  border-top: var(--hair) solid var(--line);
+}
+.sizing-table tbody th {
+  font-weight: 400;
+}
+.sizing-table tr.is-current {
+  background: var(--sunken);
+  border-top-color: var(--line-strong);
+  border-bottom: var(--hair) solid var(--line-strong);
+}
+.sizing-table tr.is-current th {
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------------------ Combat's setup: the sizing reading */
+
+.sizing {
+  --gap: var(--sp-2);
+}
+.sizing__head {
+  --gap: var(--sp-2) var(--sp-3);
+}
+.sizing__level {
+  width: 5.5rem;
+}

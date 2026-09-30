@@ -10,6 +10,7 @@
 import type { GmView } from "@gradebreaker/record";
 import { useEffect, useState } from "react";
 import { api, currentToken } from "../api.ts";
+import { Icon } from "../ui.tsx";
 
 interface Recording {
   id: string;
@@ -71,7 +72,7 @@ function Corrector({ campaignId, r, onClose }: { campaignId: string; r: Recordin
       setError((e as Error).message);
     }
   };
-  if (!data) return error ? <p className="error small">{error}</p> : <p className="muted small">Loading the lines…</p>;
+  if (!data) return error ? <p className="error">{error}</p> : <p className="small dim">Loading the lines…</p>;
   const name = (id: string) => data.speakers.find((s) => s.id === id)?.name ?? id;
   const second = (l: Line) => data.second?.lines[l.id];
   const differs = (l: Line) => data.second !== null && !same(l.text, second(l) ?? "");
@@ -90,57 +91,74 @@ function Corrector({ campaignId, r, onClose }: { campaignId: string; r: Recordin
   };
   const checkedCount = data.lines.filter((l) => l.checked).length;
   return (
-    <div className="form">
-      <div className="form-row">
-        <strong className="grow">
+    <div className="stack corrector">
+      <div className="cluster corrector__head">
+        <b className="grow">
           Correcting: {checkedCount} of {data.lines.length} lines checked
           {data.second ? `; the second opinion (${data.second.model}) differs on ${data.lines.filter(differs).length}` : ""}
-        </strong>
-        <select value={filter} onChange={(e) => setFilter(e.target.value as typeof filter)} aria-label="Which lines">
+        </b>
+        <select className="select corrector__filter" value={filter} onChange={(e) => setFilter(e.target.value as typeof filter)} aria-label="Which lines">
           {data.second && <option value="disagree">Where the two disagree</option>}
           <option value="unchecked">Not yet checked</option>
           <option value="all">Every line</option>
         </select>
-        <button onClick={onClose}>Close</button>
+        <button className="btn btn--sm" type="button" onClick={onClose}>
+          <Icon name="close" />
+          Close
+        </button>
       </div>
-      <ul className="corrections">
+      <ul className="corrector__lines">
         {shown.slice(0, SHOWN + more).map((l) => {
           const text = edits[l.id] ?? l.text;
           const alt = second(l);
           return (
-            <li key={l.id} className={l.checked ? "checked" : ""}>
-              <div className="form-row tight">
-                <button className="link" onClick={() => play(l)} title="Hear this line">
-                  ▶ {clock(l.startMs)}
+            <li key={l.id} className={`stack corrector__line${l.checked ? " is-checked" : ""}${edits[l.id] !== undefined ? " is-edited" : ""}`}>
+              <div className="cluster corrector__meta">
+                <button className="btn-link num" type="button" onClick={() => play(l)} title="Hear this line" aria-label={`Hear this line, ${clock(l.startMs)}`}>
+                  <Icon name="play" /> {clock(l.startMs)}
                 </button>
-                <span className="muted small">{name(l.speaker)}</span>
+                <span className="dim">{name(l.speaker)}</span>
                 {l.checked && <span className="tag">checked</span>}
               </div>
-              <input className="wide" value={text} onChange={(e) => setEdits({ ...edits, [l.id]: e.target.value })} />
+              <input
+                className="input"
+                value={text}
+                onChange={(e) => setEdits({ ...edits, [l.id]: e.target.value })}
+                aria-label={`Line at ${clock(l.startMs)}, ${name(l.speaker)}`}
+              />
               {alt !== undefined && differs(l) && (
-                <div className="small muted">
+                <div className="dim">
                   Second opinion: {alt || "(nothing heard)"}{" "}
-                  <button className="link" onClick={() => setEdits({ ...edits, [l.id]: alt })}>
+                  <button className="btn-link corrector__take" type="button" onClick={() => setEdits({ ...edits, [l.id]: alt })}>
                     Take it
                   </button>
                 </div>
               )}
               {!l.checked && edits[l.id] === undefined && (
-                <button className="link small" onClick={() => setEdits({ ...edits, [l.id]: l.text })}>
-                  Right as heard
-                </button>
+                <div>
+                  <button className="btn-link" type="button" onClick={() => setEdits({ ...edits, [l.id]: l.text })}>
+                    Right as heard
+                  </button>
+                </div>
               )}
             </li>
           );
         })}
       </ul>
-      {shown.length > SHOWN + more && <button onClick={() => setMore(more + SHOWN)}>Show {Math.min(SHOWN, shown.length - SHOWN - more)} more</button>}
-      <div className="form-row">
-        <button className="primary" disabled={!Object.keys(edits).length} onClick={save}>
+      {shown.length > SHOWN + more && (
+        <div>
+          <button className="btn btn--sm" type="button" onClick={() => setMore(more + SHOWN)}>
+            Show {Math.min(SHOWN, shown.length - SHOWN - more)} more
+          </button>
+        </div>
+      )}
+      <div className="cluster corrector__save">
+        <button className="btn btn--primary btn--sm" type="button" disabled={!Object.keys(edits).length} onClick={save}>
+          <Icon name="confirm" />
           Save {Object.keys(edits).length || ""} line{Object.keys(edits).length === 1 ? "" : "s"}
         </button>
-        {saved && <span className="small muted">{saved}</span>}
-        {error && <span className="error small">{error}</span>}
+        {saved && <span className="dim">{saved}</span>}
+        {error && <span className="error">{error}</span>}
       </div>
     </div>
   );
@@ -204,52 +222,76 @@ export function RecordingsCard({ view }: { view: GmView }) {
 
   if (!list?.length && !error) return null;
   return (
-    <section className="card">
-      <h2>Test recordings</h2>
-      <p className="muted small">
-        Each person's voice as the listening took it, with the lines it heard, for measuring the listener. Correct the lines here, hearing
-        each one; a second opinion from a more accurate transcriber marks where the two disagree. Then save the files into
-        build/listening/audio/ under one folder and run stt-eval on it. Deleted here, or 7 days after the recording ends.
-      </p>
-      {error && <p className="error small">{error}</p>}
-      <ul className="small">
-        {(list ?? []).map((r) => (
-          <li key={r.id}>
-            {new Date(r.startedAt).toLocaleString()}
-            {r.endedAt ? `, ${minutes(r)} min` : ", recording"}: {r.people.map((p) => p.name).join(", ") || "nobody"}
-            {r.endedAt && (
-              <div className="form-row">
-                {r.files.map((f) => (
-                  <button key={f.name} className="link" onClick={() => download(r, f.name, f.save)}>
-                    {f.name === "timeline.json"
-                      ? "Timeline"
-                      : f.name === "timeline.heard.json"
-                        ? "Timeline as heard"
-                        : f.name === "second.json"
-                          ? "Second opinion"
-                          : (r.people.find((p) => `${p.userId}.wav` === f.name)?.name ?? "Track")}{" "}
-                    ({size(f.bytes)})
-                  </button>
-                ))}
-                <button className="link" onClick={() => setCorrecting(correcting === r.id ? null : r.id)}>
-                  Correct the lines
-                </button>
-                {r.second === "running" ? (
-                  <span className="muted">second opinion running…</span>
-                ) : r.second === "done" ? null : r.secondAvailable ? (
-                  <button className="link" onClick={() => secondOpinion(r)} title="Transcribes the tracks again with a more accurate transcriber, faster than real time">
-                    {typeof r.second === "object" ? `Second opinion failed (${r.second.failed}): try again` : "Get a second opinion"}
-                  </button>
-                ) : null}
-                <button className="link" onClick={() => remove(r)}>
-                  Delete
-                </button>
-              </div>
+    <section className="panel" aria-labelledby="rec-h">
+      <div className="panel__head">
+        <i className="ic ic-listen dim" aria-hidden="true" />
+        <h2 id="rec-h">Test recordings</h2>
+      </div>
+      <div className="panel__body stack recordings">
+        <p className="small dim">
+          Each person's voice as the listening took it, with the lines it heard, for measuring the listener. Correct the lines here, hearing
+          each one; a second opinion from a more accurate transcriber marks where the two disagree. Then save the files into
+          build/listening/audio/ under one folder and run stt-eval on it. Deleted here, or 7 days after the recording ends.
+        </p>
+        {error && <p className="error">{error}</p>}
+        {!!list?.length && (
+          <ul className="rows small">
+            {list.map((r) =>
+              !r.endedAt ? (
+                <li key={r.id}>
+                  <span className="row__main">
+                    <span className="num">{new Date(r.startedAt).toLocaleString()}</span>, recording: {r.people.map((p) => p.name).join(", ") || "nobody"}
+                  </span>
+                  <i className="listen-dot" aria-hidden="true" />
+                </li>
+              ) : (
+                <li key={r.id} className="recording">
+                  <div>
+                    <span className="num">{new Date(r.startedAt).toLocaleString()}</span>, {minutes(r)} min: {r.people.map((p) => p.name).join(", ") || "nobody"}
+                  </div>
+                  <div className="cluster recording__files">
+                    {r.files.map((f) => (
+                      <button key={f.name} className="btn-link" type="button" onClick={() => download(r, f.name, f.save)}>
+                        {f.name === "timeline.json"
+                          ? "Timeline"
+                          : f.name === "timeline.heard.json"
+                            ? "Timeline as heard"
+                            : f.name === "second.json"
+                              ? "Second opinion"
+                              : (r.people.find((p) => `${p.userId}.wav` === f.name)?.name ?? "Track")}{" "}
+                        <span className="num dim">({size(f.bytes)})</span>
+                      </button>
+                    ))}
+                  </div>
+                  <div className="cluster recording__actions">
+                    <button className="btn btn--sm" type="button" aria-expanded={correcting === r.id} onClick={() => setCorrecting(correcting === r.id ? null : r.id)}>
+                      <Icon name="edit" />
+                      Correct the lines
+                    </button>
+                    {r.second === "running" ? (
+                      <span className="dim">second opinion running…</span>
+                    ) : r.second === "done" ? null : r.secondAvailable ? (
+                      <button
+                        className="btn btn--sm"
+                        type="button"
+                        onClick={() => secondOpinion(r)}
+                        title="Transcribes the tracks again with a more accurate transcriber, faster than real time"
+                      >
+                        {typeof r.second === "object" ? `Second opinion failed (${r.second.failed}): try again` : "Get a second opinion"}
+                      </button>
+                    ) : null}
+                    <span className="grow" />
+                    <button className="btn btn--sm btn--danger" type="button" onClick={() => remove(r)}>
+                      Delete
+                    </button>
+                  </div>
+                  {correcting === r.id && <Corrector campaignId={id} r={r} onClose={() => setCorrecting(null)} />}
+                </li>
+              ),
             )}
-            {correcting === r.id && r.endedAt && <Corrector campaignId={id} r={r} onClose={() => setCorrecting(null)} />}
-          </li>
-        ))}
-      </ul>
+          </ul>
+        )}
+      </div>
     </section>
   );
 }

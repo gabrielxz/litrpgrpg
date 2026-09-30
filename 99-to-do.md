@@ -113,9 +113,9 @@ Edits an app session forces, each with Gabriel's ruling or Claude's recommendati
 - **Sign-in, home, and join** with crops of the art bible's standard painting until the dedicated paintings exist; Home's Delete takes the confirm tap.
 - Encounter sizing in the Bestiary counts GM-held characters. The AssemblyAI key is a Fly secret, and a push that changes a book chapter deploys.
 
-The other GM sections (Prep, Bestiary, Principles, Classes, HVE, the log, Rules, Table) take the look through the shared layer without their own markup port; their artboards are on the canvas for a later pass. Claude's calls in the port are under Decisions for Gabriel's cut. Not pushed at this close unless Gabriel said so.
+Every other GM section follows its artboard too (Gabriel, 2026-09-30): Prep, Bestiary, Principles, Classes, HVE, the log, Rules, and Table, ported by four agents with file ownership and checked in the browser, plus Combat's setup and aftermath. The class offer writer and the Distillation form are ported but unseen in a browser: no local character reaches them, so the rehearsal pack's Level 10 rests are the first chance to look. Claude's calls in the port are under Decisions for Gabriel's cut.
 
-**Next.** The user guide, reachable from every screen, with screenshots of the new look; the canvas's "Set up the table" checklist for a new campaign belongs with it. Then the rehearsal. Open for Gabriel: the paintings for the sign-in, home, and join slots (the canvas's Illustration artboard gives sizes and crops), and whether the other sections get their artboards' markup before the rehearsal.
+**Next.** The user guide, reachable from every screen, with screenshots of the new look; the canvas's "Set up the table" checklist for a new campaign belongs with it. Then the rehearsal. Open for Gabriel: the paintings for the sign-in, home, and join slots (the canvas's Illustration artboard gives sizes and crops).
 
 ### Queued for the app
 

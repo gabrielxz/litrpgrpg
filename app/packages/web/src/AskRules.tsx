@@ -6,6 +6,7 @@
  */
 import { useState } from "react";
 import { askRules } from "./api.ts";
+import { Icon } from "./ui.tsx";
 
 interface Asked {
   question: string;
@@ -14,7 +15,10 @@ interface Asked {
   inBook: boolean;
 }
 
-/** `heading: false` where the surrounding fold already names it (the player's tray). */
+/**
+ * With its heading (the GM's Rules section), the question and each answer are panels of their own;
+ * `heading: false` where the surrounding fold already names it (the player's tray), a compact stack.
+ */
 export function AskRules({ campaignId, gm, className, heading = true }: { campaignId: string; gm?: boolean; className?: string; heading?: boolean }) {
   const [question, setQuestion] = useState("");
   const [asked, setAsked] = useState<Asked[]>([]);
@@ -35,37 +39,88 @@ export function AskRules({ campaignId, gm, className, heading = true }: { campai
       setBusy(false);
     }
   };
+  const note = gm ? "Answered from every chapter of the book." : "Answered from the chapters players read.";
+  const field = (
+    <textarea
+      className="textarea"
+      rows={2}
+      maxLength={1000}
+      value={question}
+      aria-label="Ask the rules"
+      placeholder="Can I Yield against a free strike?"
+      onChange={(e) => setQuestion(e.target.value)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          void ask();
+        }
+      }}
+    />
+  );
+  const button = (primary: boolean) => (
+    <button className={primary ? "btn btn--primary" : "btn btn--sm"} type="button" disabled={busy || !question.trim()} onClick={ask}>
+      {busy ? "Looking it up…" : "Ask"}
+    </button>
+  );
+  const citations = (a: Asked) => a.citations.map((c) => `${c.chapter}, "${c.heading}"`).join("; ");
+  const notInBook = `Not answered in ${gm ? "the book" : "the players' chapters"}: the GM's call.`;
+
+  if (!heading)
+    return (
+      <section className={className ?? "stack ask-rules"}>
+        <p className="small dim">{note}</p>
+        {field}
+        <div>{button(false)}</div>
+        {error && <p className="error">{error}</p>}
+        {asked.map((a, i) => (
+          <div key={i} className="rules-answer">
+            <p className="small">
+              <strong>{a.question}</strong>
+            </p>
+            <p>{a.answer}</p>
+            {a.citations.length > 0 && <p className="small dim">{citations(a)}</p>}
+            {!a.inBook && <p className="small dim">{notInBook}</p>}
+          </div>
+        ))}
+      </section>
+    );
+
   return (
-    <section className={className ?? "table-dice"}>
-      {heading && <h3>Ask the rules</h3>}
-      <p className="small dim">{gm ? "Answered from every chapter of the book." : "Answered from the chapters players read."}</p>
-      <textarea
-        rows={2}
-        maxLength={1000}
-        value={question}
-        placeholder="Can I Yield against a free strike?"
-        onChange={(e) => setQuestion(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && !e.shiftKey) {
-            e.preventDefault();
-            void ask();
-          }
-        }}
-      />
-      <button disabled={busy || !question.trim()} onClick={ask}>
-        {busy ? "Looking it up…" : "Ask"}
-      </button>
-      {error && <p className="error">{error}</p>}
-      {asked.map((a, i) => (
-        <div key={i} className="rules-answer">
-          <p className="small">
-            <strong>{a.question}</strong>
-          </p>
-          <p>{a.answer}</p>
-          {a.citations.length > 0 && <p className="small dim">{a.citations.map((c) => `${c.chapter}, "${c.heading}"`).join("; ")}</p>}
-          {!a.inBook && <p className="small dim">Not answered in {gm ? "the book" : "the players' chapters"}: the GM's call.</p>}
+    <div className={className ?? "stack ask-panels"}>
+      <section className="panel" aria-labelledby="ask-h">
+        <div className="panel__head">
+          <i className="ic ic-rules dim" aria-hidden="true" />
+          <h2 id="ask-h">Ask the rules</h2>
+          <span className="small dim">{note}</span>
         </div>
+        <div className="panel__body stack ask-panels__form">
+          {field}
+          <div className="cluster">{button(true)}</div>
+          {error && <p className="error">{error}</p>}
+        </div>
+      </section>
+      {asked.map((a, i) => (
+        <article key={i} className="panel">
+          <div className="panel__body stack ask-panels__answer">
+            <h3>{a.question}</h3>
+            <p className="prose">{a.answer}</p>
+            {a.citations.length > 0 && (
+              <p className="label cluster ask-panels__cited">
+                <Icon name="rules" />
+                {citations(a)}
+              </p>
+            )}
+            {!a.inBook && (
+              <div>
+                <span className="tag tag--warn ask-panels__gm-call">
+                  <Icon name="warning" />
+                  {notInBook}
+                </span>
+              </div>
+            )}
+          </div>
+        </article>
       ))}
-    </section>
+    </div>
   );
 }

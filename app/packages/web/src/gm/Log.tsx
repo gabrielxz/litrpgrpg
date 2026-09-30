@@ -8,6 +8,7 @@ import type { Envelope, GmView } from "@gradebreaker/record";
 import { useMemo, useState } from "react";
 import { type Names, describe } from "../text.ts";
 import { Commit } from "./Commit.tsx";
+import { Icon } from "../ui.tsx";
 
 export function Log({
   view,
@@ -45,51 +46,75 @@ export function Log({
     .slice(0, limit);
 
   return (
-    <section className="card log">
-      <h2>Campaign log</h2>
+    <section className="panel log-panel" aria-labelledby="log-h">
+      <div className="panel__head">
+        <i className="ic ic-log dim" aria-hidden="true" />
+        <h2 id="log-h">Campaign log</h2>
+        <span className="grow" />
+        {prepCount > 0 && (
+          <label className="check small">
+            <input type="checkbox" checked={showPrep} onChange={(e) => setShowPrep(e.target.checked)} /> Show Prep entries ({prepCount})
+          </label>
+        )}
+      </div>
       {view.rejected.length > 0 && (
-        <p className="warning">
-          {view.rejected.length} action{view.rejected.length === 1 ? " no longer applies" : "s no longer apply"}. Each is marked
-          below; record it again if it should stand.
-        </p>
+        <div className="callout log-callout" role="status">
+          <Icon name="warning" />
+          <span>
+            {view.rejected.length} action{view.rejected.length === 1 ? " no longer applies" : "s no longer apply"}. Each is marked
+            below; record it again if it should stand.
+          </span>
+        </div>
       )}
-      {log.length === 0 && <p className="muted">Nothing recorded yet.</p>}
-      {prepCount > 0 && (
-        <label className="check small">
-          <input type="checkbox" checked={showPrep} onChange={(e) => setShowPrep(e.target.checked)} /> Show Prep entries ({prepCount})
-        </label>
-      )}
-      <ol className="entries">
+      {log.length === 0 && <p className="panel__body dim">Nothing recorded yet.</p>}
+      <ol className="rows log-rows">
         {shown.map((e) => {
           const isVoided = voided.has(e.id);
           const reason = rejected.get(e.id);
           const canVoid = e.action.type !== "void" && !isVoided && !reason;
           return (
-            <li key={e.id} className={`${isVoided ? "voided" : ""} ${reason ? "rejected" : ""}`}>
-              <div className="entry">
-                <span className="seq">#{e.seq + 1}</span>
-                <span className="what">{describe(e.action, names, seqOf, who)}</span>
-                <span className="meta">
+            <li key={e.id} className={`${isVoided ? "is-voided" : ""}${reason ? " is-rejected" : ""}`}>
+              <span className="num small dim log-seq">#{e.seq + 1}</span>
+              <div className="log-what">
+                <div className="log-text">{describe(e.action, names, seqOf, who)}</div>
+                <div className="row__meta">
                   {who(e.actor.userId)} · {new Date(e.at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                   {e.source === "suggestion" && e.cause?.startsWith("draft:") ? " · accepted from a draft" : ""}
-                </span>
-                {canVoid && (
-                  <span className="entry-actions">
-                    <button className="link" onClick={() => setOpen({ id: e.id, reason: "undo" })}>
-                      Undo
-                    </button>
-                    <button className="link" onClick={() => setOpen({ id: e.id, reason: "correction" })}>
-                      Correct
-                    </button>
-                  </span>
-                )}
+                </div>
               </div>
-              {isVoided && <div className="small muted">{voided.get(e.id) === "correction" ? "Corrected" : "Undone"}: it no longer counts.</div>}
-              {reason && <div className="small error">No longer applies: {reason}</div>}
+              {canVoid ? (
+                <div className="row__actions small dim">
+                  <button className="btn-link" type="button" aria-expanded={open?.id === e.id && open.reason === "undo"} onClick={() => setOpen({ id: e.id, reason: "undo" })}>
+                    Undo
+                  </button>
+                  <button className="btn-link" type="button" aria-expanded={open?.id === e.id && open.reason === "correction"} onClick={() => setOpen({ id: e.id, reason: "correction" })}>
+                    Correct
+                  </button>
+                </div>
+              ) : (
+                <span />
+              )}
+              {isVoided && (
+                <div className="cluster small log-note">
+                  <Icon name="undo" />
+                  {voided.get(e.id) === "correction" ? "Corrected" : "Undone"}: it no longer counts.
+                </div>
+              )}
+              {reason && (
+                <div className="cluster log-note">
+                  <span className="tag tag--danger">
+                    <Icon name="danger" />
+                    No longer applies
+                  </span>
+                  <span className="small">{reason}</span>
+                </div>
+              )}
               {open?.id === e.id && (
-                <div className="void-form">
+                <div className="log-void">
                   {open.reason === "correction" && (
-                    <input value={note} onChange={(ev) => setNote(ev.target.value)} placeholder="What was wrong (kept in the log)" />
+                    <div className="log-void__note">
+                      <input className="input" value={note} onChange={(ev) => setNote(ev.target.value)} placeholder="What was wrong (kept in the log)" />
+                    </div>
                   )}
                   <Commit
                     campaignId={view.campaign.id}
@@ -101,15 +126,18 @@ export function Log({
                     }}
                     names={names}
                     label={open.reason === "undo" ? `Undo #${e.seq + 1}` : `Correct #${e.seq + 1}`}
+                    danger={{ icon: open.reason === "undo" ? "undo" : "edit" }}
                     onRecorded={(env) => {
                       setOpen(null);
                       setNote("");
                       onRecorded(env);
                     }}
+                    actions={
+                      <button className="btn-link small log-void__cancel" type="button" onClick={() => setOpen(null)}>
+                        Cancel
+                      </button>
+                    }
                   />
-                  <button className="link" onClick={() => setOpen(null)}>
-                    Cancel
-                  </button>
                 </div>
               )}
             </li>
@@ -117,9 +145,11 @@ export function Log({
         })}
       </ol>
       {log.length > limit && (
-        <button className="link" onClick={() => setLimit(limit + 40)}>
-          Earlier entries
-        </button>
+        <div className="log-more">
+          <button className="btn-link small" type="button" onClick={() => setLimit(limit + 40)}>
+            Earlier entries
+          </button>
+        </div>
       )}
     </section>
   );

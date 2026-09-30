@@ -1,0 +1,272 @@
+/*
+ * The GM's HVE section (gm/Hve.tsx) and the campaign log with its sessions (gm/Log.tsx,
+ * gm/Sessions.tsx), on gb.css's tokens and components. Follows the canvas artboards GmHve and
+ * GmLog. Imported from Hve.tsx, so it loads with the GM's screen.
+ */
+
+/* ------------------------------------------------------------------ HVE */
+
+.hve-screen {
+  max-width: 110rem;
+}
+.hve-main {
+  --gap: 1.25rem;
+  min-width: 0;
+}
+.hve-side {
+  --gap: var(--sp-4);
+  min-width: 0;
+}
+.hve-panel-body {
+  --gap: 0.9rem;
+}
+.hve-intro {
+  max-width: 44rem;
+}
+.hve-session {
+  max-width: 20rem;
+}
+
+/* Weighing a moment: the weights table and the calibration notes */
+.hve-weighing[open] > summary {
+  margin-bottom: var(--sp-3);
+}
+.hve-weighing .table {
+  margin-bottom: var(--sp-3);
+}
+.hve-weighing .table td {
+  vertical-align: top;
+}
+.hve-weighing ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding-left: 1.1rem;
+  list-style: square;
+}
+.hve-weighing ul li::marker {
+  color: var(--text-faint);
+}
+
+/* One character's sweep sheet, ruled off inside the sweep panel */
+.hve-sheet {
+  --gap: var(--sp-3);
+  margin: 0 var(--sp-4);
+  padding: var(--sp-4) 0 1.1rem;
+  border-top: var(--hair) solid var(--line-strong);
+}
+.hve-sheet h3,
+.hve-standing .panel__head h3 {
+  font-size: 1.0625rem;
+}
+.hve-sheet h4 {
+  font-weight: 500;
+}
+.hve-list {
+  --gap: 0.35rem;
+}
+.hve-logged {
+  align-items: flex-start;
+}
+.hve-logged input {
+  margin-top: 0.15rem;
+}
+
+/* Adding a moment: four fields in a row, then the coercion box and Add */
+.hve-moment__fields {
+  display: grid;
+  grid-template-columns: 8.5rem 11.5rem 10rem minmax(0, 1fr);
+  gap: 0.6rem;
+  align-items: end;
+}
+.hve-moment__act {
+  --gap: var(--sp-4);
+}
+
+/* The axes: Current beside Deep on a sweep sheet, Deep alone on a standing sheet */
+.hve-axes {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+}
+.hve-axes th {
+  text-align: left;
+  font-weight: 500;
+  padding: 0.3rem 0;
+}
+.hve-axes tbody tr {
+  border-top: var(--hair) solid var(--line);
+}
+.hve-axes td {
+  padding: 0.4rem 0;
+}
+.hve-standing .hve-axes td {
+  padding: 0.35rem 0;
+}
+.hve-axes--current th:first-child {
+  width: 34%;
+}
+.hve-axes--current th:nth-child(2) {
+  width: 33%;
+}
+
+.hve-callout {
+  margin: 0 var(--sp-4) var(--sp-3);
+}
+/* The sweep's record and decide row close the panel */
+.hve-sweep > .commit {
+  margin-top: 0;
+  border: 0;
+}
+
+/* A standing sheet */
+.hve-standing__body {
+  --gap: 0.7rem;
+}
+.hve-circled {
+  --gap: 0.3rem;
+}
+.hve-disclosure[open] > summary {
+  margin-bottom: var(--sp-2);
+}
+.hve-deep {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
+  gap: var(--sp-2);
+}
+
+.hve-offer-note {
+  max-width: 48rem;
+}
+.hve-offer-for {
+  max-width: 14rem;
+}
+
+/* ------------------------------------------------------------------ the campaign log screen
+ * The artboard's screen--side: the log on the left, the sessions pinned on the right. */
+
+.log-screen {
+  max-width: 110rem;
+}
+.log-screen > .log-panel {
+  min-width: 0;
+}
+.log-screen > .sessions-panel {
+  position: sticky;
+  top: var(--sp-4);
+  max-height: calc(100vh - var(--sp-6));
+  overflow-y: auto;
+  min-width: 0;
+}
+
+/* The log */
+.log-callout {
+  align-items: flex-start;
+  margin: var(--sp-3) var(--sp-4) var(--sp-1);
+  font-size: var(--fs-md);
+}
+.log-callout .ic {
+  margin-top: 0.1rem;
+}
+.log-panel .log-rows {
+  padding: 0 var(--sp-4);
+}
+.log-panel .log-rows > li {
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr) auto;
+  column-gap: var(--sp-3);
+  row-gap: 0.35rem;
+  align-items: baseline;
+}
+.log-what {
+  min-width: 0;
+}
+.log-note {
+  grid-column: 2 / -1;
+  --gap: var(--sp-2);
+}
+.log-panel .btn-link[aria-expanded="true"] {
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* An action that no longer applies: the danger stripe across the whole row */
+.log-panel .log-rows > li.is-rejected {
+  margin: 0 calc(var(--sp-4) * -1);
+  padding-left: var(--sp-4);
+  padding-right: var(--sp-4);
+  background: var(--danger-wash);
+  box-shadow: inset 3px 0 0 var(--danger);
+}
+/* Undone or corrected: struck through, the row dimmed */
+.log-panel .log-rows > li.is-voided {
+  color: var(--text-dim);
+  row-gap: 0.2rem;
+}
+.is-voided .log-text {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+.is-voided .log-note {
+  --gap: 0.35rem;
+}
+
+/* Undo or Correct, opened under its row: the record, then the decide row */
+.log-void {
+  grid-column: 2 / -1;
+  margin: var(--sp-2) 0 var(--sp-1);
+  border: var(--hair) solid var(--line-strong);
+}
+.log-void__note {
+  padding: var(--sp-3) var(--sp-4) 0;
+}
+.log-void > .commit {
+  margin-top: 0;
+  border: 0;
+}
+.log-void > .commit > .record {
+  border-top: 0;
+}
+.log-void__cancel {
+  padding: 0 var(--sp-2);
+}
+.log-more {
+  padding: var(--sp-3) var(--sp-4) var(--sp-4);
+  border-top: var(--hair) solid var(--line);
+}
+
+/* A disclosure that opens an editor: an underlined summary */
+.log-disclosure > summary {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.log-disclosure__body {
+  --gap: var(--sp-3);
+  margin-top: var(--sp-3);
+}
+
+/* The sessions card */
+.sessions-memory {
+  --gap: 0.65rem;
+  background: var(--surface-2);
+  border-bottom: var(--hair) solid var(--line);
+}
+.sessions-chronicles {
+  --gap: 0.4rem;
+}
+.sessions-panel .sessions-rows {
+  padding: 0 var(--sp-4);
+}
+.sessions-panel .sessions-rows > li {
+  display: block;
+  padding: var(--sp-3) 0;
+}
+.sessions-roster {
+  margin-top: 0.15rem;
+}
+.sessions-summary {
+  margin-top: var(--sp-2);
+}
+.sessions-rows .log-disclosure {
+  margin-top: 0.4rem;
+}
