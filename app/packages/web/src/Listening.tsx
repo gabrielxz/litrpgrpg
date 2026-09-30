@@ -7,13 +7,13 @@
  * not muted, and no newer tab of theirs has taken over. It tells the server what it is doing, so
  * the GM sees a muted microphone as muted and a refused one as refused.
  *
- * Every frame is sent while the microphone is open. With SEND_ONLY_SPEECH a frame goes out only
- * while its level is at VOICE_LEVEL or more and for HANG_MS after, led by the PREROLL_FRAMES before
- * it, and the server closes the idle vendor stream (listening.ts), so the bill follows speaking
- * time; it stays off until a measurement shows it loses no short line after a long silence. The
- * level goes to the server four times a second regardless, for the GM's panel.
+ * Every frame is sent while the microphone is open. With SEND_ONLY_SPEECH the speech gate
+ * (@gradebreaker/record) sends only speech and the half second before it, and the server closes
+ * the idle vendor stream (listening.ts), so the bill follows speaking time; it stays off until a
+ * measurement shows it loses no short line after a long silence. The level goes to the server
+ * four times a second regardless, for the GM's panel.
  */
-import type { ListeningStatus, StreamStatus } from "@gradebreaker/record";
+import { type ListeningStatus, SpeechGate, type StreamStatus } from "@gradebreaker/record";
 import { useEffect, useRef, useState } from "react";
 import { api } from "./api.ts";
 import { type Microphone, MicrophoneError, NeedsClick, openMicrophone } from "./capture.ts";
@@ -27,12 +27,6 @@ interface Props {
 
 /** Off: a short reply after a silence must not lose its first words (Gabriel, 2026-09-29). */
 const SEND_ONLY_SPEECH = false;
-/** A frame's level (0 to 1, from capture.ts) at which it counts as speech. */
-const VOICE_LEVEL = 0.1;
-/** How long sending continues after the last voiced frame: the pauses inside a sentence. */
-const HANG_MS = 1500;
-/** Frames held before speech starts and sent ahead of it: half a second. */
-const PREROLL_FRAMES = 5;
 const LEVEL_EVERY_MS = 250;
 
 const MODE_LABEL = { off: "Not listening", listening: "Listening", paused: "Paused" } as const;
@@ -89,20 +83,12 @@ export function ListeningBar({ campaignId, role, status, send }: Props) {
     let live = true;
     setMicError(null);
     setNeedsClick(false);
-    const held: ArrayBuffer[] = [];
-    let sendingUntil = 0;
+    const gate = new SpeechGate<ArrayBuffer>();
     let levelAt = 0;
     openMicrophone((pcm, l) => {
       const now = performance.now();
-      if (l >= VOICE_LEVEL) {
-        if (now >= sendingUntil) for (const f of held.splice(0)) send(f);
-        sendingUntil = now + HANG_MS;
-      }
-      if (!SEND_ONLY_SPEECH || now < sendingUntil) send(pcm);
-      else {
-        held.push(pcm);
-        if (held.length > PREROLL_FRAMES) held.shift();
-      }
+      if (!SEND_ONLY_SPEECH) send(pcm);
+      else for (const f of gate.push(pcm, l, now)) send(f);
       if (now - levelAt >= LEVEL_EVERY_MS) {
         levelAt = now;
         send(JSON.stringify({ type: "level", level: Math.round(l * 100) / 100 }));

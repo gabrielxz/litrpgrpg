@@ -1,0 +1,73 @@
+# A scene for measuring the tab's speech gate (Listening.tsx, SEND_ONLY_SPEECH): short replies,
+# one to four words, most after 10 seconds or more in which their speaker said nothing, as a table
+# thinks, reads, or waits on the GM. `pause` is the silence after the line before it ends; the
+# scorer reads each line's own silence from the rendered timeline. Transcription only: it carries
+# no expected record. The speakers match the scripts' table.
+id: silences
+title: Short replies after silence
+speakers:
+  - {id: gm, role: gm, name: Ike}
+  - {id: nora, role: player, name: Nora, characters: [kara]}
+  - {id: ben, role: player, name: Ben, characters: [joe]}
+  - {id: aisha, role: player, name: Aisha, characters: [andre]}
+
+lines:
+  - {id: s1, speaker: gm, text: "Night falls over the camp. The fire is down to coals, and the howls out in the Arcane Debris have stopped. Who takes first watch?"}
+  - {id: s2, speaker: nora, pause: 5, text: "Me."}
+  - {id: s3, speaker: gm, pause: 1, text: "Kara has first watch. Joe and Andre, you're asleep unless you say otherwise."}
+  - {id: s4, speaker: ben, pause: 4, text: "Yeah, asleep."}
+  - {id: s5, speaker: aisha, pause: 3, text: "Wait."}
+  - {id: s6, speaker: aisha, pause: 2, text: "Andre meditates on the Battle Memory before he lies down."}
+  - {id: s7, speaker: gm, pause: 2, text: "Fine, he sleeps with it in his head. Kara, about an hour into your watch, something moves in the rubble to the east."}
+  - {id: s8, speaker: nora, pause: 6, text: "Listen."}
+  - {id: s9, speaker: gm, pause: 2, text: "Claws on metal, then nothing. Then again, closer. Two shapes, low to the ground."}
+  - {id: s10, speaker: ben, pause: 9, text: "Snarljaws?"}
+  - {id: s11, speaker: gm, pause: 2, text: "You're asleep, Joe. You don't know that."}
+  - {id: s12, speaker: nora, pause: 7, text: "Kara wakes Joe."}
+  - {id: s13, speaker: gm, pause: 1, text: "Joe, you get a boot in the ribs. Andre, you hear it and wake too. Everyone roll Momentum."}
+  - {id: s14, speaker: aisha, pause: 12, text: "Sixteen."}
+  - {id: s15, speaker: ben, pause: 3, text: "Forty-two."}
+  - {id: s16, speaker: gm, pause: 8, text: "Kara, you rolled?"}
+  - {id: s17, speaker: nora, pause: 4, text: "Seventy-one."}
+  - {id: s18, speaker: gm, pause: 2, text: "Kara goes first, then Joe, then Andre, then the Snarljaws. The first one is already at the edge of the firelight."}
+  - {id: s19, speaker: nora, pause: 10, text: "Hold on."}
+  - {id: s20, speaker: nora, pause: 3, text: "Can Kara reach it this Beat, or is it a Zone away?"}
+  - {id: s21, speaker: gm, pause: 2, text: "It's in your Zone."}
+  - {id: s22, speaker: nora, pause: 5, text: "Axe. Surge two."}
+  - {id: s23, speaker: gm, pause: 1, text: "Two Aether. That's a Clash, your Strength Force against its Dexterity. Roll it."}
+  - {id: s24, speaker: nora, pause: 8, text: "Fifty-eight."}
+  - {id: s25, speaker: gm, pause: 3, text: "The axe bites into its shoulder and it yelps and backs off. Joe."}
+  - {id: s26, speaker: ben, pause: 11, text: "Spear, same one."}
+  - {id: s27, speaker: gm, pause: 2, text: "It's wounded and it's backing into the dark. It has Flanking with the second one, so plus ten on its defense. Roll."}
+  - {id: s28, speaker: ben, pause: 9, text: "Nine."}
+  - {id: s29, speaker: gm, pause: 2, text: "Missed. The second Snarljaw circles toward Andre's bedroll. Andre."}
+  - {id: s30, speaker: aisha, pause: 14, text: "Stay down."}
+  - {id: s31, speaker: gm, pause: 2, text: "Andre stays on the ground? It's right over him."}
+  - {id: s32, speaker: aisha, pause: 6, text: "Yes. Playing dead."}
+  - {id: s33, speaker: gm, pause: 3, text: "It sniffs at him, loses interest, and turns toward the fire and the pack. Kara, it's your Beat again."}
+  - {id: s34, speaker: nora, pause: 13, text: "Fine. Same one."}
+  - {id: s35, speaker: gm, pause: 2, text: "It's wounded and backing off. Roll the Clash."}
+  - {id: s36, speaker: nora, pause: 7, text: "Ninety-four."}
+  - {id: s37, speaker: gm, pause: 3, text: "Ninety-four drops it. It's dead. That's Kara's kill. The second one breaks and runs for the rubble."}
+  - {id: s38, speaker: ben, pause: 12, text: "Let it go."}
+  - {id: s39, speaker: aisha, pause: 4, text: "Agreed."}
+  - {id: s40, speaker: gm, pause: 3, text: "The camp goes quiet again. Kara, there's a Heart in the dead one, if you want to cut it out."}
+  - {id: s41, speaker: nora, pause: 15, text: "Sure, why not."}
+  - {id: s42, speaker: gm, pause: 2, text: "Roll Survival. It's messy work in the dark."}
+  - {id: s43, speaker: nora, pause: 9, text: "Thirty-three."}
+  - {id: s44, speaker: gm, pause: 2, text: "You get it out whole. Andre, what's Andre doing while she works?"}
+  - {id: s45, speaker: aisha, pause: 16, text: "Healing Pill."}
+  - {id: s46, speaker: gm, pause: 2, text: "You're not hurt. Who's it for?"}
+  - {id: s47, speaker: aisha, pause: 8, text: "Oh. Never mind."}
+  - {id: s48, speaker: gm, pause: 3, text: "Joe, you're on watch after Kara now, since you're up anyway. Anything else before morning?"}
+  - {id: s49, speaker: ben, pause: 20, text: "Pass."}
+  - {id: s50, speaker: gm, pause: 4, text: "Morning comes grey. The System has a notice for each of you. Read them and tell me when you're done."}
+  - {id: s51, speaker: aisha, pause: 22, text: "Done."}
+  - {id: s52, speaker: ben, pause: 6, text: "Thanks, done."}
+  - {id: s53, speaker: nora, pause: 9, text: "Okay, done."}
+  - {id: s54, speaker: gm, pause: 2, text: "Good. The road to Sector C runs past the gate. Do you take it, or go back through the Arcane Debris?"}
+  - {id: s55, speaker: ben, pause: 25, text: "The gate."}
+  - {id: s56, speaker: gm, pause: 3, text: "Kara, Andre, are you with him?"}
+  - {id: s57, speaker: nora, pause: 11, text: "Yes."}
+  - {id: s58, speaker: aisha, pause: 9, text: "Hm. Fine."}
+  - {id: s59, speaker: gm, pause: 2, text: "Then that's where we stop tonight."}

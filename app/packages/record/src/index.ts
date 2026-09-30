@@ -44,6 +44,7 @@ export type {
 } from "./protocol.ts";
 export { type D100, type Dice, rollD100s } from "./dice.ts";
 export { rollFor } from "./rolling.ts";
+export { HANG_MS, PREROLL_FRAMES, SpeechGate, VOICE_LEVEL } from "./speech-gate.ts";
 export { type KillEntry, type LootResult, type RollLoot, type Settle, encounterAwards, lootRow } from "./aftermath.ts";
 export { type ItemAction, SPOILS, type Stack } from "./inventory.ts";
 export { type MarkByHand, type Proficiency, shapes } from "./proficiency.ts";

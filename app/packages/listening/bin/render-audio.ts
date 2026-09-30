@@ -1,13 +1,15 @@
 /**
  * Renders a scripted session as audio, one track per speaker (app/DESIGN.md, "Testing the listening":
  * synthetic audio per speaker). Each speaker gets a Kokoro voice of their own; lines play in order
- * with a short gap, or at a line's `t` when the script times it, and a speaker's track is silent
+ * with a short gap, or after a line's `pause` (seconds of silence after the line before it ends),
+ * or at a line's `t` when the script times it, and a speaker's track is silent
  * while others talk, as a microphone with headphones would be. Tracks are 16 kHz mono PCM16 WAV,
  * with a timeline of every line, in build/listening/audio/<script>/.
  *
- *   pnpm --filter @gradebreaker/listening render-audio [--script long-session] [--all]
+ *   pnpm --filter @gradebreaker/listening render-audio [--script long-session|silences] [--all]
  *
- * With no script named it renders `audio/terms.yaml`. Rendered lines are cached by voice and text.
+ * A script is looked for in `audio/` (scenes for transcription only), then `scripts/`. With no
+ * script named it renders `audio/terms.yaml`. Rendered lines are cached by voice and text.
  */
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
@@ -34,6 +36,7 @@ interface Line {
   speaker: string;
   text: string;
   t?: number;
+  pause?: number;
 }
 interface Speaker {
   id: string;
@@ -54,10 +57,12 @@ const arg = (name: string) => {
 };
 
 function sources(): string[] {
-  if (process.argv.includes("--all")) return [join(PKG, "audio/terms.yaml"), ...readdirSync(join(PKG, "scripts")).map((f) => join(PKG, "scripts", f))];
-  const id = arg("--script");
-  if (!id || id === "terms") return [join(PKG, "audio/terms.yaml")];
-  return [join(PKG, "scripts", `${id}.yaml`)];
+  const dirs = ["audio", "scripts"].map((d) => join(PKG, d));
+  if (process.argv.includes("--all")) return dirs.flatMap((d) => readdirSync(d).filter((f) => f.endsWith(".yaml")).map((f) => join(d, f)));
+  const id = arg("--script") ?? "terms";
+  const found = dirs.map((d) => join(d, `${id}.yaml`)).find(existsSync);
+  if (!found) throw new Error(`no script ${id} in audio/ or scripts/`);
+  return [found];
 }
 
 /** Linear resampling from Kokoro's 24 kHz to 16 kHz, as PCM16. */
@@ -117,7 +122,7 @@ async function render(path: string) {
   let cursor = LEAD_MS;
   for (const l of s.lines) {
     const pcm = await speak(l.text, voiceOf(l.speaker));
-    const startMs = l.t !== undefined ? Math.max(LEAD_MS, l.t * 1000) : cursor;
+    const startMs = l.t !== undefined ? Math.max(LEAD_MS, l.t * 1000) : l.pause !== undefined ? cursor - GAP_MS + l.pause * 1000 : cursor;
     const endMs = startMs + Math.round((pcm.length / RATE) * 1000);
     lines.push({ id: l.id, speaker: l.speaker, text: l.text, startMs, endMs });
     clips.push({ speaker: l.speaker, at: startMs, pcm });

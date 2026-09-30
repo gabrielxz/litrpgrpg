@@ -2,7 +2,9 @@
  * Soniox real-time (docs read 2026-09-29): the key and the configuration in the first text frame,
  * then raw PCM16 at real-time pace. Responses carry tokens; a token marked `is_final` is sent once
  * and never revised, so finals accumulate until endpoint detection closes the segment with `<end>`
- * (or `<fin>` after a finalize). An empty frame ends the stream; `finished` follows the last tokens.
+ * (or `<fin>` after a finalize). An empty text frame ends the stream; `finished` follows the last
+ * tokens. The docs allow an empty binary frame too, but Soniox ignores one (probed 2026-09-29): the
+ * close then waits out its deadline and the words not yet final are lost.
  */
 import type { Segment, Transcriber, TranscriberOptions } from "../listening.ts";
 import { vendorSocket } from "./socket.ts";
@@ -96,7 +98,7 @@ export function soniox(key: string): Transcriber {
       });
       return {
         write: (pcm) => sock.send(pcm),
-        close: () => sock.end(Buffer.alloc(0)),
+        close: () => sock.end(""),
       };
     },
   };

@@ -67,6 +67,23 @@ export function editDistance(ref: string[], hyp: string[]): number {
   return prev[hyp.length]!;
 }
 
+/** Which reference words a minimal-edit alignment matches exactly: a line's words, heard or lost. */
+export function matchedWords(ref: string[], hyp: string[]): boolean[] {
+  const d = Array.from({ length: ref.length + 1 }, (_, i) => Array.from({ length: hyp.length + 1 }, (_, j) => (i === 0 ? j : j === 0 ? i : 0)));
+  for (let i = 1; i <= ref.length; i++)
+    for (let j = 1; j <= hyp.length; j++) d[i]![j] = Math.min(d[i - 1]![j]! + 1, d[i]![j - 1]! + 1, d[i - 1]![j - 1]! + (ref[i - 1] === hyp[j - 1] ? 0 : 1));
+  const out = ref.map(() => false);
+  for (let i = ref.length, j = hyp.length; i > 0 && j > 0; ) {
+    if (ref[i - 1] === hyp[j - 1] && d[i]![j] === d[i - 1]![j - 1]) {
+      out[--i] = true;
+      j--;
+    } else if (d[i]![j] === d[i - 1]![j - 1]! + 1) (i--, j--);
+    else if (d[i]![j] === d[i - 1]![j]! + 1) i--;
+    else j--;
+  }
+  return out;
+}
+
 /** How many times a term's words occur in order in a word list. */
 function occurrences(list: string[], term: string[]): number {
   let n = 0;
