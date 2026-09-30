@@ -1914,3 +1914,54 @@ li.draft > .draft__decide {
 .echo--danger .ic {
   color: var(--danger);
 }
+
+/* ------------------------------------------------------------------ Combat (setting up) */
+
+.combat-setup .combat-head {
+  align-items: flex-start;
+}
+.setup__name {
+  max-width: 24rem;
+}
+.setup__sides {
+  --gap: var(--sp-3);
+  align-items: flex-end;
+}
+.setup__sides .field {
+  width: 12rem;
+}
+.setup__side {
+  width: 11rem;
+}
+.picker__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 5.5rem 11rem auto;
+  gap: var(--sp-3);
+  align-items: end;
+}
+.picker__custom {
+  margin-top: var(--sp-3);
+}
+details.folded > .field {
+  margin-bottom: var(--sp-3);
+}
+details.folded > .commit {
+  margin: var(--sp-2) calc(var(--sp-4) * -1) calc(var(--sp-3) * -1);
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 0;
+}
+.aftermath {
+  --gap: var(--sp-5);
+  max-width: 64rem;
+}
+.aftermath__item {
+  width: 18rem;
+}
+.aftermath__settle > .commit {
+  margin: 0;
+  border: 0;
+}
+.aftermath__settle > .callout {
+  margin: var(--sp-3) var(--sp-4) 0;
+}

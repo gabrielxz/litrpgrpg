@@ -78,13 +78,21 @@ export function AftermathPanel({ view, engine, names, onRecorded }: { view: GmVi
   };
 
   return (
-    <section className="card aftermath">
-      <h2>After {e.name}</h2>
-      <h3>Kills</h3>
+    <section className="stack aftermath" aria-label={`After ${e.name}`}>
+      <header className="stack combat-head combat-head__title">
+        <span className="label">The fight is over</span>
+        <h1>After {e.name}</h1>
+      </header>
+      <section className="panel">
+        <div className="panel__head">
+          <i className="ic ic-clash dim" aria-hidden="true" />
+          <h2>Kills</h2>
+        </div>
       {kills.length === 0 ? (
-        <p className="muted small">Nobody died, so there is no kill to award or loot to roll.</p>
+        <p className="dim small panel__body">Nobody died, so there is no kill to award or loot to roll.</p>
       ) : (
-        <table className="rows">
+        <div className="panel__body">
+        <table className="table">
           <thead>
             <tr>
               <th>Killed</th>
@@ -160,9 +168,16 @@ export function AftermathPanel({ view, engine, names, onRecorded }: { view: GmVi
             })}
           </tbody>
         </table>
+        </div>
       )}
+      </section>
 
-      <h3>Took part</h3>
+      <section className="panel">
+        <div className="panel__head">
+          <i className="ic ic-party dim" aria-hidden="true" />
+          <h2>Took part</h2>
+        </div>
+        <div className="panel__body stack">
       <div className="form-row tight">
         {fighters.map((c) => {
           const gone = sheet(c.characterId!)?.dead;
@@ -185,12 +200,12 @@ export function AftermathPanel({ view, engine, names, onRecorded }: { view: GmVi
           );
         })}
       </div>
-      <p className="muted small">Fighting, guarding, scouting the escape route, and controlling the field all count; being elsewhere does not.</p>
+      <p className="dim small">Fighting, guarding, scouting the escape route, and controlling the field all count; being elsewhere does not.</p>
 
       {participants.length > 0 && (
         <>
-          <h3>VE</h3>
-          <table className="rows">
+          <h3 className="label">VE</h3>
+          <table className="table">
             <tbody>
               {computed.map((w) => (
                 <tr key={w.characterId}>
@@ -213,8 +228,15 @@ export function AftermathPanel({ view, engine, names, onRecorded }: { view: GmVi
           </table>
         </>
       )}
+        </div>
+      </section>
 
-      <h3>Loot</h3>
+      <section className="panel">
+        <div className="panel__head">
+          <i className="ic ic-spoils dim" aria-hidden="true" />
+          <h2>Loot</h2>
+        </div>
+        <div className="panel__body stack">
       {kills.length > 0 &&
         (e.loot ? (
           <ul className="small">
@@ -227,10 +249,11 @@ export function AftermathPanel({ view, engine, names, onRecorded }: { view: GmVi
           </ul>
         ) : (
           <div className="form-row tight">
-            <button className="primary" disabled={busy} onClick={rollLoot}>
+            <button className="btn btn--primary btn--sm" disabled={busy} onClick={rollLoot}>
+              <i className="ic ic-dice" aria-hidden="true" />
               Roll loot
             </button>
-            <span className="muted small">
+            <span className="dim small">
               One roll per kill;{" "}
               {kills
                 .map((k) => {
@@ -244,7 +267,7 @@ export function AftermathPanel({ view, engine, names, onRecorded }: { view: GmVi
           </div>
         ))}
       {error && <p className="error">{error}</p>}
-      <p className="muted small">Enter what dropped. It goes into the spoils, and the players divide it on their screens.</p>
+      <p className="dim small">Enter what dropped. It goes into the spoils, and the players divide it on their screens.</p>
       <datalist id="item-catalog">
         {catalogNames(engine).map((n) => (
           <option key={n} value={n} />
@@ -252,19 +275,29 @@ export function AftermathPanel({ view, engine, names, onRecorded }: { view: GmVi
       </datalist>
       {spoils.map((s, i) => (
         <div key={i} className="form-row tight">
-          <input list="item-catalog" value={s.name} onChange={(ev) => setSpoils(spoils.map((x, j) => (j === i ? { ...x, name: ev.target.value } : x)))} placeholder="Lesser Healing Pill" aria-label="Item" />
-          <input type="number" className="narrow-input" min={1} value={s.count} onChange={(ev) => setSpoils(spoils.map((x, j) => (j === i ? { ...x, count: ev.target.value } : x)))} aria-label="How many" />
-          <button onClick={() => setSpoils(spoils.filter((_, j) => j !== i))}>Remove</button>
+          <input className="input aftermath__item" list="item-catalog" value={s.name} onChange={(ev) => setSpoils(spoils.map((x, j) => (j === i ? { ...x, name: ev.target.value } : x)))} placeholder="Lesser Healing Pill" aria-label="Item" />
+          <input type="number" className="input num narrow-input" min={1} value={s.count} onChange={(ev) => setSpoils(spoils.map((x, j) => (j === i ? { ...x, count: ev.target.value } : x)))} aria-label="How many" />
+          <button className="btn btn--sm" onClick={() => setSpoils(spoils.filter((_, j) => j !== i))}>Remove</button>
         </div>
       ))}
-      <button onClick={() => setSpoils([...spoils, { name: "", count: "1" }])}>Add an item</button>
+      <div>
+        <button className="btn btn--sm" onClick={() => setSpoils([...spoils, { name: "", count: "1" }])}>
+          <i className="ic ic-add" aria-hidden="true" />
+          Add an item
+        </button>
+      </div>
+        </div>
+      </section>
 
-      {survivors.length > 0 && (
-        <p className="small">
-          {survivors.map((c) => c.name).join(" and ")} survived Downed: a Battle Memory Card is due, unless the Downing taught nothing.
-        </p>
-      )}
-      <Commit campaignId={view.campaign.id} action={settle} problem={problem} names={names} label={`Settle ${e.name}`} onRecorded={onRecorded} />
+      <section className="panel aftermath__settle">
+        {survivors.length > 0 && (
+          <p className="callout">
+            <i className="ic ic-memory" aria-hidden="true" />
+            {survivors.map((c) => c.name).join(" and ")} survived Downed: a Battle Memory Card is due, unless the Downing taught nothing.
+          </p>
+        )}
+        <Commit campaignId={view.campaign.id} action={settle} problem={problem} names={names} label={`Settle ${e.name}`} onRecorded={onRecorded} />
+      </section>
     </section>
   );
 }

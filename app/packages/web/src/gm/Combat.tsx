@@ -141,11 +141,11 @@ function CreaturePicker({
   };
 
   return (
-    <div className="form">
-      <div className="form-row">
-        <label>
-          From the Bestiary
-          <select value={pick} onChange={(e) => setPick(e.target.value)}>
+    <div className="stack picker">
+      <div className="picker__row">
+        <label className="field">
+          <span>From the Bestiary</span>
+          <select className="select" value={pick} onChange={(e) => setPick(e.target.value)}>
             {bestiary.map((c) => (
               <option key={c.name} value={c.name}>
                 {c.name} ({c.grade} {c.tier}, HP {c.hp})
@@ -153,13 +153,13 @@ function CreaturePicker({
             ))}
           </select>
         </label>
-        <label>
-          How many
-          <input type="number" className="narrow-input" min={1} max={20} value={count} onChange={(e) => setCount(e.target.value)} />
+        <label className="field">
+          <span>How many</span>
+          <input type="number" className="input num" min={1} max={20} value={count} onChange={(e) => setCount(e.target.value)} />
         </label>
-        <label>
-          Side
-          <select value={side} onChange={(e) => setSideId(e.target.value)}>
+        <label className="field">
+          <span>Side</span>
+          <select className="select" value={side} onChange={(e) => setSideId(e.target.value)}>
             {sides.map((s) => (
               <option key={s.id} value={s.id}>
                 {s.name}
@@ -167,11 +167,14 @@ function CreaturePicker({
             ))}
           </select>
         </label>
-        <button onClick={addBestiary}>Add</button>
+        <button className="btn" onClick={addBestiary}>
+          <Icon name="add" />
+          Add
+        </button>
       </div>
       <details>
-        <summary>Someone not in the Bestiary</summary>
-        <div className="form-row">
+        <summary className="small dim">Someone not in the Bestiary</summary>
+        <div className="form-row picker__custom">
           <label>
             Name
             <input value={custom.name} onChange={(e) => setCustom({ ...custom, name: e.target.value })} />
@@ -211,7 +214,8 @@ function CreaturePicker({
               onChange={(e) => setCustom({ ...custom, momentum: e.target.value })}
             />
           </label>
-          <button disabled={!customOk} onClick={addCustom}>
+          <button className="btn" disabled={!customOk} onClick={addCustom}>
+            <Icon name="add" />
             Add
           </button>
         </div>
@@ -249,157 +253,201 @@ function Setup({ view, engine, onRecorded, firing, onFired }: { view: GmView; en
   const sideCount = new Set(combatants.map((c) => c.sideId)).size;
   const problem = sideCount < 2 ? "Put someone on at least two sides." : null;
 
+  const start = async () => {
+    const ok = await run(
+      {
+        type: "combat.start",
+        encounterId: `fight-${rid()}`,
+        name: name.trim() || "Fight",
+        sides: sides.filter((s) => combatants.some((c) => c.sideId === s.id)),
+        zones,
+        combatants,
+      },
+      firing && prepCause(firing.prepId),
+    );
+    if (ok) onFired?.();
+  };
+
+  // The Combat screen's two columns: the fight's parts on the left, its sizing and start docked right.
   return (
-    <section className="card combat-setup">
-      <h2>A new fight</h2>
-      {firing && <p className="muted small">From Prep. Place the characters, then start it.</p>}
-      <div className="form-row">
-        <label>
-          Name
-          <input value={name} onChange={(e) => setName(e.target.value)} placeholder="The treeline" />
-        </label>
-      </div>
-      <h3>Sides</h3>
-      <div className="form-row">
-        {sides.map((s, i) => (
-          <label key={s.id}>
-            Side {i + 1}
-            <input value={s.name} onChange={(e) => setSides(sides.map((x) => (x.id === s.id ? { ...x, name: e.target.value } : x)))} />
-          </label>
-        ))}
-        {sides.length < 6 && (
-          <button onClick={() => setSides([...sides, { id: `side-${rid()}`, name: `Side ${sides.length + 1}` }])} title="Three or more sides: Momentum sets the order for the whole round">
-            Add a side
-          </button>
-        )}
-      </div>
-      <h3>Zones</h3>
-      <div className="form-row">
-        <label>
-          Loose areas, separated by commas; everyone starts in the first
-          <input className="wide" value={zoneText} onChange={(e) => setZoneText(e.target.value)} placeholder="The bar, The floor, The doorway" />
-        </label>
-      </div>
-      <h3>Characters</h3>
-      {view.characters.length === 0 && <p className="muted">No characters in the campaign yet.</p>}
-      <table className="rows">
-        <tbody>
-          {view.characters.map((c) => (
-            <tr key={c.id}>
-              <td>{c.name}</td>
-              <td>
-                <select value={placed[c.id] ?? ""} onChange={(e) => setPlaced({ ...placed, [c.id]: e.target.value })}>
-                  <option value="">Not in the fight</option>
-                  {sides.map((s) => (
-                    <option key={s.id} value={s.id}>
-                      {s.name}
-                    </option>
-                  ))}
-                </select>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <h3>Creatures and NPCs</h3>
-      <CreaturePicker engine={engine} sides={sides} onAdd={(specs) => setOthers([...others, ...specs])} />
-      {others.length > 0 && (
-        <table className="rows">
-          <tbody>
-            {others.map((o) => (
-              <tr key={o.combatantId}>
-                <td>{o.name}</td>
-                <td className="muted small">
-                  {sides.find((s) => s.id === o.sideId)?.name} · HP {o.maxHp} · {o.beats} Beat{o.beats === 1 ? "" : "s"} · Momentum {o.momentumForce}
-                </td>
-                <td>
-                  <button onClick={() => setOthers(others.filter((x) => x.combatantId !== o.combatantId))}>Remove</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-      <SizingPanel
-        engine={engine}
-        party={view.characters.filter((c) => placed[c.id])}
-        creatures={others.filter((o) => !view.characters.some((c) => placed[c.id] === o.sideId)).map((o) => sizedOf(engine, o))}
-      />
-      {problem && <p className="muted">{problem}</p>}
-      {error && <p className="error">{error}</p>}
-      <button
-        className="primary"
-        disabled={Boolean(problem) || busy}
-        onClick={async () => {
-          const ok = await run(
-            {
-              type: "combat.start",
-              encounterId: `fight-${rid()}`,
-              name: name.trim() || "Fight",
-              sides: sides.filter((s) => combatants.some((c) => c.sideId === s.id)),
-              zones,
-              combatants,
-            },
-            firing && prepCause(firing.prepId),
-          );
-          if (ok) onFired?.();
-        }}
-      >
-        Start the fight
-      </button>
-      {firing && others.length > 0 && (
-        <details>
-          <summary>Save the changes to Prep</summary>
-          <Commit
-            campaignId={view.campaign.id}
-            action={{
-              type: "prep.save",
-              items: [
-                savedTo(view, firing.prepId, {
-                  kind: "encounter",
-                  title: view.prep.find((p) => p.id === firing.prepId)?.title ?? (name.trim() || "Fight"),
-                  encounter: { name: name.trim() || "Fight", zones: zones.map((z) => z.name), creatures: prepCreaturesOf(others.filter((o) => !view.characters.some((c) => c.id === o.characterId))) },
-                }),
-              ],
-            }}
-            names={(id) => id}
-            label="Save to Prep"
-            onRecorded={(env) => {
-              onRecorded(env);
-              onFired?.();
-            }}
-          />
-        </details>
-      )}
-      {others.length > 0 && (
-        <details>
-          <summary>Save this fight to Prep</summary>
-          <div className="form-row">
-            <label>
-              Title
-              <input value={prepTitle} onChange={(e) => setPrepTitle(e.target.value)} placeholder={name.trim() || "The treeline"} />
-            </label>
+    <main className="screen screen--side combat-screen combat-setup">
+      <section className="stack combat-main" aria-label="A new fight">
+        <header className="stack combat-head combat-head__title">
+          <span className="label">The fight</span>
+          <h1>A new fight</h1>
+          {firing && <p className="small dim">From Prep. Place the characters, then start it.</p>}
+        </header>
+        <section className="panel">
+          <div className="panel__head">
+            <Icon name="clash" />
+            <h2>Name, sides, and Zones</h2>
           </div>
-          <Commit
-            campaignId={view.campaign.id}
-            action={{
-              type: "prep.save",
-              items: [
-                {
-                  id: `fight-${slug(prepTitle.trim() || name.trim() || "fight")}`,
-                  kind: "encounter",
-                  title: prepTitle.trim() || name.trim() || "Fight",
-                  encounter: { name: name.trim() || prepTitle.trim() || "Fight", zones: zones.map((z) => z.name), creatures: prepCreaturesOf(others.filter((o) => !view.characters.some((c) => c.id === o.characterId))) },
-                },
-              ],
-            }}
-            names={(id) => id}
-            label="Save to Prep"
-            onRecorded={onRecorded}
-          />
-        </details>
-      )}
-    </section>
+          <div className="panel__body stack">
+            <label className="field setup__name">
+              <span>Name</span>
+              <input className="input" value={name} onChange={(e) => setName(e.target.value)} placeholder="The treeline" />
+            </label>
+            <div className="cluster setup__sides">
+              {sides.map((s, i) => (
+                <label key={s.id} className="field">
+                  <span>Side {i + 1}</span>
+                  <input className="input" value={s.name} onChange={(e) => setSides(sides.map((x) => (x.id === s.id ? { ...x, name: e.target.value } : x)))} />
+                </label>
+              ))}
+              {sides.length < 6 && (
+                <button className="btn btn--sm setup__add-side" onClick={() => setSides([...sides, { id: `side-${rid()}`, name: `Side ${sides.length + 1}` }])} title="Three or more sides: Momentum sets the order for the whole round">
+                  <Icon name="add" />
+                  Add a side
+                </button>
+              )}
+            </div>
+            <label className="field">
+              <span>Zones: loose areas, separated by commas; everyone starts in the first</span>
+              <input className="input" value={zoneText} onChange={(e) => setZoneText(e.target.value)} placeholder="The bar, The floor, The doorway" />
+            </label>
+            {zones.length > 0 && (
+              <div className="zones__grid" role="list" aria-label="Zones">
+                {zones.map((z, i) => (
+                  <div key={z.id} role="listitem" className="zone-card">
+                    <div className="spread">
+                      <b className="world">{z.name}</b>
+                      <Icon name="zone" />
+                    </div>
+                    <div className="small dim">{i === 0 ? "everyone starts here" : "empty"}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+        <section className="panel">
+          <div className="panel__head">
+            <Icon name="party" />
+            <h2>Characters</h2>
+          </div>
+          {view.characters.length === 0 ? (
+            <p className="dim panel__body">No characters in the campaign yet.</p>
+          ) : (
+            <ul className="rows panel__rows">
+              {view.characters.map((c) => (
+                <li key={c.id}>
+                  <span className="row__main">
+                    <b>{c.name}</b> <span className="small dim num">Level {c.level} · {c.grade}</span>
+                  </span>
+                  <select className="select select--sm setup__side" value={placed[c.id] ?? ""} onChange={(e) => setPlaced({ ...placed, [c.id]: e.target.value })} aria-label={`Side for ${c.name}`}>
+                    <option value="">Not in the fight</option>
+                    {sides.map((s) => (
+                      <option key={s.id} value={s.id}>
+                        {s.name}
+                      </option>
+                    ))}
+                  </select>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+        <section className="panel">
+          <div className="panel__head">
+            <Icon name="bestiary" />
+            <h2>Creatures and NPCs</h2>
+          </div>
+          <div className="panel__body stack">
+            <CreaturePicker engine={engine} sides={sides} onAdd={(specs) => setOthers([...others, ...specs])} />
+          </div>
+          {others.length > 0 && (
+            <ul className="rows panel__rows setup__others">
+              {others.map((o) => (
+                <li key={o.combatantId}>
+                  <span className="row__main">
+                    <b>{o.name}</b>{" "}
+                    <span className="small dim">
+                      {sides.find((s) => s.id === o.sideId)?.name} · HP {o.maxHp} · {o.beats} Beat{o.beats === 1 ? "" : "s"} · Momentum {o.momentumForce}
+                    </span>
+                  </span>
+                  <button className="btn btn--sm" onClick={() => setOthers(others.filter((x) => x.combatantId !== o.combatantId))}>
+                    Remove
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      </section>
+      <aside className="stack combat-aside">
+        <section className="panel">
+          <div className="panel__head">
+            <Icon name="momentum" />
+            <h2>Start</h2>
+          </div>
+          <div className="panel__body stack">
+            <SizingPanel
+              engine={engine}
+              party={view.characters.filter((c) => placed[c.id])}
+              creatures={others.filter((o) => !view.characters.some((c) => placed[c.id] === o.sideId)).map((o) => sizedOf(engine, o))}
+            />
+            {problem && <p className="problem">{problem}</p>}
+            {error && <p className="error">{error}</p>}
+          </div>
+          <div className="draft__decide">
+            <button className="btn btn--primary" disabled={Boolean(problem) || busy} onClick={start}>
+              <Icon name="play" />
+              Start the fight
+            </button>
+          </div>
+        </section>
+        {firing && others.length > 0 && (
+          <details className="panel folded">
+            <summary>Save the changes to Prep</summary>
+            <Commit
+              campaignId={view.campaign.id}
+              action={{
+                type: "prep.save",
+                items: [
+                  savedTo(view, firing.prepId, {
+                    kind: "encounter",
+                    title: view.prep.find((p) => p.id === firing.prepId)?.title ?? (name.trim() || "Fight"),
+                    encounter: { name: name.trim() || "Fight", zones: zones.map((z) => z.name), creatures: prepCreaturesOf(others.filter((o) => !view.characters.some((c) => c.id === o.characterId))) },
+                  }),
+                ],
+              }}
+              names={(id) => id}
+              label="Save to Prep"
+              onRecorded={(env) => {
+                onRecorded(env);
+                onFired?.();
+              }}
+            />
+          </details>
+        )}
+        {others.length > 0 && (
+          <details className="panel folded">
+            <summary>Save this fight to Prep</summary>
+            <label className="field">
+              <span>Title</span>
+              <input className="input" value={prepTitle} onChange={(e) => setPrepTitle(e.target.value)} placeholder={name.trim() || "The treeline"} />
+            </label>
+            <Commit
+              campaignId={view.campaign.id}
+              action={{
+                type: "prep.save",
+                items: [
+                  {
+                    id: `fight-${slug(prepTitle.trim() || name.trim() || "fight")}`,
+                    kind: "encounter",
+                    title: prepTitle.trim() || name.trim() || "Fight",
+                    encounter: { name: name.trim() || prepTitle.trim() || "Fight", zones: zones.map((z) => z.name), creatures: prepCreaturesOf(others.filter((o) => !view.characters.some((c) => c.id === o.characterId))) },
+                  },
+                ],
+              }}
+              names={(id) => id}
+              label="Save to Prep"
+              onRecorded={onRecorded}
+            />
+          </details>
+        )}
+      </aside>
+    </main>
   );
 }
 
