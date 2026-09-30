@@ -16,6 +16,8 @@ import type { DevSignIn } from "./devauth.ts";
 import { type Drafts, MAX_TALK_CHARS } from "./drafts.ts";
 import type { LiveDrafting } from "./live-drafting.ts";
 import type { Recordings } from "./recordings.ts";
+import { SECOND_OPINION_MODEL, transcribeWav } from "./stt/assemblyai-file.ts";
+import { vocabulary } from "@gradebreaker/listening/stt";
 import { type Listening, ListeningRefused } from "./listening.ts";
 import { HttpError, type Service, type User } from "./service.ts";
 
@@ -48,6 +50,8 @@ const recordBody = z.object({ on: z.boolean() });
 const listeningBody = z.object({ mode: z.enum(["off", "listening", "paused"]) });
 const acceptDraft = submissionSchema.pick({ id: true, action: true });
 const draftDistillationBody = z.object({ characterId: z.string().min(1).max(100), family: z.string().min(1).max(40), words: z.string().max(2000).optional(), refine: z.boolean().optional() });
+
+const correctionBody = z.object({ lines: z.array(z.object({ id: z.string().max(40), text: z.string().max(4000) })).max(5000) });
 
 const rulesQuestionBody = z.object({ question: z.string().min(1).max(1000) });
 
@@ -232,7 +236,46 @@ export function createApp(service: Service, opts: AppOptions = {}) {
   app.get("/campaigns/:id/recordings", async (c) => {
     const id = c.req.param("id");
     await service.requireGm(id, c.get("user"));
-    return c.json({ recordings: recordings().list(id) });
+    return c.json({ recordings: recordings().list(id).map((r) => ({ ...r, second: recordings().secondState(r.id), secondAvailable: Boolean(process.env.ASSEMBLYAI_API_KEY) })) });
+  });
+  // Correcting a recording's timeline: its lines with the second opinion's text, a line's audio, and the GM's corrections.
+  app.get("/campaigns/:id/recordings/:rec/lines", async (c) => {
+    const { id, rec } = c.req.param();
+    await service.requireGm(id, c.get("user"));
+    const t = recordings().timeline(id, rec);
+    if (!t) throw new HttpError(404, "no such recording, or it is still recording");
+    return c.json({ speakers: t.speakers, lines: t.lines, second: recordings().second(id, rec), state: recordings().secondState(rec) });
+  });
+  app.put("/campaigns/:id/recordings/:rec/lines", async (c) => {
+    const { id, rec } = c.req.param();
+    await service.requireGm(id, c.get("user"));
+    const b = await body(c, correctionBody);
+    try {
+      return c.json({ corrected: recordings().correct(id, rec, b.lines) });
+    } catch (e) {
+      throw new HttpError(404, (e as Error).message);
+    }
+  });
+  app.get("/campaigns/:id/recordings/:rec/snippet/:speaker", async (c) => {
+    const { id, rec, speaker } = c.req.param();
+    await service.requireGm(id, c.get("user"));
+    const wav = recordings().snippet(id, rec, speaker, Number(c.req.query("start")), Number(c.req.query("end")));
+    if (!wav) throw new HttpError(404, "no such stretch of audio");
+    return new Response(new Uint8Array(wav), { headers: { "content-type": "audio/wav", "content-length": String(wav.length) } });
+  });
+  app.post("/campaigns/:id/recordings/:rec/second-opinion", async (c) => {
+    const { id, rec } = c.req.param();
+    await service.requireGm(id, c.get("user"));
+    const key = process.env.ASSEMBLYAI_API_KEY;
+    if (!key) throw new HttpError(409, "the server has no key for the second transcriber");
+    const record = await service.record(id);
+    const terms = vocabulary(record.engine, [...record.state.characters.values()].map((x) => x.name));
+    try {
+      recordings().startSecond(id, rec, SECOND_OPINION_MODEL, (wav) => transcribeWav(key, wav, terms));
+    } catch (e) {
+      throw new HttpError(404, (e as Error).message);
+    }
+    return c.json({ state: recordings().secondState(rec) }, 202);
   });
   app.get("/campaigns/:id/recordings/:rec/:file", async (c) => {
     const { id, rec, file } = c.req.param();

@@ -7,15 +7,22 @@
  * a recording as on a rendered scene; its lines are the transcriber's, a first draft of the
  * reference for the GM to correct.
  *
+ * The GM corrects the timeline in the app, line by line with each line's audio to hand: the
+ * corrected text replaces the transcriber's in `timeline.json` (the heard text is kept in
+ * `timeline.heard.json`), so `stt-eval` scores against what was said. A second opinion from a more
+ * accurate transcriber, run on the tracks after the session, is aligned to the lines by time and
+ * kept in `second.json`, so the GM can check only the lines where the two disagree.
+ *
  * The audio stays on the server's own disk, never in the database: the GM downloads it and
  * deletes it, it is deleted RECORDING_KEEP_DAYS after the recording ends, and a new machine starts without
  * it. Withdrawing consent deletes that person's tracks.
  */
-import { createReadStream, createWriteStream, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync, type WriteStream } from "node:fs";
+import { closeSync, createReadStream, createWriteStream, existsSync, mkdirSync, openSync, readFileSync, readSync, readdirSync, rmSync, statSync, writeFileSync, type WriteStream } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { Readable } from "node:stream";
 import type { HeardLine } from "@gradebreaker/record";
+import { words } from "@gradebreaker/listening/stt";
 import { newId } from "./tokens.ts";
 
 const RATE = 16_000;
@@ -43,6 +50,46 @@ export interface RecordedPerson {
   name: string;
   role: "gm" | "player";
 }
+
+/** A timeline line as the recording keeps it; `checked` once the GM has corrected or confirmed it. */
+export interface TimelineLine {
+  id: string;
+  speaker: string;
+  text: string;
+  startMs: number;
+  endMs: number;
+  checked?: boolean;
+}
+
+/** The longest snippet of a track served at once. */
+const SNIPPET_MAX_MS = 60_000;
+/** How far from a line a second opinion's word may fall and still belong to it. */
+const ALIGN_SLACK_MS = 1500;
+
+/**
+ * A second transcript's words, one speaker's, laid on that speaker's lines: each word goes to the
+ * line it overlaps most, or the nearest within ALIGN_SLACK_MS; a word near no line is left out.
+ */
+export function alignWords(lines: readonly TimelineLine[], speaker: string, heard: readonly { text: string; startMs: number; endMs: number }[]): Map<string, string> {
+  const mine = lines.filter((l) => l.speaker === speaker);
+  const out = new Map<string, string[]>();
+  for (const w of heard) {
+    let best: TimelineLine | undefined;
+    let score = -Infinity;
+    for (const l of mine) {
+      const overlap = Math.min(l.endMs, w.endMs) - Math.max(l.startMs, w.startMs);
+      if (overlap > score) {
+        score = overlap;
+        best = l;
+      }
+    }
+    if (best && score > -ALIGN_SLACK_MS) out.set(best.id, [...(out.get(best.id) ?? []), w.text]);
+  }
+  return new Map([...out].map(([id, ws]) => [id, ws.join(" ")]));
+}
+
+/** Whether two readings of a line differ in their words (case and punctuation aside). */
+export const disagree = (a: string, b: string) => words(a).join(" ") !== words(b).join(" ");
 
 export interface RecordingMeta {
   id: string;
@@ -143,7 +190,9 @@ export class Recordings {
             ...m.people
               .filter((p) => existsSync(this.path(m.id, `${p.userId}.pcm`)))
               .map((p) => ({ name: `${p.userId}.wav`, save: saved.get(p.userId)!, bytes: 44 + statSync(this.path(m.id, `${p.userId}.pcm`)).size })),
-            ...(existsSync(this.path(m.id, "timeline.json")) ? [{ name: "timeline.json", save: "timeline.json", bytes: statSync(this.path(m.id, "timeline.json")).size }] : []),
+            ...["timeline.json", "timeline.heard.json", "second.json"]
+              .filter((f) => existsSync(this.path(m.id, f)))
+              .map((f) => ({ name: f, save: f, bytes: statSync(this.path(m.id, f)).size })),
           ],
         };
       });
@@ -153,7 +202,7 @@ export class Recordings {
   file(campaignId: string, id: string, name: string): { type: string; bytes: number; body: ReadableStream } | null {
     const meta = this.list(campaignId).find((m) => m.id === id);
     if (!meta?.endedAt || !meta.files.some((f) => f.name === name)) return null;
-    if (name === "timeline.json") {
+    if (name.endsWith(".json")) {
       const p = this.path(id, name);
       return { type: "application/json", bytes: statSync(p).size, body: Readable.toWeb(createReadStream(p)) as ReadableStream };
     }
@@ -169,6 +218,96 @@ export class Recordings {
       ),
     ) as ReadableStream;
     return { type: "audio/wav", bytes: 44 + size, body };
+  }
+
+  /** A finished recording's timeline, or null. */
+  timeline(campaignId: string, id: string): { speakers: { id: string; name: string; file: string }[]; lines: TimelineLine[] } | null {
+    const meta = this.list(campaignId).find((m) => m.id === id);
+    if (!meta?.endedAt || !existsSync(this.path(id, "timeline.json"))) return null;
+    return JSON.parse(readFileSync(this.path(id, "timeline.json"), "utf8"));
+  }
+
+  /** The second opinion's text by line, once it has run. */
+  second(campaignId: string, id: string): { model: string; lines: Record<string, string> } | null {
+    if (!this.timeline(campaignId, id) || !existsSync(this.path(id, "second.json"))) return null;
+    return JSON.parse(readFileSync(this.path(id, "second.json"), "utf8"));
+  }
+
+  /**
+   * The GM's corrections: each named line takes the text given and is marked checked. The
+   * transcriber's text is kept in `timeline.heard.json` the first time.
+   */
+  correct(campaignId: string, id: string, lines: { id: string; text: string }[]): number {
+    const t = this.timeline(campaignId, id);
+    if (!t) throw new Error("no such recording, or it is still recording");
+    if (!existsSync(this.path(id, "timeline.heard.json"))) writeFileSync(this.path(id, "timeline.heard.json"), readFileSync(this.path(id, "timeline.json")));
+    const byId = new Map(lines.map((l) => [l.id, l.text.trim()]));
+    let n = 0;
+    for (const l of t.lines) {
+      const text = byId.get(l.id);
+      if (text === undefined) continue;
+      l.text = text;
+      l.checked = true;
+      n++;
+    }
+    writeFileSync(this.path(id, "timeline.json"), JSON.stringify(t, null, 1));
+    return n;
+  }
+
+  /** A stretch of one person's track as a WAV of its own, to hear a line against its text. */
+  snippet(campaignId: string, id: string, userId: string, startMs: number, endMs: number): Buffer | null {
+    const t = this.timeline(campaignId, id);
+    const pcm = this.path(id, `${userId}.pcm`);
+    if (!t || !/^[\w-]+$/.test(userId) || !existsSync(pcm)) return null;
+    const from = Math.max(0, Math.floor((startMs * RATE) / 1000)) * 2;
+    const to = Math.min(statSync(pcm).size, Math.floor((Math.min(endMs, startMs + SNIPPET_MAX_MS) * RATE) / 1000) * 2);
+    if (to <= from) return null;
+    const out = Buffer.alloc(to - from);
+    const fd = openSync(pcm, "r");
+    try {
+      readSync(fd, out, 0, out.length, from);
+    } finally {
+      closeSync(fd);
+    }
+    return Buffer.concat([wavHeader(out.length), out]);
+  }
+
+  private seconds = new Map<string, { state: "running" } | { state: "failed"; error: string }>();
+
+  /** Where a second opinion stands: running, failed with why, done, or never asked for. */
+  secondState(id: string): "running" | "done" | "none" | { failed: string } {
+    const s = this.seconds.get(id);
+    if (s?.state === "running") return "running";
+    if (existsSync(this.path(id, "second.json"))) return "done";
+    return s?.state === "failed" ? { failed: s.error } : "none";
+  }
+
+  /**
+   * Runs the second opinion in the background: each track transcribed by `transcribe`, its words
+   * laid on the speaker's lines, and the result written to `second.json`.
+   */
+  startSecond(campaignId: string, id: string, model: string, transcribe: (wav: { header: Buffer; pcmPath: string }) => Promise<{ text: string; startMs: number; endMs: number }[]>): void {
+    const t = this.timeline(campaignId, id);
+    if (!t) throw new Error("no such recording, or it is still recording");
+    if (this.seconds.get(id)?.state === "running") return;
+    this.seconds.set(id, { state: "running" });
+    void (async () => {
+      try {
+        const lines: Record<string, string> = {};
+        await Promise.all(
+          t.speakers.map(async (sp) => {
+            const pcmPath = this.path(id, `${sp.id}.pcm`);
+            if (!existsSync(pcmPath)) return;
+            const heard = await transcribe({ header: wavHeader(statSync(pcmPath).size), pcmPath });
+            for (const [line, text] of alignWords(t.lines, sp.id, heard)) lines[line] = text;
+          }),
+        );
+        writeFileSync(this.path(id, "second.json"), JSON.stringify({ model, lines }, null, 1));
+        this.seconds.delete(id);
+      } catch (e) {
+        this.seconds.set(id, { state: "failed", error: (e as Error).message });
+      }
+    })();
   }
 
   delete(campaignId: string, id: string): boolean {
@@ -189,10 +328,18 @@ export class Recordings {
     for (const m of this.list(campaignId)) {
       rmSync(this.path(m.id, `${userId}.pcm`), { force: true });
       // What they said goes from the timeline with their voice.
-      const tl = this.path(m.id, "timeline.json");
-      if (existsSync(tl)) {
-        const t = JSON.parse(readFileSync(tl, "utf8")) as { speakers: { id: string }[]; lines: { speaker: string }[] };
+      const theirs = new Set<string>();
+      for (const f of ["timeline.json", "timeline.heard.json"]) {
+        const tl = this.path(m.id, f);
+        if (!existsSync(tl)) continue;
+        const t = JSON.parse(readFileSync(tl, "utf8")) as { speakers: { id: string }[]; lines: { id: string; speaker: string }[] };
+        for (const l of t.lines) if (l.speaker === userId) theirs.add(l.id);
         writeFileSync(tl, JSON.stringify({ ...t, speakers: t.speakers.filter((x) => x.id !== userId), lines: t.lines.filter((l) => l.speaker !== userId) }, null, 1));
+      }
+      const second = this.path(m.id, "second.json");
+      if (existsSync(second)) {
+        const s = JSON.parse(readFileSync(second, "utf8")) as { model: string; lines: Record<string, string> };
+        writeFileSync(second, JSON.stringify({ ...s, lines: Object.fromEntries(Object.entries(s.lines).filter(([id]) => !theirs.has(id))) }, null, 1));
       }
       if (!this.open.has(m.id)) writeFileSync(this.path(m.id, "meta.json"), JSON.stringify({ ...m, files: undefined, people: m.people.filter((p) => p.userId !== userId) }));
     }
