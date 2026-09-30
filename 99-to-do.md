@@ -115,7 +115,7 @@ Edits an app session forces, each with Gabriel's ruling or Claude's recommendati
 - **The rehearsal pack:** `app/packs/rehearsal.yaml` and its run sheet `rehearsal.md` (four Level 8 characters, five scenes, two rests to Level 10); the pack test replays its setup and VE plan.
 - **Distillation drafts** (two readings with their grants), **rules questions** (GM: every chapter; players: the players' chapters, nothing from the campaign; the image now carries the chapters), and **correcting a test recording's lines** in the app with each line's audio and an AssemblyAI second opinion that narrows the list to disagreements.
 
-**Next.** The visual makeover, in Claude Design: Gabriel's step, since it does not run in a session like this. Then the user guide, reachable from every screen, with Claude's screenshots of the new look. Then the rehearsal. Two decisions wait on Gabriel: whether to set `ASSEMBLYAI_API_KEY` as a Fly secret (the second opinion shows only where the server holds it), and whether book pushes should deploy so rules questions read the newest chapters (today they read the chapters of the last app deploy).
+**Next.** The visual makeover (Gabriel, 2026-09-30): he works in Claude Design and brings questions to the next app session, which starts there. Then the user guide, reachable from every screen, with Claude's screenshots of the new look. Then the rehearsal. Two decisions wait on Gabriel: whether to set `ASSEMBLYAI_API_KEY` as a Fly secret (the second opinion shows only where the server holds it), and whether book pushes should deploy so rules questions read the newest chapters (today they read the chapters of the last app deploy).
 
 ### Queued for the app
 
