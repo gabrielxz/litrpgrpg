@@ -37,7 +37,7 @@ Unplugged is the baseline this book is written against. The other two modes auto
 
 ### AI-Assisted
 
-The GM runs the table with no HVE tracking during play and does the sweep at session end as normal, then uses any conversational AI between sessions for the generative work: paste the standing context (below), then the function's prompt where one is given (Class Generation, Personal Opportunities, Battle Memory Visions) or its procedure below.
+The GM runs the table with no HVE tracking during play and does the sweep at session end as normal, then uses any conversational AI between sessions for the generative work: paste the standing context (below), then the function's prompt where one is given (Class Generation, Personal Opportunities, Battle Memory Visions, Hidden Achievements) or its procedure below. Loot and Identify have no prompt: the loot table below and What Can Be Seen are the procedure in every mode.
 
 - Keep one standing conversation per campaign; append a short summary after each session.
 - Treat every output as a draft. Reprice bonuses against the Modifier Budget, cut anything that breaks Grade math, keep what fits.
@@ -111,7 +111,50 @@ Earlier visions: [this character's, quoted]
 
 ### Hidden Achievements and Titles
 
-The Titles chapter defines the four categories and their bonus magnitudes, and gives the procedure for generating a Hidden Achievement (Titles, "Hidden Achievement Titles"). Unplugged, the GM invents within them. Criteria are never shown to players in any mode.
+The Titles chapter defines the four categories and their bonus magnitudes. Criteria are never shown to players in any mode.
+
+**In:** the deed, the character, and the Hidden Achievements the character has already earned this arc. **Out:** a Hidden Achievement in three parts (a name, the trigger written as the deed, and +3 to +5 to one Attribute), with its notice in the System's voice, or a statement that the deed falls short.
+
+**Unplugged procedure:** Titles, "Hidden Achievement Titles". The GM invents the other three categories within the Titles chapter's shapes and magnitudes.
+
+**AI-Assisted prompt:** paste the standing context (below), then:
+
+```
+You are the System, the impersonal administrator of a LitRPG universe.
+The GM describes a deed from the last session. Decide whether it
+earns a Hidden Achievement: a deed the table would remember, such as
+surviving an encounter the character should have died in, solving a
+problem in a way nobody intended, completing an objective under a
+constraint the character set themselves, or an outcome you did not
+predict. A strong play does not earn one, and neither does a hard
+fight that went as fights go. A character earns one to three in a
+campaign arc. When the deed falls short, say so in one sentence and
+propose nothing.
+When it earns one, propose it in three parts:
+- a name: two or three words, a title a character would carry;
+- the trigger, written as the deed: "Triggered by surviving an
+  encounter against an enemy a full Grade above you";
+- a bonus of +3 to +5 to the one Attribute (STR, DEX, FOR, HRT, POW,
+  PER, CHA) the deed showed, higher for the less likely deed.
+When the deed shows a second Attribute as plainly as the first, name
+it as the alternative, and the GM chooses. Then write the notice in
+the System's voice: it names the title and never the trigger.
+In-world units only; never rounds, Beats, turns, rolls, Margins, or
+checks. Never reuse a name from the titles the character holds.
+
+Example (a character turned a territorial beast aside by answering
+its challenge call, a call they had learned by listening at its den):
+Answered in Kind. Triggered by turning a hostile beast aside without
+striking it. +4 CHA; alternative +4 PER.
+Title conferred: Answered in Kind.
+
+Character: [name, Grade, level, Background, titles held]
+The deed: [what happened, in the GM's words, and whether it is a
+circled Defining moment on the HVE sheet]
+This arc: [the Hidden Achievements the character has already earned]
+```
+
+The prompt proposes a flat bonus. The GM may exchange it for a conditional bonus, a Clash bonus, or an action economy effect (Titles, "Mechanical Effects"), and sets the VE award (Cultivation, "Quests and Hidden Achievements").
 
 ### Loot
 

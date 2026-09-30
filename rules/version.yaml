@@ -1,7 +1,7 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.39"
+version: "0.1.40"
 dated: "2026-09-30"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
@@ -133,3 +133,5 @@ notes: >
   margin_cut moves into its hook as cover: 40, once per round. No number moved.
   0.1.39: tutorial.yaml loot (the Node's default loot list, the Locked Cache's contents) and npcs
   (the Recurring NPCs table), loaded into the companion app's Prep with the rest of the pack.
+  0.1.40: system-ai.yaml Hidden Achievements prompt (templates/hidden-achievement.txt), printed in The
+  System AI; Loot and Identify record that they take no prompt. No number moved.

@@ -59,6 +59,8 @@ Rare, with larger bonuses (+3 to +5 at F-Grade). Players never see criteria in a
 - **Bonus.** The Hidden Achievement row under "Bonus Magnitudes": +3 to +5 to one stat at F-Grade. A conditional bonus in the same range, a Clash bonus priced by the Modifier Budget, or an action economy effect may take its place (see "Mechanical Effects").
 - **Name and notice.** A short name, announced in the System's voice (The System AI, "The Voice of the System"): *Title conferred: Cornerless.* The VE that comes with it is in Cultivation, "Quests and Hidden Achievements".
 
+The AI-Assisted prompt for a Hidden Achievement is in The System AI, "Hidden Achievements and Titles".
+
 ### HVE-Resonant Titles
 
 Generated when a character's behavior settles into a recognizable pattern. Achievement titles track things a character did; these track how a character does things. Tend to appear during Consolidation, after meaningful Battle Memories, or at Breakthrough.

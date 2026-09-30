@@ -26,16 +26,22 @@ functions:
     template: templates/battle-memory-vision.txt
     example: {memory: a cave-in survived by holding the slab, principle: Weight, vision: "A mountain hangs from a thread. The thread does not strain. Below, something waits to be told where to fall."}
   - name: Hidden Achievements and Titles
-    unplugged: invent within the four categories; criteria never shown to players in any mode
+    inputs: [the deed, the character, the Hidden Achievements the character has earned this arc]
+    outputs: a name, the trigger written as the deed, +3 to +5 to one Attribute (with an alternative Attribute when the deed shows two), and the notice; or a statement that the deed falls short
+    unplugged: Titles, "Hidden Achievement Titles"; invent within the four categories; criteria never shown to players in any mode
+    template: templates/hidden-achievement.txt
+    after: the GM may exchange the flat bonus for a conditional bonus, a Clash bonus, or an action economy effect, and sets the VE award
   - name: Loot
     inputs: [enemy difficulty tier, circumstances of the kill]
     unplugged: the table below; bosses and named enemies drop one step up
+    prompt: none; the loot table is the procedure in every mode
   - name: Skill Synthesis
     inputs: [two or more source effects]
     outputs: one merged skill, priced
     unplugged: combine one property from each source, price against the Modifier Budget, Aether from the origin-Grade table, the merged bonus caps at +20; Aether from the higher of the sources' Grades
   - name: Identify and Inspect
     unplugged: GM narrates; visibility per What Can Be Seen
+    prompt: none; What Can Be Seen is the procedure in every mode
 
 # `drop` is the book's cell. A row with a `chance` rolls d100 (an effect-table roll, no explosion):
 # at or under the chance it drops `on_hit`, otherwise `on_miss`; a row without one always drops `on_hit`.
