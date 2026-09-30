@@ -76,6 +76,12 @@ const prepItem = z.discriminatedUnion("kind", [
   z.object({ ...prepBase, kind: z.literal("encounter"), encounter: z.object({ name: z.string().max(120), zones: z.array(z.string().max(60)).max(12), creatures: z.array(prepCreature).max(20) }) }),
   z.object({ ...prepBase, kind: z.literal("quest"), quest: questSpec }),
   z.object({ ...prepBase, kind: z.literal("notice"), text: z.string().max(2000) }),
+  z.object({ ...prepBase, kind: z.literal("loot"), loot: z.array(stack).max(40) }),
+  z.object({
+    ...prepBase,
+    kind: z.literal("npc"),
+    npc: z.object({ who: z.string().max(300), line: z.string().max(600).optional(), block: prepCreature.omit({ creature: true, count: true, name: true }).optional() }),
+  }),
 ]);
 const classPackage = z.object({
   name: z.string().max(60),

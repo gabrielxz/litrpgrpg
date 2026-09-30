@@ -93,7 +93,7 @@ export {
   packageProblems,
   packageWarnings,
 } from "./classes.ts";
-export { type PrepAction, type PrepCreature, type PrepItem, prepCause, tutorialPack } from "./prep.ts";
+export { type PackData, type PrepAction, type PrepCreature, type PrepItem, type PrepNpc, packItems, prepCause, tutorialPack } from "./prep.ts";
 export { type Clock, type ClockAction, MINUTES_PER_DAY, clockLine, dayOf, toNextDawn } from "./clock.ts";
 export { type CampaignSession, type SessionAction, runningSession, sessionName } from "./sessions.ts";
 export { type CampaignEvent, type EventAction, type HveEntry, type LogEvent, intensities, sweepWeight } from "./events.ts";

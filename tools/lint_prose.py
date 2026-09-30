@@ -19,7 +19,8 @@ Two checks over the chapter sources, the kit, and the pipeline, and two warning 
 6. Encounter sizing: each row's `mix` and `force` in rules/bestiary.yaml must say
    what its rendered text cells say.
 7. The tutorial pack: every notice paragraph in rules/tutorial.yaml appears in the
-   tutorial chapter as System text, and every quest's title and objective appear there.
+   tutorial chapter as System text, every quest's title and objective appear there,
+   and every loot item and NPC name (the part before any colon) is in the chapter.
 
     python3 tools/lint_prose.py
 """
@@ -109,6 +110,13 @@ def tutorial_pack_drift() -> list[str]:
         for field in ("title", "objective"):
             if q["quest"][field] not in flat:
                 out.append(f"rules/tutorial.yaml: quest {q['quest']['id']}: its {field} is not in the tutorial")
+    for l in pack.get("loot", []):
+        for item in l["items"]:
+            if item["name"] not in flat:
+                out.append(f"rules/tutorial.yaml: loot {l['id']}: {item['name']} is not in the tutorial")
+    for n in pack.get("npcs", []):
+        if n["name"].split(":")[0] not in flat:
+            out.append(f"rules/tutorial.yaml: NPC {n['id']}: {n['name']} is not in the tutorial")
     return out
 
 

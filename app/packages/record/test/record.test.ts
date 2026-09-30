@@ -5,7 +5,7 @@
 import { Engine } from "@gradebreaker/engine";
 import { loadRules } from "@gradebreaker/engine/node";
 import { beforeEach, describe, expect, it } from "vitest";
-import { type Action, type ClassPackage, CampaignRecord, partyLevelOf, sizeEncounter, bookClasses, packageWarnings, type Draft, RecordError, encounterAwards, hoursForGoal, flankingSuggested, killAwards, questForHolder, rollD100s, rollFor, treasurePoints } from "../src/index.ts";
+import { type Action, type ClassPackage, CampaignRecord, partyLevelOf, sizeEncounter, bookClasses, packageWarnings, type Draft, RecordError, encounterAwards, hoursForGoal, flankingSuggested, killAwards, questForHolder, rollD100s, rollFor, treasurePoints, tutorialPack, packItems } from "../src/index.ts";
 
 const engine = new Engine(loadRules());
 const GM = { role: "gm", userId: "gm-1" } as const;
@@ -1972,6 +1972,29 @@ describe("Prep", () => {
     expect(rec.state.prep.has("tutorial-void")).toBe(false);
     gm({ type: "void", targetId: load.envelope.id, reason: "undo" });
     expect(rec.state.prep.size).toBe(0);
+  });
+});
+
+describe("Prep packs", () => {
+  it("loads the tutorial's loot and NPCs, and a pack from a file in the same shape", () => {
+    const pack = tutorialPack(engine);
+    expect(pack.find((p) => p.id === "tutorial-node-pile")).toMatchObject({ kind: "loot", loot: expect.arrayContaining([{ name: "Edge Shard", count: 2 }]) });
+    expect(pack.find((p) => p.id === "tutorial-ray")).toMatchObject({ kind: "npc", title: "Ray Okafor", npc: { who: "A concussed delivery driver with a nail gun" } });
+    const own = packItems({
+      pack: "rehearsal",
+      loot: [{ id: "locker", group: "Scene 1", title: "The locker", items: [{ name: "Healing Pill", count: 2 }] }],
+      npcs: [{ id: "mara", group: "Scene 1", name: "Mara", who: "A grandmother at the depot gate", block: { grade: "F", maxHp: 20, beats: 2, momentumForce: 5 } }],
+      notices: [{ id: "hello", group: "Scene 1", title: "Hello", text: "Integration continues." }],
+    });
+    expect(own.map((p) => p.id)).toEqual(["rehearsal-hello", "rehearsal-locker", "rehearsal-mara"]);
+    expect(() => packItems({ pack: "Bad Name" })).toThrow(/names itself/);
+    expect(() => packItems({ pack: "x", loot: [{ id: "a", group: "g", title: "Empty", items: [] }] })).toThrow(/at least one item/);
+    gm({ type: "prep.save", items: own, pack: "rehearsal" });
+    // An NPC's line is kept by saving the item again under its id.
+    const mara = own.find((p) => p.id === "rehearsal-mara") as Extract<(typeof own)[number], { kind: "npc" }>;
+    gm({ type: "prep.save", items: [{ ...mara, npc: { ...mara.npc, line: "Grateful; her grandson is home" } }] });
+    expect(rec.state.prep.get("rehearsal-mara")).toMatchObject({ npc: { line: "Grateful; her grandson is home", block: { maxHp: 20 } } });
+    expect(() => gm({ type: "prep.save", items: [{ id: "n", kind: "npc", title: "Nobody", npc: { who: " " } }] })).toThrow(/say who they are/);
   });
 });
 

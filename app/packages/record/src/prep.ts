@@ -1,15 +1,20 @@
 /**
- * Prep: fights, quests, and System notices the GM prepares before a session and fires live.
+ * Prep: fights, quests, System notices, loot, and NPCs the GM prepares before a session and fires
+ * live.
  *
  * A prepared item is the GM's alone and changes nothing at the table. Firing it records the real
- * action (a fight's start, a quest's issue, a message) with the prepared item as its cause, and
- * the item stays in Prep for another use; the GM removes what is spent. A content pack, such as
- * the tutorial's (`rules/tutorial.yaml`), loads as one save, so undoing the load removes the pack.
+ * action (a fight's start, a quest's issue, a message, items to the spoils or a character, an NPC
+ * joining a fight) with the prepared item as its cause, and the item stays in Prep for another use;
+ * the GM removes what is spent. An NPC's line (their condition, and how the party treated them)
+ * is kept by saving the item again under its id, which is how any prepared item is edited. A
+ * content pack, such as the tutorial's (`rules/tutorial.yaml`) or one loaded from a file in the
+ * same shape, loads as one save, so undoing the load removes the pack.
  */
 import type { Engine } from "@gradebreaker/engine";
 import { type Effect, Rejected, type World } from "./fold.ts";
 import type { ForceOption } from "./combat.ts";
 import type { QuestSpec } from "./quests.ts";
+import type { Stack } from "./inventory.ts";
 
 /** One kind of creature or NPC in a prepared fight: a Bestiary entry by name, or a block typed in. */
 export interface PrepCreature {
@@ -39,10 +44,22 @@ interface PrepBase {
   note?: string;
 }
 
+/** An NPC the party may meet again: who they are, their line as it stands, and a block for a fight. */
+export interface PrepNpc {
+  /** Who they are, in a line: "a concussed delivery driver with a nail gun". */
+  who: string;
+  /** Their condition and how the party treated them, kept current as play goes. */
+  line?: string;
+  /** Their numbers, for joining a fight; without HP they join none. */
+  block?: Omit<PrepCreature, "creature" | "count" | "name">;
+}
+
 export type PrepItem =
   | (PrepBase & { kind: "encounter"; encounter: { name: string; zones: string[]; creatures: PrepCreature[] } })
   | (PrepBase & { kind: "quest"; quest: QuestSpec })
-  | (PrepBase & { kind: "notice"; text: string });
+  | (PrepBase & { kind: "notice"; text: string })
+  | (PrepBase & { kind: "loot"; loot: Stack[] })
+  | (PrepBase & { kind: "npc"; npc: PrepNpc });
 
 /** Saves prepared items, replacing any with the same id. GM only. */
 export interface SavePrep {
@@ -75,6 +92,14 @@ function problems(p: PrepItem): string | null {
       return p.text.trim() ? null : `${p.title} needs the notice's text`;
     case "quest":
       return p.quest.id.trim() && p.quest.title.trim() && p.quest.objective.trim() ? null : `${p.title} needs a quest code, title, and objective`;
+    case "loot":
+      if (!p.loot.length) return `${p.title} needs at least one item`;
+      for (const x of p.loot) if (!x.name.trim() || !Number.isInteger(x.count) || x.count < 1) return `${p.title}: each item needs a name and a count from 1`;
+      return null;
+    case "npc":
+      if (!p.npc.who.trim()) return `${p.title}: say who they are`;
+      if (p.npc.block?.maxHp !== undefined && (!Number.isInteger(p.npc.block.maxHp) || p.npc.block.maxHp < 1)) return `${p.title}: HP is a whole number from 1`;
+      return null;
     case "encounter":
       if (!p.encounter.creatures.length) return `${p.title} needs at least one creature or NPC`;
       for (const c of p.encounter.creatures) {
@@ -104,21 +129,56 @@ export function applyPrep(world: World, a: PrepAction): Effect[] {
   return [];
 }
 
+/**
+ * A content pack as written (`rules/tutorial.yaml` is one): its name, and its notices, quests,
+ * fights, loot, and NPCs, each with the group it belongs to. A file the GM loads takes the same shape.
+ */
+export interface PackData {
+  pack: string;
+  title?: string;
+  notices?: { id: string; group: string; title: string; note?: string; text: string[] | string }[];
+  quests?: { group: string; note?: string; quest: QuestSpec }[];
+  encounters?: { id: string; group: string; title: string; note?: string; zones: string[]; creatures: PrepCreature[] }[];
+  loot?: { id: string; group: string; title: string; note?: string; items: Stack[] }[];
+  npcs?: { id: string; group: string; name: string; who: string; line?: string; note?: string; block?: PrepNpc["block"] }[];
+}
+
+/**
+ * A pack's items, ids prefixed with the pack's name, in its groups' order. A pack that does not
+ * hold together (a missing field, an id twice) is refused with the reason.
+ */
+export function packItems(data: PackData): PrepItem[] {
+  if (!data || typeof data !== "object" || typeof data.pack !== "string" || !/^[a-z0-9-]+$/.test(data.pack))
+    throw new Rejected("a pack names itself: `pack:` in lowercase letters, digits, and hyphens");
+  const t = data.pack;
+  const extra = (x: { group: string; note?: string }) => ({ group: String(x.group ?? "Unsorted"), ...(x.note ? { note: x.note } : {}) });
+  const items: PrepItem[] = [
+    ...(data.notices ?? []).map((n): PrepItem => ({ id: `${t}-${n.id}`, kind: "notice", title: n.title, ...extra(n), text: Array.isArray(n.text) ? n.text.join("\n\n") : n.text })),
+    ...(data.quests ?? []).map((q): PrepItem => ({ id: `${t}-${q.quest.id.toLowerCase()}`, kind: "quest", title: `[${q.quest.id}] ${q.quest.title}`, ...extra(q), quest: q.quest })),
+    ...(data.encounters ?? []).map((e): PrepItem => ({ id: `${t}-${e.id}`, kind: "encounter", title: e.title, ...extra(e), encounter: { name: e.title, zones: e.zones, creatures: e.creatures } })),
+    ...(data.loot ?? []).map((l): PrepItem => ({ id: `${t}-${l.id}`, kind: "loot", title: l.title, ...extra(l), loot: l.items.map((x) => ({ name: x.name, count: x.count ?? 1 })) })),
+    ...(data.npcs ?? []).map(
+      (n): PrepItem => ({
+        id: `${t}-${n.id}`,
+        kind: "npc",
+        title: n.name,
+        ...extra(n),
+        npc: { who: n.who, ...(n.line ? { line: n.line } : {}), ...(n.block ? { block: n.block } : {}) },
+      }),
+    ),
+  ];
+  const ids = new Set<string>();
+  for (const p of items) {
+    const bad = problems(p);
+    if (bad) throw new Rejected(bad);
+    if (ids.has(p.id)) throw new Rejected(`${p.id} is in the pack twice`);
+    ids.add(p.id);
+  }
+  // Groups are named in order ("Phase 2", "Scene 10"), so they sort as the pack runs, numbers as numbers.
+  return items.sort((a, b) => a.group!.localeCompare(b.group!, "en", { numeric: true }));
+}
+
 /** The tutorial pack (`rules/tutorial.yaml`) as prepared items. */
 export function tutorialPack(engine: Engine): PrepItem[] {
-  const t = engine.rules.tutorial as {
-    pack: string;
-    notices: { id: string; group: string; title: string; note?: string; text: string[] }[];
-    quests: { group: string; note?: string; quest: QuestSpec }[];
-    encounters: { id: string; group: string; title: string; note?: string; zones: string[]; creatures: PrepCreature[] }[];
-  };
-  const extra = (x: { group: string; note?: string }) => ({ group: x.group, ...(x.note ? { note: x.note } : {}) });
-  const items: PrepItem[] = [
-    ...t.notices.map((n): PrepItem => ({ id: `${t.pack}-${n.id}`, kind: "notice", title: n.title, ...extra(n), text: n.text.join("\n\n") })),
-    ...t.quests.map((q): PrepItem => ({ id: `${t.pack}-${q.quest.id.toLowerCase()}`, kind: "quest", title: `[${q.quest.id}] ${q.quest.title}`, ...extra(q), quest: q.quest })),
-    ...t.encounters.map((e): PrepItem => ({ id: `${t.pack}-${e.id}`, kind: "encounter", title: e.title, ...extra(e), encounter: { name: e.title, zones: e.zones, creatures: e.creatures } })),
-  ];
-  // The book's order: group by group as the chapter runs.
-  const order = [...new Set([...t.notices, ...t.quests, ...t.encounters].map((x) => x.group))].sort();
-  return items.sort((a, b) => order.indexOf(a.group!) - order.indexOf(b.group!));
+  return packItems(engine.rules.tutorial as PackData);
 }

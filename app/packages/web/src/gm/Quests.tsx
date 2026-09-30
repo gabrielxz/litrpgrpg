@@ -11,7 +11,7 @@ import { newActionId, submit } from "../api.ts";
 import { catalogNames } from "../items.ts";
 import { type Names, duration } from "../text.ts";
 import { TableWords } from "./TableWords.tsx";
-import type { Firing } from "./Prep.tsx";
+import { type Firing, savedTo } from "./Prep.tsx";
 import { Commit } from "./Commit.tsx";
 
 const OFFERED: QuestCategory[] = ["Routine", "Faction", "Personal Opportunity"];
@@ -278,6 +278,21 @@ function IssueForm({
             onFired?.();
           }}
         />
+        {firing && "prepId" in firing && f.title.trim() && (
+          <details>
+            <summary>Save the changes to Prep instead</summary>
+            <Commit
+              campaignId={view.campaign.id}
+              action={{ type: "prep.save", items: [savedTo(view, firing.prepId, { kind: "quest", title: `[${code}] ${spec.title}`, quest: spec })] }}
+              names={names}
+              label="Save to Prep"
+              onRecorded={(env) => {
+                onRecorded(env);
+                onFired?.();
+              }}
+            />
+          </details>
+        )}
         {!firing && f.title.trim() && (
           <details>
             <summary>Save this quest to Prep instead</summary>

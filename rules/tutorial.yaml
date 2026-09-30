@@ -1,7 +1,8 @@
 # The tutorial (70-tutorial.md) as a content pack: the System notices the GM delivers by hand, the
-# quests the System issues, and the fights by phase. The companion app loads it into Prep. The book
+# quests the System issues, the fights by phase, the loot lists, and the recurring NPCs. The companion app loads it into Prep. The book
 # is the truth: every notice paragraph and every quest's title and objective appear in the chapter
-# word for word (the prose lint checks), and a change there is copied here. Notices the record
+# word for word, and every loot item and NPC name is in the chapter (the prose lint checks), and a
+# change there is copied here. Notices the record
 # emits itself (a kill confirmed, a technique acquired, a title conferred) are left out.
 # source: 70-tutorial.md
 
@@ -187,3 +188,48 @@ encounters:
     note: "Nowhere to be driven on the span: Yield gives up one Beat at most. The Warden reaches the span in round 4; the Purge reaches the gate mouth in round 12."
     zones: [The span, The gate mouth]
     creatures: [{creature: Corrupted System Warden}]
+
+loot:
+  - id: node-pile
+    group: "Phase 3: The Recycling Node"
+    title: "The Scarcity Test: the Node's default loot list"
+    note: "Written for four; for three, take out one Edge Shard. Lay it out, say everyone can see all of it, and stop talking. Put it in the spoils and let the group divide it."
+    items:
+      - {name: Resonance Shard, count: 1}
+      - {name: Edge Shard, count: 2}
+      - {name: Veil Shard, count: 1}
+      - {name: Spear, count: 1}
+      - {name: Low-Grade Armor Scraps, count: 1}
+      - {name: Reactive Buckler, count: 1}
+      - {name: Healing Pill, count: 1}
+      - {name: Resonance Glass, count: 1}
+  - id: locked-cache
+    group: "Phase 2: The Violent Arrival"
+    title: "The Locked Cache: its contents"
+    note: "To the character who opened it. Forced open, the buckler and the tablet are crushed: give the pill alone."
+    items:
+      - {name: Reactive Buckler, count: 1}
+      - {name: Sparkstone Tablet, count: 1}
+      - {name: Lesser Healing Pill, count: 1}
+
+npcs:
+  - id: ray
+    group: "Recurring NPCs"
+    name: Ray Okafor
+    who: "A concussed delivery driver with a nail gun"
+    note: "First met in Phase 2: The Other Survivor, or circling in view of The High Ground. Helped, he reaches the Node by dusk, keeps the fire, and joins the gate queue in Phase 5. Without help, he dies during the first night, and the party can find his nail gun in Phase 4."
+  - id: marisol
+    group: "Recurring NPCs"
+    name: Marisol Vega
+    who: "A runner with a length of pipe"
+    note: "First met in Phase 2: The High Ground, the fight below the ridge. Helped, she follows the character down, is part of the Node camp by evening, and joins the gate queue in Phase 5. Without help, she loses the fight below the ridge."
+  - id: kith
+    group: "Recurring NPCs"
+    name: "The Kith: Kes, Nemi, Sava, and Tovan"
+    who: "Kes the scout, Nemi, Sava, and Tovan"
+    note: "Met in Phase 4: The Arriving Initiates; Kes's tally on the slopes is met earlier (Phase 2, The Tally). Helped, they fight beside the party in Phase 5 and name the Warden's weak point. Without help, the party enters Phase 5 without their warning and without allies."
+  - id: node-strangers
+    group: "Recurring NPCs"
+    name: "The Node strangers: Marco, Dele, and Wren"
+    who: "Marco, Dele, and Wren, at the Node in Phase 3"
+    note: "Helped, they are part of the camp and of the gate queue in Phase 5. Without help, they fend for themselves and are not in the gate queue."

@@ -187,7 +187,16 @@ const questLine = (q: Quest) =>
   `- ${q.id}: ${q.title} (${q.code}), ${q.status}, held by ${q.holders.join(", ")}: ${q.objective}${q.count ? ` ${q.count.done} of ${q.count.of}.` : ""}`;
 
 const prepLine = (p: PrepItem) => {
-  const what = p.kind === "notice" ? `System notice: ${p.text.replace(/\s+/g, " ")}` : p.kind === "quest" ? `quest: ${p.quest.objective}` : `fight: ${p.encounter.name}`;
+  const what =
+    p.kind === "notice"
+      ? `System notice: ${p.text.replace(/\s+/g, " ")}`
+      : p.kind === "quest"
+        ? `quest: ${p.quest.objective}`
+        : p.kind === "loot"
+          ? `loot: ${p.loot.map((x) => `${x.name} ×${x.count}`).join(", ")}`
+          : p.kind === "encounter"
+            ? `fight: ${p.encounter.name}`
+            : `NPC: ${p.npc.who}`;
   return `- ${p.id}: ${p.title}${p.group ? ` (${p.group})` : ""}. Cue: ${p.note?.replace(/\.$/, "") ?? "none written"}. ${what}`;
 };
 

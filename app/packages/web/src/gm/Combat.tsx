@@ -33,7 +33,7 @@ import { AftermathPanel } from "./Aftermath.tsx";
 import { RollList } from "../Dice.tsx";
 import { SizingPanel, sizedOf } from "./Sizing.tsx";
 import { permissionClash, reactionsOffered, techniqueOffer } from "../classes.ts";
-import { type Firing, expandCreatures, prepCreaturesOf } from "./Prep.tsx";
+import { type Firing, expandCreatures, prepCreaturesOf, savedTo } from "./Prep.tsx";
 import { prepCause } from "@gradebreaker/record";
 import { Commit } from "./Commit.tsx";
 
@@ -346,6 +346,30 @@ function Setup({ view, engine, onRecorded, firing, onFired }: { view: GmView; en
       >
         Start the fight
       </button>
+      {firing && others.length > 0 && (
+        <details>
+          <summary>Save the changes to Prep</summary>
+          <Commit
+            campaignId={view.campaign.id}
+            action={{
+              type: "prep.save",
+              items: [
+                savedTo(view, firing.prepId, {
+                  kind: "encounter",
+                  title: view.prep.find((p) => p.id === firing.prepId)?.title ?? (name.trim() || "Fight"),
+                  encounter: { name: name.trim() || "Fight", zones: zones.map((z) => z.name), creatures: prepCreaturesOf(others.filter((o) => !view.characters.some((c) => c.id === o.characterId))) },
+                }),
+              ],
+            }}
+            names={(id) => id}
+            label="Save to Prep"
+            onRecorded={(env) => {
+              onRecorded(env);
+              onFired?.();
+            }}
+          />
+        </details>
+      )}
       {others.length > 0 && (
         <details>
           <summary>Save this fight to Prep</summary>
