@@ -86,6 +86,8 @@ export interface Tab {
   sendListening(status: ListeningStatus): void;
   /** Sends the GM's tab what was heard. */
   sendHeard(lines: HeardLine[]): void;
+  /** Tells the GM's tab its drafts changed. */
+  sendDrafts(): void;
 }
 
 interface Stream {
@@ -133,12 +135,20 @@ export class Listening {
   private readonly tabs = new Map<string, Set<Tab>>();
   private readonly now: () => number;
   private readonly log: (msg: string) => void;
+  /** Drafting while the table talks (live-drafting.ts): each line heard, and the table falling quiet at a pause or a stop. */
+  private readonly onHeard: (campaignId: string) => void;
+  private readonly onQuiet: (campaignId: string) => void;
 
-  constructor(service: Service, opts: { transcriber?: Transcriber; now?: () => number; log?: (msg: string) => void } = {}) {
+  constructor(
+    service: Service,
+    opts: { transcriber?: Transcriber; now?: () => number; log?: (msg: string) => void; onHeard?: (campaignId: string) => void; onQuiet?: (campaignId: string) => void } = {},
+  ) {
     this.service = service;
     this.transcriber = opts.transcriber ?? meterOnly;
     this.now = opts.now ?? Date.now;
     this.log = opts.log ?? (() => {});
+    this.onHeard = opts.onHeard ?? (() => {});
+    this.onQuiet = opts.onQuiet ?? (() => {});
     service.on((e) => void this.recheck(e.campaignId).catch(() => {}));
   }
 
@@ -202,7 +212,10 @@ export class Listening {
       if (missing.length) throw new ListeningRefused(`Waiting on consent from ${list(missing)}.`);
       t.mode = mode;
       delete t.stopped;
-      if (mode === "paused") for (const id of [...t.streams.keys()]) this.closeSink(t, id);
+      if (mode === "paused") {
+        for (const id of [...t.streams.keys()]) this.closeSink(t, id);
+        this.onQuiet(campaignId);
+      }
     } else {
       this.stop(t, "the GM stopped listening");
     }
@@ -214,6 +227,8 @@ export class Listening {
     t.mode = "off";
     t.stopped = why;
     for (const id of [...t.streams.keys()]) this.closeSink(t, id);
+    const campaignId = [...this.tables].find(([, x]) => x === t)?.[0];
+    if (campaignId) this.onQuiet(campaignId);
   }
 
   /** After anything recorded or any membership change: a session ended, someone arrived without consent. */
@@ -323,6 +338,12 @@ export class Listening {
       ...(seg.words ? { words: seg.words.map((w) => ({ text: w.text, startMs: w.startMs - seg.startMs, endMs: w.endMs - seg.startMs })) } : {}),
     });
     for (const tab of this.tabs.get(campaignId) ?? []) if (tab.role === "gm") tab.sendHeard([line]);
+    this.onHeard(campaignId);
+  }
+
+  /** Tells the campaign's GM tabs their drafts changed. */
+  draftsChanged(campaignId: string): void {
+    for (const tab of this.tabs.get(campaignId) ?? []) if (tab.role === "gm") tab.sendDrafts();
   }
 
   /** Deletes heard lines past their keeping; main runs it at start and daily. */

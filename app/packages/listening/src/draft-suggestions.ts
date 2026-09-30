@@ -12,7 +12,7 @@
 import { ATTRIBUTES, type Engine } from "@gradebreaker/engine";
 import { type Action, CampaignRecord, type Draft, type Sheet } from "@gradebreaker/record";
 import { z } from "zod";
-import { type Drafter, type Effort, type Scene, rosterOf, section, transcriptOf } from "./draft-events.ts";
+import { type Drafter, type Effort, type Scene, cited, earlierOf, lineOrder, rosterOf, section, transcriptOf } from "./draft-events.ts";
 import type { Drafted } from "./script.ts";
 
 export const DRAFT_SUGGESTIONS_FEATURE = "draft-suggestions";
@@ -139,7 +139,7 @@ const heldLine = (s: Sheet) => {
 
 export function draftSuggestionsPrompt(scene: Scene): string {
   const sheets = [...scene.record.sheets().values()];
-  return [section("Roster", rosterOf(scene)), section("Titles and cards", sheets.map(heldLine)), `# Transcript\n\n${transcriptOf(scene).join("\n")}`].join("\n\n");
+  return [section("Roster", rosterOf(scene)), section("Titles and cards", sheets.map(heldLine)), ...earlierOf(scene), `# Transcript\n\n${transcriptOf(scene).join("\n")}`].join("\n\n");
 }
 
 // ----------------------------------------------------------- drafts ---
@@ -177,7 +177,7 @@ function suggestionOf(r: Raw): { suggestion: SuggestionDraft["suggestion"]; acce
  * merge, and a card for a character whose card for these lines is already due is dropped.
  */
 export function suggestionDraftsOf(engine: Engine, scene: Scene, out: DraftSuggestionsOutput): SuggestionDrafts {
-  const order = new Map(scene.lines.map((l, i) => [l.id, i]));
+  const order = lineOrder(scene);
   const result: SuggestionDrafts = { drafts: [], dropped: [], repaired: [] };
   const raws: Raw[] = [
     ...out.titles.map((x) => ({ ...x, cat: "titles" as const })),
@@ -191,10 +191,11 @@ export function suggestionDraftsOf(engine: Engine, scene: Scene, out: DraftSugge
   let n = 0;
   for (const r of raws) {
     const id = `suggestion-${++n}`;
-    const lines = r.lines.filter((l) => order.has(l));
-    if (lines.length < r.lines.length) result.repaired.push(`${id}: dropped line ids the scene lacks (${r.lines.filter((l) => !order.has(l)).join(", ")})`);
-    if (!lines.length) {
-      result.dropped.push({ draft: r, why: "cites no line in the scene" });
+    const c = cited(scene, r.lines);
+    const lines = c.kept;
+    if (c.unknown.length) result.repaired.push(`${id}: dropped line ids the scene lacks (${c.unknown.join(", ")})`);
+    if (c.drop) {
+      result.dropped.push({ draft: r, why: c.drop });
       continue;
     }
     const sheet = check.sheets().get(r.characterId);

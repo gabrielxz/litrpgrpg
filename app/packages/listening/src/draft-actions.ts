@@ -13,7 +13,7 @@
 import type { Engine } from "@gradebreaker/engine";
 import { type Action, CampaignRecord, type Draft, type Quest, type PrepItem, tickedCounters } from "@gradebreaker/record";
 import { z } from "zod";
-import { type Drafter, type Effort, type Scene, rosterOf, section, transcriptOf } from "./draft-events.ts";
+import { type Drafter, type Effort, type Scene, cited, earlierOf, lineOrder, rosterOf, section, transcriptOf } from "./draft-events.ts";
 import type { Drafted } from "./script.ts";
 
 export const DRAFT_ACTIONS_FEATURE = "draft-actions";
@@ -208,6 +208,7 @@ export function draftActionsPrompt(scene: Scene): string {
     section("Items held", items),
     section("Quests", quests),
     section("Prep", prep),
+    ...earlierOf(scene),
     `# Transcript\n\n${transcriptOf(scene).join("\n")}`,
   ].join("\n\n");
 }
@@ -267,7 +268,7 @@ function actionOf(r: Raw, record: CampaignRecord): Action | string {
  * the record refuses is dropped with the reason; a cue must name a prepared item.
  */
 export function actionDraftsOf(engine: Engine, scene: Scene, out: DraftActionsOutput): ActionDrafts {
-  const order = new Map(scene.lines.map((l, i) => [l.id, i]));
+  const order = lineOrder(scene);
   const result: ActionDrafts = { drafts: [], dropped: [], repaired: [] };
   const raws: Raw[] = [
     ...out.items.map((x) => ({ ...x, cat: "items" as const })),
@@ -331,10 +332,11 @@ export function actionDraftsOf(engine: Engine, scene: Scene, out: DraftActionsOu
   let n = 0;
   for (const r of raws) {
     const id = `action-${++n}`;
-    const lines = r.lines.filter((l) => order.has(l));
-    if (lines.length < r.lines.length) result.repaired.push(`${id}: dropped line ids the scene lacks (${r.lines.filter((l) => !order.has(l)).join(", ")})`);
-    if (!lines.length) {
-      result.dropped.push({ draft: r, why: "cites no line in the scene" });
+    const c = cited(scene, r.lines);
+    const lines = c.kept;
+    if (c.unknown.length) result.repaired.push(`${id}: dropped line ids the scene lacks (${c.unknown.join(", ")})`);
+    if (c.drop) {
+      result.dropped.push({ draft: r, why: c.drop });
       continue;
     }
     if (r.cat === "cues") {

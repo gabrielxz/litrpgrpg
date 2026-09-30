@@ -94,7 +94,7 @@ export function EventsSection({
   return (
     <main className="gm">
       <div>
-        <HeardCard view={view} heard={heard} onUse={(text) => setSeed((s) => ({ text, n: s.n + 1 }))} />
+        <HeardCard view={view} heard={heard} drafts={drafts} onUse={(text) => setSeed((s) => ({ text, n: s.n + 1 }))} />
         <DraftsCard view={view} engine={engine} names={names} onRecorded={onRecorded} drafts={drafts} seed={seed} />
         <LogForm view={view} engine={engine} names={names} onRecorded={onRecorded} />
       </div>

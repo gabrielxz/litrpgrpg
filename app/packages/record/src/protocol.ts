@@ -335,6 +335,8 @@ export interface HeardLine {
 export type LiveMessage =
   | { type: "listening"; status: ListeningStatus }
   | { type: "heard"; lines: HeardLine[] }
+  /** The GM's drafts changed on the server (a window of heard lines started drafting or finished): fetch them again. */
+  | { type: "drafts" }
   | { type: "state"; view: View }
   | { type: "appended"; envelope: Envelope; effects: Effect[]; view: GmView }
   | { type: "update"; view: PlayerView }

@@ -124,13 +124,18 @@ export interface DraftRun {
   status: "drafting" | "done" | "failed";
   problem?: string;
   message?: string;
-  talk: TypedTalk;
+  /** The talk drafted from: typed, or a window of heard lines whose earlier lines (sent as context) come first. */
+  talk: TypedTalk & { heard?: { sessionId: string; through: number; earlier: string[] } };
   repaired: string[];
   dropped: { why: string }[];
   items: DraftItem[];
 }
 
-export const draftRuns = (campaignId: string) => api<{ runs: DraftRun[] }>("GET", `/campaigns/${campaignId}/drafts`);
+export const draftRuns = (campaignId: string) => api<{ runs: DraftRun[]; live?: { on: boolean } }>("GET", `/campaigns/${campaignId}/drafts`);
+/** Drafts what the listening heard since the last draft, now. */
+export const draftHeardNow = (campaignId: string) => api<{ run: DraftRun }>("POST", `/campaigns/${campaignId}/drafts/heard`, {});
+/** Turns drafting while the table talks on or off. */
+export const setLiveDrafting = (campaignId: string, on: boolean) => api<{ live: { on: boolean } }>("POST", `/campaigns/${campaignId}/drafts/heard/auto`, { on });
 
 export const startOpportunity = (campaignId: string, characterId: string, situation: string) =>
   api<{ run: DraftRun }>("POST", `/campaigns/${campaignId}/opportunities`, { characterId, situation });

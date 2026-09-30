@@ -42,6 +42,12 @@ export interface Scene {
   lines: { id: string; speaker: string; text: string; as?: string }[];
   /** Actions recorded in the app during the scene, each after the line it follows, with what they did. */
   recorded: { after: string; action: Action; effects: Effect[] }[];
+  /**
+   * Talk just before the lines, drafted in an earlier pass (a live window's context): shown so the
+   * lines read in context, citable, and never the only thing a draft cites. What the table recorded
+   * among them is in `recorded` after them, and in the record already.
+   */
+  earlier?: { id: string; speaker: string; text: string; as?: string }[];
 }
 
 /** A drafted event, with the model's reason for each entry for the GM to read. */
@@ -204,6 +210,35 @@ export function transcriptOf(scene: Scene): string[] {
 
 export const section = (title: string, rows: string[]) => `# ${title}\n\n${rows.length ? rows.join("\n") : "(none)"}`;
 
+/** The talk before a live window's lines, as a section ahead of the transcript; none for a whole scene. */
+export function earlierOf(scene: Scene): string[] {
+  if (!scene.earlier?.length) return [];
+  // What the table recorded among these lines shows too (a Downing in the tracker is said by no one).
+  const lines = transcriptOf({ ...scene, lines: scene.earlier });
+  return [
+    `# Earlier talk\n\nThese lines come just before the transcript and were drafted in an earlier pass. They are here so the transcript reads in context. Draft nothing from them alone: every draft cites at least one transcript line, and may cite these as well.\n\n${lines.join("\n")}`,
+  ];
+}
+
+/** Each line's place, the earlier talk before the scene's own lines. */
+export function lineOrder(scene: Scene): Map<string, number> {
+  const earlier = scene.earlier ?? [];
+  return new Map([...earlier.map((l, i) => [l.id, i - earlier.length] as const), ...scene.lines.map((l, i) => [l.id, i] as const)]);
+}
+
+/**
+ * A draft's cited lines checked against the scene: the ones it knows (earlier talk included), the
+ * ones it does not, and why the draft is dropped when nothing it cites is one of the scene's own lines.
+ */
+export function cited(scene: Scene, lines: string[]): { kept: string[]; unknown: string[]; drop?: string } {
+  const order = lineOrder(scene);
+  const kept = lines.filter((l) => order.has(l));
+  const unknown = lines.filter((l) => !order.has(l));
+  if (!kept.length) return { kept, unknown, drop: "cites no line in the scene" };
+  if (!kept.some((l) => order.get(l)! >= 0)) return { kept, unknown, drop: "cites only earlier talk, drafted in an earlier pass" };
+  return { kept, unknown };
+}
+
 /** The request's material: the roster and record before the scene, then the transcript. */
 export function draftEventsPrompt(scene: Scene): string {
   const state = scene.record.state;
@@ -222,6 +257,7 @@ export function draftEventsPrompt(scene: Scene): string {
     section("Items held", items),
     section("Quests", quests),
     section("Events already in the record", events),
+    ...earlierOf(scene),
     `# Transcript\n\n${transcriptOf(scene).join("\n")}`,
   ].join("\n\n");
 }
@@ -248,16 +284,16 @@ export function sceneOfScript(engine: Engine, script: Script): Scene {
  * single tally) and drops what the record refuses.
  */
 export function eventDraftsOf(engine: Engine, scene: Scene, out: DraftEventsOutput): EventDrafts {
-  const lineIds = new Set(scene.lines.map((l) => l.id));
   const result: EventDrafts = { drafts: [], dropped: [], repaired: [] };
   const check = new CampaignRecord(engine, scene.record.log);
   const minSecondary = intensitiesOf(engine).find((x) => x > engine.rules.hve.structured_logging.intensities.remembered)!;
 
   out.events.forEach((e, n) => {
     const id = `draft-${n + 1}`;
-    const lines = e.lines.filter((l) => lineIds.has(l));
-    if (lines.length < e.lines.length) result.repaired.push(`${id}: dropped line ids the scene lacks (${e.lines.filter((l) => !lineIds.has(l)).join(", ")})`);
-    if (!lines.length) return void result.dropped.push({ draft: e, why: "cites no line in the scene" });
+    const c = cited(scene, e.lines);
+    const lines = c.kept;
+    if (c.unknown.length) result.repaired.push(`${id}: dropped line ids the scene lacks (${c.unknown.join(", ")})`);
+    if (c.drop) return void result.dropped.push({ draft: e, why: c.drop });
     if (!e.entries.length) return void result.dropped.push({ draft: e, why: "carries no entry" });
 
     const seen = new Set<string>();

@@ -22,6 +22,7 @@ import { createApp } from "./app.ts";
 import { supabaseVerifier } from "./auth.ts";
 import { devSignIn, eitherVerifier } from "./devauth.ts";
 import { Drafts } from "./drafts.ts";
+import { LiveDrafting } from "./live-drafting.ts";
 import { migrate, postgresDb } from "./db.ts";
 import { LiveHub } from "./live.ts";
 import { Listening } from "./listening.ts";
@@ -58,18 +59,28 @@ for (const name of await migrate(db)) log(`migrated ${name}`);
 const service = await Service.open(db, loadRules(process.env.RULES_DIR), verifier, log);
 const transcriber = transcribers.soniox;
 if (!transcriber) log("SONIOX_API_KEY is not set: listening measures the microphones and transcribes nothing");
-const listening = new Listening(service, { ...(transcriber ? { transcriber } : {}), log });
+// Listening hands each heard line to the live drafting, made below once the drafts exist.
+let liveDrafting: LiveDrafting | undefined;
+const listening = new Listening(service, {
+  ...(transcriber ? { transcriber } : {}),
+  log,
+  onHeard: (campaignId) => liveDrafting?.heard(campaignId),
+  onQuiet: (campaignId) => liveDrafting?.quiet(campaignId),
+});
 const purge = () => void listening.purge().then((n) => n && log(`listening: deleted ${n} heard line(s) past keeping`)).catch((e) => log(`listening: ${e}`));
 purge();
 setInterval(purge, 86_400_000).unref();
 const hub = new LiveHub(service, log, undefined, listening);
 if (!process.env.AI_KEY_SECRET) log("AI_KEY_SECRET is not set: GMs cannot store a language-model key");
 const ai = new CampaignAi(db, process.env.AI_KEY_SECRET);
+const drafts = await Drafts.open(db, service, ai);
+liveDrafting = new LiveDrafting(service, drafts, (campaignId) => listening.draftsChanged(campaignId), { log });
 const app = createApp(service, {
   connected: () => hub.connected,
   ai,
-  drafts: await Drafts.open(db, service, ai),
+  drafts,
   listening,
+  liveDrafting,
   ...(publishableKey ? { supabase: { url: supabaseUrl, publishableKey } } : {}),
   ...(dev ? { dev } : {}),
   ...(existsSync(resolve(webDist, "index.html")) ? { webDist } : {}),

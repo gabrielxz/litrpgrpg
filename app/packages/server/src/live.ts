@@ -148,6 +148,7 @@ export class LiveHub {
         role: sub.role,
         sendListening: (status) => this.send(sub, { type: "listening", status }),
         sendHeard: (lines) => this.send(sub, { type: "heard", lines }),
+        sendDrafts: () => this.send(sub, { type: "drafts" }),
       };
       void listening.join(sub.tab).catch((err) => this.log(`listening: ${err}`));
     } else if (msg.type === "level" && sub.tab) {

@@ -14,6 +14,7 @@ import { z } from "zod";
 import { type CampaignAi, ModelError } from "./ai.ts";
 import type { DevSignIn } from "./devauth.ts";
 import { type Drafts, MAX_TALK_CHARS } from "./drafts.ts";
+import type { LiveDrafting } from "./live-drafting.ts";
 import { type Listening, ListeningRefused } from "./listening.ts";
 import { HttpError, type Service, type User } from "./service.ts";
 
@@ -35,6 +36,7 @@ const joinBody = z.object({ campaignId: z.string().min(1) });
 const aiKey = z.object({ key: z.string().min(1).max(500), model: z.string().optional() });
 const aiModel = z.object({ model: z.string() });
 const draftOpportunityBody = z.object({ characterId: z.string().max(80), situation: z.string().max(2000).optional() });
+const liveDraftingBody = z.object({ on: z.boolean() });
 const draftTalk = z.object({ text: z.string().max(MAX_TALK_CHARS * 2) });
 const draftClassesBody = z.object({ characterId: z.string().max(80), keepsDoing: z.string().max(2000).optional(), guarded: z.boolean().optional() });
 const draftSummaryBody = z.object({ characterId: z.string().max(80), integration: z.boolean().optional() });
@@ -75,6 +77,8 @@ export interface AppOptions {
   drafts?: Drafts;
   /** Consent and the table's listening (listening.ts). */
   listening?: Listening;
+  /** Drafting what the listening hears, a window at a time (live-drafting.ts). */
+  liveDrafting?: LiveDrafting;
 }
 
 export function createApp(service: Service, opts: AppOptions = {}) {
@@ -257,7 +261,27 @@ export function createApp(service: Service, opts: AppOptions = {}) {
     if (!opts.drafts) throw new HttpError(404, "not found");
     return opts.drafts;
   };
-  app.get("/campaigns/:id/drafts", async (c) => c.json({ runs: await drafts().list(c.req.param("id"), c.get("user")) }));
+  app.get("/campaigns/:id/drafts", async (c) => {
+    const id = c.req.param("id");
+    const runs = await drafts().list(id, c.get("user"));
+    return c.json({ runs, ...(opts.liveDrafting ? { live: { on: opts.liveDrafting.isOn(id) } } : {}) });
+  });
+  // What the listening heard: drafted a window at a time while the table talks, or now at the GM's word.
+  const liveDrafting = () => {
+    if (!opts.liveDrafting) throw new HttpError(404, "not found");
+    return opts.liveDrafting;
+  };
+  app.post("/campaigns/:id/drafts/heard", async (c) => {
+    const out = await liveDrafting().now(c.req.param("id"), c.get("user"));
+    if (out.run) return c.json({ run: out.run }, 202);
+    const why = { "no key": "drafting needs the campaign's key", busy: "a draft is still running; wait for it to finish", "no session": "start a session first", "too few lines": "no line heard since the last draft" }[out.skip!];
+    throw new HttpError(409, why);
+  });
+  app.post("/campaigns/:id/drafts/heard/auto", async (c) => {
+    const b = await body(c, liveDraftingBody);
+    await liveDrafting().setOn(c.req.param("id"), c.get("user"), b.on);
+    return c.json({ live: { on: b.on } });
+  });
   app.post("/campaigns/:id/drafts", async (c) => {
     const b = await body(c, draftTalk);
     return c.json({ run: await drafts().start(c.req.param("id"), c.get("user"), b.text) }, 202);

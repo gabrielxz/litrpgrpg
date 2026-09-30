@@ -14,6 +14,8 @@ import { createApp } from "../src/app.ts";
 import { jwtVerifier } from "../src/auth.ts";
 import { type Db, migrate, pgliteDb } from "../src/db.ts";
 import { Drafts } from "../src/drafts.ts";
+import { LiveDrafting } from "../src/live-drafting.ts";
+import { EARLIER_LINES } from "@gradebreaker/listening";
 import { Service } from "../src/service.ts";
 
 const rules = loadRules();
@@ -82,6 +84,8 @@ const scripted = (_key: string, model: string): LanguageModel => ({
 });
 
 let db: Db;
+let service: Service;
+let ai: CampaignAi;
 let drafts: Drafts;
 let app: ReturnType<typeof createApp>;
 
@@ -140,8 +144,8 @@ beforeEach(async () => {
   prompts = [];
   db = await pgliteDb(new PGlite());
   await migrate(db);
-  const service = await Service.open(db, rules, verifier);
-  const ai = new CampaignAi(db, "a server secret for the tests", scripted);
+  service = await Service.open(db, rules, verifier);
+  ai = new CampaignAi(db, "a server secret for the tests", scripted);
   drafts = await Drafts.open(db, service, ai);
   app = createApp(service, { ai, drafts });
 });
@@ -505,5 +509,105 @@ describe("drafting from typed table talk", () => {
     expect(c.json.draft.text).toContain("Level 1. VE awaiting refinement: 0.");
     const view = (await call("GET", `/campaigns/${campaignId}`, gm)).json;
     expect(view.sessions[0].summary).toBeUndefined();
+  });
+});
+
+describe("drafting what the listening heard", () => {
+  /** A campaign in session, and a way to store what someone said at a moment. */
+  async function listening() {
+    const t = await table();
+    const act = (action: unknown) => call("POST", `/campaigns/${t.campaignId}/actions`, t.gm, { id: randomUUID(), action });
+    await act({ type: "session.start", label: "The Node", present: ["kara", "joe"] });
+    const view = (await call("GET", `/campaigns/${t.campaignId}`, t.gm)).json;
+    const sessionId = view.sessions[0].id as string;
+    const playerId = view.members.find((m: { role: string }) => m.role === "player").userId as string;
+    const gmId = view.members.find((m: { role: string }) => m.role === "gm").userId as string;
+    const say = (userId: string, text: string, at = Date.now()) =>
+      service.addHeard(t.campaignId, { userId, sessionId, startedAt: new Date(at).toISOString(), endedAt: new Date(at + 500).toISOString(), text });
+    return { ...t, act, sessionId, playerId, gmId, say };
+  }
+
+  it("drafts the lines not yet drafted, with the ones before as context and the record as it stood", async () => {
+    const { gm, campaignId, act, playerId, gmId, say } = await listening();
+    const pill = { ...pillEvent, lines: ["h2", "h3"] };
+    outputs = [{ output: { events: [pill] } }];
+    const t0 = Date.now() + 5;
+    await say(gmId, "The pill sits between you.", t0);
+    await say(playerId, "Mine. I swallow it.", t0 + 1);
+    await new Promise((r) => setTimeout(r, 20));
+    await act({ type: "item.give", to: "spoils", items: [{ name: "Lesser Healing Pill", count: 1 }] });
+    await say(gmId, "Joe, anything?", Date.now() + 5);
+    expect((await drafts.startHeard(campaignId, 5)) as unknown).toEqual({ skip: "too few lines" });
+    const first = await drafts.startHeard(campaignId, 1);
+    if (!("run" in first)) throw new Error(first.skip);
+    await drafts.settled(first.run.id);
+    // Each line by its stored id, and the item given after the second line said.
+    expect(prompts[0]).toContain("[h1] Gabriel (GM): The pill sits between you.");
+    expect(prompts[0]).toMatch(/\[h2\] Ana: Mine\. I swallow it\.\n {4}app: \{"type":"item\.give"/);
+    expect(prompts[0]).not.toContain("# Earlier talk");
+    let run = (await call("GET", `/campaigns/${campaignId}/drafts`, gm)).json.runs[0];
+    expect(run.talk.heard).toMatchObject({ through: 3, earlier: [] });
+    expect(run.items.map((i: { lines: string[] }) => i.lines)).toEqual([["h2", "h3"]]);
+
+    // The next window carries the earlier lines as context; a draft of the same moment again is dropped, and a new one kept.
+    await say(playerId, "Fine. Take it.", Date.now() + 5);
+    const joe = { ...pillEvent, lines: ["h4"], summary: "Joe let Kara have the pill.", participants: ["joe"], entries: [{ ...pillEvent.entries[0], characterId: "joe", pole: "Restraint" }] };
+    outputs = [{ output: { events: [{ ...pill, lines: ["h3", "h4"] }, joe] } }];
+    const second = await drafts.startHeard(campaignId, 1);
+    if (!("run" in second)) throw new Error(second.skip);
+    await drafts.settled(second.run.id);
+    expect(prompts[1]).toContain("# Earlier talk");
+    expect(prompts[1].indexOf("[h1]")).toBeLessThan(prompts[1].indexOf("# Transcript"));
+    run = (await call("GET", `/campaigns/${campaignId}/drafts`, gm)).json.runs[0];
+    expect(run.talk.heard).toMatchObject({ through: 4, earlier: ["h1", "h2", "h3"] });
+    expect(run.items.map((i: { action: { summary: string } }) => i.action.summary)).toEqual(["Joe let Kara have the pill."]);
+    expect(run.dropped).toEqual([{ why: "repeats a draft from an earlier window" }]);
+    expect(await drafts.startHeard(campaignId, 1)).toEqual({ skip: "too few lines" });
+  });
+
+  it("closes a window at a pause once enough lines have arrived, at a stop, or at the GM's word; the GM can turn it off", async () => {
+    const { gm, player, campaignId, playerId, say } = await listening();
+    const changed: string[] = [];
+    const live = new LiveDrafting(service, drafts, (c) => changed.push(c), { quietMs: 30 });
+    const hear = async (n: number) => {
+      for (let i = 0; i < n; i++) {
+        await say(playerId, `line ${i}`);
+        live.heard(campaignId);
+      }
+    };
+    const runs = async () => (await call("GET", `/campaigns/${campaignId}/drafts`, gm)).json.runs as { status: string; talk: { lines: unknown[] } }[];
+    const settle = async () => {
+      for (let i = 0; i < 100 && (changed.length % 2 || (await runs()).some((r) => r.status === "drafting")); i++) await new Promise((r) => setTimeout(r, 10));
+      await new Promise((r) => setTimeout(r, 60));
+    };
+
+    await hear(19);
+    await settle();
+    expect(await runs()).toHaveLength(0);
+    await hear(1);
+    await settle();
+    expect((await runs()).map((r) => r.talk.lines.length)).toEqual([20]);
+    expect(changed.length).toBe(2);
+
+    // A stop drafts what is left, with the lines before as context.
+    await hear(3);
+    live.quiet(campaignId);
+    await settle();
+    expect((await runs()).map((r) => r.talk.lines.length)).toEqual([3 + Math.min(EARLIER_LINES, 20), 20]);
+
+    // Off, nothing closes on its own; the GM's word still drafts, and a player has no say.
+    app = createApp(service, { ai, drafts, liveDrafting: live });
+    expect((await call("GET", `/campaigns/${campaignId}/drafts`, gm)).json.live).toEqual({ on: true });
+    expect((await call("POST", `/campaigns/${campaignId}/drafts/heard/auto`, player, { on: false })).status).toBe(403);
+    expect((await call("POST", `/campaigns/${campaignId}/drafts/heard/auto`, gm, { on: false })).json.live).toEqual({ on: false });
+    await hear(40);
+    await settle();
+    expect(await runs()).toHaveLength(2);
+    const now = await call("POST", `/campaigns/${campaignId}/drafts/heard`, gm, {});
+    expect(now.status).toBe(202);
+    await drafts.settled(now.json.run.id);
+    expect((await runs()).map((r) => r.talk.lines.length)).toEqual([40 + Math.min(EARLIER_LINES, 23), 3 + Math.min(EARLIER_LINES, 20), 20]);
+    const none = await call("POST", `/campaigns/${campaignId}/drafts/heard`, gm, {});
+    expect(none).toMatchObject({ status: 409, json: { error: "no line heard since the last draft" } });
   });
 });

@@ -9,10 +9,14 @@
  * Recording by hand makes the same record. The System's voice (a message for the composer, a
  * vision for a meditation) is drafted and returned to the GM's form, never stored.
  *
+ * What the listening heard is drafted the same way, a window of lines at a time (`startHeard`,
+ * closed by live-drafting.ts): the lines not yet drafted with the ones before them as context, the
+ * record as it stood at the first of them, and what the table recorded since, placed by time.
+ *
  * Nothing here reaches a player: every operation is the GM's, and drafts are never in a view.
  * A campaign drafts one run at a time, so a double click does not pay twice.
  */
-import { type Action, type Appended, CampaignRecord } from "@gradebreaker/record";
+import { type Action, type Appended, CampaignRecord, type Envelope, type HeardLine, runningSession } from "@gradebreaker/record";
 import {
   DRAFT_ACTIONS_FEATURE,
   DRAFT_CHARACTER_SUMMARY_FEATURE,
@@ -39,9 +43,13 @@ import {
   draftSessionSummary,
   draftSuggestions,
   draftVision,
+  type DraftMark,
+  EARLIER_LINES,
   dueOffers,
   flavorsFor,
+  markOf,
   readTypedTalk,
+  repeats,
 } from "@gradebreaker/listening";
 import { type CampaignAi, ModelError, problemOf } from "./ai.ts";
 import type { Db } from "./db.ts";
@@ -103,6 +111,19 @@ export interface DraftItem {
   resolvedAt?: string;
 }
 
+/** A window of heard lines: its session, the last line drafted (by id), and the earlier lines sent as context. */
+export interface HeardWindow {
+  sessionId: string;
+  through: number;
+  earlier: string[];
+}
+
+/** A run's talk: typed, or a window of heard lines, whose earlier lines come first. */
+export type RunTalk = TypedTalk & { heard?: HeardWindow };
+
+/** Why a window of heard lines did not start drafting. */
+export type HeardSkip = "no key" | "busy" | "no session" | "too few lines";
+
 export interface DraftRun {
   id: string;
   feature: string;
@@ -111,7 +132,7 @@ export interface DraftRun {
   status: RunStatus;
   problem?: string;
   message?: string;
-  talk: TypedTalk;
+  talk: RunTalk;
   repaired: string[];
   dropped: { why: string }[];
   items: DraftItem[];
@@ -178,6 +199,76 @@ export class Drafts {
     const work = this.draft(campaignId, id, scene).finally(() => this.running.delete(id));
     this.running.set(id, work);
     return (await this.run(campaignId, id))!;
+  }
+
+  /**
+   * Drafts a window of what the listening heard in the running session: the lines stored since the
+   * last window (at least `min` of them), in the order they were said, with the EARLIER_LINES
+   * before them as context; the record as it stood when the first was said, and what the table
+   * recorded since, each after the line it followed. Returns the run, or why it did not start.
+   */
+  async startHeard(campaignId: string, min: number): Promise<{ run: DraftRun } | { skip: HeardSkip }> {
+    if (!(await this.ai.status(campaignId)).configured) return { skip: "no key" };
+    const record = await this.service.record(campaignId);
+    const session = runningSession(record.state);
+    if (!session) return { skip: "no session" };
+    const [busy] = await this.db.query("select id from draft_runs where campaign_id = $1 and status = 'drafting'", [campaignId]);
+    if (busy) return { skip: "busy" };
+    const [done] = await this.db.query(
+      "select coalesce(max((talk->'heard'->>'through')::bigint), 0) as through from draft_runs where campaign_id = $1 and talk->'heard'->>'sessionId' = $2",
+      [campaignId, session.id],
+    );
+    const through = Number(done?.through ?? 0);
+    const heard = await this.service.heard(campaignId, session.id);
+    const fresh = heard.filter((l) => Number(l.id) > through).slice(0, MAX_TALK_LINES);
+    if (fresh.length < Math.max(1, min)) return { skip: "too few lines" };
+    const earlier = heard.filter((l) => Number(l.id) <= through).slice(-EARLIER_LINES);
+
+    const members = await this.service.members(campaignId);
+    const speakers = members.map((m) => ({ id: m.userId, role: m.role, name: m.displayName }));
+    const line = (l: HeardLine) => ({ id: `h${l.id}`, speaker: l.userId, text: l.text });
+    const firstAt = Date.parse(fresh[0]!.startedAt);
+    const before = record.log.filter((e: Envelope) => Date.parse(e.at) < firstAt);
+    // What the table recorded from the first earlier line on, each after the last line said before it
+    // (a Downing in the tracker is said by no one); what came before the window is in its record too.
+    const spoken = [...earlier, ...fresh];
+    const from = Date.parse(spoken[0]!.startedAt);
+    const since = record.log.filter((e: Envelope) => Date.parse(e.at) >= from);
+    const after = (e: Envelope) => line(spoken.filter((l) => Date.parse(l.startedAt) <= Date.parse(e.at)).at(-1) ?? spoken[0]!).id;
+    const scene: Scene = {
+      record: new CampaignRecord(record.engine, before),
+      speakers,
+      lines: fresh.map(line),
+      earlier: earlier.map(line),
+      recorded: since.map((e) => ({ after: after(e), action: e.action, effects: record.state.effects.get(e.id) ?? [] })),
+    };
+    const talk: RunTalk = {
+      speakers,
+      lines: [...scene.earlier!, ...scene.lines],
+      readings: [],
+      heard: { sessionId: session.id, through: Math.max(...fresh.map((l) => Number(l.id))), earlier: scene.earlier!.map((l) => l.id) },
+    };
+    const id = newId();
+    // The window drafts for the GM, who started the listening.
+    const gm = members.find((m) => m.role === "gm")!;
+    await this.db.query(
+      "insert into draft_runs (id, campaign_id, feature, created_by, status, talk) values ($1, $2, $3, $4, 'drafting', $5::jsonb)",
+      [id, campaignId, `${DRAFT_EVENTS_FEATURE},${DRAFT_ACTIONS_FEATURE},${DRAFT_SUGGESTIONS_FEATURE}`, gm.userId, JSON.stringify(talk)],
+    );
+    const prior = await this.heardMarks(campaignId, session.id, id);
+    const work = this.draft(campaignId, id, scene, prior).finally(() => this.running.delete(id));
+    this.running.set(id, work);
+    return { run: (await this.run(campaignId, id))! };
+  }
+
+  /** What earlier windows of the session drafted, so a window does not draft the same moment again. */
+  private async heardMarks(campaignId: string, sessionId: string, except: string): Promise<DraftMark[]> {
+    const rows = await this.db.query(
+      `select i.lines, i.action, i.suggestion from draft_items i join draft_runs r on r.id = i.run_id
+       where i.campaign_id = $1 and r.talk->'heard'->>'sessionId' = $2 and r.id <> $3 and i.kind <> 'cue'`,
+      [campaignId, sessionId, except],
+    );
+    return rows.map((r) => markOf(r.suggestion ? { lines: r.lines, suggestion: r.suggestion } : { lines: r.lines, action: r.action }));
   }
 
   /**
@@ -353,7 +444,7 @@ export class Drafts {
     return this.running.get(runId) ?? Promise.resolve();
   }
 
-  private async draft(campaignId: string, runId: string, scene: Scene): Promise<void> {
+  private async draft(campaignId: string, runId: string, scene: Scene, prior: DraftMark[] = []): Promise<void> {
     const engine = scene.record.engine;
     const drafter =
       (feature: string): Drafter =>
@@ -393,6 +484,15 @@ export class Drafts {
         else rows.push([d.id, "suggestion", d.lines, d.accept, [], d.why, d.suggestion]);
       }
     }
+    // A window of heard lines drops what an earlier window already drafted.
+    const kept = rows.filter((r) => {
+      const [, kind, lines, action, , , suggestion] = r as [string, ItemKind, string[], Action | null, unknown, unknown, Suggested | null];
+      if (kind === "cue" || !prior.length) return true;
+      const again = repeats(prior, markOf(suggestion ? { lines, suggestion: suggestion as never } : { lines, action: action! }));
+      if (again) seen.push({ why: "repeats a draft from an earlier window" });
+      return !again;
+    });
+    rows.splice(0, rows.length, ...kept);
     const fulfilled = all.flatMap((x) => (x.out.status === "fulfilled" ? [x.out.value] : []));
     const repaired = fulfilled.flatMap((x) => x.repaired);
     const dropped = [...fulfilled.flatMap((x) => x.dropped), ...seen];
@@ -442,10 +542,16 @@ export class Drafts {
     return `${s.kind === "battle-memory" ? "a Battle Memory Card" : s.key} for ${who} was suggested before (${how})`;
   }
 
-  /** The newest runs with their drafts. */
+  /** The newest runs with their drafts, and any older run with a draft still open (live windows add runs quickly). */
   async list(campaignId: string, user: User | null): Promise<DraftRun[]> {
     await this.service.requireGm(campaignId, user);
-    const runs = await this.db.query("select * from draft_runs where campaign_id = $1 order by created_at desc, id desc limit $2", [campaignId, RUNS_LISTED]);
+    const runs = await this.db.query(
+      `select * from draft_runs r where r.campaign_id = $1 and (
+         r.id in (select id from draft_runs where campaign_id = $1 order by created_at desc, id desc limit $2)
+         or exists (select 1 from draft_items i where i.run_id = r.id and i.status = 'open'))
+       order by r.created_at desc, r.id desc`,
+      [campaignId, RUNS_LISTED],
+    );
     if (!runs.length) return [];
     const items = await this.db.query("select * from draft_items where run_id = any($1::text[]) order by run_id, item_id", [runs.map((r) => r.id)]);
     const record = await this.service.record(campaignId);

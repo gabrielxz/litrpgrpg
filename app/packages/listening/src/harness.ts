@@ -15,6 +15,13 @@ import { SUGGESTION_CATEGORIES, draftSuggestions } from "./draft-suggestions.ts"
 import { type Drafter, type Effort, type EventDrafts, draftEvents, sceneOfScript } from "./draft-events.ts";
 import { type Report, type Tally, score } from "./score.ts";
 import { type Script, loadScript } from "./script.ts";
+import { inWindows, windowScenes } from "./windows.ts";
+
+/** Drafting a script as live play would: windows of `size` lines, each with `earlier` lines of context (windows.ts). */
+export interface Windowing {
+  size: number;
+  earlier: number;
+}
 
 export const SCRIPTS_DIR = join(dirname(fileURLToPath(import.meta.url)), "../scripts");
 
@@ -87,12 +94,13 @@ export function summarize(scriptId: string, runs: Run[]): Summary {
 }
 
 /** Runs one script through the events drafter `runs` times, one request after another so later runs read the cached instructions. */
-export async function evaluateEvents(engine: Engine, script: Script, drafter: Drafter, runs: number, opts: { effort?: Effort } = {}): Promise<Evaluation> {
+export async function evaluateEvents(engine: Engine, script: Script, drafter: Drafter, runs: number, opts: { effort?: Effort; window?: Windowing } = {}): Promise<Evaluation> {
   const scene = sceneOfScript(engine, script);
+  const scenes = opts.window ? windowScenes(engine, script, opts.window.size, opts.window.earlier) : null;
   const out: Run[] = [];
   for (let run = 1; run <= runs; run++) {
     try {
-      const drafts = await draftEvents(engine, drafter, scene, opts);
+      const drafts = scenes ? await inWindows(scenes, (s) => draftEvents(engine, drafter, s, opts)) : await draftEvents(engine, drafter, scene, opts);
       out.push({ run, drafts, report: score(script, drafts.drafts, { categories: EVENT_CATEGORIES }) });
     } catch (err) {
       out.push({ run, drafts: null, report: null, error: err instanceof Error ? err.message : String(err) });
@@ -149,13 +157,13 @@ export interface ActionEvaluation {
 const countOf = (keys: string[]) => keys.reduce<Record<string, number>>((m, k) => ((m[k] = (m[k] ?? 0) + 1), m), {});
 
 /** Runs one script through the actions drafter `runs` times, scoring the categories it drafts. */
-export function evaluateActions(engine: Engine, script: Script, drafter: Drafter, runs: number, opts: { effort?: Effort } = {}): Promise<ActionEvaluation> {
-  return evaluateDrafted(engine, script, runs, (scene) => draftActions(engine, drafter, scene, opts), ACTION_CATEGORIES);
+export function evaluateActions(engine: Engine, script: Script, drafter: Drafter, runs: number, opts: { effort?: Effort; window?: Windowing } = {}): Promise<ActionEvaluation> {
+  return evaluateDrafted(engine, script, runs, (scene) => draftActions(engine, drafter, scene, opts), ACTION_CATEGORIES, opts.window);
 }
 
 /** Runs one script through the suggestions drafter `runs` times, scoring the kinds it drafts. */
-export function evaluateSuggestions(engine: Engine, script: Script, drafter: Drafter, runs: number, opts: { effort?: Effort } = {}): Promise<ActionEvaluation> {
-  return evaluateDrafted(engine, script, runs, (scene) => draftSuggestions(engine, drafter, scene, opts), SUGGESTION_CATEGORIES);
+export function evaluateSuggestions(engine: Engine, script: Script, drafter: Drafter, runs: number, opts: { effort?: Effort; window?: Windowing } = {}): Promise<ActionEvaluation> {
+  return evaluateDrafted(engine, script, runs, (scene) => draftSuggestions(engine, drafter, scene, opts), SUGGESTION_CATEGORIES, opts.window);
 }
 
 async function evaluateDrafted(
@@ -164,12 +172,14 @@ async function evaluateDrafted(
   runs: number,
   draft: (scene: ReturnType<typeof sceneOfScript>) => Promise<ActionDrafts>,
   categories: string[],
+  window?: Windowing,
 ): Promise<ActionEvaluation> {
   const scene = sceneOfScript(engine, script);
+  const scenes = window ? windowScenes(engine, script, window.size, window.earlier) : null;
   const out: ActionRun[] = [];
   for (let run = 1; run <= runs; run++) {
     try {
-      const drafts = await draft(scene);
+      const drafts = scenes ? await inWindows(scenes, draft) : await draft(scene);
       out.push({ run, drafts, report: score(script, drafts.drafts, { categories }) });
     } catch (err) {
       out.push({ run, drafts: null, report: null, error: err instanceof Error ? err.message : String(err) });

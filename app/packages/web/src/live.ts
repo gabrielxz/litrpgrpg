@@ -20,6 +20,8 @@ export function useCampaign(campaignId: string) {
   const [error, setError] = useState<string | null>(null);
   const [listening, setListening] = useState<ListeningStatus | null>(null);
   const [heard, setHeard] = useState<HeardLine[]>([]);
+  /** Counts the server's word that the GM's drafts changed, so the drafts are fetched again. */
+  const [draftsChanged, setDraftsChanged] = useState(0);
   const socketRef = useRef<WebSocket | null>(null);
 
   /** Sends on the live socket if it is open; a frame sent while reconnecting is dropped. */
@@ -60,6 +62,8 @@ export function useCampaign(campaignId: string) {
             const added = msg.lines.filter((x) => !known.has(x.id));
             return added.length ? [...h, ...added].sort((a, b) => a.startedAt.localeCompare(b.startedAt)) : h;
           });
+        } else if (msg.type === "drafts") {
+          setDraftsChanged((n) => n + 1);
         } else if (msg.type === "state") {
           setView(msg.view);
           if (!asked) {
@@ -97,7 +101,7 @@ export function useCampaign(campaignId: string) {
     };
   }, [campaignId, addToLog]);
 
-  return { view, log, status, error, addToLog, listening, send, heard };
+  return { view, log, status, error, addToLog, listening, send, heard, draftsChanged };
 }
 
 const engines = new Map<string, Promise<Engine>>();

@@ -256,7 +256,7 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
   const [section, setSection] = useSection();
   // A prepared fight or quest handed to Combat or Quests to fire there.
   const [firing, setFiring] = useState<Firing | null>(null);
-  const drafts = useDraftRuns(view);
+  const drafts = useDraftRuns(view, live.draftsChanged);
   // Characters by id, and every creature or NPC a fight has named, for the log's lines.
   const byId = new Map(view.characters.map((c) => [c.id, c.name]));
   for (const env of live.log) {

@@ -6,6 +6,7 @@ export * from "./draft-suggestions.ts";
 export * from "./draft-opportunity.ts";
 export * from "./offers.ts";
 export * from "./harness.ts";
+export * from "./windows.ts";
 export * from "./typed.ts";
 export * from "./draft-voice.ts";
 export * from "./voice.ts";

@@ -128,7 +128,8 @@ function DraftCard({
 const when = (iso: string) => new Date(iso).toLocaleString([], { dateStyle: "medium", timeStyle: "short" });
 
 function RunLine({ run }: { run: DraftRun }) {
-  const lines = `${run.talk.lines.length} line${run.talk.lines.length === 1 ? "" : "s"}`;
+  const n_ = run.talk.lines.length - (run.talk.heard?.earlier.length ?? 0);
+  const lines = `${n_}${run.talk.heard ? " heard" : ""} line${n_ === 1 ? "" : "s"}`;
   if (run.status === "drafting") return <p className="muted">Drafting from {lines}…</p>;
   if (run.status === "failed") return <p className="error small">The draft from {lines} ({when(run.createdAt)}) failed: {run.message}</p>;
   const n = run.items.length;
@@ -154,19 +155,25 @@ function RunLine({ run }: { run: DraftRun }) {
 }
 
 /** The campaign's draft runs, kept for the Events and Suggestions sections alike. */
-export function useDraftRuns(view: GmView) {
+export function useDraftRuns(view: GmView, changed = 0) {
   const id = view.campaign.id;
   const [runs, setRuns] = useState<DraftRun[]>([]);
+  /** Whether the server drafts what the listening hears while the table talks. */
+  const [live, setLive] = useState<{ on: boolean } | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const refresh = () =>
     draftRuns(id)
-      .then((r) => setRuns(r.runs))
+      .then((r) => {
+        setRuns(r.runs);
+        setLive(r.live ?? null);
+      })
       .catch((e) => setError(e.message));
 
+  // At first, and whenever the server says a window of heard lines started or finished.
   useEffect(() => {
     void refresh();
-  }, [id]);
+  }, [id, changed]);
 
   const drafting = runs.some((r) => r.status === "drafting");
   useEffect(() => {
@@ -190,7 +197,7 @@ export function useDraftRuns(view: GmView) {
       setError((e as Error).message);
     }
   };
-  return { runs, setRuns, drafting, replace, mark, error, setError };
+  return { runs, setRuns, drafting, replace, mark, error, setError, live, setLive, refresh };
 }
 
 export type DraftRuns = ReturnType<typeof useDraftRuns>;

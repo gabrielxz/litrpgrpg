@@ -3,6 +3,7 @@
  * "Testing the listening", text evaluation). Each run spends real tokens.
  *
  *   pnpm draft-eval [--drafter events|actions|suggestions|offers|voice|classes|summaries] [--runs 3] [--script id] [--effort medium] [--campaign name]
+ *     [--window 20[,10]]   draft each script as live play would, in windows of that many lines with that many earlier lines as context
  *
  * The key comes from one of two places:
  *   ANTHROPIC_API_KEY (app/.env)   used directly, with the model from --model; tokens are tallied here
@@ -35,6 +36,7 @@ import {
   type Effort,
   evaluateActions,
   evaluateClasses,
+  EARLIER_LINES,
   evaluateEvents,
   evaluateOffer,
   evaluateSuggestions,
@@ -63,6 +65,7 @@ const { values } = parseArgs({
     script: { type: "string" },
     effort: { type: "string", default: "medium" },
     drafter: { type: "string", default: "events" },
+    window: { type: "string" },
   },
 });
 const FEATURES: Record<string, string> = { events: DRAFT_EVENTS_FEATURE, actions: DRAFT_ACTIONS_FEATURE, suggestions: DRAFT_SUGGESTIONS_FEATURE, offers: DRAFT_OPPORTUNITY_FEATURE, voice: "draft-voice", classes: DRAFT_CLASSES_FEATURE, summaries: "draft-summaries" };
@@ -160,7 +163,8 @@ try {
     evaluations.push(e);
   }
   for (const script of scripts) {
-    const opts = { effort: values.effort as Effort };
+    const [size, earlier] = (values.window ?? "").split(",").map(Number);
+    const opts = { effort: values.effort as Effort, ...(size ? { window: { size, earlier: earlier ?? EARLIER_LINES } } : {}) };
     const e =
       values.drafter === "actions"
         ? await evaluateActions(engine, script, source.drafter, Number(values.runs), opts)
@@ -179,8 +183,8 @@ try {
 
   const out = resolve(dirname(fileURLToPath(import.meta.url)), "../../../../build/listening");
   mkdirSync(out, { recursive: true });
-  const file = join(out, `${FEATURE}-${started.replace(/[:.]/g, "-")}.json`);
-  writeFileSync(file, JSON.stringify({ started, drafter: values.drafter, model: source.model, effort: values.effort, usage, evaluations }, null, 2));
+  const file = join(out, `${FEATURE}${values.window ? "-windowed" : ""}-${started.replace(/[:.]/g, "-")}.json`);
+  writeFileSync(file, JSON.stringify({ started, drafter: values.drafter, model: source.model, effort: values.effort, window: values.window ?? null, usage, evaluations }, null, 2));
   console.log(`\nthe runs: ${file}`);
 } finally {
   await source.close();
