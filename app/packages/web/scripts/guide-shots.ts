@@ -399,6 +399,7 @@ const SHOTS: [string, (c: Ctx) => Promise<void>][] = [
     "gm-combat-setup",
     async (c) => {
       await gmAt(c, c.s.main, "prep");
+      await c.gm.waitFor(`document.body.innerText.includes("The fence line: three Snarljaws")`, "the prepared fight");
       await c.gm.pressOn("The fence line: three Snarljaws", "Set up the fight");
       await c.gm.waitFor(`document.body.innerText.includes("A new fight")`, "the fight's setup");
       for (const n of ["Kara", "Joe", "Andre", "Nia"]) await c.gm.choose(`Side for ${n}`, "party");
@@ -429,16 +430,17 @@ const SHOTS: [string, (c: Ctx) => Promise<void>][] = [
     "gm-aftermath",
     async (c) => {
       await gmAt(c, c.s.main, "combat");
-      await c.gm.press("Roll the Clash").catch(() => undefined);
+      await c.gm.waitFor(`document.querySelector(".panel.clash")`, "the waiting Clash");
+      await c.gm.press("Roll the Clash");
       // A hit the defender may Yield waits on the choice; take the damage.
-      await c.gm.pressMatch(/^Take \d+$/).catch(() => undefined);
+      await c.gm.pressMatch(/^Take \d+/).catch(() => undefined);
       await c.gm.press("End the fight…");
       await c.gm.pressMatch(/^End The fence line/);
       await c.gm.waitFor(`document.body.innerText.includes("The fight is over") || document.body.innerText.includes("THE FIGHT IS OVER")`, "the aftermath");
       await c.gm.shot("gm-aftermath", { maxHeight: 1600 });
     },
   ],
-  // Last, since it moves everyone to Level 10: the rehearsal's VE plan, then three of the book's classes for Kara.
+  // Last, since it moves everyone to Level 10: the rehearsal's VE plan (the fence, both quests, one rest), then three of the book's classes for Kara.
   [
     "player-class-offers",
     async (c) => {
@@ -446,10 +448,7 @@ const SHOTS: [string, (c: Ctx) => Promise<void>][] = [
       const all = ["kara", "joe", "andre", "nia"];
       const everyone = (ve: number) => gm({ type: "ve.award", basis: { kind: "other", note: "the rehearsal's plan" }, awards: all.map((id) => ({ characterId: id, ve })) });
       const rest = (hours: number) => gm({ type: "consolidation.rest", highDensity: false, rests: all.map((id) => ({ characterId: id, hours })) });
-      await everyone(38);
-      await rest(4);
-      await gm({ type: "points.system", characterId: "kara", level: 9, placement: { STR: 3 } });
-      await everyone(110);
+      await everyone(50);
       await rest(6);
       const engine = new Engine(loadRules());
       const book = bookClasses(engine);

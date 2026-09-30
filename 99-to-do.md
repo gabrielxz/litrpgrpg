@@ -113,7 +113,9 @@ Edits an app session forces, each with Gabriel's ruling or Claude's recommendati
 - **"Set up the table"** on a new campaign's Party, from the canvas: invite, session, clock, each Done from the record, with **Hide**. The canvas's painting slot for an empty campaign is not built (Gabriel keeps the current paintings).
 - Fixed in passing: stale help on the AI card, the HP and Aether tab, and the Quests form's "Drafted from the sweep"; Player view replaying moments on switching players.
 
-**Next.** Gabriel reads the guide (Claude's calls are under Decisions, "the user guide"), then the rehearsal. Push when he says (it deploys).
+**The rehearsal, rewritten** (Gabriel, 2026-09-30): one night of two hours, the first for the table and microphones, the second for one hour of play ending on class offers. `app/packs/rehearsal.yaml`, `rehearsal.md`, and the GM's run sheet `rehearsal-run-sheet.html` (private artifact https://claude.ai/artifact/CN62b1z3mxhkuu3G7iJvKk). Characters start at Level 9 with seeded HVE Deep; one fight, two quests, one rest to Level 10. Checked end to end on the development server (setup, fight, aftermath, rest, a class offer on the player's screen); the AI class drafts at a live table are the untested step.
+
+**Next.** Gabriel's solo dry run from the run sheet, then the rehearsal night. Afterward: his notes, the test recordings, and the drafts measured. Push when he says (it deploys).
 
 **Found while writing the guide**, for Gabriel's call (from reading code; none seen failing at a table):
 - A player's **Ask the rules** and the HVE section's **Draft an offer** show without a campaign key and return the raw server error; every other AI control checks for the key first.

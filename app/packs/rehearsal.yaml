@@ -1,11 +1,13 @@
-# The rehearsal: a scene that spoils nothing in the tutorial, written to exercise the app's systems
-# before real play (app/DESIGN.md, M3, "A rehearsal session"; the run sheet is rehearsal.md). Load it in
-# Prep with "Load a pack from a file", record its setup once, then assign the four characters to
-# players from the Party section. The setup is the record's own actions, as a script's setup is.
+# The rehearsal: one hour of play that spoils nothing in the tutorial, written to see how the app
+# holds up at a real table and to end on class offers (app/DESIGN.md, M3, "A rehearsal session"; the
+# overview is rehearsal.md, the GM's step-by-step script rehearsal-run-sheet.html). Load it in Prep
+# with "Load a pack from a file", record its setup once, then give the four characters to their
+# players in the Table section's Who plays whom. The setup is the record's own actions.
 pack: rehearsal
 title: "The rehearsal: past the depot fence"
 
-# Four characters at Level 8, 100 of the 120 VE toward Level 9 refined, on Day 12 at 16:00.
+# Four characters at Level 9, 100 of the 120 VE toward Level 10 refined, on Day 12 at 16:00. One
+# fight and one quest carry them past it at the rest, and the class offers follow.
 setup:
   - {"id": "create-kara", "action": {"type": "character.pregen", "characterId": "kara", "pregen": "Kara"}}
   - {"id": "create-joe", "action": {"type": "character.pregen", "characterId": "joe", "pregen": "Joe"}}
@@ -32,9 +34,12 @@ setup:
   - {"id": "kara-ve-8", "action": {"type": "ve.award", "basis": {"kind": "other", "note": "Days 1 to 11, before the rehearsal"}, "awards": [{"characterId": "kara", "ve": 120}]}}
   - {"id": "kara-rest-8", "action": {"type": "consolidation.rest", "highDensity": false, "rests": [{"characterId": "kara", "hours": 6, "interrupted": false}]}}
   - {"id": "kara-points-8", "action": {"type": "points.system", "characterId": "kara", "level": 8, "placement": {"STR": 2, "FOR": 1}}}
-  - {"id": "kara-ve-9", "action": {"type": "ve.award", "basis": {"kind": "other", "note": "Days 1 to 11, before the rehearsal"}, "awards": [{"characterId": "kara", "ve": 100}]}}
-  - {"id": "kara-rest-9", "action": {"type": "consolidation.rest", "highDensity": false, "rests": [{"characterId": "kara", "hours": 5, "interrupted": false}]}}
-  - {"id": "kara-free", "action": {"type": "points.free", "characterId": "kara", "placement": {"STR": 7, "FOR": 7}}}
+  - {"id": "kara-ve-9", "action": {"type": "ve.award", "basis": {"kind": "other", "note": "Days 1 to 11, before the rehearsal"}, "awards": [{"characterId": "kara", "ve": 120}]}}
+  - {"id": "kara-rest-9", "action": {"type": "consolidation.rest", "highDensity": false, "rests": [{"characterId": "kara", "hours": 6, "interrupted": false}]}}
+  - {"id": "kara-points-9", "action": {"type": "points.system", "characterId": "kara", "level": 9, "placement": {"STR": 2, "FOR": 1}}}
+  - {"id": "kara-ve-10", "action": {"type": "ve.award", "basis": {"kind": "other", "note": "Days 1 to 11, before the rehearsal"}, "awards": [{"characterId": "kara", "ve": 100}]}}
+  - {"id": "kara-rest-10", "action": {"type": "consolidation.rest", "highDensity": false, "rests": [{"characterId": "kara", "hours": 5, "interrupted": false}]}}
+  - {"id": "kara-free", "action": {"type": "points.free", "characterId": "kara", "placement": {"STR": 8, "FOR": 8}}}
   - {"id": "joe-ve-2", "action": {"type": "ve.award", "basis": {"kind": "other", "note": "Days 1 to 11, before the rehearsal"}, "awards": [{"characterId": "joe", "ve": 120}]}}
   - {"id": "joe-rest-2", "action": {"type": "consolidation.rest", "highDensity": false, "rests": [{"characterId": "joe", "hours": 6, "interrupted": false}]}}
   - {"id": "joe-points-2", "action": {"type": "points.system", "characterId": "joe", "level": 2, "placement": {"FOR": 2, "HRT": 1}}}
@@ -56,9 +61,12 @@ setup:
   - {"id": "joe-ve-8", "action": {"type": "ve.award", "basis": {"kind": "other", "note": "Days 1 to 11, before the rehearsal"}, "awards": [{"characterId": "joe", "ve": 120}]}}
   - {"id": "joe-rest-8", "action": {"type": "consolidation.rest", "highDensity": false, "rests": [{"characterId": "joe", "hours": 6, "interrupted": false}]}}
   - {"id": "joe-points-8", "action": {"type": "points.system", "characterId": "joe", "level": 8, "placement": {"FOR": 2, "HRT": 1}}}
-  - {"id": "joe-ve-9", "action": {"type": "ve.award", "basis": {"kind": "other", "note": "Days 1 to 11, before the rehearsal"}, "awards": [{"characterId": "joe", "ve": 100}]}}
-  - {"id": "joe-rest-9", "action": {"type": "consolidation.rest", "highDensity": false, "rests": [{"characterId": "joe", "hours": 5, "interrupted": false}]}}
-  - {"id": "joe-free", "action": {"type": "points.free", "characterId": "joe", "placement": {"STR": 7, "FOR": 7}}}
+  - {"id": "joe-ve-9", "action": {"type": "ve.award", "basis": {"kind": "other", "note": "Days 1 to 11, before the rehearsal"}, "awards": [{"characterId": "joe", "ve": 120}]}}
+  - {"id": "joe-rest-9", "action": {"type": "consolidation.rest", "highDensity": false, "rests": [{"characterId": "joe", "hours": 6, "interrupted": false}]}}
+  - {"id": "joe-points-9", "action": {"type": "points.system", "characterId": "joe", "level": 9, "placement": {"FOR": 2, "HRT": 1}}}
+  - {"id": "joe-ve-10", "action": {"type": "ve.award", "basis": {"kind": "other", "note": "Days 1 to 11, before the rehearsal"}, "awards": [{"characterId": "joe", "ve": 100}]}}
+  - {"id": "joe-rest-10", "action": {"type": "consolidation.rest", "highDensity": false, "rests": [{"characterId": "joe", "hours": 5, "interrupted": false}]}}
+  - {"id": "joe-free", "action": {"type": "points.free", "characterId": "joe", "placement": {"STR": 8, "FOR": 8}}}
   - {"id": "andre-ve-2", "action": {"type": "ve.award", "basis": {"kind": "other", "note": "Days 1 to 11, before the rehearsal"}, "awards": [{"characterId": "andre", "ve": 120}]}}
   - {"id": "andre-rest-2", "action": {"type": "consolidation.rest", "highDensity": false, "rests": [{"characterId": "andre", "hours": 6, "interrupted": false}]}}
   - {"id": "andre-points-2", "action": {"type": "points.system", "characterId": "andre", "level": 2, "placement": {"PER": 2, "DEX": 1}}}
@@ -80,9 +88,12 @@ setup:
   - {"id": "andre-ve-8", "action": {"type": "ve.award", "basis": {"kind": "other", "note": "Days 1 to 11, before the rehearsal"}, "awards": [{"characterId": "andre", "ve": 120}]}}
   - {"id": "andre-rest-8", "action": {"type": "consolidation.rest", "highDensity": false, "rests": [{"characterId": "andre", "hours": 6, "interrupted": false}]}}
   - {"id": "andre-points-8", "action": {"type": "points.system", "characterId": "andre", "level": 8, "placement": {"PER": 2, "DEX": 1}}}
-  - {"id": "andre-ve-9", "action": {"type": "ve.award", "basis": {"kind": "other", "note": "Days 1 to 11, before the rehearsal"}, "awards": [{"characterId": "andre", "ve": 100}]}}
-  - {"id": "andre-rest-9", "action": {"type": "consolidation.rest", "highDensity": false, "rests": [{"characterId": "andre", "hours": 5, "interrupted": false}]}}
-  - {"id": "andre-free", "action": {"type": "points.free", "characterId": "andre", "placement": {"FOR": 10, "DEX": 4}}}
+  - {"id": "andre-ve-9", "action": {"type": "ve.award", "basis": {"kind": "other", "note": "Days 1 to 11, before the rehearsal"}, "awards": [{"characterId": "andre", "ve": 120}]}}
+  - {"id": "andre-rest-9", "action": {"type": "consolidation.rest", "highDensity": false, "rests": [{"characterId": "andre", "hours": 6, "interrupted": false}]}}
+  - {"id": "andre-points-9", "action": {"type": "points.system", "characterId": "andre", "level": 9, "placement": {"PER": 2, "DEX": 1}}}
+  - {"id": "andre-ve-10", "action": {"type": "ve.award", "basis": {"kind": "other", "note": "Days 1 to 11, before the rehearsal"}, "awards": [{"characterId": "andre", "ve": 100}]}}
+  - {"id": "andre-rest-10", "action": {"type": "consolidation.rest", "highDensity": false, "rests": [{"characterId": "andre", "hours": 5, "interrupted": false}]}}
+  - {"id": "andre-free", "action": {"type": "points.free", "characterId": "andre", "placement": {"FOR": 11, "DEX": 5}}}
   - {"id": "nia-ve-2", "action": {"type": "ve.award", "basis": {"kind": "other", "note": "Days 1 to 11, before the rehearsal"}, "awards": [{"characterId": "nia", "ve": 120}]}}
   - {"id": "nia-rest-2", "action": {"type": "consolidation.rest", "highDensity": false, "rests": [{"characterId": "nia", "hours": 6, "interrupted": false}]}}
   - {"id": "nia-points-2", "action": {"type": "points.system", "characterId": "nia", "level": 2, "placement": {"POW": 2, "HRT": 1}}}
@@ -104,9 +115,12 @@ setup:
   - {"id": "nia-ve-8", "action": {"type": "ve.award", "basis": {"kind": "other", "note": "Days 1 to 11, before the rehearsal"}, "awards": [{"characterId": "nia", "ve": 120}]}}
   - {"id": "nia-rest-8", "action": {"type": "consolidation.rest", "highDensity": false, "rests": [{"characterId": "nia", "hours": 6, "interrupted": false}]}}
   - {"id": "nia-points-8", "action": {"type": "points.system", "characterId": "nia", "level": 8, "placement": {"POW": 2, "HRT": 1}}}
-  - {"id": "nia-ve-9", "action": {"type": "ve.award", "basis": {"kind": "other", "note": "Days 1 to 11, before the rehearsal"}, "awards": [{"characterId": "nia", "ve": 100}]}}
-  - {"id": "nia-rest-9", "action": {"type": "consolidation.rest", "highDensity": false, "rests": [{"characterId": "nia", "hours": 5, "interrupted": false}]}}
-  - {"id": "nia-free", "action": {"type": "points.free", "characterId": "nia", "placement": {"FOR": 9, "POW": 5}}}
+  - {"id": "nia-ve-9", "action": {"type": "ve.award", "basis": {"kind": "other", "note": "Days 1 to 11, before the rehearsal"}, "awards": [{"characterId": "nia", "ve": 120}]}}
+  - {"id": "nia-rest-9", "action": {"type": "consolidation.rest", "highDensity": false, "rests": [{"characterId": "nia", "hours": 6, "interrupted": false}]}}
+  - {"id": "nia-points-9", "action": {"type": "points.system", "characterId": "nia", "level": 9, "placement": {"POW": 2, "HRT": 1}}}
+  - {"id": "nia-ve-10", "action": {"type": "ve.award", "basis": {"kind": "other", "note": "Days 1 to 11, before the rehearsal"}, "awards": [{"characterId": "nia", "ve": 100}]}}
+  - {"id": "nia-rest-10", "action": {"type": "consolidation.rest", "highDensity": false, "rests": [{"characterId": "nia", "hours": 5, "interrupted": false}]}}
+  - {"id": "nia-free", "action": {"type": "points.free", "characterId": "nia", "placement": {"FOR": 10, "POW": 6}}}
   # What they carry, who they are to each other, and where they stand on Day 12.
   - {id: kit-kara, action: {type: item.give, to: kara, items: [{name: Battle Axe / Maul, count: 1}, {name: Reactive Buckler, count: 1}, {name: Healing Pill, count: 1}]}}
   - {id: kit-joe, action: {type: item.give, to: joe, items: [{name: Spear, count: 1}, {name: Battered Medkit, count: 1}, {name: Lesser Healing Pill, count: 2}]}}
@@ -120,116 +134,68 @@ setup:
   - {id: nia-joins, action: {type: party.answer, inviteId: invite-nia, accept: true}}
   - {id: title-andre, action: {type: title.grant, characterId: andre, title: {catalog: Gate-Runner}}}
   - {id: title-kara, action: {type: title.grant, characterId: kara, title: {catalog: Wrong Key}}}
-  # Principles: Andre's crystallized and 2 short of Seed; Joe's 1 short of crystallizing; Kara holds a card to meditate on.
+  # Principles: Andre's crystallized as Measure Twice; Joe's 1 short of crystallizing; Kara holds a card.
+  # The class drafter reads them, with the Deep below, when it writes each character's offers.
   - {id: ip-andre, action: {type: insight.award, characterId: andre, source: "Any other Principle-aligned experience, GM's call", family: Architecture, ip: 3, note: Mapped the valley's exits before anyone moved}}
   - {id: name-andre, action: {type: principle.name, characterId: andre, family: Architecture, name: Measure Twice, passive: "+5 to checks that read ground or structure"}}
   - {id: ip-andre-2, action: {type: insight.award, characterId: andre, source: "Any other Principle-aligned experience, GM's call", family: Architecture, ip: 3, note: Brought the party through the flooded underpass by the map}}
   - {id: ip-andre-3, action: {type: insight.award, characterId: andre, source: "Any other Principle-aligned experience, GM's call", family: Architecture, ip: 2, note: Rigged the depot's shutter to drop behind them}}
   - {id: ip-joe, action: {type: insight.award, characterId: joe, source: "Any other Principle-aligned experience, GM's call", family: Preservation, ip: 2, note: Carried Ray out of the collapse}}
   - {id: card-kara, action: {type: memory.grant, characterId: kara, text: "The Alpha's jaws closed on the buckler instead of her throat"}}
+  # Eleven days of play on the HVE sheet, so the offers have leads to read: Kara pushes and takes,
+  # Joe gives way and gives up his share, Andre plans and sets the terms, Nia holds order and holds back.
+  - {id: deep-kara, action: {type: hve.deep, characterId: kara, deep: {Force: 5, Hunger: 2, Will: 2, Freedom: 1}}}
+  - {id: deep-joe, action: {type: hve.deep, characterId: joe, deep: {Restraint: 4, Accord: 3, Force: 2}}}
+  - {id: deep-andre, action: {type: hve.deep, characterId: andre, deep: {Method: 5, Control: 2, Accord: 1}}}
+  - {id: deep-nia, action: {type: hve.deep, characterId: nia, deep: {Control: 3, Restraint: 3, Method: 2}}}
   - {id: clock, action: {type: clock.set, day: 12, hour: 16, minute: 0}}
 
 notices:
   - id: day-twelve
-    group: "Scene 1: The depot gate"
+    group: "Scene 1: The gate"
     title: "Day 12: the status notice"
     note: "Send to everyone at the start, before Mara speaks."
     text:
       - "Day 12 since Integration. Sector: Depot District."
       - "Initiates in range: 4. Local hostiles: present."
-  - id: pattern
-    group: "Scene 2: Past the fence"
-    title: "Pattern detected"
-    note: "To the one who spares a beaten creature for the second time, whether or not a Hidden quest goes out."
-    text:
-      - "Pattern detected. Monitoring."
-  - id: building
-    group: "Scene 3: The lit building"
-    title: "Structure scan"
-    note: "To whoever steps into the lot first."
-    text:
-      - "Structure: municipal records annex. Power: partial. Occupancy: 3 human, 1 construct."
-  - id: terminal
-    group: "Scene 5: The terminal"
-    title: "Fragment detected"
-    note: "At the terminal, after the Mandate. Read it aloud."
-    text:
-      - "Data fragment detected. Coherence: failing. Containment: none."
-      - "It has noticed you."
 
 quests:
-  - group: "Scene 1: The depot gate"
-    note: "When the Snarljaws are in sight. Issue to one character; the holder shares it with the party."
+  - group: "Scene 1: The gate"
+    note: "When the Snarljaws are in sight. Offer to one character; they accept and share it with the party."
     quest: {id: Q-201, category: Routine, title: Fence Line Clearance, issuer: System, grade: F, difficulty: Easy,
             objective: "Eliminate the Snarljaws at the depot fence.", count: 3, countFixed: true, time: Open.}
-  - group: "Scene 1: The depot gate"
-    note: "Mara's request, if the listener does not draft it: to the character she asked, then shared. Severe, because a construct holds the three in the annex; set it Severe if the listener drafts it lower."
-    quest: {id: Q-202, category: Faction, title: Bring Them Home, issuer: Mara, grade: F, difficulty: Severe,
+  - group: "Scene 1: The gate"
+    note: "Mara's request, only if the listener has not drafted it by the rest: offer it to the character she asked, who shares it. Easy: the three are shut in the depot office, and the danger was the fence."
+    quest: {id: Q-202, category: Faction, title: Bring Them Home, issuer: Mara, grade: F, difficulty: Easy,
             objective: "Find Mara's grandson and the two who went past the fence with him, and bring them home.", count: 3, countFixed: true,
             rewardText: "Mara's gratitude, and the co-op's."}
-  - group: "Scene 2: Past the fence"
-    note: "Fully obscured, to the first character who spares a beaten creature. Reveal it partially the second time (the listener may draft the reveal)."
-    quest: {id: Q-HID-01, category: Hidden, title: Spare the Beaten, issuer: System, grade: F, difficulty: Moderate,
-            objective: "Let what is done fighting go.", hidden: obscured}
-  - group: "Scene 5: The terminal"
-    note: "Read it aloud and set the time. Failure: the fragment spreads through the district's power, and the annex goes dark with the three inside."
-    quest: {id: M-01, category: Mandate, title: "Fragment Containment: Records Annex", issuer: System, grade: F, difficulty: Hard,
-            objective: "Destroy the data fragment at the annex terminal before it propagates.", hours: 2,
-            rewardText: "District power restored. Continued Integration."}
 
 encounters:
   - id: fence
-    group: "Scene 1: The depot gate"
+    group: "Scene 2: The fence line"
     title: "The fence line: three Snarljaws"
-    note: "Standard for four at Level 8 (one at Force 40, or two at 20: three Snarljaws). Pack-Breaker waits for whoever kills all three. One Snarljaw that is beaten and backs away tests the Hidden quest."
+    note: "Short on purpose: the table learns the fight without it eating the hour. Pack-Breaker waits for whoever kills all three."
     zones: [The gate, The fence line, The yard]
     creatures: [{creature: Snarljaw, count: 3}]
-  - id: lot
-    group: "Scene 3: The lit building"
-    title: "The lot: the Alpha"
-    note: "Optional. Hard. If the party is short of the VE for Level 10, this fight is 20 more each."
-    zones: [The lot, The loading dock]
-    creatures: [{creature: Alpha Snarljaw}]
-  - id: sentinel
-    group: "Scene 3: The lit building"
-    title: "The lobby: the Husk Sentinel"
-    note: "Hard. It Yields: talk works once it is below half, and it will open the stairwell for the three held upstairs. Mara may join (Prep, NPCs)."
-    zones: [The lobby, The side door, The stairwell]
-    creatures: [{creature: Husk Sentinel}]
-  - id: wraith
-    group: "Scene 5: The terminal"
-    title: "The terminal: the Fragment Wraith"
-    note: "Severe, run at Level 10 with the classes. Rush, Take It, Reach the Fallen, and the techniques all have room here. A kill is Giant-Feller."
-    zones: [The terminal room, The stairwell, The roof access]
-    creatures: [{creature: Fragment Wraith}]
 
 loot:
   - id: locker
-    group: "Scene 2: Past the fence"
-    title: "The depot locker"
-    note: "Behind the fence, to the spoils: the party divides it."
+    group: "Scene 3: The depot office"
+    title: "The depot office's first-aid locker"
+    note: "In the office, to the spoils: the party divides it. Dana wants it for the co-op."
     items:
       - {name: Healing Pill, count: 2}
       - {name: Edge Shard, count: 1}
       - {name: Low-Grade Armor Scraps, count: 1}
-  - id: lobby
-    group: "Scene 3: The lit building"
-    title: "The lobby cache"
-    note: "After the Sentinel. The Pristine Core pays 40 VE to the one who absorbs it (Award VE, a core): 150 stored, still Mild Saturation. The Sentinel Heart is a Standard Attribute Treasure."
-    items:
-      - {name: Pristine Core, count: 1}
-      - {name: Sentinel Heart, count: 1}
-      - {name: Sparkstone Tablet, count: 2}
 
 npcs:
   - id: mara
     group: "NPCs"
     name: Mara
     who: "A grandmother at the depot gate with a crowbar and a co-op armband"
-    note: "Asks for her grandson and the two with him in Scene 1. Joins a fight only to protect them."
-    block: {kind: npc, grade: F, maxHp: 20, beats: 2, momentumForce: 6, offense: [{force: 12, stat: STR, means: crowbar}], defense: [{force: 10, stat: DEX, means: dodge}]}
+    note: "Asks one character, by name, to find her grandson and the two with him."
   - id: teo
     group: "NPCs"
     name: Teo
-    who: "Mara's grandson, nineteen, held upstairs in the annex with Dana and Fitch"
-    note: "Found in Scene 4. Wants to go home; Dana wants to stay and loot the records."
+    who: "Mara's grandson, nineteen, shut in the depot office with Dana and Fitch"
+    note: "Wants to go home now. Dana wants to take the first-aid locker back to the co-op first; Fitch sides with whoever is loudest."
