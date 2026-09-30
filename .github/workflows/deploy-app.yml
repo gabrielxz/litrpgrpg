@@ -1,7 +1,7 @@
 # Deploys the companion app to Fly.io (the personal org's `gradebreaker` app) when app code,
-# rules data, or the deploy files change on main. Book-only commits do not deploy. The deploy
-# waits until nobody is connected, so a push mid-session does not drop the table; a manual run
-# can force it.
+# rules data, the book's chapters (rules questions read them), or the deploy files change on
+# main. The book's art, kit, and pipeline do not deploy. The deploy waits until nobody is
+# connected, so a push mid-session does not drop the table; a manual run can force it.
 name: Deploy the companion app
 
 on:
@@ -11,6 +11,7 @@ on:
       - "app/**"
       - "!app/**/*.md"
       - "rules/**"
+      - "book/[0-9][0-9]-*.md"
       - "Dockerfile"
       - ".dockerignore"
       - "fly.toml"
