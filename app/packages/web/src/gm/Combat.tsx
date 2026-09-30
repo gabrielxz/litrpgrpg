@@ -25,6 +25,7 @@ import {
   stabilizeCheck,
 } from "@gradebreaker/record";
 import { useState } from "react";
+import { Icon, Meter } from "../ui.tsx";
 import { newActionId, submit } from "../api.ts";
 import { type Actor, CareActions, type Mate, pillsOf } from "../Care.tsx";
 import { AttackForm, type Clasher, DefenseForm, YieldChoice } from "../Clash.tsx";
@@ -428,7 +429,7 @@ function Pips({ n, of }: { n: number; of: number }) {
   return (
     <span className="pips" title={`${n} of ${of} Beats left`}>
       {Array.from({ length: Math.max(of, n) }, (_, i) => (
-        <span key={i} className={i < n ? "pip on" : "pip"} />
+        <i key={i} className={i < n ? "on" : ""} />
       ))}
     </span>
   );
@@ -485,219 +486,283 @@ function CombatantRow({
   const acting = e.acting === c.id;
   const holder = e.order[0];
   const d = Math.trunc(Number(delta));
-  const pct = c.maxHp ? Math.max(0, Math.min(100, (c.hp / c.maxHp) * 100)) : 0;
   const applyHp = async (sign: 1 | -1) => {
     if (d > 0 && (await run({ type: "combat.hp", combatantId: c.id, delta: sign * d }))) setDelta("");
   };
+  // The acting combatant's situational controls are open; any other row opens them with one
+  // press (P4). Free strikes and reactions stay in view whenever they can be taken.
+  const [open, setOpen] = useState(false);
+  const ruling = Boolean(c.downed || (c.dead && c.kind !== "character" && c.hp === 0));
+  const offTurn = !acting && !e.clash && e.round > 0 && !c.out && !c.downed;
+  const reactionsNow = offTurn ? reactions : [];
+  const down = Boolean(c.downed || c.dead);
+  const hpControls = (
+    <>
+      <input type="number" className="input num track__delta" min={1} value={delta} onChange={(ev) => setDelta(ev.target.value)} placeholder="HP" aria-label={`HP for ${c.name}`} />
+      <button className="btn btn--sm" disabled={busy || !(d > 0)} onClick={() => applyHp(-1)}>
+        Damage
+      </button>
+      <button className="btn btn--sm" disabled={busy || !(d > 0)} onClick={() => applyHp(1)}>
+        Heal
+      </button>
+    </>
+  );
 
   return (
-    <li className={`combatant ${acting ? "acting" : ""} ${c.acted ? "acted" : ""} ${c.out ? "out" : ""} ${c.downed ? "downed" : ""}`}>
-      <div className="combatant-head">
-        <strong>{c.name}</strong>
-        {c.creature && c.creature !== c.name && <span className="muted small"> {c.creature}</span>}
-        <span className="muted small"> · Momentum {c.momentumForce}</span>
-        {c.zoneId && <span className="muted small"> · {zoneName(c.zoneId)}</span>}
-        {c.exposed && <span className="tag danger">Exposed</span>}
-        {c.downed && (
-          <span className="tag danger">{c.downed.stabilized ? "Downed, stabilized" : `Downed: vital coherence ${c.downed.coherence}`}</span>
-        )}
-        {c.aura === "suppressed" && <span className="tag danger">Suppressed</span>}
-        {c.aura === "steeled" && <span className="tag">Steeled</span>}
-        {c.readAsDead && <span className="tag" title={permission?.effect}>Reads as dead</span>}
-        {c.huntsByReading && <span className="muted small"> · hunts by the System's reading</span>}
-        {e.round === 0 && e.surprise?.includes(c.id) && <span className="tag attention">Surprise Beat</span>}
-        {c.dead ? <span className="tag danger">Dead</span> : c.out && <span className="tag">Out</span>}
-        {acting && <span className="tag attention">Acting</span>}
-        {c.acted && !c.out && <span className="muted small"> · acted</span>}
-        <span className="grow" />
-        <Pips n={c.beats} of={c.beatsPerTurn} />
-      </div>
-      <div className="vital">
-        <span>HP</span>
-        <div className="meter hp">
-          <div style={{ width: `${pct}%` }} />
-        </div>
-        <span className="num">
-          {c.hp}/{c.maxHp}
-        </span>
-      </div>
-      {c.spent.length > 0 && <div className="muted small">This round: {c.spent.join(", ")}</div>}
-      {c.characterId && (c.pills.healing > 0 || c.pills.aether > 0) && (
-        <div className="muted small">
-          Pills since the last Consolidation: {c.pills.healing} healing, {c.pills.aether} Aether
-        </div>
-      )}
-      {(c.downed || (c.dead && c.kind !== "character" && c.hp === 0)) && (
-        <div className="form-row tight">
-          <span className="muted small">Your ruling:</span>
-          {(c.dead || !c.downed?.stabilized) && (
-            <button disabled={busy} onClick={() => run({ type: "combat.fate", combatantId: c.id, fate: "stabilized" })} title="Left alive, or success at a cost: the countdown stops">
-              {c.dead ? "Left alive" : "Stabilized"}
-            </button>
-          )}
-          {!c.dead && (
-            <button disabled={busy} onClick={() => run({ type: "combat.fate", combatantId: c.id, fate: "dead" })}>
-              Dies
-            </button>
-          )}
-        </div>
-      )}
-      {!c.out && (
-        <div className="form-row tight">
-          <input type="number" className="narrow-input" min={1} value={delta} onChange={(ev) => setDelta(ev.target.value)} placeholder="HP" />
-          <button disabled={busy || !(d > 0)} onClick={() => applyHp(-1)}>
-            Damage
-          </button>
-          <button disabled={busy || !(d > 0)} onClick={() => applyHp(1)}>
-            Heal
-          </button>
-          <span className="grow" />
-          {canAct && !acting && (
-            <button className="primary" disabled={busy} onClick={() => run({ type: "combat.act", combatantId: c.id })}>
-              {c.name} acts
-            </button>
-          )}
-          <button disabled={busy} onClick={() => run({ type: "combat.remove", combatantId: c.id })} title="Fled, dead, or otherwise out">
-            Out
-          </button>
-        </div>
-      )}
-      {!c.out && (
-        <div className="form-row tight">
-          {e.zones.length > 1 && (
+    <li className={`track${acting ? " track--acting" : ""}${(c.acted || c.out) && !acting ? " track--done" : ""}${down ? " track--downed" : ""}`}>
+      <span className="track__stripe" aria-hidden="true" />
+      <div className="track__who">
+        <span className="track__name">{c.name}</span>
+        <span className="track__meta">
+          {c.creature && c.creature !== c.name && `${c.creature} · `}Momentum {c.momentumForce}
+          {c.zoneId && (
             <>
-              <select value={zone || c.zoneId || ""} onChange={(ev) => setZone(ev.target.value)} aria-label="Zone">
-                {e.zones.map((z) => (
-                  <option key={z.id} value={z.id}>
-                    {z.name}
-                  </option>
-                ))}
-              </select>
-              {pickedZone && acting && (
-                <button disabled={busy || c.beats < 1} onClick={() => run({ type: "combat.move", combatantId: c.id, zoneId: pickedZone })}>
-                  Move (1 Beat)
-                </button>
-              )}
-              {pickedZone && acting && hook?.kind === "free-move" && (
-                <button disabled={busy} title={permission!.effect} onClick={() => run({ type: "combat.move", combatantId: c.id, zoneId: pickedZone, permission: true })}>
-                  Move by {permission!.name} (no Beat)
-                </button>
-              )}
-              {pickedZone && (
-                <button disabled={busy} onClick={() => run({ type: "combat.move", combatantId: c.id, zoneId: pickedZone, forced: true })} title="Driven, thrown, or placed: no Beat">
-                  Place
-                </button>
-              )}
+              {" · "}
+              <span className="world">{zoneName(c.zoneId)}</span>
             </>
           )}
-          <button disabled={busy} onClick={() => run({ type: "combat.exposed", combatantId: c.id, exposed: !c.exposed })} title="−10 to Clash rolls until the end of their next turn">
-            {c.exposed ? "Clear Exposed" : "Exposed"}
-          </button>
-          {!c.downed && (
-            <button
-              disabled={busy}
-              onClick={() => run({ type: "combat.suppress", combatantId: c.id, suppressed: c.aura !== "suppressed" })}
-              title="Your ruling: a creature or NPC under Aura Pressure, or three or more Grades apart without a save"
-            >
-              {c.aura === "suppressed" ? "Clear Suppressed" : "Suppressed"}
-            </button>
+          {c.huntsByReading && " · hunts by the System's reading"}
+          {c.acted && !c.out && " · acted"}
+        </span>
+        <div className="track__tags">
+          {acting && <span className="tag tag--solid">Acting</span>}
+          {e.round === 0 && e.surprise?.includes(c.id) && <span className="tag tag--solid">Surprise Beat</span>}
+          {c.exposed && (
+            <span className="tag tag--danger">
+              <Icon name="exposed" />
+              Exposed
+            </span>
           )}
-          {c.aura === "suppressed" && c.characterId && e.aura && (
-            <button disabled={busy} onClick={() => run({ type: "combat.will", combatantId: c.id, reason: "distracted" })} title="The entity took significant damage or was distracted: the Will Save again">
-              Entity hurt: save again
-            </button>
+          {c.downed && (
+            <span className="tag tag--danger">
+              <Icon name="downed" />
+              {c.downed.stabilized ? "Downed, stabilized" : `Downed: vital coherence ${c.downed.coherence}`}
+            </span>
           )}
-          {!acting && !e.clash && e.round > 0 && (
-            <button disabled={busy} onClick={() => setAttacking(attacking === "free" ? null : "free")} title="Leaving a Zone without Disengaging: one Clash roll at no Beat">
-              Free strike…
-            </button>
+          {c.aura === "suppressed" && (
+            <span className="tag tag--danger">
+              <Icon name="suppressed" />
+              Suppressed
+            </span>
           )}
-          {!acting && !e.clash && e.round > 0 && !c.downed &&
-            reactions.map((r) => (
-              <button key={r.name} disabled={busy} onClick={() => setAttacking(r)} title={r.technique ? sheet!.class!.technique.effect : permission!.effect}>
-                {r.name}…
+          {c.aura === "steeled" && <span className="tag">Steeled</span>}
+          {c.readAsDead && (
+            <span className="tag" title={permission?.effect}>
+              Reads as dead
+            </span>
+          )}
+          {c.dead ? <span className="tag tag--danger">Dead</span> : c.out && <span className="tag">Out</span>}
+        </div>
+      </div>
+      <div className="track__hp">
+        <Meter kind={down ? "danger" : "health"} value={c.hp} max={c.maxHp} />
+        <span className="num" style={down ? { color: "var(--danger)" } : undefined}>
+          <b>{c.hp}</b>/{c.maxHp}
+        </span>
+      </div>
+      <div className="track__beats" title={`${c.beats} of ${c.beatsPerTurn} Beats left`}>
+        {c.downed || c.out ? (
+          <span className="dim small">no Beats</span>
+        ) : (
+          <>
+            <Pips n={c.beats} of={c.beatsPerTurn} />
+            <span className="num dim">
+              {c.beats}/{c.beatsPerTurn}
+            </span>
+          </>
+        )}
+      </div>
+      <div className="track__actions">
+        {ruling ? (
+          <>
+            <span className="small dim">Your ruling:</span>
+            {(c.dead || !c.downed?.stabilized) && (
+              <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "combat.fate", combatantId: c.id, fate: "stabilized" })} title="Left alive, or success at a cost: the countdown stops">
+                {c.dead ? "Left alive" : "Stabilized"}
               </button>
-            ))}
+            )}
+            {!c.dead && (
+              <button className="btn btn--sm btn--danger" disabled={busy} onClick={() => run({ type: "combat.fate", combatantId: c.id, fate: "dead" })}>
+                Dies
+              </button>
+            )}
+          </>
+        ) : (
+          !c.out && (
+            <>
+              {hpControls}
+              {canAct && !acting && (
+                <button className="btn btn--sm btn--primary" disabled={busy} onClick={() => run({ type: "combat.act", combatantId: c.id })}>
+                  {c.name} acts
+                </button>
+              )}
+              <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "combat.remove", combatantId: c.id })} title="Fled, dead, or otherwise out">
+                Out
+              </button>
+            </>
+          )
+        )}
+        {!c.out && !acting && (
+          <button className="btn btn--sm btn--icon track__more" aria-expanded={open} aria-label={open ? `Fewer controls for ${c.name}` : `More controls for ${c.name}`} onClick={() => setOpen(!open)}>
+            <Icon name="caret" />
+          </button>
+        )}
+      </div>
+      {offTurn && !attacking && (
+        <div className="track__quick">
+          <button className="btn btn--sm" disabled={busy} onClick={() => setAttacking("free")} title="Leaving a Zone without Disengaging: one Clash roll at no Beat">
+            Free strike…
+          </button>
+          {reactionsNow.map((r) => (
+            <button key={r.name} className="btn btn--sm" disabled={busy} onClick={() => setAttacking(r)} title={r.technique ? sheet!.class!.technique.effect : permission!.effect}>
+              {r.name}…
+            </button>
+          ))}
+        </div>
+      )}
+      {(acting || open) && !c.out && (
+        <div className="track__drawer">
+          {c.spent.length > 0 && <div className="small dim">This round: {c.spent.join(", ")}</div>}
+          {c.characterId && (c.pills.healing > 0 || c.pills.aether > 0) && (
+            <div className="small dim">
+              Pills since the last Consolidation: {c.pills.healing} healing, {c.pills.aether} Aether
+            </div>
+          )}
+          {ruling && <div className="cluster">{hpControls}</div>}
+          <div className="cluster">
+            {e.zones.length > 1 && (
+              <>
+                <select className="select select--sm" value={zone || c.zoneId || ""} onChange={(ev) => setZone(ev.target.value)} aria-label={`Zone for ${c.name}`}>
+                  {e.zones.map((z) => (
+                    <option key={z.id} value={z.id}>
+                      {z.name}
+                    </option>
+                  ))}
+                </select>
+                {pickedZone && acting && (
+                  <button className="btn btn--sm" disabled={busy || c.beats < 1} onClick={() => run({ type: "combat.move", combatantId: c.id, zoneId: pickedZone })}>
+                    <Icon name="move" />
+                    Move (1 Beat)
+                  </button>
+                )}
+                {pickedZone && acting && hook?.kind === "free-move" && (
+                  <button className="btn btn--sm" disabled={busy} title={permission!.effect} onClick={() => run({ type: "combat.move", combatantId: c.id, zoneId: pickedZone, permission: true })}>
+                    Move by {permission!.name} (no Beat)
+                  </button>
+                )}
+                {pickedZone && (
+                  <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "combat.move", combatantId: c.id, zoneId: pickedZone, forced: true })} title="Driven, thrown, or placed: no Beat">
+                    Place
+                  </button>
+                )}
+              </>
+            )}
+            <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "combat.exposed", combatantId: c.id, exposed: !c.exposed })} title="−10 to Clash rolls until the end of their next turn">
+              {c.exposed ? "Clear Exposed" : "Exposed"}
+            </button>
+            {!c.downed && (
+              <button
+                className="btn btn--sm"
+                disabled={busy}
+                onClick={() => run({ type: "combat.suppress", combatantId: c.id, suppressed: c.aura !== "suppressed" })}
+                title="Your ruling: a creature or NPC under Aura Pressure, or three or more Grades apart without a save"
+              >
+                {c.aura === "suppressed" ? "Clear Suppressed" : "Suppressed"}
+              </button>
+            )}
+            {c.aura === "suppressed" && c.characterId && e.aura && (
+              <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "combat.will", combatantId: c.id, reason: "distracted" })} title="The entity took significant damage or was distracted: the Will Save again">
+                Entity hurt: save again
+              </button>
+            )}
+          </div>
+          {acting && !e.clash && (
+            <div className="cluster beats">
+              <button className="btn btn--sm btn--primary" disabled={busy || c.beats < 1} aria-expanded={attacking === "turn"} onClick={() => setAttacking(attacking === "turn" ? null : "turn")}>
+                <Icon name="clash" />
+                Attack…
+              </button>
+              {BEAT_KINDS.map((k) => (
+                <button key={k} className="btn btn--sm" disabled={busy || c.beats < 1} onClick={() => run({ type: "combat.beat", combatantId: c.id, what: k })}>
+                  {k}
+                </button>
+              ))}
+              {hook?.kind === "free-disengage" && (
+                <button className="btn btn--sm" disabled={busy} title={permission!.effect} onClick={() => run({ type: "combat.beat", combatantId: c.id, what: "Disengage", permission: true })}>
+                  Disengage by {permission!.name} (no Beat)
+                </button>
+              )}
+              <input className="input track__other" value={other} onChange={(ev) => setOther(ev.target.value)} placeholder="Other" aria-label="Another use of a Beat" />
+              <button
+                className="btn btn--sm"
+                disabled={busy || c.beats < 1 || !other.trim()}
+                onClick={async () => {
+                  if (await run({ type: "combat.beat", combatantId: c.id, what: other.trim() })) setOther("");
+                }}
+              >
+                Spend
+              </button>
+              {e.round > 0 && c.sideId !== holder && (
+                <button className="btn btn--sm" disabled={busy || c.beats < 1} onClick={() => run({ type: "combat.seize", combatantId: c.id })} title="1 Beat: a Momentum Roll against the side holding Momentum">
+                  <Icon name="momentum" />
+                  Seize Momentum
+                </button>
+              )}
+              {auraSavers(engine, e as unknown as Encounter, c.id, true).length > 0 && (
+                <button className="btn btn--sm" disabled={busy || c.beats < 1} onClick={() => run({ type: "combat.aura", entityId: c.id, flaring: true, flare: true })} title="1 Beat: a fresh Will Save against 115 from everyone below its Grade">
+                  Flare aura
+                </button>
+              )}
+              <span className="grow" />
+              <button className="btn btn--sm btn--primary" disabled={busy} onClick={() => run({ type: "combat.done", combatantId: c.id })}>
+                <Icon name="confirm" />
+                Done
+              </button>
+            </div>
+          )}
+          {acting && !e.clash && (
+            <CareActions
+              me={actorOf(view, c, engine)}
+              people={e.combatants.map(mateOf)}
+              pills={pillsOf(engine)}
+              pillLimit={pillLimit(engine)}
+              stabilize={stabilizeCheck(engine)}
+              beats={c.beats}
+              busy={busy}
+              run={run}
+            />
+          )}
         </div>
       )}
       {attacking && !e.clash && (
-        <AttackForm
-          attacker={clasherOf(view, c, "attack", engine)}
-          targets={targets}
-          suggestFlanking={(d) => flankingSuggested(e as unknown as Encounter, c.id, d)}
-          gm
-          free={attacking === "free"}
-          {...(typeof attacking === "object" ? { reaction: attacking } : {})}
-          {...(attacking === "turn" && hook?.kind === "rush" ? { rush: { name: permission!.name, zones: e.zones.filter((z) => z.id !== c.zoneId) } } : {})}
-          busy={busy}
-          onCancel={() => setAttacking(null)}
-          onDeclare={async (d) => {
-            const ok = await run({
-              type: "combat.attack",
-              attackerId: c.id,
-              defenderId: d.defenderId,
-              attack: d.attack,
-              ...(d.flanking ? { flanking: true } : {}),
-              ...(d.cornered ? { cornered: true } : {}),
-              ...(attacking === "free" ? { free: true } : {}),
-              ...(typeof attacking === "object" ? { reaction: true } : {}),
-              ...(d.rush ? { rush: d.rush } : {}),
-              ...(d.label ? { label: d.label } : {}),
-            });
-            if (ok) setAttacking(null);
-          }}
-        />
-      )}
-      {acting && !e.clash && (
-        <div className="form-row tight beats">
-          <button className="primary" disabled={busy || c.beats < 1} onClick={() => setAttacking(attacking === "turn" ? null : "turn")}>
-            Attack…
-          </button>
-          {BEAT_KINDS.map((k) => (
-            <button key={k} disabled={busy || c.beats < 1} onClick={() => run({ type: "combat.beat", combatantId: c.id, what: k })}>
-              {k}
-            </button>
-          ))}
-          {hook?.kind === "free-disengage" && (
-            <button disabled={busy} title={permission!.effect} onClick={() => run({ type: "combat.beat", combatantId: c.id, what: "Disengage", permission: true })}>
-              Disengage by {permission!.name} (no Beat)
-            </button>
-          )}
-          <input className="narrow-input" value={other} onChange={(ev) => setOther(ev.target.value)} placeholder="Other" />
-          <button
-            disabled={busy || c.beats < 1 || !other.trim()}
-            onClick={async () => {
-              if (await run({ type: "combat.beat", combatantId: c.id, what: other.trim() })) setOther("");
+        <div className="track__drawer">
+          <AttackForm
+            attacker={clasherOf(view, c, "attack", engine)}
+            targets={targets}
+            suggestFlanking={(d) => flankingSuggested(e as unknown as Encounter, c.id, d)}
+            gm
+            free={attacking === "free"}
+            {...(typeof attacking === "object" ? { reaction: attacking } : {})}
+            {...(attacking === "turn" && hook?.kind === "rush" ? { rush: { name: permission!.name, zones: e.zones.filter((z) => z.id !== c.zoneId) } } : {})}
+            busy={busy}
+            onCancel={() => setAttacking(null)}
+            onDeclare={async (d) => {
+              const ok = await run({
+                type: "combat.attack",
+                attackerId: c.id,
+                defenderId: d.defenderId,
+                attack: d.attack,
+                ...(d.flanking ? { flanking: true } : {}),
+                ...(d.cornered ? { cornered: true } : {}),
+                ...(attacking === "free" ? { free: true } : {}),
+                ...(typeof attacking === "object" ? { reaction: true } : {}),
+                ...(d.rush ? { rush: d.rush } : {}),
+                ...(d.label ? { label: d.label } : {}),
+              });
+              if (ok) setAttacking(null);
             }}
-          >
-            Spend
-          </button>
-          {e.round > 0 && c.sideId !== holder && (
-            <button disabled={busy || c.beats < 1} onClick={() => run({ type: "combat.seize", combatantId: c.id })} title="1 Beat: a Momentum Roll against the side holding Momentum">
-              Seize Momentum
-            </button>
-          )}
-          {auraSavers(engine, e as unknown as Encounter, c.id, true).length > 0 && (
-            <button disabled={busy || c.beats < 1} onClick={() => run({ type: "combat.aura", entityId: c.id, flaring: true, flare: true })} title="1 Beat: a fresh Will Save against 115 from everyone below its Grade">
-              Flare aura
-            </button>
-          )}
-          <button className="primary" disabled={busy} onClick={() => run({ type: "combat.done", combatantId: c.id })}>
-            Done
-          </button>
+          />
         </div>
-      )}
-      {acting && !e.clash && (
-        <CareActions
-          me={actorOf(view, c, engine)}
-          people={e.combatants.map(mateOf)}
-          pills={pillsOf(engine)}
-          pillLimit={pillLimit(engine)}
-          stabilize={stabilizeCheck(engine)}
-          beats={c.beats}
-          busy={busy}
-          run={run}
-        />
       )}
     </li>
   );
@@ -741,71 +806,94 @@ function Running({
   const last = [...log].reverse().find((x) => x.action.type.startsWith("combat.") && !voided.has(x.id) && !rejected.has(x.id));
   const undoable = last && last.action.type !== "combat.start";
 
+  // The pending Clash docks in a column that stays in view (Decisions, "the makeover", P3).
   return (
-    <section className="tracker">
-      <header className="tracker-head">
-        <h2>{e.name}</h2>
-        <span className="muted">{e.round ? `Round ${e.round}` : "Momentum not rolled"}</span>
-        {e.round > 0 && <span className="tag">Momentum: {sideName(e.order[0]!)}</span>}
-        {e.pending && e.pending.sideId !== e.order[0] && (
-          <span className="tag attention">
-            Shifts to {sideName(e.pending.sideId)} next round ({e.pending.by === "seize" ? "Seize" : "Reversal"})
-          </span>
-        )}
-        <span className="grow" />
-        {e.round === 0 ? (
-          <button className="primary" disabled={busy} onClick={() => run({ type: "combat.momentum" })}>
-            Roll Initial Momentum
-          </button>
-        ) : (
-          <button className={roundOver ? "primary" : ""} disabled={busy} onClick={() => run({ type: "combat.round" })}>
-            Next round
-          </button>
-        )}
-        <button disabled={busy || !undoable} onClick={() => last && run({ type: "void", targetId: last.id, reason: "undo" })}>
-          Undo
-        </button>
-        {ending ? (
-          <>
-            <button className="primary" disabled={busy} onClick={() => run({ type: "combat.end" })}>
-              End {e.name}
-            </button>
-            <button onClick={() => setEnding(false)}>Keep fighting</button>
-          </>
-        ) : (
-          <button onClick={() => setEnding(true)}>End the fight…</button>
-        )}
-      </header>
-      {e.round > 0 && (
-        <div className="form-row tight reversals">
-          <span className="muted small">Decisive Tactical Reversal:</span>
-          {e.sides
-            .filter((s) => s.id !== e.order[0])
-            .map((s) => (
-              <button key={s.id} disabled={busy} onClick={() => run({ type: "combat.reversal", sideId: s.id })}>
-                Momentum to {s.name} next round
+    <main className="screen screen--side combat-screen">
+      <section className="stack combat-main" aria-label="The fight">
+        <header className="spread combat-head">
+          <div className="stack combat-head__title">
+            <span className="label">The fight</span>
+            <h1>{e.name}</h1>
+            <div className="cluster">
+              <span className="tablebar__big">{e.round ? `Round ${e.round}` : "Momentum not rolled"}</span>
+              {e.round > 0 && (
+                <span className="tag">
+                  <Icon name="momentum" />
+                  Momentum: {sideName(e.order[0]!)}
+                </span>
+              )}
+              {e.pending && e.pending.sideId !== e.order[0] && (
+                <span className="tag tag--solid">
+                  Shifts to {sideName(e.pending.sideId)} next round ({e.pending.by === "seize" ? "Seize" : "Reversal"})
+                </span>
+              )}
+            </div>
+          </div>
+          <div className="cluster">
+            {e.round === 0 ? (
+              <button className="btn btn--primary" disabled={busy} onClick={() => run({ type: "combat.momentum" })}>
+                <Icon name="momentum" />
+                Roll Initial Momentum
               </button>
-            ))}
-        </div>
-      )}
-      {roundOver && <p className="muted">Every side has acted. Start the next round.</p>}
-      {error && <p className="error">{error}</p>}
-      {e.round === 0 && !e.surprise && <SurprisePanel e={e} run={run} busy={busy} />}
-      <AuraPanel engine={engine} e={e} run={run} busy={busy} />
-      <ClashPanel view={view} engine={engine} e={e} run={run} busy={busy} />
-      {e.zones.length > 0 && <ZonesBar e={e} run={run} busy={busy} />}
-      <div className="sides">
+            ) : (
+              <button className={roundOver ? "btn btn--primary" : "btn"} disabled={busy} onClick={() => run({ type: "combat.round" })}>
+                <Icon name="next" />
+                Next round
+              </button>
+            )}
+            <button className="btn" disabled={busy || !undoable} onClick={() => last && run({ type: "void", targetId: last.id, reason: "undo" })}>
+              <Icon name="undo" />
+              Undo
+            </button>
+            {ending ? (
+              <span className="confirm confirm--armed">
+                <button className="btn btn--primary" disabled={busy} onClick={() => run({ type: "combat.end" })}>
+                  End {e.name}
+                </button>
+                <button className="btn" onClick={() => setEnding(false)}>
+                  Keep fighting
+                </button>
+              </span>
+            ) : (
+              <button className="btn" onClick={() => setEnding(true)}>
+                End the fight…
+              </button>
+            )}
+          </div>
+        </header>
+        {e.round > 0 && (
+          <div className="cluster small">
+            <span className="dim">Decisive Tactical Reversal:</span>
+            {e.sides
+              .filter((s) => s.id !== e.order[0])
+              .map((s) => (
+                <button key={s.id} className="btn btn--sm" disabled={busy} onClick={() => run({ type: "combat.reversal", sideId: s.id })}>
+                  Momentum to {s.name} next round
+                </button>
+              ))}
+          </div>
+        )}
+        {roundOver && <p className="callout">Every side has acted. Start the next round.</p>}
+        {error && <p className="error">{error}</p>}
+        {e.round === 0 && !e.surprise && <SurprisePanel e={e} run={run} busy={busy} />}
+        <AuraPanel engine={engine} e={e} run={run} busy={busy} />
+        {e.zones.length > 0 && <ZonesBar e={e} run={run} busy={busy} />}
         {order.map((sid, i) => {
           const members = e.combatants.filter((c) => c.sideId === sid);
           const taking = sid === turnSide;
           return (
-            <div key={sid} className={`side ${taking ? "taking" : ""}`}>
-              <h3>
+            <section key={sid} className="stack combat-side-block" aria-label={sideName(sid)}>
+              <h2 className="cluster combat-side-block__head">
                 {sideName(sid)}
-                {e.round > 0 && i === 0 && <span className="tag">Momentum</span>}
-                {taking && <span className="tag attention">Taking its turn</span>}
-              </h3>
-              <ol className="combatants">
+                {e.round > 0 && i === 0 && (
+                  <span className="tag">
+                    <Icon name="momentum" />
+                    Momentum
+                  </span>
+                )}
+                {taking && <span className="tag tag--solid">Taking its turn</span>}
+              </h2>
+              <ol className="tracker">
                 {members.map((c) => (
                   <CombatantRow
                     key={c.id}
@@ -819,17 +907,27 @@ function Running({
                   />
                 ))}
               </ol>
-            </div>
+            </section>
           );
         })}
-      </div>
-      <details open={adding} onToggle={(ev) => setAdding((ev.target as HTMLDetailsElement).open)}>
-        <summary>Someone joins the fight</summary>
-        <AddMidFight view={view} engine={engine} e={e} run={run} />
-      </details>
-      <h3 className="rolls-heading">Recent rolls</h3>
-      <RollList rolls={view.rolls.slice(0, 12)} gm />
-    </section>
+        <details className="panel combat-join" open={adding} onToggle={(ev) => setAdding((ev.target as HTMLDetailsElement).open)}>
+          <summary>Someone joins the fight</summary>
+          <AddMidFight view={view} engine={engine} e={e} run={run} />
+        </details>
+      </section>
+      <aside className="stack combat-aside">
+        <ClashPanel view={view} engine={engine} e={e} run={run} busy={busy} />
+        <section className="panel">
+          <div className="panel__head">
+            <Icon name="dice" />
+            <h2 className="label">Recent rolls</h2>
+          </div>
+          <div className="panel__body">
+            <RollList rolls={view.rolls.slice(0, 12)} gm />
+          </div>
+        </section>
+      </aside>
+    </main>
   );
 }
 
@@ -925,12 +1023,16 @@ function ClashPanel({
       cl.free ? "free strike" : "",
     ].filter(Boolean);
     return (
-      <section className="clash-panel">
-        <h3>
-          {att.name} attacks {def.name}
-          {cl.label ? `: ${cl.label}` : ""}
-        </h3>
-        <p className="small muted">
+      <section className="panel clash" aria-label="The Clash">
+        <div className="panel__head">
+          <Icon name="clash" />
+          <h2>
+            {att.name} attacks {def.name}
+            {cl.label ? `: ${cl.label}` : ""}
+          </h2>
+        </div>
+        <div className="panel__body stack clash__body">
+        <p className="small dim">
           {how}
           {extras.length ? ` · ${extras.join(" · ")}` : ""}
         </p>
@@ -944,18 +1046,40 @@ function ClashPanel({
           </>
         ) : (
           <>
-            <p>
-              {cl.result!.attackTotal} against {cl.result!.defenseTotal}: Margin {cl.result!.margin}
-              {cut ? `, ${cut} cut by ${cl.result!.covers!.map((x) => name(x.combatantId)).join(" and ")}, ${Math.max(0, cl.result!.margin - cut)} left` : ""}.{" "}
-              {def.characterId ? `${def.name}'s player can choose on their screen.` : ""}
-            </p>
+            <div className="clash__totals">
+              <div className="stack">
+                <span className="label">Attack</span>
+                <span className="num clash__total">{cl.result!.attackTotal}</span>
+                <span className="small dim">{att.name}</span>
+              </div>
+              <span className="dim clash__against">against</span>
+              <div className="stack">
+                <span className="label">Defense</span>
+                <span className="num clash__total">{cl.result!.defenseTotal}</span>
+                <span className="small dim">{def.name}</span>
+              </div>
+            </div>
+            <div className="spread clash__margin">
+              <span className="label">Margin</span>
+              <span className="num">
+                {cut ? (
+                  <>
+                    <s className="dim">{cl.result!.margin}</s> {Math.max(0, cl.result!.margin - cut)}
+                  </>
+                ) : (
+                  cl.result!.margin
+                )}
+              </span>
+            </div>
+            {cut > 0 && <p className="small dim">{cut} cut by {cl.result!.covers!.map((x) => name(x.combatantId)).join(" and ")}.</p>}
+            {def.characterId && <p className="small">{def.name}'s player can choose on their screen.</p>}
             {(e.coverIds ?? []).length > 0 && (
-              <div className="form-row tight">
+              <div className="cluster">
                 {e.coverIds!.map((id) => {
                   const sh = view.characters.find((s) => s.id === e.combatants.find((x) => x.id === id)?.characterId);
                   const p = sh?.class?.permission;
                   return (
-                    <button key={id} disabled={busy} title={p?.effect} onClick={() => run({ type: "combat.cover", combatantId: id })}>
+                    <button key={id} className="btn btn--sm" disabled={busy} title={p?.effect} onClick={() => run({ type: "combat.cover", combatantId: id })}>
                       {p?.name ?? "Cover"}: {name(id)} cuts the Margin by {p?.hook?.kind === "cover" ? p.hook.cut : ""} (a Beat from the next turn)
                     </button>
                   );
@@ -971,6 +1095,7 @@ function ClashPanel({
             />
           </>
         )}
+        </div>
       </section>
     );
   }
@@ -983,26 +1108,28 @@ function ClashPanel({
   const zones = e.zones.filter((z) => z.id !== def?.zoneId);
   const target = zones.some((z) => z.id === drive) ? drive : (zones[0]?.id ?? "");
   return (
-    <section className="clash-panel last">
+    <section className="panel clash clash--last" aria-label="The last Clash">
+      <div className="panel__body stack">
       <p>{line}</p>
       {!r.attackerWins && r.defenseExploded && (
-        <p className="small muted">A defensive Clash won on an explosion can be a Decisive Tactical Reversal; call it above if it is.</p>
+        <p className="small dim">A defensive Clash won on an explosion can be a Decisive Tactical Reversal; call it above if it is.</p>
       )}
       {r.drivable && def && !def.out && zones.length > 0 && (
-        <div className="form-row tight">
+        <div className="cluster">
           <span className="small">{name(r.attackerId)} may drive {def.name} into an adjacent Zone:</span>
-          <select value={target} onChange={(ev) => setDrive(ev.target.value)}>
+          <select className="select select--sm" value={target} onChange={(ev) => setDrive(ev.target.value)}>
             {zones.map((z) => (
               <option key={z.id} value={z.id}>
                 {z.name}
               </option>
             ))}
           </select>
-          <button disabled={busy} onClick={() => run({ type: "combat.move", combatantId: def.id, zoneId: target, forced: true })}>
+          <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "combat.move", combatantId: def.id, zoneId: target, forced: true })}>
             Drive
           </button>
         </div>
       )}
+      </div>
     </section>
   );
 }
@@ -1021,27 +1148,36 @@ function ZonesBar({ e, run, busy }: { e: EncounterView; run: (a: Action) => Prom
     if (await run({ type: "combat.zones", zones })) setEditing(false);
   };
   return (
-    <div className="zones-bar">
-      {e.zones.map((z) => (
-        <span key={z.id} className="zone">
-          <strong>{z.name}</strong>{" "}
-          <span className="muted small">
-            {e.combatants
-              .filter((c) => c.zoneId === z.id && !c.out)
-              .map((c) => c.name)
-              .join(", ") || "empty"}
-          </span>
-        </span>
-      ))}
+    <div className="stack zones">
+      <div className="zones__grid" role="list" aria-label="Zones">
+        {e.zones.map((z) => (
+          <div key={z.id} role="listitem" className="zone-card">
+            <div className="spread">
+              <b className="world">{z.name}</b>
+              <Icon name="zone" />
+            </div>
+            <div className="small dim">
+              {e.combatants
+                .filter((c) => c.zoneId === z.id && !c.out)
+                .map((c) => c.name)
+                .join(", ") || "empty"}
+            </div>
+          </div>
+        ))}
+      </div>
       {editing ? (
-        <>
-          <input className="wide" value={text} onChange={(ev) => setText(ev.target.value)} />
-          <button disabled={busy} onClick={save}>
+        <div className="cluster">
+          <input className="input wide" value={text} onChange={(ev) => setText(ev.target.value)} aria-label="Zones, separated by commas" />
+          <button className="btn btn--sm" disabled={busy} onClick={save}>
             Save Zones
           </button>
-        </>
+        </div>
       ) : (
-        <button onClick={() => setEditing(true)}>Edit Zones</button>
+        <div>
+          <button className="btn-link small dim" onClick={() => setEditing(true)}>
+            Edit Zones
+          </button>
+        </div>
       )}
     </div>
   );
@@ -1116,11 +1252,10 @@ export function CombatSection({
   onFired?: () => void;
 }) {
   if (!engine) return <p className="muted pad">Loading rules…</p>;
+  if (view.encounter) return <Running view={view} engine={engine} e={view.encounter} log={log} onRecorded={onRecorded} />;
   return (
     <main className="page">
-      {view.encounter ? (
-        <Running view={view} engine={engine} e={view.encounter} log={log} onRecorded={onRecorded} />
-      ) : view.aftermath ? (
+      {view.aftermath ? (
         // Keyed by the fight, so a new aftermath starts from its own defaults.
         <AftermathPanel key={view.aftermath.id} view={view} engine={engine} names={names} onRecorded={onRecorded} />
       ) : (
