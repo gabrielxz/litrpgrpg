@@ -23,6 +23,7 @@ import { supabaseVerifier } from "./auth.ts";
 import { devSignIn, eitherVerifier } from "./devauth.ts";
 import { Drafts } from "./drafts.ts";
 import { LiveDrafting } from "./live-drafting.ts";
+import { Recordings } from "./recordings.ts";
 import { migrate, postgresDb } from "./db.ts";
 import { LiveHub } from "./live.ts";
 import { Listening } from "./listening.ts";
@@ -61,13 +62,22 @@ const transcriber = transcribers.soniox;
 if (!transcriber) log("SONIOX_API_KEY is not set: listening measures the microphones and transcribes nothing");
 // Listening hands each heard line to the live drafting, made below once the drafts exist.
 let liveDrafting: LiveDrafting | undefined;
+const recordings = new Recordings({ ...(process.env.RECORDINGS_DIR ? { dir: process.env.RECORDINGS_DIR } : {}) });
 const listening = new Listening(service, {
+  recordings,
   ...(transcriber ? { transcriber } : {}),
   log,
   onHeard: (campaignId) => liveDrafting?.heard(campaignId),
   onQuiet: (campaignId) => liveDrafting?.quiet(campaignId),
 });
-const purge = () => void listening.purge().then((n) => n && log(`listening: deleted ${n} heard line(s) past keeping`)).catch((e) => log(`listening: ${e}`));
+const purge = () => {
+  void listening
+    .purge()
+    .then((n) => n && log(`listening: deleted ${n} heard line(s) past keeping`))
+    .catch((e) => log(`listening: ${e}`));
+  const gone = recordings.purge();
+  if (gone) log(`recordings: deleted ${gone} test recording(s) past keeping`);
+};
 purge();
 setInterval(purge, 86_400_000).unref();
 const hub = new LiveHub(service, log, undefined, listening);
@@ -81,6 +91,7 @@ const app = createApp(service, {
   drafts,
   listening,
   liveDrafting,
+  recordings,
   ...(publishableKey ? { supabase: { url: supabaseUrl, publishableKey } } : {}),
   ...(dev ? { dev } : {}),
   ...(existsSync(resolve(webDist, "index.html")) ? { webDist } : {}),

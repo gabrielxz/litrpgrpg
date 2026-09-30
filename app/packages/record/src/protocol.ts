@@ -300,6 +300,8 @@ export interface StreamStatus {
   state: StreamState;
   /** The last half second's loudness, 0 to 1. */
   level: number;
+  /** Whether a test recording keeps this person's audio now. */
+  recorded?: boolean;
   /** Why the stream is not transcribed, in words for the GM. */
   failure?: string;
 }
@@ -318,6 +320,12 @@ export interface ListeningStatus {
   streams?: StreamStatus[];
   /** Present people who have not consented: listening cannot start until they do. */
   missing?: string[];
+  /** Whether this person has consented to test recordings. */
+  recordingConsented?: boolean;
+  /** Whether a test recording keeps this person's audio now, so their tab says so. */
+  recorded?: boolean;
+  /** The GM's: whether a test recording is running, and the present people it cannot keep for want of consent. */
+  recording?: { on: boolean; unconsented: string[] };
 }
 
 /** A final stretch of one person's speech, as the listening heard it. The GM's only. */

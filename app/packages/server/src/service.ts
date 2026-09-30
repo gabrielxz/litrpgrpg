@@ -224,6 +224,23 @@ export class Service {
     return new Set(rows.map((r) => r.user_id));
   }
 
+  /** The people in a campaign who have consented to test recordings. */
+  async recordingConsents(campaignId: string): Promise<Set<string>> {
+    const rows = await this.db.query<{ user_id: string }>(
+      "select user_id from memberships where campaign_id = $1 and recording_consent_at is not null",
+      [campaignId],
+    );
+    return new Set(rows.map((r) => r.user_id));
+  }
+
+  /** Gives or withdraws one's own consent to test recordings. */
+  async setRecordingConsent(campaignId: string, userId: string, give: boolean): Promise<void> {
+    await this.db.query(
+      `update memberships set recording_consent_at = ${give ? "coalesce(recording_consent_at, now())" : "null"} where campaign_id = $1 and user_id = $2`,
+      [campaignId, userId],
+    );
+  }
+
   /** Stores a line the listening heard; returns it with its id. */
   async addHeard(campaignId: string, line: Omit<HeardLine, "id"> & { words?: unknown }): Promise<HeardLine> {
     const [row] = await this.db.query<{ id: string }>(

@@ -3,6 +3,9 @@
  * what a player may see, persistence across a restart, and the live channel on a real socket.
  * Sign-in tokens are signed with a key made for the test and checked the way Supabase's are.
  */
+import { mkdtempSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { randomUUID } from "node:crypto";
 import { PGlite } from "@electric-sql/pglite";
 import { serve } from "@hono/node-server";
@@ -19,6 +22,7 @@ import { jwtVerifier } from "../src/auth.ts";
 import { devSignIn, eitherVerifier } from "../src/devauth.ts";
 import { type Db, migrate, pgliteDb } from "../src/db.ts";
 import { LiveHub } from "../src/live.ts";
+import { Recordings } from "../src/recordings.ts";
 import { Listening, RETRY_AFTER_MS, StreamLimit, type Transcriber, type TranscriberOptions } from "../src/listening.ts";
 import { Service } from "../src/service.ts";
 
@@ -1070,7 +1074,7 @@ describe("listening", () => {
     const { campaignId, gm, player } = await seated();
     const g = await tab(campaignId, gm);
     const p = await tab(campaignId, player);
-    expect(await p.settle()).toEqual({ mode: "off", consented: false, capturing: false, present: true });
+    expect(await p.settle()).toEqual({ mode: "off", consented: false, capturing: false, present: true , recordingConsented: false });
     expect((await g.settle()).missing).toEqual(["Gabriel", "Ana"]);
     await consent(campaignId, gm);
     await consent(campaignId, player);
@@ -1078,7 +1082,7 @@ describe("listening", () => {
     p.capture();
     p.speak(0.5);
     const ps = await p.settle();
-    expect(ps).toEqual({ mode: "listening", consented: true, capturing: true, present: true });
+    expect(ps).toEqual({ mode: "listening", consented: true, capturing: true, present: true , recordingConsented: false });
     const gs = await g.settle();
     expect(gs.missing).toEqual([]);
     expect(gs.streams.map((s: { displayName: string; state: string }) => [s.displayName, s.state])).toEqual([
@@ -1257,6 +1261,64 @@ describe("listening", () => {
     // Any other failure reads as refused or dropped.
     opens[1]!.onError(new Error("Soniox closed the stream (1011)"));
     expect((await g.settle()).streams.find((x: { userId: string }) => x.userId === playerId).failure).toMatch(/^the speech service refused or dropped the stream/);
+  });
+
+  it("keeps a test recording of those who consented to one, for the GM to download and delete", async () => {
+    const { campaignId, gm, player, playerId } = await seated();
+    const dir = mkdtempSync(join(tmpdir(), "gb-recordings-"));
+    const recordings = new Recordings({ dir });
+    const listening = new Listening(service, { recordings });
+    hub.close();
+    server.close();
+    hub = new LiveHub(service, undefined, undefined, listening);
+    app = createApp(service, { connected: () => hub.connected, listening, recordings });
+    server = await new Promise<Server>((resolve) => {
+      const s = serve({ fetch: app.fetch, port: 0 }, () => resolve(s as Server)) as Server;
+    });
+    hub.attach(server);
+    port = (server.address() as AddressInfo).port;
+
+    await consent(campaignId, gm);
+    await consent(campaignId, player);
+    const record = (token: string, on: boolean) => call("POST", `/campaigns/${campaignId}/listening/record`, { token, body: { on } });
+    expect((await record(gm, true)).json.error).toMatch(/Start listening first/);
+    await setMode(campaignId, gm, "listening");
+    expect((await record(gm, true)).json.error).toBe("Nobody at the table has consented to test recordings.");
+    expect((await call("POST", `/campaigns/${campaignId}/listening/recording-consent`, { token: player, body: { give: true } })).status).toBe(200);
+    expect((await record(player, true)).status).toBe(403);
+    expect((await record(gm, true)).status).toBe(200);
+
+    const g = await tab(campaignId, gm);
+    const p = await tab(campaignId, player);
+    p.capture();
+    p.speak();
+    p.speak();
+    const gs = await g.settle();
+    expect(gs.recording).toEqual({ on: true, unconsented: ["Gabriel"] });
+    expect(gs.streams.find((x: { userId: string }) => x.userId === playerId).recorded).toBe(true);
+    expect(await p.settle()).toMatchObject({ recordingConsented: true, recorded: true });
+    expect((await g.settle()).recorded).toBeUndefined();
+    await record(gm, false);
+
+    const list = (await call("GET", `/campaigns/${campaignId}/recordings`, { token: gm })).json.recordings;
+    expect(list).toHaveLength(1);
+    expect(list[0].people.map((x: { userId: string }) => x.userId)).toEqual([playerId]);
+    expect(list[0].files.map((f: { name: string }) => f.name)).toEqual([`${playerId}.wav`, "timeline.json"]);
+    const wav = await app.request(`/api/campaigns/${campaignId}/recordings/${list[0].id}/${playerId}.wav`, { headers: { authorization: `Bearer ${gm}` } });
+    const bytes = Buffer.from(await wav.arrayBuffer());
+    expect(bytes.subarray(0, 4).toString()).toBe("RIFF");
+    expect(bytes.length).toBeGreaterThanOrEqual(44 + 6400);
+    // The timeline names each track as it is saved, the shape stt-eval reads.
+    expect(list[0].files[0].save).toBe("ana.wav");
+    const timeline = await (await app.request(`/api/campaigns/${campaignId}/recordings/${list[0].id}/timeline.json`, { headers: { authorization: `Bearer ${gm}` } })).json();
+    expect(timeline).toMatchObject({ rate: 16000, speakers: [{ id: playerId, name: "Ana", role: "player", file: "ana.wav" }], lines: [] });
+    expect((await call("GET", `/campaigns/${campaignId}/recordings`, { token: player })).status).toBe(403);
+
+    // Withdrawing consent deletes the person's tracks; the GM deletes the rest.
+    await call("POST", `/campaigns/${campaignId}/listening/recording-consent`, { token: player, body: { give: false } });
+    expect((await call("GET", `/campaigns/${campaignId}/recordings`, { token: gm })).json.recordings[0].files.map((f: { name: string }) => f.name)).toEqual(["timeline.json"]);
+    expect((await call("DELETE", `/campaigns/${campaignId}/recordings/${list[0].id}`, { token: gm })).status).toBe(200);
+    expect((await call("GET", `/campaigns/${campaignId}/recordings`, { token: gm })).json.recordings).toEqual([]);
   });
 
   it("deletes heard lines past thirty days", async () => {

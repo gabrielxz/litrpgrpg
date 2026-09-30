@@ -29,6 +29,8 @@ interface Props {
 const SEND_ONLY_SPEECH = false;
 const LEVEL_EVERY_MS = 250;
 
+/** The server's RECORDING_KEEP_DAYS, which the consent text states. */
+const RECORDING_KEEP_DAYS = 7;
 const MODE_LABEL = { off: "Not listening", listening: "Listening", paused: "Paused" } as const;
 
 const STREAM_LABEL: Record<StreamStatus["state"], string> = {
@@ -48,6 +50,7 @@ export function ListeningBar({ campaignId, role, status, send }: Props) {
   const [level, setLevel] = useState(0);
   const [takenElsewhere, setTakenElsewhere] = useState(false);
   const [asking, setAsking] = useState(false);
+  const [askingRecording, setAskingRecording] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const sawCapturing = useRef(false);
 
@@ -125,11 +128,20 @@ export function ListeningBar({ campaignId, role, status, send }: Props) {
       setError((e as Error).message);
     }
   };
-  const consent = async (give: boolean) => {
+  const consent = async (give: boolean, what: "consent" | "recording-consent" = "consent") => {
     setError(null);
     try {
-      await api("POST", `/campaigns/${campaignId}/listening/consent`, { give });
+      await api("POST", `/campaigns/${campaignId}/listening/${what}`, { give });
       setAsking(false);
+      setAskingRecording(false);
+    } catch (e) {
+      setError((e as Error).message);
+    }
+  };
+  const record = async (on: boolean) => {
+    setError(null);
+    try {
+      await api("POST", `/campaigns/${campaignId}/listening/record`, { on });
     } catch (e) {
       setError((e as Error).message);
     }
@@ -159,6 +171,7 @@ export function ListeningBar({ campaignId, role, status, send }: Props) {
           {MODE_LABEL[status.mode]}
         </strong>
         {mine && <span className="small">{mine}</span>}
+        {status.recorded && <span className="tag attention">Recording for testing</span>}
         {micOn && !micError && <LevelMeter level={level} />}
         {micOn && micError && (
           <button onClick={() => setRetry((n) => n + 1)}>{needsClick ? "Turn my microphone on" : "Try again"}</button>
@@ -177,6 +190,12 @@ export function ListeningBar({ campaignId, role, status, send }: Props) {
             {status.mode === "listening" && <button onClick={() => setMode("paused")}>Pause for everyone</button>}
             {status.mode === "paused" && <button onClick={() => setMode("listening")}>Resume</button>}
             {status.mode !== "off" && <button onClick={() => setMode("off")}>Stop listening</button>}
+            {status.mode !== "off" &&
+              (status.recording?.on ? (
+                <button onClick={() => record(false)}>Stop the test recording</button>
+              ) : (
+                <button onClick={() => record(true)}>Record for testing</button>
+              ))}
           </span>
         )}
         <span className="listening-consent">
@@ -186,6 +205,17 @@ export function ListeningBar({ campaignId, role, status, send }: Props) {
             </button>
           ) : (
             !asking && <button onClick={() => setAsking(true)}>Consent to listening…</button>
+          )}
+          {status.recordingConsented ? (
+            <button className="link small" onClick={() => consent(false, "recording-consent")}>
+              Withdraw test-recording consent
+            </button>
+          ) : (
+            !askingRecording && (
+              <button className="link small" onClick={() => setAskingRecording(true)}>
+                Test recordings…
+              </button>
+            )
           )}
         </span>
       </div>
@@ -205,6 +235,23 @@ export function ListeningBar({ campaignId, role, status, send }: Props) {
           </div>
         </div>
       )}
+      {askingRecording && !status.recordingConsented && (
+        <div className="listening-ask">
+          <p>
+            A test recording keeps your voice so the listener can be measured against real speech. While the GM records a listening session
+            for testing, the Gradebreaker server saves what your microphone sends, with the text the listening made of it, for the GM to
+            download. It is deleted from the server when the GM deletes it, or {RECORDING_KEEP_DAYS} days after the recording ends. This
+            tab says when your voice is being kept. Withdrawing this consent deletes your part of every test recording still on the server.
+            It is separate from consenting to listening, which keeps no audio.
+          </p>
+          <div className="row">
+            <button className="primary" onClick={() => consent(true, "recording-consent")}>
+              I consent to test recordings
+            </button>
+            <button onClick={() => setAskingRecording(false)}>Not now</button>
+          </div>
+        </div>
+      )}
       {role === "gm" && <GmStreams status={status} />}
       {error && <p className="error small">{error}</p>}
     </div>
@@ -218,6 +265,9 @@ function GmStreams({ status }: { status: ListeningStatus }) {
     <div className="listening-streams small">
       {status.mode === "off" && status.stopped && <span>Stopped: {status.stopped}.</span>}
       {missing.length > 0 && <span className="warn-text">Waiting on consent from {names(missing)}.</span>}
+      {status.recording?.on && status.recording.unconsented.length > 0 && (
+        <span className="muted">Not recorded (no test-recording consent): {names(status.recording.unconsented)}.</span>
+      )}
       {streams.length === 0 && status.mode === "off" && !status.stopped && <span className="muted">Start a session to listen.</span>}
       {status.mode === "listening" &&
         streams.map((s) => (
@@ -225,6 +275,7 @@ function GmStreams({ status }: { status: ListeningStatus }) {
             {s.displayName}: {STREAM_LABEL[s.state]}
             {s.failure && ` (${s.failure})`}
             {s.state === "live" && <LevelMeter level={s.level} />}
+            {s.recorded && <span className="tag">recorded</span>}
           </span>
         ))}
     </div>

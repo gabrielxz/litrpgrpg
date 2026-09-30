@@ -14,6 +14,7 @@
  */
 import { vocabulary } from "@gradebreaker/listening/stt";
 import { type HeardLine, type ListeningMode, type ListeningStatus, type StreamState, type StreamStatus, runningSession } from "@gradebreaker/record";
+import type { Recordings } from "./recordings.ts";
 import type { Service } from "./service.ts";
 import type { Member, Role } from "./views.ts";
 
@@ -125,6 +126,9 @@ interface Table {
   sessionId: string | null;
   /** The vocabulary a vendor stream opens with: the characters' names, then the game's words. */
   terms: string[];
+  recordingConsented: Set<string>;
+  /** A test recording running (recordings.ts), and the people it keeps. */
+  recording?: { id: string; people: Set<string> };
 }
 
 export class Listening {
@@ -138,11 +142,20 @@ export class Listening {
   /** Drafting while the table talks (live-drafting.ts): each line heard, and the table falling quiet at a pause or a stop. */
   private readonly onHeard: (campaignId: string) => void;
   private readonly onQuiet: (campaignId: string) => void;
+  private readonly recordings: Recordings | null;
 
   constructor(
     service: Service,
-    opts: { transcriber?: Transcriber; now?: () => number; log?: (msg: string) => void; onHeard?: (campaignId: string) => void; onQuiet?: (campaignId: string) => void } = {},
+    opts: {
+      transcriber?: Transcriber;
+      now?: () => number;
+      log?: (msg: string) => void;
+      onHeard?: (campaignId: string) => void;
+      onQuiet?: (campaignId: string) => void;
+      recordings?: Recordings;
+    } = {},
   ) {
+    this.recordings = opts.recordings ?? null;
     this.service = service;
     this.transcriber = opts.transcriber ?? meterOnly;
     this.now = opts.now ?? Date.now;
@@ -154,18 +167,20 @@ export class Listening {
 
   private table(campaignId: string): Table {
     let t = this.tables.get(campaignId);
-    if (!t) this.tables.set(campaignId, (t = { mode: "off", streams: new Map(), running: false, present: new Set(), consented: new Set(), members: [], sessionId: null, terms: [] }));
+    if (!t) this.tables.set(campaignId, (t = { mode: "off", streams: new Map(), running: false, present: new Set(), consented: new Set(), members: [], sessionId: null, terms: [], recordingConsented: new Set() }));
     return t;
   }
 
   /** Rereads who is present and who has consented. */
   private async refresh(campaignId: string): Promise<Table> {
     const t = this.table(campaignId);
-    const [rec, members, consented] = await Promise.all([
+    const [rec, members, consented, recordingConsented] = await Promise.all([
       this.service.record(campaignId),
       this.service.members(campaignId),
       this.service.listeningConsents(campaignId),
+      this.service.recordingConsents(campaignId),
     ]);
+    t.recordingConsented = recordingConsented;
     const session = runningSession(rec.state);
     t.running = Boolean(session);
     t.sessionId = session?.id ?? null;
@@ -201,6 +216,43 @@ export class Listening {
     this.broadcast(campaignId);
   }
 
+  /** Gives or withdraws one's own consent to test recordings; withdrawing deletes one's tracks. */
+  async recordingConsent(campaignId: string, userId: string, give: boolean): Promise<void> {
+    await this.service.setRecordingConsent(campaignId, userId, give);
+    const t = await this.refresh(campaignId);
+    if (!give) {
+      t.recording?.people.delete(userId);
+      this.recordings?.forget(campaignId, userId);
+    }
+    this.broadcast(campaignId);
+  }
+
+  /** The GM starts or stops a test recording, which keeps the audio of those present who consented to it. */
+  async record(campaignId: string, on: boolean): Promise<void> {
+    if (!this.recordings) throw new ListeningRefused("This server keeps no test recordings.");
+    const t = await this.refresh(campaignId);
+    if (on) {
+      if (t.recording) return;
+      if (t.mode === "off") throw new ListeningRefused("Start listening first: a test recording keeps what the listening takes.");
+      const people = t.members.filter((m) => t.present.has(m.userId) && t.consented.has(m.userId) && t.recordingConsented.has(m.userId));
+      if (!people.length) throw new ListeningRefused("Nobody at the table has consented to test recordings.");
+      const meta = this.recordings.start(
+        campaignId,
+        t.sessionId,
+        people.map((m) => ({ userId: m.userId, name: m.displayName, role: m.role })),
+      );
+      t.recording = { id: meta.id, people: new Set(people.map((m) => m.userId)) };
+    } else await this.endRecording(campaignId, t);
+    this.broadcast(campaignId);
+  }
+
+  private async endRecording(campaignId: string, t: Table): Promise<void> {
+    const r = t.recording;
+    if (!r || !this.recordings) return;
+    delete t.recording;
+    await this.recordings.stop(r.id, t.sessionId ? await this.service.heard(campaignId, t.sessionId) : []);
+  }
+
   // ------------------------------------------------------ the GM's hand ---
 
   /** Starts, pauses, resumes, or stops listening. Starting needs a running session and everyone present consenting. */
@@ -228,7 +280,10 @@ export class Listening {
     t.stopped = why;
     for (const id of [...t.streams.keys()]) this.closeSink(t, id);
     const campaignId = [...this.tables].find(([, x]) => x === t)?.[0];
-    if (campaignId) this.onQuiet(campaignId);
+    if (campaignId) {
+      this.onQuiet(campaignId);
+      void this.endRecording(campaignId, t).catch((e) => this.log(`recording: ${e}`));
+    }
   }
 
   /** After anything recorded or any membership change: a session ended, someone arrived without consent. */
@@ -316,6 +371,7 @@ export class Listening {
     s.clock.origin = Math.min(s.clock.origin, now - s.clock.writtenMs);
     s.clock.writtenMs += (pcm.length / 2 / SAMPLE_RATE) * 1000;
     s.sink.write(pcm);
+    if (t.recording?.people.has(tab.userId)) this.recordings?.write(t.recording.id, tab.userId, pcm);
     return true;
   }
 
@@ -427,6 +483,7 @@ export class Listening {
                   ? "not-transcribed"
                   : "live";
         const out: StreamStatus = { userId: m.userId, displayName: m.displayName, role: m.role, consented: t.consented.has(m.userId), state, level: s && state === "live" ? round(s.level) : 0 };
+        if (t.recording?.people.has(m.userId)) out.recorded = true;
         if (state === "not-transcribed")
           out.failure = `${s!.failure!.limit ? "the speech service is at its limit on streams" : "the speech service refused or dropped the stream"}; trying again every ${RETRY_AFTER_MS / 1000} s`;
         return out;
@@ -440,12 +497,18 @@ export class Listening {
       consented: s.t.consented.has(tab.userId),
       capturing: s.t.streams.get(tab.userId)?.tab === tab,
       present: s.t.present.has(tab.userId),
+      recordingConsented: s.t.recordingConsented.has(tab.userId),
     };
+    if (s.t.recording?.people.has(tab.userId)) out.recorded = true;
     if (tab.role === "gm") {
       // Why it stopped can name who withdrew; a player's tab only learns that it stopped.
       if (s.t.stopped && s.t.mode === "off") out.stopped = s.t.stopped;
       out.streams = s.streams;
       out.missing = s.missing;
+      out.recording = {
+        on: Boolean(s.t.recording),
+        unconsented: [...s.t.present].filter((u) => !s.t.recordingConsented.has(u)).map((u) => s.t.members.find((m) => m.userId === u)?.displayName ?? u),
+      };
     }
     return out;
   }

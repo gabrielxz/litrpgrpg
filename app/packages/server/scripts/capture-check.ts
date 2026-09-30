@@ -6,10 +6,12 @@
  *
  * With `--speech <wav>` the microphone plays that file instead (a rendered script's track), and the
  * check waits for the server's transcriber to send the GM what it heard; the dev server needs its
- * vendor key for that. `--gm-token` makes an existing development sign-in the GM, so a GM tab in
+ * vendor key for that. With `--record` as well, the player consents to test recordings and the GM
+ * records the session, and the check reads the recording back: the player's track, and the heard
+ * lines in its timeline. `--gm-token` makes an existing development sign-in the GM, so a GM tab in
  * the browser pane can watch the check's campaign (its id is printed).
  *
- *   node scripts/capture-check.ts [--chrome /usr/bin/google-chrome] [--headed] [--speech <wav> --seconds 60] [--gm-token <token>]
+ *   node scripts/capture-check.ts [--chrome /usr/bin/google-chrome] [--headed] [--speech <wav> --seconds 60 [--record]] [--gm-token <token>]
  */
 import { writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -107,10 +109,28 @@ try {
     const seconds = Number(arg("--seconds") ?? 60);
     // A stream the vendor refuses reads as not transcribed, and the check waits out its retries.
     await until("the player's microphone is live", () => stream()?.state === "live" || stream()?.state === "not-transcribed");
+    const recording = process.argv.includes("--record");
+    if (recording) {
+      await call("POST", `/campaigns/${campaignId}/listening/recording-consent`, player, { give: true });
+      await call("POST", `/campaigns/${campaignId}/listening/record`, gm, { on: true });
+      await page.getByText("Recording for testing").waitFor({ timeout: 5000 });
+      console.log("ok  the player's tab says it is recorded");
+    }
     await new Promise((r) => setTimeout(r, seconds * 1000));
     if (!heard.length) throw new Error(`nothing heard in ${seconds} s`);
     for (const l of heard) console.log(`    heard ${l.startedAt.slice(11, 19)}: ${l.text}`);
     console.log(`speech check passed: ${heard.length} line(s)`);
+    if (recording) {
+      await call("POST", `/campaigns/${campaignId}/listening/record`, gm, { on: false });
+      const [r] = (await call<{ recordings: { id: string; files: { name: string; bytes: number }[] }[] }>("GET", `/campaigns/${campaignId}/recordings`, gm)).recordings;
+      const track = r?.files.find((f) => f.name.endsWith(".wav"));
+      if (!r || !track) throw new Error("the recording kept no track");
+      const res = await fetch(`${API}/campaigns/${campaignId}/recordings/${r.id}/timeline.json`, { headers: { authorization: `Bearer ${gm}` } });
+      const timeline = (await res.json()) as { durationMs: number; lines: { text: string; startMs: number }[] };
+      console.log(`    track ${track.bytes} bytes (${(((track.bytes - 44) / 32000) | 0)} s of ${(timeline.durationMs / 1000) | 0} s); timeline ${timeline.lines.length} line(s), first at ${(timeline.lines[0]?.startMs ?? 0) / 1000} s: ${timeline.lines[0]?.text ?? ""}`);
+      if (!timeline.lines.length) throw new Error("the timeline has no lines");
+      console.log("recording check passed");
+    }
     process.exit(0);
   }
   await until("the player's stream arrives with sound", () => stream()?.state === "live" && stream()?.level > 0.3);
