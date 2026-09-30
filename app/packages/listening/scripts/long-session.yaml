@@ -165,6 +165,17 @@ expected:
         entries:
           - {characterId: andre, pole: Hunger, intensity: 1, intent: Have the shard whatever it costs, outcome: Five damage and a Pulse Shard}
 
+    # Attacking the unknown the moment it appears, before anyone knows what it is: a reminder at most (Gabriel, 2026-09-29).
+    - id: x-ev-swing
+      optional: true
+      lines: [l45, l46, l47]
+      action:
+        type: event.log
+        summary: Kara swings her axe at the heat-shimmer creature the moment it rises through the floor.
+        participants: [kara]
+        entries:
+          - {characterId: kara, pole: Force, intensity: 0.5}
+
     - id: x-ev-climb
       lines: [l48, l49, l50, l51, l52, l53, l56, l57, l58]
       action:

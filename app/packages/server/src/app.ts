@@ -36,7 +36,7 @@ const joinBody = z.object({ campaignId: z.string().min(1) });
 const aiKey = z.object({ key: z.string().min(1).max(500), model: z.string().optional() });
 const aiModel = z.object({ model: z.string() });
 const draftOpportunityBody = z.object({ characterId: z.string().max(80), situation: z.string().max(2000).optional() });
-const liveDraftingBody = z.object({ on: z.boolean() });
+const liveDraftingBody = z.object({ mode: z.enum(["on", "shadow", "off"]) });
 const draftTalk = z.object({ text: z.string().max(MAX_TALK_CHARS * 2) });
 const draftClassesBody = z.object({ characterId: z.string().max(80), keepsDoing: z.string().max(2000).optional(), guarded: z.boolean().optional() });
 const draftSummaryBody = z.object({ characterId: z.string().max(80), integration: z.boolean().optional() });
@@ -264,7 +264,7 @@ export function createApp(service: Service, opts: AppOptions = {}) {
   app.get("/campaigns/:id/drafts", async (c) => {
     const id = c.req.param("id");
     const runs = await drafts().list(id, c.get("user"));
-    return c.json({ runs, ...(opts.liveDrafting ? { live: { on: opts.liveDrafting.isOn(id) } } : {}) });
+    return c.json({ runs, ...(opts.liveDrafting ? { live: { mode: await opts.liveDrafting.mode(id) } } : {}) });
   });
   // What the listening heard: drafted a window at a time while the table talks, or now at the GM's word.
   const liveDrafting = () => {
@@ -277,10 +277,16 @@ export function createApp(service: Service, opts: AppOptions = {}) {
     const why = { "no key": "drafting needs the campaign's key", busy: "a draft is still running; wait for it to finish", "no session": "start a session first", "too few lines": "no line heard since the last draft" }[out.skip!];
     throw new HttpError(409, why);
   });
-  app.post("/campaigns/:id/drafts/heard/auto", async (c) => {
+  app.post("/campaigns/:id/drafts/heard/mode", async (c) => {
     const b = await body(c, liveDraftingBody);
-    await liveDrafting().setOn(c.req.param("id"), c.get("user"), b.on);
-    return c.json({ live: { on: b.on } });
+    await liveDrafting().setMode(c.req.param("id"), c.get("user"), b.mode);
+    return c.json({ live: { mode: b.mode } });
+  });
+  // Shadow mode: the session's hidden drafts against what the GM recorded by hand, and releasing them to review.
+  app.get("/campaigns/:id/sessions/:session/shadow", async (c) => c.json(await drafts().shadow(c.req.param("id"), c.get("user"), c.req.param("session"))));
+  app.post("/campaigns/:id/sessions/:session/shadow/release", async (c) => {
+    await drafts().releaseShadow(c.req.param("id"), c.get("user"), c.req.param("session"));
+    return c.json({ ok: true });
   });
   app.post("/campaigns/:id/drafts", async (c) => {
     const b = await body(c, draftTalk);

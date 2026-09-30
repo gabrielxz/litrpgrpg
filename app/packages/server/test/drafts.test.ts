@@ -597,9 +597,10 @@ describe("drafting what the listening heard", () => {
 
     // Off, nothing closes on its own; the GM's word still drafts, and a player has no say.
     app = createApp(service, { ai, drafts, liveDrafting: live });
-    expect((await call("GET", `/campaigns/${campaignId}/drafts`, gm)).json.live).toEqual({ on: true });
-    expect((await call("POST", `/campaigns/${campaignId}/drafts/heard/auto`, player, { on: false })).status).toBe(403);
-    expect((await call("POST", `/campaigns/${campaignId}/drafts/heard/auto`, gm, { on: false })).json.live).toEqual({ on: false });
+    expect((await call("GET", `/campaigns/${campaignId}/drafts`, gm)).json.live).toEqual({ mode: "on" });
+    expect((await call("POST", `/campaigns/${campaignId}/drafts/heard/mode`, player, { mode: "off" })).status).toBe(403);
+    expect((await call("POST", `/campaigns/${campaignId}/drafts/heard/mode`, gm, { mode: "off" })).json.live).toEqual({ mode: "off" });
+    expect((await call("GET", `/campaigns/${campaignId}/drafts`, gm)).json.live).toEqual({ mode: "off" });
     await hear(40);
     await settle();
     expect(await runs()).toHaveLength(2);
@@ -609,5 +610,41 @@ describe("drafting what the listening heard", () => {
     expect((await runs()).map((r) => r.talk.lines.length)).toEqual([40 + Math.min(EARLIER_LINES, 23), 3 + Math.min(EARLIER_LINES, 20), 20]);
     const none = await call("POST", `/campaigns/${campaignId}/drafts/heard`, gm, {});
     expect(none).toMatchObject({ status: 409, json: { error: "no line heard since the last draft" } });
+  });
+
+  it("drafts in shadow, keeps the drafts from review, compares them with what the GM recorded, and releases them", async () => {
+    const { gm, player, campaignId, act, playerId, gmId, say, sessionId } = await listening();
+    const t0 = Date.now() + 5;
+    await say(gmId, "The pill sits between you.", t0);
+    await say(playerId, "Mine. I swallow it.", t0 + 1);
+    // The GM logs the moment by hand before the window drafts, and gives an item nobody drafts.
+    await new Promise((r) => setTimeout(r, 10));
+    await act({ type: "event.log", summary: "Kara took the pill.", participants: ["kara"], entries: [{ characterId: "kara", pole: "Hunger", intensity: 1 }] });
+    await act({ type: "item.give", to: "kara", items: [{ name: "Edge Shard", count: 1 }] });
+    outputs = [{ output: { events: [{ ...pillEvent, lines: ["h2"] }] } }];
+    const started = await drafts.startHeard(campaignId, 1, true);
+    if (!("run" in started)) throw new Error(started.skip);
+    await drafts.settled(started.run.id);
+    // The listener drafted blind to what the GM logged by hand.
+    expect(prompts.at(-1)).not.toContain("Kara took the pill.");
+    expect(prompts.at(-1)).not.toContain("Edge Shard");
+    let run = (await call("GET", `/campaigns/${campaignId}/drafts`, gm)).json.runs[0];
+    expect(run).toMatchObject({ shadow: "hidden", items: [] });
+    expect((await call("POST", `/campaigns/${campaignId}/drafts/${run.id}/draft-1/dismiss`, gm, {})).status).toBe(409);
+    const path = `/campaigns/${campaignId}/sessions/${sessionId}/shadow`;
+    expect((await call("GET", path, player)).status).toBe(403);
+    const report = (await call("GET", path, gm)).json;
+    expect(report.hidden).toBe(1);
+    expect(report.both).toHaveLength(1);
+    expect(report.both[0]).toMatchObject({ item: { itemId: "draft-1", lines: ["h2"] }, logged: { action: { summary: "Kara took the pill." } }, sameSide: true });
+    expect(report.gmOnly.map((e: { action: { type: string } }) => e.action.type)).toEqual(["item.give"]);
+    expect(report.listenerOnly).toEqual([]);
+    expect(report.byType["event.log"]).toEqual({ both: 1, gmOnly: 0, listenerOnly: 0 });
+
+    expect((await call("POST", `${path}/release`, gm, {})).status).toBe(200);
+    run = (await call("GET", `/campaigns/${campaignId}/drafts`, gm)).json.runs[0];
+    expect(run.shadow).toBe("released");
+    expect(run.items.map((i: { itemId: string }) => i.itemId)).toEqual(["draft-1"]);
+    expect((await call("GET", path, gm)).json.hidden).toBe(0);
   });
 });

@@ -159,6 +159,16 @@ expected:
           - {characterId: joe, pole: Method, intensity: 0.5, intent: Put the construct where it cannot reach Kara}
 
     - {id: x-empty-handed, lines: [l24, l25, l27, l28], action: {type: counter.tick, characterId: andre, counter: empty-handed-wins, count: 1}}
+    # Leaving the platform to finish it bare-handed is a choice at some risk: a reminder at most (Gabriel, 2026-09-29).
+    - id: x-ev-fists
+      optional: true
+      lines: [l24, l25, l27, l28]
+      action:
+        type: event.log
+        summary: Andre leaves the platform and finishes the Sentry with his fists.
+        participants: [andre]
+        entries:
+          - {characterId: andre, pole: Force, intensity: 0.5}
 
     - id: x-armory
       lines: [l29]

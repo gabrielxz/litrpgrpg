@@ -47,6 +47,10 @@ import {
   EARLIER_LINES,
   dueOffers,
   flavorsFor,
+  SHADOW_TYPES,
+  type ShadowDraft,
+  type ShadowReport,
+  compareShadow,
   markOf,
   readTypedTalk,
   repeats,
@@ -124,6 +128,19 @@ export type RunTalk = TypedTalk & { heard?: HeardWindow };
 /** Why a window of heard lines did not start drafting. */
 export type HeardSkip = "no key" | "busy" | "no session" | "too few lines";
 
+/** Drafting what the listening hears: on, in shadow (kept from review until released), or off. */
+export type LiveMode = "on" | "shadow" | "off";
+
+/** Shadow mode's comparison for one session, with each draft as the review shows it. */
+export interface ShadowSession {
+  /** Drafts still kept from review. */
+  hidden: number;
+  both: { item: DraftItem; logged: Envelope; sameSide?: boolean }[];
+  gmOnly: Envelope[];
+  listenerOnly: DraftItem[];
+  byType: ShadowReport["byType"];
+}
+
 export interface DraftRun {
   id: string;
   feature: string;
@@ -133,6 +150,8 @@ export interface DraftRun {
   problem?: string;
   message?: string;
   talk: RunTalk;
+  /** A window drafted in shadow: hidden (its drafts kept from review) or released. */
+  shadow?: "hidden" | "released";
   repaired: string[];
   dropped: { why: string }[];
   items: DraftItem[];
@@ -207,7 +226,7 @@ export class Drafts {
    * before them as context; the record as it stood when the first was said, and what the table
    * recorded since, each after the line it followed. Returns the run, or why it did not start.
    */
-  async startHeard(campaignId: string, min: number): Promise<{ run: DraftRun } | { skip: HeardSkip }> {
+  async startHeard(campaignId: string, min: number, shadow = false): Promise<{ run: DraftRun } | { skip: HeardSkip }> {
     if (!(await this.ai.status(campaignId)).configured) return { skip: "no key" };
     const record = await this.service.record(campaignId);
     const session = runningSession(record.state);
@@ -228,12 +247,18 @@ export class Drafts {
     const speakers = members.map((m) => ({ id: m.userId, role: m.role, name: m.displayName }));
     const line = (l: HeardLine) => ({ id: `h${l.id}`, speaker: l.userId, text: l.text });
     const firstAt = Date.parse(fresh[0]!.startedAt);
-    const before = record.log.filter((e: Envelope) => Date.parse(e.at) < firstAt);
+    // In shadow the listener works blind to what the GM records by hand this session, the kinds the
+    // comparison counts, or it would decline to draft what it sees already logged and measure nothing.
+    const types = new Set<string>(SHADOW_TYPES);
+    const sessionAt = Date.parse(session.startedAt);
+    const seen = (e: Envelope) => !(shadow && types.has(e.action.type) && e.source !== "suggestion" && Date.parse(e.at) >= sessionAt);
+    const log = record.log.filter(seen);
+    const before = log.filter((e: Envelope) => Date.parse(e.at) < firstAt);
     // What the table recorded from the first earlier line on, each after the last line said before it
     // (a Downing in the tracker is said by no one); what came before the window is in its record too.
     const spoken = [...earlier, ...fresh];
     const from = Date.parse(spoken[0]!.startedAt);
-    const since = record.log.filter((e: Envelope) => Date.parse(e.at) >= from);
+    const since = log.filter((e: Envelope) => Date.parse(e.at) >= from);
     const after = (e: Envelope) => line(spoken.filter((l) => Date.parse(l.startedAt) <= Date.parse(e.at)).at(-1) ?? spoken[0]!).id;
     const scene: Scene = {
       record: new CampaignRecord(record.engine, before),
@@ -252,13 +277,73 @@ export class Drafts {
     // The window drafts for the GM, who started the listening.
     const gm = members.find((m) => m.role === "gm")!;
     await this.db.query(
-      "insert into draft_runs (id, campaign_id, feature, created_by, status, talk) values ($1, $2, $3, $4, 'drafting', $5::jsonb)",
-      [id, campaignId, `${DRAFT_EVENTS_FEATURE},${DRAFT_ACTIONS_FEATURE},${DRAFT_SUGGESTIONS_FEATURE}`, gm.userId, JSON.stringify(talk)],
+      "insert into draft_runs (id, campaign_id, feature, created_by, status, talk, shadow) values ($1, $2, $3, $4, 'drafting', $5::jsonb, $6)",
+      [id, campaignId, `${DRAFT_EVENTS_FEATURE},${DRAFT_ACTIONS_FEATURE},${DRAFT_SUGGESTIONS_FEATURE}`, gm.userId, JSON.stringify(talk), shadow],
     );
     const prior = await this.heardMarks(campaignId, session.id, id);
     const work = this.draft(campaignId, id, scene, prior).finally(() => this.running.delete(id));
     this.running.set(id, work);
     return { run: (await this.run(campaignId, id))! };
+  }
+
+  async liveMode(campaignId: string): Promise<LiveMode> {
+    const [r] = await this.db.query("select live_drafting from campaigns where id = $1", [campaignId]);
+    return (r?.live_drafting ?? "on") as LiveMode;
+  }
+
+  async setLiveMode(campaignId: string, user: User | null, mode: LiveMode): Promise<void> {
+    await this.service.requireGm(campaignId, user);
+    await this.db.query("update campaigns set live_drafting = $2 where id = $1", [campaignId, mode]);
+  }
+
+  /**
+   * Shadow mode's comparison for a session: the drafts of its shadow windows against what the GM
+   * recorded by hand while it ran (drafts the GM accepted are no baseline, nor anything undone).
+   * A draft is dated by when its first cited line was said.
+   */
+  async shadow(campaignId: string, user: User | null, sessionId: string): Promise<ShadowSession> {
+    await this.service.requireGm(campaignId, user);
+    const record = await this.service.record(campaignId);
+    const session = record.state.sessions.get(sessionId);
+    if (!session) throw new HttpError(404, "no such session");
+    const runs = await this.db.query("select * from draft_runs where campaign_id = $1 and shadow and talk->'heard'->>'sessionId' = $2", [campaignId, sessionId]);
+    const items = runs.length ? await this.db.query("select * from draft_items where run_id = any($1::text[]) and kind <> 'cue' and action is not null", [runs.map((r) => r.id)]) : [];
+    const said = new Map((await this.service.heard(campaignId, sessionId)).map((l) => [`h${l.id}`, Date.parse(l.startedAt)]));
+    const byKey = new Map<string, DraftItem>();
+    const drafts: ShadowDraft[] = items.map((i) => {
+      const run = runs.find((r) => r.id === i.run_id)!;
+      byKey.set(`${i.run_id}/${i.item_id}`, this.itemOf(i, record, iso(run.created_at)));
+      const times = (i.lines as string[]).map((l) => said.get(l)).filter((t): t is number => t !== undefined);
+      return { runId: i.run_id, itemId: i.item_id, action: i.action, saidAt: times.length ? Math.min(...times) : Date.parse(iso(run.created_at)) };
+    });
+    const state = record.state;
+    const from = Date.parse(session.startedAt);
+    const to = session.endedAt ? Date.parse(session.endedAt) : Infinity;
+    const types = new Set<string>(SHADOW_TYPES);
+    const logged = record.log.filter(
+      (e) =>
+        types.has(e.action.type) &&
+        e.source !== "suggestion" &&
+        Date.parse(e.at) >= from &&
+        Date.parse(e.at) <= to &&
+        !state.voided.has(e.id) &&
+        !state.rejected.some((x) => x.envelope.id === e.id),
+    );
+    const report = compareShadow(drafts, logged);
+    const item = (d: ShadowDraft) => byKey.get(`${d.runId}/${d.itemId}`)!;
+    return {
+      hidden: runs.filter((r) => !r.released_at).length,
+      both: report.both.map((m) => ({ item: item(m.draft), logged: m.logged, ...(m.sameSide !== undefined ? { sameSide: m.sameSide } : {}) })),
+      gmOnly: report.gmOnly,
+      listenerOnly: report.listenerOnly.map(item),
+      byType: report.byType,
+    };
+  }
+
+  /** Puts a session's shadow drafts in review. */
+  async releaseShadow(campaignId: string, user: User | null, sessionId: string): Promise<void> {
+    await this.service.requireGm(campaignId, user);
+    await this.db.query("update draft_runs set released_at = now() where campaign_id = $1 and shadow and released_at is null and talk->'heard'->>'sessionId' = $2", [campaignId, sessionId]);
   }
 
   /** What earlier windows of the session drafted, so a window does not draft the same moment again. */
@@ -566,6 +651,9 @@ export class Drafts {
   }
 
   private runOf(r: Record<string, any>, items: Record<string, any>[], record: CampaignRecord): DraftRun {
+    // A shadow window's drafts stay out of review until the GM releases them.
+    const hidden = Boolean(r.shadow && !r.released_at);
+    if (hidden) items = [];
     const at = new Map((r.talk as TypedTalk).lines.map((l, i) => [l.id, i]));
     const first = (x: DraftItem) => Math.min(...x.lines.map((l) => at.get(l) ?? Infinity));
     const rank = { event: 0, action: 1, cue: 2, suggestion: 3 };
@@ -577,6 +665,7 @@ export class Drafts {
       status: r.status,
       ...(r.problem ? { problem: r.problem, message: r.message } : {}),
       talk: r.talk,
+      ...(r.shadow ? { shadow: hidden ? ("hidden" as const) : ("released" as const) } : {}),
       repaired: r.repaired,
       dropped: r.dropped,
       // In the order the table reached them; on one line, the moment first.
@@ -610,10 +699,11 @@ export class Drafts {
 
   private async item(campaignId: string, runId: string, itemId: string): Promise<DraftItem> {
     const [i] = await this.db.query(
-      "select i.*, r.created_at as run_created_at from draft_items i join draft_runs r on r.id = i.run_id where i.campaign_id = $1 and i.run_id = $2 and i.item_id = $3",
+      "select i.*, r.created_at as run_created_at, r.shadow as run_shadow, r.released_at as run_released_at from draft_items i join draft_runs r on r.id = i.run_id where i.campaign_id = $1 and i.run_id = $2 and i.item_id = $3",
       [campaignId, runId, itemId],
     );
     if (!i) throw new HttpError(404, "no such draft");
+    if (i.run_shadow && !i.run_released_at) throw new HttpError(409, "this draft is in shadow until you release the session's drafts");
     return this.itemOf(i, await this.service.record(campaignId), iso(i.run_created_at));
   }
 

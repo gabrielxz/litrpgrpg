@@ -4,17 +4,19 @@
  * and nobody has spoken for WINDOW_QUIET_MS, or at WINDOW_MAX_LINES regardless, and whatever is
  * left closes when the GM pauses or stops the listening. A closed window drafts through
  * `Drafts.startHeard` into the same drafts typed talk makes, which wait for the GM. The GM can
- * turn it off (it spends the campaign's key) and draft the lines so far at any time.
+ * turn it off (it spends the campaign's key), put it in shadow (drafted and kept from review, to
+ * measure against the GM's own logging), and draft the lines so far at any time.
  *
- * The switch and the counts live in memory, like the listening; after a restart drafting is on,
- * and the lines not yet drafted are found from the runs, so none is skipped.
+ * The mode is the campaign's, stored; the counts live in memory, like the listening, and after a
+ * restart the lines not yet drafted are found from the runs, so none is skipped.
  */
 import { WINDOW_LINES, WINDOW_MAX_LINES, WINDOW_QUIET_MS } from "@gradebreaker/listening";
-import type { DraftRun, Drafts, HeardSkip } from "./drafts.ts";
+import type { DraftRun, Drafts, HeardSkip, LiveMode } from "./drafts.ts";
 import type { Service, User } from "./service.ts";
 
 interface Table {
-  off: boolean;
+  /** Read from the campaign on first use. */
+  mode?: LiveMode;
   /** Lines heard since the last window started. */
   pending: number;
   timer?: ReturnType<typeof setTimeout>;
@@ -41,7 +43,7 @@ export class LiveDrafting {
 
   private table(campaignId: string): Table {
     let t = this.tables.get(campaignId);
-    if (!t) this.tables.set(campaignId, (t = { off: false, pending: 0, busy: false }));
+    if (!t) this.tables.set(campaignId, (t = { pending: 0, busy: false }));
     return t;
   }
 
@@ -49,37 +51,42 @@ export class LiveDrafting {
   heard(campaignId: string): void {
     const t = this.table(campaignId);
     t.pending++;
-    this.schedule(campaignId);
+    void this.mode(campaignId)
+      .then(() => this.schedule(campaignId))
+      .catch((e) => this.log(`live drafting: ${e}`));
   }
 
   /** The listening paused or stopped: the lines so far are drafted. */
   quiet(campaignId: string): void {
     const t = this.table(campaignId);
-    if (!t.off && t.pending) void this.close(campaignId, 1);
+    if (t.mode !== "off" && t.pending) void this.close(campaignId, 1);
   }
 
-  /** The GM drafts the lines not yet drafted, now. */
+  async mode(campaignId: string): Promise<LiveMode> {
+    const t = this.table(campaignId);
+    t.mode ??= await this.drafts.liveMode(campaignId);
+    return t.mode;
+  }
+
+  /** The GM drafts the lines not yet drafted, now (in shadow when the campaign drafts in shadow). */
   async now(campaignId: string, user: User | null): Promise<{ run?: DraftRun; skip?: HeardSkip }> {
     await this.service.requireGm(campaignId, user);
+    await this.mode(campaignId);
     return this.start(campaignId, 1);
   }
 
-  async setOn(campaignId: string, user: User | null, on: boolean): Promise<void> {
-    await this.service.requireGm(campaignId, user);
+  async setMode(campaignId: string, user: User | null, mode: LiveMode): Promise<void> {
+    await this.drafts.setLiveMode(campaignId, user, mode);
     const t = this.table(campaignId);
-    t.off = !on;
+    t.mode = mode;
     clearTimeout(t.timer);
-    if (on) this.schedule(campaignId);
-  }
-
-  isOn(campaignId: string): boolean {
-    return !this.table(campaignId).off;
+    this.schedule(campaignId);
   }
 
   /** Closes a window now at the most lines, or at the next pause once there are enough. */
   private schedule(campaignId: string) {
     const t = this.table(campaignId);
-    if (t.off || t.busy) return;
+    if (!t.mode || t.mode === "off" || t.busy) return;
     clearTimeout(t.timer);
     if (t.pending >= WINDOW_MAX_LINES) void this.close(campaignId, 1);
     else if (t.pending >= WINDOW_LINES) t.timer = setTimeout(() => void this.close(campaignId, WINDOW_LINES), this.quietMs);
@@ -107,7 +114,7 @@ export class LiveDrafting {
     const counted = t.pending;
     let out: Awaited<ReturnType<Drafts["startHeard"]>>;
     try {
-      out = await this.drafts.startHeard(campaignId, min);
+      out = await this.drafts.startHeard(campaignId, min, t.mode === "shadow");
     } catch (e) {
       t.busy = false;
       throw e;

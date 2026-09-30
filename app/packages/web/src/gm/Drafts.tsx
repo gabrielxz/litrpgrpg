@@ -10,7 +10,7 @@ import type { Engine } from "@gradebreaker/engine";
 import { type NameReading, type TypedTalk, readTypedTalk } from "@gradebreaker/listening/typed";
 import type { Envelope, GmView, LogEvent } from "@gradebreaker/record";
 import { useEffect, useMemo, useState } from "react";
-import { type DraftItem, type DraftRun, acceptDraft, api, draftRuns, markDraft, startDraft } from "../api.ts";
+import { type DraftItem, type DraftRun, type LiveMode, acceptDraft, api, draftRuns, markDraft, startDraft } from "../api.ts";
 import { type Names, describe } from "../text.ts";
 import { Commit } from "./Commit.tsx";
 import { ActionDraftCard } from "./DraftActions.tsx";
@@ -130,7 +130,9 @@ const when = (iso: string) => new Date(iso).toLocaleString([], { dateStyle: "med
 function RunLine({ run }: { run: DraftRun }) {
   const n_ = run.talk.lines.length - (run.talk.heard?.earlier.length ?? 0);
   const lines = `${n_}${run.talk.heard ? " heard" : ""} line${n_ === 1 ? "" : "s"}`;
-  if (run.status === "drafting") return <p className="muted">Drafting from {lines}…</p>;
+  if (run.status === "drafting") return <p className="muted">Drafting from {lines}{run.shadow ? " in shadow" : ""}…</p>;
+  // Its drafts are kept from review, so none is counted here.
+  if (run.status === "done" && run.shadow === "hidden") return <p className="muted small">{when(run.createdAt)}: drafted in shadow from {lines}.</p>;
   if (run.status === "failed") return <p className="error small">The draft from {lines} ({when(run.createdAt)}) failed: {run.message}</p>;
   const n = run.items.length;
   return (
@@ -159,7 +161,7 @@ export function useDraftRuns(view: GmView, changed = 0) {
   const id = view.campaign.id;
   const [runs, setRuns] = useState<DraftRun[]>([]);
   /** Whether the server drafts what the listening hears while the table talks. */
-  const [live, setLive] = useState<{ on: boolean } | null>(null);
+  const [live, setLive] = useState<{ mode: LiveMode } | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const refresh = () =>

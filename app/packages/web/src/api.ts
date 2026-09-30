@@ -126,16 +126,31 @@ export interface DraftRun {
   message?: string;
   /** The talk drafted from: typed, or a window of heard lines whose earlier lines (sent as context) come first. */
   talk: TypedTalk & { heard?: { sessionId: string; through: number; earlier: string[] } };
+  /** A window drafted in shadow: hidden (its drafts kept from review) or released. */
+  shadow?: "hidden" | "released";
   repaired: string[];
   dropped: { why: string }[];
   items: DraftItem[];
 }
 
-export const draftRuns = (campaignId: string) => api<{ runs: DraftRun[]; live?: { on: boolean } }>("GET", `/campaigns/${campaignId}/drafts`);
+/** Drafting what the listening hears: on, in shadow (kept from review until released), or off. */
+export type LiveMode = "on" | "shadow" | "off";
+export const draftRuns = (campaignId: string) => api<{ runs: DraftRun[]; live?: { mode: LiveMode } }>("GET", `/campaigns/${campaignId}/drafts`);
 /** Drafts what the listening heard since the last draft, now. */
 export const draftHeardNow = (campaignId: string) => api<{ run: DraftRun }>("POST", `/campaigns/${campaignId}/drafts/heard`, {});
-/** Turns drafting while the table talks on or off. */
-export const setLiveDrafting = (campaignId: string, on: boolean) => api<{ live: { on: boolean } }>("POST", `/campaigns/${campaignId}/drafts/heard/auto`, { on });
+/** Drafts what the listening hears as the table talks, in shadow, or not at all. */
+export const setLiveDrafting = (campaignId: string, mode: LiveMode) => api<{ live: { mode: LiveMode } }>("POST", `/campaigns/${campaignId}/drafts/heard/mode`, { mode });
+
+/** Shadow mode's comparison for a session: the hidden drafts against what the GM recorded by hand. */
+export interface ShadowSession {
+  hidden: number;
+  both: { item: DraftItem; logged: Envelope; sameSide?: boolean }[];
+  gmOnly: Envelope[];
+  listenerOnly: DraftItem[];
+  byType: Record<string, { both: number; gmOnly: number; listenerOnly: number }>;
+}
+export const shadowSession = (campaignId: string, sessionId: string) => api<ShadowSession>("GET", `/campaigns/${campaignId}/sessions/${sessionId}/shadow`);
+export const releaseShadow = (campaignId: string, sessionId: string) => api<{ ok: true }>("POST", `/campaigns/${campaignId}/sessions/${sessionId}/shadow/release`, {});
 
 export const startOpportunity = (campaignId: string, characterId: string, situation: string) =>
   api<{ run: DraftRun }>("POST", `/campaigns/${campaignId}/opportunities`, { characterId, situation });

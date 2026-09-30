@@ -12,6 +12,7 @@ import { Commit } from "./Commit.tsx";
 import { type DraftRuns, DraftsCard } from "./Drafts.tsx";
 import { EventFields, emptyEvent, eventActionOf } from "./EventFields.tsx";
 import { HeardCard } from "./Heard.tsx";
+import { ShadowCard } from "./Shadow.tsx";
 
 export function entryLine(x: HveEntry): string {
   return `${x.pole} ${x.intensity}${x.secondary ? `, ${x.secondary} ${x.intensity - 1}` : ""}${x.coercion ? ", coercion of a player character" : ""}`;
@@ -95,6 +96,7 @@ export function EventsSection({
     <main className="gm">
       <div>
         <HeardCard view={view} heard={heard} drafts={drafts} onUse={(text) => setSeed((s) => ({ text, n: s.n + 1 }))} />
+        <ShadowCard view={view} names={names} heard={heard} drafts={drafts} />
         <DraftsCard view={view} engine={engine} names={names} onRecorded={onRecorded} drafts={drafts} seed={seed} />
         <LogForm view={view} engine={engine} names={names} onRecorded={onRecorded} />
       </div>
