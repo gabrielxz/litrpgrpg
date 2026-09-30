@@ -3,7 +3,7 @@
  * record: catalog titles whose count is met, the Battle Memory Cards the rules make due, and
  * pointers to the other sections where something is due (assigned points, class offers, a
  * Principle, a quest whose time ran out). From table talk: the titles the fiction earns, Battle
- * Memory Cards, Hidden Achievements, and Prep cues the drafter raised, each accepted as the grant
+ * Memory Cards, Hidden Achievements, quests (a partial reveal among them), and Prep cues the drafter raised, each accepted as the grant
  * it names (edited or not) or dismissed. A dismissed suggestion stays dismissed and can be
  * restored; drafting the same talk again raises nothing the GM has already seen.
  */
@@ -41,6 +41,10 @@ function elsewhere(view: GmView, engine: Engine | null, names: Names): { line: s
   if (now !== undefined)
     for (const q of view.quests.filter((x) => x.status === "active" && x.due !== undefined && x.due <= now))
       out.push({ line: `[${q.code}] ${q.title}: its time ran out (${q.holders.map(names).join(", ")})`, section: "quests", label: "Quests" });
+  // Rewards the record shows as earned and not yet paid.
+  for (const q of view.quests.filter((x) => x.status === "active" && x.count && x.count.done >= x.count.of))
+    out.push({ line: `[${q.code}] ${q.title}: its count is met and its reward unpaid (${q.holders.map(names).join(", ")})`, section: "quests", label: "Quests" });
+  if (view.aftermath) out.push({ line: `${view.aftermath.name}: the fight ended and its kills and loot are not recorded`, section: "combat", label: "Combat" });
   return out;
 }
 
@@ -51,7 +55,7 @@ export function suggestionsWaiting(view: GmView, engine: Engine | null, names: N
   return record + drafted + elsewhere(view, engine, names).length;
 }
 
-const HEADING = { title: "Title", "battle-memory": "Battle Memory Card", "hidden-achievement": "Hidden Achievement", "personal-opportunity": "Personal Opportunity", "class-offers": "Class offers" } as const;
+const HEADING = { title: "Title", "battle-memory": "Battle Memory Card", "hidden-achievement": "Hidden Achievement", "personal-opportunity": "Personal Opportunity", quest: "Quest", "class-offers": "Class offers" } as const;
 
 /** A warning when player-facing text names a side of a behavioral axis as the sheet does (capitalized): the System never shows how it keeps count. */
 function SheetWords({ engine, text }: { engine: Engine; text: string }) {
@@ -62,24 +66,28 @@ function SheetWords({ engine, text }: { engine: Engine; text: string }) {
 }
 
 /**
- * A drafted Personal Opportunity: the offer as its log entry, the System's words, and the GM's note.
- * It opens in the Quests form to edit and issue; issuing there accepts the draft. The System's
- * words go to the player only when the GM sends them.
+ * A drafted quest to issue: a Personal Opportunity from the sweep (with the System's words and the
+ * GM's note) or a quest from table talk (Routine, Faction, or Hidden), shown as its log entry. It
+ * opens in the Quests form to edit and issue; issuing there accepts the draft. The System's words
+ * go to the player only when the GM sends them.
  */
-function OpportunityCard({ view, engine, names, item, drafts, onRecorded, onFire }: Omit<Props, "engine"> & { engine: Engine; item: DraftItem }) {
+function QuestCard({ view, engine, names, run, item, drafts, onRecorded, onFire }: Omit<Props, "engine"> & { engine: Engine; run?: DraftRun; item: DraftItem }) {
   const s = item.suggestion!;
   const issue = item.action as Extract<Action, { type: "quest.issue" }>;
   const q = issue.quest;
   const who = names(s.characterId);
-  const ve = q.scaled ? "proportional" : `${q.ve ?? questTableVe(engine, q.category, q.difficulty, q.grade ?? "F")} VE`;
+  const table = questTableVe(engine, q.category, q.difficulty, q.grade ?? "F");
+  const ve = q.scaled ? "proportional" : q.ve !== undefined || table !== null ? `${q.ve ?? table} VE` : "";
   return (
     <li className="draft">
       <h4 className="draft-kind">
-        Personal Opportunity for {who}
+        {s.kind === "personal-opportunity" ? "Personal Opportunity" : `${q.category} quest`} for {who}
         <span className="muted">
-          : {q.title} ({q.flavor}, drafted to {s.stance})
+          : {q.title}
+          {s.kind === "personal-opportunity" ? ` (${q.flavor}, drafted to ${s.stance})` : q.hidden ? " (fully obscured on the log)" : q.issuer ? ` (asked by ${q.issuer})` : ""}
         </span>
       </h4>
+      {run && <Cited view={view} run={run} item={item} names={names} />}
       {item.why && <p className="muted small">Drafted because: {item.why}</p>}
       {item.undone && <p className="small warning">Issued, and the offer was undone in the log. Issue it again or dismiss it.</p>}
       <pre className="quest-entry">
@@ -123,6 +131,46 @@ Reward:     ${[ve, q.rewardText ?? ""].filter(Boolean).join(", ")}${q.time ? `\n
           <Commit campaignId={view.campaign.id} action={{ type: "message.send", to: [s.characterId], text: s.notice }} names={names} label={`Send to ${who}`} onRecorded={onRecorded} />
         </details>
       )}
+    </li>
+  );
+}
+
+/** A drafted partial reveal of a fully obscured Hidden quest: the suggestive name, editable, recorded as drafted or edited. */
+function RevealCard({ view, names, run, item, drafts, onRecorded }: Pick<Props, "view" | "names" | "drafts" | "onRecorded"> & { run: DraftRun; item: DraftItem }) {
+  const drafted = item.action as Extract<Action, { type: "quest.reveal" }>;
+  const [name, setName] = useState(drafted.name);
+  const q = view.quests.find((x) => x.id === drafted.questId);
+  const who = names(item.suggestion!.characterId);
+  return (
+    <li className="draft">
+      <h4 className="draft-kind">
+        Partial reveal for {who}
+        <span className="muted">: [{q?.code ?? drafted.questId}] {q?.title ?? ""}</span>
+      </h4>
+      <Cited view={view} run={run} item={item} names={names} />
+      {item.why && <p className="muted small">Drafted because: {item.why}</p>}
+      {q && <p className="small">Objective, still hidden from {who}: {q.objective}</p>}
+      <label>
+        The name the log shows
+        <input value={name} maxLength={80} onChange={(e) => setName(e.target.value)} />
+      </label>
+      <TableWords text={name} />
+      <Commit
+        campaignId={view.campaign.id}
+        action={name.trim() ? { ...drafted, name: name.trim() } : null}
+        problem={name.trim() ? null : "Name it."}
+        names={names}
+        label={`Reveal it to ${who}`}
+        submitWith={async (id, a) => {
+          const out = await acceptDraft(view.campaign.id, item, id, a);
+          drafts.replace(out.item);
+          return out.appended;
+        }}
+        onRecorded={onRecorded}
+      />
+      <div className="row">
+        <button onClick={() => drafts.mark(item, "dismiss")}>Dismiss</button>
+      </div>
     </li>
   );
 }
@@ -172,6 +220,20 @@ function SuggestionCard({ view, engine, names, run, item, drafts, onRecorded }: 
           <input value={text} maxLength={300} onChange={(e) => setText(e.target.value)} />
         </label>
       )}
+      {s.kind === "hidden-achievement" &&
+        s.alternatives?.map((alt) => {
+          const altStat = Object.keys((alt.accept as Extract<Action, { type: "title.grant" }>).title.bonus ?? {})[0];
+          return (
+            <p key={alt.label} className="small">
+              Another reading: {alt.label}. {alt.why}{" "}
+              {altStat && altStat !== stat && (
+                <button className="link" onClick={() => setStat(altStat)}>
+                  Take it
+                </button>
+              )}
+            </p>
+          );
+        })}
       {s.kind === "hidden-achievement" && (
         <div className="form">
           <label>
@@ -242,7 +304,7 @@ export function SuggestionsSection({ view, engine, names, onRecorded, drafts, on
           {waiting.length === 0 ? (
             <p className="muted">
               Nothing waiting. Drafting from table talk (the <a href="#events">Events</a> section) raises the titles the fiction earns, Battle Memory Cards,
-              Hidden Achievements, and Prep cues here.
+              Hidden Achievements, quests, and Prep cues here.
             </p>
           ) : (
             <ul className="drafts">
@@ -265,8 +327,9 @@ export function SuggestionsSection({ view, engine, names, onRecorded, drafts, on
                       </div>
                     </li>
                   );
-                if (item.suggestion?.kind === "personal-opportunity")
-                  return <OpportunityCard key={key} view={view} engine={engine} names={names} item={item} drafts={drafts} onRecorded={onRecorded} onFire={onFire} />;
+                if (item.action?.type === "quest.issue")
+                  return <QuestCard key={key} view={view} engine={engine} names={names} run={run} item={item} drafts={drafts} onRecorded={onRecorded} onFire={onFire} />;
+                if (item.action?.type === "quest.reveal") return <RevealCard key={key} view={view} names={names} run={run} item={item} drafts={drafts} onRecorded={onRecorded} />;
                 return <SuggestionCard key={key} view={view} engine={engine} names={names} run={run} item={item} drafts={drafts} onRecorded={onRecorded} />;
               })}
             </ul>

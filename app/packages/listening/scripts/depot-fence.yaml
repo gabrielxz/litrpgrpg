@@ -1,0 +1,67 @@
+# A Faction request and a Hidden pattern, beside a pay question and a grumble. The format is in app/DESIGN.md, "The script format".
+id: depot-fence
+title: Past the depot fence, a grandmother's request and two spared animals
+source: Written for the quest suggestions (2026-09-30); spoils nothing in the tutorial
+rules: 0.1.38
+notes: >
+  Mara asks Kara to find her grandson and the two who went with him, and Kara agrees aloud: a
+  Faction quest for Kara, issued by Mara, three to find. Past the fence Joe spares a snared
+  fox-thing and then a cornered rat-hound: the same choice twice, so a Hidden quest for Joe, fully
+  obscured. Each sparing is a moment of its own. Traps: the player asking whether the job pays,
+  and Kara's player grumbling about Joe's mercy.
+
+speakers:
+  - {id: gm, role: gm, name: Dana}
+  - {id: priya, role: player, name: Priya, characters: [kara]}
+  - {id: tom, role: player, name: Tom, characters: [joe]}
+
+setup:
+  - {id: kara, action: {type: character.pregen, characterId: kara, pregen: Kara, playerId: priya}}
+  - {id: joe, action: {type: character.pregen, characterId: joe, pregen: Joe, playerId: tom}}
+  - {id: invite-joe, action: {type: party.invite, fromId: kara, toId: joe}}
+  - {id: joe-joins, action: {type: party.answer, inviteId: invite-joe, accept: true}}
+
+lines:
+  - {id: l01, speaker: gm, text: "The old woman at the depot gate grabs Kara's sleeve. Her grandson went past the fence at dawn with two others and nobody has come back."}
+  - {id: l02, speaker: gm, as: Mara, text: "Please. Find them and bring them home. The co-op will pay what it can."}
+  - {id: l03, speaker: priya, as: kara, text: "I'll find them. Joe, you're with me."}
+  - {id: l04, speaker: tom, as: joe, text: "Yeah, of course."}
+  - {id: l05, speaker: tom, text: "Wait, do we get VE for this or is it just a nice thing?"}
+  - {id: l06, speaker: gm, text: "Past the fence you find a fox-thing caught in a snare, snapping at you. Joe, it's wounded and it can't get away."}
+  - {id: l07, speaker: tom, text: "Joe cuts the snare and lets it go. He's not killing something that can't fight back."}
+  - {id: l08, speaker: gm, text: "It limps off into the weeds. A little later a rat-hound corners itself against the wall, whimpering, done fighting."}
+  - {id: l09, speaker: tom, text: "Same thing. Joe backs off and lets it run."}
+  - {id: l10, speaker: priya, text: "Tom, you're going to get us killed being nice to monsters."}
+
+expected:
+  actions:
+    - id: x-ev-fox
+      lines: [l06, l07]
+      optional: true
+      action:
+        type: event.log
+        summary: Joe cuts a wounded fox-thing out of a snare and lets it go rather than kill it.
+        participants: [joe]
+        entries:
+          - {characterId: joe, pole: Restraint, intensity: 1, intent: Spare what cannot fight back, outcome: The fox-thing limps away}
+      also:
+        - {characterId: joe, pole: Accord, intensity: 1}
+    - id: x-ev-hound
+      lines: [l08, l09]
+      optional: true
+      action:
+        type: event.log
+        summary: Joe backs off from a cornered, beaten rat-hound and lets it run.
+        participants: [joe]
+        entries:
+          - {characterId: joe, pole: Restraint, intensity: 1, intent: Spare what is done fighting, outcome: The rat-hound runs}
+      also:
+        - {characterId: joe, pole: Accord, intensity: 1}
+
+  suggestions:
+    - {id: s-crew, kind: quest, key: Bring Them Home, characterId: kara, lines: [l02, l03]}
+    - {id: s-mercy, kind: quest, key: Spare the Beaten, characterId: joe, lines: [l07, l09]}
+
+  quiet:
+    - {lines: [l05], why: rules-question}
+    - {lines: [l10], why: joke}

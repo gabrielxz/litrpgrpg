@@ -75,7 +75,7 @@ const ACCEPTS: Record<ItemKind, readonly Action["type"][]> = {
   event: ["event.log"],
   action: ["item.give", "item.move", "item.remove", "quest.progress", "quest.complete", "quest.fail", "ve.award", "party.invite", "party.answer", "counter.tick"],
   cue: [],
-  suggestion: ["title.grant", "memory.grant", "quest.issue", "class.offer"],
+  suggestion: ["title.grant", "memory.grant", "quest.issue", "quest.reveal", "class.offer"],
 };
 
 /** A suggestion as the panel names it: a title, a Battle Memory Card, or a Hidden Achievement for a character. */
@@ -89,6 +89,8 @@ export interface Suggested {
   /** Class offers: for the GM, each offer's role, what it weighs, and the book's rules and advice it crosses; and problems across the three. */
   offers?: { role: string; weighs: string; problems: string[]; warnings: string[]; everyFight?: boolean }[];
   problems?: string[];
+  /** Other readings of the same deed, each with what accepting it records: the GM takes one or the draft. */
+  alternatives?: { label: string; why: string; accept: Action }[];
 }
 
 export interface DraftItem {
@@ -566,7 +568,7 @@ export class Drafts {
       for (const d of suggestions.value.drafts) {
         const again = this.again(d, texts, before, nameOf);
         if (again) seen.push({ why: again });
-        else rows.push([d.id, "suggestion", d.lines, d.accept, [], d.why, d.suggestion]);
+        else rows.push([d.id, "suggestion", d.lines, d.accept, [], d.why, d.alternatives ? { ...d.suggestion, alternatives: d.alternatives } : d.suggestion]);
       }
     }
     // A window of heard lines drops what an earlier window already drafted.
@@ -722,7 +724,8 @@ export class Drafts {
       const before = await this.item(campaignId, runId, itemId);
       if (!ACCEPTS[before.kind].includes(s.action.type))
         throw new HttpError(422, before.kind === "cue" ? "a Prep cue is fired from Prep" : `this draft is accepted as ${ACCEPTS[before.kind].join(" or ")}`);
-      const forWhom = "characterId" in s.action ? [s.action.characterId] : s.action.type === "quest.issue" ? s.action.to : [];
+      const revealed = s.action.type === "quest.reveal" ? (await this.service.record(campaignId)).state.quests.get(s.action.questId) : undefined;
+      const forWhom = "characterId" in s.action ? [s.action.characterId] : s.action.type === "quest.issue" ? s.action.to : revealed ? revealed.holders.slice(0, 1) : [];
       if (before.kind === "suggestion" && (forWhom.length !== 1 || forWhom[0] !== before.suggestion?.characterId))
         throw new HttpError(422, "a suggestion is accepted for the character it names");
       if (before.status === "dismissed") throw new HttpError(409, "this draft was dismissed; restore it first");

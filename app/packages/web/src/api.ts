@@ -93,7 +93,7 @@ export interface DraftItem {
   action?: Action;
   prepId?: string;
   suggestion?: {
-    kind: "title" | "battle-memory" | "hidden-achievement" | "personal-opportunity" | "class-offers";
+    kind: "title" | "battle-memory" | "hidden-achievement" | "personal-opportunity" | "quest" | "class-offers";
     key: string;
     characterId: string;
     /** A Personal Opportunity: whether it affirms or tests the pattern, and the System's words with the offer. */
@@ -102,6 +102,8 @@ export interface DraftItem {
     /** Class offers: for the GM, each offer's role, what it weighs, and the book's rules and advice it crosses; and problems across the three. */
     offers?: { role: string; weighs: string; problems: string[]; warnings: string[]; everyFight?: boolean }[];
     problems?: string[];
+    /** Other readings of the same deed, each with what accepting it records. */
+    alternatives?: { label: string; why: string; accept: Action }[];
   };
   /** An event's reason per character. */
   reasons: { characterId: string; why: string }[];

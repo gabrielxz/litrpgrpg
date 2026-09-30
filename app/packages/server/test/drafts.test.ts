@@ -44,7 +44,7 @@ let classed: ({ output: unknown } | { problem: Problem })[] = [];
 let summarized: ({ output: unknown } | { problem: Problem })[] = [];
 let prompts: string[] = [];
 const noActions = { items: [], quests: [], ve: [], parties: [], counters: [], cues: [] };
-const noSuggestions = { titles: [], memories: [], hidden: [] };
+const noSuggestions = { titles: [], memories: [], hidden: [], quests: [], reveals: [] };
 const scripted = (_key: string, model: string): LanguageModel => ({
   model,
   async check() {},
@@ -302,14 +302,18 @@ describe("drafting from typed table talk", () => {
 
   it("drafts suggestions beside them, accepted as the grant each names, and raises none the GM has seen", async () => {
     const { gm, campaignId } = await table();
-    const hidden = { lines: ["L2"], characterId: "kara", name: "First to the Pill", deed: "Triggered by taking the only pill first.", attribute: "DEX", bonus: 3, why: "Nobody saw it coming." };
+    const hidden = { lines: ["L2"], characterId: "kara", name: "First to the Pill", deed: "Triggered by taking the only pill first.", attribute: "DEX", bonus: 3, why: "Nobody saw it coming.", alternative: { attribute: "PER", why: "She saw the pill first." } };
     const card = { lines: ["L2", "L4"], characterId: "kara", moment: "The pill, gone before anyone spoke", why: "A moment she will keep." };
-    suggested = [{ output: { titles: [], memories: [card], hidden: [hidden] } }];
+    const crew = { lines: ["L4"], characterId: "kara", category: "Faction", title: "The Lost Crew", issuer: "the co-op", difficulty: "Hard", objective: "Find the missing scavengers", count: null, countFixed: false, why: "The co-op asked." };
+    suggested = [{ output: { titles: [], memories: [card], hidden: [hidden], quests: [crew], reveals: [] } }];
     const run = await drafted(campaignId, gm);
     const byKind = (k: string) => run.items.find((i: { kind: string; suggestion?: { kind: string } }) => i.kind === "suggestion" && i.suggestion!.kind === k);
     const [memory, achievement] = [byKind("battle-memory"), byKind("hidden-achievement")];
     expect(memory).toMatchObject({ suggestion: { kind: "battle-memory", key: "The pill, gone before anyone spoke", characterId: "kara" }, action: { type: "memory.grant", characterId: "kara" } });
     expect(achievement).toMatchObject({ why: "Nobody saw it coming.", action: { type: "title.grant", title: { name: "First to the Pill", category: "Hidden Achievement", bonus: { DEX: 3 } } } });
+    expect(achievement.suggestion.alternatives).toEqual([{ label: "+3 PER", why: "She saw the pill first.", accept: { ...achievement.action, title: { ...achievement.action.title, bonus: { PER: 3 } } } }]);
+    const quest = byKind("quest");
+    expect(quest).toMatchObject({ suggestion: { key: "The Lost Crew", characterId: "kara" }, action: { type: "quest.issue", quest: { id: "Q-101", category: "Faction", issuer: "the co-op" }, to: ["kara"] } });
 
     const accept = (item: { itemId: string }, action: unknown) => call("POST", `/campaigns/${campaignId}/drafts/${run.id}/${item.itemId}/accept`, gm, { id: randomUUID(), action });
     // A suggestion records a grant, edited or not, and only for the character it names.
@@ -319,15 +323,33 @@ describe("drafting from typed table talk", () => {
     expect(ok.status).toBe(201);
     expect(ok.json.appended.envelope).toMatchObject({ source: "suggestion", action: { type: "title.grant", title: { name: "Quickest Hand" } } });
     expect((await call("POST", `/campaigns/${campaignId}/drafts/${run.id}/${memory.itemId}/dismiss`, gm)).status).toBe(200);
+    expect((await accept(quest, quest.action)).status).toBe(201);
 
     // The same talk drafted again: the dismissed card and the accepted title stay as the GM left them.
-    suggested = [{ output: { titles: [], memories: [{ ...card, moment: "Kara's pill" }], hidden: [hidden] } }];
+    suggested = [{ output: { titles: [], memories: [{ ...card, moment: "Kara's pill" }], hidden: [hidden], quests: [], reveals: [] } }];
     const again = await drafted(campaignId, gm);
     expect(again.items.filter((i: { kind: string }) => i.kind === "suggestion")).toEqual([]);
     expect(again.dropped.map((d: { why: string }) => d.why)).toEqual([
       "a Battle Memory Card for Kara was suggested before (dismissed)",
       "First to the Pill for Kara was suggested before (accepted)",
     ]);
+  });
+
+  it("drafts the partial reveal of an obscured Hidden quest, recorded for its holder", async () => {
+    const { gm, player, campaignId } = await table();
+    const issued = await call("POST", `/campaigns/${campaignId}/actions`, gm, {
+      id: randomUUID(),
+      action: { type: "quest.issue", quest: { id: "Q-101", category: "Hidden", title: "Stayed Hand", difficulty: "Moderate", objective: "Spare what yields", hidden: "obscured" }, to: ["kara"] },
+    });
+    const questId = issued.json.envelope.id as string;
+    suggested = [{ output: { ...noSuggestions, reveals: [{ lines: ["L2"], questId, name: "Let It Go", why: "She spared it again." }] } }];
+    const run = await drafted(campaignId, gm);
+    const reveal = run.items.find((i: { kind: string }) => i.kind === "suggestion");
+    expect(reveal).toMatchObject({ suggestion: { kind: "quest", key: "Q-101", characterId: "kara" }, action: { type: "quest.reveal", questId, name: "Let It Go" } });
+    const ok = await call("POST", `/campaigns/${campaignId}/drafts/${run.id}/${reveal.itemId}/accept`, gm, { id: randomUUID(), action: { ...reveal.action, name: "Let Them Go" } });
+    expect(ok.status).toBe(201);
+    const log = (await call("GET", `/campaigns/${campaignId}`, player)).json.characters[0].quests;
+    expect(log[0]).toMatchObject({ hiddenName: "Let Them Go" });
   });
 
   it("drafts a Personal Opportunity at the sweep, issued from the draft, its note kept off the player's log", async () => {
