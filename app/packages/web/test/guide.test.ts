@@ -7,7 +7,7 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { parse } from "../src/guide/markdown.tsx";
+import { darkOf, parse } from "../src/guide/markdown.tsx";
 import { GROUPS, PAGES, SOURCES, guideFor } from "../src/guide/pages.ts";
 
 const SHOTS = join(import.meta.dirname, "..", "public", "guide-shots");
@@ -32,7 +32,8 @@ describe("the user guide", () => {
   it("links only to its own pages and shows only screenshots it has", () => {
     for (const [id, md] of SOURCES) {
       for (const m of md.matchAll(/\]\(guide:([^)]+)\)/g)) expect(PAGES.has(m[1]!), `${id} links to ${m[1]}`).toBe(true);
-      for (const b of parse(md)) if (b.kind === "shot") expect(existsSync(join(SHOTS, b.src)), `${id} shows ${b.src}`).toBe(true);
+      for (const b of parse(md))
+        if (b.kind === "shot") for (const src of [b.src, darkOf(b.src)]) expect(existsSync(join(SHOTS, src)), `${id} shows ${src}`).toBe(true);
     }
   });
 

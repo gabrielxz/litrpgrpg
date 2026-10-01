@@ -1324,6 +1324,11 @@ details.typed > summary {
 .sheet__tags:empty {
   display: none;
 }
+/* gb.css keeps a tag on one line; on a sheet the Saturation tag outgrows the card, so it wraps there. */
+.sheet__tags > .tag {
+  white-space: normal;
+  max-width: 100%;
+}
 .sheet .vital {
   grid-template-columns: 4.5rem 1fr 5.5rem;
 }

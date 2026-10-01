@@ -1,7 +1,8 @@
 /**
  * The user guide's screenshots (app/DESIGN.md, M4, "User guide"): seeds a campaign from the
  * rehearsal pack through the development API, then drives headless Chrome over its debugging
- * protocol to capture each screen into `public/guide-shots/`. Needs the development servers
+ * protocol to capture each screen into `public/guide-shots/`, in the light theme and the dark
+ * (`<name>-dark.webp`). Needs the development servers
  * running (app-api on 8787 with DEV_SIGNIN, app-web on 5173) and Google Chrome.
  *
  *   node scripts/guide-shots.ts            every shot
@@ -193,6 +194,10 @@ class Page {
       s.dispatchEvent(new Event("change", { bubbles: true }));
     })()`);
   }
+  async theme(scheme: "light" | "dark") {
+    await this.send("Emulation.setEmulatedMedia", { features: [{ name: "prefers-color-scheme", value: scheme }, { name: "prefers-reduced-motion", value: "reduce" }] });
+    await sleep(400);
+  }
   async settle() {
     // The development sign-in's tag is not part of any screen a table sees.
     await this.eval(`document.querySelectorAll(".topbar .tag").forEach((t) => (t.style.display = "none"))`);
@@ -223,9 +228,15 @@ class Page {
       const h = await this.eval<number>(`document.documentElement.scrollHeight`);
       clip = { x: 0, y: 0, width: WIDTH, height: Math.min(h, opts.maxHeight ?? 1500) };
     }
-    const { data } = (await this.send("Page.captureScreenshot", { format: "webp", quality: 88, captureBeyondViewport: true, clip: { ...clip, scale: 1 } })) as { data: string };
-    writeFileSync(join(OUT, `${name}.webp`), Buffer.from(data, "base64"));
-    console.log(`  ${name}.webp  ${Math.round(clip.width)}×${Math.round(clip.height)}`);
+    // Each shot in both themes: the console follows the reader's light or dark setting, and the
+    // guide shows the one that matches (a player's screen is dark in both).
+    for (const theme of ["light", "dark"] as const) {
+      await this.theme(theme);
+      const { data } = (await this.send("Page.captureScreenshot", { format: "webp", quality: 88, captureBeyondViewport: true, clip: { ...clip, scale: 1 } })) as { data: string };
+      writeFileSync(join(OUT, `${name}${theme === "dark" ? "-dark" : ""}.webp`), Buffer.from(data, "base64"));
+    }
+    await this.theme("light");
+    console.log(`  ${name}.webp, ${name}-dark.webp  ${Math.round(clip.width)}×${Math.round(clip.height)}`);
   }
 }
 

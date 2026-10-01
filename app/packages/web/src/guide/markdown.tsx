@@ -47,6 +47,9 @@ export function parse(md: string): Block[] {
   return blocks;
 }
 
+/** A screenshot's dark-theme capture: `gm-party.webp` is `gm-party-dark.webp`. */
+export const darkOf = (src: string) => src.replace(/(\.[a-z]+)$/, "-dark$1");
+
 /** Where a link goes: `guide:<id>` is another page of the guide. */
 export const hrefOf = (target: string) => (target.startsWith("guide:") ? `/guide/${target.slice(6)}` : target);
 
@@ -121,7 +124,11 @@ export function Markdown({ blocks, shotBase, onLink }: { blocks: Block[]; shotBa
             return (
               <figure key={i} className="guide__shot">
                 <a href={`${shotBase}${b.src}`} target="_blank" rel="noreferrer">
-                  <img src={`${shotBase}${b.src}`} alt={b.caption} loading="lazy" />
+                  {/* The dark theme's capture for a reader in dark mode, as the guide itself follows the setting. */}
+                  <picture>
+                    <source srcSet={`${shotBase}${darkOf(b.src)}`} media="(prefers-color-scheme: dark)" />
+                    <img src={`${shotBase}${b.src}`} alt={b.caption} loading="lazy" />
+                  </picture>
                 </a>
                 <figcaption>{t(b.caption)}</figcaption>
               </figure>
