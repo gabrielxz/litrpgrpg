@@ -108,7 +108,7 @@ Edits an app session forces, each with Gabriel's ruling or Claude's recommendati
 
 ### Next app session
 
-**State (2026-09-30, seventeenth close).** Rules 0.1.40, `make app-check` green (engine 236, record 139, server 86, listening 191, web 12). Committed, not pushed. This session:
+**State (2026-09-30, seventeenth close).** Rules 0.1.40, `make app-check` green (engine 236, record 139, server 86, listening 191, web 12). Everything pushed and deployed (last: 73c7b2e, run green, health 200). This session:
 - **The Hidden Achievements drafter follows the book's prompt** (rules 0.1.40): one to three a campaign arc, with each character's earned Hidden Achievements in the request, the bonus higher for the less likely deed, the book's example, the trigger for the GM only. Not re-measured against the model.
 - **The user guide** at `/guide`, 29 pages written from the running code (every GM section, setup, sessions, listening, and six player pages), open without signing in; the top bar's **Guide** opens the page for the screen the reader is on, in its own tab. Screenshots come from `make guide-shots` (the development servers running): a campaign seeded from the rehearsal pack, captured by headless Chrome. `test/guide.test.ts` holds links, shots, and Markdown; `app/CLAUDE.md` has THE GUIDE rule. The deploy workflow now deploys a guide-page edit (it skipped Markdown under `app/`).
 - **"Set up the table"** on a new campaign's Party, from the canvas: invite, session, clock, each Done from the record, with **Hide**. The canvas's painting slot for an empty campaign is not built (Gabriel keeps the current paintings).
@@ -118,7 +118,7 @@ Edits an app session forces, each with Gabriel's ruling or Claude's recommendati
 
 **Then the plan changed** (Gabriel, 2026-09-30): the first real play is the tutorial, Phases 1 and 2 one-on-one with one player, fixed between players, before the group's Phase 3. The script is `app/packs/tutorial-solo-run-sheet.html` (private artifact https://claude.ai/artifact/N6btfjocLmnA12aFaoJZfc). Class offers with humans wait until Level 10, after the tutorial (it ends at Level 4 or 5); the depot-fence run sheet's solo dry run still exercises them. Gaps the script found: Marisol Vega has no stat block in `rules/tutorial.yaml` (a High Ground player who helps her fights two-on-one; the sheet improvises her through "Someone not in the Bestiary"), and the first-kill box (queued for the book).
 
-**Next.** Gabriel's first solo tutorial night. Before the group's Phase 3, a ten-minute check with everyone (join, consent, a line each, a die). Superseded: the depot-fence rehearsal night. Afterward: his notes, the test recordings, and the drafts measured. Push when he says (it deploys).
+**Next.** Gabriel's first solo tutorial night. Before the group's Phase 3, a ten-minute check with everyone (join, consent, a line each, a die). Superseded: the depot-fence rehearsal night. Afterward: his notes, the test recordings, and the drafts measured.
 
 **Found while writing the guide**, for Gabriel's call (from reading code; none seen failing at a table):
 - A player's **Ask the rules** and the HVE section's **Draft an offer** show without a campaign key and return the raw server error; every other AI control checks for the key first.
