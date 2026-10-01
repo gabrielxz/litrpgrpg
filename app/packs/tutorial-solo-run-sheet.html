@@ -1,0 +1,482 @@
+<title>Tutorial Solo Run Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Chakra+Petch:wght@600;700&family=EB+Garamond:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root {
+  --ground: #f4ede1;
+  --surface: #fbf7f0;
+  --sunken: #ece3d3;
+  --line: #e0d4c0;
+  --line-strong: #cbbda6;
+  --text: #131b20;
+  --dim: #55595a;
+  --system: #0b6f80;
+  --system-wash: rgba(46, 180, 198, 0.1);
+  --world: #7d5f1e;
+  --danger: #a3322a;
+  --ok: #4f7a43;
+  --key-bg: #131b20;
+  --key-text: #fbf7f0;
+  --focus: #131b20;
+  --ui: "Alegreya Sans", "Segoe UI", system-ui, sans-serif;
+  --display: "Chakra Petch", "Alegreya Sans", system-ui, sans-serif;
+  --prose: "EB Garamond", Georgia, "Times New Roman", serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --ground: #0e1012;
+    --surface: #1c2125;
+    --sunken: #15191c;
+    --line: #2f373d;
+    --line-strong: #4a535a;
+    --text: #e6e1d6;
+    --dim: #a39d90;
+    --system: #7fd9e3;
+    --system-wash: rgba(46, 180, 198, 0.12);
+    --world: #d4b26a;
+    --danger: #f08a7e;
+    --ok: #95bd8a;
+    --key-bg: #e6e1d6;
+    --key-text: #0e1012;
+    --focus: #e6e1d6;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ground: #0e1012;
+  --surface: #1c2125;
+  --sunken: #15191c;
+  --line: #2f373d;
+  --line-strong: #4a535a;
+  --text: #e6e1d6;
+  --dim: #a39d90;
+  --system: #7fd9e3;
+  --system-wash: rgba(46, 180, 198, 0.12);
+  --world: #d4b26a;
+  --danger: #f08a7e;
+  --ok: #95bd8a;
+  --key-bg: #e6e1d6;
+  --key-text: #0e1012;
+  --focus: #e6e1d6;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--text);
+  font: 17px/1.55 var(--ui);
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 50rem; margin: 0 auto; padding-inline: 16px; padding-block: 0 5rem; }
+
+/* The bar: where you are, how far along, and a jump to any part */
+.bar {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 5;
+  background: var(--ground);
+  border-bottom: 1px solid var(--line-strong);
+}
+.bar__in { max-width: 50rem; margin: 0 auto; padding: 0.55rem 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; }
+.bar__name { font: 700 0.95rem/1 var(--display); letter-spacing: 0.08em; text-transform: uppercase; }
+.bar__jump { display: flex; flex-wrap: wrap; gap: 0.15rem 0.7rem; font-size: 0.9rem; }
+.bar__jump a { color: var(--dim); text-decoration: none; }
+.bar__jump a:hover { color: var(--text); text-decoration: underline; }
+.bar__progress { margin-left: auto; font: 500 0.8rem/1 var(--mono); color: var(--dim); font-variant-numeric: tabular-nums; }
+.meter { flex-basis: 100%; height: 3px; background: var(--line); }
+.meter i { display: block; height: 100%; width: 0; background: var(--system); transition: width 0.2s; }
+
+header.top { padding-block: 2.2rem 1rem; }
+h1 { font: 700 2rem/1.1 var(--display); letter-spacing: 0.02em; margin: 0 0 0.4rem; text-wrap: balance; }
+.lede { color: var(--dim); margin: 0; max-width: 40rem; }
+
+h2 { font: 700 1.35rem/1.2 var(--display); letter-spacing: 0.02em; margin: 3rem 0 0.3rem; scroll-margin-top: 5rem; text-wrap: balance; }
+h2 .part { display: block; font: 500 0.72rem/1 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--system); margin-bottom: 0.45rem; }
+h3 { font: 700 1.05rem/1.3 var(--ui); margin: 2rem 0 0.2rem; scroll-margin-top: 5rem; }
+.when { font: 500 0.78rem/1.4 var(--mono); color: var(--dim); margin: 0 0 0.8rem; }
+p { margin: 0 0 0.8rem; }
+
+/* The verdict */
+.verdict { background: var(--surface); border: 1px solid var(--line); padding: 1.1rem 1.25rem; margin: 0.5rem 0 1.5rem; }
+.verdict h2 { margin-top: 0; }
+.verdict ol { margin: 0.4rem 0 0; padding-left: 1.3rem; }
+.verdict li + li { margin-top: 0.35rem; }
+
+/* The key to the line kinds */
+.key { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.5rem 1.25rem; font-size: 0.92rem; margin: 0 0 1rem; padding: 0; list-style: none; }
+.key li { display: flex; gap: 0.5rem; align-items: baseline; }
+.tagk { flex: none; font: 500 0.68rem/1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; padding: 0.22rem 0.4rem; border: 1px solid var(--line-strong); color: var(--dim); }
+
+/* Steps */
+ol.steps { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.step { display: grid; grid-template-columns: 1.6rem minmax(0, 1fr); gap: 0.1rem 0.6rem; padding: 0.7rem 0; border-bottom: 1px solid var(--line); }
+.step input { margin: 0.3rem 0 0; width: 1.1rem; height: 1.1rem; accent-color: var(--system); cursor: pointer; }
+.step input:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.step > div > * + * { margin-top: 0.5rem; }
+.step > div > p { margin-bottom: 0; }
+.step.done > div { opacity: 0.45; }
+.step.done .say, .step.done .sys { display: none; }
+.lab { font: 500 0.66rem/1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); margin-right: 0.35rem; }
+
+.say { font: 1.12rem/1.55 var(--prose); background: var(--sunken); padding: 0.7rem 0.95rem; border-left: 3px solid var(--line-strong); }
+.say .lab { display: block; margin-bottom: 0.35rem; }
+.sys { font-style: italic; color: var(--system); background: var(--system-wash); padding: 0.55rem 0.95rem; }
+.sys .lab { font-style: normal; color: var(--system); }
+.players { padding-left: 0.95rem; border-left: 3px dotted var(--line-strong); }
+.if { padding-left: 0.95rem; border-left: 3px solid var(--world); }
+.if .lab { color: var(--world); }
+.warn { padding-left: 0.95rem; border-left: 3px solid var(--danger); }
+.warn .lab { color: var(--danger); }
+.step ul { margin: 0.3rem 0 0; padding-left: 1.15rem; }
+.step li + li { margin-top: 0.2rem; }
+
+kbd {
+  font: 500 0.78rem/1 var(--mono);
+  background: var(--key-bg);
+  color: var(--key-text);
+  padding: 0.18rem 0.4rem 0.2rem;
+  white-space: nowrap;
+  border-radius: 2px;
+}
+.where { font: 500 0.72rem/1 var(--mono); letter-spacing: 0.06em; color: var(--system); border: 1px solid currentColor; padding: 0.12rem 0.35rem; white-space: nowrap; }
+.w { color: var(--world); }
+b { font-weight: 700; }
+
+.aside { background: var(--surface); border: 1px solid var(--line); padding: 1rem 1.2rem; margin-top: 1rem; }
+.aside h3 { margin-top: 0; }
+.aside dl { margin: 0; }
+.aside dt { font-weight: 700; margin-top: 0.7rem; }
+.aside dt:first-child { margin-top: 0; }
+.aside dd { margin: 0.15rem 0 0; }
+
+.reset { margin-top: 3rem; display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; font-size: 0.9rem; color: var(--dim); }
+button { font: 500 0.85rem/1 var(--ui); padding: 0.5rem 0.8rem; background: var(--surface); color: var(--text); border: 1px solid var(--line-strong); cursor: pointer; }
+button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+button.danger { border-color: var(--danger); color: var(--danger); }
+
+@media (max-width: 34rem) {
+  body { font-size: 16px; }
+  h1 { font-size: 1.6rem; }
+  .bar__progress { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .meter i { transition: none; } }
+</style>
+
+<div class="bar">
+  <div class="bar__in">
+    <span class="bar__name">Tutorial, solo</span>
+    <nav class="bar__jump" aria-label="Parts">
+      <a href="#before">Before</a>
+      <a href="#setup">Setup</a>
+      <a href="#character">Character</a>
+      <a href="#p1">Phase 1</a>
+      <a href="#p2">Phase 2</a>
+      <a href="#arrival">The arrival</a>
+      <a href="#walk">Walk down</a>
+      <a href="#close">Close</a>
+      <a href="#others">Other encounters</a>
+      <a href="#trouble">Trouble</a>
+    </nav>
+    <span class="bar__progress" id="progress">0 of 0</span>
+    <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+  </div>
+</div>
+
+<main class="wrap">
+<header class="top">
+  <h1>The Tutorial, One Player</h1>
+  <p class="lede">Phases 1 and 2 with one player and you: the void, the landing, one encounter, the arrival fight, and the walk down toward the Node. About an hour, with the app checked along the way. Written for the first player with The Locked Cache; the other seven encounters' presses are at the end, for the next players. The book (The Tutorial) wins wherever this sheet and it differ.</p>
+</header>
+
+<ul class="key" aria-label="How to read a step">
+  <li><span class="tagk">Say</span>Read aloud or paraphrase.</li>
+  <li><span class="tagk" style="color:var(--system);border-color:var(--system)">System</span>What the player's screen shows.</li>
+  <li><span class="tagk">Player</span>What they do on their own screen.</li>
+  <li><span class="tagk" style="color:var(--world);border-color:var(--world)">If</span>A branch; skip it if it does not happen.</li>
+  <li><kbd>Button</kbd> Press this, exactly as labeled.</li>
+  <li><span class="where">Section</span> Where the button is.</li>
+</ul>
+
+<!-- ================================================================ BEFORE -->
+<h2 id="before"><span class="part">Before the night</span>Get ready</h2>
+<ol class="steps">
+  <li class="step" data-id="b-pick"><input type="checkbox" aria-label="Done"><div>
+    <p><b>Pick the player</b>: the one most patient with a stall, since tonight is also the app's first real night. Tell them it runs about an hour, one-on-one, on a laptop in Chrome with headphones, and that they will build their character at the start.</p>
+  </div></li>
+  <li class="step" data-id="b-choose"><input type="checkbox" aria-label="Done"><div>
+    <p><b>Choose their probe and encounter.</b> This sheet scripts <b>probe 1</b> (three sounds, the third their name said wrong) with <b>The Locked Cache</b>: it uses the most of the app (a System notice from Prep, a check, loot, a VE award) and its arrival is a Husk Crawler in the wreck, which probe 1's sounds set up. For another player, pick a different pair; their presses are under Other encounters.</p>
+  </div></li>
+  <li class="step" data-id="b-notes"><input type="checkbox" aria-label="Done"><div>
+    <p><b>Open a notes file</b> beside the app: a line whenever the app stalls you, whenever the player cannot find something, and whenever a draft is late, wrong, or missing. Note the clock time at each phase.</p>
+  </div></li>
+</ol>
+
+<!-- ================================================================ SETUP -->
+<h2 id="setup"><span class="part">Setup · before the player joins</span>The campaign</h2>
+<ol class="steps">
+  <li class="step" data-id="s-camp"><input type="checkbox" aria-label="Done"><div>
+    <p>On Home, start the campaign under its real name. <span class="where">Table</span> On the <b>AI</b> card, paste your Anthropic key, <kbd>Check and save</kbd>, wait for <b>Works</b>.</p>
+  </div></li>
+  <li class="step" data-id="s-pack"><input type="checkbox" aria-label="Done"><div>
+    <p><span class="where">Prep</span> On the <b>tutorial pack</b> panel, press <kbd>Load the tutorial pack</kbd>. Its notices, fights, loot, and NPCs appear grouped by phase. Phase 1 and Phase 2 are the groups tonight.</p>
+  </div></li>
+  <li class="step" data-id="s-invite"><input type="checkbox" aria-label="Done"><div>
+    <p><span class="where">Table</span> Under <b>Invite links</b>, type <b>1</b>, <kbd>New invite link</kbd>, <kbd>Copy</kbd>, and send it to the player. Later players get their own links.</p>
+  </div></li>
+</ol>
+
+<!-- ================================================================ CHARACTER -->
+<h2 id="character"><span class="part">With the player · 10 to 15 minutes</span>Joining and the character</h2>
+<ol class="steps">
+  <li class="step" data-id="c-join"><input type="checkbox" aria-label="Done"><div>
+    <p class="players"><span class="lab">Player</span>Opens the link, signs in with Google, presses <b>Join the campaign</b>. Their screen reads <i>Interface: awaiting registration.</i></p>
+  </div></li>
+  <li class="step" data-id="c-build"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Say</span>"Press <b>Build a character</b> and choose <b>Build your own</b>. Your character is you, or someone like you, on an ordinary day: a name, one or two lines about your life and work, and 40 points across seven Attributes, each from 3 to 10. The line under each number tells you what it means. Don't overthink it."</p>
+    <p class="players"><span class="lab">Player</span>Fills the form and presses <b>Register</b>. Their interface appears at Level 1.</p>
+    <p class="if"><span class="lab">If</span>they would rather not build one tonight: <b>Play a ready-made character</b> and pick Kara, Joe, or Andre.</p>
+  </div></li>
+  <li class="step" data-id="c-pockets"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Say</span>"One more thing: what were you wearing, and what's in your pockets right now, at this moment on an ordinary day?"</p>
+    <p class="if"><span class="lab">If</span>they name something useful (a pocketknife, a lighter, a phone): <span class="where">Party</span> Record panel <b>Items</b>, <b>Give</b>, to their character, type it, and record it. The System provides nothing else; everything after this is scavenged.</p>
+  </div></li>
+  <li class="step" data-id="c-consent"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Say</span>"The app can listen to us and draft what happened for me to check; I'm testing that tonight. There's a strip at the top of your screen: <b>Consent to listening</b>. Read it and say yes if you're happy with it. <b>Test recordings</b> is separate: it keeps your audio seven days so I can measure how well it hears."</p>
+    <p>Press <kbd>Consent to listening…</kbd> in your own table bar too, then <kbd>I consent</kbd>.</p>
+  </div></li>
+  <li class="step" data-id="c-session"><input type="checkbox" aria-label="Done"><div>
+    <p>Table bar: <kbd>Start a session</kbd>, name it <b>Arrival: [the character's name]</b>, keep them ticked, press <kbd>Start Arrival: …</kbd>. Then <kbd>Start listening</kbd>, and once it shows <b>Listening</b>, <kbd>Record for testing</kbd>.</p>
+    <p class="say"><span class="lab">Say</span>"Say a sentence about your character, as yourself." Watch <span class="where">Events</span>: the line should appear in <b>Heard this session</b> under their name. If it does not, the table bar's listening drawer names the problem.</p>
+  </div></li>
+  <li class="step" data-id="c-frame"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Say</span>"It's an ordinary day. You're doing whatever you'd be doing at this hour. Tell me where you are." Let them answer in a sentence, then begin. Say nothing about the world: the void is the introduction.</p>
+  </div></li>
+</ol>
+
+<!-- ================================================================ PHASE 1 -->
+<h2 id="p1"><span class="part">Phase 1 · 2 to 5 minutes</span>The Threshold</h2>
+<p class="when">Keep it short. The character should stay disoriented.</p>
+<ol class="steps">
+  <li class="step" data-id="p1-void"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Read aloud: the void</span>Between one moment and the next, the world goes.<br><br>No flash, and no sound of anything breaking. The ground is gone from under you, and then the direction the ground used to be is gone too. You reach out. There is no arm to reach with, and something reaches anyway.<br><br>You cannot feel your body. You can still think, and when you try to move, something answers.<br><br>Far off, in a direction you have no name for, there are others. Thousands of them, more, felt the way a crowd is felt in a dark stadium.<br><br>Then something notices you. All of it at once, the way the ocean would notice a swimmer.</p>
+    <p><span class="where">Prep</span> On <b>The Void</b> (Phase 1), press <kbd>Send…</kbd>, keep their character ticked, <kbd>Send the notice</kbd>. Read it aloud as it lands.</p>
+    <p class="sys"><span class="lab">System</span>Consciousness anchored. Native world: Earth. Status: Integrated. Population: 7,916,442,203. Integration stability: provisional. Tutorial: provisioned. Prior exemptions: expired. Observation: begun.</p>
+    <p>If they ask the System a question, nothing answers.</p>
+  </div></li>
+  <li class="step" data-id="p1-probe"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Read aloud: the probe</span>Somewhere below you something is repeating. Three sounds, the same three, over and over, and the third one is your name said wrong.</p>
+    <p>Then wait. There is no prescribed answer. Note what they do: go toward it, hold still and work out the pattern, or something else.</p>
+  </div></li>
+  <li class="step" data-id="p1-line"><input type="checkbox" aria-label="Done"><div>
+    <p><b>The System's private line.</b> <span class="where">Party</span> Record panel <b>System message</b>: tick their character, and under <b>The System says</b> type the line that fits what they did:</p>
+    <ul>
+      <li>went toward it: <i>Approach logged. Threshold tolerance: above baseline.</i></li>
+      <li>pulled back: <i>Withdrawal logged. Risk profile: conservative. Revising estimate.</i></li>
+      <li>kept listening, working it out: <i>Repeat engagement logged. Fixation: probable.</i></li>
+      <li>did nothing: <i>No response recorded. Recording anyway.</i></li>
+    </ul>
+    <p>Send it with the panel's send button. It is the first System message you write yourself.</p>
+  </div></li>
+  <li class="step" data-id="p1-fall"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Read aloud: the fall</span>The dark lets go all at once. There is ground, and it hits you before you know you are falling: grit, heat, the taste of scorched metal. Above you, a sky the wrong color.<br><br>Your ears come back last. Far off across the rubble, other things are hitting the ground, a scatter of impacts too spread out to count.</p>
+    <p><span class="where">Prep</span> <b>The Fall</b> <kbd>Send…</kbd>, <kbd>Send the notice</kbd>.</p>
+    <p class="sys"><span class="lab">System</span>Integration complete. Vitals: nominal.</p>
+    <p class="if"><span class="lab">If</span>they went toward the sounds: they land facing the thing that made them, and see it first. If they held still and worked out the pattern: they land knowing its rhythm, and will know the moment it changes. Carry that into the arrival.</p>
+  </div></li>
+</ol>
+
+<!-- ================================================================ PHASE 2 -->
+<h2 id="p2"><span class="part">Phase 2 · 10 to 20 minutes</span>The Violent Arrival: The Locked Cache</h2>
+<ol class="steps">
+  <li class="step" data-id="p2-valley"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Read aloud: the valley</span>You wake on a slope of broken masonry, none of it from the same building, all of it shifting a little as you stand.<br><br>You are on the inside rim of a valley, and the valley is made of parts. Below you a forest is giving off its own light, blue, moving when there is no wind. Beyond it, at the bottom where everything comes to rest, a gray hill of debris stands with paths of wreckage fanning out from it like something poured.<br><br>Around the rim, far off, other things are still hitting the ground in little bursts of dust. After a moment, one of them gets up.<br><br>Nothing here grew together. Somebody put it here.</p>
+    <p class="if"><span class="lab">If</span>they look around: a line of rain to the north standing still as a wall, a tower to the west hanging in the pieces it broke into, windows to the south, and behind them, past the rim, a wall of moving light where the horizon should be. Every path of wreckage runs down to the hill.</p>
+  </div></li>
+  <li class="step" data-id="p2-cache"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Read aloud: the cache</span>A box stands upright in the debris. Clean. Humming. There is no dust on it and everything around it is buried.<br><br>Three things are set into its face: a narrow slot the width of a blade, a shallow dish, and a panel of symbols that is either counting up or counting down. Forty feet to your right, a heap of wreckage is still burning.<br><br>When your hand comes near the dish, text arrives behind your eyes.</p>
+    <p>When their hand nears the dish: <span class="where">Prep</span> <b>The Locked Cache</b> <kbd>Send…</kbd>, <kbd>Send the notice</kbd>.</p>
+    <p class="sys"><span class="lab">System</span>Thermal input required. Threshold: 40 degrees. Current reading: 36.6. Insufficient.</p>
+    <p class="say"><span class="lab">Read aloud</span>Behind you, deeper in the wreck, a sheet of metal clatters down flat, the way it would if something stepped on it.</p>
+  </div></li>
+  <li class="step" data-id="p2-open"><input type="checkbox" aria-label="Done"><div>
+    <p><b>Any one of three inputs opens it</b> (yours only):</p>
+    <ul>
+      <li><b>Heat:</b> a hot fragment from the burning wreck, pressed into the dish. Automatic if they think of the wreck; if they ask what nearby is hot, a PER check against 65.</li>
+      <li><b>Blade:</b> any hard edge fits the slot.</li>
+      <li><b>Symbols:</b> watching thirty seconds shows it counts seconds since Integration; pressing it as the count lands on a multiple of 100 opens it. Tell them when the next one is due.</li>
+      <li><b>Force it:</b> STR check against 115. It opens; the buckler and the tablet are crushed, the pill survives.</li>
+    </ul>
+    <p class="say"><span class="lab">Say, for a check</span>"Open <b>Dice</b> in your tray. <b>Check</b>, pick Perception (or Strength), and roll." Compare their total to the number above, and tell them what happens. That teaches the roll before the fight does.</p>
+    <p class="if"><span class="lab">If</span>they work slowly, the creature arrives first: run the arrival, and they can open the cache afterward.</p>
+  </div></li>
+  <li class="step" data-id="p2-loot"><input type="checkbox" aria-label="Done"><div>
+    <p><b>When it opens</b>: <span class="where">Prep</span> <b>The Locked Cache: its contents</b> <kbd>Give…</kbd>, choose their character, <kbd>Give it to …</kbd>. Forced open: Record panel <b>Items</b>, <b>Give</b>, the Lesser Healing Pill alone.</p>
+    <p class="sys"><span class="lab">System</span>Item registered: Reactive Buckler.</p>
+    <p>Then the reward: Record panel <b>Award VE</b>, Source <b>Other</b> (note: the Locked Cache), their character, <b>30</b> for a clean open or <b>15</b> forced, <kbd>Award 30 VE</kbd>.</p>
+  </div></li>
+</ol>
+
+<!-- ================================================================ ARRIVAL -->
+<h2 id="arrival"><span class="part">Phase 2 · the arrival · 10 minutes</span>The first fight</h2>
+<p class="when">One Husk Crawler, Trivial, sized for one Level 1 character. Nobody dies in this fight.</p>
+<ol class="steps">
+  <li class="step" data-id="a-start"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Read aloud</span>The thing that knocked the metal down comes out of the wreck low and crooked: a body of plates and wire the size of a big dog, dragging one leg, its head turning in short jerks. It stops. The head turns toward you, and stays.</p>
+    <p><span class="where">Prep</span> On <b>The arrival: rubble, slopes, ruins</b>, press <kbd>Set up the fight</kbd>. Set their character's side to <b>The party</b>, <kbd>Start the fight</kbd>, <kbd>Roll Initial Momentum</kbd>.</p>
+    <p class="if"><span class="lab">If</span>probe 1 put them facing it, or they spotted it first: before rolling Momentum, open <b>An ambush? Give the Surprise Beat</b> and tick their character. They act once before anything else.</p>
+  </div></li>
+  <li class="step" data-id="a-roll"><input type="checkbox" aria-label="Done"><div>
+    <p><b>Step 1: roll and see what happens.</b> Do not explain the Clash first.</p>
+    <p class="say"><span class="lab">Say</span>"It's coming. On your screen, in the tray, press <b>Act</b>, then <b>Attack…</b>. Pick it as the target, and for <b>Attack with</b> pick Strength if you're swinging something, Dexterity if you're throwing it. Then attack."</p>
+    <p>When the Crawler attacks: on its row <kbd>Husk Crawler acts</kbd>, <kbd>Attack…</kbd>, target them, <kbd>Husk Crawler attacks (1 Beat)</kbd>. Their tray asks how they defend.</p>
+    <p class="say"><span class="lab">Say</span>"It's swinging at you. In your tray, pick how you defend: Dexterity to dodge, Fortitude to take it on something solid. Then <b>Roll the Clash</b>." Narrate the result in the world; give the damage without the formula.</p>
+  </div></li>
+  <li class="step" data-id="a-beats"><input type="checkbox" aria-label="Done"><div>
+    <p><b>Step 2: Beats and Zones</b>, when they ask whether they can do two things, or at the start of their second turn.</p>
+    <p class="say"><span class="lab">Say</span>"You get two Beats a turn: an attack is one, moving to the next area is one. You can see them as pips by your name. The areas are Zones; it's in yours."</p>
+  </div></li>
+  <li class="step" data-id="a-surge"><input type="checkbox" aria-label="Done"><div>
+    <p><b>Step 3: the Surge</b>, the first time they want an attack badly.</p>
+    <p class="say"><span class="lab">Say</span>"You can push. Tick <b>Surge</b> before you roll: it spends some Aether for +5 on this roll. Aether only comes back after the first full hour of rest, and that's hours away; you have enough for at least two of these."</p>
+    <p>Whatever they choose, say nothing about it.</p>
+  </div></li>
+  <li class="step" data-id="a-yield"><input type="checkbox" aria-label="Done"><div>
+    <p><b>Steps 4 and 5: the creature wins one, and Yield.</b> When a hit would drop them, their tray shows both totals, the Margin, and buttons: <b>Take 31</b>, <b>Yield 1 Beat: 11</b>, <b>Yield 2 Beats: 0</b>. Before they press:</p>
+    <p class="say"><span class="lab">Say, with the numbers on their screen</span>"That's a Margin of 31 and you have 12 Health. Before it lands: you can give ground. Give up one Beat from your next turn and the Margin drops by 20. Give up both and it drops by 40; your next turn is gone, and it can push you out of this Zone. What do you do?"</p>
+    <p>Then wait. Do not recommend an answer. This is the first Yield decision at your table, and they make it alone.</p>
+    <p class="if"><span class="lab">If</span>the dice give them a clean win, teach Yield after the fight with the same words and the book's example (Dana, Margin 31).</p>
+  </div></li>
+  <li class="step" data-id="a-down"><input type="checkbox" aria-label="Done"><div>
+    <p class="warn"><span class="lab">If they go Downed</span>they will not die here. Describe the Crawler losing interest, or starting to drag them, and someone's path crossing theirs. On their row, under <b>Your ruling:</b>, press <kbd>Stabilized</kbd>, then <kbd>Out</kbd> on the Crawler. They wake at 1 Health when the fight ends.</p>
+  </div></li>
+  <li class="step" data-id="a-end"><input type="checkbox" aria-label="Done"><div>
+    <p>When it dies: <kbd>End the fight…</kbd>, <kbd>End The arrival: rubble, slopes, ruins</kbd>, then in the aftermath <kbd>Settle …</kbd>.</p>
+    <p class="say"><span class="lab">Read aloud: the first kill</span>It stops moving all at once, the way a machine does.<br><br>Then something comes off it. Pale, slow, like heat over a road, except that it does not rise. It leans toward you, crosses the ground, and goes in through your chest. Warmth spreads down through your arms and legs.</p>
+    <p class="sys"><span class="lab">System</span>Kill confirmed. Grade F, Trivial. Volatile Energy absorbed: 2.</p>
+    <p class="say"><span class="lab">Say</span>"Look at your interface: Volatile Energy, 2 out of 80. That's what was holding that body together, and it's yours now. When you rest properly, it turns into progress toward your next level."</p>
+  </div></li>
+</ol>
+
+<!-- ================================================================ WALK DOWN -->
+<h2 id="walk"><span class="part">Phase 2 · the walk down · 5 minutes</span>Scavenging</h2>
+<ol class="steps">
+  <li class="step" data-id="w-finds"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Read aloud: two or three of these</span>A spear stands upright where it fell, pinning a sheet of tarpaulin to the ground.<br><br>A crystal the size of a thumb is fused into the masonry, glowing faintly through its own coat of dust.<br><br>A white case with a red cross on it has slid to a stop against a wall. The cross is almost the right shape.</p>
+    <p>For each they take: Record panel <b>Items</b>, <b>Give</b>, their character, the name as the catalog suggests it (<b>Spear</b>, an <b>Edge Shard</b> or <b>Pulse Shard</b> for the crystal, <b>Battered Medkit</b>), and record it.</p>
+    <p>Hold the rest of the book's list (armor scraps, the relic, the Resonance Glass, the Battered Communicator) for the other players' walks and the Node pile.</p>
+  </div></li>
+  <li class="step" data-id="w-summary"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Read aloud</span>The slope runs down toward the gray hill. Somewhere below, between you and it, something moves that walks like a person.</p>
+    <p><span class="where">Prep</span> <b>After the arrival</b> <kbd>Send…</kbd>. Change <b>7 minutes</b> to the minutes they actually spent since landing, then <kbd>Send the notice</kbd>.</p>
+    <p class="sys"><span class="lab">System</span>Survival duration: 12 minutes. First engagement: resolved. Behavioral telemetry: registered.</p>
+    <p>End the phase there, on the walk down. The Node and the others are Phase 3, with the group.</p>
+  </div></li>
+</ol>
+
+<!-- ================================================================ CLOSE -->
+<h2 id="close"><span class="part">The close · 10 minutes</span>Wrapping up</h2>
+<ol class="steps">
+  <li class="step" data-id="x-ask"><input type="checkbox" aria-label="Done"><div>
+    <p class="say"><span class="lab">Say, out of character</span>"That's the end of your arrival; you'll meet the others at the bottom of the valley. Two questions: was there anything on your screen you couldn't find, or didn't understand? And did anything feel slow?" Write it down. Ask them not to tell the others what happened.</p>
+  </div></li>
+  <li class="step" data-id="x-drafts"><input type="checkbox" aria-label="Done"><div>
+    <p><b>The drafts.</b> <span class="where">Events</span> Under <b>To review</b>, accept what happened (the probe choice, how they opened the cache, the Yield decision), dismiss what did not, and note each wrong one. <span class="where">Suggestions</span> Look, and accept or dismiss.</p>
+  </div></li>
+  <li class="step" data-id="x-sweep"><input type="checkbox" aria-label="Done"><div>
+    <p><span class="where">HVE</span> On their sheet, the accepted entries are checked in. Add what is missing from your own memory: the probe, the cache, the Yield. Weigh what they chose in light of what they knew; a choice made without knowing a rule says nothing about temperament. <kbd>Record the sweep</kbd>.</p>
+  </div></li>
+  <li class="step" data-id="x-end"><input type="checkbox" aria-label="Done"><div>
+    <p>Table bar: <kbd>End the session</kbd>, <kbd>Draft it from the record</kbd>, read it, <kbd>End Arrival: …</kbd>. Listening and the test recording stop with it.</p>
+    <p>Afterward, <span class="where">Table</span> <b>Test recordings</b>: download their track and the Timeline (kept 7 days).</p>
+  </div></li>
+</ol>
+
+<!-- ================================================================ OTHER ENCOUNTERS -->
+<h2 id="others"><span class="part">For the next players</span>The other encounters in the app</h2>
+<p>Read each encounter's text from the book (The Tutorial, Phase 2). The setup, character, Phase 1, arrival, walk down, and close above are the same for every player; give each a different probe and encounter. A check is the player's <b>Dice</b>, <b>Check</b>, against 65 (Easy), 90 (Moderate), or 115 (Hard). VE goes through Record panel <b>Award VE</b>, Source <b>Other</b>; items through <b>Items</b>, <b>Give</b>.</p>
+<div class="aside">
+  <dl>
+    <dt>1. The Dying Scavenger</dt>
+    <dd>Taking the stone, or waiting: Award VE <b>20</b> (a predator core). Talking to it (CHA, 65) and waiting: also <span class="where">Principles</span> <b>Award Insight</b>, any other aligned experience, <b>Preservation</b>, 1; and the Hidden quest <b>Let It Finish</b>: <span class="where">Quests</span>, Category <b>Hidden</b>, the log shows nothing readable, bind their character, issue (it is revealed in Phase 6). Killing it: nothing.</dd>
+    <dt>2. The Rubble Trap</dt>
+    <dd>Three rounds before the walker (the Husk Crawler) arrives. Taking the bar: Record panel <b>HP and Aether</b>, −3 HP. Checks: force it STR 90, lever it DEX 65, go still PER 90. Escape by any method: Award VE <b>20</b>; the bar is a club (Items, Give, <b>Club / Pipe / Crowbar</b>). If they let it pass, tick them for the Surprise Beat in the arrival.</dd>
+    <dt>4. The High Ground</dt>
+    <dd>To the fighter: Marisol Vega fights beside them, two-on-one. She has no stat block in the pack: once the fight starts, open <b>Someone joins the fight</b>, then <b>Someone not in the Bestiary</b>, name her, put her on their side, and give her a Level 1 human's numbers (about 12 HP, 2 Beats, Momentum Force 5), or run her swings by narration. To the circling man: run The Other Survivor below. To the spill: Items, Give, <b>Healing Pill</b> and <b>Knife / Dagger</b>; the arrival is the Frenzy Rat (<b>The arrival: near the treeline</b>).</dd>
+    <dt>5. The Resonance Flicker</dt>
+    <dd>Pull the shard: Items, Give, <b>Edge Shard</b>. Wait it out: <span class="where">Principles</span> Award Insight, 1, toward the family their behavior points to, and grant a Battle Memory (<b>Grant a Battle Memory</b>, the moment in a line). Break the column: Award VE <b>30</b>.</dd>
+    <dt>6. The Sorting Machine</dt>
+    <dd>Work out the rule (PER, 90), then one Skill Shard: Items, Give. Break it: Award VE <b>20</b>.</dd>
+    <dt>7. The Tally</dt>
+    <dd>Follow the arrow: Award VE <b>10</b>. Adding to it or destroying it changes nothing in the app; write it in your notes for Phase 4 (Kes saw it).</dd>
+    <dt>8. The Other Survivor</dt>
+    <dd>Ray Okafor and his nail gun. Talk him down: CHA, 65. Taking the gun: Items, Give, <b>Nail gun</b> (an improvised object). If their probe was 7 and they say <i>Okafor</i>, the gun comes down with no roll. Helped, Ray reaches the Node; left, he dies in the night. Note which.</dd>
+  </dl>
+</div>
+
+<!-- ================================================================ TROUBLE -->
+<h2 id="trouble"><span class="part">When it goes sideways</span>Trouble</h2>
+<div class="aside">
+  <dl>
+    <dt>You pressed the wrong thing</dt>
+    <dd><span class="where">Campaign log</span> Find it, <kbd>Undo</kbd>, confirm. In the fight, the tracker's <kbd>Undo</kbd> takes back the last tracker action.</dd>
+    <dt>Nothing happens in the fight</dt>
+    <dd>A Clash is waiting in the right column for a defense or a Take or Yield choice. Press <kbd>Roll the Clash</kbd> or the choice yourself.</dd>
+    <dt>The fight will not end</dt>
+    <dd>They are Downed. <b>Your ruling:</b> <kbd>Stabilized</kbd>.</dd>
+    <dt>The player cannot find something</dt>
+    <dd><span class="where">Player view</span> shows exactly their screen. Point them to it, and write it down.</dd>
+    <dt>Listening fails</dt>
+    <dd>Play on without it; you log moments by hand in <span class="where">Events</span> or at the sweep. Write down what the drawer said.</dd>
+    <dt>The player builds a character that will not register</dt>
+    <dd>The line above <b>Register</b> names what is missing: a name, a Background, or points not spent to exactly 40.</dd>
+  </dl>
+</div>
+
+<div class="reset">
+  <button type="button" id="reset">Clear all ticks</button>
+  <button type="button" id="reset-yes" class="danger" hidden>Yes, clear them</button>
+  <button type="button" id="reset-no" hidden>Keep them</button>
+</div>
+</main>
+
+<script>
+(function () {
+  var KEY = "tutorial-solo-run-sheet";
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { state = {}; }
+  var steps = Array.prototype.slice.call(document.querySelectorAll(".step"));
+  var progress = document.getElementById("progress");
+  var meter = document.getElementById("meter");
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+  function tally() {
+    var done = steps.filter(function (s) { return s.classList.contains("done"); }).length;
+    progress.textContent = done + " of " + steps.length;
+    meter.style.width = (steps.length ? (done / steps.length) * 100 : 0) + "%";
+  }
+  steps.forEach(function (s) {
+    var id = s.getAttribute("data-id");
+    var box = s.querySelector("input");
+    box.id = "tick-" + id;
+    if (state[id]) { box.checked = true; s.classList.add("done"); }
+    box.addEventListener("change", function () {
+      s.classList.toggle("done", box.checked);
+      if (box.checked) state[id] = 1; else delete state[id];
+      save();
+      tally();
+    });
+  });
+  tally();
+  var reset = document.getElementById("reset"), yes = document.getElementById("reset-yes"), no = document.getElementById("reset-no");
+  reset.addEventListener("click", function () { reset.hidden = true; yes.hidden = false; no.hidden = false; });
+  no.addEventListener("click", function () { reset.hidden = false; yes.hidden = true; no.hidden = true; });
+  yes.addEventListener("click", function () {
+    state = {}; save();
+    steps.forEach(function (s) { s.classList.remove("done"); s.querySelector("input").checked = false; });
+    tally();
+    reset.hidden = false; yes.hidden = true; no.hidden = true;
+  });
+})();
+</script>
