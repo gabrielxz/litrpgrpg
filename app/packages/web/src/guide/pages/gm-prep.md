@@ -15,7 +15,7 @@ Each kind fires its own way:
 - **Notice**: **Send…** opens the text, *The notice, as it will reach them*, for you to edit (fill in the counts the moment decides), and a **To:** row with a box for each living character. Every player's character is ticked to start. Press **Send the notice**.
 - **Loot**: **Give…** opens a **To** list: *The spoils, for the party to divide*, or one character. Press **Put it in the spoils** or **Give it to Nia**.
 - **NPC**: an NPC with HP shows **Joins the fight…** while a fight is running. Pick the **Side** and press **Mara joins The lobby**. An NPC without HP is a reference card for their name, who they are, and their line.
-- **Fight**: **Set up the fight** opens Combat's setup filled in with the fight's name, Zones, and creatures. Place the characters there and press **Start the fight**. See [Combat](guide:gm-combat).
+- **Fight**: **Set up the fight** opens Combat's setup filled in with the fight's name, Zones, and creatures. Place the characters there and press **Start the fight**. The button is hidden while a fight runs or its aftermath waits. See [Combat](guide:gm-combat).
 - **Quest**: **Issue…** opens the Quests form filled in. Pick the holders there and issue it. See [Quests](guide:gm-quests).
 
 Sending a notice, giving loot, and bringing in an NPC each show a preview first, including what each player will receive, and record when you press the button.

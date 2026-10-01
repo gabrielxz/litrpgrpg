@@ -75,6 +75,10 @@ import { newId } from "./tokens.ts";
 /** The longest paste a run takes: about an hour of talk. */
 export const MAX_TALK_CHARS = 60_000;
 export const MAX_TALK_LINES = 800;
+/** Whether a recorded action still applies: in the log, not voided, not rejected. */
+const standing = (record: CampaignRecord, id: string) =>
+  record.log.some((e) => e.id === id) && !record.state.voided.has(id) && !record.state.rejected.some((x) => x.envelope.id === id);
+
 /** Runs the GM's list carries, newest first. */
 export const RUNS_LISTED = 10;
 
@@ -690,19 +694,28 @@ export class Drafts {
     return `${s.kind === "battle-memory" ? "a Battle Memory Card" : s.key} for ${who} was suggested before (${how})`;
   }
 
-  /** The newest runs with their drafts, and any older run with a draft still open (live windows add runs quickly). */
+  /**
+   * The newest runs with their drafts, and any older run with a draft still waiting on the GM
+   * (live windows add runs quickly): one open, or one accepted whose action has since been undone.
+   */
   async list(campaignId: string, user: User | null): Promise<DraftRun[]> {
     await this.service.requireGm(campaignId, user);
+    const record = await this.service.record(campaignId);
+    // Undone is the record's to say, so those runs are found here and named to the query.
+    const accepted = await this.db.query("select distinct run_id, action_id from draft_items where campaign_id = $1 and status = 'accepted' and action_id is not null", [
+      campaignId,
+    ]);
+    const undoneRuns = [...new Set(accepted.filter((a) => !standing(record, a.action_id)).map((a) => a.run_id as string))];
     const runs = await this.db.query(
       `select * from draft_runs r where r.campaign_id = $1 and (
          r.id in (select id from draft_runs where campaign_id = $1 order by created_at desc, id desc limit $2)
+         or r.id = any($3::text[])
          or exists (select 1 from draft_items i where i.run_id = r.id and i.status = 'open'))
        order by r.created_at desc, r.id desc`,
-      [campaignId, RUNS_LISTED],
+      [campaignId, RUNS_LISTED, undoneRuns],
     );
     if (!runs.length) return [];
     const items = await this.db.query("select * from draft_items where run_id = any($1::text[]) order by run_id, item_id", [runs.map((r) => r.id)]);
-    const record = await this.service.record(campaignId);
     return runs.map((r) => this.runOf(r, items.filter((i) => i.run_id === r.id), record));
   }
 
@@ -737,11 +750,9 @@ export class Drafts {
   }
 
   private itemOf(i: Record<string, any>, record: CampaignRecord, since: string): DraftItem {
-    const state = record.state;
-    const standing = (id: string) => record.log.some((e) => e.id === id) && !state.voided.has(id) && !state.rejected.some((x) => x.envelope.id === id);
     const prepId: string | undefined = i.kind === "cue" ? i.suggestion?.key : undefined;
     const fired =
-      i.kind === "cue" && record.log.some((e) => e.cause === `prep:${prepId}` && e.at >= since && standing(e.id));
+      i.kind === "cue" && record.log.some((e) => e.cause === `prep:${prepId}` && e.at >= since && standing(record, e.id));
     return {
       runId: i.run_id,
       itemId: i.item_id,
@@ -754,7 +765,7 @@ export class Drafts {
       ...(i.why ? { why: i.why } : {}),
       status: i.status,
       ...(i.action_id ? { actionId: i.action_id } : {}),
-      ...(i.status === "accepted" && i.action_id && !standing(i.action_id) ? { undone: true } : {}),
+      ...(i.status === "accepted" && i.action_id && !standing(record, i.action_id) ? { undone: true } : {}),
       ...(fired ? { fired: true } : {}),
       ...(i.resolved_at ? { resolvedAt: iso(i.resolved_at) } : {}),
     };

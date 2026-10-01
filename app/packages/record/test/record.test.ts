@@ -2001,6 +2001,7 @@ describe("Prep packs", () => {
     const pack = tutorialPack(engine);
     expect(pack.find((p) => p.id === "tutorial-node-pile")).toMatchObject({ kind: "loot", loot: expect.arrayContaining([{ name: "Edge Shard", count: 2 }]) });
     expect(pack.find((p) => p.id === "tutorial-ray")).toMatchObject({ kind: "npc", title: "Ray Okafor", npc: { who: "A concussed delivery driver with a nail gun" } });
+    expect(pack.find((p) => p.id === "tutorial-marisol")).toMatchObject({ kind: "npc", npc: { block: { grade: "F", maxHp: 14, beats: 2, momentumForce: 5 } } });
     const own = packItems({
       pack: "rehearsal",
       loot: [{ id: "locker", group: "Scene 1", title: "The locker", items: [{ name: "Healing Pill", count: 2 }] }],
@@ -2103,6 +2104,10 @@ describe("class techniques", () => {
   it("runs an Aether technique outside a fight, and a Frequency one only in a fight", () => {
     gm({ type: "hp.change", characterId: "kara", delta: -8 });
     const hp = rec.sheet("kara")!.hp;
+    // Outside a fight a heal reaches the user and their party alone.
+    expect(() => gm({ type: "class.technique", characterId: "joe", targetId: "kara" })).toThrow(/Kara is not in Joe's party/);
+    rec.append(draft({ type: "party.invite", fromId: "kara", toId: "joe" }, P1, "inv-heal"));
+    rec.append(draft({ type: "party.answer", inviteId: "inv-heal", accept: true }, P2, "ans-heal"));
     gm({ type: "class.technique", characterId: "joe", targetId: "kara" });
     expect(rec.sheet("kara")!.hp).toBe(Math.min(rec.sheet("kara")!.maxHp, hp + 10));
     expect(() => gm({ type: "class.technique", characterId: "joe" })).toThrow(/name them/);

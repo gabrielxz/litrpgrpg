@@ -1450,6 +1450,9 @@ export function useTechnique(engine: Engine, world: World, a: UseTechnique): Eff
     }
     const target = world.characters.get(a.targetId);
     if (!target || target.dead) throw new Rejected("name a living character to heal");
+    // Outside a fight the heal reaches the user or their party (Gabriel, 2026-10-01).
+    const party = [...world.parties.values()].find((p) => p.members.includes(a.characterId));
+    if (target.id !== a.characterId && !party?.members.includes(target.id)) throw new Rejected(`${target.name} is not in ${world.characters.get(a.characterId)!.name}'s party`);
     out.push(...payTechnique(engine, world, null, null, a.characterId, a.drawback));
     target.hp = Math.min(maxHpOf(engine, target), target.hp + t.hook.amount);
     return out;

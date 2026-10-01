@@ -113,6 +113,14 @@ describe("the GM's key", () => {
     expect((await call("PUT", `/campaigns/${campaignId}/ai/key`, player, { key: KEY })).status).toBe(403);
   });
 
+  it("tells anyone at the table whether it is set, and nothing more", async () => {
+    const { gm, player, campaignId } = await table();
+    expect((await call("GET", `/campaigns/${campaignId}/ai/configured`, player)).json).toEqual({ configured: false });
+    await call("PUT", `/campaigns/${campaignId}/ai/key`, gm, { key: KEY });
+    const told = await call("GET", `/campaigns/${campaignId}/ai/configured`, player);
+    expect(told.json).toEqual({ configured: true });
+  });
+
   it("is refused when the provider refuses it, and kept with the problem when the provider cannot be asked", async () => {
     const { gm, campaignId } = await table();
     checks = ["key"];

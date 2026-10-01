@@ -27,6 +27,7 @@ import { entryLine } from "./Events.tsx";
 import { startOpportunity } from "../api.ts";
 import type { DraftRuns } from "./Drafts.tsx";
 import { Icon } from "../ui.tsx";
+import { NEEDS_KEY, useAiConfigured } from "./useAi.ts";
 
 type Drafts = Record<string, Moment[]>;
 
@@ -415,6 +416,7 @@ function OpportunityCard({ view, drafts }: { view: GmView; drafts: DraftRuns }) 
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [started, setStarted] = useState<string | null>(null);
+  const configured = useAiConfigured(view.campaign.id);
   const run = drafts.runs.find((r) => r.id === started);
   const draft = async () => {
     setBusy(true);
@@ -456,9 +458,13 @@ function OpportunityCard({ view, drafts }: { view: GmView; drafts: DraftRuns }) 
           <textarea className="textarea" rows={2} maxLength={2000} value={situation} onChange={(e) => setSituation(e.target.value)} placeholder="Where they are, who is near, what presses on them" />
         </label>
         <div className="cluster">
-          <button className="btn btn--primary" type="button" disabled={busy || !who || drafts.drafting} onClick={draft}>
-            Draft an offer
-          </button>
+          {configured === false ? (
+            <span className="small dim">Drafting an offer {NEEDS_KEY}.</span>
+          ) : (
+            <button className="btn btn--primary" type="button" disabled={busy || !who || drafts.drafting || !configured} onClick={draft}>
+              Draft an offer
+            </button>
+          )}
           {run?.status === "drafting" && <span className="small dim">Drafting…</span>}
           {run?.status === "done" && run.items.length > 0 && (
             <span className="small">

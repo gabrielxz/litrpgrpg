@@ -546,7 +546,8 @@ function ItemCard({ view, engine, names, onRecorded, item, fired, onFire }: Omit
               {open === "fire" ? "Close" : "Joins the fight…"}
             </button>
           )}
-          {item.kind === "encounter" && engine && (
+          {/* Combat takes a new fight only when no fight runs and no aftermath waits. */}
+          {item.kind === "encounter" && engine && !view.encounter && !view.aftermath && (
             <button className="btn btn--sm" onClick={() => onFire({ prepId: item.id, kind: "encounter", encounter: item.encounter })}>
               <Icon name="clash" />
               Set up the fight

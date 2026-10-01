@@ -91,6 +91,6 @@ The aftermath panel, **After The fence line**, replaces the setup screen until y
 
 - **Kills** lists every creature and NPC who died. Set each kill's **Tier for the party** (filled from the Bestiary), tick **×1.5** for a boss, confirm the **Finishing blow** (filled from who landed it), and set a different tier for any participant under **Tier differs for**.
 - **Took part** has a box for each character in the fight; a character who died is greyed out. The VE each participant collects is computed at their own tier; type a number beside it to override.
-- **Loot**: **Roll loot** makes one roll per kill and shows each row, die, and drop. Enter what actually dropped with **Add an item** (the catalog's names are suggested). It goes into the spoils, and the players divide it on their screens.
+- **Loot**: **Roll loot** makes one roll per kill and shows each row, die, and drop. **Undo the roll** takes it back, to roll again. Enter what actually dropped with **Add an item** (the catalog's names are suggested). It goes into the spoils, and the players divide it on their screens.
 
-Press **Settle The fence line**. The preview shows the VE, confirmed kills, and spoils, and what each player receives. Settling is one action and undoes as one from the Campaign log, as does the loot roll. The rules are in Cultivation, "Combat Kills" and The System AI, "Loot".
+Press **Settle The fence line**. The preview shows the VE, confirmed kills, and spoils, and what each player receives. Settling is one action and undoes as one from the Campaign log. The rules are in Cultivation, "Combat Kills" and The System AI, "Loot".

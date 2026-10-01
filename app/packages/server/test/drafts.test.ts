@@ -13,7 +13,7 @@ import { CampaignAi, type LanguageModel, ModelError, type Problem } from "../src
 import { createApp } from "../src/app.ts";
 import { jwtVerifier } from "../src/auth.ts";
 import { type Db, migrate, pgliteDb } from "../src/db.ts";
-import { Drafts } from "../src/drafts.ts";
+import { Drafts, RUNS_LISTED } from "../src/drafts.ts";
 import { LiveDrafting } from "../src/live-drafting.ts";
 import { EARLIER_LINES } from "@gradebreaker/listening";
 import { Service } from "../src/service.ts";
@@ -196,6 +196,18 @@ describe("drafting from typed table talk", () => {
     const again = (await call("GET", `/campaigns/${campaignId}/drafts`, gm)).json.runs[0].items[0];
     expect(again).toMatchObject({ status: "accepted", undone: true });
     expect((await call("POST", path, gm, { id: randomUUID(), action: run.items[0].action })).status).toBe(201);
+  });
+
+  it("keeps an undone draft in review when its run is older than the runs listed", async () => {
+    const { gm, campaignId } = await table();
+    const run = await drafted(campaignId, gm);
+    const id = randomUUID();
+    await call("POST", `/campaigns/${campaignId}/drafts/${run.id}/draft-1/accept`, gm, { id, action: run.items[0].action });
+    for (let i = 0; i < RUNS_LISTED; i++) await drafted(campaignId, gm, { events: [] });
+    const listed = async () => (await call("GET", `/campaigns/${campaignId}/drafts`, gm)).json.runs.map((r: { id: string }) => r.id);
+    expect(await listed()).not.toContain(run.id);
+    await call("POST", `/campaigns/${campaignId}/actions`, gm, { id: randomUUID(), action: { type: "void", targetId: id, reason: "undo" } });
+    expect(await listed()).toContain(run.id);
   });
 
   it("dismisses and restores a draft, and accepts only an event", async () => {

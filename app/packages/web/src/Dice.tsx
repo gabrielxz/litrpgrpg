@@ -36,8 +36,11 @@ export function RollForm({
   grades,
   onRolled,
   shapes = [],
+  surgeBonus,
 }: {
   campaignId: string;
+  /** A Surge's bonus to the roll, from the rules. */
+  surgeBonus: number;
   characters: RollerOption[];
   /** The weapon shapes a character's Clash can be made with. */
   shapes?: string[];
@@ -211,7 +214,7 @@ export function RollForm({
         )}
         {canSurge && (
           <label className="check" title="Declared before the roll. No Beat.">
-            <input type="checkbox" checked={surge} disabled={!affordable} onChange={(e) => setSurge(e.target.checked)} /> Surge (+5 for{" "}
+            <input type="checkbox" checked={surge} disabled={!affordable} onChange={(e) => setSurge(e.target.checked)} /> Surge (+{surgeBonus} for{" "}
             {c!.surgeCost} Aether{affordable ? "" : `; ${c!.aether} left`})
           </label>
         )}
@@ -244,7 +247,7 @@ export function RollForm({
       )}
       {problem && <p className="muted">{problem}</p>}
       {error && <p className="error">{error}</p>}
-      <button className="primary" disabled={Boolean(problem) || busy} onClick={roll}>
+      <button className="btn btn--sm btn--primary" disabled={Boolean(problem) || busy} onClick={roll}>
         {typedDice ? `Record ${name}'s dice` : `Roll for ${name}`}
       </button>
     </div>

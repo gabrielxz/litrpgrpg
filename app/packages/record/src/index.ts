@@ -43,6 +43,7 @@ export type {
   StreamStatus,
   View,
 } from "./protocol.ts";
+export { HEARD_KEEP_DAYS, RECORDING_KEEP_DAYS } from "./protocol.ts";
 export { type D100, type Dice, rollD100s } from "./dice.ts";
 export { rollFor } from "./rolling.ts";
 export { HANG_MS, PREROLL_FRAMES, SpeechGate, VOICE_LEVEL } from "./speech-gate.ts";

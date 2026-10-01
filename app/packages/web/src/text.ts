@@ -266,7 +266,7 @@ export function describe(
     case "class.use":
       return `${name(a.characterId)} uses the class's once-a-day permission`;
     case "class.technique":
-      return `${name(a.characterId)} uses the class technique${a.targetId ? ` on ${name(a.targetId)}` : ""}${a.drawback ? ` (${a.drawback === "health" ? "10 Health" : "Exposed"})` : ""}`;
+      return `${name(a.characterId)} uses the class technique${a.targetId ? ` on ${name(a.targetId)}` : ""}${a.drawback ? ` (${a.drawback === "health" ? "paid in Health" : "Exposed"})` : ""}`;
     case "prep.save":
       return a.pack ? `Loaded the ${a.pack} pack into Prep (${a.items.length} items)` : `Prepared: ${a.items.map((i) => i.title).join(", ")}`;
     case "prep.remove":

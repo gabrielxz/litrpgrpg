@@ -54,4 +54,4 @@ Press **Correct the lines** to open every line with its time and speaker. Press 
 
 **Get a second opinion** transcribes the tracks again with a more accurate service, faster than real time, and appears only when the server holds a key for it. Where the second opinion differs, the line shows it with **Take it**.
 
-**Delete** removes the recording at once, with no confirmation. The server deletes any recording 7 days after it ends.
+**Delete…** asks once more, since deleting is permanent: **Delete the recording** removes it, **Keep it** leaves it. The server deletes any recording 7 days after it ends.

@@ -26,7 +26,7 @@ import {
 } from "@gradebreaker/record";
 import { Fragment, useEffect, useState } from "react";
 import { type DraftItem, acceptDraft, startClassOffers } from "../api.ts";
-import { costLine, permissionHookLine, profileLine, returnedOf, selectionLine, techniqueOffer } from "../classes.ts";
+import { costLine, healthCost, permissionHookLine, profileLine, returnedOf, selectionLine, techniqueOffer } from "../classes.ts";
 import { ATTRIBUTES, type Names } from "../text.ts";
 import { TableWords } from "./TableWords.tsx";
 import { Commit } from "./Commit.tsx";
@@ -268,7 +268,7 @@ function OfferEditor({ engine, c, value, onChange, index }: { engine: Engine; c:
             }}
           >
             <option value="">The player chooses each time</option>
-            <option value="health">10 Health</option>
+            <option value="health">{healthCost(engine)}</option>
             <option value="exposed">Exposed until the next turn</option>
           </select>
         </label>
@@ -687,7 +687,9 @@ function Standing({ view, engine, names, onRecorded, c }: Props & { c: Sheet }) 
 /** The technique used outside a fight, recorded by the GM: its cost paid, a heal applied. */
 function TechniqueOutside({ view, engine, names, onRecorded, c }: Props & { c: Sheet }) {
   const k = c.class!;
-  const living = view.characters.filter((x) => !x.dead);
+  // The user and their party, as the player's own button offers (Gabriel, 2026-10-01).
+  const party = view.parties.find((p) => p.members.includes(c.id));
+  const living = view.characters.filter((x) => !x.dead && (x.id === c.id || party?.members.includes(x.id)));
   const [target, setTarget] = useState(c.id);
   const inFight = Boolean(view.encounter?.combatants.some((x) => x.characterId === c.id && !x.out));
   const t = techniqueOffer(engine, k, { aether: c.aether, inFight: false });

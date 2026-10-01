@@ -35,20 +35,20 @@ function useAct(campaignId: string) {
   return { run, busy, error };
 }
 
-const clasher = (c: InterfaceSheet, engine: Engine | null, combat: Combat): Clasher => ({
+const clasher = (c: InterfaceSheet, engine: Engine, combat: Combat): Clasher => ({
   kind: "character",
   name: c.name,
   force: c.force,
   aether: c.aether,
   surgeCost: c.surgeCost,
-  shapes: engine ? shapes(engine) : [],
+  shapes: shapes(engine),
   proficiencies: c.proficiencies,
   ...(c.class ? { technique: techniqueOf(engine, c, combat) } : {}),
   ...permissionClash(c.class),
 });
 
 /** The character's class technique as this fight offers it. */
-const techniqueOf = (engine: Engine | null, c: InterfaceSheet, combat: Combat) =>
+const techniqueOf = (engine: Engine, c: InterfaceSheet, combat: Combat) =>
   techniqueOffer(engine, c.class!, { aether: c.aether, usedThisFight: Boolean(combat.combatants.find((x) => x.characterId === c.id)?.techniqueUsed), inFight: true });
 
 /** Flanking from the Zones: another hostile of the target shares its Zone. */
@@ -79,7 +79,7 @@ function MyTurn({
   combatantId,
 }: {
   view: PlayerView;
-  engine: Engine | null;
+  engine: Engine;
   combat: Combat;
   c: InterfaceSheet;
   combatantId: string;
@@ -105,6 +105,7 @@ function MyTurn({
       </p>
       {attacking ? (
         <AttackForm
+          engine={engine}
           attacker={clasher(c, engine, combat)}
           targets={targets}
           suggestFlanking={(d) => flanks(combat, me.id, d)}
@@ -126,7 +127,7 @@ function MyTurn({
         />
       ) : (
         <div className="form-row tight">
-          <button className="primary" disabled={busy || beats < 1} onClick={() => setAttacking(true)}>
+          <button className="btn btn--sm btn--primary" disabled={busy || beats < 1} onClick={() => setAttacking(true)}>
             Attack…
           </button>
           {otherZones.length > 0 && (
@@ -138,11 +139,11 @@ function MyTurn({
                   </option>
                 ))}
               </select>
-              <button disabled={busy || beats < 1} onClick={() => run({ type: "combat.move", combatantId: me.id, zoneId: picked })}>
+              <button className="btn btn--sm" disabled={busy || beats < 1} onClick={() => run({ type: "combat.move", combatantId: me.id, zoneId: picked })}>
                 Move (1 Beat)
               </button>
               {hook?.kind === "free-move" && (
-                <button
+                <button className="btn btn--sm"
                   disabled={busy || !freeMoveOk}
                   title={freeMoveOk ? permission!.effect : "Only into a Zone holding a Downed ally"}
                   onClick={() => run({ type: "combat.move", combatantId: me.id, zoneId: picked, permission: true })}
@@ -153,16 +154,16 @@ function MyTurn({
             </>
           )}
           {hook?.kind === "free-disengage" && (
-            <button disabled={busy} title={permission!.effect} onClick={() => run({ type: "combat.beat", combatantId: me.id, what: "Disengage", permission: true })}>
+            <button className="btn btn--sm" disabled={busy} title={permission!.effect} onClick={() => run({ type: "combat.beat", combatantId: me.id, what: "Disengage", permission: true })}>
               Disengage by {permission!.name} (no Beat)
             </button>
           )}
-          <button disabled={busy} onClick={() => run({ type: "combat.done", combatantId: me.id })}>
+          <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "combat.done", combatantId: me.id })}>
             Done
           </button>
         </div>
       )}
-      {!attacking && engine && (
+      {!attacking && (
         <CareActions
           me={{ ...mateOf(me), force: c.force, items: c.items, ...(c.class ? { technique: techniqueOf(engine, c, combat) } : {}) }}
           people={combat.combatants.map(mateOf)}
@@ -179,7 +180,7 @@ function MyTurn({
   );
 }
 
-function Defending({ view, engine, combat, c }: { view: PlayerView; engine: Engine | null; combat: Combat; c: InterfaceSheet }) {
+function Defending({ view, engine, combat, c }: { view: PlayerView; engine: Engine; combat: Combat; c: InterfaceSheet }) {
   const { run, busy, error } = useAct(view.campaign.id);
   const cl = combat.clash!;
   return (
@@ -196,15 +197,17 @@ function Defending({ view, engine, combat, c }: { view: PlayerView; engine: Engi
         </div>
       )}
       {cl.stage === "defense" ? (
-        <DefenseForm defender={clasher(c, engine, combat)} busy={busy} onDefend={(s) => run({ type: "combat.defend", defense: s })} />
+        <DefenseForm engine={engine} defender={clasher(c, engine, combat)} busy={busy} onDefend={(s) => run({ type: "combat.defend", defense: s })} />
       ) : (
         <>
           <p className="small">
             {cl.attackTotal} against {cl.defenseTotal}: Margin {cl.margin}
-            {cl.cut ? `, ${cl.cut} cut by an ally, ${Math.max(0, (cl.margin ?? 0) - cl.cut)} left` : ""}. Yield gives up Beats from {c.name}'s next turn, 20 Margin each.
+            {cl.cut ? `, ${cl.cut} cut by an ally, ${Math.max(0, (cl.margin ?? 0) - cl.cut)} left` : ""}. Yield gives up Beats from{" "}
+            {c.name}'s next turn, {engine.rules.combat.yield.margin_reduction_per_beat} Margin each.
           </p>
           {cl.coverIds?.length ? <p className="small dim">An ally can still cut the Margin before you Yield.</p> : null}
           <YieldChoice
+            engine={engine}
             margin={Math.max(0, (cl.margin ?? 0) - (cl.cut ?? 0))}
             cap={cl.yieldCap ?? 0}
             multiplier={cl.damageMultiplier ?? 1}
@@ -219,7 +222,7 @@ function Defending({ view, engine, combat, c }: { view: PlayerView; engine: Engi
 }
 
 /** Off-turn, while no Clash waits: the class's reaction, or a technique used as one. */
-function Reactions({ view, engine, combat, c, combatantId }: { view: PlayerView; engine: Engine | null; combat: Combat; c: InterfaceSheet; combatantId: string }) {
+function Reactions({ view, engine, combat, c, combatantId }: { view: PlayerView; engine: Engine; combat: Combat; c: InterfaceSheet; combatantId: string }) {
   const { run, busy, error } = useAct(view.campaign.id);
   const [using, setUsing] = useState<{ name: string; technique: boolean } | null>(null);
   const me = combat.combatants.find((x) => x.id === combatantId)!;
@@ -230,6 +233,7 @@ function Reactions({ view, engine, combat, c, combatantId }: { view: PlayerView;
     <div className="fight-box stack">
       {using ? (
         <AttackForm
+          engine={engine}
           attacker={clasher(c, engine, combat)}
           targets={targets}
           suggestFlanking={(d) => flanks(combat, me.id, d)}
@@ -252,7 +256,7 @@ function Reactions({ view, engine, combat, c, combatantId }: { view: PlayerView;
       ) : (
         <div className="form-row tight">
           {offered.map((r) => (
-            <button key={r.name} disabled={busy} onClick={() => setUsing(r)} title={r.technique ? c.class!.technique.effect : c.class!.permission.effect}>
+            <button className="btn btn--sm" key={r.name} disabled={busy} onClick={() => setUsing(r)} title={r.technique ? c.class!.technique.effect : c.class!.permission.effect}>
               {r.name}: {c.name} strikes now (no Beat)
             </button>
           ))}
@@ -270,7 +274,7 @@ function Cover({ view, c, combatantId, defenderName }: { view: PlayerView; c: In
   if (hook?.kind !== "cover") return null;
   return (
     <div className="fight-box stack">
-      <button className="primary" disabled={busy} title={c.class!.permission.effect} onClick={() => run({ type: "combat.cover", combatantId })}>
+      <button className="btn btn--sm btn--primary" disabled={busy} title={c.class!.permission.effect} onClick={() => run({ type: "combat.cover", combatantId })}>
         {c.class!.permission.name}: {c.name} cuts {defenderName}'s Margin by {hook.cut} (1 Beat from the next turn)
       </button>
       {error && <p className="error">{error}</p>}
@@ -278,7 +282,7 @@ function Cover({ view, c, combatantId, defenderName }: { view: PlayerView; c: In
   );
 }
 
-export function Fight({ view, engine, combat, readOnly }: { view: PlayerView; engine: Engine | null; combat: Combat; readOnly?: boolean }) {
+export function Fight({ view, engine, combat, readOnly }: { view: PlayerView; engine: Engine; combat: Combat; readOnly?: boolean }) {
   const { run, busy } = useAct(view.campaign.id);
   const mine = new Map(view.characters.map((c) => [c.id, c]));
   const zoneName = (id: string | null) => combat.zones.find((z) => z.id === id)?.name;

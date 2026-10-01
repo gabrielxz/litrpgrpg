@@ -4,6 +4,41 @@
 
 ---
 
+**Handoff (2026-09-30, app track: seventeenth close; replaced 2026-10-01).** Rules 0.1.40, `make app-check` green (engine 236, record 139, server 86, listening 191, web 12). Everything pushed and deployed (last: 3e9e44f, run green, health 200). Since the close: sheet tags wrap, and the guide shows its screenshots in light and dark. This session:
+- **The Hidden Achievements drafter follows the book's prompt** (rules 0.1.40): one to three a campaign arc, with each character's earned Hidden Achievements in the request, the bonus higher for the less likely deed, the book's example, the trigger for the GM only. Not re-measured against the model.
+- **The user guide** at `/guide`, 29 pages written from the running code (every GM section, setup, sessions, listening, and six player pages), open without signing in; the top bar's **Guide** opens the page for the screen the reader is on, in its own tab. Screenshots come from `make guide-shots` (the development servers running): a campaign seeded from the rehearsal pack, captured by headless Chrome. `test/guide.test.ts` holds links, shots, and Markdown; `app/CLAUDE.md` has THE GUIDE rule. The deploy workflow now deploys a guide-page edit (it skipped Markdown under `app/`).
+- **"Set up the table"** on a new campaign's Party, from the canvas: invite, session, clock, each Done from the record, with **Hide**. The canvas's painting slot for an empty campaign is not built (Gabriel keeps the current paintings).
+- Fixed in passing: stale help on the AI card, the HP and Aether tab, and the Quests form's "Drafted from the sweep"; Player view replaying moments on switching players.
+
+**The rehearsal, rewritten** (Gabriel, 2026-09-30): one night of two hours, the first for the table and microphones, the second for one hour of play ending on class offers. `app/packs/rehearsal.yaml`, `rehearsal.md`, and the GM's run sheet `rehearsal-run-sheet.html` (private artifact https://claude.ai/artifact/CN62b1z3mxhkuu3G7iJvKk). Characters start at Level 9 with seeded HVE Deep; one fight, two quests, one rest to Level 10. Checked end to end on the development server (setup, fight, aftermath, rest, a class offer on the player's screen); the AI class drafts at a live table are the untested step.
+
+**Then the plan changed** (Gabriel, 2026-09-30): the first real play is the tutorial, Phases 1 and 2 one-on-one with one player, fixed between players, before the group's Phase 3. The script is `app/packs/tutorial-solo-run-sheet.html` (private artifact https://claude.ai/artifact/N6btfjocLmnA12aFaoJZfc). Class offers with humans wait until Level 10, after the tutorial (it ends at Level 4 or 5); the depot-fence run sheet's solo dry run still exercises them. Gaps the script found: Marisol Vega has no stat block in `rules/tutorial.yaml` (a High Ground player who helps her fights two-on-one; the sheet improvises her through "Someone not in the Bestiary"), and the first-kill box (queued for the book).
+
+**Next session: the findings batch** (Gabriel, 2026-10-01: all of it, before the solo tutorial night where possible). In this order:
+1. The tutorial night's: the Test recordings card (a confirm on Delete; GM-facing text in place of the `build/listening/audio/` and `stt-eval` instructions); the old `primary` button class in the Surprise, Aura, join-mid-fight, and Clash forms; Prep's **Set up the fight** hidden while a fight runs or an aftermath waits, and the handed-over fight cleared once Combat cannot take it.
+2. The numbers the client restates, read from the rules data instead: Yield's 20 per Beat and 40 for Driven Back (`Clash.tsx`, `player/Fight.tsx`), Surge +5, Flanking +10, Exposed −10, the Will Save's 90 and 115, "Pay 10 Health" (`Care.tsx`); the consent text's 30 and 7 days from the server's constants. Add any field the data lacks, with a version bump and `make check`.
+3. A negative title's **Release** behind a preview of what the player receives.
+4. An accepted draft later undone stays in review however old its run (`server/src/drafts.ts`, the newest-ten window).
+5. A player's **Ask the rules** and the HVE section's **Draft an offer** check for the campaign's key first, as the other AI controls do.
+6. An undo for a loot roll in the aftermath.
+7. The Bestiary's VE line computes for the creature's own Grade, or says F-Grade.
+8. Marisol Vega's stat block in `rules/tutorial.yaml` (a Level 1 human with a pipe), with a version bump.
+9. **Open for Gabriel:** a heal technique recorded by the GM outside a fight can target anyone; the player's own button offers only themselves and their party. Which is right? Claude's recommendation: the party, as the player's button has it; run that meanwhile.
+
+Then Gabriel's first solo tutorial night. Before the group's Phase 3, a ten-minute check with everyone (join, consent, a line each, a die). Superseded: the depot-fence rehearsal night. Afterward: his notes, the test recordings, and the drafts measured.
+
+**Found while writing the guide**, for Gabriel's call (from reading code; none seen failing at a table):
+- A player's **Ask the rules** and the HVE section's **Draft an offer** show without a campaign key and return the raw server error; every other AI control checks for the key first.
+- Numbers the client restates that the rules data could carry: Yield's 20 per Beat and 40 for Driven Back (`Clash.tsx`, `player/Fight.tsx`), Surge +5, Flanking +10, Exposed −10, the Will Save's 90 and 115, "Pay 10 Health" (`Care.tsx`), and the 30 and 7 day retention in the consent text (the server holds its own constants).
+- A negative title's **Release** records with no preview of what the player receives.
+- A test recording's **Delete** has no confirm, and the Test recordings card tells the GM to save files into `build/listening/audio/` and run `stt-eval` (developer text).
+- The aftermath has no undo for a loot roll; only the Campaign log.
+- Prep's **Set up the fight** shows while a fight runs or an aftermath waits, and the fight it hands over lingers until the setup opens later.
+- An accepted draft later undone, in a run older than the newest ten, drops out of review (`server/src/drafts.ts`).
+- A heal technique recorded by the GM outside a fight can target anyone; the player's own button offers only themselves and their party. One is wrong.
+- The Bestiary's VE line says "each participant of its Grade" and computes for F-Grade (right while every creature is F).
+- The Surprise, Aura, join-mid-fight, and Clash forms still carry the old `primary` button class.
+
 **Handoff (2026-09-30, app track: sixteenth close; replaced 2026-09-30).** Rules 0.1.39, `make app-check` green (engine 236, record 139, server 86, listening 191, web 8). Everything pushed and deployed (last: e609a3b, run green, health 200). The makeover is built from Claude Design's canvas "Gradebreaker App Makeover" (https://claude.ai/artifact/7wzrXRhs9U4FeS751NXWey), each screen checked in the browser with a GM tab and a player tab: `gb.css` is the canvas's design system (see `app/CLAUDE.md`, THE LOOK), `styles.css` the app's layer, the four fonts self-hosted. Gabriel accepted Claude's recommendations on the canvas's proposals (Decisions, "the makeover and deploys"): P1, P2, P3, P4 (reactions and free strikes kept in view), P5, P7, P9, P10, P12 built; P6 cut; P8, P11, P13 deferred. Built:
 - **The player's screen** as the System's interface with the "At the table" tray, pinned head and vitals, folded long notices, and the moments (level, title, technique, class, Distillation, quest, Downed), with the GM's quiet echo in the table bar.
 - **The GM's frame** (sections in four groups, one table bar holding session, listening, and clock), **Party**, **Combat** (the Clash docked beside the tracker, drawers on the rows), **Suggestions** and every draft as a card, **Events**, **Quests** in the book's shape, and **every preview** showing what each player receives (`noticesFor` moved to the record package so the preview and the feed agree).

@@ -914,14 +914,15 @@ export function PlayerCampaign({
         <Notices feed={view.feed} names={names} rising={rising} />
         <div className="tray table-tray">
           <div className="tray-head">At the table</div>
-          {view.combat && <Fight view={view} engine={engine} combat={view.combat} readOnly={readOnly} />}
+          {view.combat && engine && <Fight view={view} engine={engine} combat={view.combat} readOnly={readOnly} />}
           <Spoils view={view} readOnly={readOnly} />
           <TrayPart title="Dice" folded={fighting}>
-            {!readOnly && view.characters.length > 0 && (
+            {!readOnly && engine && view.characters.length > 0 && (
               <RollForm
                 campaignId={view.campaign.id}
                 characters={view.characters.map((c) => ({ id: c.id, name: c.name, force: c.force, aether: c.aether, surgeCost: c.surgeCost, proficiencies: c.proficiencies }))}
-                shapes={engine ? shapes(engine) : []}
+                shapes={shapes(engine)}
+                surgeBonus={engine.rules.combat.surge.bonus}
               />
             )}
             <RollList rolls={view.rolls} />

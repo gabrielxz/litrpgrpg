@@ -314,7 +314,7 @@ export function CueCard({ view, item, cited, onDismiss }: { view: GmView; item: 
             Fire it from Prep
           </a>
         )}
-        <button onClick={onDismiss}>{item.fired ? "Clear" : "Dismiss"}</button>
+        <button className="btn btn--sm" onClick={onDismiss}>{item.fired ? "Clear" : "Dismiss"}</button>
       </div>
     </li>
   );

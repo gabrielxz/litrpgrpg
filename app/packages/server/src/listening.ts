@@ -13,7 +13,7 @@
  * captures with (the newest tab to ask). Frames go to the transcriber and are not kept here.
  */
 import { vocabulary } from "@gradebreaker/listening/stt";
-import { type HeardLine, type ListeningMode, type ListeningStatus, type StreamState, type StreamStatus, runningSession } from "@gradebreaker/record";
+import { HEARD_KEEP_DAYS, type HeardLine, type ListeningMode, type ListeningStatus, type StreamState, type StreamStatus, runningSession } from "@gradebreaker/record";
 import type { Recordings } from "./recordings.ts";
 import type { Service } from "./service.ts";
 import type { Member, Role } from "./views.ts";
@@ -36,8 +36,6 @@ export const IDLE_CLOSE_MS = 4000;
  * on new streams, which every table on the key shares.
  */
 export const RETRY_AFTER_MS = 30_000;
-/** How long a heard line is kept after it was said; the consent text states it. */
-export const HEARD_KEEP_DAYS = 30;
 
 /** A final stretch of one person's speech; times are milliseconds from the stream's first audio. */
 export interface Segment {

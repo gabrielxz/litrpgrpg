@@ -3,6 +3,7 @@
  * attack, the defense (the server rolls both sides when it is recorded), and the defender's
  * Yield once the Margin is known.
  */
+import type { Engine } from "@gradebreaker/engine";
 import type { ClashSide, ForceOption, Proficiency } from "@gradebreaker/record";
 import type { TechniqueOffer } from "./classes.ts";
 import { useState } from "react";
@@ -42,11 +43,13 @@ const DEFENSE = [
 const int = (s: string) => (s.trim() === "" ? 0 : Math.trunc(Number(s)));
 
 function SideFields({
+  engine,
   who,
   role,
   value,
   onChange,
 }: {
+  engine: Engine;
   who: Clasher;
   role: "attack" | "defense";
   value: ClashSide;
@@ -159,7 +162,7 @@ function SideFields({
               onChange(e.target.checked ? { ...rest, surge: true, ...(who.aether < who.surgeCost && who.surgeHealth !== undefined ? { surgeHealth: true } : {}) } : rest);
             }}
           />{" "}
-          Surge (+5 for {who.surgeCost} Aether{who.surgeUp !== undefined && who.surgeUp < who.surgeCost ? `, ${who.surgeUp} against a higher Grade` : ""})
+          Surge (+{engine.rules.combat.surge.bonus} for {who.surgeCost} Aether{who.surgeUp !== undefined && who.surgeUp < who.surgeCost ? `, ${who.surgeUp} against a higher Grade` : ""})
         </label>
       )}
       {who.kind === "character" && who.surgeHealth !== undefined && value.surge && (
@@ -200,6 +203,7 @@ export interface AttackDeclaration {
 }
 
 export function AttackForm({
+  engine,
   attacker,
   targets,
   suggestFlanking,
@@ -211,6 +215,7 @@ export function AttackForm({
   onDeclare,
   onCancel,
 }: {
+  engine: Engine;
   attacker: Clasher;
   targets: { id: string; name: string; zoneId?: string | null }[];
   suggestFlanking: (defenderId: string) => boolean;
@@ -233,6 +238,7 @@ export function AttackForm({
   const [label, setLabel] = useState("");
   const defenderId = targets.some((t) => t.id === target) ? target : (targets[0]?.id ?? "");
   const flanking = flank ?? suggestFlanking(defenderId);
+  const flankingBonus: number = engine.rules.resolution.flanking_bonus;
   // A Rush goes into the target's Zone when the scene places it; otherwise the attacker names one.
   const targetZone = targets.find((t) => t.id === defenderId)?.zoneId ?? null;
   const rushZones = rush ? rush.zones.filter((z) => !targetZone || z.id === targetZone) : [];
@@ -271,10 +277,10 @@ export function AttackForm({
           </label>
         </div>
       )}
-      <SideFields who={attacker} role="attack" value={side} onChange={setSide} />
+      <SideFields engine={engine} who={attacker} role="attack" value={side} onChange={setSide} />
       <div className="form-row tight">
-        <label className="check" title="+10 when two or more hostiles engage the target; suggested from the Zones">
-          <input type="checkbox" checked={flanking} onChange={(e) => setFlank(e.target.checked)} /> Flanking +10
+        <label className="check" title={`+${flankingBonus} when two or more hostiles engage the target; suggested from the Zones`}>
+          <input type="checkbox" checked={flanking} onChange={(e) => setFlank(e.target.checked)} /> Flanking +{flankingBonus}
         </label>
         {gm && (
           <label className="check" title="Nowhere to be driven: the target can Yield only one Beat">
@@ -284,38 +290,40 @@ export function AttackForm({
       </div>
       <div className="form-row tight">
         <button
-          className="primary"
+          className="btn btn--sm btn--primary"
           disabled={busy || !defenderId}
           onClick={() => onDeclare({ defenderId, attack: side, flanking, cornered, ...(label.trim() ? { label: label.trim() } : {}), ...(rushing ? { rush: rushing } : {}) })}
         >
           {free ? "Declare the free strike" : reaction ? `${reaction.name}: ${attacker.name} attacks (no Beat)` : rushing ? `${rush!.name}: move and attack (1 Beat)` : `${attacker.name} attacks (1 Beat)`}
         </button>
-        {onCancel && <button onClick={onCancel}>Cancel</button>}
+        {onCancel && <button className="btn btn--sm" onClick={onCancel}>Cancel</button>}
       </div>
     </div>
   );
 }
 
-export function DefenseForm({ defender, busy, onDefend }: { defender: Clasher; busy?: boolean; onDefend: (s: ClashSide) => void }) {
+export function DefenseForm({ engine, defender, busy, onDefend }: { engine: Engine; defender: Clasher; busy?: boolean; onDefend: (s: ClashSide) => void }) {
   const [side, setSide] = useState<ClashSide>(() => initial(defender, "defense"));
   return (
     <div className="clash-form">
-      <SideFields who={defender} role="defense" value={side} onChange={setSide} />
-      <button className="primary" disabled={busy} onClick={() => onDefend(side)}>
+      <SideFields engine={engine} who={defender} role="defense" value={side} onChange={setSide} />
+      <button className="btn btn--sm btn--primary" disabled={busy} onClick={() => onDefend(side)}>
         Roll the Clash
       </button>
     </div>
   );
 }
 
-/** The defender's Yield: each Beat takes 20 off the Margin, after any ally's cover, before the Grade multiplier. */
+/** The defender's Yield: each Beat takes the rules' Margin per Beat off, after any ally's cover, before the Grade multiplier. */
 export function YieldChoice({
+  engine,
   margin,
   cap,
   multiplier,
   busy,
   onYield,
 }: {
+  engine: Engine;
   margin: number;
   cap: number;
   multiplier: number;
@@ -323,13 +331,13 @@ export function YieldChoice({
   onYield: (beats: number) => void;
 }) {
   const options = Array.from({ length: cap + 1 }, (_, y) => {
-    const left = Math.max(0, margin - 20 * y);
-    return { y, damage: left * multiplier, drivenBack: left >= 40 };
+    const left = Math.max(0, margin - engine.rules.combat.yield.margin_reduction_per_beat * y);
+    return { y, damage: left * multiplier, drivenBack: left >= engine.rules.resolution.rule_of_40.driven_back_margin };
   });
   return (
     <div className="form-row tight yield">
       {options.map((o) => (
-        <button key={o.y} className={o.y === 0 ? "" : "primary"} disabled={busy} onClick={() => onYield(o.y)}>
+        <button key={o.y} className={o.y === 0 ? "btn btn--sm" : "btn btn--sm btn--primary"} disabled={busy} onClick={() => onYield(o.y)}>
           {o.y === 0 ? `Take ${o.damage}` : `Yield ${o.y} Beat${o.y === 1 ? "" : "s"}: ${o.damage}`}
           {o.drivenBack ? ", Driven Back" : ""}
           {o.y >= 2 ? " (may be driven)" : ""}

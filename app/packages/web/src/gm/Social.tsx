@@ -240,14 +240,14 @@ export function MessageForm({ view, names, onRecorded }: FormProps) {
             <textarea rows={2} value={gist} maxLength={2000} onChange={(e) => setGist(e.target.value)} placeholder="In your words, or leave it empty to put the message below in the voice" />
           </label>
           <div className="form-row">
-            <button disabled={!recipients.length || !asked || drafting} onClick={draft}>
+            <button className="btn btn--sm" disabled={!recipients.length || !asked || drafting} onClick={draft}>
               {drafting ? "Drafting…" : "Draft"}
             </button>
             <span className="muted small">The draft replaces the message below, for you to edit before sending.</span>
           </div>
           {recipients.length === 1 && (
             <div className="form-row">
-              <button disabled={drafting} onClick={summarize}>
+              <button className="btn btn--sm" disabled={drafting} onClick={summarize}>
                 Draft a summary of {names(recipients[0]!)}
               </button>
               <label className="check small">
@@ -306,8 +306,8 @@ export function MessageForm({ view, names, onRecorded }: FormProps) {
                 </div>
                 <div className="muted small">For {m.to.map(names).join(", ")}</div>
                 <div className="form-row">
-                  <button onClick={() => setHeldPick({ id: m.id, send: true })}>Send now…</button>
-                  <button onClick={() => setHeldPick({ id: m.id, send: false })}>Discard…</button>
+                  <button className="btn btn--sm" onClick={() => setHeldPick({ id: m.id, send: true })}>Send now…</button>
+                  <button className="btn btn--sm" onClick={() => setHeldPick({ id: m.id, send: false })}>Discard…</button>
                 </div>
               </li>
             ))}

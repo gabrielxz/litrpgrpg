@@ -223,6 +223,16 @@ npcs:
     name: Marisol Vega
     who: "A runner with a length of pipe"
     note: "First met in Phase 2: The High Ground, the fight below the ridge. Helped, she follows the character down, is part of the Node camp by evening, and joins the gate queue in Phase 5. Without help, she loses the fight below the ridge."
+    # A Level 1 human at F-Grade, Force equal to Raw: a runner (FOR 7) swinging a pipe (STR 5),
+    # HP 2 × Raw FOR, Momentum on HRT and PER 5, and a human's two Beats and Yield.
+    block:
+      grade: F
+      maxHp: 14
+      beats: 2
+      momentumForce: 5
+      yields: true
+      offense: [{force: 5, stat: STR, means: pipe}]
+      defense: [{force: 6, stat: DEX, means: dodge}, {force: 7, stat: FOR, means: absorb}]
   - id: kith
     group: "Recurring NPCs"
     name: "The Kith: Kes, Nemi, Sava, and Tovan"

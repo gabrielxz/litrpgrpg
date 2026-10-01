@@ -133,7 +133,8 @@ function SizingTable({ view, engine }: { view: GmView; engine: Engine }) {
 }
 
 function StatBlock({ engine, c }: { engine: Engine; c: Entry }) {
-  const ve = engine.killVe(c.tier, "F", c.grade);
+  // What a participant of the creature's own Grade receives, as the line says.
+  const ve = engine.killVe(c.tier, c.grade, c.grade);
   const id = `sb-${c.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
   return (
     <article className="panel creature-block" aria-labelledby={id}>

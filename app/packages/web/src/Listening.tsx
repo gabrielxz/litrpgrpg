@@ -13,7 +13,7 @@
  * measurement shows it loses no short line after a long silence. The level goes to the server
  * four times a second regardless, for the GM's panel.
  */
-import { type ListeningStatus, SpeechGate, type StreamStatus } from "@gradebreaker/record";
+import { HEARD_KEEP_DAYS, type ListeningStatus, RECORDING_KEEP_DAYS, SpeechGate, type StreamStatus } from "@gradebreaker/record";
 import { useEffect, useRef, useState } from "react";
 import { api } from "./api.ts";
 import { type Microphone, MicrophoneError, NeedsClick, openMicrophone } from "./capture.ts";
@@ -29,8 +29,6 @@ interface Props {
 const SEND_ONLY_SPEECH = false;
 const LEVEL_EVERY_MS = 250;
 
-/** The server's RECORDING_KEEP_DAYS, which the consent text states. */
-const RECORDING_KEEP_DAYS = 7;
 const MODE_LABEL = { off: "Not listening", listening: "Listening", paused: "Paused" } as const;
 
 const STREAM_LABEL: Record<StreamStatus["state"], string> = {
@@ -218,7 +216,7 @@ export function ListeningBar({ campaignId, role, status, send }: Props) {
           <p>
             While the GM has listening on during a session, this tab sends your microphone to the Gradebreaker server, which passes it to
             Soniox to turn into text. Neither keeps the audio. The text appears on the GM's screen, where the app uses it to draft what
-            happened, and is deleted 30 days after it was said. You can mute this tab at any time. The table listens only while everyone
+            happened, and is deleted {HEARD_KEEP_DAYS} days after it was said. You can mute this tab at any time. The table listens only while everyone
             at it has consented, and withdrawing your consent stops it for everyone.
           </p>
           <div className="cluster">

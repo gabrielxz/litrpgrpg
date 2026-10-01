@@ -38,6 +38,11 @@ export function selectionLine(engine: Engine | null, p: Package, bonus?: number)
   return lead && n !== undefined ? `${ATTRIBUTE_NAMES[lead] ?? lead} +${n}` : null;
 }
 
+/** "10 Health": what a Drawback technique's Health cost reads as, from the rules. */
+export function healthCost(engine: Engine | null): string {
+  return engine ? `${engine.rules.classes.technique.drawback_health as number} Health` : "Health";
+}
+
 /** A character's class technique as the fight's forms offer it. */
 export interface TechniqueOffer {
   name: string;
@@ -49,6 +54,8 @@ export interface TechniqueOffer {
   noBeat: boolean;
   /** Set when the player chooses the drawback. */
   chooseDrawback: boolean;
+  /** The Health a Drawback technique costs, as it reads: "10 Health". */
+  healthCost: string;
   /** Why it cannot be used now, or null. */
   blocked: string | null;
 }
@@ -61,7 +68,7 @@ export function techniqueOffer(
 ): TechniqueOffer {
   const t = k.technique;
   const aetherCost = engine ? engine.classTechniqueCost(k.grade ?? "F") : null;
-  const cost = t.cost === "Aether" ? `${aetherCost ?? ""} Aether`.trim() : t.cost === "Frequency" ? "once per fight" : t.drawback === "exposed" ? "Exposed until the next turn" : t.drawback === "health" ? "10 Health" : "10 Health or Exposed";
+  const cost = t.cost === "Aether" ? `${aetherCost ?? ""} Aether`.trim() : t.cost === "Frequency" ? "once per fight" : t.drawback === "exposed" ? "Exposed until the next turn" : t.drawback === "health" ? healthCost(engine) : `${healthCost(engine)} or Exposed`;
   const sides: TechniqueOffer["sides"] =
     t.hook?.kind === "clash" ? (t.hook.side === "either" ? ["attack", "defense"] : [t.hook.side]) : t.hook?.kind === "heal" ? [] : ["attack"];
   const blocked =
@@ -72,7 +79,7 @@ export function techniqueOffer(
         : t.cost === "Frequency" && state.usedThisFight
           ? "used this fight"
           : null;
-  return { name: t.name, ...(t.hook ? { hook: t.hook } : {}), cost, sides, noBeat: Boolean(t.noBeat), chooseDrawback: t.cost === "Drawback" && !t.drawback, blocked };
+  return { name: t.name, ...(t.hook ? { hook: t.hook } : {}), cost, sides, noBeat: Boolean(t.noBeat), chooseDrawback: t.cost === "Drawback" && !t.drawback, healthCost: healthCost(engine), blocked };
 }
 
 /** What a held class's permission adds to the Clash forms: a Surge paid in Health, or cheaper against a higher Grade. */

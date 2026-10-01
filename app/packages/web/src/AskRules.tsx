@@ -6,6 +6,7 @@
  */
 import { useState } from "react";
 import { askRules } from "./api.ts";
+import { NEEDS_KEY, useAiConfigured } from "./gm/useAi.ts";
 import { Icon } from "./ui.tsx";
 
 interface Asked {
@@ -24,6 +25,7 @@ export function AskRules({ campaignId, gm, className, heading = true }: { campai
   const [asked, setAsked] = useState<Asked[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const configured = useAiConfigured(campaignId);
   const ask = async () => {
     const q = question.trim();
     if (!q) return;
@@ -40,6 +42,8 @@ export function AskRules({ campaignId, gm, className, heading = true }: { campai
     }
   };
   const note = gm ? "Answered from every chapter of the book." : "Answered from the chapters players read.";
+  // Without the campaign's key there is nothing to ask; the book stays the answer.
+  const keyless = gm ? `Answering ${NEEDS_KEY}.` : "Answering needs the campaign's AI key, which the GM sets. Until then, the book has the answer.";
   const field = (
     <textarea
       className="textarea"
@@ -58,7 +62,7 @@ export function AskRules({ campaignId, gm, className, heading = true }: { campai
     />
   );
   const button = (primary: boolean) => (
-    <button className={primary ? "btn btn--primary" : "btn btn--sm"} type="button" disabled={busy || !question.trim()} onClick={ask}>
+    <button className={primary ? "btn btn--primary" : "btn btn--sm"} type="button" disabled={busy || !question.trim() || !configured} onClick={ask}>
       {busy ? "Looking it up…" : "Ask"}
     </button>
   );
@@ -68,9 +72,9 @@ export function AskRules({ campaignId, gm, className, heading = true }: { campai
   if (!heading)
     return (
       <section className={className ?? "stack ask-rules"}>
-        <p className="small dim">{note}</p>
-        {field}
-        <div>{button(false)}</div>
+        <p className="small dim">{configured === false ? keyless : note}</p>
+        {configured !== false && field}
+        {configured !== false && <div>{button(false)}</div>}
         {error && <p className="error">{error}</p>}
         {asked.map((a, i) => (
           <div key={i} className="rules-answer">
@@ -94,8 +98,8 @@ export function AskRules({ campaignId, gm, className, heading = true }: { campai
           <span className="small dim">{note}</span>
         </div>
         <div className="panel__body stack ask-panels__form">
-          {field}
-          <div className="cluster">{button(true)}</div>
+          {configured === false ? <p className="small dim">{keyless}</p> : field}
+          {configured !== false && <div className="cluster">{button(true)}</div>}
           {error && <p className="error">{error}</p>}
         </div>
       </section>

@@ -157,7 +157,7 @@ function Attendance({ view, s, onRecorded }: { view: GmView; s: CampaignSession;
         .filter((c) => !c.dead)
         .map((c) => (
           <span key={c.id} className="attendee">
-            <button disabled={busy} onClick={() => run({ type: "session.attend", characterId: c.id, present: !here(c.id) })}>
+            <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "session.attend", characterId: c.id, present: !here(c.id) })}>
               {here(c.id) ? `${c.name} leaves` : `${c.name} joins`}
             </button>
           </span>

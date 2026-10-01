@@ -236,11 +236,11 @@ function IssueForm({
           <div key={i} className="form-row tight">
             <input list="quest-items" value={it.name} onChange={(e) => setItems(items.map((x, j) => (j === i ? { ...x, name: e.target.value } : x)))} placeholder="Stuttering Tincture" aria-label="Reward item" />
             <input type="number" className="narrow-input" min={1} value={it.count} onChange={(e) => setItems(items.map((x, j) => (j === i ? { ...x, count: e.target.value } : x)))} aria-label="How many" />
-            <button onClick={() => setItems(items.filter((_, j) => j !== i))}>Remove</button>
+            <button className="btn btn--sm" onClick={() => setItems(items.filter((_, j) => j !== i))}>Remove</button>
           </div>
         ))}
         <div className="form-row">
-          <button onClick={() => setItems([...items, { name: "", count: "1" }])}>Add a reward item</button>
+          <button className="btn btn--sm" onClick={() => setItems([...items, { name: "", count: "1" }])}>Add a reward item</button>
           <label>
             Other reward
             <input className="wide" value={f.rewardText} onChange={(e) => set("rewardText", e.target.value)} placeholder="Standing with the co-op improves" />
@@ -403,41 +403,41 @@ function QuestCard({ q, view, engine, names, onRecorded }: { q: Quest; view: GmV
         <div className="form-row tight">
           {q.status === "offered" && (
             <>
-              <button disabled={busy} onClick={() => run({ type: "quest.answer", questId: q.id, characterId: q.holders[0]!, accept: true })} title={`For a player away from their screen. ${receives("quest-accepted", [q.holders[0]!]) ?? ""}`}>
+              <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "quest.answer", questId: q.id, characterId: q.holders[0]!, accept: true })} title={`For a player away from their screen. ${receives("quest-accepted", [q.holders[0]!]) ?? ""}`}>
                 Accept for {names(q.holders[0]!)}
               </button>
-              <button disabled={busy} onClick={() => run({ type: "quest.answer", questId: q.id, characterId: q.holders[0]!, accept: false })} title={receives("quest-refused", [q.holders[0]!])}>
+              <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "quest.answer", questId: q.id, characterId: q.holders[0]!, accept: false })} title={receives("quest-refused", [q.holders[0]!])}>
                 Refuse for {names(q.holders[0]!)}
               </button>
             </>
           )}
           {q.status === "active" && q.count && (
             <>
-              <button disabled={busy} onClick={() => run({ type: "quest.progress", questId: q.id, by: -1 })} title={receives("quest-progress", q.holders, { done: q.count.done - 1, of: q.count.of })}>
+              <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "quest.progress", questId: q.id, by: -1 })} title={receives("quest-progress", q.holders, { done: q.count.done - 1, of: q.count.of })}>
                 −1
               </button>
-              <button disabled={busy} onClick={() => run({ type: "quest.progress", questId: q.id, by: 1 })} title={receives("quest-progress", q.holders, { done: q.count.done + 1, of: q.count.of })}>
+              <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "quest.progress", questId: q.id, by: 1 })} title={receives("quest-progress", q.holders, { done: q.count.done + 1, of: q.count.of })}>
                 +1
               </button>
             </>
           )}
           {q.status === "active" && (
             <>
-              <button className="primary" disabled={busy} aria-expanded={completing} onClick={() => setCompleting(!completing)}>
+              <button className="btn btn--sm btn--primary" disabled={busy} aria-expanded={completing} onClick={() => setCompleting(!completing)}>
                 Complete…
               </button>
-              <button disabled={busy} onClick={() => run({ type: "quest.fail", questId: q.id })} title={receives("quest-failed")}>
+              <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "quest.fail", questId: q.id })} title={receives("quest-failed")}>
                 Failed
               </button>
             </>
           )}
-          <button disabled={busy} onClick={() => run({ type: "quest.withdraw", questId: q.id })} title="Expires silently: no refusal is counted">
+          <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "quest.withdraw", questId: q.id })} title="Expires silently: no refusal is counted">
             Expire
           </button>
           {q.status === "active" && q.hidden === "obscured" && (
             <>
               <input value={revealName} onChange={(e) => setRevealName(e.target.value)} placeholder="Suggestive name" aria-label="Suggestive name" />
-              <button disabled={busy || !revealName.trim()} onClick={() => run({ type: "quest.reveal", questId: q.id, name: revealName })}>
+              <button className="btn btn--sm" disabled={busy || !revealName.trim()} onClick={() => run({ type: "quest.reveal", questId: q.id, name: revealName })}>
                 Partial reveal
               </button>
               <TableWords text={revealName} />

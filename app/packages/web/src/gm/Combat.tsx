@@ -53,6 +53,8 @@ interface Creature {
 }
 
 const rid = () => Math.random().toString(36).slice(2, 6);
+/** A modifier with its sign, the minus typeset: "−10", "+10". */
+const minus = (n: number) => (n < 0 ? `−${-n}` : `+${n}`);
 const slug = (s: string) =>
   s
     .toLowerCase()
@@ -709,7 +711,7 @@ function CombatantRow({
                 )}
               </>
             )}
-            <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "combat.exposed", combatantId: c.id, exposed: !c.exposed })} title="−10 to Clash rolls until the end of their next turn">
+            <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "combat.exposed", combatantId: c.id, exposed: !c.exposed })} title={`${minus(engine.rules.resolution.exposed)} to Clash rolls until the end of their next turn`}>
               {c.exposed ? "Clear Exposed" : "Exposed"}
             </button>
             {!c.downed && (
@@ -717,7 +719,7 @@ function CombatantRow({
                 className="btn btn--sm"
                 disabled={busy}
                 onClick={() => run({ type: "combat.suppress", combatantId: c.id, suppressed: c.aura !== "suppressed" })}
-                title="Your ruling: a creature or NPC under Aura Pressure, or three or more Grades apart without a save"
+                title={`Your ruling: a creature or NPC under Aura Pressure, or ${engine.rules.combat.aura_pressure.gm_may_skip_at_grade_gap} or more Grades apart without a save`}
               >
                 {c.aura === "suppressed" ? "Clear Suppressed" : "Suppressed"}
               </button>
@@ -761,7 +763,7 @@ function CombatantRow({
                 </button>
               )}
               {auraSavers(engine, e as unknown as Encounter, c.id, true).length > 0 && (
-                <button className="btn btn--sm" disabled={busy || c.beats < 1} onClick={() => run({ type: "combat.aura", entityId: c.id, flaring: true, flare: true })} title="1 Beat: a fresh Will Save against 115 from everyone below its Grade">
+                <button className="btn btn--sm" disabled={busy || c.beats < 1} onClick={() => run({ type: "combat.aura", entityId: c.id, flaring: true, flare: true })} title={`1 Beat: a fresh Will Save against ${engine.auraResistance(true)} from everyone below its Grade`}>
                   Flare aura
                 </button>
               )}
@@ -789,6 +791,7 @@ function CombatantRow({
       {attacking && !e.clash && (
         <div className="track__drawer">
           <AttackForm
+            engine={engine}
             attacker={clasherOf(view, c, "attack", engine)}
             targets={targets}
             suggestFlanking={(d) => flankingSuggested(e as unknown as Encounter, c.id, d)}
@@ -1002,7 +1005,7 @@ function SurprisePanel({ e, run, busy }: { e: EncounterView; run: (a: Action) =>
             {c.name}
           </label>
         ))}
-        <button className="primary" disabled={busy || picked.length === 0} onClick={() => run({ type: "combat.surprise", combatantIds: picked })}>
+        <button className="btn btn--sm btn--primary" disabled={busy || picked.length === 0} onClick={() => run({ type: "combat.surprise", combatantIds: picked })}>
           Give the Surprise Beat
         </button>
       </div>
@@ -1017,6 +1020,12 @@ function AuraPanel({ engine, e, run, busy }: { engine: Engine; e: EncounterView;
     .map((c) => ({ c, savers: auraSavers(engine, e as unknown as Encounter, c.id, false) }))
     .filter((x) => x.savers.length > 0);
   if (!pressing.length) return null;
+  // The Resistance with its Difficulty's name off the card: "Moderate (90)".
+  const aura = (flaring: boolean) => {
+    const n = engine.auraResistance(flaring);
+    const row = (engine.rules.resolution.resistance_card as { difficulty: string; resistance: number }[]).find((d) => d.resistance === n);
+    return row ? `${row.difficulty} (${n})` : String(n);
+  };
   return (
     <section className="clash-panel">
       {pressing.map(({ c, savers }) => (
@@ -1025,15 +1034,16 @@ function AuraPanel({ engine, e, run, busy }: { engine: Engine; e: EncounterView;
             Aura Pressure: {c.name} ({c.grade}-Grade)
           </h3>
           <p className="small">
-            {savers.map((s) => s.name).join(", ")} {savers.length === 1 ? "makes" : "make"} the Will Save, Heart against its aura. Three or more Grades
-            apart, you may mark them Suppressed without a save; an entity holding its aura in asks for no save.
+            {savers.map((s) => s.name).join(", ")} {savers.length === 1 ? "makes" : "make"} the Will Save, Heart against its aura.{" "}
+            {engine.rules.combat.aura_pressure.gm_may_skip_at_grade_gap} or more Grades apart, you may mark them Suppressed without a save; an entity
+            holding its aura in asks for no save.
           </p>
           <div className="form-row tight">
-            <button className="primary" disabled={busy} onClick={() => run({ type: "combat.aura", entityId: c.id, flaring: false })}>
-              Carried calmly: Moderate (90)
+            <button className="btn btn--sm btn--primary" disabled={busy} onClick={() => run({ type: "combat.aura", entityId: c.id, flaring: false })}>
+              Carried calmly: {aura(false)}
             </button>
-            <button className="primary" disabled={busy} onClick={() => run({ type: "combat.aura", entityId: c.id, flaring: true })}>
-              Flaring: Hard (115)
+            <button className="btn btn--sm btn--primary" disabled={busy} onClick={() => run({ type: "combat.aura", entityId: c.id, flaring: true })}>
+              Flaring: {aura(true)}
             </button>
           </div>
         </div>
@@ -1065,12 +1075,13 @@ function ClashPanel({
     const a = cl.attack;
     const cut = (cl.result?.covers ?? []).reduce((n, x) => n + x.cut, 0);
     const how = a.attribute ? `${a.attribute}` : `${a.means ?? "Force"} ${a.force}`;
+    const r = engine.rules;
     const extras = [
       a.modifier ? `${a.modifier > 0 ? "+" : ""}${a.modifier}` : "",
-      cl.flanking ? "Flanking +10" : "",
-      a.surge ? `Surge +5${a.surgeHealth ? " (paid in Health)" : ""}` : "",
+      cl.flanking ? `Flanking +${r.resolution.flanking_bonus}` : "",
+      a.surge ? `Surge +${r.combat.surge.bonus}${a.surgeHealth ? " (paid in Health)" : ""}` : "",
       a.advantage ? "Advantage" : "",
-      att.exposed ? "Exposed −10" : "",
+      att.exposed ? `Exposed ${minus(r.resolution.exposed)}` : "",
       cl.cornered ? `${def.name} Cornered` : "",
       cl.free ? "free strike" : "",
     ].filter(Boolean);
@@ -1092,9 +1103,9 @@ function ClashPanel({
           <>
             <p className="small">
               {def.characterId ? `${def.name}'s player can answer on their screen, or record it here.` : `${def.name} defends.`}
-              {def.exposed ? " Exposed: −10." : ""}
+              {def.exposed ? ` Exposed: ${minus(r.resolution.exposed)}.` : ""}
             </p>
-            <DefenseForm defender={clasherOf(view, def, "defense", engine)} busy={busy} onDefend={(s) => run({ type: "combat.defend", defense: s })} />
+            <DefenseForm engine={engine} defender={clasherOf(view, def, "defense", engine)} busy={busy} onDefend={(s) => run({ type: "combat.defend", defense: s })} />
           </>
         ) : (
           <>
@@ -1139,6 +1150,7 @@ function ClashPanel({
               </div>
             )}
             <YieldChoice
+              engine={engine}
               margin={Math.max(0, cl.result!.margin - cut)}
               cap={cl.result!.yieldCap}
               multiplier={engine.damageMultiplier(att.grade)}
@@ -1271,7 +1283,7 @@ function AddMidFight({ view, engine, e, run }: { view: GmView; engine: Engine; e
               ))}
             </select>
           </label>
-          <button
+          <button className="btn btn--sm"
             onClick={() =>
               run({ type: "combat.add", combatant: { combatantId: e.combatants.some((c) => c.id === picked) ? `${picked}-${rid()}` : picked, sideId, characterId: picked } })
             }
@@ -1315,7 +1327,7 @@ export function CombatSection({
     <main className="page">
       {view.aftermath ? (
         // Keyed by the fight, so a new aftermath starts from its own defaults.
-        <AftermathPanel key={view.aftermath.id} view={view} engine={engine} names={names} onRecorded={onRecorded} />
+        <AftermathPanel key={view.aftermath.id} view={view} engine={engine} names={names} log={log} onRecorded={onRecorded} />
       ) : (
         <Setup key={firing?.prepId ?? "new"} view={view} engine={engine} onRecorded={onRecorded} {...(firing ? { firing } : {})} {...(onFired ? { onFired } : {})} />
       )}

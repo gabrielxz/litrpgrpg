@@ -30,7 +30,7 @@ Ending a session from [the table bar](guide:gm-session) warns you when no sweep 
 
 ## Personal Opportunities
 
-This panel drafts a Personal Opportunity offer through the campaign's AI key, after the sweep.
+This panel drafts a Personal Opportunity offer through the campaign's AI key, after the sweep. Without a key, the panel says so in place of **Draft an offer**.
 
 1. Choose who it is **For**.
 2. Describe **The situation (optional)**: where they are, who is near, what presses on them.

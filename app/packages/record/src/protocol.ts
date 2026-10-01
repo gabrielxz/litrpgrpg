@@ -323,6 +323,11 @@ export interface StreamStatus {
   failure?: string;
 }
 
+/** How long a heard line is kept after it was said; the server purges by it and the consent text states it. */
+export const HEARD_KEEP_DAYS = 30;
+/** How long a test recording is kept after it ends; the server purges by it and the consent text states it. */
+export const RECORDING_KEEP_DAYS = 7;
+
 /** What each tab is told. `stopped`, `streams`, and `missing` go to the GM only. */
 export interface ListeningStatus {
   mode: ListeningMode;

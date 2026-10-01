@@ -100,6 +100,7 @@ function DiceTab({ view, engine }: FormProps) {
         gm
         characters={view.characters.map((c) => ({ id: c.id, name: c.name, force: c.force, aether: c.aether, surgeCost: c.surgeCost, proficiencies: c.proficiencies }))}
         shapes={shapes(engine)}
+        surgeBonus={engine.rules.combat.surge.bonus}
         difficulties={engine.rules.resolution.resistance_card}
         grades={engine.rules.grades.grades.map((g: { code: string }) => g.code)}
       />
@@ -670,7 +671,7 @@ function AssignedProposalLine({ c, onUse }: { c: Sheet; onUse: (placement: Recor
       <p className="small">
         Since the last placement ({p.events} {p.events === 1 ? "event" : "events"}): {tally}. Proposed: <strong>{placement}</strong> ({why}).
       </p>
-      <button onClick={() => onUse(p.placement)}>Use the proposal</button>
+      <button className="btn btn--sm" onClick={() => onUse(p.placement)}>Use the proposal</button>
     </div>
   );
 }

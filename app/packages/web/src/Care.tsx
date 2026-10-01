@@ -121,18 +121,18 @@ export function CareActions({
     <>
       <div className="form-row tight">
         {pills.length > 0 && (
-          <button disabled={noBeat || pillTargets.length === 0} onClick={() => toggle("pill")}>
+          <button className="btn btn--sm" disabled={noBeat || pillTargets.length === 0} onClick={() => toggle("pill")}>
             Pill…
           </button>
         )}
-        <button disabled={noBeat || dying.length === 0} onClick={() => toggle("stabilize")} title={`Bare hands: a ${stabilize.difficulty} (${stabilize.resistance}) ${stabilize.attribute} check in the Downed character's Zone`}>
+        <button className="btn btn--sm" disabled={noBeat || dying.length === 0} onClick={() => toggle("stabilize")} title={`Bare hands: a ${stabilize.difficulty} (${stabilize.resistance}) ${stabilize.attribute} check in the Downed character's Zone`}>
           Stabilize…
         </button>
-        <button disabled={noBeat || downed.length === 0} onClick={() => toggle("execute")} title="A deliberate attack on a Downed combatant kills them: 1 Beat, no roll">
+        <button className="btn btn--sm" disabled={noBeat || downed.length === 0} onClick={() => toggle("execute")} title="A deliberate attack on a Downed combatant kills them: 1 Beat, no roll">
           Execute…
         </button>
         {ownUse && me.characterId && (
-          <button
+          <button className="btn btn--sm"
             disabled={busy || Boolean(ownUse.blocked) || (!ownUse.noBeat && beats < 1)}
             onClick={() => toggle("technique")}
             title={ownUse.blocked ?? `${ownUse.noBeat ? "No Beat" : "1 Beat"}, ${ownUse.cost}`}
@@ -141,12 +141,12 @@ export function CareActions({
           </button>
         )}
         {me.suppressed && me.characterId && (
-          <button disabled={noBeat} onClick={() => run({ type: "combat.will", combatantId: me.id, reason: "principle" })} title="A Principle Application that pushes back: 1 Beat, and the Will Save again">
+          <button className="btn btn--sm" disabled={noBeat} onClick={() => run({ type: "combat.will", combatantId: me.id, reason: "principle" })} title="A Principle Application that pushes back: 1 Beat, and the Will Save again">
             Push back (1 Beat)
           </button>
         )}
         {!me.suppressed && suppressedAllies.length > 0 && (
-          <button disabled={noBeat} onClick={() => toggle("intervene")} title="Shield, shout, or reach them: 1 Beat, and they make the Will Save again">
+          <button className="btn btn--sm" disabled={noBeat} onClick={() => toggle("intervene")} title="Shield, shout, or reach them: 1 Beat, and they make the Will Save again">
             Intervene…
           </button>
         )}
@@ -161,7 +161,7 @@ export function CareActions({
             ))}
           </select>
           for {targetSelect}
-          <button className="primary" disabled={noBeat || !picked || !pill} onClick={() => done({ type: "combat.pill", combatantId: me.id, targetId: picked, pill })}>
+          <button className="btn btn--sm btn--primary" disabled={noBeat || !picked || !pill} onClick={() => done({ type: "combat.pill", combatantId: me.id, targetId: picked, pill })}>
             {picked === me.id ? "Take it (1 Beat)" : "Give it (1 Beat)"}
           </button>
           {takenOfKind >= pillLimit && <span className="small warn">{pickedMate?.name} has taken {takenOfKind} of this kind since the last Consolidation: it will have no effect.</span>}
@@ -181,7 +181,7 @@ export function CareActions({
             <input type="checkbox" checked={advantage} onChange={(e) => setAdvantage(e.target.checked)} /> Medical Background (Advantage)
           </label>
           <button
-            className="primary"
+            className="btn btn--sm btn--primary"
             disabled={noBeat || !picked || (!me.force && force.trim() === "")}
             onClick={() =>
               done({
@@ -209,12 +209,12 @@ export function CareActions({
           )}
           {ownUse.chooseDrawback && (
             <select value={drawback} onChange={(e) => setDrawback(e.target.value as "health" | "exposed")} aria-label="Drawback">
-              <option value="health">Pay 10 Health</option>
+              <option value="health">Pay {ownUse.healthCost}</option>
               <option value="exposed">Be Exposed until the next turn</option>
             </select>
           )}
           <button
-            className="primary"
+            className="btn btn--sm btn--primary"
             disabled={busy || Boolean(ownUse.blocked) || (!ownUse.noBeat && beats < 1) || (ownUse.hook?.kind === "heal" && !picked)}
             onClick={() =>
               done({
@@ -233,7 +233,7 @@ export function CareActions({
       {open === "execute" && (
         <div className="form-row tight subform">
           {targetSelect}
-          <button className="danger" disabled={noBeat || !picked} onClick={() => done({ type: "combat.execute", combatantId: me.id, targetId: picked })}>
+          <button className="btn btn--sm btn--danger" disabled={noBeat || !picked} onClick={() => done({ type: "combat.execute", combatantId: me.id, targetId: picked })}>
             Execute {pickedMate?.name} (1 Beat)
           </button>
         </div>
@@ -242,7 +242,7 @@ export function CareActions({
         <div className="form-row tight subform">
           {targetSelect}
           <button
-            className="primary"
+            className="btn btn--sm btn--primary"
             disabled={noBeat || !picked}
             onClick={() => done({ type: "combat.will", combatantId: picked, reason: "intervention", helperId: me.id })}
           >

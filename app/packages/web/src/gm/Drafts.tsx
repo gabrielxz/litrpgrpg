@@ -292,7 +292,7 @@ export function DraftsCard({
           </label>
           {talk.lines.length > 0 && <Readings talk={talk} view={view} names={names} />}
           <div className="form-row">
-            <button className="primary" disabled={!talk.lines.length || busy || drafting || !configured} onClick={start}>
+            <button className="btn btn--sm btn--primary" disabled={!talk.lines.length || busy || drafting || !configured} onClick={start}>
               Draft
             </button>
             <span className="muted small">Drafts wait here for you; nothing is logged until you accept one.</span>

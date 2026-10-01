@@ -21,7 +21,7 @@ import { closeSync, createReadStream, createWriteStream, existsSync, mkdirSync, 
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { Readable } from "node:stream";
-import type { HeardLine } from "@gradebreaker/record";
+import { type HeardLine, RECORDING_KEEP_DAYS } from "@gradebreaker/record";
 import { words } from "@gradebreaker/listening/stt";
 import { newId } from "./tokens.ts";
 
@@ -40,8 +40,6 @@ export function trackNames(people: RecordedPerson[]): Map<string, string> {
   }
   return out;
 }
-/** How long a recording is kept after it ends; the consent text states it. */
-export const RECORDING_KEEP_DAYS = 7;
 /** A gap longer than this between one person's frames is filled with silence, so the tracks keep one clock. */
 const GAP_MS = 200;
 

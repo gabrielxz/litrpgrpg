@@ -192,15 +192,18 @@ export function TitlesForm({ view, engine, names, onRecorded }: { view: GmView; 
         </>
       )}
       <Commit campaignId={view.campaign.id} action={action} problem={problem} names={names} label={`Confer ${source === "catalog" ? catalog : custom.name.trim() || "the title"} on ${c.name}`} onRecorded={onRecorded} />
-      <HeldTitles view={view} engine={engine} c={c} onRecorded={onRecorded} />
+      <HeldTitles view={view} engine={engine} names={names} c={c} onRecorded={onRecorded} />
     </div>
   );
 }
 
-/** A character's titles, with the release of a negative one. */
-function HeldTitles({ view, engine, c, onRecorded }: { view: GmView; engine: Engine; c: Sheet; onRecorded: (env: Envelope) => void }) {
-  const { run, busy, error } = useRun(view.campaign.id, onRecorded);
+/**
+ * A character's titles, with the release of a negative one. The player sees the release, so it
+ * waits behind the preview of what they receive and the GM's tap.
+ */
+function HeldTitles({ view, engine, names, c, onRecorded }: { view: GmView; engine: Engine; names: Names; c: Sheet; onRecorded: (env: Envelope) => void }) {
   const [replacement, setReplacement] = useState<Record<string, string>>({});
+  const [releasing, setReleasing] = useState<string | null>(null);
   if (!c.titles.length) return null;
   const titles = catalogGroups(engine).flatMap(([, t]) => t);
   return (
@@ -228,20 +231,26 @@ function HeldTitles({ view, engine, c, onRecorded }: { view: GmView; engine: Eng
                     </option>
                   ))}
                 </select>
-                <button
-                  disabled={busy}
-                  onClick={() =>
-                    run({ type: "title.release", characterId: c.id, titleId: t.id, ...(replacement[t.id] ? { replacement: { catalog: replacement[t.id]! } } : {}) })
-                  }
-                >
-                  Release
+                <button className="btn btn--sm" aria-expanded={releasing === t.id} onClick={() => setReleasing(releasing === t.id ? null : t.id)}>
+                  {releasing === t.id ? "Close" : "Release…"}
                 </button>
               </span>
+            )}
+            {t.negative && t.status === "active" && releasing === t.id && (
+              <Commit
+                campaignId={view.campaign.id}
+                action={{ type: "title.release", characterId: c.id, titleId: t.id, ...(replacement[t.id] ? { replacement: { catalog: replacement[t.id]! } } : {}) }}
+                names={names}
+                label={replacement[t.id] ? `Release ${t.name} into ${replacement[t.id]}` : `Release ${t.name}`}
+                onRecorded={(env) => {
+                  setReleasing(null);
+                  onRecorded(env);
+                }}
+              />
             )}
           </li>
         ))}
       </ul>
-      {error && <p className="error">{error}</p>}
     </div>
   );
 }
@@ -284,7 +293,7 @@ export function CountersForm({ view, engine, onRecorded }: { view: GmView; engin
                 {DERIVED_COUNTERS.has(k) ? (
                   <span className="muted small">from the record</span>
                 ) : (
-                  <button disabled={busy} onClick={() => run({ type: "counter.tick", characterId: c.id, counter: k, count: 1 })}>
+                  <button className="btn btn--sm" disabled={busy} onClick={() => run({ type: "counter.tick", characterId: c.id, counter: k, count: 1 })}>
                     +1
                   </button>
                 )}

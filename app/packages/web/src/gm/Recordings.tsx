@@ -1,13 +1,14 @@
 /**
  * Test recordings in the GM's Table section (app/DESIGN.md, M3, "Test recordings"): each one's
  * tracks (one WAV per person who consented) and its timeline of heard lines, in the shape
- * `render-audio` writes, to download into build/listening/audio/<name>/ and run `stt-eval` on.
+ * `render-audio` writes. A developer downloads them into build/listening/audio/<name>/ and runs
+ * `stt-eval` on them; the GM-facing text says only what the GM does.
  * The timeline's lines are the transcriber's: the GM corrects them here, hearing each line, and a
  * second opinion from a more accurate transcriber marks the lines where the two disagree, so
  * only those need a listen. The GM deletes a recording once it is downloaded; the server deletes
  * it after seven days regardless.
  */
-import type { GmView } from "@gradebreaker/record";
+import { type GmView, RECORDING_KEEP_DAYS } from "@gradebreaker/record";
 import { useEffect, useState } from "react";
 import { api, currentToken } from "../api.ts";
 import { Icon } from "../ui.tsx";
@@ -172,6 +173,7 @@ export function RecordingsCard({ view }: { view: GmView }) {
   const [list, setList] = useState<Recording[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [correcting, setCorrecting] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState<string | null>(null);
   const refresh = () =>
     api<{ recordings: Recording[] }>("GET", `/campaigns/${id}/recordings`)
       .then((r) => setList(r.recordings))
@@ -212,6 +214,7 @@ export function RecordingsCard({ view }: { view: GmView }) {
   }, [list]);
   const remove = async (r: Recording) => {
     setError(null);
+    setDeleting(null);
     try {
       await api("DELETE", `/campaigns/${id}/recordings/${r.id}`);
       await refresh();
@@ -229,9 +232,9 @@ export function RecordingsCard({ view }: { view: GmView }) {
       </div>
       <div className="panel__body stack recordings">
         <p className="small dim">
-          Each person's voice as the listening took it, with the lines it heard, for measuring the listener. Correct the lines here, hearing
-          each one; a second opinion from a more accurate transcriber marks where the two disagree. Then save the files into
-          build/listening/audio/ under one folder and run stt-eval on it. Deleted here, or 7 days after the recording ends.
+          Each person's voice as the listening took it, with the lines it heard, for measuring how well the listening hears your table.
+          Correct the lines here, hearing each one; a second opinion from a more accurate transcriber marks where the two disagree.
+          Download the files to keep them. A recording is deleted here, or {RECORDING_KEEP_DAYS} days after it ends.
         </p>
         {error && <p className="error">{error}</p>}
         {!!list?.length && (
@@ -281,9 +284,22 @@ export function RecordingsCard({ view }: { view: GmView }) {
                       </button>
                     ) : null}
                     <span className="grow" />
-                    <button className="btn btn--sm btn--danger" type="button" onClick={() => remove(r)}>
-                      Delete
-                    </button>
+                    {/* Deleting is for good, so it takes the confirm tap (Decisions, "the makeover", P12). */}
+                    {deleting === r.id ? (
+                      <span className="confirm confirm--armed">
+                        <span className="confirm__what">Deleting is permanent.</span>
+                        <button className="btn btn--sm btn--danger" type="button" onClick={() => remove(r)}>
+                          Delete the recording
+                        </button>
+                        <button className="btn btn--sm" type="button" onClick={() => setDeleting(null)}>
+                          Keep it
+                        </button>
+                      </span>
+                    ) : (
+                      <button className="btn btn--sm btn--danger" type="button" onClick={() => setDeleting(r.id)}>
+                        Delete…
+                      </button>
+                    )}
                   </div>
                   {correcting === r.id && <Corrector campaignId={id} r={r} onClose={() => setCorrecting(null)} />}
                 </li>

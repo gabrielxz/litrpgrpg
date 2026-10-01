@@ -52,23 +52,6 @@ body {
   opacity: 0.42;
   cursor: default;
 }
-:where(.gb button.primary) {
-  --b-bg: var(--btn-fill);
-  --b-fg: var(--btn-text);
-  --b-line: var(--btn-fill);
-  font-weight: 700;
-}
-:where(.gb button.primary:hover:not(:disabled)) {
-  --b-bg: var(--btn-hover);
-  --b-line: var(--btn-hover);
-}
-:where(.gb button.danger) {
-  --b-fg: var(--danger);
-  --b-line: var(--danger);
-}
-:where(.gb button.danger:hover) {
-  --b-bg: var(--danger-wash);
-}
 :where(.gb button.link) {
   min-height: 0;
   padding: 0 0.2rem;

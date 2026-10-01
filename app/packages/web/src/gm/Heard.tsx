@@ -6,11 +6,11 @@
  * talk does (a time, a name, the words). Players never see these.
  */
 import { WINDOW_LINES, WINDOW_QUIET_MS } from "@gradebreaker/listening/window-sizes";
-import type { GmView, HeardLine } from "@gradebreaker/record";
+import { type GmView, HEARD_KEEP_DAYS, type HeardLine } from "@gradebreaker/record";
 import { useEffect, useRef, useState } from "react";
 import { type LiveMode, draftHeardNow, setLiveDrafting } from "../api.ts";
 import type { DraftRuns } from "./Drafts.tsx";
-import { useAiConfigured } from "./useAi.ts";
+import { NEEDS_KEY, useAiConfigured } from "./useAi.ts";
 
 const time = (iso: string) =>
   new Date(iso).toLocaleTimeString([], {
@@ -80,7 +80,7 @@ export function HeardCard({ view, heard, drafts, onUse }: { view: GmView; heard:
       )}
       <div className="form-row">
         {configured === false ? (
-          <span className="muted small">Drafting from these needs the campaign's key (the AI card in the Table section). Kept 30 days, then deleted.</span>
+          <span className="muted small">Drafting from these {NEEDS_KEY}. Kept {HEARD_KEEP_DAYS} days, then deleted.</span>
         ) : (
           <>
             {drafts.live && (
@@ -93,12 +93,12 @@ export function HeardCard({ view, heard, drafts, onUse }: { view: GmView; heard:
                 </select>
               </label>
             )}
-            <button disabled={!fresh.length || busy || drafts.drafting} onClick={now}>
+            <button className="btn btn--sm" disabled={!fresh.length || busy || drafts.drafting} onClick={now}>
               Draft {fresh.length || "no"} new line
               {fresh.length === 1 ? "" : "s"} now
             </button>
             {mode === "off" && (
-              <button
+              <button className="btn btn--sm"
                 disabled={!fresh.length}
                 onClick={() => {
                   onUse(fresh.map((l) => `${time(l.startedAt)} ${speaker(l.userId)}: ${l.text}`).join("\n"));
@@ -115,7 +115,7 @@ export function HeardCard({ view, heard, drafts, onUse }: { view: GmView; heard:
         <p className="muted small">
           {mode !== "off" ? `Drafted at a pause of ${WINDOW_QUIET_MS / 1000} s once ${WINDOW_LINES} new lines have arrived, and when the listening pauses or stops. ` : ""}
           {mode === "shadow" ? "In shadow, the drafts are kept from review until you release them, so what you log by hand can be compared with them. " : ""}
-          Kept 30 days, then deleted.
+          Kept {HEARD_KEEP_DAYS} days, then deleted.
         </p>
       )}
       {error && <p className="error small">{error}</p>}

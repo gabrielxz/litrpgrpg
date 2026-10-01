@@ -303,6 +303,12 @@ export function GmCampaign({ view, live }: { view: GmView; live: ReturnType<type
   const [section, setSection] = useSection();
   // A prepared fight or quest handed to Combat or Quests to fire there.
   const [firing, setFiring] = useState<Firing | null>(null);
+  // A fight handed over and not started is dropped once Combat holds a running fight or an
+  // aftermath, so it cannot resurface in a setup opened later.
+  const combatBusy = Boolean(view.encounter || view.aftermath);
+  useEffect(() => {
+    if (combatBusy && firing?.kind === "encounter") setFiring(null);
+  }, [combatBusy, firing]);
   const drafts = useDraftRuns(view, live.draftsChanged);
   const echo = useEcho(view);
   // Characters by id, and every creature or NPC a fight has named, for the log's lines.

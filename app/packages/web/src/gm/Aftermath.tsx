@@ -10,14 +10,21 @@ import { useState } from "react";
 import { newActionId, submit } from "../api.ts";
 import { catalogNames } from "../items.ts";
 import type { Names } from "../text.ts";
+import { Icon } from "../ui.tsx";
 import { Commit } from "./Commit.tsx";
 
 type Aftermath = NonNullable<GmView["aftermath"]>;
 
 const int = (s: string) => (s.trim() === "" ? Number.NaN : Math.trunc(Number(s)));
 
-export function AftermathPanel({ view, engine, names, onRecorded }: { view: GmView; engine: Engine; names: Names; onRecorded: (env: Envelope) => void }) {
+export function AftermathPanel({ view, engine, names, log, onRecorded }: { view: GmView; engine: Engine; names: Names; log: Envelope[]; onRecorded: (env: Envelope) => void }) {
   const e: Aftermath = view.aftermath!;
+  // The loot roll standing for this fight, which Undo takes back so the GM can roll again.
+  const voided = new Set(log.flatMap((x) => (x.action.type === "void" ? [x.action.targetId] : [])));
+  const rejected = new Set(view.rejected.map((r) => r.id));
+  const lootRoll = [...log]
+    .reverse()
+    .find((x) => x.action.type === "encounter.loot" && x.action.encounterId === e.id && !voided.has(x.id) && !rejected.has(x.id));
   const tierNames: string[] = engine.rules.cultivation.awards.kill_tiers.map((t: { difficulty: string }) => t.difficulty);
   const bestiary: { name: string; tier: string }[] = engine.rules.bestiary.creatures;
   const dead = e.combatants.filter((c) => c.dead && !c.characterId);
@@ -60,15 +67,11 @@ export function AftermathPanel({ view, engine, names, onRecorded }: { view: GmVi
   const setKill = (i: number, k: Partial<KillEntry>) => setKills(kills.map((x, j) => (j === i ? { ...x, ...k } : x)));
   const survivors = fighters.filter((c) => c.wasDowned && !c.dead);
 
-  const rollLoot = async () => {
+  const record = async (action: Action) => {
     setBusy(true);
     setError(null);
     try {
-      const r = await submit(view.campaign.id, newActionId(), {
-        type: "encounter.loot",
-        encounterId: e.id,
-        kills: kills.map((k) => ({ combatantId: k.combatantId, tier: k.tier, ...(k.boss ? { boss: true } : {}) })),
-      });
+      const r = await submit(view.campaign.id, newActionId(), action);
       onRecorded(r.envelope);
     } catch (err) {
       setError((err as Error).message);
@@ -246,10 +249,28 @@ export function AftermathPanel({ view, engine, names, onRecorded }: { view: GmVi
                 {r.die === null ? "" : `, rolled ${r.die}`}): {r.drop}
               </li>
             ))}
+            {lootRoll && (
+              <li>
+                <button className="btn btn--sm" disabled={busy} onClick={() => record({ type: "void", targetId: lootRoll.id, reason: "undo" })} title="Takes the roll back, to roll again">
+                  <Icon name="undo" />
+                  Undo the roll
+                </button>
+              </li>
+            )}
           </ul>
         ) : (
           <div className="form-row tight">
-            <button className="btn btn--primary btn--sm" disabled={busy} onClick={rollLoot}>
+            <button
+              className="btn btn--primary btn--sm"
+              disabled={busy}
+              onClick={() =>
+                record({
+                  type: "encounter.loot",
+                  encounterId: e.id,
+                  kills: kills.map((k) => ({ combatantId: k.combatantId, tier: k.tier, ...(k.boss ? { boss: true } : {}) })),
+                })
+              }
+            >
               <i className="ic ic-dice" aria-hidden="true" />
               Roll loot
             </button>

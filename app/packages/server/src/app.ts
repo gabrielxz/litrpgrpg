@@ -323,6 +323,12 @@ export function createApp(service: Service, opts: AppOptions = {}) {
     await service.requireGm(id, c.get("user"));
     return c.json(await aiView(id));
   });
+  // Whether the campaign has a key, for anyone at the table: a player's Ask the rules checks it.
+  app.get("/campaigns/:id/ai/configured", async (c) => {
+    const id = c.req.param("id");
+    await service.requireMember(id, c.get("user"));
+    return c.json({ configured: (await ai().status(id)).configured });
+  });
   app.put("/campaigns/:id/ai/key", async (c) => {
     const id = c.req.param("id");
     await service.requireGm(id, c.get("user"));

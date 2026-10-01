@@ -66,11 +66,11 @@ export function ShadowCard({ view, names, heard, drafts }: { view: GmView; names
         {hidden ? `; ${hidden === runs.length ? "their" : `${hidden} windows'`} drafts are kept from review.` : ", all in review."}
       </p>
       <div className="form-row">
-        <button disabled={busy} onClick={compare}>
+        <button className="btn btn--sm" disabled={busy} onClick={compare}>
           {report ? "Compare again" : "Compare with what you logged"}
         </button>
         {hidden > 0 && (
-          <button disabled={busy} onClick={release}>
+          <button className="btn btn--sm" disabled={busy} onClick={release}>
             Put the drafts in review
           </button>
         )}

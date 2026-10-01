@@ -43,5 +43,5 @@ To write different offers, undo the offer in the [Campaign log](guide:gm-log); t
 **Classes held** lists each class in the table's words. Inspection never shows a class; only its holder's player sees it.
 
 - If the selection bonus pushed the lead Attribute past the stat cap, the card says how much was lost.
-- A technique used outside a fight can be recorded here: **Record Joe's Triage**, with the cost in the label, pays the cost and, for a heal, restores the Health to the character you pick. While the character is in a fight, it is used from the [Combat](guide:gm-combat) tracker instead. A Clash-bonus technique and a once-per-fight technique are used only in a fight.
+- A technique used outside a fight can be recorded here: **Record Joe's Triage**, with the cost in the label, pays the cost and, for a heal, restores the Health to the character you pick: the user or someone in their party. While the character is in a fight, it is used from the [Combat](guide:gm-combat) tracker instead. A Clash-bonus technique and a once-per-fight technique are used only in a fight.
 - A once-a-day permission shows "ready" or "used since dawn" against dawn on the in-game clock, with **Record Kara's use of Finder's Share** while it is ready. The player can mark the use on their own screen as well. Without the clock set, the card asks you to keep the count yourself.

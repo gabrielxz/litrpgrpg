@@ -26,4 +26,4 @@ Nobody else sees your questions or the answers, and nothing is recorded in the c
 
 ## When it does not work
 
-Asking uses the campaign's AI key, which the GM sets. Without one, asking shows "no key is set for this campaign". Ask your GM to set it, or look the rule up in the book.
+Asking uses the campaign's AI key, which the GM sets. Without one, the tray says so in place of the field. Ask your GM to set it, or look the rule up in the book.

@@ -26,6 +26,6 @@ Nothing. An answer stays on the screen that asked, up to the last 10, until the 
 
 ## What it needs
 
-Asking runs on the campaign's AI key, and players' questions spend it as well. Without a key, **Ask** returns the error *no key is set for this campaign*. The AI card's **Usage** table counts the questions under **rules-question** (see [Setting up a campaign](guide:gm-setup)).
+Asking runs on the campaign's AI key, and players' questions spend it as well. Without a key, the section says answering needs the campaign's key in place of the field. The AI card's **Usage** table counts the questions under **rules-question** (see [Setting up a campaign](guide:gm-setup)).
 
 > The book is the rulebook, and the answer is a reading of it. Where the answer and the book differ, the book wins.

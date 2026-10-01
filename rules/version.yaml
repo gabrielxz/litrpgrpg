@@ -1,8 +1,8 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.40"
-dated: "2026-09-30"
+version: "0.1.41"
+dated: "2026-10-01"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
   flat-value VE (Tolerance 80, level 120, 20 per hour), the Grade Gap Rule,
@@ -135,3 +135,6 @@ notes: >
   (the Recurring NPCs table), loaded into the companion app's Prep with the rest of the pack.
   0.1.40: system-ai.yaml Hidden Achievements prompt (templates/hidden-achievement.txt), printed in The
   System AI; Loot and Identify record that they take no prompt. No number moved.
+  0.1.41: tutorial.yaml gives Marisol Vega a stat block (a Level 1 human runner with a pipe: HP 14,
+  2 Beats, Momentum 5, Off STR 05 pipe, Def DEX 06 or FOR 07, Yields), so she joins the High Ground
+  fight from Prep.

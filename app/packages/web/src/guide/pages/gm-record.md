@@ -8,7 +8,7 @@ The panel opens on **Award VE**, or on **New character** while the campaign has 
 
 ## The preview and the button
 
-Every form except **Dice**, **Counts**, **Inspection**, and a title's **Release** ends in a preview and a button named for the action (**Award 130 VE**, **Create Kara**). The button stays disabled until the preview accepts the draft.
+Every form except **Dice**, **Counts**, and **Inspection** ends in a preview and a button named for the action (**Award 130 VE**, **Create Kara**). The button stays disabled until the preview accepts the draft.
 
 - **If you record this** lists what the action does and, for each character it touches, the changes to their sheet. A character the action adds is marked **New character:**.
 - **This cannot be recorded** gives the rule it breaks, and the button stays off.
@@ -69,7 +69,7 @@ Records a Proficiency Mark in a weapon shape. A Clash that names its shape recor
 
 Choose the character, then **From the book** (the F-Grade catalog by group, and the tutorial's titles) or **Written fresh**. A fresh HVE-Resonant title needs its **Axis pair**; a fresh Bestowed title can be marked **Negative**, which requires a **Release condition**. A warning appears when the name uses the table's words (round, Beat, roll); keep the word if it means something else there. Press **Confer Iron Nerve on Joe** to grant it; the player's notice reads *Title conferred: Iron Nerve.* Bonus sizes are in Titles, "Bonus Magnitudes".
 
-Below the form, the character's titles are listed. A negative title that is active has a **Release** button, with a choice to convert it into a catalog title when the release was earned. **Release** records at once.
+Below the form, the character's titles are listed. A negative title that is active has a choice to convert it into a catalog title when the release was earned, and a **Release…** button that opens the preview of what the player receives. Press **Release Salvaged** (or **Release Salvaged into** the title it converts into) to record it.
 
 ### Counts
 

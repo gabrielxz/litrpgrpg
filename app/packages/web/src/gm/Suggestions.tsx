@@ -110,7 +110,7 @@ Reward:     ${[ve, q.rewardText ?? ""].filter(Boolean).join(", ")}${q.time ? `\n
       <SheetWords engine={engine} text={[q.title, q.objective, q.rewardText ?? "", s.notice ?? ""].join(" ")} />
       <div className="form-row">
         <button
-          className="primary"
+          className="btn btn--sm btn--primary"
           onClick={() =>
             onFire({
               kind: "quest",
@@ -127,7 +127,7 @@ Reward:     ${[ve, q.rewardText ?? ""].filter(Boolean).join(", ")}${q.time ? `\n
         >
           Open in Quests to issue
         </button>
-        <button onClick={() => drafts.mark(item, "dismiss")}>Dismiss</button>
+        <button className="btn btn--sm" onClick={() => drafts.mark(item, "dismiss")}>Dismiss</button>
       </div>
       {s.notice && (
         <details>
