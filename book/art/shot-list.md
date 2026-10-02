@@ -14,6 +14,7 @@ The trim is 7 by 10 inches. The text block is 5.45 by 8.25 inches. There is no b
 | Spot (creature, object) | Square | 1024×1024 or larger | 1200×1200 | Quarter page, beside text; a quiet background or none |
 | Portrait (NPC, pregen) | Portrait 2:3 | 1024×1536 | 1200×1800 | Cropped to square for the kit's cards, so keep the face in the middle third |
 | Map | Landscape 3:2 | Largest landscape available | 3000×2000 | Full page, rotated, with room on one edge for the phase key |
+| App screen | Landscape 3:2 | 1536×1024 or larger | 1536×1024 | Shown on a player's screen by the companion app; see "The Tutorial on the players' screens" |
 
 Request the largest size the tool offers for every image and inspect the file. Upscaling adds no detail. Keep the originals; the build makes its own derivatives.
 
@@ -63,6 +64,69 @@ Request the largest size the tool offers for every image and inspect the file. U
 | The Reality Purge | Full page | The wall of white coming across the valley at a walking pace with nothing behind it, the glowing forest going into it, and something very large standing up in the middle ground. | Blue-black and bone | Instability at planetary scale |
 | The Causeway | Half page | Forty feet of road with white on one side and a drop on the other, a queue of people on it, and the Warden's bulk filling the far end. | Bone, dark-leaning | Restriction: heavy continuous bars |
 | The Other Side | Half page | Grass with no seam in it, weather in the sky, a gate closing behind a group who have just come through and have stopped walking. | Time-of-day (open daylight) | Recognition: fragments aligning over each person |
+
+## The Tutorial on the players' screens
+
+Images the GM shows to one player or to the party from the companion app's Prep, in the order the tutorial reaches them. Phases 1 and 2 come first, since the solo nights run them. Three rules bind every brief here:
+
+- **The viewer is the character.** Frame each scene from where the character stands. No figure stands in for a player character; NPCs and other survivors may appear.
+- **No readable text,** as everywhere in the bible. System glyphs carry the meaning.
+- **Shown in a scene, never ahead of it.** Each image shows only what the character has just seen.
+
+Deliver each file to `app/packs/images/tutorial/` under the slug in the first column (`the-locked-cache.png`), at the size the Shape column names. The app makes its own screen-sized copy.
+
+### New images
+
+| Slug | Shape | Shown when | Scene | Palette | System intent |
+|---|---|---|---|---|---|
+| landing | 3:2 | Phase 1, The Fall | On the ground, looking up past grit and scorched metal at a sky the wrong color. Far off across the rubble, small bursts of dust where other things are hitting the ground. A short string of glyphs sits over the whole view like frost on glass. | Bone, with a wrong-colored sky | Communication: one short ordered string over everything |
+| the-valley-from-the-rim | 3:2 | Phase 2, Read Aloud: The Valley | From a slope of broken masonry on the inside rim: below, a forest giving off moving blue light; beyond it at the bottom, a gray hill of debris with paths of wreckage fanning out from it like something poured. A line of rain standing still as a wall to the north, a tower hanging in the pieces it broke into to the west. Far off on the rim, one small figure getting up out of a burst of dust. Nobody in the foreground. | Time-of-day (morning haze) | Dormant: faint partial traces over the valley floor |
+| the-dying-scavenger | 3:2 | Encounter 1 | An arm's length away, a faceless creature the size of a dog has opened a seam along its own side with one limb and is putting pieces of itself into a stone held against its chest. The stone gives off a low warmth. Up the slope behind it, three more of them, each smaller, each still, each with a stone against its chest. It is paying the viewer no attention. | Bone | None; the stone's warmth is the scene's only light |
+| the-rubble-trap | 3:2 | Encounter 2 | From the ground, pinned: the edge of a slab of wall lying across the viewer at the hips fills the lower frame. A crack runs through it near the shoulder. A rusted iron bar lies just past reach. Dust trembles on the rubble, and up the slope, the shadow of something on four legs dragging a fifth. | Bone, dark-leaning | None |
+| the-locked-cache | 3:2 | Encounter 3 | A box standing upright in the debris, clean and humming, without a speck of dust while everything around it is buried. Set into its face: a narrow slot the width of a blade, a shallow dish, and a panel of glyphs mid-count. Forty feet to the right, a heap of wreckage still burning. | Bone, with the fire's warm light on one side | Instruction: an ordered string counting on the panel |
+| the-high-ground | 3:2 | Encounter 4 | From a ridge of tiered stone, the valley below. To the left and far off, a woman in running clothes backing away from something low and fast, swinging a length of pipe, losing ground toward a drop. To the right and closer, a man in a brown uniform walking a slow circle in the rubble. Straight below at the ridge's foot, a burst footlocker with its contents scattered bright across the rock and a rat-sized shape moving toward them. | Time-of-day | None |
+| the-resonance-flicker | 3:2 | Encounter 5 | A cracked stone column about head height standing alone where nothing else stands. A crystal shard the size of a palm is sunk into its base. A pulse is leaving it as a ring through the air, and the colors inside the ring separate. | Bone | Recognition: fragments pulsing toward alignment around the shard |
+| the-sorting-machine | 3:2 | Encounter 6 | Fifty feet off in the wreck, a waist-high machine with more legs than it needs, picking objects out of the debris and setting them into two piles. A boot in each pile. The piles look alike. | Bone | None; its own small work light |
+| the-tally | 3:2 | Encounter 7 (a handout) | A sheet of hull metal leaning against a stone, scratched with marks in groups of five, rows of them, forty-one in all. The oldest have rusted brown, the newer are gray, the last is bright at the edges. Under the marks, an arrow cut deep and sure, pointing down the slope toward a treeline. Close enough to count. | Bone | None |
+| the-first-kill | 3:2 | The First Kill | A broken construct of plates and wire lying still on the debris. Something pale is coming off it like heat over a road, except that it does not rise: it leans toward the viewer and crosses the ground toward them. | Bone | None; the energy is pale, not cyan |
+| the-camp-at-night | 3:2 | Phase 3, Making Camp | Night at the foot of the debris hill: a small fire, strangers sitting well apart around it, a wetsuit and pyjamas among the clothes, and over the far rim the wall of moving light. | Everyday color, night | Dormant |
+| the-wall-tally | 3:2 | Phase 4, Sector D (a handout) | A courthouse wall beside a door frame, a tally cut into it in groups of five: nineteen marks, the last three shorter and cut by a different hand. Bedding on the floor at the frame's edge. | Everyday color | None |
+| the-kith | 3:2 | Phase 4, The Arriving Initiates | Four Kith walking fast into view and looking behind them: narrow upright bodies, two long arms and a smaller pair held close under the ribs, folds down the neck flared. Exhausted, carrying one of their own, armed with improvised gear like the party's. The scout in front has stopped and is looking at the viewer. | Bone | Observation from both sides |
+| the-gate | 3:2 | Phase 5, before the crossing | From the debris hill's east shoulder: the last span of an elevated road, forty feet long, running out over a ring of fused glassy shards to a platform with sheer sides, and the broken transit nexus standing on it. Nobody on the span yet. | Bone, dark-leaning | Instruction: ordered strings waking along the nexus's frame |
+| marisol-vega | 2:3 portrait | Encounter 4, after the fight | A woman in running clothes, breathing hard, a length of pipe in one hand, looking at whoever came down the ridge for her. | Everyday color | None |
+
+Spots for the finds (square, quiet background), shown when a character picks one up:
+
+| Slug | Scene |
+|---|---|
+| a-spear | A spear standing upright where it fell, pinning a sheet of tarpaulin to the ground |
+| a-battered-medkit | A white case with a red cross on it, slid to a stop against a wall; the cross is almost the right shape |
+| a-sparkstone-tablet | The Locked Cache's tablet: a flat stone with a spark held inside it |
+| a-ranged-relic | Something like a rifle with nowhere to hold it, lying across a step, one light on its side pulsing slowly |
+| a-battered-communicator | A dented handset of no make anyone knows, one light still on |
+
+### Images the book already has
+
+Under `book/assets/art/`. Each can be shown as it is once it has been checked for a figure that would read as the player's character; the ones marked *figure* were briefed with one.
+
+| Shown when | Image |
+|---|---|
+| Phase 1, The Void | `scenes/the-void.png` |
+| Phase 2, the valley's layout | `map/valley-map.png` (the chapter calls the illustration what the characters see; the schematic stays the GM's) |
+| The Arrival | `scenes/the-arrival.png` (*figure*) and the spots `husk-crawler.png`, `frenzy-rat.png` |
+| Encounter 8 | `people/ray-okafor.png` |
+| The Locked Cache's contents | `spots/the-reactive-buckler.png`, `spots/healing-pills.png` |
+| Scavenging | `spots/a-skill-shard.png` |
+| Phase 3, The Node | `scenes/the-recycling-node.png`, and `openers/items.png` for the pile (*figure*: people around it) |
+| Phase 3, the Node strangers | `scenes/marco-dele-and-wren.png` |
+| Phase 3, The Scarcity Test | `spots/a-resonance-shard.png` |
+| Phase 4, the sectors | `scenes/sector-a-the-martial-remnant.png`, `scenes/sector-b-the-wild-fragment.png` (*figure*: a boot), `scenes/sector-c-the-arcane-debris.png` (*figure*: someone walking), `scenes/sector-d-the-civic-fragment.png` |
+| Phase 4, creatures | the spots `snarljaw.png`, `alpha-snarljaw.png`, `glow-stalker.png`, `training-sentry.png`, `husk-sentinel.png`, `fragment-wraith.png`, `rival-initiate.png` |
+| Phase 4, The Offering | `scenes/the-offering.png` |
+| Phase 5, the Purge | `scenes/the-reality-purge.png` |
+| Phase 5, the Warden | `scenes/the-corrupted-system-warden.png` |
+| Phase 5, the crossing | `scenes/the-causeway.png` (*figure*: the queue) |
+| Phase 6, The Other Side | `scenes/the-other-side.png` (*figure*: the group) |
 
 ## People
 
