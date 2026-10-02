@@ -138,5 +138,6 @@ notes: >
   0.1.41: tutorial.yaml gives Marisol Vega a stat block (a Level 1 human runner with a pipe: HP 14,
   2 Beats, Momentum 5, Off STR 05 pipe, Def DEX 06 or FOR 07, Yields), so she joins the High Ground
   fight from Prep.
-  0.1.42: tutorial.yaml images: twenty images the GM shows on the players' screens from the
-  companion app's Prep, each a file under app/packs/images/tutorial. No number moved.
+  0.1.42: tutorial.yaml images: forty-nine images the GM shows on the players' screens from the
+  companion app's Prep (twenty made for the screen, twenty-nine from the book's art), each a file
+  under app/packs/images/tutorial. No number moved.

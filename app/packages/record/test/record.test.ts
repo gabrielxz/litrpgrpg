@@ -2024,7 +2024,7 @@ describe("Prep packs", () => {
     expect(pack.find((p) => p.id === "tutorial-ray")).toMatchObject({ kind: "npc", title: "Ray Okafor", npc: { who: "A concussed delivery driver with a nail gun" } });
     expect(pack.find((p) => p.id === "tutorial-marisol")).toMatchObject({ kind: "npc", npc: { block: { grade: "F", maxHp: 14, beats: 2, momentumForce: 5 } } });
     expect(pack.find((p) => p.id === "tutorial-img-tally")).toMatchObject({ kind: "image", title: "The tally", image: { src: "pack:tutorial/the-tally" } });
-    expect(pack.filter((p) => p.kind === "image")).toHaveLength(20);
+    expect(pack.filter((p) => p.kind === "image")).toHaveLength(49);
     const own = packItems({
       pack: "rehearsal",
       loot: [{ id: "locker", group: "Scene 1", title: "The locker", items: [{ name: "Healing Pill", count: 2 }] }],

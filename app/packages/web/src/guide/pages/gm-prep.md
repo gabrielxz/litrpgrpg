@@ -43,7 +43,7 @@ Fights save to Prep from Combat's setup (**Save this fight to Prep**) and quests
 
 ## Packs
 
-The **tutorial pack** panel loads The Tutorial's notices, quests, fights, loot lists, recurring NPCs, and twenty images, grouped by phase. Each image's title is what the player reads under it, and its cue names the moment to show it. Press **Load the tutorial pack**. Once loaded, the panel says *Loaded.*, or how many of its items are in Prep, and **Load it again, replacing its items with the book's** restores any you edited or removed.
+The **tutorial pack** panel loads The Tutorial's notices, quests, fights, loot lists, recurring NPCs, and 49 images, grouped by phase: the scenes, creatures, people, and finds a character sees, from the arrival to the far side of the gate. Each image's title is what the player reads under it, and its cue names the moment to show it. Press **Load the tutorial pack**. Once loaded, the panel says *Loaded.*, or how many of its items are in Prep, and **Load it again, replacing its items with the book's** restores any you edited or removed.
 
 **Load a pack from a file** takes a YAML or JSON file shaped like `rules/tutorial.yaml`: a `pack` name, then notices, quests, encounters, loot, and npcs, each with its group. A pack's `images` name files that ship with the app, so a pack of your own carries no images; prepare yours with the image form. After you choose the file, the panel counts what it holds and warns if some items are already in Prep. Press **Load** with the pack's name.
 

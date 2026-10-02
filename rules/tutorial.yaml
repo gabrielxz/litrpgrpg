@@ -244,28 +244,57 @@ npcs:
     who: "Marco, Dele, and Wren, at the Node in Phase 3"
     note: "Helped, they are part of the camp and of the gate queue in Phase 5. Without help, they fend for themselves and are not in the gate queue."
 
-# Images the GM shows on the players' screens from Prep (app/DESIGN.md, M1, "Images and handouts";
-# briefs in book/art/shot-list.md, "The Tutorial on the players' screens"). Each file is
-# app/packs/images/tutorial/<file>.webp. A title is what the player reads under the image, so it
-# names only what the character has just seen. The book holds none of these.
+# Images the GM shows on the players' screens from Prep (app/DESIGN.md, M1, "Images and handouts"),
+# in the order play reaches them. Each file is app/packs/images/tutorial/<file>.webp, made by
+# app/packs/images/webp.py from Gabriel's originals beside it or from the book's art. A title is what
+# the player reads under the image, so it names only what the character has just seen.
 images:
+  - {id: img-void, group: "Phase 1: The Threshold", title: "The void", file: the-void, note: "Read Aloud: The Void."}
   - {id: img-landing, group: "Phase 1: The Threshold", title: "The landing", file: landing, note: "The Fall, as the dark lets go."}
   - {id: img-valley, group: "Phase 2: The Violent Arrival", title: "The valley", file: the-valley-from-the-rim, note: "Read Aloud: The Valley, when the character first sees the valley floor."}
   - {id: img-dying-scavenger, group: "Phase 2: The Violent Arrival", title: "Something coming apart", file: the-dying-scavenger, note: "Encounter 1, The Dying Scavenger."}
   - {id: img-rubble-trap, group: "Phase 2: The Violent Arrival", title: "Pinned", file: the-rubble-trap, note: "Encounter 2, The Rubble Trap."}
   - {id: img-locked-cache, group: "Phase 2: The Violent Arrival", title: "The box in the debris", file: the-locked-cache, note: "Encounter 3, The Locked Cache."}
+  - {id: img-sparkstone, group: "Phase 2: The Violent Arrival", title: "A sparkstone tablet", file: a-sparkstone-tablet, note: "The Locked Cache, opened clean."}
+  - {id: img-buckler, group: "Phase 2: The Violent Arrival", title: "A reactive buckler", file: the-reactive-buckler, note: "The Locked Cache, opened clean."}
+  - {id: img-healing-pills, group: "Phase 2: The Violent Arrival", title: "Healing pills", file: healing-pills, note: "The Locked Cache's pill, or the High Ground's spill."}
   - {id: img-high-ground, group: "Phase 2: The Violent Arrival", title: "From the ridge", file: the-high-ground, note: "Encounter 4, The High Ground."}
   - {id: img-marisol, group: "Phase 2: The Violent Arrival", title: "Marisol Vega", file: marisol-vega, note: "Encounter 4, once the character has gone to the fighter."}
   - {id: img-resonance-flicker, group: "Phase 2: The Violent Arrival", title: "The pulsing column", file: the-resonance-flicker, note: "Encounter 5, The Resonance Flicker."}
   - {id: img-sorting-machine, group: "Phase 2: The Violent Arrival", title: "The sorting machine", file: the-sorting-machine, note: "Encounter 6, The Sorting Machine."}
   - {id: img-tally, group: "Phase 2: The Violent Arrival", title: "The tally", file: the-tally, note: "Encounter 7, The Tally. A handout: the player can count the marks."}
+  - {id: img-ray, group: "Phase 2: The Violent Arrival", title: "The man with the nail gun", file: ray-okafor, note: "Encounter 8, The Other Survivor, or the circling man from the ridge."}
+  - {id: img-arrival, group: "Phase 2: The Violent Arrival", title: "It comes out of the wreck", file: the-arrival, note: "The Arrival, as the creature shows itself."}
+  - {id: img-husk-crawler, group: "Phase 2: The Violent Arrival", title: "The thing in the wreck", file: husk-crawler, note: "The arrival on rubble, slopes, or ruins (the Husk Crawler)."}
+  - {id: img-frenzy-rat, group: "Phase 2: The Violent Arrival", title: "The rat", file: frenzy-rat, note: "The arrival near the treeline (the Frenzy Rat)."}
+  - {id: img-glow-motes, group: "Phase 2: The Violent Arrival", title: "The drifting lights", file: glow-mote-swarm, note: "The arrival on open ground (the Glow-Mote Swarm)."}
   - {id: img-first-kill, group: "Phase 2: The Violent Arrival", title: "What comes off it", file: the-first-kill, note: "The First Kill, with the read-aloud."}
   - {id: img-spear, group: "Phase 2: The Violent Arrival", title: "A spear", file: a-spear, note: "Scavenging on the way, when a character finds it."}
+  - {id: img-skill-shard, group: "Phase 2: The Violent Arrival", title: "A shard in the masonry", file: a-skill-shard, note: "Scavenging on the way, when a character finds it."}
   - {id: img-medkit, group: "Phase 2: The Violent Arrival", title: "A battered medkit", file: a-battered-medkit, note: "Scavenging on the way, when a character finds it."}
   - {id: img-relic, group: "Phase 2: The Violent Arrival", title: "A relic", file: a-ranged-relic, note: "Scavenging on the way, when a character finds it."}
   - {id: img-communicator, group: "Phase 2: The Violent Arrival", title: "A battered communicator", file: a-battered-communicator, note: "Scavenging on the way, when a character finds it."}
-  - {id: img-sparkstone, group: "Phase 2: The Violent Arrival", title: "A sparkstone tablet", file: a-sparkstone-tablet, note: "The Locked Cache, opened clean."}
+  - {id: img-node, group: "Phase 3: The Recycling Node", title: "The hill at the bottom", file: the-recycling-node, note: "Read Aloud: The Node."}
+  - {id: img-strangers-at-the-node, group: "Phase 3: The Recycling Node", title: "Three strangers", file: marco-dele-and-wren, note: "At the Node, when the party meets Marco, Dele, and Wren."}
+  - {id: img-node-pile, group: "Phase 3: The Recycling Node", title: "The pile", file: the-node-pile, note: "The Scarcity Test, as the pile is laid out."}
+  - {id: img-resonance-shard, group: "Phase 3: The Recycling Node", title: "A shard that holds its glow", file: a-resonance-shard, note: "The Scarcity Test, when someone looks closely at the Resonance Shard."}
+  - {id: img-valley-map, group: "Phase 3: The Recycling Node", title: "The valley, all of it", file: valley-map, note: "Looking Outward, once the party has taken in the whole valley."}
   - {id: img-camp, group: "Phase 3: The Recycling Node", title: "The camp", file: the-camp-at-night, note: "Making Camp."}
-  - {id: img-wall-tally, group: "Phase 4: The Field of Ruins", title: "The tally by the door", file: the-wall-tally, note: "Sector D, The Civic Fragment. A handout: the player can count the marks."}
+  - {id: img-sector-a, group: "Phase 4: The Field of Ruins", title: "The arena", file: sector-a, note: "Sector A, The Martial Remnant, on arrival."}
+  - {id: img-training-sentry, group: "Phase 4: The Field of Ruins", title: "The stone figure", file: training-sentry, note: "Sector A, when a sentry moves."}
+  - {id: img-sector-b, group: "Phase 4: The Field of Ruins", title: "The glowing forest", file: sector-b, note: "Sector B, The Wild Fragment, on arrival."}
+  - {id: img-snarljaw, group: "Phase 4: The Field of Ruins", title: "At the tree line", file: snarljaw, note: "Sector B, the Snarljaw pack."}
+  - {id: img-alpha-snarljaw, group: "Phase 4: The Field of Ruins", title: "The pack leader", file: alpha-snarljaw, note: "Sector B, when the Alpha shows itself."}
+  - {id: img-glow-stalker, group: "Phase 4: The Field of Ruins", title: "Something in the blue light", file: glow-stalker, note: "Sector B, the Glow-Stalker."}
+  - {id: img-sector-c, group: "Phase 4: The Field of Ruins", title: "The hanging tower", file: sector-c, note: "Sector C, The Arcane Debris, on arrival."}
+  - {id: img-fragment-wraith, group: "Phase 4: The Field of Ruins", title: "Something in the halls", file: fragment-wraith, note: "Sector C, the Fragment Wraith."}
+  - {id: img-sector-d, group: "Phase 4: The Field of Ruins", title: "The courthouse", file: sector-d, note: "Sector D, The Civic Fragment, on arrival."}
+  - {id: img-wall-tally, group: "Phase 4: The Field of Ruins", title: "The tally by the door", file: the-wall-tally, note: "Sector D. A handout: the player can count the marks."}
+  - {id: img-husk-sentinel, group: "Phase 4: The Field of Ruins", title: "The thing in the doorway", file: husk-sentinel, note: "Sector D, the Husk Sentinel."}
   - {id: img-strangers, group: "Phase 4: The Field of Ruins", title: "The strangers", file: the-kith, note: "The Arriving Initiates, as they walk into view."}
+  - {id: img-offering, group: "Phase 4: The Field of Ruins", title: "The offering", file: the-offering, note: "Personal Opportunity: The Offering."}
+  - {id: img-purge, group: "Phase 5: The Convergence Crisis", title: "The wall of white", file: the-reality-purge, note: "Read Aloud: The Purge."}
+  - {id: img-warden, group: "Phase 5: The Convergence Crisis", title: "The construct", file: the-warden, note: "When the Warden is first seen."}
   - {id: img-gate, group: "Phase 5: The Convergence Crisis", title: "The gate", file: the-gate, note: "Before the crossing, from the Node's east shoulder."}
+  - {id: img-causeway, group: "Phase 5: The Convergence Crisis", title: "The causeway", file: the-causeway, note: "The Crossing, once the queue is on the span."}
+  - {id: img-other-side, group: "Phase 6: First Recognition", title: "The other side", file: the-other-side, note: "Read Aloud: The Other Side."}

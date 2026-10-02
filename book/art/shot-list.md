@@ -107,7 +107,7 @@ Spots for the finds (square, quiet background), shown when a character picks one
 
 ### Images the book already has
 
-Under `book/assets/art/`. Each can be shown as it is once it has been checked for a figure that would read as the player's character; the ones marked *figure* were briefed with one.
+Under `book/assets/art/`, and in the tutorial pack as they are (Gabriel, 2026-10-02); the ones marked *figure* were briefed with one. `app/packs/images/webp.py` makes the app's copies from these masters.
 
 | Shown when | Image |
 |---|---|
@@ -121,7 +121,7 @@ Under `book/assets/art/`. Each can be shown as it is once it has been checked fo
 | Phase 3, the Node strangers | `scenes/marco-dele-and-wren.png` |
 | Phase 3, The Scarcity Test | `spots/a-resonance-shard.png` |
 | Phase 4, the sectors | `scenes/sector-a-the-martial-remnant.png`, `scenes/sector-b-the-wild-fragment.png` (*figure*: a boot), `scenes/sector-c-the-arcane-debris.png` (*figure*: someone walking), `scenes/sector-d-the-civic-fragment.png` |
-| Phase 4, creatures | the spots `snarljaw.png`, `alpha-snarljaw.png`, `glow-stalker.png`, `training-sentry.png`, `husk-sentinel.png`, `fragment-wraith.png`, `rival-initiate.png` |
+| Phase 4, creatures | the spots `snarljaw.png`, `alpha-snarljaw.png`, `glow-stalker.png`, `training-sentry.png`, `husk-sentinel.png`, `fragment-wraith.png` |
 | Phase 4, The Offering | `scenes/the-offering.png` |
 | Phase 5, the Purge | `scenes/the-reality-purge.png` |
 | Phase 5, the Warden | `scenes/the-corrupted-system-warden.png` |
