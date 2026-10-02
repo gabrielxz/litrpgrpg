@@ -165,6 +165,17 @@ export interface PlayerCombat {
 }
 
 /** One System notice about one of the player's characters, rebuilt from the log on every view. */
+/** An image shown to a player's characters: one per showing, naming which of theirs saw it. */
+export interface SeenImage {
+  /** The showing action's id. */
+  key: string;
+  at: string;
+  title: string;
+  src: string;
+  caption?: string;
+  characterIds: string[];
+}
+
 export interface FeedItem {
   key: string;
   /** When the action that caused it was recorded. */
@@ -290,6 +301,8 @@ export interface PlayerView {
   roster: { id: string; name: string }[];
   /** The System's notices to this player's characters, newest first. */
   feed: FeedItem[];
+  /** The images and handouts shown to this player's characters, newest first. */
+  seen: SeenImage[];
   /** The table's open rolls, newest first. */
   rolls: RollView[];
   combat: PlayerCombat | null;

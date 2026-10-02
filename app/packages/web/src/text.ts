@@ -124,6 +124,8 @@ export function describe(
       return "Party disbanded";
     case "message.send":
       return `System message${a.hold ? " held" : ""} to ${a.to.map(name).join(", ")}: “${clip(a.text)}”`;
+    case "image.show":
+      return `Showed ${a.to.map(name).join(", ")} the image “${clip(a.title)}”`;
     case "message.release": {
       const seq = seqOf(a.messageId);
       return `Sent held message ${seq === undefined ? "" : `#${seq + 1}`}`.trim();
@@ -376,6 +378,8 @@ export function effectLine(e: Effect, name: Names): string | null {
       return `${name(e.characterId)}: the party is disbanded`;
     case "message":
       return `${name(e.characterId)} receives the message`;
+    case "image-shown":
+      return `${name(e.characterId)} sees the image “${e.title}”`;
     case "message-held":
       return `Held for ${e.to.map(name).join(", ")}; nobody sees it until you send it`;
     case "combat-started":
@@ -515,6 +519,9 @@ export function noticeLine(e: Effect): string | null {
       return "Party dissolved.";
     case "message":
       return e.text;
+    // An image is the world showing itself, not the System speaking: it is no notice.
+    case "image-shown":
+      return null;
     case "combat-downed":
       return `Vital coherence: ${e.coherence}. Falling. Stabilization: required.`;
     case "vital-coherence":

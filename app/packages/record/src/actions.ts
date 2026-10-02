@@ -217,6 +217,20 @@ export interface SendMessage {
   hold?: boolean;
 }
 
+/**
+ * An image or a handout shown to characters (app/DESIGN.md, M1, "Images and handouts"). It is
+ * the world, not the System: it reaches each player's "Seen" strip, never the notice feed. Undoing
+ * it takes the image back. GM only.
+ */
+export interface ShowImage {
+  type: "image.show";
+  to: string[];
+  title: string;
+  /** As a prepared image names it (`PrepImage`). */
+  src: string;
+  caption?: string;
+}
+
 /** Delivers a held message, named by the id of its `message.send`. GM only. */
 export interface ReleaseMessage {
   type: "message.release";
@@ -292,6 +306,7 @@ export type Action =
   | DisbandParty
   | SendMessage
   | ReleaseMessage
+  | ShowImage
   | RollDice
   | CombatAction
   | AftermathAction

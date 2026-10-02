@@ -48,6 +48,7 @@ The tray under the notices holds the table's tools.
 
 - The fight, under its name, while one is running. See [Fights](guide:player-fight).
 - **Spoils**, when the party has loot it has not divided. Pick who it is for and press **Take one**.
+- **Seen**, once the GM has shown you an image or a handout, newest first. An image the GM shows while your screen is open fills the screen; press **Close**, Escape, or anywhere around it to put it away. Press any image in the strip to see it full-screen again.
 - **Dice**, for any roll the GM calls for. See [Fights](guide:player-fight).
 - **Ask the rules**. See [Asking the rules](guide:player-rules).
 

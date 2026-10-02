@@ -19,6 +19,8 @@ import type { Recordings } from "./recordings.ts";
 import { SECOND_OPINION_MODEL, transcribeWav } from "./stt/assemblyai-file.ts";
 import { vocabulary } from "@gradebreaker/listening/stt";
 import { type Listening, ListeningRefused } from "./listening.ts";
+import { Images, MAX_IMAGE_BYTES } from "./images.ts";
+import { seenFor } from "./views.ts";
 import { HttpError, type Service, type User } from "./service.ts";
 
 type Env = { Variables: { user: User | null } };
@@ -91,6 +93,8 @@ export interface AppOptions {
   liveDrafting?: LiveDrafting;
   /** Test recordings' files (recordings.ts). */
   recordings?: Recordings;
+  /** The images the GM shows (images.ts). */
+  images?: Images;
 }
 
 export function createApp(service: Service, opts: AppOptions = {}) {
@@ -111,6 +115,30 @@ export function createApp(service: Service, opts: AppOptions = {}) {
     const token = auth?.startsWith("Bearer ") ? auth.slice(7) : undefined;
     c.set("user", await service.authenticate(token));
     await next();
+  });
+
+  // Images and handouts (images.ts): the GM uploads; the GM, or a player an image was shown to, fetches.
+  const images = opts.images ?? new Images(service.db);
+  app.post("/campaigns/:id/images", async (c) => {
+    const id = c.req.param("id");
+    await service.requireGm(id, c.get("user"));
+    const size = Number(c.req.header("content-length") ?? 0);
+    if (size > MAX_IMAGE_BYTES) throw new HttpError(413, "the image is larger than 4 MB");
+    const bytes = new Uint8Array(await c.req.arrayBuffer());
+    return c.json({ src: await images.upload(id, c.get("user")!.id, (c.req.header("content-type") ?? "").split(";")[0]!.trim(), bytes) }, 201);
+  });
+  app.get("/campaigns/:id/image", async (c) => {
+    const id = c.req.param("id");
+    const src = c.req.query("src") ?? "";
+    const role = await service.requireMember(id, c.get("user"));
+    if (role !== "gm") {
+      const record = await service.record(id);
+      const own = new Set([...record.state.characters.values()].filter((x) => x.playerId === c.get("user")!.id).map((x) => x.id));
+      if (!seenFor(record, own).some((s) => s.src === src)) throw new HttpError(404, "no such image");
+    }
+    const img = await images.get(id, src);
+    if (!img) throw new HttpError(404, "no such image");
+    return new Response(img.body, { headers: { "content-type": img.type, "content-length": String(img.body.length), "cache-control": "private, max-age=3600" } });
   });
 
   app.get("/health", (c) => c.json({ ok: true, rulesVersion: service.rulesVersion, connected: connected() }));

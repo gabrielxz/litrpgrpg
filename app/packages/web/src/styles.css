@@ -1918,3 +1918,118 @@ details.folded > .commit {
 .table-setup__step--done .table-setup__num {
   color: var(--text-dim);
 }
+
+/* ------------------------------------------------------------ images and handouts */
+
+/* A picture fills its box; while it loads, the box holds the image's shape. */
+.picture {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+.picture--loading {
+  aspect-ratio: 3 / 2;
+  width: 100%;
+  background: var(--sunken);
+}
+.picture--missing {
+  padding: var(--sp-2);
+  font-size: var(--fs-sm);
+  color: var(--danger);
+  background: var(--sunken);
+}
+
+/* Prep: the image on its card, and the player's view of it before it is shown */
+.prep-card__image {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: flex-start;
+}
+.prep-card__thumb {
+  width: 12rem;
+  max-width: 45%;
+  border: var(--hair) solid var(--line);
+}
+.image-preview__img {
+  max-height: 16rem;
+  width: auto;
+  align-self: flex-start;
+}
+.image-preview__caption,
+.image-view__caption {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  font-size: var(--fs-sm);
+}
+
+/* The player's tray: what the GM has shown, newest first */
+.seen {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  gap: var(--sp-2);
+}
+.seen__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  width: 100%;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  color: var(--text);
+  background: none;
+  border: 0;
+  cursor: zoom-in;
+}
+.seen__item:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.seen__thumb {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border: var(--hair) solid var(--line);
+}
+.seen__title {
+  font-size: var(--fs-sm);
+  line-height: 1.25;
+}
+
+/* An image full-screen over everything; a click outside it or Escape closes it */
+.image-view {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: var(--sp-4);
+  background: color-mix(in srgb, var(--carbon-950) 96%, transparent);
+  cursor: zoom-out;
+}
+.image-view__figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  max-width: min(96vw, 1600px);
+  cursor: default;
+}
+.image-view__img {
+  max-height: calc(100vh - 9rem);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+.image-view__caption {
+  color: var(--chalk-50);
+}
+.image-view__close {
+  position: fixed;
+  top: var(--sp-3);
+  right: var(--sp-3);
+}

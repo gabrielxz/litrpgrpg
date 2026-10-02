@@ -1,8 +1,8 @@
 # The rules version. Bump the minor number when a number or table changes,
 # the major number when a procedure changes. Campaigns record the version
 # they started under and migrate when their GM says so.
-version: "0.1.41"
-dated: "2026-10-01"
+version: "0.1.42"
+dated: "2026-10-02"
 notes: >
   First extraction from the book as of build litrpg-rpg-20260910-223335:
   flat-value VE (Tolerance 80, level 120, 20 per hour), the Grade Gap Rule,
@@ -138,3 +138,5 @@ notes: >
   0.1.41: tutorial.yaml gives Marisol Vega a stat block (a Level 1 human runner with a pipe: HP 14,
   2 Beats, Momentum 5, Off STR 05 pipe, Def DEX 06 or FOR 07, Yields), so she joins the High Ground
   fight from Prep.
+  0.1.42: tutorial.yaml images: twenty images the GM shows on the players' screens from the
+  companion app's Prep, each a file under app/packs/images/tutorial. No number moved.

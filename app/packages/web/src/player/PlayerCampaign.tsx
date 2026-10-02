@@ -9,8 +9,9 @@
  * tray beside the notices, in the table's words.
  */
 import type { Engine } from "@gradebreaker/engine";
-import { type Action, type FeedItem, type InterfaceSheet, type PlayerQuest, type PlayerView, shapes } from "@gradebreaker/record";
-import { useEffect, useState } from "react";
+import { type Action, type FeedItem, type InterfaceSheet, type PlayerQuest, type PlayerView, type SeenImage, shapes } from "@gradebreaker/record";
+import { useEffect, useRef, useState } from "react";
+import { ImageView, Picture } from "../images.tsx";
 import { api, newActionId, submit } from "../api.ts";
 import { useAuth } from "../auth.ts";
 import { RollForm, RollList } from "../Dice.tsx";
@@ -856,6 +857,44 @@ function Arrival({ view }: { view: PlayerView }) {
   );
 }
 
+/**
+ * The images and handouts the GM has shown this player's characters (app/DESIGN.md, M1, "Images
+ * and handouts"): the world showing itself, kept apart from the System's notices. One shown while
+ * the screen is open opens full-screen once; any of them opens again from its thumbnail.
+ */
+function Seen({ view, readOnly, names }: { view: PlayerView; readOnly?: boolean | undefined; names: Map<string, string> | null }) {
+  const [open, setOpen] = useState<SeenImage | null>(null);
+  const known = useRef<Set<string> | null>(null);
+  useEffect(() => {
+    if (!known.current) {
+      known.current = new Set(view.seen.map((s) => s.key));
+      return;
+    }
+    const fresh = view.seen.find((s) => !known.current!.has(s.key));
+    for (const s of view.seen) known.current.add(s.key);
+    if (fresh && !readOnly) setOpen(fresh);
+  }, [view.seen, readOnly]);
+  // An image taken back closes if it is open.
+  const showing = open && view.seen.some((s) => s.key === open.key) ? open : null;
+  if (!view.seen.length) return null;
+  return (
+    <TrayPart title="Seen" folded={false}>
+      <ul className="seen">
+        {view.seen.map((s) => (
+          <li key={s.key}>
+            <button className="seen__item" type="button" onClick={() => setOpen(s)} title={s.caption ?? s.title}>
+              <Picture campaignId={view.campaign.id} src={s.src} alt={s.caption ?? s.title} className="seen__thumb" />
+              <span className="seen__title world">{s.title}</span>
+              {names && <span className="seen__who small dim">{s.characterIds.map((id) => names.get(id) ?? id).join(", ")}</span>}
+            </button>
+          </li>
+        ))}
+      </ul>
+      {showing && <ImageView campaignId={view.campaign.id} src={showing.src} title={showing.title} {...(showing.caption ? { caption: showing.caption } : {})} onClose={() => setOpen(null)} />}
+    </TrayPart>
+  );
+}
+
 /** A tool in the tray: open by default, folded closed while a fight runs (P5). */
 function TrayPart({ title, folded, children }: { title: string; folded: boolean; children: React.ReactNode }) {
   return (
@@ -916,6 +955,7 @@ export function PlayerCampaign({
           <div className="tray-head">At the table</div>
           {view.combat && engine && <Fight view={view} engine={engine} combat={view.combat} readOnly={readOnly} />}
           <Spoils view={view} readOnly={readOnly} />
+          <Seen view={view} readOnly={readOnly} names={names} />
           <TrayPart title="Dice" folded={fighting}>
             {!readOnly && engine && view.characters.length > 0 && (
               <RollForm

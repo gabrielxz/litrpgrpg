@@ -5,7 +5,7 @@
 import { Engine } from "@gradebreaker/engine";
 import { loadRules } from "@gradebreaker/engine/node";
 import { beforeEach, describe, expect, it } from "vitest";
-import { type Action, type ClassPackage, CampaignRecord, partyLevelOf, sizeEncounter, bookClasses, packageWarnings, type Draft, RecordError, encounterAwards, hoursForGoal, flankingSuggested, killAwards, questForHolder, rollD100s, rollFor, treasurePoints, tutorialPack, packItems, memoryOf } from "../src/index.ts";
+import { type Action, type ClassPackage, CampaignRecord, partyLevelOf, sizeEncounter, bookClasses, packageWarnings, type Draft, RecordError, encounterAwards, hoursForGoal, flankingSuggested, killAwards, questForHolder, rollD100s, rollFor, treasurePoints, tutorialPack, packItems, memoryOf, noticesFor } from "../src/index.ts";
 
 const engine = new Engine(loadRules());
 const GM = { role: "gm", userId: "gm-1" } as const;
@@ -330,6 +330,27 @@ describe("the party", () => {
     const out = gm({ type: "party.disband", partyId });
     expect(out.effects.map((e) => ("characterId" in e ? e.characterId : null))).toEqual(["kara", "joe"]);
     expect(rec.state.parties.size).toBe(0);
+  });
+});
+
+describe("Images and handouts", () => {
+  beforeEach(() => {
+    gm({ type: "character.pregen", characterId: "kara", pregen: "Kara", playerId: "player-1" });
+    gm({ type: "character.pregen", characterId: "joe", pregen: "Joe", playerId: "player-2" });
+  });
+
+  it("shows an image to each character named, as the world and not a notice, and takes it back on undo", () => {
+    const out = gm({ type: "image.show", to: ["kara"], title: "The tally", src: "pack:tutorial/the-tally", caption: "Forty-one marks." }, "i1");
+    expect(out.effects).toEqual([{ kind: "image-shown", characterId: "kara", title: "The tally", src: "pack:tutorial/the-tally", caption: "Forty-one marks." }]);
+    expect(noticesFor(out.effects, new Set(["kara"]))).toEqual([]);
+    gm({ type: "void", targetId: "i1", reason: "undo" });
+    expect(rec.state.effects.get("i1")).toBeUndefined();
+  });
+
+  it("refuses a file the app does not hold, nobody to show, and a player showing", () => {
+    expect(() => gm({ type: "image.show", to: ["kara"], title: "X", src: "https://example.com/x.png" })).toThrow(/not an image/);
+    expect(() => gm({ type: "image.show", to: [], title: "X", src: "pack:tutorial/the-tally" })).toThrow(/at least one/);
+    expect(() => rec.append(draft({ type: "image.show", to: ["kara"], title: "X", src: "pack:tutorial/the-tally" }, P1))).toThrow(/only the GM/);
   });
 });
 
@@ -2002,6 +2023,8 @@ describe("Prep packs", () => {
     expect(pack.find((p) => p.id === "tutorial-node-pile")).toMatchObject({ kind: "loot", loot: expect.arrayContaining([{ name: "Edge Shard", count: 2 }]) });
     expect(pack.find((p) => p.id === "tutorial-ray")).toMatchObject({ kind: "npc", title: "Ray Okafor", npc: { who: "A concussed delivery driver with a nail gun" } });
     expect(pack.find((p) => p.id === "tutorial-marisol")).toMatchObject({ kind: "npc", npc: { block: { grade: "F", maxHp: 14, beats: 2, momentumForce: 5 } } });
+    expect(pack.find((p) => p.id === "tutorial-img-tally")).toMatchObject({ kind: "image", title: "The tally", image: { src: "pack:tutorial/the-tally" } });
+    expect(pack.filter((p) => p.kind === "image")).toHaveLength(20);
     const own = packItems({
       pack: "rehearsal",
       loot: [{ id: "locker", group: "Scene 1", title: "The locker", items: [{ name: "Healing Pill", count: 2 }] }],

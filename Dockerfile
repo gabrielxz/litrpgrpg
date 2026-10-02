@@ -35,6 +35,7 @@ COPY app/packages/engine app/packages/engine
 COPY app/packages/record app/packages/record
 COPY app/packages/listening app/packages/listening
 COPY app/packages/server app/packages/server
+COPY app/packs/images app/packs/images
 COPY --from=web /repo/app/packages/web/dist app/packages/web/dist
 
 WORKDIR /repo/app/packages/server

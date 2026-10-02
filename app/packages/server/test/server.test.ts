@@ -892,6 +892,49 @@ describe("Prep", () => {
   });
 });
 
+describe("images and handouts", () => {
+  const fetchImage = (campaignId: string, token: string, src: string) => app.request(`/api/campaigns/${campaignId}/image?src=${encodeURIComponent(src)}`, { headers: { authorization: `Bearer ${token}` } });
+
+  it("takes the GM's upload, and gives a player only what was shown to them, until it is taken back", async () => {
+    const { campaignId, gm, player, playerId } = await table();
+    await act(campaignId, gm, { type: "character.pregen", characterId: "kara", pregen: "Kara", playerId });
+    const png = new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10, 1, 2, 3]);
+    const refused = await app.request(`/api/campaigns/${campaignId}/images`, { method: "POST", headers: { authorization: `Bearer ${player}`, "content-type": "image/png" }, body: png });
+    expect(refused.status).toBe(403);
+    const up = await app.request(`/api/campaigns/${campaignId}/images`, { method: "POST", headers: { authorization: `Bearer ${gm}`, "content-type": "image/png" }, body: png });
+    expect(up.status).toBe(201);
+    const { src } = (await up.json()) as { src: string };
+    expect(src).toMatch(/^upload:/);
+    const wrong = await app.request(`/api/campaigns/${campaignId}/images`, { method: "POST", headers: { authorization: `Bearer ${gm}`, "content-type": "text/plain" }, body: "hi" });
+    expect(wrong.status).toBe(415);
+
+    const asGm = await fetchImage(campaignId, gm, src);
+    expect(asGm.status).toBe(200);
+    expect(asGm.headers.get("content-type")).toBe("image/png");
+    expect(new Uint8Array(await asGm.arrayBuffer())).toEqual(png);
+    expect((await fetchImage(campaignId, player, src)).status).toBe(404);
+
+    await act(campaignId, gm, { type: "image.show", to: ["kara"], title: "The depot gate", src }, "show-1");
+    expect((await fetchImage(campaignId, player, src)).status).toBe(200);
+    const theirs = (await call("GET", `/campaigns/${campaignId}`, { token: player })).json;
+    expect(theirs.seen).toEqual([expect.objectContaining({ key: "show-1", title: "The depot gate", src, characterIds: ["kara"] })]);
+    expect(theirs.feed).toEqual([]);
+
+    await act(campaignId, gm, { type: "void", targetId: "show-1", reason: "undo" });
+    expect((await fetchImage(campaignId, player, src)).status).toBe(404);
+    expect((await call("GET", `/campaigns/${campaignId}`, { token: player })).json.seen).toEqual([]);
+  });
+
+  it("serves a pack's image from its file", async () => {
+    const { campaignId, gm } = await table();
+    const res = await fetchImage(campaignId, gm, "pack:tutorial/the-tally");
+    expect(res.status).toBe(200);
+    expect(res.headers.get("content-type")).toBe("image/webp");
+    expect((await fetchImage(campaignId, gm, "pack:tutorial/no-such-image")).status).toBe(404);
+    expect((await fetchImage(campaignId, gm, "../../etc/passwd")).status).toBe(404);
+  });
+});
+
 describe("the rules version", () => {
   it("moves every campaign to the current rules when the server starts, replaying its log under them", async () => {
     const { campaignId, gm } = await table();

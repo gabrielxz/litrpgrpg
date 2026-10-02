@@ -79,6 +79,9 @@ async function seed(): Promise<Seeded> {
   const holders = { kara: "Priya", joe: "Marcus", andre: "Leo" } as const;
   for (const [c, name] of Object.entries(holders)) await record(gm, main, { type: "character.assign", characterId: c, playerId: idOf(name) });
   await record(gm, main, { type: "session.start", present: ["kara", "joe", "andre", "nia"], label: "The depot gate" });
+  // An image in Prep, shown to Kara, so the Prep and tray shots carry one.
+  await record(gm, main, { type: "prep.save", items: [{ id: "image-the-tally", kind: "image", title: "The tally", group: "Scene 1: The depot gate", note: "When someone finds the sheet of hull metal.", image: { src: "pack:tutorial/the-tally" } }] });
+  await record(gm, main, { type: "image.show", to: ["kara"], title: "The tally", src: "pack:tutorial/the-tally" });
   // The shots show the people without the run's suffix.
   for (const [t, name] of [[gm, "Dana"], [players.kara, "Priya"], [players.joe, "Marcus"], [players.andre, "Leo"], [newcomer, "Sam"]] as const)
     await call(t, "PATCH", "/me", { displayName: name });

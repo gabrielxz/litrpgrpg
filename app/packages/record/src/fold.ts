@@ -22,6 +22,7 @@ import type {
   LeaveParty,
   PlaceSystemPoints,
   ReleaseMessage,
+  ShowImage,
   RollDice,
   SendMessage,
   SpendFreePoints,
@@ -40,7 +41,7 @@ import { type CampaignSession, applySessions, cloneSession } from "./sessions.ts
 import { type Clock, applyClock } from "./clock.ts";
 import { type PrincipleState, applyPrinciples, clonePrinciples, collectDue } from "./principles.ts";
 import { type ClassState, applyClasses, cloneClass, placeByProfile } from "./classes.ts";
-import { type PrepItem, applyPrep, clonePrep } from "./prep.ts";
+import { IMAGE_SRC, type PrepItem, applyPrep, clonePrep } from "./prep.ts";
 import { type Quest, type QuestNoticeKind, applyQuests, authorizeQuestPlayer, cloneQuest, questsOnJoin, questsOnLeave } from "./quests.ts";
 
 export interface CharacterState {
@@ -160,6 +161,7 @@ export type Effect =
   | { kind: "party-left"; characterId: string; memberId: string; memberName: string }
   | { kind: "party-disbanded"; characterId: string; partyId: string }
   | { kind: "message"; characterId: string; messageId: string; text: string }
+  | { kind: "image-shown"; characterId: string; title: string; src: string; caption?: string }
   | { kind: "message-held"; messageId: string; to: string[] }
   | {
       kind: "rolled";
@@ -532,6 +534,8 @@ function apply(engine: Engine, world: World, env: Envelope): Effect[] {
       return sendMessage(world, a, env.id);
     case "message.release":
       return releaseMessage(world, a);
+    case "image.show":
+      return showImage(world, a);
     case "dice.roll":
       return rollDice(engine, world, a);
     case "combat.start":
@@ -1099,6 +1103,15 @@ function sendMessage(world: World, a: SendMessage, id: string): Effect[] {
     return [{ kind: "message-held", messageId: id, to: [...a.to] }];
   }
   return deliver(a.to, id, a.text);
+}
+
+function showImage(world: World, a: ShowImage): Effect[] {
+  if (!a.title.trim()) throw new Rejected("an image needs a title");
+  if (!IMAGE_SRC.test(a.src)) throw new Rejected("that is not an image the app holds");
+  if (a.to.length === 0) throw new Rejected("an image goes to at least one character");
+  if (new Set(a.to).size !== a.to.length) throw new Rejected("a character is listed twice");
+  for (const c of a.to) need(world.characters, c);
+  return a.to.map((characterId) => ({ kind: "image-shown", characterId, title: a.title, src: a.src, ...(a.caption ? { caption: a.caption } : {}) }) as const);
 }
 
 function releaseMessage(world: World, a: ReleaseMessage): Effect[] {

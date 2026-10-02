@@ -41,6 +41,7 @@ import type {
   PlayerView,
   Role,
   RollView,
+  SeenImage,
   Sheet,
   View,
 } from "@gradebreaker/record";
@@ -295,6 +296,24 @@ export function feedFor(record: CampaignRecord, own: ReadonlySet<string>): FeedI
   return out;
 }
 
+/**
+ * The images shown to a set of characters: one entry per standing `image.show`, newest first,
+ * naming which of the set saw it. An undone showing leaves the list, and with it the right to
+ * fetch the file.
+ */
+export function seenFor(record: CampaignRecord, own: ReadonlySet<string>): SeenImage[] {
+  const out: SeenImage[] = [];
+  const { effects } = record.state;
+  for (let i = record.log.length - 1; i >= 0; i--) {
+    const env = record.log[i]!;
+    const shown = (effects.get(env.id) ?? []).filter((e): e is Extract<Effect, { kind: "image-shown" }> => e.kind === "image-shown" && own.has(e.characterId));
+    if (!shown.length) continue;
+    const first = shown[0]!;
+    out.push({ key: env.id, at: env.at, title: first.title, src: first.src, ...(first.caption ? { caption: first.caption } : {}), characterIds: shown.map((e) => e.characterId) });
+  }
+  return out;
+}
+
 /** The running fight with each combatant's HP and Momentum Force read where they live. */
 export function encounterView(record: CampaignRecord, which: "running" | "aftermath" = "running"): EncounterView | null {
   const e = record.state.encounter;
@@ -453,6 +472,7 @@ export function viewFor(
     characters,
     roster,
     feed: feedFor(record, ownIds),
+    seen: seenFor(record, ownIds),
     rolls,
     combat,
     spoils: (record.state.inventory.get(SPOILS) ?? []).map((x) => ({ ...x })),

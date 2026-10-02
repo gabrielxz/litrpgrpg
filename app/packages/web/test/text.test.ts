@@ -73,6 +73,7 @@ const samples: Samples = {
   ],
   "party-disbanded": [{ kind: "party-disbanded", characterId: "k", partyId: "p" }],
   message: [{ kind: "message", characterId: "k", messageId: "m", text: "Anomaly logged." }],
+  "image-shown": [{ kind: "image-shown", characterId: "k", title: "The Tally", src: "pack:tutorial/the-tally" }],
   "message-held": [{ kind: "message-held", messageId: "m", to: ["k"] }],
   rolled: [{ kind: "rolled", characterId: "k", total: 167, diceTotal: 137, force: 30, exploded: true, extraDice: 1, battleMemory: false }],
   "combat-started": [{ kind: "combat-started", encounterId: "x" }],
@@ -135,12 +136,16 @@ const samples: Samples = {
   voided: [{ kind: "voided", targetId: "x", reason: "undo" }],
 };
 
-/** Kinds the System never announces: the table's bookkeeping, the GM's tracker, and Saturation, which the GM narrates. */
+/**
+ * Kinds the System never announces: the table's bookkeeping, the GM's tracker, Saturation, which
+ * the GM narrates, and an image shown, which is the world and reaches the player's Seen strip.
+ */
 const SILENT = new Set<Effect["kind"]>([
   "prepared", "class-used", "technique-used", "clock", "dawn", "quest-due", "session-started", "session-ended",
   "event-logged", "hve-swept", "hve-copied", "created", "reassigned", "saturation", "message-held", "rolled",
   "combat-started", "momentum", "seized", "momentum-shifted", "combat-hp", "combat-died", "battle-memory-due",
   "loot", "encounter-settled", "spoils-added", "combat-check", "combat-ended", "clash", "clash-resolved", "voided",
+  "image-shown",
 ]);
 
 const every: Effect[] = Object.values(samples).flat();

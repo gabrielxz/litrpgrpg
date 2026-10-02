@@ -196,7 +196,9 @@ const prepLine = (p: PrepItem) => {
           ? `loot: ${p.loot.map((x) => `${x.name} ×${x.count}`).join(", ")}`
           : p.kind === "encounter"
             ? `fight: ${p.encounter.name}`
-            : `NPC: ${p.npc.who}`;
+            : p.kind === "image"
+              ? `image to show${p.image.caption ? `: ${p.image.caption}` : ""}`
+              : `NPC: ${p.npc.who}`;
   return `- ${p.id}: ${p.title}${p.group ? ` (${p.group})` : ""}. Cue: ${p.note?.replace(/\.$/, "") ?? "none written"}. ${what}`;
 };
 

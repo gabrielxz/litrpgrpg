@@ -77,6 +77,7 @@ const prepItem = z.discriminatedUnion("kind", [
   z.object({ ...prepBase, kind: z.literal("quest"), quest: questSpec }),
   z.object({ ...prepBase, kind: z.literal("notice"), text: z.string().max(2000) }),
   z.object({ ...prepBase, kind: z.literal("loot"), loot: z.array(stack).max(40) }),
+  z.object({ ...prepBase, kind: z.literal("image"), image: z.object({ src: z.string().max(120), caption: z.string().max(300).optional() }) }),
   z.object({
     ...prepBase,
     kind: z.literal("npc"),
@@ -196,6 +197,7 @@ export const actionSchema = z.discriminatedUnion("type", [
     hold: z.boolean().optional(),
   }),
   z.object({ type: z.literal("message.release"), messageId: id }),
+  z.object({ type: z.literal("image.show"), to: z.array(id).max(50), title: z.string().max(120), src: z.string().max(120), caption: z.string().max(300).optional() }),
   z.object({
     type: z.literal("dice.roll"),
     roller: z.discriminatedUnion("kind", [

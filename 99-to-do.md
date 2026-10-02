@@ -126,7 +126,7 @@ Not seen in the browser (no recording, higher-Grade creature, or classed charact
 
 **Next.** A campaign that loaded the tutorial pack before 0.1.41 presses **Load the tutorial pack again** for Marisol's block. Then Gabriel's first solo tutorial night. Before the group's Phase 3, a ten-minute check with everyone (join, consent, a line each, a die). Afterward: his notes, the test recordings, and the drafts measured.
 
-**Queued: images and handouts** (Gabriel, 2026-10-01; the M1 row "Images and handouts" has the design). Build it, then, when Gabriel delivers the tutorial's images to `app/packs/images/tutorial/`, add them to the tutorial pack as Image items in their phase groups, with the book's images listed under "Images the book already has" once he has checked them for figures. The briefs are in `book/art/shot-list.md`, "The Tutorial on the players' screens". It does not block the solo night.
+**Built since the close: images and handouts** (2026-10-02, the M1 row has the detail). Prep holds images; **Show…** puts one on the players' screens and the **Seen** strip keeps it; uploads are stored in Postgres; the tutorial pack has Gabriel's twenty images (rules 0.1.42). Checked in the browser with a GM tab and a player tab: the pack's images in Prep, the preview, the image opening on Kara's screen, the Seen strip, an upload shrunk to 1600 pixels, and an undo taking it back. Waiting on Gabriel: a look at the book's tutorial images listed in `book/art/shot-list.md` ("Images the book already has") for figures, before they join the pack.
 
 **Open for Gabriel** (Claude's calls, in Decisions): Marisol Yields where the Bestiary's human Brigand does not; a character in no formal party heals only themselves out of a fight.
 

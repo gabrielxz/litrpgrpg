@@ -243,3 +243,29 @@ npcs:
     name: "The Node strangers: Marco, Dele, and Wren"
     who: "Marco, Dele, and Wren, at the Node in Phase 3"
     note: "Helped, they are part of the camp and of the gate queue in Phase 5. Without help, they fend for themselves and are not in the gate queue."
+
+# Images the GM shows on the players' screens from Prep (app/DESIGN.md, M1, "Images and handouts";
+# briefs in book/art/shot-list.md, "The Tutorial on the players' screens"). Each file is
+# app/packs/images/tutorial/<file>.webp. A title is what the player reads under the image, so it
+# names only what the character has just seen. The book holds none of these.
+images:
+  - {id: img-landing, group: "Phase 1: The Threshold", title: "The landing", file: landing, note: "The Fall, as the dark lets go."}
+  - {id: img-valley, group: "Phase 2: The Violent Arrival", title: "The valley", file: the-valley-from-the-rim, note: "Read Aloud: The Valley, when the character first sees the valley floor."}
+  - {id: img-dying-scavenger, group: "Phase 2: The Violent Arrival", title: "Something coming apart", file: the-dying-scavenger, note: "Encounter 1, The Dying Scavenger."}
+  - {id: img-rubble-trap, group: "Phase 2: The Violent Arrival", title: "Pinned", file: the-rubble-trap, note: "Encounter 2, The Rubble Trap."}
+  - {id: img-locked-cache, group: "Phase 2: The Violent Arrival", title: "The box in the debris", file: the-locked-cache, note: "Encounter 3, The Locked Cache."}
+  - {id: img-high-ground, group: "Phase 2: The Violent Arrival", title: "From the ridge", file: the-high-ground, note: "Encounter 4, The High Ground."}
+  - {id: img-marisol, group: "Phase 2: The Violent Arrival", title: "Marisol Vega", file: marisol-vega, note: "Encounter 4, once the character has gone to the fighter."}
+  - {id: img-resonance-flicker, group: "Phase 2: The Violent Arrival", title: "The pulsing column", file: the-resonance-flicker, note: "Encounter 5, The Resonance Flicker."}
+  - {id: img-sorting-machine, group: "Phase 2: The Violent Arrival", title: "The sorting machine", file: the-sorting-machine, note: "Encounter 6, The Sorting Machine."}
+  - {id: img-tally, group: "Phase 2: The Violent Arrival", title: "The tally", file: the-tally, note: "Encounter 7, The Tally. A handout: the player can count the marks."}
+  - {id: img-first-kill, group: "Phase 2: The Violent Arrival", title: "What comes off it", file: the-first-kill, note: "The First Kill, with the read-aloud."}
+  - {id: img-spear, group: "Phase 2: The Violent Arrival", title: "A spear", file: a-spear, note: "Scavenging on the way, when a character finds it."}
+  - {id: img-medkit, group: "Phase 2: The Violent Arrival", title: "A battered medkit", file: a-battered-medkit, note: "Scavenging on the way, when a character finds it."}
+  - {id: img-relic, group: "Phase 2: The Violent Arrival", title: "A relic", file: a-ranged-relic, note: "Scavenging on the way, when a character finds it."}
+  - {id: img-communicator, group: "Phase 2: The Violent Arrival", title: "A battered communicator", file: a-battered-communicator, note: "Scavenging on the way, when a character finds it."}
+  - {id: img-sparkstone, group: "Phase 2: The Violent Arrival", title: "A sparkstone tablet", file: a-sparkstone-tablet, note: "The Locked Cache, opened clean."}
+  - {id: img-camp, group: "Phase 3: The Recycling Node", title: "The camp", file: the-camp-at-night, note: "Making Camp."}
+  - {id: img-wall-tally, group: "Phase 4: The Field of Ruins", title: "The tally by the door", file: the-wall-tally, note: "Sector D, The Civic Fragment. A handout: the player can count the marks."}
+  - {id: img-strangers, group: "Phase 4: The Field of Ruins", title: "The strangers", file: the-kith, note: "The Arriving Initiates, as they walk into view."}
+  - {id: img-gate, group: "Phase 5: The Convergence Crisis", title: "The gate", file: the-gate, note: "Before the crossing, from the Node's east shoulder."}

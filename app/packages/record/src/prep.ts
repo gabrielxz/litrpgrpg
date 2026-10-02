@@ -1,6 +1,6 @@
 /**
- * Prep: fights, quests, System notices, loot, and NPCs the GM prepares before a session and fires
- * live.
+ * Prep: fights, quests, System notices, loot, NPCs, and images the GM prepares before a session
+ * and fires live.
  *
  * A prepared item is the GM's alone and changes nothing at the table. Firing it records the real
  * action (a fight's start, a quest's issue, a message, items to the spoils or a character, an NPC
@@ -60,7 +60,22 @@ export type PrepItem =
   | (PrepBase & { kind: "quest"; quest: QuestSpec })
   | (PrepBase & { kind: "notice"; text: string })
   | (PrepBase & { kind: "loot"; loot: Stack[] })
-  | (PrepBase & { kind: "npc"; npc: PrepNpc });
+  | (PrepBase & { kind: "npc"; npc: PrepNpc })
+  | (PrepBase & { kind: "image"; image: PrepImage });
+
+/**
+ * An image or a handout the GM shows to characters. `src` names the file: `pack:<pack>/<name>`
+ * for one a content pack ships (`app/packs/images/<pack>/<name>.webp`), `upload:<id>` for one
+ * the GM uploaded.
+ */
+export interface PrepImage {
+  src: string;
+  /** A line under the image on the player's screen. */
+  caption?: string;
+}
+
+/** What an image's `src` may be. */
+export const IMAGE_SRC = /^(pack:[a-z0-9-]+\/[a-z0-9-]+|upload:[0-9a-f-]{36})$/;
 
 /** Saves prepared items, replacing any with the same id. GM only. */
 export interface SavePrep {
@@ -101,6 +116,8 @@ function problems(p: PrepItem): string | null {
       if (!p.npc.who.trim()) return `${p.title}: say who they are`;
       if (p.npc.block?.maxHp !== undefined && (!Number.isInteger(p.npc.block.maxHp) || p.npc.block.maxHp < 1)) return `${p.title}: HP is a whole number from 1`;
       return null;
+    case "image":
+      return IMAGE_SRC.test(p.image.src) ? null : `${p.title}: the image is missing`;
     case "encounter":
       if (!p.encounter.creatures.length) return `${p.title} needs at least one creature or NPC`;
       for (const c of p.encounter.creatures) {
@@ -132,7 +149,7 @@ export function applyPrep(world: World, a: PrepAction): Effect[] {
 
 /**
  * A content pack as written (`rules/tutorial.yaml` is one): its name, and its notices, quests,
- * fights, loot, and NPCs, each with the group it belongs to. A file the GM loads takes the same shape.
+ * fights, loot, NPCs, and images, each with the group it belongs to. A file the GM loads takes the same shape.
  */
 export interface PackData {
   pack: string;
@@ -142,6 +159,8 @@ export interface PackData {
   encounters?: { id: string; group: string; title: string; note?: string; zones: string[]; creatures: PrepCreature[] }[];
   loot?: { id: string; group: string; title: string; note?: string; items: Stack[] }[];
   npcs?: { id: string; group: string; name: string; who: string; line?: string; note?: string; block?: PrepNpc["block"] }[];
+  /** Images the pack ships, each a file under `app/packs/images/<pack>/` named `<file>.webp`. */
+  images?: { id: string; group: string; title: string; note?: string; caption?: string; file: string }[];
   /**
    * The record's own actions that set the table before play (characters, their levels, kit,
    * parties), in order, as a script's setup is written. The GM records them once; each keeps its
@@ -172,6 +191,9 @@ export function packItems(data: PackData): PrepItem[] {
         ...extra(n),
         npc: { who: n.who, ...(n.line ? { line: n.line } : {}), ...(n.block ? { block: n.block } : {}) },
       }),
+    ),
+    ...(data.images ?? []).map(
+      (m): PrepItem => ({ id: `${t}-${m.id}`, kind: "image", title: m.title, ...extra(m), image: { src: `pack:${t}/${m.file}`, ...(m.caption ? { caption: m.caption } : {}) } }),
     ),
   ];
   const ids = new Set<string>();

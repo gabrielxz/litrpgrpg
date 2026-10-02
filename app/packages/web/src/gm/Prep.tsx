@@ -28,6 +28,7 @@ import {
 import { Fragment, useState } from "react";
 import { parse as parseYaml } from "yaml";
 import "../css/prep-bestiary.css";
+import { Picture, uploadImage } from "../images.tsx";
 import { submit } from "../api.ts";
 import { type Names } from "../text.ts";
 import { Icon } from "../ui.tsx";
@@ -192,6 +193,137 @@ function NewNotice({ view, names, onRecorded }: Omit<Props, "engine" | "log">) {
   );
 }
 
+// --------------------------------------------------------------- images ---
+
+/**
+ * Shows a prepared image to the characters checked (app/DESIGN.md, M1, "Images and handouts"),
+ * behind a preview in the player's register of what they receive.
+ */
+function ShowImage({ view, names, item, onRecorded }: { view: GmView; names: Names; item: Extract<PrepItem, { kind: "image" }>; onRecorded: (env: Envelope) => void }) {
+  const living = view.characters.filter((c) => !c.dead);
+  const [to, setTo] = useState<string[]>(living.filter((c) => c.playerId).map((c) => c.id));
+  const action: Action | null = to.length ? { type: "image.show", to, title: item.title, src: item.image.src, ...(item.image.caption ? { caption: item.image.caption } : {}) } : null;
+  return (
+    <>
+      <div className="prep-form stack">
+        <div className="cluster prep-to" role="group" aria-label="Who sees it">
+          <span className="small">To:</span>
+          {living.map((c) => (
+            <label key={c.id} className="check">
+              <input type="checkbox" checked={to.includes(c.id)} onChange={(e) => setTo(e.target.checked ? [...to, c.id] : to.filter((x) => x !== c.id))} />
+              {c.name}
+            </label>
+          ))}
+        </div>
+        {to.length > 0 && (
+          <div className="preview sys image-preview">
+            <div className="preview__to">
+              <Icon name="send" />
+              {to.map(names).join(", ")} {to.length > 1 ? "each see" : "sees"}
+            </div>
+            <Picture campaignId={view.campaign.id} src={item.image.src} alt={item.image.caption ?? item.title} className="image-preview__img" />
+            <div className="image-preview__caption">
+              <b className="world">{item.title}</b>
+              {item.image.caption && <span>{item.image.caption}</span>}
+            </div>
+          </div>
+        )}
+      </div>
+      <Commit
+        campaignId={view.campaign.id}
+        action={action}
+        problem={!to.length ? "Pick who sees it." : null}
+        names={names}
+        label="Show the image"
+        cause={prepCause(item.id)}
+        onRecorded={onRecorded}
+      />
+    </>
+  );
+}
+
+/** An image or a handout the GM uploads into Prep: shrunk in the browser, stored by the server. */
+function NewImage({ view, names, onRecorded }: Omit<Props, "engine" | "log">) {
+  const [f, setF] = useState({ title: "", group: "", caption: "", note: "", src: "" });
+  const [status, setStatus] = useState<string | null>(null);
+  const id = `image-${slug(f.title)}`;
+  const taken = view.prep.some((p) => p.id === id);
+  const item: PrepItem = {
+    id,
+    kind: "image",
+    title: f.title.trim(),
+    image: { src: f.src, ...(f.caption.trim() ? { caption: f.caption.trim() } : {}) },
+    ...(f.group.trim() ? { group: f.group.trim() } : {}),
+    ...(f.note.trim() ? { note: f.note.trim() } : {}),
+  };
+  return (
+    <details className="panel prep-new">
+      <summary className="panel__head">
+        <Icon name="next" />
+        <h2>Prepare an image or a handout</h2>
+      </summary>
+      <div className="panel__body stack">
+        <label className="field">
+          <span>The image (PNG, JPEG, or WebP)</span>
+          <input
+            type="file"
+            accept="image/png,image/jpeg,image/webp"
+            onChange={async (e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              setStatus("Uploading…");
+              try {
+                const src = await uploadImage(view.campaign.id, file);
+                setF((x) => ({ ...x, src, title: x.title || file.name.replace(/\.[a-z]+$/i, "").replace(/[-_]+/g, " ") }));
+                setStatus(null);
+              } catch (err) {
+                setStatus((err as Error).message);
+              }
+            }}
+          />
+        </label>
+        {status && <p className="small dim">{status}</p>}
+        {f.src && <Picture campaignId={view.campaign.id} src={f.src} alt={f.title} className="prep-card__thumb" />}
+        <div className="prep-pair">
+          <label className="field">
+            <span>Title</span>
+            <input className="input" value={f.title} onChange={(e) => setF({ ...f, title: e.target.value })} placeholder="The depot gate" />
+          </label>
+          <label className="field">
+            <span>Group</span>
+            <input className="input" value={f.group} onChange={(e) => setF({ ...f, group: e.target.value })} placeholder="Session 4" />
+          </label>
+        </div>
+        <label className="field">
+          <span>Caption, under the image on the player's screen (optional)</span>
+          <input className="input" value={f.caption} onChange={(e) => setF({ ...f, caption: e.target.value })} />
+        </label>
+        {taken && (
+          <p className="warning small">
+            <Icon name="warning" />
+            A prepared image already has this title; saving replaces it.
+          </p>
+        )}
+        <label className="field">
+          <span>When to show it</span>
+          <input className="input" value={f.note} onChange={(e) => setF({ ...f, note: e.target.value })} />
+        </label>
+      </div>
+      <Commit
+        campaignId={view.campaign.id}
+        action={f.title.trim() && f.src ? { type: "prep.save", items: [item] } : null}
+        problem={!f.src ? "Pick the image." : !f.title.trim() ? "Give it a title." : null}
+        names={names}
+        label="Prepare the image"
+        onRecorded={(env) => {
+          setF({ title: "", group: "", caption: "", note: "", src: "" });
+          onRecorded(env);
+        }}
+      />
+    </details>
+  );
+}
+
 // -------------------------------------------------------- loot and NPCs ---
 
 /** "Healing Pill × 2" per line, into stacks; a line without a count is one. */
@@ -287,7 +419,10 @@ function EditItem({ view, names, item, onRecorded, onFire, onDone }: { view: GmV
     beats: item.kind === "npc" && item.npc.block?.beats !== undefined ? String(item.npc.block.beats) : "2",
     momentum: item.kind === "npc" && item.npc.block?.momentumForce !== undefined ? String(item.npc.block.momentumForce) : "",
     force: item.kind === "npc" && item.npc.block?.offense?.[0] ? String(item.npc.block.offense[0].force) : "",
+    src: item.kind === "image" ? item.image.src : "",
+    caption: item.kind === "image" ? (item.image.caption ?? "") : "",
   });
+  const [uploading, setUploading] = useState<string | null>(null);
   if (item.kind === "quest" || item.kind === "encounter")
     return (
       <div className="prep-form">
@@ -303,6 +438,7 @@ function EditItem({ view, names, item, onRecorded, onFire, onDone }: { view: GmV
   let next: PrepItem;
   if (item.kind === "notice") next = { ...base, kind: "notice", text: f.text.trim() };
   else if (item.kind === "loot") next = { ...base, kind: "loot", loot: stacksOf(f.loot) };
+  else if (item.kind === "image") next = { ...base, kind: "image", image: { src: f.src, ...(f.caption.trim() ? { caption: f.caption.trim() } : {}) } };
   else {
     const hp = int(f.hp);
     const force = int(f.force);
@@ -339,6 +475,35 @@ function EditItem({ view, names, item, onRecorded, onFire, onDone }: { view: GmV
               <textarea className="textarea" rows={4} value={f.text} onChange={set("text")} />
             </label>
             <TableWords text={f.text} />
+          </>
+        )}
+        {item.kind === "image" && (
+          <>
+            <Picture campaignId={view.campaign.id} src={f.src} alt={f.title} className="prep-card__thumb" />
+            <label className="field">
+              <span>Replace the image</span>
+              <input
+                type="file"
+                accept="image/png,image/jpeg,image/webp"
+                onChange={async (e) => {
+                  const file = e.target.files?.[0];
+                  if (!file) return;
+                  setUploading("Uploading…");
+                  try {
+                    const src = await uploadImage(view.campaign.id, file);
+                    setF((x) => ({ ...x, src }));
+                    setUploading(null);
+                  } catch (err) {
+                    setUploading((err as Error).message);
+                  }
+                }}
+              />
+            </label>
+            {uploading && <p className="small dim">{uploading}</p>}
+            <label className="field">
+              <span>Caption, under the image on the player's screen (optional)</span>
+              <input className="input" value={f.caption} onChange={set("caption")} />
+            </label>
           </>
         )}
         {item.kind === "loot" && (
@@ -518,7 +683,7 @@ function PackFile({ view, names, onRecorded }: Omit<Props, "engine" | "log">) {
 
 // ---------------------------------------------------------- the section ---
 
-const KIND = { encounter: "Fight", quest: "Quest", notice: "Notice", loot: "Loot", npc: "NPC" } as const;
+const KIND = { encounter: "Fight", quest: "Quest", notice: "Notice", loot: "Loot", npc: "NPC", image: "Image" } as const;
 
 function ItemCard({ view, engine, names, onRecorded, item, fired, onFire }: Omit<Props, "log"> & { item: PrepItem; fired: number; onFire: (f: Firing) => void }) {
   const [open, setOpen] = useState<null | "fire" | "edit">(null);
@@ -539,6 +704,11 @@ function ItemCard({ view, engine, names, onRecorded, item, fired, onFire }: Omit
           {item.kind === "loot" && (
             <button className="btn btn--sm" aria-expanded={open === "fire"} onClick={() => toggle("fire")}>
               {open === "fire" ? "Close" : "Give…"}
+            </button>
+          )}
+          {item.kind === "image" && (
+            <button className="btn btn--sm" aria-expanded={open === "fire"} onClick={() => toggle("fire")}>
+              {open === "fire" ? "Close" : "Show…"}
             </button>
           )}
           {joins && (
@@ -614,10 +784,17 @@ function ItemCard({ view, engine, names, onRecorded, item, fired, onFire }: Omit
             {item.quest.category} · {item.quest.difficulty} · {item.quest.objective}
           </p>
         )}
+        {item.kind === "image" && open !== "fire" && (
+          <div className="prep-card__image">
+            <Picture campaignId={view.campaign.id} src={item.image.src} alt={item.image.caption ?? item.title} className="prep-card__thumb" />
+            {item.image.caption && <p className="small">{item.image.caption}</p>}
+          </div>
+        )}
       </div>
       {open === "fire" && item.kind === "notice" && <FireNotice view={view} names={names} item={item} onRecorded={onRecorded} />}
       {open === "fire" && item.kind === "loot" && <GiveLoot view={view} names={names} item={item} onRecorded={onRecorded} />}
       {open === "fire" && item.kind === "npc" && <NpcJoins view={view} names={names} item={item} onRecorded={onRecorded} />}
+      {open === "fire" && item.kind === "image" && <ShowImage view={view} names={names} item={item} onRecorded={onRecorded} />}
       {open === "edit" && <EditItem view={view} names={names} item={item} onRecorded={onRecorded} onFire={onFire} onDone={() => setOpen(null)} />}
       <div className="prep-card__foot">
         <details className="small">
@@ -649,8 +826,8 @@ export function PrepSection(props: Props & { onFire: (f: Firing) => void }) {
             Prep
           </h1>
           <p className="small dim">
-            Fights, quests, System notices, loot, and NPCs made ready before a session. Firing one records the real thing at the table; the prepared item stays until you remove it. Save a fight
-            from Combat's setup and a quest from the Quests form; write a notice, loot, or an NPC below, or load a pack from a file.
+            Fights, quests, System notices, loot, NPCs, and images made ready before a session. Firing one records the real thing at the table; the prepared item stays until you remove it. Save
+            a fight from Combat's setup and a quest from the Quests form; write a notice, loot, or an NPC, or add an image, below, or load a pack from a file.
           </p>
         </header>
         {pack.length > 0 && (
@@ -658,8 +835,8 @@ export function PrepSection(props: Props & { onFire: (f: Firing) => void }) {
             <div className="panel__body stack">
               <p>
                 <strong>The tutorial pack</strong>: {pack.filter((p) => p.kind === "notice").length} notices, {pack.filter((p) => p.kind === "quest").length} quests,{" "}
-                {pack.filter((p) => p.kind === "encounter").length} fights, {pack.filter((p) => p.kind === "loot").length} loot lists, and {pack.filter((p) => p.kind === "npc").length} recurring NPCs from The
-                Tutorial, by phase.{" "}
+                {pack.filter((p) => p.kind === "encounter").length} fights, {pack.filter((p) => p.kind === "loot").length} loot lists, {pack.filter((p) => p.kind === "npc").length} recurring NPCs, and{" "}
+                {pack.filter((p) => p.kind === "image").length} images from The Tutorial, by phase.{" "}
                 {loaded > 0 && <span className="dim">{loaded === pack.length ? "Loaded." : `${loaded} of ${pack.length} in Prep.`}</span>}
               </p>
               {loaded > 0 && (
@@ -689,6 +866,7 @@ export function PrepSection(props: Props & { onFire: (f: Firing) => void }) {
         <NewNotice view={view} names={names} onRecorded={onRecorded} />
         <NewItem view={view} names={names} onRecorded={onRecorded} kind="loot" />
         <NewItem view={view} names={names} onRecorded={onRecorded} kind="npc" />
+        <NewImage view={view} names={names} onRecorded={onRecorded} />
         <section className="panel" aria-label="Load a pack from a file">
           <PackFile view={view} names={names} onRecorded={onRecorded} />
         </section>

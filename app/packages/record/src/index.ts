@@ -23,6 +23,7 @@ export type {
   PartyFrame,
   PartyFrameMember,
   RollView,
+  SeenImage,
   CombatantView,
   EncounterView,
   PlayerCombat,
@@ -95,7 +96,7 @@ export {
   packageProblems,
   packageWarnings,
 } from "./classes.ts";
-export { type PackData, type PrepAction, type PrepCreature, type PrepItem, type PrepNpc, packItems, packSetup, prepCause, tutorialPack } from "./prep.ts";
+export { IMAGE_SRC, type PackData, type PrepAction, type PrepCreature, type PrepImage, type PrepItem, type PrepNpc, packItems, packSetup, prepCause, tutorialPack } from "./prep.ts";
 export { type Clock, type ClockAction, MINUTES_PER_DAY, clockLine, dayOf, toNextDawn } from "./clock.ts";
 export { type CampaignSession, type SessionAction, memoryOf, runningSession, sessionName } from "./sessions.ts";
 export { type CampaignEvent, type EventAction, type HveEntry, type LogEvent, intensities, sweepWeight } from "./events.ts";
